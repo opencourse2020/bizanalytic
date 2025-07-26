@@ -189,7 +189,7 @@ ADMINS = tuple(parseaddr(email) for email in admins_data)
 # Third-party syndicma settings
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
-    # "allauth.account.auth_backends.AuthenticationBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
     "guardian.backends.ObjectPermissionBackend",
 )
 SITE_ID = 1

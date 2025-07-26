@@ -1,6 +1,6 @@
 from django import template
 from django.contrib.auth.models import Group
-from coelinks.profiles.models import User
+from bizanalytic.profiles.models import User
 register = template.Library()
 
 

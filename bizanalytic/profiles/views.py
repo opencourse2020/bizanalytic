@@ -165,11 +165,11 @@ class ProfileView(LoginRequiredMixin, RedirectView):
 class DispatchLoginView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         if hasattr(self.request.user, "admin"):
-            return reverse_lazy("coeanalytics:sdashboard")
+            return reverse_lazy("logiflex:index")
         elif hasattr(self.request.user, "member"):
-            return reverse_lazy("coeanalytics:sdashboard")
+            return reverse_lazy("logiflex:index")
         else:
-            return reverse_lazy("coeanalytics:sdashboard")
+            return reverse_lazy("logiflex:index")
 
         return super().get_redirect_url(*args, **kwargs)
 
@@ -188,14 +188,14 @@ class EnterpriseCreateView(LoginRequiredMixin, CreateView):
     model = models.Enterprise
     form_class = forms.EnterpriseForm
     template_name = "profiles/enterprise_edit.html"
-    success_url = reverse_lazy("coeanalytics:analytics:edit")
+    success_url = reverse_lazy("logiflex:index")
 
 
 class EnterpriseEditView(LoginRequiredMixin, CreateView):
     model = models.Enterprise
     form_class = forms.EnterpriseForm
     template_name = "profiles/enterprise_edit.html"
-    success_url = reverse_lazy("coeanalytics:analytics:edit")
+    success_url = reverse_lazy("logiflex:index")
 
 
 class UserDetailView(DetailView, SingleObjectMixin):

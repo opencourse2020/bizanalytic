@@ -35,8 +35,7 @@ admin.site.register(models.User)
 
 model_objects = (
     models.Admin,
-    models.Regular,
-    models.Review,
+    models.Member,
     models.Enterprise
     )
 

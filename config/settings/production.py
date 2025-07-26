@@ -42,7 +42,7 @@ INSTALLED_APPS += [
     # "django_extensions",
 ]
 
-log_filename = str(BASE_DIR("logs", "coelinks.log"))
+log_filename = str(BASE_DIR("logs", "bizanalytic.log"))
 os.makedirs(os.path.dirname(log_filename), exist_ok=True)
 LOGGING = {
     "version": 1,
@@ -65,7 +65,7 @@ LOGGING = {
         "rotating_file": {
             "level": "INFO",
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": str(BASE_DIR("logs", "coelinks.log")),
+            "filename": str(BASE_DIR("logs", "bizanalytic.log")),
             "maxBytes": 1024 * 1024 * 5,
             "backupCount": 5,
         },

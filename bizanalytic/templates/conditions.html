@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content_title %}
+  <h2 class="h3">{% trans "Conditions" %}</h2>
+{% endblock content_title %}
+
+{% block content %}
+  <p class=MsoNormal><b><span lang=FR style='mso-ansi-language:FR'>Introduction&nbsp;</span></b><span
+lang=FR style='mso-ansi-language:FR'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Les présentes
+conditions générales d'utilisation s'appliquent à toutes les personnes accédant
+à Superprof.ma.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Superprof.ma se
+réserve le droit de modifier à n’importe quel moment ces présentes conditions générales
+d'utilisation, en mettant en ligne sur le site une nouvelle version.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b><span lang=FR style='mso-ansi-language:FR'>1. Objet du
+site&nbsp;</span></b><span lang=FR style='mso-ansi-language:FR'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Superprof.ma est
+un site internet dont le but est la mise en relation de Professeurs et Elèves.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Il permet la
+création de profils pour les professeurs et les élèves et la saisie et
+diffusion de cours particuliers.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b><span lang=FR style='mso-ansi-language:FR'>2.
+Inscription, accès et résiliation&nbsp;</span></b><span lang=FR
+style='mso-ansi-language:FR'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>L'inscription aux
+services se fait par Internet sur le site&nbsp;<span class=MsoHyperlink><a
+href="https://www.superprof.ma/" target="_blank">www.Superprof.ma</a></span>.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Les données et
+informations que vous communiquez doivent être exactes, conformes à la réalité
+et ne peuvent en aucun cas induire le destinataire en erreur.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Vous devez être
+majeur pour poster des cours. Il n'y a pas d'âge minimum pour accéder aux cours
+publiés sur le site. Superprof.ma se réserve le droit de refuser une
+inscription si les présentes conditions générales d'utilisation ne sont pas
+respectées.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Après
+inscription, l'utilisateur aura accès à son compte, <span class=GramE>via
+&nbsp;l’adresse</span> e-mail &nbsp;renseignée et son mot de passe.
+L'utilisateur ayant perdu son mot de passe a la possibilité d'en demander un
+nouveau mot de passe via le site&nbsp;<span class=MsoHyperlink><a
+href="https://www.superprof.ma/" target="_blank">www.Superprof.ma</a></span>.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>L'utilisateur,
+ainsi qu’Superprof.ma, peuvent mettre un terme à leur contrat ou/<span
+class=GramE>et &nbsp;résilier</span> l’inscription de l'utilisateur à tout
+moment, sans devoir se justifier de part et d’autre. Toute résiliation se fera
+via le&nbsp;<span class=MsoHyperlink><a
+href="http://www.apprentus.com/fr/contact" target="_blank">formulaire de
+contact</a></span>&nbsp;du site ou par e-mail. Superprof.ma se réserve le droit
+de résilier l'inscription d'un utilisateur qui aurait contrevenu à l'une des
+présentes conditions générales d'utilisation.<o:p></o:p></span></p>
+
+<p class=MsoNormal><b><span lang=FR style='mso-ansi-language:FR'>3. <span
+class=SpellE>Status</span> des Professeurs et des Elèves.</span></b><span
+lang=FR style='mso-ansi-language:FR'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Les Elèves
+entrent en relation d'affaires avec les professeurs à travers Superprof.ma Platform.
+Lorsqu'un Elève choisit un Professeur à partir du site internet de Superprof.ma,
+L’Elève engage Superprof.ma pour fournir des services via son réseau de
+Professeurs indépendants. L’Elève reconnait que les Professeurs sont des
+entrepreneurs autonomes qui opèrent leurs activités comme entité séparée de
+Superprof.ma. En tant que tels, nous ne contrôlons pas les dispositions ou
+méthodes prestations fournies, et n'exerçons aucun contrôle sur la relation
+professionnelle entre le Professeur et l’Elève et ne pouvons garantir les
+prestations d’aucun Professeur.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>La relation
+commerciale des Professeurs avec Superprof.ma est celles d'entrepreneurs
+autonomes, et rien dans ces Conditions d'utilisation, ou autre accord, n'est
+destiné à créer une relation de partenariat, d'agence, d'emploi ou relation
+similaire entre les Professeurs et Superprof.ma. Les Professeurs sont seuls
+responsables de leurs déclarations de revenus auprès de leur autorité fiscale
+locale ou de l'État ou toute autre autorité fiscale à l'égard des revenus de
+leurs Elèves.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Aucune partie des
+revenus des Professeurs n’est retenue par Superprof.ma pour le paiement de
+toute sécurité sociale ou de toute autre taxe sur les salaires des employés.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Les Professeurs
+ne sont pas autorisés à représenter Superprof.ma, rédiger un contrat ou un
+engagement au nom de Superprof.ma, à moins qu’expressément demandé par le
+Professeur et autorisé par écrit.<o:p></o:p></span></p>
+
+<p class=MsoNormal><b><span lang=FR style='mso-ansi-language:FR'><br>
+4. Fonctionnement du site et mise en relation entre Professeurs et Elèves.</span></b><span
+lang=FR style='mso-ansi-language:FR'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Le contenu de
+chaque cours peut être régulièrement modifié et actualisé, afin de confirmer
+les disponibilités du professeur - &nbsp;ou être supprimé de Superprof.ma.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Les mises en
+relation entre élèves et professeurs se font uniquement par la plateforme de
+message électronique ou de réservation de Superprof.ma. &nbsp;&nbsp;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Pour faciliter la
+mise en relation entre utilisateurs,&nbsp;Superprof.ma se réserve le droit de
+vérifier, filtrer, modifier,&nbsp;conserver et/ou&nbsp;supprimer les messages
+électroniques internes avant de les transmettre au(x) destinataire(s).<br>
+Pour aider les élèves à trouver le meilleur professeur pour leurs besoins, Superprof.ma
+peut demander à un maximum de cinq autres professeurs de les contacter par
+e-mail s'ils sont en mesure de les aider. <span class=GramE>Aucune informations
+personnelles</span>, y compris adresse e-mail, n'est partagée.&nbsp;&nbsp;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Les mises en
+relation ayant pour objectif de proposer services et/ou produits concurrents,
+courriers électroniques non sollicités à caractère commercial, … ne sont pas
+autorisés.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Superprof.ma se
+réserve le droit de contacter directement professeurs et élèves afin de
+faciliter la mise en relation commercial si nécessaire.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>En sa qualité
+d'annonceur, Superprof.ma ne peut garantir la véracité des informations
+contenues dans le descriptif des cours, ou des profils des professeurs.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Superprof.ma ne
+peut garantir les paiements effectués en dehors du site de Superprof.ma pour
+les prestations de cours particuliers.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b><span lang=FR style='mso-ansi-language:FR'>5. Publication
+des cours&nbsp;</span></b><span lang=FR style='mso-ansi-language:FR'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Après
+inscription, l'utilisateur a accès à son&nbsp;<span class=MsoHyperlink><a
+href="https://www.superprof.ma/profiles/profile.html" target="_blank">compte</a></span>.
+Il peut à tout moment modifier son profil et gérer ses cours.&nbsp;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>La publication des
+cours est gratuite.&nbsp;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Les cours ne
+doivent pas comporter d'informations fausses, illicites ou de nature à induire
+les élèves en erreur. S’il le juge nécessaire, Superprof.ma se réserve le droit
+de modifier un cours ou un profil à sa seule appréciation, sans que
+l'utilisateur en soit notifié, et sans avoir à fournir de justification.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Les cours qui ne
+seraient pas conformes à l'objet du site, à ses conditions générales
+d'utilisations, ou avec une adresse e-mail incorrecte seront supprimés.&nbsp;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Hors plan tarifaire,
+les cours ne peuvent pas, dans leur description, comporter d’éléments
+permettant de retrouver les coordonnées de l’auteur sans passer par Superprof.ma.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Superprof.ma se
+réserve le droit de modifier, supprimer ou demander à l’auteur de modifier les annonces
+en question.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Le professeur ne
+peut en aucun cas en escompter une quelconque indemnité. Il devra modifier ses
+cours pour permettre leur parution.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b><span lang=FR style='mso-ansi-language:FR'>6. Tarifs des
+cours et paiements&nbsp;</span></b><span lang=FR style='mso-ansi-language:FR'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Vous comprenez et
+acceptez de respecter les politiques de&nbsp;paiement des professeurs&nbsp;et
+des&nbsp;élèves&nbsp;sur Superprof.ma.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Vous acceptez de
+payer tous les coûts associés aux services de Superprof.ma. Ces coûts incluent,
+sans limites : (a) le taux horaire d'un professeur tel qu’indiqué ; (b) les
+frais d'annulation tels que décrits dans la politique d'annulation du
+professeur lors de la commande des cours ; Et (c) la commission entre l’élève
+et Superprof.ma.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Le prix exact
+d'un cours est toujours affiché sur le site&nbsp;<span class=MsoHyperlink><a
+href="https://www.superprof.ma/" target="_blank">www.Superprof.ma</a></span>&nbsp;sur
+la page de cours et sur le formulaire de rendez-vous. Le paiement des cours se
+fait en ligne par cartes bancaire, cartes de crédit, PayPal ou versement
+bancaire en ligne.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Note&nbsp;: <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>En ce premier
+temps et jusqu’à nouvel ordre,<o:p></o:p></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+lang=FR style='mso-ascii-font-family:Calibri;mso-fareast-font-family:Calibri;
+mso-hansi-font-family:Calibri;mso-bidi-font-family:Calibri;mso-ansi-language:
+FR'><span style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR></span><span lang=FR
+style='mso-ansi-language:FR'>La commission entre l’élève et Superprof.ma n’est
+pas encore appliquée. Tous payements pour une séance (des séances) ou un cours
+(des cours) doit être gérer par le professeur. Superprof.ma n'acceptera aucun
+paiement de la part des élèves et étudiants pour les services offerts.<o:p></o:p></span></p>
+
+<p class=MsoListParagraphCxSpLast style='text-indent:-.25in;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+lang=FR style='mso-ascii-font-family:Calibri;mso-fareast-font-family:Calibri;
+mso-hansi-font-family:Calibri;mso-bidi-font-family:Calibri;mso-ansi-language:
+FR'><span style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span dir=LTR></span><span lang=FR
+style='mso-ansi-language:FR'>Les services offerts par Superpro.ma au
+professeurs, y compris, mais sans s'y limiter, la création d'un ou plusieurs
+cours et la création d'un ou plusieurs centres sont gratuits. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b><span lang=FR style='mso-ansi-language:FR'>7. Limitation
+de garantie</span></b><span lang=FR style='mso-ansi-language:FR'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Les frais de
+télécommunication vers le site&nbsp;<span class=MsoHyperlink><a
+href="https://www.superprof.ma/" target="_blank">www.Superprof.ma</a></span>&nbsp;sont
+à la charge exclusive de l'utilisateur.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Superprof.ma ne
+garantit pas que le fonctionnement de ses services soit continu, rapide,
+parfaitement sécurisé ou sans bugs mineurs.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Superprof.ma ne
+peut être tenu responsable de la perte d'informations, de l'interruption ou du
+dysfonctionnement de ses services.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Superprof.ma ne
+peut être tenu pour responsable de fausses déclarations faites par un
+utilisateur ni des préjudices qui en résultent.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Toute autre
+garantie, explicite ou implicite, est exclue.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b><span lang=FR style='mso-ansi-language:FR'>8. Droit
+applicable&nbsp;</span></b><span lang=FR style='mso-ansi-language:FR'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Les présentes
+conditions générales d'utilisation sont soumises à la loi marocaine. En cas de
+litige, une solution amiable sera recherchée avant toute action judiciaire. A
+défaut de règlement amiable, les présentes conditions seront utilisées comme
+base juridique et les tribunaux de l'arrondissement judiciaire de Londres
+seront seuls compétents.&nbsp;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b><span lang=FR style='mso-ansi-language:FR'>9. Support
+illimité par email&nbsp;</span></b><span lang=FR style='mso-ansi-language:FR'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Superprof.ma
+dispose d'un service clientèle disponible par email pour vous aider et répondre
+à toutes les questions que vous auriez. Par ailleurs, si vous avez des
+suggestions, commentaires, merci de nous en faire part à l’adresse info@Superprof.ma,
+nous voulons vous entendre !<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b><span lang=FR style='mso-ansi-language:FR'>10. Politique
+de confidentialité&nbsp;</span></b><span lang=FR style='mso-ansi-language:FR'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=FR style='mso-ansi-language:FR'>Veuillez
+    également consulter la politique de confidentialité de Superprof.ma <a href="{% url 'profiles:privacy' %}">ici.</a><o:p></o:p></span></p>
+{% endblock content %}

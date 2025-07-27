@@ -54,20 +54,20 @@
 {#                            </div>#}
                         </div>
                     </div>
-                    <div class="col-md-9">
-                        <div class="header-right" style="color: #0cb7d6">
-                            <div class="location-text">
-                                <span class="location-icon" style="color: #0cb7d6"><i class="ri-map-pin-2-fill" style="color: #0cb7d6"></i></span> <a href="#" style="color: #0cb7d6">Houston, Texas</a>
-                            </div>
-                            <span class="separator"></span>
-                            <ul class="header-social" style="color: #0cb7d6">
-                                <li><a href="#" style="color: #0cb7d6"><i class="ri-facebook-fill"></i></a></li>
-                                <li><a href="#" style="color: #0cb7d6"><i class="ri-instagram-line"></i></a></li>
-                                <li><a href="#" style="color: #0cb7d6"><i class="ri-twitter-x-fill"></i></a></li>
-                                <li><a href="#" style="color: #0cb7d6"><i class="ri-linkedin-box-fill"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
+{#                    <div class="col-md-9">#}
+{#                        <div class="header-right" style="color: #0cb7d6">#}
+{#                            <div class="location-text">#}
+{#                                <span class="location-icon" style="color: #0cb7d6"><i class="ri-map-pin-2-fill" style="color: #0cb7d6"></i></span> <a href="#" style="color: #0cb7d6">Houston, Texas</a>#}
+{#                            </div>#}
+{#                            <span class="separator"></span>#}
+{#                            <ul class="header-social" style="color: #0cb7d6">#}
+{#                                <li><a href="#" style="color: #0cb7d6"><i class="ri-facebook-fill"></i></a></li>#}
+{#                                <li><a href="#" style="color: #0cb7d6"><i class="ri-instagram-line"></i></a></li>#}
+{#                                <li><a href="#" style="color: #0cb7d6"><i class="ri-twitter-x-fill"></i></a></li>#}
+{#                                <li><a href="#" style="color: #0cb7d6"><i class="ri-linkedin-box-fill"></i></a></li>#}
+{#                            </ul>#}
+{#                        </div>#}
+{#                    </div>#}
                 </div>
             </div>
         </div>
@@ -125,7 +125,7 @@
 
                     <div class="col-xl-2 col-lg-3 col-6">
                         <div class="nav-right-content">
-                            <a href="about.html" class="primary-btn secondary-bg"><span class="text">learn more</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                            <a href="#tryfree" class="primary-btn secondary-bg"><span class="text">{% trans "Try Free" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                         </div>
                     </div>
                 </div>
@@ -157,37 +157,32 @@
         </section>
 
         <!-- contact area starts -->
-        <section class="contact-area pt-120">
+        <section class="contact-area pt-120" id="tryfree">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-6 wow fadeInRight" data-wow-delay=".2s">
                         <div class="form-part">
-                            <h4 class="title">Send free to message</h4>
+                            <h4 class="title">{% trans "Get Your Report" %}</h4>
+                            <p>{% trans "Upload your route data and receive a comprehensive analysis" %}</p>
                             <div class="theme-form mt-40">
                                 <form action="#">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <input type="text" placeholder="Your Name">
+                                        <div class="col">
+                                            <label for="company_nm">{% trans "Company Name" %}</label>
+                                            <input type="text" id="company_nm" placeholder="Enter your Company Name">
                                         </div>
-                                        <div class="col-md-6">
-                                            <input type="email" placeholder="Your Email">
+                                        <div class="col">
+                                            <label for="email_nm">{% trans "Email Address" %}</label>
+                                            <input type="email" id="email_nm" placeholder="Enter your Email Address">
                                         </div>
-                                        <div class="col-md-6">
-                                            <input type="tel" placeholder="Phone Number">
+                                        <div class="col">
+                                            <label for="route_fl" >{% trans "Route Data File" %}</label>
+                                            <input type="file" id="route_fl" placeholder="">
+                                            <span>{% trans "Supports .csv, .xlsx files" %}</span>
                                         </div>
-                                        <div class="col-md-6">
-                                            <select>
-                                                <option value="">Choose a Option</option>
-                                                <option value="ca">Freight Shipping</option>
-                                                <option value="au">Vehicle Transport</option>
-                                                <option value="bd">Logistics & Warehousing</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-12">
-                                            <textarea name="message" placeholder="Message Here.."></textarea>
-                                        </div>
+
                                     </div>
-                                    <button type="submit" class="primary-btn primary-bg"><span class="text">submit now</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></button>
+                                    <button type="button" id="generate_rp" class="primary-btn primary-bg"><span class="text">{% trans "Generate Performance Report" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></button>
                                 </form>
                             </div>
                         </div>

@@ -279,13 +279,13 @@ img { width: 100%; height: auto; display: block; }
 .footer-menu li a:hover { color: #2ba3c4; }
 
 /* breadcrumb */
-.breadcrumb-area { text-align: center; background: no-repeat center/cover; position: relative; z-index: 1; padding: 230px 0 120px; }
+.breadcrumb-area { text-align: center; background: no-repeat center/cover; position: relative; z-index: 1; padding: 80px 0 120px; }
 
-@media (min-width: 768px) and (max-width: 991.98px) { .breadcrumb-area { padding: 180px 0 80px; } }
+@media (min-width: 768px) and (max-width: 991.98px) { .breadcrumb-area { padding: 80px 0 80px; } }
 
-@media (min-width: 576px) and (max-width: 767.98px) { .breadcrumb-area { padding: 210px 0 80px; } }
+@media (min-width: 576px) and (max-width: 767.98px) { .breadcrumb-area { padding: 150px 0 80px; } }
 
-@media (max-width: 575.98px) { .breadcrumb-area { padding: 240px 0 80px; } }
+@media (max-width: 575.98px) { .breadcrumb-area { padding: 80px 0 80px; } }
 
 .breadcrumb-area::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 27, 36, 0.8); z-index: -1; }
 

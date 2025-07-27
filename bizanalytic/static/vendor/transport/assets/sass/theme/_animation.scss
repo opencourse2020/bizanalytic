@@ -1,0 +1,40 @@
+/* animation */ 
+@keyframes fixed_top {
+    0% {
+        top: -100%;
+    }
+    100% {
+        top: 0;
+    }
+}
+
+@keyframes custom_slide {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+}
+
+@keyframes progress {
+    0%{
+        width:0;
+    }
+    100%{
+        width:100%;
+    }
+}
+
+.play-btn-ripple {    
+    animation: ripple 3s infinite ease-in-out;
+}
+
+@keyframes ripple {
+    0% {
+        box-shadow: 0 0 0 0 rgba(43, 163, 196, 0.2), 0 0 0 10px rgba(43, 163, 196, 0.2), 0 0 0 20px rgba(43, 163, 196, 0.2)
+    }
+    100% {
+        box-shadow: 0 0 0 20px rgba(43, 163, 196, 0.2), 0 0 0 20px rgba(43, 163, 196, 0.1), 0 0 0 40px rgba(43, 163, 196, 0)
+    }
+}

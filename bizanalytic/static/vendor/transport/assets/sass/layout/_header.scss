@@ -1,0 +1,230 @@
+/* header */
+.header-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 9;
+}
+
+.header-area-2 {
+    position: relative;
+    z-index: 9;
+}
+
+.header-top {
+    background-color: $primary-color;
+    padding: 10px 0;
+    .header-left {
+        .email-icon {
+            color: $white-color;
+        }
+        a {
+            color: $white-color;
+            transition: $transition;
+            &:hover {
+                color: $secondary-color;
+            }
+        }
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        justify-content: end;
+        @include landscape-phone {
+            justify-content: start;
+            margin-top: 5px;
+        }
+        @include portrait-phone {
+            display: block;
+            margin-top: 5px;
+        }
+        .location-text {
+            .location-icon {
+                color: $white-color;
+            }
+            a {
+                color: $white-color;
+                transition: $transition;
+                &:hover {
+                    color: $secondary-color;
+                }
+            }
+        }
+        .separator {
+            width: 1px;
+            height: 16px;
+            background-color: $white-color;
+            display: block;
+            @include portrait-phone {
+                display: none;
+            }
+        }
+    }
+}
+
+.header-top-2 {
+    padding: 10px 0;
+    background-color: $light-bg;
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        @include portrait-phone {
+            display: inherit;
+        }
+        .location-text {
+            @include portrait-phone {
+                margin-top: 5px;
+            }
+        }
+        .email-icon,
+        .location-icon {
+            color: $primary-color;
+        }
+        a {
+            color: $paragraph-color;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+}
+
+.header-social {
+    @include portrait-phone {
+        margin-top: 5px;
+    }
+    li {
+        display: inline-block;
+        +li {
+            margin-left: 20px;
+            @include portrait-phone {
+                margin-left: 10px;
+            }
+        }
+        a {
+            color: $white-color;
+            transition: $transition;
+            &:hover {
+                color: $secondary-color;
+            }
+        }
+    }
+}
+
+.header-social-2 {
+    text-align: right;
+    @include all-phone {
+        text-align: left;
+        margin-top: 5px;
+    }
+    li {
+        display: inline-block;
+        +li {
+            margin-left: 5px;
+        }
+        a {
+            color: $heading-color;
+            background-color: transparent;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            border: 1px solid $border-color;
+            border-radius: 50%;
+            text-align: center;
+            display: inline-block;
+            transition: $transition;
+            &:hover {
+                color: $white-color;
+                background-color: $primary-color;
+                border: 1px solid transparent;
+            }
+        }
+    }
+}
+
+.menu-area {
+    background-color: transparent;
+    position: relative;
+    &.menu-area-2 {
+        background-color: $heading-color;
+        position: relative;
+        z-index: 1;
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 35%;
+            height: 100%;
+            background-color: $secondary-color;
+            clip-path: polygon(0 0, 97% 0, 90% 100%, 0% 100%);
+            z-index: -1;
+            @include desktop {
+                width: 25%;
+            }
+            @include landscape-phone {
+                width: 40%;
+            }
+            @include portrait-phone {
+                width: 54%;
+            }
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 36%;
+            height: 100%;
+            background-color: $primary-color;
+            clip-path: polygon(0 0, 97% 0, 90% 100%, 0% 100%);
+            z-index: -2;
+            @include desktop {
+                width: 26%;
+            }
+            @include landscape-phone {
+                width: 41%;
+            }
+            @include portrait-phone {
+                width: 56%;
+            }
+        }
+    }
+
+    @include phone-tablet {
+        padding: 10px 0;
+    }
+    &.fixed-top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        background-color: $heading-color;
+        animation: fixed_top 0.8s;
+    }
+    .logo-area {
+        img {
+            max-width: 160px;
+            display: inline-block;
+        }
+    }
+    .nav-right-content {
+        text-align: right;
+        @include tablet {
+            margin-right: 50px;
+        }
+        @include landscape-phone {
+            margin-right: 50px;
+        }
+        @include portrait-phone {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,2021 @@
+/* theme */ 
+.hero-area {
+    background: no-repeat center/cover;
+    position: relative;
+    z-index: 1;
+    padding: 210px 0 100px;
+    @include tablet {
+        padding: 180px 0 80px;
+    }
+    @include landscape-phone {
+        padding: 210px 0 80px;
+    }
+    @include portrait-phone {
+        padding: 230px 0 80px;
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($heading-color, .8);
+        z-index: -1;
+    }
+
+    .hero-image {
+        position: relative;
+        @include phone-tablet {
+            margin-top: 40px;
+        }
+        .hero-image-1 {
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            border: 20px solid rgba($white-color, .1);
+            object-fit: cover;
+            margin-left: auto;
+            @include desktop {
+                width: 500px;
+                height: 500px;
+            }
+            @include landscape-phone {
+                width: 500px;
+                height: 500px;
+            }
+            @include portrait-phone {
+                width: 330px;
+                height: 330px;
+                margin-left: 0;
+            }
+        }
+        .hero-image-2 {
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            object-fit: cover;
+            padding: 20px;
+            border: 2px solid rgba($white-color, .2);
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            @include portrait-phone {
+                width: 160px;
+                height: 160px;
+                padding: 15px;
+            }
+        }
+    }
+
+    .section-top {
+        animation: 1.5s fadeInUp;
+    }
+    .button-group {
+        animation: 1.5s fadeInDown;
+    }
+}
+
+.hero-area-2 {
+    color: $white-color;
+    text-align: center;
+    padding: 200px 0;
+    background: no-repeat center/cover;
+    position: relative;
+    z-index: 2;
+    @include phone-tablet {
+        padding: 80px 0;
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($heading-color, .8);
+        z-index: -2;
+    }
+    
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('../images/hero-pattern.png') no-repeat center/cover;
+        z-index: -1;
+    }
+
+    .title {
+        text-transform: uppercase;
+        line-height: 1.3;
+        .dashed-underline {
+            color: $secondary-color;
+            font-weight: 600;
+            position: relative;
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: -12px;
+                width: 100%;
+                height: 100%;
+                background: url('../images/dashed-underline.png') no-repeat center bottom/contain;
+            }
+        }
+    }
+    .hero-content {
+        .section-top {
+            animation: 1.5s fadeInUp;
+        }
+        p {
+            animation: 1.5s fadeInDown;
+        }
+        .button-group-2 {
+            animation: 1.5s fadeInDown;
+        }
+    }
+}
+
+.button-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    @include portrait-phone {
+        display: inherit;
+    }
+
+    .phone-text {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        @include portrait-phone {
+            margin-top: 20px;
+        }
+        &.white-color {
+            span {
+                color: $white-color;
+            }
+            .title {
+                a {
+                    color: $white-color;
+                }
+            }
+        }
+
+        img {
+            width: 50px;
+        }
+        span {
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        .title {
+            a {
+                color: $heading-color;
+                transition: $transition;
+                &:hover {
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+}
+
+.button-group-2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    @include portrait-phone {
+        gap: 20px;
+    }
+}
+
+.section-top {
+    .sub-title {
+        color: $primary-color;
+        font-family: $secondary-font;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        &.white-color {
+            color: $white-color
+        }
+        &.third-color {
+            color: $third-color
+        }
+        &.primary-color {
+            color: $primary-color
+        }
+    }
+    .title {
+        color: $heading-color;
+        span {
+            font-weight: 300;
+        }
+        &.white-color {
+            color: $white-color;
+        }
+    }
+}
+
+.about-item {
+    padding: 20px;
+    border: 1px solid $border-color;
+    border-radius: 20px;
+    &:first-child {
+        @include portrait-phone {
+            margin-bottom: 20px;
+        }
+    }
+    img {
+        width: 40px;
+    }
+}
+
+.about-images {
+    position: relative;
+    @include phone-tablet {
+        margin-bottom: 40px;
+    }
+    .about-image-1 {
+        max-width: 400px;
+        margin-left: auto;
+        @include tablet {
+            margin-left: 25%;
+        }
+        @include portrait-phone {
+            max-width: 330px;
+            margin-left: 0;
+        }
+    }
+    .about-image-2 {
+        max-width: 330px;
+        position: absolute;
+        top: 40px;
+        left: 0;
+        @include desktop {
+            max-width: 220px;
+            top: 180px;
+        }
+        @include landscape-phone {
+            max-width: 250px;
+            top: 220px;
+            left: 10px;
+        }
+        @include portrait-phone {
+            max-width: 215px;
+            top: 220px;
+            left: 10px;
+        }
+    }
+    .devilery-text {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: $primary-color;
+        padding: 30px;
+        border-radius: 20px;
+        width: 215px;
+        position: absolute;
+        left: 29px;
+        bottom: 70px;
+        @include desktop {
+            left: 0;
+            bottom: 20px;
+        }
+        @include landscape-phone {
+            bottom: 30px
+        }
+        @include portrait-phone {
+            left: 40px;
+            bottom: 40px
+        }
+        img {
+            width: 50px;
+        }
+        .title {
+            color: $white-color;
+            text-transform: uppercase;
+        }
+    }
+}
+
+.about-area-2 {
+    .text-stroke {
+        width: 100%;
+        text-align: center;
+    }
+    img {
+        border-radius: 20px;
+    }
+    .about-image-4 {
+        max-height: 500px;
+        margin-top: 50px;
+        @include portrait-phone {
+            margin-top: 20px;
+        }
+    }
+    .about-content {
+        @include phone-tablet {
+            margin-top: 50px;
+        }
+    }
+}
+
+.about-area-3 {
+    .about-images {
+        @include phone-tablet {
+            margin-bottom: 0;
+            margin-top: 40px;
+        }
+    }
+}
+
+.feature-area {
+    background-color: $light-bg;
+    .top-content {
+        img {
+            max-width: 170px;
+            @include phone-tablet {
+                margin-top: 40px;
+            }
+        }
+    }
+    .feature-items {
+        background: url('../images/line-shape.png') no-repeat top 30px center/70%;
+        margin-top: 80px;
+        @include phone-tablet {
+            background: none;
+            margin-top: 50px;
+        }
+    }
+}
+
+.single-feature {
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 30px;
+    @include phone-tablet {
+        padding: 0;
+    }
+    .icon-box {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .title {
+        width: 70%;
+        margin: auto;
+        @include desktop {
+            width: 80%;
+        }
+        @include all-phone {
+            width: 100%;
+        }
+    } 
+}
+
+.icon-box {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    &.small-box {
+        width: 70px;
+        height: 70px;
+        .icon {
+            width: 40px;
+        }
+    }
+    &.white-bg{
+        background-color: $white-color;
+    }
+    &.third-bg {
+        background-color: $third-color;
+    }
+    &.primary-bg {
+        background-color: $primary-color;
+    }
+    .icon {
+        width: 50px;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.partner-slider-wrapper {
+    overflow-x: hidden;
+    .partner-slider {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 50px;
+        width: max-content;
+        animation: custom_slide 30s linear infinite;
+        .single-slide {
+            .icon {
+                width: 50px;
+            }
+            span {
+                color: $heading-color;
+                font-size: 54px;
+                font-family: $secondary-font;
+                text-transform: uppercase;
+                &.bold-text {
+                    font-weight: 700;
+                }
+                @include phone-tablet {
+                    font-size: 48px;
+                }
+            }
+        }
+    }
+}
+
+.counter-area {
+    .top-part {
+        background-color: $primary-color;
+        border-radius: 20px;
+        padding-left: 60px;
+        @include desktop {
+            padding-left: 20px;
+        }
+        @include phone-tablet {
+            padding: 20px;
+        }
+        h5.title {
+            color: $white-color;
+            width: 65%;
+            @include desktop {
+                width: 100%;
+            }
+            @include tablet {
+                width: 80%;
+            }
+            @include all-phone {
+                width: 100%;
+            }
+        }
+    }
+    .counter-content {
+        .icon-box {
+            margin-top: 30px;
+            @include phone-tablet {
+                margin-top: 0;
+            }
+        }
+    }
+    .counter-image {
+        padding: 10px;
+        @include phone-tablet {
+            padding: 0;
+        }
+        img {
+            border-radius: 10px;
+        }
+    }
+}
+
+.counter-area-2 {
+    background-color: $third-color;
+    padding: 200px 0 50px;
+    @include phone-tablet {
+        padding: 80px 0 50px;
+    }
+}
+
+.single-counter {
+    padding: 20px;
+    border: 1px solid $border-color;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    @include desktop {
+        padding: 20px 10px;
+    }
+    .icon {
+        width: 40px;
+    }
+    h3 {
+        color: $white-color;
+    }
+    .title {
+        color: $white-color;
+        display: inline-block;
+        text-transform: capitalize;
+        font-size: 18px;
+    }
+}
+
+.single-counter-2 {
+    padding: 20px;
+    border: 1px dashed $white-color;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    @include desktop {
+        padding: 20px 10px;
+    }
+    .icon {
+        width: 40px;
+    }
+    h3 {
+        color: $heading-color;
+    }
+    .title {
+        color: $heading-color;
+        display: inline-block;
+        text-transform: capitalize;
+        font-size: 18px;
+    }
+}
+
+.single-card {
+    padding: 40px;
+    background-color: $light-bg;
+    border-radius: 20px;
+    @include portrait-phone {
+        padding: 30px;
+    }
+    &.dark-bg {
+        color: $white-color;
+        background: no-repeat center / cover;
+        position: relative;
+        z-index: 1;
+        padding: 60px;
+        @include portrait-phone {
+            padding: 30px;
+        }
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba($heading-color, .8);
+            z-index: -1;
+            border-radius: 20px;
+        }
+        .title {
+            color: $white-color;
+        }
+    }
+    &.primary-bg {
+        color: $white-color;
+        background-color: $primary-color;
+        border-radius: 0 20px 20px 20px;
+        @include phone-tablet {
+            border-radius: 20px;
+        }
+        .title {
+            color: $white-color;
+        }
+        .primary-btn.secondary-bg {
+            &:hover {
+                background-color: $third-color;
+            }
+        }
+    }
+}
+
+.check-list {
+    &.primary-color {
+        li {
+            +li {
+                margin-top: 15px;
+            }
+        }
+        .icon {
+            color: $primary-color;
+        }
+    }
+    &.white-color {
+        li {
+            font-weight: 300;
+            +li {
+                margin-top: 20px;
+            }
+            color: $white-color;
+            .icon {
+                color: $white-color;
+            }
+        }
+    }
+    li {
+        color: $heading-color;
+        font-weight: 500;
+        text-transform: capitalize;
+        +li {
+            margin-top: 10px;
+        }
+        .icon {
+            color: $secondary-color;
+            display: inline-block;
+            margin-right: 5px;
+        }
+    }
+}
+
+.service-area {
+    background-color: $light-bg;
+    position: relative;
+    z-index: 1;
+    .service-bg-card {
+        width: 600px;
+        height: 100%;
+        background-color: $secondary-color;
+        padding: 40px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: -1;
+        @include screen-1400 {
+            width: 450px;
+        }
+        @include screen-1200 {
+            width: 450px;
+        }
+        @include desktop {
+            width: 450px;
+        }
+        @include tablet {
+            position: inherit;
+            width: 100%;
+            height: 600px;
+            margin-top: 50px;
+        }
+        @include all-phone {
+            position: inherit;
+            width: 100%;
+            height: 550px;
+            margin-top: 50px;
+        }
+        
+        img {
+            max-width: 470px;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            @include tablet {
+                max-width: 450px;
+            }
+            @include all-phone {
+                max-width: 400px;
+            }
+        }
+    }
+}
+
+.service-area-2 {
+    background: no-repeat center/95% 100%;
+    @include phone-tablet {
+        background: no-repeat center/cover;
+    }
+}
+
+.text-stroke {
+    color: $secondary-color;
+    font-size: 64px;
+    font-weight: 700;
+    font-family: $secondary-font;
+    text-transform: uppercase;
+    -webkit-text-stroke: 1px $white-color;
+    display: inline-block;
+    &.paragraph-color {
+        color: $white-color;
+        -webkit-text-stroke: 1px $paragraph-color;
+    }
+    &.third-border {
+        padding: 10px; 
+        border: 4px solid $third-color; 
+        border-radius: 20px; 
+    }
+    @include screen-1200 {
+        font-size: 54px;
+    }
+    @include desktop {
+        font-size: 48px;
+    }
+    @include phone-tablet {
+        font-size: 48px;
+    }
+}
+
+.service-slider {
+    padding-right: 1px;
+    position: relative;
+    .slick-slide {
+        margin: 0 10px;
+        @include all-desktop {
+                &:first-child {
+                margin-left: 0;
+            }
+        }
+        @include tablet {
+                &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+    .prev-arrow,
+    .next-arrow {
+        position: absolute;
+        top: -110px;
+        color: $primary-color;
+        background-color: rgba($primary-color, .2);
+        border: 1px solid transparent;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 50%;
+        text-align: center;
+        cursor: pointer;
+        transition: $transition;
+        z-index: 1;
+        &:hover {
+            color: $white-color;
+            background-color: $primary-color;
+            border: 1px solid transparent;
+        }
+    }
+    .prev-arrow {
+        right: 31%;
+        @include screen-1400 {
+            right: 37%;
+        }
+        @include screen-1200 {
+            right: 46%;
+        }
+        @include desktop {
+            right: 54%;
+        }
+    }
+    .next-arrow {
+        right: 26%;
+        @include screen-1400 {
+            right: 32%;
+        }
+        @include screen-1200 {
+            right: 40%;
+        }
+        @include desktop {
+            right: 47%;
+        }
+    }
+}
+
+.single-service {
+    padding: 40px;
+    border: 1px solid $border-color;
+    border-radius: 20px;
+    background-color: $white-color;
+    margin-bottom: 30px;
+    @include portrait-phone {
+        padding: 30px;
+    }
+    .main-icon {
+        width: 60%;
+        img {
+            width: 50px;
+        }
+    }
+    .number {
+        font-size: 48px;
+        font-weight: 700;
+        font-family: $secondary-font;
+        color: $border-color;
+        line-height: 1;
+    }
+    .title {
+        a {
+            color: $heading-color;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+}
+
+.single-service-2 {
+    padding: 40px;
+    border-radius: 20px;
+    background-color: $white-color;
+    text-align: center;
+    margin-bottom: 30px;
+    @include phone-tablet {
+        padding: 30px;
+    }
+    .service-icon {
+        width: 50px;
+        margin: 0 auto 20px;
+    }
+    .title {
+        a {
+            color: $heading-color;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+}
+
+.testimonial-area {
+    .form-part {
+        padding: 60px 40px;
+        border-radius: 20px;
+        box-shadow: $box-shadow;
+        @include phone-tablet {
+            margin-top: 50px;
+        }
+        @include portrait-phone {
+            padding: 40px 30px;
+        }
+    }
+}
+
+.testimonial-slider {
+    .slick-dots {
+        position: absolute;
+        left: 50%;
+        bottom: 50px;
+        transform: translateX(-50%);
+    }
+    .slick-dots li {
+        display: inline;
+        margin: 0 5px;
+    }
+    .slick-dots button {
+        background-color: $border-color;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        transition: $transition;
+        cursor: pointer;
+        font-size: 0;
+        border: 1px solid transparent;
+    }
+    .slick-dots .slick-active button {
+        width: 15px;
+        height: 15px;
+        background-color: $third-color;
+    }
+}
+
+.single-testimonial {
+    padding: 40px 40px 90px;
+    background-color: $light-bg;
+    border-radius: 20px;
+    @include portrait-phone {
+        padding: 30px 30px 80px;
+    }
+    .reviewer {
+        width: 70px;
+        border-radius: 10px;
+    }
+    .icon {
+        width: 50px;
+    }
+    .divider {
+        display: block;
+        width: 100%;
+        height: 1px;
+        background-color: $border-color;
+        margin: 50px 0 40px;
+    }
+    .quote {
+        font-size: 28px;
+        @include desktop {
+            font-size: 24px;
+        }
+        @include phone-tablet {
+            font-size: 24px;
+        }
+    }
+}
+
+.project-slider {
+    .slick-slide {
+        margin: 0 5px;
+    }
+}
+
+.single-project {
+    position: relative;
+    margin-bottom: 30px;
+    &:hover {
+        .hover-state {
+            opacity: 1;
+            visibility: visible;
+            bottom: 20px;
+        }
+    }
+    img {
+        border-radius: 20px;
+    }
+    .hover-state {
+        background-color: $white-color;
+        padding: 20px;
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        width: 90%;
+        transform: translateX(-50%);
+        transition: $transition;
+        border-radius: 20px;
+        opacity: 0;
+        visibility: hidden;
+        .category {
+            color: $heading-color;
+            display: inline-block;
+            font-size: 18px;
+            font-weight: 700;
+            font-family: $secondary-font;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+        }
+        .title {
+            a {
+                color: $heading-color;
+                transition: $transition;
+                &:hover {
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+}
+
+.project-area-2 {
+    padding-bottom: 70px;
+    @include phone-tablet {
+        padding-bottom: 30px;
+    }
+}
+
+.single-pricing {
+    padding: 30px 40px;
+    border: 1px solid $border-color;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    @include screen-1200 {
+        padding: 30px;
+        display: inherit;
+    }
+    @include desktop {
+        padding: 30px;
+        display: inherit;
+    }
+    @include phone-tablet {
+        padding: 30px;
+        display: inherit;
+    }
+    .content-part {
+        display: flex;
+        align-items: center;
+        gap: 60px;
+        @include desktop {
+            gap: 40px;
+        }
+        @include phone-tablet {
+            display: inherit;
+        }
+    }
+    .price-box {
+        @include phone-tablet {
+            margin: 10px 0;
+        }
+    }
+    .check-list {
+        @include phone-tablet {
+            margin-top: 20px;
+        }
+        li {
+            text-transform: capitalize;
+            +li {
+                margin-top: 10px;
+            }
+            .icon {
+                color: $secondary-color;
+                display: inline-block;
+                margin-right: 5px;
+            }
+        }
+    }
+    .pricing-button {
+        @include screen-1200 {
+            margin-top: 20px;
+        }
+        @include desktop {
+            margin-top: 20px;
+        }
+        @include phone-tablet {
+            margin-top: 20px;
+        }
+    }
+}
+
+.pricing-area-2 {
+    padding-top: 200px;
+    @include phone-tablet {
+        padding-top: 80px;
+    }
+}
+
+.single-pricing-2 {
+    border: 1px solid $border-color;
+    border-radius: 20px;
+    transition: $transition;
+    margin-bottom: 30px;
+    &.popular {
+        border: 1px solid transparent;
+        box-shadow: $box-shadow;
+    }
+    .price-icon {
+        width: 50px;
+    }
+    .content-top {
+        padding: 40px 40px 20px;
+        @include portrait-phone {
+            padding: 30px 30px 20px;
+        }
+    }
+    .content-bottom {
+        border-top: 1px solid $border-color;
+        padding: 30px 40px 40px;
+        position: relative;
+        .popular-badge {
+            width: 40px;
+            position: absolute;
+            top: 0;
+            right: -1px;
+        }
+        @include portrait-phone {
+            padding: 30px;
+        }
+    }
+    .check-list {
+        li {
+            font-weight: 400;
+        }
+    }
+}
+
+.cta-area {
+    margin-bottom: -120px;
+    position: relative;
+    z-index: 1;
+}
+
+.cta-area-2 {
+    margin-bottom: -120px;
+    position: relative;
+    z-index: 1;
+}
+
+.cta-box {
+    background: no-repeat center bottom/100% 80%;
+    border-radius: 20px;
+    @include phone-tablet {
+        background: no-repeat center/cover;
+    }
+    .cta-content {
+        padding-top: 100px;
+        padding-left: 100px;
+        @include phone-tablet {
+            padding: 30px 30px 10px;
+        }
+        .title {
+            color: $white-color;
+        }
+    }
+    .cta-image {
+        max-width: 350px;
+        @include phone-tablet {
+            padding: 0 10px;
+        }
+    }
+}
+
+.faq-area {
+    background: no-repeat center top/100% 92%;
+    padding-top: 240px;
+    @include desktop {
+        background: no-repeat center top/100% 100%;
+        padding-bottom: 120px; 
+    }
+    @include phone-tablet {
+        background: no-repeat center top/100% 100%;
+        padding: 200px 0 80px; 
+    }
+    .faq-image {
+        @include phone-tablet {
+            margin-top: 50px;
+        }
+        img {
+            border-radius: 20px;
+        }
+    }
+}
+
+.faq-area-2 {
+    background: $heading-color no-repeat center right/49% 100%;
+    position: relative;
+    z-index: 1;
+    @include desktop {
+        background: $heading-color no-repeat center right/48% 100%;
+    }
+    @include phone-tablet {
+        background: $heading-color no-repeat center right/0 0;
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 20px;
+        height: 100%;
+        background-color: $secondary-color;
+        z-index: -1;
+        margin-left: 14px;
+        @include screen-1200 {
+            margin-left: 12px;
+        }
+        @include phone-tablet {
+            width: 0;
+        }
+    }
+    .faq-content {
+        padding: 120px 0;
+        @include phone-tablet {
+            padding: 80px 0 50px;
+        }
+    }
+    .right-content {
+        @include phone-tablet {
+            padding-bottom: 80px;
+        }
+    }
+    .single-card {
+        margin-bottom: -80px;
+        @include phone-tablet {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.single-blog {
+    margin-bottom: 30px;
+    .blog-thumbnail {
+        img {
+            border-radius: 20px 20px 0 0;
+        }
+    }
+    .blog-content {
+        padding: 20px 40px 40px;
+        border: 1px solid $border-color;
+        border-radius: 0 0 20px 20px;
+        @include desktop {
+            padding: 20px 20px 30px;
+        }
+        @include all-phone {
+            padding: 20px 20px 30px;
+        }
+    }
+    .blog-meta {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        @include portrait-phone {
+            display: inherit;
+        }
+        li {
+            +li {
+                @include portrait-phone {
+                    margin-top: 5px;
+                }
+            }
+        }
+        a {
+            color: $paragraph-color;
+            text-transform: capitalize;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+            .icon {
+                color: $third-color;
+            }
+        }
+    }
+    .title {
+        a {
+            color: $heading-color;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+}
+
+.single-blog-2 {
+    margin-bottom: 30px;
+    border-bottom: 4px solid transparent;
+    transition: $transition;
+    .blog-thumbnail {
+        position: relative;
+        img {
+            border-radius: 20px 20px 0 0;
+        }
+    }
+    .blog-content {
+        padding: 20px 40px 40px;
+        border: 1px solid $border-color;
+        border-radius: 0 0 20px 20px;
+        @include desktop {
+            padding: 20px 20px 30px;
+        }
+        @include all-phone {
+            padding: 20px 20px 30px;
+        }
+    }
+    .blog-meta {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        position: absolute;
+        left: 20px;
+        bottom: 20px;
+        padding: 7px 18px;
+        background-color: $primary-color;
+        border-radius: 30px;
+        @include portrait-phone {
+            display: inherit;
+        }
+        a {
+            color: $white-color;
+            text-transform: capitalize;
+            transition: $transition;
+            &:hover {
+                color: $secondary-color;
+            }
+            .icon {
+                color: $white-color;
+            }
+        }
+    }
+    .title {
+        a {
+            color: $heading-color;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+}
+
+.team-area {
+    margin-bottom: -120px;
+    @include phone-tablet {
+        margin-bottom: 0;
+        padding-bottom: 80px;
+    }
+}
+
+.team-slider {
+    padding-right: 5px;
+    position: relative;
+    .prev-arrow,
+    .next-arrow {
+        position: absolute;
+        top: 60px;
+        color: $white-color;
+        background-color: rgba($white-color, .1);
+        border: 1px solid transparent;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 50%;
+        text-align: center;
+        cursor: pointer;
+        transition: $transition;
+        z-index: 1;
+        &:hover {
+            color: $black-color;
+            background-color: $white-color;
+            border: 1px solid transparent;
+        }
+    }
+    .prev-arrow {
+        right: 42%;
+        @include screen-1200 {
+            right: 50%;
+        }
+        @include desktop {
+            right: 54%;
+        }
+    }
+    .next-arrow {
+        right: 37%;
+        @include screen-1200 {
+            right: 44%;
+        }
+        @include desktop {
+            right: 47%;
+        }
+    }
+}
+
+.single-member {
+    .member-content {
+        background: no-repeat center/cover;
+        color: $white-color;
+        padding: 61px 70px;
+        border-radius: 20px 0 0 20px;
+        @include screen-1200 {
+            padding: 58px 70px;
+        }
+        @include desktop {
+            padding: 44px;
+        }
+        @include phone-tablet {
+            border-radius: 20px;
+            margin-bottom: 10px;
+            padding: 40px;
+        }
+    }
+    .title {
+        color: $white-color;
+    }
+    .designation {
+        font-weight: 300;
+        text-transform: capitalize;
+    }
+    p {
+        font-size: 26px;
+        @include desktop {
+            font-size: 20px;
+        }
+        @include phone-tablet {
+            font-size: 20px;
+        }
+    }
+    .member-social {
+        li {
+            display: inline-block;
+            margin-right: 5px;
+            a {
+                color: $white-color;
+                background-color: transparent;
+                border: 1px solid $white-color;
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                border-radius: 50%;
+                text-align: center;
+                display: inline-block;
+                transition: $transition;
+                &:hover {
+                    background-color: $primary-color;
+                    border: 1px solid transparent;
+                }
+            }
+        }
+    }
+    .member-image {
+        img {
+            border-radius: 0 20px 20px 0;
+            margin-left: -1px;
+            @include phone-tablet {
+                margin-left: auto;
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                margin-top: -50px;
+                margin-right: 20px;
+            }
+        }
+    }
+}
+
+.team-item {
+    margin-bottom: 30px;
+    box-shadow: $box-shadow;
+    &:hover {
+        .hover-state {
+            opacity: 1;
+        }
+        .team-social {
+            opacity: 1;
+        }
+    }
+
+    .team-image {
+        position: relative;
+        img {
+            border-radius: 20px 20px 0 0;
+        }
+    }
+
+    .hover-state {
+        text-align: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba($black-color, 0.5);
+        opacity: 0;
+        transition: $transition;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .team-social {
+        width: 80%;
+        position: absolute;
+        background: #fff;
+        left: 50%;
+        bottom: 30px;
+        padding: 10px 20px;
+        border-radius: 30px;
+        opacity: 0;
+        transform: translateX(-50%);
+        transition-delay: 0.2s;
+        li {
+            display: inline;
+            margin: 0 7px;
+        }
+        a {
+            color: $heading-color;
+            font-size: 18px;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+
+    .team-content {
+        background: #fff;
+        padding: 20px 10px;
+        text-align: center;
+        overflow: hidden;
+        a {
+            color: $heading-color;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+}
+
+.team-details {
+    .member-image {
+        img {
+            border-radius: 20px;
+        }
+    }
+
+    .contact-info {
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: $heading-color;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+            i {
+                color: $primary-color;
+            }
+        }
+    }
+
+    .team-social {
+        li {
+            display: inline;
+            margin-right: 10px;
+        }
+        a {
+            font-size: 24px;
+            color: $heading-color;
+            display: inline-block;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+}
+
+.biography-area {
+    .skill-wrapper{
+        margin-bottom:30px;
+    }
+
+    .progress{
+        width: 100%;
+        height: 10px;
+    }
+
+    .progress-bar {
+        background: $primary-color;
+    }
+
+    .progressbar-active{
+        animation-name: progress;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-delay: 0.3s;
+    }
+}
+
+.blog-area-2 {
+    padding-bottom: 170px;
+    @include phone-tablet {
+        padding-bottom: 50px;
+    }
+}
+
+.section-top-button {
+    text-align: right;
+    @include all-phone {
+        text-align: left;
+        margin-top: 20px;
+    }
+}
+
+.page-link-url {
+    display: inline-block;
+    color: $heading-color;
+    font-family: $secondary-font;
+    font-weight: 700;
+    text-transform: capitalize;
+    transition: $transition;
+    &:hover {
+        color: $primary-color;
+    }
+    .icon {
+        position: relative;
+        top: 1px;
+        font-weight: 400;
+    }
+}
+
+.service-details {
+    .service-thumbnail {
+        img {
+            border-radius: 20px;
+        }
+    }
+    .single-box {
+        padding: 40px;
+        border: 1px solid $border-color;
+        border-radius: 20px;
+        position: relative;
+        @include portrait-phone {
+            padding: 30px;
+        }
+        .icon {
+            width: 50px;
+            margin-bottom: 40px;
+        }
+        .icon-fade {
+            width: 80px;
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            opacity: .1;
+        }
+    }
+    .image-box {
+        img {
+            border-radius: 20px;
+        }
+    }
+}
+
+.sidebar-widget {
+    padding: 30px;
+    border: 1px solid $border-color;
+    border-radius: 20px;
+    &:not(:last-child) {
+        margin-bottom: 30px;
+    }
+    &.search-widget {
+        padding-bottom: 10px;
+    }
+    &.tags-widget {
+        a {
+            color: $paragraph-color;
+            background-color: $light-bg;
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 30px;
+            margin-right: 5px;
+            margin-bottom: 10px;
+            text-transform: capitalize;
+            transition: $transition;
+            &:hover {
+                color: $white-color;
+                background-color: $primary-color;
+            }
+        }
+    }
+    .widget-title {
+        margin-bottom: 25px;
+    }
+    li {
+        position: relative;
+        +li {
+            margin-top: 20px;
+        }
+        a {
+            width: 100%;
+            display: inline-block;
+            padding: 15px 30px;
+            color: $heading-color;
+            background-color: $light-bg;
+            border-radius: 30px;
+            font-weight: 700;
+            font-family: $secondary-font;
+            text-transform: capitalize;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+        }
+        .arrow-icon {
+            position: absolute;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            font-size: 20px;
+            font-weight: 400;
+        }
+        .info-icon {
+            margin-right: 10px;
+            font-weight: 400;
+        }
+    }
+
+    .contact-box {
+        color: $white-color;
+        background-color: $primary-color;
+        text-align: center;
+        padding: 30px;
+        border-radius: 20px;
+        .widget-title {
+            color: $white-color;
+        }
+        .phone-icon {
+            color: $white-color;
+            background-color: rgba($white-color, .2);
+            font-size: 20px;
+            width: 55px;
+            height: 55px;
+            line-height: 55px;
+            border-radius: 50%;
+            text-align: center;
+            display: block;
+            margin: 20px auto;
+        }
+        .title {
+            a {
+                color: $white-color;
+                transition: $transition;
+                &:hover {
+                    color: $secondary-color;
+                }
+            }
+        }
+    }
+
+    .single-post {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        &:not(:last-child) {
+            margin-bottom: 30px;
+        }
+        a {
+            color: $heading-color;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+        }
+        .post-thumb {
+            img {
+                width: 80px;
+                height: 80px;
+                object-fit: cover
+            }
+        }
+        .title {
+            margin-top: 10px;
+        }
+    }
+}
+
+.project-details {
+    .info-box {
+        color: $white-color;
+        background-color: $primary-color;
+        border-radius: 20px;
+        padding: 30px 60px 0;
+        width: 90%;
+        margin: -50px auto 30px;
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        @include phone-tablet {
+            padding: 30px 30px 0;
+        }
+        @include all-phone {
+            display: inherit;
+        }
+        .single-info {
+            margin-bottom: 30px;
+            span.email {
+                text-transform: lowercase;
+            }
+        }
+
+        .title {
+            color: $white-color;
+        }
+        span {
+            text-transform: capitalize;
+            display: block;
+            margin-top: 5px;
+        }
+    }
+    
+    .check-list {
+        li {
+            color: $paragraph-color;
+            font-weight: 400;
+            +li {
+                margin-top: 15px;
+            }
+        }
+        .icon {
+            color: $primary-color;
+        }
+    }
+}
+
+.page-pagination {
+    padding: 15px 0;
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    a {
+        color: $heading-color;
+        font-family: $secondary-font;
+        font-weight: 700;
+        text-transform: capitalize;
+        transition: $transition;
+        &:hover {
+            color: $primary-color;
+        }
+    }
+}
+
+.blog-slider {
+    position: relative;
+    .prev-arrow,
+    .next-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $white-color;
+        background-color: $primary-color;
+        border: 1px solid transparent;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 50%;
+        text-align: center;
+        cursor: pointer;
+        transition: $transition;
+        z-index: 1;
+        &:hover {
+            color: $black-color;
+            background-color: $white-color;
+            border: 1px solid transparent;
+        }
+    }
+    .prev-arrow {
+        left: 20px;
+    }
+    .next-arrow {
+        right: 20px;
+    }
+}
+
+.blog-patination {
+    a {
+        color: $heading-color;
+        background-color: $light-bg;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 50%;
+        text-align: center;
+        display: inline-block;
+        transition: $transition;
+        margin-right: 5px;
+        &.active {
+            color: $white-color;
+            background-color: $primary-color;
+        }
+        &:hover {
+            color: $white-color;
+            background-color: $primary-color;
+        }
+    }
+}
+
+.blog-sidebar {
+    @include phone-tablet {
+        margin-top: 50px;
+    }
+}
+
+.blog-details {
+    .blog-thumbnail {
+        img {
+            border-radius: 20px;
+        }
+    }
+
+    .blog-meta {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        @include portrait-phone {
+            display: inherit;
+        }
+        li {
+            +li {
+                @include portrait-phone {
+                    margin-top: 5px;
+                }
+            }
+        }
+        a {
+            color: $paragraph-color;
+            text-transform: capitalize;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+            .icon {
+                color: $primary-color;
+            }
+        }
+    }
+
+    blockquote {
+        background-color: $light-bg;
+        padding: 30px 40px;
+        border-radius: 10px;
+        margin: 30px 0;
+        @include portrait-phone {
+            padding: 30px;
+        }
+        .icon {
+            font-size: 30px;
+            line-height: 30px;
+            color: $primary-color;
+        }
+    }
+
+    .details-image {
+        img {
+            border-radius: 20px;
+        }
+    }
+}
+
+.comment-box {
+    padding: 30px 40px;
+    border: 1px solid $border-color;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    &:not(:last-child) {
+        margin-bottom: 30px;
+    }
+    @include portrait-phone {
+        display: inherit;
+    }
+    .author-image {
+        @include portrait-phone {
+            margin-bottom: 20px;
+        }
+        img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+        }
+    }
+    .bottom-text {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.contact-area {
+    .form-part {
+        padding: 60px 40px;
+        border-radius: 20px;
+        border: 1px solid $border-color;
+        @include phone-tablet {
+            margin-top: 50px;
+        }
+        @include portrait-phone {
+            padding: 40px 30px;
+        }
+    }
+}
+
+.info-items {
+    .single-info {
+        margin-bottom: 30px;
+        .icon {
+            font-size: 24px;
+            color: $heading-color;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border: 1px solid $primary-color;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        a{
+            color: $paragraph-color;
+            transition: $transition;
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+}
+
+.contact-info {
+    .contact-social {
+        li {
+            display: inline-block;
+            margin-right: 10px;
+            a {
+                color: $heading-color;
+                background-color: $light-bg;
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                border-radius: 50%;
+                text-align: center;
+                display: inline-block;
+                transition: $transition;
+                &:hover {
+                    color: $white-color;
+                    background-color: $primary-color;
+                }
+            }
+        }
+    }
+}
+
+.error-wrapper {
+    text-align: center;
+    .title {
+        font-size: 180px;
+        line-height: .8;
+        span {
+            color: $primary-color;
+        }
+    }
+}

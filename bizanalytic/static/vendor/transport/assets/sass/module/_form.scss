@@ -1,0 +1,96 @@
+/* form */
+.theme-form {
+    &.dark-form {
+        input,
+        textarea {
+            color: $white-color;
+            background-color: transparent;
+            border: 1px solid rgba($white-color, .1);
+            &::placeholder {
+                color: $white-color;
+            }
+        }
+    }
+    form {
+        input,
+        textarea,
+        select {
+            color: $paragraph-color;
+            width: 100%;
+            padding: 20px;
+            border: 1px solid $border-color;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        textarea {
+            height: 120px;
+        }
+        button.primary-btn {
+            padding-right: 0;
+        }
+    }
+}
+
+.cta-form {
+    form {
+        max-width: 500px;
+        position: relative;
+        input {
+            color: $white-color;
+            background-color: transparent;
+            border: 1px solid $white-color;
+            border-radius: 30px;
+            padding: 15px 70px 15px 30px;
+            width: 100%;
+            &::placeholder {
+                color: $white-color;
+            }
+        }
+        button {
+            background: none;
+            margin: 0;
+            padding: 0;
+            border: none;
+            .icon {
+                color: $white-color;
+                background-color: $primary-color;
+                display: inline-block;
+                height: 45px;
+                width: 45px;
+                line-height: 45px;
+                border-radius: 50%;
+                text-align: center;
+                position: absolute;
+                top: 5px;
+                right: 5px;
+            }
+        }
+    }
+}
+
+.search-form {
+    form {
+        position: relative;
+        input {
+            color: $heading-color;
+            background-color: $light-bg;
+            border: 1px solid $white-color;
+            border-radius: 30px;
+            padding: 15px 60px 15px 30px;
+            width: 100%;
+            &::placeholder {
+                color: $paragraph-color;
+            }
+        }
+        button {
+            all: unset;
+            .icon {
+                color: $heading-color;
+                display: inline-block;
+                position: absolute;
+                top: 17px;
+                right: 30px;
+            }
+        }
+    }
+}

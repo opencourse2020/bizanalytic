@@ -11,4 +11,4 @@ from django.views.generic import (
 )
 # Create your views here.
 class IndexView(TemplateView):
-    template_name = "../templates/logiflex/index.html"
+    template_name = "../templates/logiflex/landing.html"

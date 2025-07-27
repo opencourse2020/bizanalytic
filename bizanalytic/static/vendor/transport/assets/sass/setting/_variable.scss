@@ -1,0 +1,24 @@
+// google font
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+// theme font
+$primary-font: "Jost", sans-serif;
+$secondary-font: "Rajdhani", sans-serif;
+
+// theme color
+$primary-color: #2ba3c4;
+$secondary-color: #EB5849;
+$third-color: #F8BC1E;
+$heading-color: #0F1B24;
+$paragraph-color: #787878;
+$white-color: #ffffff;
+$black-color: #000000;
+$border-color: #CCCCCC;
+$light-bg: #F5F5F5;
+$dark-bg: #192630;
+
+// box shadow
+$box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+
+// transition
+$transition: all .2s ease-in; 

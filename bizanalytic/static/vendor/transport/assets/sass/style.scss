@@ -1,0 +1,53 @@
+/*-------------------------------------------------------------
+theme name: Nogor - Transportation & Logistics HTML Template
+theme uri: https://code.themepitcher.com/nogor/
+author: themepitcher
+author uri: https://themepitcher.com/
+description: Nogor is a customized and responsive HTML template for Logistic, Transportation & Warehouse. 
+tags: cargo, clean, freight, hub, international, inventory, liquid, logistics, modern, responsive, shipping, tracking, transportation, warehouse
+version: 1.2.1
+text domain: nogor
+-------------------------------------------------------------*/
+
+/*------------------------------------------------------------- 
+TABLE OF CONTENTS: 
+---------------------------------------------------------------
+>> author css
+>> navbar
+>> header
+>> footer
+>> breadcrumb
+>> preloader
+>> button 
+>> form
+>> accordion
+>> back to top
+>> animation
+>> spacing
+>> theme
+--------------------------------------------------------------*/
+
+// setting
+@import 'setting/variable';
+@import 'setting/mixin';
+
+// base
+@import 'base/base';
+
+// layout
+@import 'layout/navbar';
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/breadcrumb';
+
+// module
+@import 'module/preloader';
+@import 'module/button';
+@import 'module/form';
+@import 'module/accordion';
+@import 'module/back-to-top';
+
+// theme 
+@import 'theme/animation';
+@import 'theme/spacing';
+@import 'theme/theme';

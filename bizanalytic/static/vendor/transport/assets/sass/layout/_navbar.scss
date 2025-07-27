@@ -1,0 +1,82 @@
+/* navbar */
+.main-menu {
+    &.main-menu-2 {
+        @include all-desktop {
+            text-align: right;
+        }
+    }
+    @include all-desktop {
+        text-align: center;
+        li {
+            display: inline-block;
+            position: relative;
+            margin: 0 15px;
+            line-height: 1.7;
+            z-index: 1;
+            &:hover {
+                &.has-submenu {
+                    &::after {
+                        color: $primary-color;
+                    }
+                }
+                a {
+                    color: $primary-color;
+                }
+                .submenu {
+                    top: 100%;
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+
+            &.has-submenu {
+                &::after {
+                    content: '\2335';
+                    color: $white-color;
+                    font-size: 12px;
+                    font-weight: 700;
+                    margin-left: 2px;
+                    position: relative;
+                    top: -2px;
+                    transition: $transition; 
+                }
+            }
+            a {
+                color: $white-color;
+                padding: 30px 0;
+                font-family: $secondary-font;
+                font-weight: 600;
+                display: inline-block;
+                text-transform: uppercase;
+                transition: $transition;
+            }
+
+            .submenu {
+                text-align: left;
+                position: absolute;
+                width: 160px;
+                top: 110%;
+                left: 0;
+                background: $white-color;
+                border: 1px solid $border-color;
+                padding: 10px 20px;
+                opacity: 0;
+                visibility: hidden;
+                transition: $transition;
+                li {
+                    display: block;
+                    margin: 0;
+                    a {
+                        color: $heading-color;
+                        display: block;
+                        padding: 5px 0;
+                        width: 100%;
+                        &:hover {
+                            color: $primary-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

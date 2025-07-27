@@ -41,20 +41,23 @@
     <!-- header area starts -->
     <header class="header-area">
         <!-- header top -->
-        <div class="header-top">
+        <div class="header-top" style="background-color: white">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-3">
                         <div class="header-left">
-                            <div class="email-text">
-                                <span class="email-icon"><i class="ri-mail-fill"></i></span> <a href="#">info@example.com</a>
-                            </div>
+                            <div class="logo-area">
+                            <a href="index.html"><img src={% static "landing/img/logo.jpg" %} alt="logo"></a>
+                        </div>
+{#                            <div class="email-text">#}
+{#                                <span class="email-icon"><i class="ri-mail-fill"></i></span> <a href="#">info@example.com</a>#}
+{#                            </div>#}
                         </div>
                     </div>
                     <div class="col-md-9">
-                        <div class="header-right">
+                        <div class="header-right" style="color: #0cb7d6">
                             <div class="location-text">
-                                <span class="location-icon"><i class="ri-map-pin-2-fill"></i></span> <a href="#">6391 Elgin St. Celina, 10299</a>
+                                <span class="location-icon"><i class="ri-map-pin-2-fill"></i></span> <a href="#">Houston, Texas</a>
                             </div>
                             <span class="separator"></span>
                             <ul class="header-social">
@@ -74,9 +77,9 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-6">
-                        <div class="logo-area">
-                            <a href="index.html"><img src={% static "landing/img/logo.jpg" %} alt="logo"></a>
-                        </div>
+{#                        <div class="logo-area">#}
+{#                            <a href="index.html"><img src={% static "landing/img/logo.jpg" %} alt="logo"></a>#}
+{#                        </div>#}
                     </div>
 
                     <div class="col-xl-8 col-lg-7 d-none d-lg-block">
@@ -138,13 +141,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="title">{% trans "Logistics Analytics" %}</h2>
+                        <h1 class="title">{% trans "Logistics Analytics" %}</h1>
 {#                        <ul class="breadcrumb-menu">#}
 {#                            <li><a href="index.html">Home</a></li>#}
 {#                            <li><span class="icon"><i class="ri-arrow-right-s-line"></i></span></li>#}
 {#                            <li class="active">contact</li>#}
 {#                        </ul>#}
-                        <p>
+                        <p style="color: white; font-size: 14px;">
                             {% trans "Transform Your Logistics Data Into Actionable Insights" %}
                         </p>
                     </div>
@@ -155,7 +158,7 @@
         <!-- contact area starts -->
         <section class="contact-area pt-120">
             <div class="container">
-                <div class="row">
+                <div class="row justify-content-center">
                     <div class="col-lg-6 wow fadeInRight" data-wow-delay=".2s">
                         <div class="form-part">
                             <h4 class="title">Send free to message</h4>
@@ -194,11 +197,11 @@
 
         <section class="contact-area pt-120">
             <div class="container">
-                <div class="row">
+                <div class="row justify-content-center">
                     <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s">
                         <div class="contact-info">
                             <h3 class="title">Lets Talk!</h3>
-                            <p class="mt-20">Logistics service involves the planning, implementation, and control of the efficient and effective transportation, storage, and distribution of goods</p>
+                            <p class="mt-20" style="color: black">Logistics service involves the planning, implementation, and control of the efficient and effective transportation, storage, and distribution of goods</p>
                             <div class="info-items mt-30">
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -208,7 +211,7 @@
                                             </div>
                                             <div class="info-text">
                                                 <h5 class="title">Phone number</h5>
-                                                <a href="#">(307) 555-0133</a>
+                                                <a href="#">+1 (832) 430-2434</a>
                                             </div>
                                         </div>
                                     </div>
@@ -219,7 +222,7 @@
                                             </div>
                                             <div class="info-text">
                                                 <h5 class="title">Email Address</h5>
-                                                <a href="#">info@example.com</a>
+                                                <a href="#">bizanalytics.us@gmail.com</a>
                                             </div>
                                         </div>
                                     </div>
@@ -230,7 +233,7 @@
                                             </div>
                                             <div class="info-text">
                                                 <h5 class="title">Address</h5>
-                                                <a href="#">6391 Elgin St. Celina, 10299</a>
+                                                <a href="#">The Woodlands, Texas - 77380</a>
                                             </div>
                                         </div>
                                     </div>

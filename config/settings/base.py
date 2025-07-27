@@ -77,8 +77,6 @@ INSTALLED_APPS = [
     "bizanalytic.profiles.apps.ProfilesConfig",
     "bizanalytic.logiflex.apps.LogiflexConfig"
 
-
-    
 ]
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL ="https"

@@ -1,0 +1,421 @@
+    1  sudo apt update && sudo apt upgrade -y
+    2  wget https://cloudron.io/cloudron-setup
+    3  chmod +x ./cloudron-setup
+    4  ./cloudron-setup
+    5  mkdir ~/.ssh 
+    6  cd ~/.ssh/
+    7  cd ..
+    8  chmod 700 ~/.ssh
+    9  cd ~/.ssh/
+   10  nano ~/.ssh/authorized_keys
+   11  sudo lsof -i -P -n | grep LISTEN
+   12  systemctl status nginx
+   13  systemctl status gunicorn
+   14  ls /etc/nginx/
+   15  cd /etc/nginx/cert/
+   16  ls
+   17  cd ..
+   18  ls
+   19  nano nginx.conf 
+   20  systemctl restart nginx
+   21  systemctl status gunicorn
+   22  systemctl status nginx
+   23  cd ..
+   24  sudo apt install python3-pip python3-dev libpq-dev postgresql postgresql-contrib curl
+   25  sudo -H pip3 install virtualenv
+   26  cd /var/www/
+   27  ls
+   28  nano ~/.ssh/id_rsa
+   29  eval $(ssh-agent -s)
+   30  ssh-add ~/.ssh/id_rsa
+   31  la ~/.ssh/
+   32  ls -A  ~/.ssh/
+   33  ll ~/.ssh/
+   34  cd ~/.ssh/
+   35  chmod 600 id_rsa 
+   36  lt
+   37  ll
+   38  cd /var/www/
+   39  apt install git
+   40  git clone git@github.com:opencourse2020/idme.ma.git
+   41  ls
+   42  sudo -u postgres psql
+   43  mkdir virtual_env
+   44  cd virtual_env/
+   45  virtualenv idme.ma
+   46  source idme.ma/bin/activate
+   47  cd ..
+   48  cd idme.ma/
+   49  cd /etc/nginx
+   50  ls
+   51  cd applications/
+   52  ls
+   53  cd ..
+   54  nginx -V
+   55  nginx -v
+   56  nano nginx.conf 
+   57  ls
+   58  nano /usr/share/nginx/modules-available/mod-http-geoip2.conf
+   59  ls /usr/share/nginx/modules-available/
+   60  ls
+   61  modules-enabled
+   62  mkdir modules-enabled
+   63  mkdir modules-available
+   64  cd modules-enabled/
+   65  ln -s /usr/share/nginx/modules-available/mod-http-geoip2.conf /etc/nginx/modules-enabled/50-mod-http-geoip2.conf
+   66  ll
+   67  ln -s /usr/share/nginx/modules-available/mod-http-image-filter.conf /etc/nginx/modules-enabled/50-mod-http-image-filter.conf
+   68  ln -s /usr/share/nginx/modules-available/mod-http-xslt-filter.conf /etc/nginx/modules-enabled/50-mod-http-xslt-filter.conf
+   69  ln -s /usr/share/nginx/modules-available/mod-mail.conf /etc/nginx/modules-enabled/50-mod-mail.conf
+   70  ln -s /usr/share/nginx/modules-available/mod-stream.conf /etc/nginx/modules-enabled/50-mod-stream.conf
+   71  ln -s /usr/share/nginx/modules-available/mod-stream-geoip2.conf /etc/nginx/modules-enabled/70-mod-stream-geoip2.conf
+   72  ll
+   73  cd ..
+   74  mkdir sites-available
+   75  mkdir sites-enabled
+   76  cd sites-available/
+   77  nano idme.ma
+   78  ln -s idme.ma /etc/nginx/sites-enabled/
+   79  cd ..
+   80  cd sites-enabled/
+   81  ls
+   82  ln -s /etc/nginx/sites-available/idme.ma /etc/nginx/sites-enabled/
+   83  rm idme.ma 
+   84  ln -s /etc/nginx/sites-available/idme.ma /etc/nginx/sites-enabled/
+   85  ls
+   86  cd /var/www/idme.ma/
+   87  ls
+   88  pip install -r requirements/production.txt 
+   89  git pull
+   90  pip install -r requirements/production.txt 
+   91  sudo apt-get install build-essential libssl-dev
+   92  sudo apt-get install cmake
+   93  cmake
+   94  pip install -r requirements/production.txt 
+   95  git pull
+   96  pip install ratelimit==2.2.1
+   97  ls
+   98  mkdir media
+   99  ls
+  100  chown -R web media/
+  101  sudo useradd web
+  102  chown -R web media/
+  103  sudo usermod -a -G www-data web 
+  104  ls
+  105  cd /etc/systemd/system/
+  106  ls
+  107  nano idme.service
+  108  nano idme.socket
+  109  cd /var/www/idme.ma/
+  110  nano .env
+  111  sudo systemctl start idme.socket
+  112  sudo systemctl enable idme.socket 
+  113  nano idme.socket
+  114  nano /etc/systemd/system/idme.socket 
+  115  systemctl status idme.service 
+  116  systemctl status idme.socket 
+  117  sudo systemctl start idme.service 
+  118  systemctl status idme.service 
+  119  nano /etc/systemd/system/idme.se
+  120  nano /etc/systemd/system/idme.service 
+  121  cd ..
+  122  ls
+  123  nano /etc/systemd/system/idme.service 
+  124  nano /etc/nginx/sites-available/idme.ma 
+  125  sudo systemctl start idme.service 
+  126  systemctl daemon-reload
+  127  sudo systemctl start idme.service 
+  128  systemctl status idme.socket 
+  129  systemctl status idme.service 
+  130  cd idme.ma/
+  131  ls
+  132  chown -R web logs/
+  133  mkdir logs
+  134  chown -R web logs/
+  135  sudo systemctl start idme.service 
+  136  systemctl status idme.socket 
+  137  systemctl status idme.service 
+  138  nano .env 
+  139  systemctl restart nginx idme.service idme.socket
+  140  systemctl status nginx.service 
+  141  nano /etc/nginx/nginx.conf 
+  142  systemctl restart nginx.service 
+  143  systemctl restart nginx
+  144  systemctl status nginx.service 
+  145  cd /etc/systemd/system/nginx.service.d/
+  146  ls
+  147  nano cloudron.conf 
+  148  cd /var/www/idme.ma/
+  149  source ../virtual_env/idme.ma/bin/activate
+  150  pip install ollama-ocr
+  151  ollama pull llama3.2-vision:11b
+  152  cd ~
+  153  cd /tmp/
+  154  curl -L https://ollama.com/download/ollama-linux-amd64.tgz -o ollama-linux-amd64.tgz
+  155  sudo tar -C /usr -xzf ollama-linux-amd64.tgz
+  156  ollama serve
+  157  ollama pull llama3.2-vision:11b
+  158  ollama serve & ollama pull llama3.2-vision:11b
+  159  ollama list
+  160  ollama pull llama3.2-vision:11b
+  161  cd /var/www/idme.ma/
+  162  cd ..
+  163  mkdir ollama
+  164  cd ollama/
+  165  nano verify.py
+  166  cp ../idme.ma/media/
+  167  cd ../idme.ma/media/
+  168  ls
+  169  cd ..
+  170  git pull
+  171  cp idme/static/pictures/ci*.* ../ollama/
+  172  cd ..
+  173  cd ollama/
+  174  ls
+  175  nano verify
+  176  nano verify.py 
+  177  python verify.py 
+  178  cd /var/www/
+  179  ls
+  180  mkdir test
+  181  cd virtual_env/
+  182  ls
+  183  virtualenv test
+  184  ls
+  185  source test/bin/activate
+  186  cd ..
+  187  cd test/
+  188  apt-get install tesseract-ocr
+  189  pip install opencv-python
+  190  pip install imutils
+  191  pip install pytesseract
+  192  ncd ..
+  193  cd ..
+  194  ls
+  195  cd idme.ma/
+  196  ls
+  197  cd idme/static/
+  198  ls
+  199  cd ..
+  200  deactivate
+  201  cd ..
+  202  ls
+  203  source ../virtual_env/idme.ma/bin/activate
+  204  python manage.py collectstatic --noinput
+  205  git pull
+  206  python manage.py makemigrations
+  207  cd /var/www/idme.ma/
+  208  source ../virtual_env/idme.ma/bin/activate
+  209  python manage.py makemigrations
+  210  python manage.py collectstatic --noinput
+  211  cd ..
+  212  cd test/
+  213  cp ../idme.ma/static/im1.jpg .
+  214  cd ../idme.ma/static/
+  215  ls
+  216  cd pictures/
+  217  ls
+  218  cd ..
+  219  cd test/
+  220  ls
+  221  cp ../idme.ma/static/pictures/im1.jpg .
+  222  cp ../idme.ma/static/pictures/im2.jpg .
+  223  nano img_rotate.py
+  224  python img_rotate.py 
+  225  apt-get update && apt-get install libgl1
+  226  python img_rotate.py 
+  227  deactivate
+  228  source ../virtual_env/test/
+  229  source ../virtual_env/test/bin/activate
+  230  python img_rotate.py 
+  231  ls
+  232  nano img_rotate.py 
+  233  python img_rotate.py 
+  234  nano img_rotate.py 
+  235  python img_rotate.py 
+  236  cd /var/www/
+  237  ls
+  238  cd /var/www/
+  239  ls
+  240  git clone git@github.com:opencourse2020/bizanalytic.git
+  241  ls
+  242  cd virtual_env/
+  243  l
+  244  ls
+  245  python -V
+  246  python3 -V
+  247  sudo apt update
+  248  sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget
+  249  cd /tmp/
+  250  sudo apt install python3.13
+  251  sudo apt install python3.12
+  252  sudo apt install software-properties-common
+  253  sudo add-apt-repository ppa:deadsnakes/ppa
+  254  sudo apt update
+  255  sudo apt install python3.13
+  256  python3 --version
+  257  sudo update-alternatives --config python
+  258  sudo update-alternatives --config python3
+  259  cd ..
+  260  sudo update-alternatives --config python
+  261  python -V
+  262  python3 -V
+  263  sudo update-alternatives --config python
+  264  cd /usr/bin/
+  265  ls
+  266  update-alternatives --install /usr/bin/python python /usr/bin/python3.13 
+  267  update-alternatives --help
+  268  nano ~/.bashrc 
+  269  alias python3='/usr/bin/python3.13'
+  270  sudo update-alternatives --set python3 /usr/bin/python3.13 
+  271  sudo update-alternatives --set python /usr/bin/python3.13 
+  272  python -V
+  273  python3 -V
+  274  cd /var/www
+  275  ls
+  276  cd virtual_env/
+  277  python3 -m venv bizanalytic
+  278  python3 -V
+  279  virtualenv bizanalytic
+  280  source bizanalytic/bin/activate
+  281  python .V
+  282  python -V
+  283  python3 -V
+  284  pip --version
+  285  cd ..
+  286  cd bizanalytic/
+  287  ls
+  288  pip install - requirements/production.txt 
+  289  pip install -r requirements/production.txt 
+  290  nano requirements/base.txt 
+  291  git pull
+  292  pip install -r requirements/production.txt 
+  293  cd /var/www/bizanalytic/
+  294  ls
+  295  source ../virtual_env/bizanalytic/bin/activate
+  296  git pull
+  297  python manage.py collectstatic --noinput
+  298  cd ..
+  299  cd idme.ma/
+  300  ls
+  301  nan .env 
+  302  nano .env 
+  303  cp .env ../bizanalytic/
+  304  cd ..
+  305  cd bizanalytic/
+  306  nano .env 
+  307  sudo -u postgres createuser adilbizanalyticadmin
+  308  sudo -u postgres createdb Bizanalyticdatabase
+  309  sudo -u postgres psql
+  310  sudo -u postgres createdb bizanalyticdatabase
+  311  sudo -u postgres psql
+  312  python manage.py collectstatic --noinput
+  313  nano manage.py 
+  314  nano ../idme.ma/manage.py 
+  315  nano manage.py 
+  316  python manage.py collectstatic --noinput
+  317  nano .env 
+  318  python manage.py collectstatic --noinput
+  319  git pull
+  320  python manage.py makemigrations
+  321  python manage.py migrate
+  322  git pull
+  323  python manage.py makemigrations
+  324  pip install Pillow
+  325  python manage.py makemigrations
+  326  git pull
+  327  python manage.py makemigrations
+  328  pip install PyJWT
+  329  python manage.py makemigrations
+  330  pip install cryptography
+  331  pip list
+  332  pip freeze > b.txt
+  333  nano b.txt 
+  334  rm b.txt 
+  335  git pull
+  336  python manage.py makemigrations
+  337  pip install oauthlib
+  338  python manage.py makemigrations
+  339  git pull
+  340  python manage.py makemigrations
+  341  git pull
+  342  python manage.py makemigrations
+  343  cd bizanalytic/profiles
+  344  ls
+  345  cd ..
+  346  python manage.py makemigrations profiles
+  347  python manage.py migrate
+  348  python manage.py collectstatic --noinput
+  349  ls
+  350  mkdir media
+  351  chown web media/
+  352  chown web logs/
+  353  cd /etc/systemd/system/
+  354  ls
+  355  cp idme.service bizanalytic.service
+  356  cp idme.socket bizanalytic.socket
+  357  nano bizanalytic.socket 
+  358  nano bizanalytic.service 
+  359  cd ..
+  360  cd nginx/sites-available/
+  361  ls
+  362  cp idme.ma bizanalytic.com
+  363  nano bizanalytic.com 
+  364  ln -s /etc/nginx/sites-available/bizanalytic.com /etc/nginx/sites-enabled/
+  365  cd ..
+  366  cd sites-enabled/
+  367  ls
+  368  cd /var/www/bizanalytic/
+  369  systemctl restart bizanalytic.service bizanalytic.socket 
+  370  systemctl status bizanalytic.service
+  371  systemctl start bizanalytic.service
+  372  systemctl status bizanalytic.service
+  373  journalctl -u bizanalytic.service -f -n 200
+  374  cd /var/www/bizanalytic/
+  375  source ../virtual_env/bizanalytic/bin/activate
+  376  journalctl -u bizanalytic.service -f -n 200
+  377  journalctl -u bizanalytic
+  378  journalctl -u bizanalytic.service
+  379  journalctl -u gunicorn
+  380  systemctl start bizanalytic.service
+  381  journalctl -u bizanalytic.service
+  382  chown -R web logs/
+  383  systemctl start bizanalytic.service
+  384  journalctl -u bizanalytic.service
+  385  cd config/
+  386  ls
+  387  nano wsgi.py 
+  388  cd settings/
+  389  nano production.py 
+  390  cd ..
+  391  nano /etc/systemd/system/bizanalytic.socket 
+  392  nano /etc/systemd/system/bizanalytic.service 
+  393  nano .env 
+  394  nano /etc/systemd/system/bizanalytic.service 
+  395  cd ../virtual_env/
+  396  ls
+  397  cd ..
+  398  nano /etc/systemd/system/bizanalytic.service 
+  399  nano /etc/nginx/sites-available/bizanalytic.com 
+  400  cd bizanalytic/
+  401  nano manage.py 
+  402  nano config/wsgi.py 
+  403  systemctl start bizanalytic.service
+  404  systemctl daemon-reload
+  405  systemctl start bizanalytic.service
+  406  systemctl status bizanalytic.service
+  407  certbot --nginx
+  408  apt install python3-certbot-nginx
+  409  certbot --nginx
+  410  nano /etc/nginx/sites-enabled/
+  411  nano /etc/nginx/sites-enabled/bizanalytic.com 
+  412  certbot --nginx bizanalytic.com
+  413  certbot --nginx -d bizanalytic.com
+  414  certbot renew --dry-run
+  415  systemctl restart nginx bizanalytic.socket bizanalytic.service 
+  416  systemctl status nginx.service 
+  417  systemctl status bizanalytic.service 
+  418  cd..
+  419  cd ..
+  420  hist > hist.txt
+  421  history > hist.txt

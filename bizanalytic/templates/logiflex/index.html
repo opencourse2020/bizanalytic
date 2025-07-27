@@ -32,14 +32,13 @@
       </div>
       <ul class="nav__links" id="nav-links">
         <li><a href="#home">HOME</a></li>
-        <li><a href="#about">ABOUT</a></li>
-        <li><a href="#tour">TOUR</a></li>
-        <li><a href="#package">PACKAGE</a></li>
+        <li><a href="#about">{% trans "Why LogiFlex?" %}</a></li>
         <li><a href="#contact">CONTACT</a></li>
-        <li><a href="#">BOOK TRIP</a></li>
+{#        <li><a href="#">BOOK TRIP</a></li>#}
       </ul>
       <div class="nav__btns">
-        <button class="btn">BOOK TRIP</button>
+{#        <button class="btn">BOOK TRIP</button>#}
+          <a href="#try_free" class="button">{% trans "Try Free Now" %}</a>
       </div>
     </nav>
 
@@ -50,9 +49,9 @@
           <h1>{% trans "Transform Your Logistics Data Into Actionable Insights" %}</h1>
           <div class="header__btns">
             <button class="btn">{% trans "Try Free Now" %}</button>
-            <a href="#">
-              <span><i class="ri-play-circle-fill"></i></span>
-            </a>
+{#            <a href="#">#}
+{#              <span><i class="ri-play-circle-fill"></i></span>#}
+{#            </a>#}
           </div>
         </div>
         <div class="header__image">
@@ -60,6 +59,38 @@
         </div>
       </div>
     </header>
+
+    <section class="section__container discover__container" id="try_free">
+
+        <h2 class="section__header">
+            {% trans "Generate Actionable Insights From Your Data" %}
+        </h2>
+        <p class="section__description">
+           {% trans "Upload your route spreadsheets and get instant performance and profitability reports. Make data-driven decisions to optimize your logistics operations." %}
+        </p>
+    <div class="discover__grid">
+        <div class="discover__card">
+            <h4>{% trans "Get Your Report" %}</h4>
+              <p>
+                {% trans "Upload your route data and receive a comprehensive analysis" %}
+
+              </p>
+        <form action="">
+            {% csrf_token %}
+            <label for="company_nm">{% trans "Company Name" %}</label>
+            <input type="text" id="company_nm">
+            <label for="email_ad">{% trans "Email Address" %}</label>
+            <input type="text" id="email_ad">
+            <label for="email_ad">{% trans "Route Data File" %}</label>
+            <input type="file" id="routefile">
+            <span>{% trans "Supports .csv, .xlsx files" %}
+            </span>
+        </form>
+        </div>
+    </div>
+
+    </section>
+
 
     <section class="section__container destination__container" id="about">
       <h2 class="section__header">{% trans "Efficient Logistics" %}</h2>

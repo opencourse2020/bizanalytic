@@ -193,7 +193,55 @@
                 </div>
             </div>
         </section>
+<section class="feature-area pt-120 pb-100">
+            <div class="container">
+                <div class="top-content">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h2 class="title">Efficient transportation is Your Competitive Advantage </h2>
+                        </div>
+                        <div class="col-lg-3">
+                            <img src={% static "vendor/transport/assets/images/icon-6.png"%} alt="icon">
+                        </div>
+                    </div>
+                </div>
 
+                <div class="feature-items">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="single-feature">
+                                <div class="icon-box white-bg mb-20">
+                                    <img src={% static "vendor/transport/assets/images/icon-7.png"%} alt="icon" class="icon">
+                                </div>
+                                <h5 class="title">{% trans "Fast Analysis" %}</h5>
+                                <p class="mt-10">{% trans "Get comprehensive reports in under 5 minutes" %}</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="single-feature">
+                                <div class="icon-box white-bg mb-20">
+                                    <img src={% static "vendor/transport/assets/images/icon-8.png"%} alt="icon" class="icon">
+                                </div>
+                                <h5 class="title">{% trans "Actionable Insights" %}</h5>
+                                <p class="mt-10">{% trans "Discover optimization opportunities and profit drivers" %}</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="single-feature">
+                                <div class="icon-box white-bg mb-20">
+                                    <img src={% static "vendor/transport/assets/images/icon-9.png" %} alt="icon" class="icon">
+                                </div>
+                                <h5 class="title">{% trans "Enterprise Security" %}</h5>
+                                <p class="mt-10">{% trans "Your data is encrypted and processed securely" %}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            </div>
+        </section>
         <section class="contact-area pt-120">
             <div class="container">
                 <div class="row justify-content-center">
@@ -294,9 +342,9 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="footer-widget">
                             <div class="footer-logo">
-                                <a href="index.html"><img src={% static "vendor/transport/assets/images/logo.png" %} alt="logo"></a>
+                                <a href="index.html">BizAnalytic</a>
                             </div>
-                            <p class="mt-30">It is a long established fact that a reader Empowering Communities</p>
+                            <p class="mt-30">{% trans "Empowering logistics operators with data-driven insights" %}</p>
                             
                             <div class="footer-social mt-20">
                                 <h6 class="title">follow us</h6>
@@ -313,45 +361,43 @@
                     <div class="col-xl-2 offset-xl-1 col-lg-3 col-sm-6">
                         <div class="footer-widget">
                             <div class="widget-title">
-                                <h5 class="title">our services</h5>
+                                <h5 class="title">{% trans "our services" %}</h5>
                             </div>
                             <ul class="nav-links mt-30">
-                                <li><a href="service-details.html">Warehousing Service</a></li>
-                                    <li><a href="service-details.html">Logistic service</a></li>
-                                    <li><a href="service-details.html">ship Freight</a></li>
-                                    <li><a href="service-details.html">road Freight</a></li>
-                                    <li><a href="service-details.html">Rail Freight</a></li>
+                                <li><a href="#">LogiFlex</a></li>
+                                    <li><a href="#">KPI Insight</a></li>
+                                    <li><a href="#">InveFlow</a></li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="col-xl-2 offset-xl-1 col-lg-3 col-sm-6">
-                        <div class="footer-widget">
-                            <div class="widget-title">
-                                <h5 class="title">About Company</h5>
-                            </div>
-                            <ul class="nav-links mt-30">
-                                <li><a href="about.html">about us</a></li>
-                                    <li><a href="service.html">our services</a></li>
-                                    <li><a href="project.html">our projects</a></li>
-                                    <li><a href="blog.html">blog & news</a></li>
-                                    <li><a href="home.html">contact us</a></li>
-                            </ul>
-                        </div>
-                    </div>
+{#                    <div class="col-xl-2 offset-xl-1 col-lg-3 col-sm-6">#}
+{#                        <div class="footer-widget">#}
+{#                            <div class="widget-title">#}
+{#                                <h5 class="title">About Company</h5>#}
+{#                            </div>#}
+{#                            <ul class="nav-links mt-30">#}
+{#                                <li><a href="about.html">about us</a></li>#}
+{#                                    <li><a href="service.html">our services</a></li>#}
+{#                                    <li><a href="project.html">our projects</a></li>#}
+{#                                    <li><a href="blog.html">blog & news</a></li>#}
+{#                                    <li><a href="home.html">contact us</a></li>#}
+{#                            </ul>#}
+{#                        </div>#}
+{#                    </div>#}
                     
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="footer-widget">
-                            <div class="widget-title">
-                                <h5 class="title">contact</h5>
-                            </div>
-                            <ul class="contact-info mt-30">
-                                <li><span class="icon"><i class="ri-mail-fill"></i></span> <a href="#">info@example.com</a></li>
-                                <li><span class="icon"><i class="ri-map-pin-2-fill"></i></span> <a href="#">6391 Elgin St. Celina, 10299</a></li>
-                                <li><span class="icon"><i class="ri-phone-fill"></i></span> <a href="#">(307) 555-0133</a></li>
-                            </ul>
-                        </div>
-                    </div>
+{#                    <div class="col-lg-3 col-sm-6">#}
+{#                        <div class="footer-widget">#}
+{#                            <div class="widget-title">#}
+{#                                <h5 class="title">contact</h5>#}
+{#                            </div>#}
+{#                            <ul class="contact-info mt-30">#}
+{#                                <li><span class="icon"><i class="ri-mail-fill"></i></span> <a href="#">info@example.com</a></li>#}
+{#                                <li><span class="icon"><i class="ri-map-pin-2-fill"></i></span> <a href="#">6391 Elgin St. Celina, 10299</a></li>#}
+{#                                <li><span class="icon"><i class="ri-phone-fill"></i></span> <a href="#">(307) 555-0133</a></li>#}
+{#                            </ul>#}
+{#                        </div>#}
+{#                    </div>#}
                 </div>
             </div>                
         </div>
@@ -362,7 +408,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6">
                         <div class="copyright-text">
-                            <span>Copyright &copy; <span id="date"></span> <a href="https://themepitcher.com/" target="_blank">themepitcher</a>. All rights reserved.</span>
+                            <span>Copyright &copy; <span id="date"></span> BizAnalytic. All rights reserved.</span>
                         </div>
                     </div>
                     <div class="col-lg-6">

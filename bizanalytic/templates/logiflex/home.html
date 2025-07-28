@@ -180,8 +180,8 @@
                                             <input type="file" id="route_fl" class="mb-0" placeholder="">
                                             <span class="mt-0">{% trans "Supports .csv, .xlsx files" %}</span>
                                         </div>
-                                        <div class="col-12">
-                                            <button type="button" id="generate_rp" class="primary-btn primary-bg d-flex"><span class="text">{% trans "Generate Performance Report" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></button>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="button" id="generate_rp" class="primary-btn primary-bg"><span class="text">{% trans "Generate Performance Report" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></button>
 
                                         </div>
                                     </div>
@@ -257,17 +257,18 @@
         <!-- cta area starts -->
         <section class="cta-area-2 pt-120">
             <div class="container">
-                <div class="cta-box" data-background={% static "vendor/transport/assets/images/cta-bg.png" %}>
+                <div class="cta-box" data-background={% static "vendor/transport/assets/images/cta-bg.jpg" %}>
                     <div class="row align-items-center">
                         <div class="col-lg-7">
                             <div class="cta-content">
                                 <div class="section-top">
-                                    <h3 class="title"><span>Transporting you with</span> care and efficiency dreams reality</h3>
+                                    <h4 class="title"><span>{% trans "Transporting you with care and efficiency dreams reality" %}</span> </h4>
+                                    <h6>{% trans "Register your Email with us to receive out Newsletter" %}</h6>
                                 </div>
                                 <div class="cta-form mt-30">
                                     <form action="#">
-                                        <input type="email" placeholder="Enter BOT Number">
-                                        <button type="submit"><span class="icon"><i class="ri-search-line"></i></span></button>
+                                        <input type="email" id="email_newsletter" placeholder="Enter Your Email">
+                                        <button type="button" class="btn-warning bg-warning"><span class="icon"><i class="ri-arrow-right-double-line"></i></span></button>
                                     </form>
                                 </div>
                             </div>
@@ -275,7 +276,7 @@
 
                         <div class="col-lg-4">
                             <div class="cta-image">
-                                <img src={% static "vendor/transport/assets/images/cta.png" %} alt="cta">
+                                <img src={% static "vendor/transport/assets/images/cta.jpg" %} alt="cta">
                             </div>
                         </div>
                     </div>
@@ -285,7 +286,7 @@
     </main>
 
     <!-- footer area starts -->
-    <footer class="footer-area-3" data-background={% static "vendor/transport/assets/images/footer-bg.png" %}>
+    <footer class="footer-area-3" data-background={% static "vendor/transport/assets/images/footer-bg.jpg" %}>
         <!-- widget area -->
         <div class="widget-area">
             <div class="container">

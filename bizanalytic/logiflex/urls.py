@@ -4,6 +4,7 @@ from . import views
 app_name = "logiflex"
 
 urlpatterns = [
+
     path("logiflex/", views.IndexView.as_view(), name="index"),
 
 ]

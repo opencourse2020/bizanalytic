@@ -36,7 +36,7 @@ from django.views.i18n import JavaScriptCatalog
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     # path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
-    path("", RedirectView.as_view(pattern_name="logiflex:index")),
+    path("", RedirectView.as_view(pattern_name="profiles:dispatch_login")),
     path("accounts/", include("allauth.urls")),
     # path("accounts/profile/", ProfileView.as_view()),
     # path("apis/chat/", include("api.chat.urls", namespace="chat")),

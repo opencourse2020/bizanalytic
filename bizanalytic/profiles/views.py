@@ -162,7 +162,7 @@ class ProfileView(LoginRequiredMixin, RedirectView):
         return super().get_redirect_url(*args, **kwargs)
 
 
-class DispatchLoginView(LoginRequiredMixin, RedirectView):
+class DispatchLoginView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         if hasattr(self.request.user, "admin"):
             return reverse_lazy("logiflex:index")

@@ -160,37 +160,8 @@
         <section class="contact-area pt-40 mb-40" id="tryfree">
             <div class="container">
                 <div class="row justify-content-around">
-                    <div class="col-lg-6 wow fadeInRight align-content-center" data-wow-delay=".2s">
-                        <div class="form-part">
-                            <h4 class="title text-center">{% trans "Get Your Free Report" %}</h4>
-                            <p class="text-center">{% trans "Upload your route data and receive performance analysis Completly Free" %}</p>
-                            <div class="theme-form mt-40">
-                                <form action="#">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <label for="company_nm">{% trans "Company Name" %}</label>
-                                            <input type="text" id="company_nm" placeholder="Enter your Company Name">
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="email_nm">{% trans "Email Address" %}</label>
-                                            <input type="email" id="email_nm" placeholder="Enter your Email Address">
-                                        </div>
-                                        <div class="col-12 mb-4">
-                                            <label for="route_fl" >{% trans "Route Data File" %}</label>
-                                            <input type="file" id="route_fl" class="mb-0" placeholder="">
-                                            <span class="mt-0">{% trans "Supports .csv, .xlsx files" %}</span>
-                                        </div>
-                                        <div class="d-flex justify-content-center">
-                                            <button type="button" id="generate_rp" class="primary-btn primary-bg"><span class="text">{% trans "Generate Performance Report" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></button>
 
-                                        </div>
-                                    </div>
 
-                                    </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-1"></div>
                     <div class="col-lg-5 wow fadeInLeft" data-wow-delay=".2s">
                         <div class="about-content">
                             <div class="section-top">
@@ -253,6 +224,37 @@
                                         <h5 class="title"><a href="#">+1 (832) 430-2434</a></h5>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-6 wow fadeInRight align-content-center" data-wow-delay=".2s">
+                        <div class="form-part">
+                            <h4 class="title text-center">{% trans "Get Your Free Report" %}</h4>
+                            <p class="text-center">{% trans "Upload your route data and receive performance analysis Completly Free" %}</p>
+                            <div class="theme-form mt-40">
+                                <form action="#">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label for="company_nm">{% trans "Company Name" %}</label>
+                                            <input type="text" id="company_nm" placeholder="Enter your Company Name">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="email_nm">{% trans "Email Address" %}</label>
+                                            <input type="email" id="email_nm" placeholder="Enter your Email Address">
+                                        </div>
+                                        <div class="col-12 mb-4">
+                                            <label for="route_fl" >{% trans "Route Data File" %}</label>
+                                            <input type="file" id="route_fl" class="mb-0" placeholder="">
+                                            <span class="mt-0">{% trans "Supports .csv, .xlsx files" %}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="button" id="generate_rp" class="primary-btn primary-bg"><span class="text">{% trans "Generate Performance Report" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></button>
+
+                                        </div>
+                                    </div>
+
+                                    </form>
                             </div>
                         </div>
                     </div>
@@ -381,7 +383,9 @@
                                 </div>
                                 <div class="cta-form mt-30">
                                     <form action="#">
+                                        <input type="text" id="company_newsletter" placeholder="Enter Your Company Name">
                                         <input type="email" id="email_newsletter" placeholder="Enter Your Email">
+
                                         <button type="button" class="btn-warning bg-warning"><span class="icon"><i class="ri-arrow-right-double-line"></i></span></button>
                                     </form>
                                 </div>

@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     # "admin_honeypot",
     # "honeypot",
     # "captcha",
+    'ckeditor',
     'corsheaders',
     "bizanalytic.profiles.apps.ProfilesConfig",
     "bizanalytic.logiflex.apps.LogiflexConfig"

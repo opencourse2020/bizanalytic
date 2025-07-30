@@ -12,6 +12,7 @@ class NewsLetter_logiflexForm(forms.ModelForm):
             "body": _("Body")
         }
 
+
 class NewsLetter_logiflex_subscriptionForm(forms.ModelForm):
     class Meta:
         model = models.NewsLetter_logiflex_subscription

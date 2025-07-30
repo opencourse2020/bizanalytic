@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
-{% load i18n %}
-
+{% load crispy_forms_tags %}
+{% load  i18n %}
 
 
 {% block css %}
@@ -41,7 +41,7 @@
     </style>
 {% endblock css %}
 
-{% block main %}
+{% block content_body %}
     <div class="modal fade" id="contacts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -191,9 +191,9 @@
     </div>
 
 
-{% endblock main %}
+{% endblock content_body %}
 
-{% block project_js %}
+{% block js %}
     {{ block.super }}
     <script src={% static "jss/list_enrollments.jss" %}></script>
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"

@@ -1,108 +1,144 @@
 {% extends "base.html" %}
-{% load i18n %}
-{% load crispy_forms_tags %}
 {% load static %}
-
-{% block page_title %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+    <meta charset="utf-8">
   <h1 class="mb-0 pb-0 display-4" id="title">{% trans "Profile Overview" %}</h1>
     <nav class="breadcrumb-container d-inline-block" aria-label="breadcrumb">
         <ul class="breadcrumb pt-0">
-            <li class="breadcrumb-item"><a href="{% url 'core:sdashboard' %}">{% trans "Home" %}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'idmeapi:sdashboard' %}">{% trans "Home" %}</a></li>
             <li class="breadcrumb-item"><a href="">{% trans "Profile" %}</a></li>
 
         </ul>
     </nav>
-{% endblock page_title %}
 
-{% block main %}
+<link href={% static "assets/css/vendor.min.css" %} rel="stylesheet">
+<link href={% static "assets/css/app.min.css" %} rel="stylesheet">
 
-    <div class="row align-items-center justify-content-center">
-        <div class="col-12 col-lg-4 col-sm-6 col-md-6 col-xl-4 col-xxl-3">
-              <!-- Biography Start -->
+{% block content_head %}
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">{% trans "Home" %}</a></li>
+    <li class="breadcrumb-item active">{% trans "Profile" %}</li>
+</ul>
 
-              <div class="card mb-5">
+<h1 class="page-header">
+    {% trans "Profile Management" %}
+</h1>
+{% endblock content_head %}
 
-                <div class="card-body">
-                  <div class="d-flex align-items-center flex-column mb-4">
-                    <div class="d-flex align-items-center flex-column">
-                      <div class="sw-13 position-relative mb-3">
+{% block content_body %}
 
-                          {% if user.picture %}
-                            <img class="img-fluid rounded-xl" src="{{ user.picture.url }}"  alt="">
-                                {% else %}
-                                <img class="img-fluid rounded-xl" src={% static "images/placeholder.jpg" %} width="170" height="170" alt="">
-                            {% endif %}
+<div class="row gx-4">
+    <div class="col-lg-6">
+        <!-- Biography Start -->
 
-                      </div>
-                      <div class="h5 mb-0">{{ user.first_name }} {{ user.last_name }}</div>
-{#                      <div class="text-muted">#}
-{#                          {% if user.parent %}#}
-{#                            <span class="d-block opacity-75">{% trans "Parent" %}</span>#}
-{#                        {% elif user.student%}#}
-{#                            <span class="d-block opacity-75">{% trans "Student" %}</span>#}
-{#                        {% elif user.professor%}#}
-{#                            <span class="d-block opacity-75">{% trans "Professor" %}</span>#}
-{#                        {% elif user.serviceprovider%}#}
-{#                            <span class="d-block opacity-75">{% trans "Service Provider" %}</span>#}
-{#                        {% elif user.institutadmin%}#}
-{#                            <span class="d-block opacity-75">{% trans "Institut Admin" %}</span>#}
-{##}
-{#                        {% endif %}#}
-{#                      </div>#}
-                      <div class="text-muted">
-                        <i data-cs-icon="pin" class="me-1"></i>
-                        <span class="align-middle">{{ user.profile.city }}, {{ user.profile.country }}</span>
-                      </div>
+        <div class="card mb-5">
+
+            <div class="card-body">
+                <div class="card">
+                    <div class="card-body pt-4 pb-4 text-center">
+                        {% if user.picture %}
+                        <img class="img-fluid" src="{{ user.picture.url }}" style="border-radius: 50%; max-width: 200px; height: 200px" alt="">
+                        {% else %}
+                        <img class="img-fluid" style="border-radius: 50%;" src="{% static "pictures/user_placeholder.png" %}" width="170" height="170" alt="">
+                        {% endif %}
                     </div>
-                  </div>
-                  <div class="nav flex-column" role="tablist">
-                    <a class="nav-link active px-0 border-bottom border-separator-light"  href="{% url 'profiles:userinfo' user.pk %}" >
-                      <i data-cs-icon="user" class="me-2" data-cs-size="17"></i>
-                      <span class="align-middle">{% trans "User Information" %}</span>
-                    </a>
-                    <a class="nav-link px-0 border-bottom border-separator-light"  href="{% url 'profiles:editprofile' %}" >
-                      <i data-cs-icon="settings-1" class="me-2" data-cs-size="17"></i>
-                      <span class="align-middle">{% trans "Edit Profile" %}</span>
-                    </a>
-                    <a class="nav-link px-0 border-bottom border-separator-light"  href="{% url 'account_change_password' %}" >
-                      <i data-cs-icon="lock-off" class="me-2" data-cs-size="17"></i>
-                      <span class="align-middle">{% trans "Manage Password"  %}</span>
-                    </a>
-                    <a class="nav-link px-0 border-bottom border-separator-light" href="{% url "account_email" %}" >
-                      <i data-cs-icon="email" class="me-2" data-cs-size="17"></i>
-                      <span class="align-middle">{% trans "Manage Emails" %}</span>
-                    </a>
-                      <a class="nav-link px-0 border-bottom border-separator-light" href="{% url 'profiles:language' user.pk %}" >
-                      <i data-cs-icon="web" class="me-2" data-cs-size="17"></i>
-                      <span class="align-middle">{% trans "Prefered Language" %}</span>
-                    </a>
-                      <a class="nav-link px-0 border-bottom border-separator-light" href="{% url 'profiles:activate' user.pk %}" >
-                      <i data-cs-icon="eye-off" class="me-2" data-cs-size="17"></i>
-                      <span class="align-middle">{% trans "Deactivate" %}</span>
-                    </a>
-                    <a class="nav-link px-0 border-bottom border-separator-light" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                      <i data-cs-icon="logout" class="me-2" data-cs-size="17"></i>
-                      <span class="align-middle">{% trans "Logout" %}</span>
-                    </a>
-
-
-                  </div>
+                    <div class="card-footer text-center">
+                        <div class="h5 mb-0">{{ user.first_name }} {{ user.last_name }}</div>
+                        <div class="text-muted">
+                            <i class="fas fa-md fa-fw me-2 fa-map-marker-alt"></i>
+                            <span class="align-middle">{{ user.profile.city }}, {{ user.profile.country }}</span>
+                        </div>
+                    </div>
+                    <div class="card-arrow">
+                        <div class="card-arrow-top-left"></div>
+                        <div class="card-arrow-top-right"></div>
+                        <div class="card-arrow-bottom-left"></div>
+                        <div class="card-arrow-bottom-right"></div>
+                    </div>
                 </div>
-              </div>
-              <!-- Biography End -->
+
+
+
+
+                <div class="card text-center">
+                    <div class="card-body pt-4 pb-4">
+                        <a class="nav-link active px-0 border-bottom border-separator-light"  href="{% url 'profiles:userinfo' user.pk %}" >
+                            <i data-cs-icon="user" class="me-2" data-cs-size="17"></i>
+                            <span class="align-middle">{% trans "User Information" %}</span>
+                        </a>
+                        <a class="nav-link px-0 border-bottom border-separator-light"  href="{% url 'profiles:editprofile' %}" >
+                            <i data-cs-icon="settings-1" class="me-2" data-cs-size="17"></i>
+                            <span class="align-middle">{% trans "Edit Profile" %}</span>
+                        </a>
+                        <a class="nav-link px-0 border-bottom border-separator-light"  href="{% url 'account_change_password' %}" >
+                            <i data-cs-icon="lock-off" class="me-2" data-cs-size="17"></i>
+                            <span class="align-middle">{% trans "Manage Password"  %}</span>
+                        </a>
+                        <a class="nav-link px-0 border-bottom border-separator-light" href="{% url "account_email" %}" >
+                        <i data-cs-icon="email" class="me-2" data-cs-size="17"></i>
+                        <span class="align-middle">{% trans "Manage Emails" %}</span>
+                        </a>
+                        <a class="nav-link active px-0 border-bottom border-separator-light"  href="{% url 'mfa_index' %}" >
+                            <i data-cs-icon="user" class="me-2" data-cs-size="17"></i>
+                            <span class="align-middle">{% trans "Enable 2FA with Autheticator App" %}</span>
+                        </a>
+                        <a class="nav-link px-0 border-bottom border-separator-light" href="{% url 'profiles:language' user.pk %}" >
+                            <i data-cs-icon="web" class="me-2" data-cs-size="17"></i>
+                            <span class="align-middle">{% trans "Prefered Language" %}</span>
+                        </a>
+                        <a class="nav-link px-0 border-bottom border-separator-light" href="{% url 'profiles:activate' user.pk %}" >
+                            <i data-cs-icon="eye-off" class="me-2" data-cs-size="17"></i>
+                            <span class="align-middle">{% trans "Deactivate" %}</span>
+                        </a>
+                        <a class="nav-link px-0 border-bottom border-separator-light" href="{% url 'profiles:services:list' %}" >
+                            <i data-cs-icon="eye-off" class="me-2" data-cs-size="17"></i>
+                            <span class="align-middle">{% trans "Services" %}</span>
+                        </a>
+                        <a class="nav-link px-0 border-bottom border-separator-light" href="{% url 'profiles:payments:list' %}" >
+                            <i data-cs-icon="eye-off" class="me-2" data-cs-size="17"></i>
+                            <span class="align-middle">{% trans "Payments" %}</span>
+                        </a>
+                        <a class="nav-link px-0 border-bottom border-separator-light" href="{% url 'profiles:logout' %}" >
+                            <i data-cs-icon="logout" class="me-2" data-cs-size="17"></i>
+                            <span class="align-middle">{% trans "Logout" %}</span>
+                        </a>
+
+
+                    </div>
+                    <div class="card-arrow">
+                        <div class="card-arrow-top-left"></div>
+                        <div class="card-arrow-top-right"></div>
+                        <div class="card-arrow-bottom-left"></div>
+                        <div class="card-arrow-bottom-right"></div>
+                    </div>
+                </div>
             </div>
-
+            <div class="card-arrow">
+                        <div class="card-arrow-top-left"></div>
+                        <div class="card-arrow-top-right"></div>
+                        <div class="card-arrow-bottom-left"></div>
+                        <div class="card-arrow-bottom-right"></div>
+                    </div>
+        </div>
+        <div class="card-arrow">
+            <div class="card-arrow-top-left"></div>
+            <div class="card-arrow-top-right"></div>
+            <div class="card-arrow-bottom-left"></div>
+            <div class="card-arrow-bottom-right"></div>
+        </div>
     </div>
+    <!-- Biography End -->
+</div>
 
 
 
-{% endblock main %}
 
-{% block create_button %}
-    {{ block.super }}
-{% endblock create_button %}
+{% endblock content_body %}
 
-{% block project_js %}
+
+
+{% block js %}
   {{ block.super }}
 
 <script>
@@ -110,4 +146,4 @@ function goBack() {
   window.history.back();
 }
 </script>
-{% endblock project_js %}
+{% endblock js %}

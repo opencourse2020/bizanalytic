@@ -24,7 +24,18 @@ class IndexView(TemplateView):
 class NewsletterCreateView(UserPassesTestMixin, CreateView):
     model = models.NewsLetter_logiflex
     form_class = forms.NewsLetter_logiflexForm
-    success_url = reverse_lazy("logiflex:index")
+    template_name = "logiflex/newsletter_logiflex_create.html"
+    success_url = reverse_lazy("logiflex:newsletters:list")
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+
+class NewsletterEditView(UserPassesTestMixin, CreateView):
+    model = models.NewsLetter_logiflex
+    form_class = forms.NewsLetter_logiflexForm
+    template_name = "logiflex/newsletter_logiflex_create.html"
+    success_url = reverse_lazy("logiflex:newsletters:list")
 
     def test_func(self):
         return self.request.user.is_staff
@@ -32,7 +43,7 @@ class NewsletterCreateView(UserPassesTestMixin, CreateView):
 
 class NewsletterListView(UserPassesTestMixin, ListView):
     model = models.NewsLetter_logiflex
-    template_name = ""
+    template_name = "logiflex/newsletter_logiflex_list.html"
 
     def test_func(self):
         return self.request.user.is_staff

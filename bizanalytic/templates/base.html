@@ -3,20 +3,20 @@
 {% load crispy_forms_tags %}
 
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en" data-bs-theme="light">
 <head>
 	<meta charset="utf-8">
     {% block head_title %}
-        <title>{% trans "Coe-Analytics" %}</title>
+        <title>Idme.ma</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content={% trans "Analytic Tools for Small to Medium Companies SMB - SME" %}>
+        <meta name="description" content={% trans "AI-Powered Analytics for Feight, Transport, logistics and small to medium businesses (SMB)" %}>
         <meta name="author" content="">
 	{% endblock %}
 
     {% block css %}
 	<!-- ================== BEGIN core-css ================== -->
-        <link href={% static {% static "vendor/transport/assets/css/vendor.min.css" %} rel="stylesheet">
-        <link href={% static {% static "vendor/transport/assets/css/app.min.css" %} rel="stylesheet">
+        <link href={% static "assets/css/vendor.min.css" %} rel="stylesheet">
+        <link href={% static "assets/css/app.min.css" %} rel="stylesheet">
 
 	<!-- ================== END core-css ================== -->
 	{% endblock css %}
@@ -24,7 +24,7 @@
 </head>
 <body>
 	<!-- BEGIN #app -->
-	<div id="app" class="app">
+	<div id="app" class="app app-sidebar-collapsed">
 		<!-- BEGIN #header -->
         {% block header %}
 		<div id="header" class="app-header">
@@ -50,11 +50,12 @@
 			
 			<!-- BEGIN brand -->
 			<div class="brand">
-				<a href="#" class="brand-logo">
-					<span class="brand-img">
-						<span class="brand-img-text text-theme">C</span>
-					</span>
-					<span class="brand-text">COE-ANALYTICS</span>
+				<a href="https://bizanalytic.com/" class="brand-logo">
+                    <img src="{% static "assets/logo/logo1-1.png" %}" width="100px">
+{#					<span class="brand-img">#}
+{#						<span class="brand-img-text text-theme">I</span>#}
+{#					</span>#}
+{#					<span class="brand-text">ID-ME</span>#}
 				</a>
 			</div>
 			<!-- END brand -->
@@ -167,7 +168,7 @@
 
                     {% endif %}
 					<div class="dropdown-menu dropdown-menu-end me-lg-3 fs-11px mt-1">
-						<a class="dropdown-item d-flex align-items-center" href="#">{% trans "PROFILE" %} <i class="bi bi-person-circle ms-auto text-theme fs-16px my-n1"></i></a>
+						<a class="dropdown-item d-flex align-items-center" href="{% url 'profiles:profile' %}">{% trans "PROFILE" %} <i class="bi bi-person-circle ms-auto text-theme fs-16px my-n1"></i></a>
 						<a class="dropdown-item d-flex align-items-center" href="#">{% trans "INBOX" %} <i class="bi bi-envelope ms-auto text-theme fs-16px my-n1"></i></a>
 						<a class="dropdown-item d-flex align-items-center" href="#">{% trans "CALENDAR" %} <i class="bi bi-calendar ms-auto text-theme fs-16px my-n1"></i></a>
 						<a class="dropdown-item d-flex align-items-center" href="#">{% trans "SETTINGS" %} <i class="bi bi-gear ms-auto text-theme fs-16px my-n1"></i></a>
@@ -204,7 +205,7 @@
 				<div class="menu">
 					<div class="menu-header">{% trans "Navigation" %}</div>
 					<div class="menu-item active">
-						<a href="{% url 'coeanalytics:sdashboard' %}" class="menu-link">
+						<a href="" class="menu-link">
 							<span class="menu-icon"><i class="bi bi-house-door"></i></span>
 							<span class="menu-text">{% trans "Home" %}</span>
 						</a>
@@ -250,8 +251,8 @@
 	<!-- END #app -->
 	{% block js %}
 	<!-- ================== BEGIN core-js ================== -->
-	<script src={% static {% static "vendor/transport/assets/js/vendor.min.js" %}></script>
-	<script src={% static {% static "vendor/transport/assets/js/app.min.js" %}></script>
+	<script src={% static "assets/js/vendor.min.js" %}></script>
+	<script src={% static "assets/js/app.min.js" %}></script>
 
 
 	<!-- ================== END core-js ================== -->

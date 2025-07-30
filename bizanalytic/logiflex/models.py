@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 
@@ -19,8 +20,13 @@ class NewsLetter_logiflex(models.Model):
 
 
 class NewsLetter_logiflex_subscription(models.Model):
+    areatype = (
+        ('lo', _("LogiFlex")),
+        ('ki', _("KPI-Insights")),
+    )
     email = models.CharField(max_length=150)
     company = models.CharField(max_length=150, null=True, blank=True)
+    area = models.CharField(max_length=2, choices=areatype, null=True, blank=True)
     date_added = models.DateField(auto_now=True)
     removed = models.BooleanField(default=False)
 

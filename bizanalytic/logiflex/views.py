@@ -55,17 +55,21 @@ class NewsletterSubscriptionCreateView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
         cp_name = request.POST.get("cp_name").lower()
         email_nl = request.POST.get("em_nl").lower()
+        tp_area = int(request.POST.get("tp_area"))
         subs = models.NewsLetter_logiflex_subscription.objects.filter(email=email_nl).first()
         company = subs.company
 
-
-        if subs and cp_name==company.lower():
+        if subs and cp_name == company.lower():
             message = _("Thank you for your request. This email is already registered with us")
         elif subs and not cp_name == company.lower():
             message = _("Thank you for your request. This email is already registered under different company name")
         else:
             message = _("Thank you for your request. You have been registered Successfully")
-            subscription = models.NewsLetter_logiflex_subscription(email=email_nl, company=cp_name)
+            if tp_area == 1:
+                area = "lo"
+            elif tp_area == 2:
+                area = "ki"
+            subscription = models.NewsLetter_logiflex_subscription(email=email_nl, company=cp_name, area=area)
             subscription.save()
         data = {"submessage": message}
 

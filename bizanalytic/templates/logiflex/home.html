@@ -579,10 +579,12 @@
     $("#register_nl").click(function (){
         let cp_name = $("#company_newsletter").val();
         let em_nl = $("#email_newsletter").val();
-        let url = "";
+        let tp_area = "1";
+        let url = "https://bizanalytic.com/logiflex/newsletters/subscrib/";
         const formData = new FormData();
         formData.append('cp_name', cp_name);
         formData.append('em_nl', em_nl);
+        formData.append('tp_area', tp_area);
 
         $.ajax({
             type: 'POST',

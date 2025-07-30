@@ -406,9 +406,9 @@ img { width: 100%; height: auto; display: block; }
 
 .cta-form form input::placeholder { color: #ffffff; }
 
-.cta-form form button { background: none; margin: 0; padding: 0; border: none; }
+/*.cta-form form button { background: none; margin: 0; padding: 0; border: none; }*/
 
-.cta-form form button .icon { color: #ffffff; background-color: #2ba3c4; display: inline-block; height: 45px; width: 45px; line-height: 45px; border-radius: 50%; text-align: center; position: absolute; top: 5px; right: 5px; }
+/*.cta-form form button .icon { color: #ffffff; background-color: #2ba3c4; display: inline-block; height: 45px; width: 45px; line-height: 45px; border-radius: 50%; text-align: center; position: absolute; top: 5px; right: 5px; }*/
 
 .search-form form { position: relative; }
 

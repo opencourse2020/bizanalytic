@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block head_title %}
+    <title>{% trans "Register" %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content={% trans "Analytic Tools for Startups and Existing Companies" %}>
+        <meta name="author" content="">
+{% endblock %}
+
+{% block css %}
+    {{ block.super }}
+{% endblock css %}
+
+
+{% block content_head %}
+
+    <ul class="breadcrumb">
+				<li class="breadcrumb-item"><a href="#">{% trans "Home" %}</a></li>
+				<li class="breadcrumb-item active">{% trans "Sign Up" %}</li>
+			</ul>
+
+			<h1 class="page-header">
+				{% trans "Sign Up" %} <small><p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>{% endblocktrans %}</p></small>
+			</h1>
+
+{% endblock content_head %}
+    {% block content_body %}
+
+
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-6 col-xxl-6 mb-5">
+            <div class="card mb-5 mt-4">
+                <div class="card-body p-3">
+                    <form action="{% url 'account_signup' %}" class="contact-form signup" method="post" id="signup_form">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-outline-theme btn-lg d-block w-100 fw-500 mb-3">{% trans "Sign Up" %}</button>
+                        </div>
+                    </form>
+                </div>
+            <div class="card-arrow">
+                        <div class="card-arrow-top-left"></div>
+                        <div class="card-arrow-top-right"></div>
+                        <div class="card-arrow-bottom-left"></div>
+                        <div class="card-arrow-bottom-right"></div>
+                    </div>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock content_body %}
+
+{% block js %}
+	{{ block.super }}
+
+{% endblock js %}

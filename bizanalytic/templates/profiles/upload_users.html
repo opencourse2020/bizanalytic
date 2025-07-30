@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content_title %}
+  <h2 class="h3">{% trans "Profile" %}</h2>
+{% endblock content_title %}
+
+{% block main %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+      <p>Please select the format of your file</p>
+      <select name="file-format" class="form-control my-3">
+          <option selected>Choose format...</option>
+          <option>CSV</option>
+          <option>XLSX</option>
+           <option>XLS</option>
+        </select>
+      <select name="user_type" class="form-control my-3">
+          <option selected>Choose you user...</option>
+           <option>parent</option>
+           <option>student</option>
+        </select>
+    <button type="submit">Upload</button>
+  </form>
+{% endblock main %}
+
+{% block project_js %}
+  {{ block.super }}
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+{% endblock project_js %}

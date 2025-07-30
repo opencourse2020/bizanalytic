@@ -1,0 +1,5 @@
+{% load i18n %}
+{% load account %}
+
+{% user_display user as user_display %}
+<p><strong>{% trans "Note" %}:</strong> <small>{% trans "you are already logged in as" %}</small> <span class="badge border border-danger text-danger fw-600">{{ user_display }}</span></p>

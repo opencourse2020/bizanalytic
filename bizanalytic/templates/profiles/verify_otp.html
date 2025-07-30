@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+
+{% block head_title %}
+
+<title>{% trans "ID Verify" %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content={% trans "Streamline user onboarding and protect your business with our secure, AI-powered ID verification service, ensuring compliance and preventing fraud." %}>
+<meta name="author" content="">
+{% endblock head_title%}
+
+{% block css %}
+
+    {{ block.super }}
+
+{% endblock css %}
+
+
+{% block content_head %}
+
+
+<h1 class="page-header">
+    {% trans "Verify Your Identity" %}
+</h1>
+{% endblock content_head %}
+
+
+
+{% block content_body %}
+    <!-- Form Section -->
+        <div class="row gx-4">
+    <div class="col-lg-8">
+
+            <div class="col-lg-6">
+                <div class="bg-white p-4 rounded-3 shadow text-center">
+                    <form method="POST" action="{% url 'profiles:verify_mfa' %}">
+                        {% csrf_token %}
+
+                        <input type="text" id="otp_code" name="otp_code"
+                        class="form-control" maxlength="6"
+                         placeholder="Enter your OTP code" required>
+                        <input type="hidden" name="user_id" value="{{ user_id }}">
+                        <button  class="btn-submit" type="submit">{% trans "Verify" $}</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-4"></div>
+        </div>
+        </div>
+{% endblock content_body %}
+
+{% block js %}
+  {{ block.super }}
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+{% endblock js %}

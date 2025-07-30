@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block page_title %}
+  <h2 class="h3">{% trans "Forbidden" %}</h2>
+{% endblock page_title %}
+
+{% block main %}
+  <ul class="list-group">
+    <li class="list-group-item">
+      {% url "core:sdashboard" as search_url %}
+      {% blocktrans %}You have no rights to access this page. <br>
+      You can <a href='{{ search_url }}'>return</a> to the home page.{% endblocktrans %}
+    </li>
+  </ul>
+{% endblock main %}

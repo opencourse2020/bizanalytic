@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block content_title %}
+  <h2 class="h3">{% trans "Active Year" %}</h2>
+{% endblock content_title %}
+{% block css %}
+    {{ block.super }}
+
+{% endblock css %}
+
+
+{% block content %}
+     <div class="page-header">
+				<div class="page-header-content header-elements-md-inline">
+					<div class="page-title d-flex">
+						<h4>
+                            <button type="button" class="btn btn-outline bg-primary text-primary-800 btn-icon ml-2" onclick="goBack()">
+                            <i class="icon-arrow-left52 mr-2" ></i></button>
+                            {% trans "Active Year Menu" %}</h4>
+						<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+					</div>
+
+
+				</div>
+    </div>
+
+    <div class="d-md-flex align-items-md-start justify-content-center">
+        <div class="tab-content w-md-75">
+
+
+
+
+                <div class="card">
+                    <div class="card-header header-elements-inline">
+                       <h6 class="card-title">{% trans "Edit Academic Year" %}</h6>
+
+
+								<div class="header-elements">
+									<div class="list-icons">
+				                		<a class="list-icons-item" data-action="collapse"></a>
+				                		<a class="list-icons-item" data-action="reload"></a>
+{#				                		<a class="list-icons-item" data-action="remove"></a>#}
+				                	</div>
+			                	</div>
+
+
+
+
+                    </div>
+                    <div class="card-body">
+                        <form action="" class="p-1" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            {{ form|crispy }}
+                            <div class="form-group">
+                              <input type="submit" value='{% trans "Submit" %}' class="btn btn-primary py-3 px-5 mt-3">
+                            </div>
+                      </form>
+
+
+                    </div>
+                    <div class="card-footer">
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+{% endblock content %}
+
+
+
+
+{% block project_js %}
+  {{ block.super }}
+  <script src={% static "vendor/jquery.formset.jss" %}></script>
+  <script src={% static "jss/center_edit.jss" %}></script>
+
+    <script>
+function goBack() {
+  window.history.back();
+}
+</script>
+{% endblock project_js %}

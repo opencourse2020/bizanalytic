@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+
+<title>{% trans "Sign Up" %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content={% trans "Streamline user onboarding and protect your business with our secure, AI-powered ID verification service, ensuring compliance and preventing fraud." %}>
+<meta name="author" content="">
+{% endblock head_title%}
+
+{% block css %}
+
+    {{ block.super }}
+
+{% endblock css %}
+
+{% block content_head %}
+
+{% endblock content_head %}
+
+{% block content_body %}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-5">
+        <div class="card px-0">
+
+            <div class="card-body">
+	<!-- BEGIN #app -->
+<!--			<div id="app" class="app app-full-height app-without-header">-->
+<!--				&lt;!&ndash; BEGIN register &ndash;&gt;-->
+<!--				<div class="register">-->
+<!--					&lt;!&ndash; BEGIN register-content &ndash;&gt;-->
+<!--					<div class="register-content">-->
+						<form action="{% url 'account_signup' %}" method="POST" name="register_form">
+							<h1 class="text-center">{% trans "Sign Up" %}</h1>
+							<p class="text-inverse text-opacity-50 text-center">{% trans "One Username is all you need to access all the offered services." %}</p>
+							{% csrf_token %}
+								{{ form|crispy }}
+								{% if redirect_field_value %}
+									<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+								{% endif %}
+							<div class="mb-3">
+								<button type="submit" class="btn btn-outline-theme btn-lg d-block w-100">{% trans "Sign Up" %}</button>
+							</div>
+							<div class="text-inverse text-opacity-50 text-center">
+								{% trans "Already have an account?" %} <a href="{{ login_url }}">{% trans "Sign In" %}</a>
+							</div>
+						</form>
+<!--					</div>-->
+					<!-- END register-content -->
+<!--				</div>-->
+				<!-- END register -->
+
+
+				<!-- BEGIN btn-scroll-top -->
+<!--				<a href="#" data-toggle="scroll-to-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>-->
+				<!-- END btn-scroll-top -->
+<!--			</div>-->
+	<!-- END #app -->
+	</div>
+            <div class="card-arrow">
+                <div class="card-arrow-top-left"></div>
+                <div class="card-arrow-top-right"></div>
+                <div class="card-arrow-bottom-left"></div>
+                <div class="card-arrow-bottom-right"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content_body %}
+
+{% block js %}
+  {{ block.super }}
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+{% endblock js %}

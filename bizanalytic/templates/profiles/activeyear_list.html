@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content_title %}
+    <h2 class="h3">{% trans "Active Years List" %}</h2>
+
+
+{% endblock content_title %}
+
+
+{% block css %}
+    {{ block.super }}
+
+{% endblock css %}
+
+{% block content %}
+    <div class="page-header">
+				<div class="page-header-content header-elements-md-inline">
+					<div class="page-title d-flex">
+						<h4>
+                            <button type="button" class="btn btn-outline bg-primary text-primary-800 btn-icon ml-2" onclick="goBack()">
+                            <i class="icon-arrow-left52 mr-2" ></i></button>
+                            {% trans "Active Years List" %}</h4>
+
+					</div>
+
+
+				</div>
+    </div>
+
+    <div class="d-md-flex align-items-md-start justify-content-center">
+        <div class="tab-content w-md-75">
+
+
+
+
+                <div class="card" >
+                    <div class="card-header header-elements-inline">
+
+
+
+{#                            <h6 class="card-title">{% trans "List of Active Years" %}</h6>#}
+                            <a class=" btn btn-primary mb-4 btn"
+                                        href="{% url 'profiles:activeyears:create' %}">{% trans "Add a New Year" %}</a>
+                             
+								<div class="header-elements">
+									<div class="list-icons">
+				                		<a class="list-icons-item" data-action="collapse"></a>
+				                		<a class="list-icons-item" data-action="reload"></a>
+{#				                		<a class="list-icons-item" data-action="remove"></a>#}
+				                	</div>
+			                	</div>
+
+                        </div>
+
+
+                    <div class="card-body">
+
+
+                        <p class="card-text">
+                        <ul class="list-group">
+                            {% for ayear in object_list %}
+                            <div class="container-fluid">
+                            <div class="row align-items-center">
+                            <div class="col-4" style="background-color: #F5F5F5; border: white solid 1px;">
+                                <a href="{% url 'profiles:activeyears:edit' ayear.pk %}"><h6 class="text-left text-warning-700">{{ ayear }}</h6></a>
+                            </div>
+                            <div class="col-3" style="border-left: 1px solid #ffffff; background-color: #F5F5F5">
+                                <h6 class="text-left">{{ ayear.startdate|date:"d-m-Y" }}</h6>
+                            </div>
+                            <div class="col-3" style="border-left: 1px solid #ffffff; background-color: #F5F5F5">
+                                <h6 class="text-left">{{ ayear.enddate|date:"d-m-Y" }}</h6>
+                            </div>
+                            <div class="col-2 text-center" style="border-left: 1px solid #ffffff; background-color: #F5F5F5">
+                                 <div class="list-icons">
+										<div class="dropdown">
+											<a href="#" class="list-icons-item" data-toggle="dropdown">
+												<i class="icon-menu9"></i>
+											</a>
+
+											<div class="dropdown-menu dropdown-menu-right">
+												<a href="{% url 'profiles:activeyears:edit' ayear.pk %}" class="dropdown-item"><i class="icon-pencil"></i> {% trans "Edit" %}</a>
+												<a href="{% url 'profiles:activeyears:delete' ayear.pk %}" class="dropdown-item"><i class="icon-trash"></i> {% trans "Delete" %}</a>
+
+											</div>
+										</div>
+									</div>
+
+
+                            </div>
+                            </div>
+                            </div>
+                            {% empty %}
+                                <li class="list-group-item">{% trans "No Active Years yet." %}</li>
+                            {% endfor %}
+                        </ul>
+                        </p>
+                    </div>
+                    <div class="card-footer">
+
+
+                    </div>
+                </div>
+
+
+
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+{% block project_js %}
+  {{ block.super }}
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+{% endblock project_js %}

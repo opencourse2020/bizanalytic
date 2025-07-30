@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+    {% block head_title %}
+
+        <title>{% trans "LogiFlex NewsLetters" %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content={% trans "Analytic Tools for Startups and small to medium Companies (SMB)" %}>
+        <meta name="author" content="">
+	{% endblock %}
+
+    {% block css %}
+	    {{ block.super }}
+         <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-bs5/css/dataTables.bootstrap5.min.css" %} >
+            <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" %} >
+            <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" %} >
+            <link rel="stylesheet" type="text/css" href={% static "assets/plugins/bootstrap-table/dist/bootstrap-table.min.css" %} >
+	{% endblock css %}
+
+    {% block content_head %}
+            <ul class="breadcrumb">
+				<li class="breadcrumb-item"><a href="#">{% trans "Home" %}</a></li>
+				<li class="breadcrumb-item active">{% trans "LogiFlex NewsLetters" %}</li>
+			</ul>
+
+			<h1 class="page-header">
+				{% trans "LogiFlex NewsLetters" %} <small>{% trans "List of LogiFlex NewsLetters" %}</small>
+			</h1>
+    {% endblock content_head %}
+    {% block content_body %}
+        <div id="datatable" class="mb-5">
+									<div class="card">
+										<div class="card-body">
+											<table id="datatableDefault" class="table text-nowrap w-100">
+												<thead>
+													<tr>
+														<th>#</th>
+														<th>{% trans "Title" %}</th>
+														<th>{% trans "Date Created" %}</th>
+                                                        <th>{% trans "Sent" %}</th>
+
+													</tr>
+												</thead>
+												<tbody>
+                                                {% for newsletter in object_list %}
+													<tr>
+														<td></td>
+                                                        <td><a href="{% url 'logiflex:newsletters:edit' newsletter.pk %}"> {{ newsletter.title }} </a> </td>
+														<td>{{ newsletter.date_created }}</td>
+                                                        {% if newsletter.dispatched %}
+                                                            <td><i class="fas fa-lg fa-fw me-2 fa-check text-primary"></i></td>
+                                                            {% else %}
+                                                            <td><i class="fas fa-lg fa-fw me-2 fa-ban text-danger"></i></td>
+                                                        {% endif %}
+													</tr>
+                                                {% endfor %}
+        											</tbody>
+											</table>
+										</div>
+										<div class="card-arrow">
+											<div class="card-arrow-top-left"></div>
+											<div class="card-arrow-top-right"></div>
+											<div class="card-arrow-bottom-left"></div>
+											<div class="card-arrow-bottom-right"></div>
+										</div>
+										<div class="hljs-container">
+											<pre><code class="xml" data-url="assets/data/table-plugins/code-1.json"></code></pre>
+										</div>
+									</div>
+								</div>
+    {% endblock content_body %}
+
+
+{% block js %}
+	{{ block.super }}
+    <!-- ================== BEGIN page-js ================== -->
+         <script src={% static "assets/plugins/datatables.net/js/dataTables.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-bs5/js/dataTables.bootstrap5.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js" %}></script>
+        <script src={% static "assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons/js/buttons.flash.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons/js/buttons.html5.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons/js/buttons.print.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js" %}></script>
+        <script src={% static "assets/plugins/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js" %}></script>
+    	<script src={% static "assets/plugins/bootstrap-table/dist/bootstrap-table.min.js"%}></script>
+
+    <!-- ================== END page-js ================== -->
+    <script src={% static "assets/js/demo/highlightjs.demo.js" %}></script>
+
+    <script src={% static "assets/js/demo/table-plugins.analysistype.js" %}></script>
+    <script src={% static "assets/js/demo/sidebar-scrollspy.demo.js" %}></script>
+{% endblock js %}
+

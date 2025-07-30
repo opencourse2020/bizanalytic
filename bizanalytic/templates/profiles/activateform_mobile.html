@@ -1,0 +1,136 @@
+{% extends "base_mobile.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+      {% block head_title %}
+            <title>{% trans "Deactivate Account" %}</title>
+      {% endblock %}
+
+{% block css %}
+{{ block.super }}
+
+{% endblock css %}
+
+{% block page_header %}
+{{ block.super }}
+{% endblock page_header %}
+
+{% block page_footer %}
+
+{% endblock page_footer %}
+
+
+
+{% block page_title %}
+    {% block page_title_name %}
+               {{ block.super }}
+    {% endblock page_title_name %}
+    {% block page_title_body %}
+                <div class="d-flex flex-row me-0">
+{#                <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-light" data-toggle-theme><i class="fa fa-moon"></i></a>#}
+{#                <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark" data-toggle-theme><i class="fa fa-lightbulb color-yellow-dark"></i></a>#}
+                <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i class="fa fa-bars"></i></a>
+                </div>
+                </div>
+                 <div class="page-title-clear"></div>
+
+        <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-width="280" data-menu-active="nav-welcome" data-menu-load={% static "menu/menu-main.html"%}></div>
+
+            {% endblock page_title_body %}
+
+{% endblock page_title %}
+{% block content %}
+<div class="page-content pb-0">
+<form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+        <div class="card card-style">
+            <div class="content">
+                <p class="mb-n1 color-highlight font-600 font-12">{% trans "Change" %}</p>
+                <h4>{{ title }}</h4>
+            <div class="mt-5 mb-3">
+
+
+                    <div class="alert me-3 ms-3 rounded-s bg-yellow-dark" role="alert">
+{#                        <span class="alert-icon color-white"><i class="fa fa-exclamation-triangle font-18"></i></span>#}
+                        <h4 class="color-white font-"><i class="fa fa-exclamation-triangle px-3 font-18"></i>{% trans "Warning" %}</h4>
+                        <strong class="alert-icon-text color-white px-1">{% trans "Please Read Before you deactivate your account" %}</strong>
+                    </div>
+
+                <div class="alert me-3 ms-3 rounded-s bg-red-dark " role="alert">
+                    <br>
+{#                    <span class="alert-icon color-white"><i class="fa fa-times-circle font-18"></i></span>#}
+                    <h4 class="color-white"><i class="fa fa-times-circle font-18 px-3"></i> {% trans "Attention" %}</h4>
+                    <strong class="alert-icon-text color-white px-1">{% trans "Once you deactivate your account, you won't be able to access it!!" %}
+                        {% trans "If you think you have deactivated your account by mistake, contact us to reactivate it for you" %}</strong>
+                </div>
+
+                            <div class="align-items-end justify-content-end">
+                            {{ form|crispy }}
+{#                              <input type="submit" value='{% trans "Save" %}' class="btn btn-primary py-2 px-5">#}
+                            <button type="button" id="deactivate_button" class="btn btn-3d btn-m btn-full mb-3 rounded-xs text-uppercase font-700 shadow-s  border-blue-dark bg-blue-light" disabled data-menu="menu-warning-2">
+                              {% trans "Deactivate" %}
+                            </button>
+
+                        </div>
+{#                    <input type="submit" value='{% trans "Save" %}' class="btn btn-success py-2 px-5" style="float: right;">#}
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="menu-warning-2"
+         class="menu menu-box-modal bg-red-dark rounded-m"
+         data-menu-height="310"
+         data-menu-width="350">
+        <h1 class="text-center mt-4"><i class="fa fa-3x fa-times-circle scale-box color-white shadow-xl rounded-circle"></i></h1>
+        <h1 class="text-center mt-3 text-uppercase color-white font-700">{% trans "Warning" %}</h1>
+        <p class="boxed-text-l color-white opacity-70">
+            {% trans "You are about to deactivate your account" %}<br>
+            {% trans "Are you sure?" %}
+        </p>
+        <input type="submit" class="btn btn-m btn-center-l button-s shadow-l rounded-s text-uppercase font-600 bg-white color-black" value='{% trans "Yes Deactivate" %}'>
+{#        <a href="#" class="close-menu btn btn-m btn-center-l button-s shadow-l rounded-s text-uppercase font-600 bg-white color-black">Hmmm, Check again?</a>#}
+    </div>
+     </form>
+</div>
+{% endblock content %}
+    <!-- Page content ends here-->
+
+
+
+
+{% block project_js %}
+<script type="text/javascript" src={% static "vendor/mobile/scripts/bootstrap.min.js" %}></script>
+    <script type="text/javascript" src={% static "vendor/mobile/scripts/custom.js" %}></script>
+<script>
+
+document.getElementById("id_is_active").addEventListener("change", idinactive);
+
+function idinactive() {
+
+    var idcheck = document.getElementById('id_is_active').checked;
+        if (idcheck)
+        {
+            document.getElementById("deactivate_button").disabled = true;
+
+        }
+        else{
+            document.getElementById("deactivate_button").removeAttribute("disabled");
+        }
+
+
+
+
+    }
+
+</script>
+
+{% endblock project_js %}
+
+
+
+
+

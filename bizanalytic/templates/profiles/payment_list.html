@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block head_title %}
+
+<title>{% trans "Payments" %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content={% trans "Streamline user onboarding and protect your business with our secure, AI-powered ID verification service, ensuring compliance and preventing fraud." %}>
+<meta name="author" content="">
+{% endblock head_title%}
+{% block css %}
+
+    {{ block.super }}
+
+{% endblock css %}
+
+
+
+{% block content_head %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'profiles:profile' %}">{% trans "Profile" %}</a></li>
+        <li class="breadcrumb-item active">{% trans "List of Payments" %}</li>
+    </ul>
+
+{% endblock content_head %}
+
+{% block content_body %}
+
+<div class="row gx-4">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-content-center">
+                <h5 class="card-title mb-0 align-content-center">{{ title }}</h5>
+
+                <a href="{% url 'profiles:payments:create'%}" type="button" class="btn btn-success " style="float: right;">{% trans "Add a Payment" %}</a>
+            </div>
+            <div class="card-body">
+
+                <table class="table table-hover mb-0">
+                    <thead>
+                    <tr>
+                        <th scope="col">{% trans "Amount" %}</th>
+                        <th scope="col">{% trans "Rmaining" %}</th>
+                        <th scope="col">{% trans "Date Added" %}</th>
+                        <th scope="col">{% trans "Approved" %}</th>
+                        <th scope="col">{% trans "Document" %}</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for adminpay in object_list %}
+                    <tr>
+{#                        <th scope="row"><a href="{% url 'profiles:services:edit' adminservice.pk %}">{{ adminservice.service.description }}</a></th>#}
+                        <td>{{ adminpay.amount }} {% trans "Dh" %}</td>
+                        <td>{{ adminpay.remainamount }} {% trans "Dh" %}</td>
+                        <td>{{ adminpay.paydate|date:"d/m/Y" }}</td>
+                        <td>{% if adminpay.approved %}
+                                <i class="fas fa-lg fa-fw me-2 fa-check text-success"></i> <span>{% trans "Yes" %}</span>
+                            {% else %}
+                            <i class="fas fa-lg fa-fw me-2 fa-times text-danger"></i><span>{% trans "No" %}</span>
+                            {% endif %}
+
+                        </td>
+                        <td>
+                            {% if adminpay.document %}
+                                <i class="fas fa-lg fa-fw me-2 fa-file-image text-success"></i><span>{{ adminpay.documentname }}</span>
+                            {% else %}
+                                <i class="fas fa-lg fa-fw me-2 fa-times-circle text-light"></i><span>{% trans "No File" %}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2">
+                        {% trans "Total Paid:" %}
+                    </div>
+                    <div class="p-2 " style="font-weight: bold">
+                        {{ totalpaid }} {% trans "Dh" %}
+                    </div>
+                    <div class="p-2">
+                        {% trans "Remaining:" %}
+                    </div>
+                    <div class="p-2" style="font-weight: bold">
+                        {{ remaining }} {% trans "Dh" %}
+                    </div>
+                </div>
+            </div>
+            <div class="card-arrow">
+                <div class="card-arrow-top-left"></div>
+                <div class="card-arrow-top-right"></div>
+                <div class="card-arrow-bottom-left"></div>
+                <div class="card-arrow-bottom-right"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content_body %}
+
+{% block js %}
+  {{ block.super }}
+    <script src={% static "assets/plugins/@highlightjs/cdn-assets/highlight.min.js" %}></script>
+    <script src={% static "assets/js/demo/highlightjs.demo.js" %}></script>
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+
+
+{% endblock js %}
+
+

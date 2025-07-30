@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block head_title %}
+
+<title>{% trans "Payments" %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content={% trans "Streamline user onboarding and protect your business with our secure, AI-powered ID verification service, ensuring compliance and preventing fraud." %}>
+<meta name="author" content="">
+{% endblock head_title%}
+{% block css %}
+
+    {{ block.super }}
+
+{% endblock css %}
+
+
+
+{% block content_head %}
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'profiles:profile' %}">{% trans "Profile" %}</a></li>
+        <li class="breadcrumb-item active">{% trans "Edit Your Payments" %}</li>
+    </ul>
+
+{% endblock content_head %}
+
+{% block content_body %}
+
+<div class="row gx-4">
+    <div class="col-lg-6">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title">{{ title }}</h5>
+
+
+            </div>
+            <div class="card-body">
+                <form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+
+                    {{ form|crispy }}
+
+
+
+                            <input type="submit" value='{% trans "Save" %}' class="btn btn-success mt-4 py-2 px-5" style="float: right;">
+
+
+
+
+
+
+                </form>
+                <br>
+            </div>
+            <div class="card-arrow">
+                <div class="card-arrow-top-left"></div>
+                <div class="card-arrow-top-right"></div>
+                <div class="card-arrow-bottom-left"></div>
+                <div class="card-arrow-bottom-right"></div>
+            </div>
+        </div>
+    </div>
+<div class="col-lg-6">
+        <div class="card bg-inverse bg-opacity-10">
+
+            <div class="card-body">
+							<!-- title -->
+							<div class="d-flex align-items-center mb-3">
+								<div class="flex-fill fw-bold fs-16px">{% trans "Type of Services" %}</div>
+							</div>
+
+							<!-- list -->
+							<div>
+                                <div class="row mb-2">
+									<div class="col-4  text-center"><i class="fas fa-lg fa-fw fa-bold text-warning"></i></div>
+									<div class="col-4 text-center"><i class="fas fa-lg fa-fw fa-bolt text-success"></i></div>
+									<div class="col-4 text-center"><i class="fas fa-lg fa-fw fa-gem text-info-emphasis"></i></div>
+								</div>
+								<div class="row mb-2">
+									<div class="col-4 text-center"><strong class="text-warning">{% trans "Basic Verification" %}</strong></div>
+									<div class="col-4 text-center"><strong class="text-success">{% trans "Standard Verification" %}</strong></div>
+									<div class="col-4 text-center"><strong class="text-info-emphasis">{% trans "Full Verification" %}</strong></div>
+								</div>
+                                <hr>
+								<div class="row mb-2">
+									<div class="col-4 text-center">5 {% trans "Dh/Verification" %}</div>
+									<div class="col-4 text-center">10 {% trans "Dh/Verification" %}</div>
+									<div class="col-4 text-center">15 {% trans "Dh/Verification" %}</div>
+								</div>
+								<div class="row mb-2">
+									<div class="col-4 text-center"><span class="small text-inverse text-opacity-50">{% trans "Name, Address, ID" %}</span></div>
+									<div class="col-4 text-center"><span class="small text-inverse text-opacity-50">{% trans "Basic + Email" %}</span></div>
+									<div class="col-4 text-center"><span class="small text-inverse text-opacity-50">{% trans "Standard + Photo, Phone, 2FA" %}</span></div>
+								</div>
+
+							</div>
+						</div>
+            <div class="card-arrow">
+                <div class="card-arrow-top-left"></div>
+                <div class="card-arrow-top-right"></div>
+                <div class="card-arrow-bottom-left"></div>
+                <div class="card-arrow-bottom-right"></div>
+            </div>
+        </div>
+</div>
+</div>
+{% endblock content_body %}
+
+{% block js %}
+  {{ block.super }}
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+
+
+{% endblock js %}
+
+

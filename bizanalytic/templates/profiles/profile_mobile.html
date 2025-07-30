@@ -1,0 +1,148 @@
+{% extends "base_mobile.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+      {% block head_title %}
+            <title>{% trans "Profile Overview" %}</title>
+      {% endblock %}
+
+{% block css %}
+{{ block.super }}
+{% endblock css %}
+
+{% block page_header %}
+{{ block.super }}
+{% endblock page_header %}
+
+{% block page_footer %}
+
+{% endblock page_footer %}
+
+
+
+    
+{% block page_title %}
+    {% block page_title_name %}
+               {{ block.super }}
+    {% endblock page_title_name %}
+    {% block page_title_body %}
+                <div class="d-flex flex-row me-0">
+{#                <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-light" data-toggle-theme><i class="fa fa-moon"></i></a>#}
+{#                <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark" data-toggle-theme><i class="fa fa-lightbulb color-yellow-dark"></i></a>#}
+                <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i class="fa fa-bars"></i></a>
+                </div>
+                </div>
+                 <div class="page-title-clear"></div>
+
+        <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-width="280" data-menu-active="nav-welcome" data-menu-load={% static "menu/menu-main.html"%}></div>
+
+            {% endblock page_title_body %}
+
+{% endblock page_title %}
+{% block content %}
+            
+    <div class="page-content pb-0">
+        <div class="card card-style mb-2">
+
+            <div class="d-block content mb-1">
+            <div class="flex-column text-center">
+
+                {% if user.picture %}
+                        <img class="rounded-circle mt-3 shadow-xl" src="{{ user.picture.url }}" width="115" height="103" >
+                        {% else %}
+                        <img class="rounded-circle mt-3 shadow-xl" src={% static "pictures/user_placeholder.png" %} alt="" width="115" height="103">
+                        {% endif %}
+            </div>
+                <!-- left side of profile -->
+                <div class="flex-grow-1 text-center">
+                    <h2>{{ user.first_name }} {{ user.last_name }}<i class="fa fa-check-circle color-blue-dark font-18 mt-2 ms-3"></i></h2>
+                    <p class="mb-2 ">
+                        <i class="fas fa-lg fa-fw me-2 fa-map-marker-alt"></i>
+                        <span class="align-middle">{{ user.profile.city }}, {{ user.profile.country }}</span>
+                    </p>
+
+                </div>
+
+            </div>
+            <!-- follow buttons-->
+
+        </div>
+
+    <div class="row mb-0">
+            <div class="col pe-2">
+                <a href="{% url 'profiles:userinfo' user.pk %}" class="card card-style rounded-m me-0 p-3 mb-3">
+                    <i class="fa fa-info-circle color-red-light font-40 icon-50"></i>
+                    <h4 class="pt-3">{% trans "User Info" %}</h4>
+                    <p class="font-11 mt-n2 mb-0 color-highlight">{% trans "Name, Username, ..." %}</p>
+                </a>
+            </div>
+            <div class="col ps-2">
+                <a href="{% url 'profiles:editprofile' %}" class="card card-style rounded-m ms-0  p-3 mb-3">
+                    <i class="fa fa-cog color-blue-light font-40 icon-50"></i>
+                    <h4 class="pt-3">{% trans "Edit Profile" %}</h4>
+                    <p class="font-11 mt-n2 mb-0 color-highlight">{% trans "Address, Tel, ..." %}</p>
+                </a>
+            </div>
+            <div class="w-100"></div>
+            <div class="col pe-2">
+                <a href="{% url 'profiles:changepassword' %}" class="card card-style rounded-m me-0 p-3 mb-3">
+{#                    <img src="{% static 'pictures/password.png' %}" style="width: 40px;">#}
+                    <i class="fa fa-user-lock color-green-light font-40 icon-50"></i>
+                    <h4 class="pt-3">{% trans "Password"  %}</h4>
+                    <p class="font-11 mt-n2 mb-0 color-highlight">{% trans "Change password, ..." %}</p>
+                </a>
+            </div>
+            <div class="col ps-2">
+                <a href="{% url 'profiles:changeemail' %}" class="card card-style rounded-m ms-0  p-3 mb-3">
+                    <i class="fa fa-mail-bulk color-yellow-light font-40 icon-50"></i>
+                    <h4 class="pt-3">{% trans "Emails" %}</h4>
+                    <p class="font-11 mt-n2 mb-0 color-highlight">{% trans "Change your email" %}</p>
+                </a>
+            </div>
+            <div class="w-100"></div>
+            <div class="col pe-2">
+                <a href="{% url 'mfa_index' %}" class="card card-style rounded-m me-0 p-3 mb-3">
+{#                    <i class="fa fa-lock color-teal-light font-40 icon-50"></i>#}
+                    <img src="{% static 'pictures/2fa.png' %}" style="width: 40px;">
+                    <h4 class="pt-3">{% trans "Enable 2FA" %}</h4>
+                    <p class="font-11 mt-n2 mb-0 color-highlight">{% trans "with Autheticator App" %}</p>
+                </a>
+            </div>
+            <div class="col ps-2">
+                <a href="#" class="card card-style rounded-m ms-0  p-3 mb-3">
+                    <i class="fa fa-language color-gray-dark font-40 icon-50"></i>
+                    <h4 class="pt-3">{% trans "Language" %}</h4>
+                    <p class="font-11 mt-n2 mb-0 color-highlight">{% trans "English, French, ..." %}</p>
+                </a>
+            </div>
+            <div class="w-100"></div>
+            <div class="col pe-2">
+                <a href="{% url 'profiles:activate' user.pk %}" class="card card-style rounded-m me-0 p-3 mb-3">
+                    <i class="fa fa-lock color-brown-light font-40 icon-50"></i>
+                    <h4 class="pt-3">{% trans "Deactivate" %}</h4>
+                    <p class="font-11 mt-n2 mb-0 color-highlight">{% trans "your Account" %}</p>
+                </a>
+            </div>
+            <div class="col ps-2">
+                <a href="{% url 'profiles:logout' %}" class="card card-style rounded-m ms-0  p-3 mb-3">
+                    <i class="fa fa-sign-out color-green-light font-40 icon-50"></i>
+                    <h4 class="pt-3">{% trans "Logout" %}</h4>
+                    <p class="font-11 mt-n2 mb-0 color-highlight">{% trans "Signout" %}</p>
+                </a>
+            </div>
+        </div>
+        
+
+    </div>
+
+    {% endblock content %}
+    <!-- Page content ends here-->
+         
+    
+
+
+{% block project_js %}
+<script type="text/javascript" src={% static "vendor/mobile/scripts/bootstrap.min.js" %}></script>
+    <script type="text/javascript" src={% static "vendor/mobile/scripts/custom.js" %}></script>
+{% endblock project_js %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+
+<title>{% trans "Login" %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content={% trans "Streamline user onboarding and protect your business with our secure, AI-powered ID verification service, ensuring compliance and preventing fraud." %}>
+<meta name="author" content="">
+{% endblock head_title%}
+
+{% block css %}
+
+    {{ block.super }}
+
+{% endblock css %}
+
+{% block content_head %}
+
+{% endblock content_head %}
+
+{% block content_body %}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-5">
+	<!-- BEGIN #app -->
+	<div id="app" class="app app-full-height app-without-header">
+		<!-- BEGIN login -->
+		<div class="login">
+			<!-- BEGIN login-content -->
+			<div class="login-content">
+				<form action="{% url 'account_login' %}" class="contact-form login_form" method="POST">
+					{% csrf_token %}
+                <h1 class="text-center">{% trans "Sign In" %}</h1>
+					<div class="text-inverse text-opacity-50 text-center mb-4">
+						{% trans "For your protection, please verify your identity." %}
+					</div>
+					{{ form|crispy }}
+					{% if redirect_field_value %}
+						<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+					{% endif %}
+{#					<a href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>#}
+					<div class="form-group">
+						<button type="submit" class="btn btn-outline-theme btn-lg d-block w-100 fw-500 mb-3">{% trans 'Sign In' %}</button>
+					</div>
+                    <div class="text-center text-inverse text-opacity-50">
+						{% trans "Don't have an account yet?" %} <a href="{% url 'account_signup' %}">{% trans 'Sign Up' %}</a>.
+					</div>
+				</form>
+			</div>
+			<!-- END login-content -->
+		</div>
+		<!-- END login -->
+		
+		<!-- BEGIN theme-panel -->
+		
+		<!-- END theme-panel -->
+		<!-- BEGIN btn-scroll-top -->
+		<a href="#" data-toggle="scroll-to-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
+		<!-- END btn-scroll-top -->
+	</div>
+	<!-- END #app -->
+	</div>
+</div>
+{% endblock content_body %}
+
+{% block js %}
+  {{ block.super }}
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+{% endblock js %}

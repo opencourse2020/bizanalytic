@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+
+{% block head_title %}
+
+<title>{% trans "ID Verify" %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content={% trans "Streamline user onboarding and protect your business with our secure, AI-powered ID verification service, ensuring compliance and preventing fraud." %}>
+<meta name="author" content="">
+{% endblock head_title%}
+
+{% block css %}
+
+    {{ block.super }}
+
+<style>
+    .input {
+    width: 40px;
+    border: none;
+    border-bottom: 3px solid rgba(0, 0, 0, 0.5);
+    margin: 0 10px;
+    text-align: center;
+    font-size: 36px;
+    cursor: not-allowed;
+    pointer-events: none;
+        background-color: floralwhite;
+        color: #0a0a0a;
+}
+
+.input:focus {
+    border-bottom: 3px solid orange;
+    outline: none;
+}
+
+.input:nth-child(1) {
+    cursor: pointer;
+    pointer-events: all;
+}
+</style>
+
+{% endblock css %}
+
+
+{% block content_head %}
+
+
+<h1 class="page-header">
+    {% trans "Verify Your Identity" %}
+</h1>
+{% endblock content_head %}
+
+
+
+{% block content_body %}
+    <!-- Form Section -->
+        <div class="row gx-4">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header text-center">
+            {% if request.user.picture %}
+                <img class="img-fluid" src="{{ request.user.picture.url }}" style="border-radius: 50%; max-width: 150px; height: 150px" alt="">
+            {% else %}
+                <i class="fas fa-user-circle fa-5x mb-3 rounded-circle"></i>
+            {% endif %}
+        <h5 class="card-title">{{ request.user.email }}</h5>
+        <p>{% trans "Member since" %}:&nbsp;{{ request.user.date_joined }}</p>
+                </div>
+            <div class="card-body text-center">
+        {% if not  request.user.mfa_enabled %}
+        <h5 class="card-title">
+            {% trans "Enable 2FA with Autheticator App." %}
+        </h5>
+
+                <img src="{{ qr_code_data_uri }}" class="card-img p-1 mb-2 border border-2 border-success" alt="{{ img_path }}" style="max-width: 200px; height: 200px">
+
+                <form method="POST" action="{% url 'profiles:verify_mfa' %}" class="form text-center">
+                    {% csrf_token %}
+                    <h5 class="card-title">
+                        {% trans "Enter Your Code Here" %}
+                    </h5>
+                                <div class="form-group text-">
+<!--                        <div class="mx-auto" style="width: 50%;">-->
+
+<!--                        </div>-->
+                        <div id="inputs" class="inputs mb-2">
+                            <input class="input" type="text"
+                                inputmode="numeric" maxlength="1" />
+                            <input class="input" type="text"
+                                inputmode="numeric" maxlength="1" />
+                            <input class="input" type="text"
+                                inputmode="numeric" maxlength="1" />
+                            <input class="input" type="text"
+                                inputmode="numeric" maxlength="1" />
+                            <input class="input" type="text"
+                                inputmode="numeric" maxlength="1" />
+                            <input class="input" type="text"
+                                inputmode="numeric" maxlength="1" />
+                        </div>
+                    </div>
+                    <input type="hidden" name="user_id" value="{{ request.user.id }}">
+                    <input type="hidden" id="otp_code" name="otp_code" value="">
+                    <button class="btn btn-success" type="submit">{% trans "Verify" %}</button>
+                </form>
+
+
+        {% else %}
+        <a href="{% url 'profiles:disable_2fa' %}" class="btn btn-success" disabled>
+            {% trans "Disable 2FA" %}
+        </a>
+        {% endif %}
+                </div>
+            <div class="card-arrow">
+                        <div class="card-arrow-top-left"></div>
+                        <div class="card-arrow-top-right"></div>
+                        <div class="card-arrow-bottom-left"></div>
+                        <div class="card-arrow-bottom-right"></div>
+                    </div>
+            </div>
+        </div>
+        </div>
+{% endblock content_body %}
+
+{% block js %}
+  {{ block.super }}
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+<script>
+    var regex = /^\d{1,4}(?:\.\d{0,3})?$/;
+$("#otp_code").keypress(function (e) {
+    var key = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (!regex.test($("input").val() + key)) {
+        e.preventDefault ? e.preventDefault() : e.returnValue = false;
+    }
+});
+</script>
+
+<script>
+    const inputs = document.getElementById("inputs");
+    const inputs_elements = inputs.children;
+    const otpinput = document.getElementById("otp_code");
+    const inputs_arr = Array.from(inputs_elements);
+    var otp = otpinput.value;
+
+inputs.addEventListener("input", function (e) {
+    const target = e.target;
+    const val = target.value;
+
+    if (isNaN(val)) {
+        target.value = "";
+        return;
+    }
+
+    if (val != "") {
+        const next = target.nextElementSibling;
+        var otpcode = "";
+        Array.from(inputs_elements).forEach((input) => {
+        otpcode = otpcode + input.value;
+            });
+
+        otpinput.value = otpcode;
+        if (next) {
+            next.focus();
+        }
+    }
+});
+
+inputs.addEventListener("keyup", function (e) {
+    const target = e.target;
+    const key = e.key.toLowerCase();
+
+    if (key == "backspace" || key == "delete") {
+        target.value = "";
+        var otpcode = "";
+        Array.from(inputs_elements).forEach((input) => {
+        otpcode = otpcode + input.value;
+            });
+        otpinput.value = otpcode;
+        // otpinput.value = otp.substring(0, otp.length-1);
+        const prev = target.previousElementSibling;
+        if (prev) {
+            prev.focus();
+        }
+        return;
+    }
+});
+</script>
+{% endblock js %}

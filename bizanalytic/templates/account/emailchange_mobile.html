@@ -1,0 +1,138 @@
+{% extends "base_mobile.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load allauth %}
+
+      {% block head_title %}
+            <title>{% trans "Email Address" %}</title>
+      {% endblock %}
+
+{% block css %}
+{{ block.super }}
+
+{% endblock css %}
+
+{% block page_header %}
+{{ block.super }}
+{% endblock page_header %}
+
+{% block page_footer %}
+
+{% endblock page_footer %}
+
+
+
+    
+{% block page_title %}
+    {% block page_title_name %}
+               {{ block.super }}
+    {% endblock page_title_name %}
+    {% block page_title_body %}
+                <div class="d-flex flex-row me-0">
+{#                <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-light" data-toggle-theme><i class="fa fa-moon"></i></a>#}
+{#                <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark" data-toggle-theme><i class="fa fa-lightbulb color-yellow-dark"></i></a>#}
+                <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i class="fa fa-bars"></i></a>
+                </div>
+                </div>
+                 <div class="page-title-clear"></div>
+
+        <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-width="280" data-menu-active="nav-welcome" data-menu-load={% static "menu/menu-main.html"%}></div>
+
+            {% endblock page_title_body %}
+
+{% endblock page_title %}
+{% block content %}
+            
+    <div class="page-content pb-0">
+    <div class="card card-style">
+            <div class="content">
+                <p class="mb-n1 color-highlight font-600 font-12">{% trans "Email Address" %}</p>
+                <h4>{% trans "Manage your Email Addresses" %}</h4>
+        {% if user.emailaddress_set.all %}
+
+
+<form action="{% url 'account_email' %}" class="email_list contact-form" method="post">
+{% csrf_token %}
+<fieldset class="blockLabels">
+<p>{% trans 'The following e-mail addresses are associated with your account:' %}</p>
+  {% for emailaddress in user.emailaddress_set.all %}
+<div class="form-check">
+      <input class="form-check-input" id="email_radio_{{forloop.counter}}" type="radio" name="email" {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked"{%endif %} value="{{emailaddress.email}}"/>
+
+
+      <label for="email_radio_{{forloop.counter}}" class="form-check-label {% if emailaddress.primary %}primary_email{%endif%}">
+
+{{ emailaddress.email }}
+    {% if emailaddress.verified %}
+    <span class="verified">{% trans "Verified" %}</span>
+    {% else %}
+    <span class="unverified">{% trans "Unverified" %}</span>
+    {% endif %}
+      {% if emailaddress.primary %}<span class="primary">{% trans "Primary" %}</span>{% endif %}
+</label>
+</div>
+  {% endfor %}
+
+<div class="buttonHolder mt-3">
+      <button class="btn btn-success mr-1 mb-1" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
+      <button class="btn btn-success mr-1 mb-1" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
+      <button class="btn btn-danger mr-1 mb-1" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
+</div>
+
+</fieldset>
+</form>
+
+{% else %}
+<p><strong>{% trans 'Warning:'%}</strong> {% trans "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc." %}</p>
+
+{% endif %}
+    </div>
+    </div>
+
+
+    <div class="card card-style">
+            <div class="content">
+                <p class="mb-n1 color-highlight font-600 font-12">{% trans "Add E-mail Address" %}</p>
+                <h4>{% trans "New Email Address" %}</h4>
+                <form method="post" action="{% url 'account_email' %}" class="add_email contact-form">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button class="btn btn-success py-2 px-5" style="float: right;" name="action_add" type="submit">{% trans "Add E-mail" %}</button>
+                </form>
+
+            </div>
+    </div>
+
+    </div>
+    {% endblock content %}
+    <!-- Page content ends here-->
+         
+    
+
+
+{% block project_js %}
+<script type="text/javascript" src={% static "vendor/mobile/scripts/bootstrap.min.js" %}></script>
+    <script type="text/javascript" src={% static "vendor/mobile/scripts/custom.js" %}></script>
+
+    <script>
+    const inputArrayb = document.getElementsByClassName('upload-fileb');
+        if(inputArrayb.length){
+            inputArrayb[0].addEventListener('change',prepareUpload,false);
+                function prepareUpload(event){
+                  if (this.files && this.files[0]) {
+                  var img = document.getElementById('image-datab');
+                  img.src = URL.createObjectURL(this.files[0]);
+
+              }
+                const files = event.target.files;
+                const fileName = files[0].name;
+                console.log(fileName);
+
+                //document.getElementsByClassName('upload-fileb-name')[0].innerHTML = files[0].name;
+
+            }
+
+        }
+    </script>
+{% endblock project_js %}

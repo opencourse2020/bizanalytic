@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content_title %}
+    <h2 class="h3">{% trans "Create Users" %}</h2>
+{% endblock content_title %}
+
+{% block content %}
+    <div class="page-header">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4>{% trans "Users Management " %}</h4>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header bg-transparent border-bottom header-elements-inline">
+            <h6 class="text-uppercase font-weight-semibold">{% trans "Create New Users" %}</h6>
+            <div class="header-elements">
+                <div class="list-icons">
+                    <a class="list-icons-item" data-action="collapse"></a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-md-8" style="border: #ddd solid 1px ">
+            <form action="{% url "profiles:createnewusers" %}" id="post-form" method="post" enctype="multipart/form-data" >
+                {% csrf_token %}
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                        <h3>{% trans "Admins" %}</h3>
+                        <p>{% trans "Enter the Number of Admins" %}</p>
+                        <input type="number" name="admins" id="admins" value="0">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" name="tenantscheck" id="tenantscheck" class="form-check-input" checked="" >
+                                {% trans "Tenants" %}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                        <h3>{% trans "Tenants" %}</h3>
+                        <p>{% trans "Enter the Number of Tenants" %}</p>
+                        <input type="number" name="tenants" id="tenants" value="0">
+
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row justify-content-center">
+                    <div class =col-md-4>
+                        <div class="form-group">
+                            <button type="button" id="simulatedata" class="btn btn-primary"><i class="icon-cog3 mr-2"></i>{% trans "Create" %}</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header bg-transparent border-bottom header-elements-inline">
+            <h6 class="text-uppercase font-weight-semibold">{% trans "List of New Users" %}</h6>
+            <div class="header-elements">
+                <div class="list-icons">
+                    <a class="list-icons-item" data-action="collapse"></a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body"> </div>
+        <table class="table datatable-responsive-row-control">
+            <thead>
+            <tr>
+                <th></th>
+                <th>{% trans "User Name" %}</th>
+                <th>{% trans "User Email" %}</th>
+                <th>{% trans "First Name" %}</th>
+                <th>{% trans "Last Name" %}</th>
+                <th>{% trans "Date joined" %}</th>
+                <th>{% trans "Expiration Date" %}</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for newuser in object_list %}
+                <tr role="row">
+                    <td></td>
+                    <td class="sorting_1">{{ newuser.username }}</td>
+                    <td>{{ newuser.email }}</td>
+                    <td>{{ newuser.first_name }}</td>
+                    <td>
+                        {{ newuser.last_name }}
+                    </td>
+
+
+                    <td>
+                        {{ newuser.date_joined|date:'Y-m-d' }}
+                    </td>
+                    <td>{{ newuser.date_expire|date:'Y-m-d' }}</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
+
+{% block project_js %}
+    {{ block.super }}
+    <script src={% static "js/user_create.js" %}></script>
+    <script src={% static "vendor/Limitless_2_3/global_assets/js/plugins/tables/datatables/datatables.min.js" %}></script>
+    <script src={% static "vendor/Limitless_2_3/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js" %}></script>
+    <script src={% static "vendor/Limitless_2_3/assets/js/datatables_responsiveuser.js" %}></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+{% endblock project_js %}

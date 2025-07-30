@@ -67,7 +67,7 @@ class NewsletterSubscriptionCreateView(CreateView, JsonFormMixin):
             message = _("Thank you for your request. You have been registered Successfully")
             subscription = models.NewsLetter_logiflex_subscription(email=email_nl, company=cp_name)
             subscription.save()
-        data = {"message": message}
+        data = {"submessage": message}
 
         return JsonResponse(data)
 

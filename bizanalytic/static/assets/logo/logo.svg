@@ -1,0 +1,9 @@
+<svg width="240" height="80" viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background is transparent by default in SVG unless a rect is drawn -->
+    <g fill="#FFFFFF">
+        <!-- Icon part -->
+        <path d="M40 70H20V30H40V70ZM80 70H60V10H80V70ZM120 70H100V0H120V70ZM160 70H140V20H160V70ZM200 70H180V40H200V70Z"/>
+        <!-- Text part (adjust position and font as needed) -->
+        <text x="220" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" text-anchor="start" alignment-baseline="middle">BizAnalytic</text>
+    </g>
+</svg>

@@ -63,9 +63,7 @@ class User(GuardianUserMixin, AbstractUser):
 
     @property
     def is_Member(self):
-        return hasattr(self, "Member")
-
-
+        return hasattr(self, "member")
 
     class Meta(AbstractUser.Meta):
         permissions = (

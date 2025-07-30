@@ -58,7 +58,7 @@ class ProfileCreateForm(SignupForm):
                 permissions = Permission.objects.filter(codename__startswith="manage")
                 for perm in permissions:
                     user.user_permissions.add(perm)
-                user.is_staff = True
+                # user.is_staff = True
 
             permission = get_object_or_404(
                 Permission, codename=f"access_{user_type}_pages"

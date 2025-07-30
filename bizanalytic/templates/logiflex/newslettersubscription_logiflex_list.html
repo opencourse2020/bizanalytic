@@ -37,10 +37,11 @@
 												<thead>
 													<tr>
 														<th>#</th>
-														<th>{% trans "Title" %}</th>
-														<th>{% trans "Date Created" %}</th>
+														<th>{% trans "Email" %}</th>
+														<th>{% trans "Company" %}</th>
                                                         <th>{% trans "Area" %}</th>
-                                                        <th>{% trans "Sent" %}</th>
+                                                        <th>{% trans "Date Added" %}</th>
+                                                        <th>{% trans "Removed" %}</th>
 
 													</tr>
 												</thead>
@@ -48,8 +49,8 @@
                                                 {% for subscrib in object_list %}
 													<tr>
 														<td></td>
-                                                        <td><a href="{% url 'logiflex:newsletters:editsubscrib' subscrib.pk %}"> {{ subscrib.title }} </a> </td>
-														<td>{{ subscrib.date_created }}</td>
+                                                        <td><a href="{% url 'logiflex:newsletters:editsubscrib' subscrib.pk %}"> {{ subscrib.email }} </a> </td>
+														<td>{{ subscrib.company }}</td>
                                                         <td>{% if subscrib.area == "lo" %}
                                                                {% trans "LogiFlex" %}
                                                             {% elif subscrib.area == "ki" %}
@@ -57,6 +58,8 @@
                                                             {% endif %}
 
                                                         </td>
+
+                                                        <td>{{ subscrib.date_added }}</td>
                                                         {% if subscrib.dispatched %}
                                                             <td><i class="fas fa-lg fa-fw me-2 fa-check text-primary"></i></td>
                                                             {% else %}

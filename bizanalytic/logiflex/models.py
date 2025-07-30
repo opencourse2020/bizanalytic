@@ -12,6 +12,7 @@ class NewsLetter_logiflex(models.Model):
     class Meta:
         verbose_name = "NewsLetter_logiflex"
         verbose_name_plural = "NewsLetters_logiflex"
+        permissions = (("manage_logiflex_newsletters", "Manage Logiflex NewsLetters"),)
 
     def __str__(self):
         return str(self.title)
@@ -26,6 +27,7 @@ class NewsLetter_logiflex_subscription(models.Model):
     class Meta:
         verbose_name = "NewsLetter_logiflex_subscription"
         verbose_name_plural = "NewsLetter_logiflex_subscriptions"
+        permissions = (("manage_logiflex_newsletters_subscription", "Manage Logiflex NewsLetters Subscription"),)
 
     def __str__(self):
         return str(self.email)

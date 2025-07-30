@@ -1,10 +1,10 @@
 from .base import *  # noqa
 from .base import env
 
-EMAIL_CONFIG = env.email_url("DJANGO_EMAIL_URL")
-vars().update(EMAIL_CONFIG)
-SERVER_EMAIL = EMAIL_CONFIG["EMAIL_HOST_USER"]
-EMAIL_TIMEOUT = 5
+# EMAIL_CONFIG = env.email_url("DJANGO_EMAIL_URL")
+# vars().update(EMAIL_CONFIG)
+# SERVER_EMAIL = EMAIL_CONFIG["EMAIL_HOST_USER"]
+# EMAIL_TIMEOUT = 5
 
 SECRET_KEY = env.str("DJANGO_SECRET_KEY")
 ADMIN_URL = env.str("DJANGO_ADMIN_URL")
@@ -23,6 +23,15 @@ DATABASES = {
     }
 }
 
+# google
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST = 'mail.idverifypro.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = env.str("DJANGO_EMAIL_HOST")
+EMAIL_HOST_PASSWORD = env.str("DJANGO_EMAI_HOST_PASS")
 
 
 SESSION_COOKIE_SECURE = True

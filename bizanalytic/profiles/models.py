@@ -68,7 +68,7 @@ class User(GuardianUserMixin, AbstractUser):
     class Meta(AbstractUser.Meta):
         permissions = (
             ("access_admin_pages", "Access Admin pages"),
-            ("access_regular_pages", "Access Member user pages"),
+            ("access_member_pages", "Access Member user pages"),
         )
 
 

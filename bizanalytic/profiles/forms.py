@@ -59,9 +59,9 @@ class ProfileCreateForm(SignupForm):
                 for perm in permissions:
                     user.user_permissions.add(perm)
                 # user.is_staff = True
-            elif user_type == "member":
-                permissions = Permission.objects.filter(codename="view_newsletter_logiflex")
-                user.user_permissions.add(permissions)
+            # elif user_type == "member":
+            #     permissions = Permission.objects.filter(codename="view_newsletter_logiflex")
+            #     user.user_permissions.add(permissions)
 
             permission = get_object_or_404(
                 Permission, codename=f"access_{user_type}_pages"

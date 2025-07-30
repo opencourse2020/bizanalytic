@@ -16,8 +16,9 @@ class NewsLetter_logiflexForm(forms.ModelForm):
 class NewsLetter_logiflex_subscriptionForm(forms.ModelForm):
     class Meta:
         model = models.NewsLetter_logiflex_subscription
-        fields = ["email", "company"]
+        fields = ["email", "company", "area"]
         labels = {
             "email": _("Email"),
-            "company": _("Company Name")
+            "company": _("Company Name"),
+            "area": _("Area")
         }

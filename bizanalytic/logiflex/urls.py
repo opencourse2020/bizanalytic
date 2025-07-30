@@ -9,6 +9,8 @@ newsletter_patterns = [
     path("edit/<int:pk>/", views.NewsletterEditView.as_view(), name="edit"),
     path("list/", views.NewsletterListView.as_view(), name="list"),
     path("subscrib/", views.NewsletterSubscriptionCreateView.as_view(), name="subscrib"),
+    path("editsubscrib/<int:pk>/", views.NewsletterSubscriptionEditView.as_view(), name="editsubscrib"),
+    path("Subscriptionlist/", views.NewsletterSubscriptionListView.as_view(), name="subscribtionlist"),
 ]
 
 urlpatterns = [

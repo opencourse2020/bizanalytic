@@ -80,7 +80,7 @@ class NewsletterSubscriptionCreateView(CreateView, JsonFormMixin):
 class NewsletterSubscriptionEditView(UserPassesTestMixin, UpdateView):
     model = models.NewsLetter_logiflex_subscription
     form_class = forms.NewsLetter_logiflex_subscriptionForm
-    template_name = "logiflex/newsletter_logiflex_create.html"
+    template_name = "logiflex/newslettersubscrib_logiflex_create.html"
     success_url = reverse_lazy("logiflex:newsletters:list")
 
     def test_func(self):
@@ -89,7 +89,7 @@ class NewsletterSubscriptionEditView(UserPassesTestMixin, UpdateView):
 
 class NewsletterSubscriptionListView(UserPassesTestMixin, ListView):
     model = models.NewsLetter_logiflex_subscription
-    template_name = "logiflex/newsletter_logiflex_list.html"
+    template_name = "logiflex/newslettersubscription_logiflex_list.html"
 
     def test_func(self):
         return self.request.user.is_staff

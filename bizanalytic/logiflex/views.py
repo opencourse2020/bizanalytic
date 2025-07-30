@@ -66,6 +66,7 @@ class NewsletterSubscriptionCreateView(CreateView, JsonFormMixin):
             message = _("Thank you for your request. This email is already registered under different company name")
         else:
             message = _("Thank you for your request. You have been registered Successfully")
+            area=""
             if tp_area == 1:
                 area = "lo"
             elif tp_area == 2:

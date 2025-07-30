@@ -25,6 +25,56 @@
     <link rel="stylesheet" href={% static "vendor/transport/assets/css/remixicon.css" %}>
     <link rel="stylesheet" href={% static "vendor/transport/assets/css/slick.css" %}>
     <link rel="stylesheet" href={% static "vendor/transport/assets/css/style.css" %}>
+
+
+    <style>
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            /* No background color for the container to maintain transparency */
+        }
+        .logo-icon {
+            width: 80px; /* Adjust size as needed */
+            height: 80px;
+            margin-right: 1.5rem;
+            fill: #FFFFFF; /* White color for the icon */
+        }
+        .logo-text {
+            font-size: 3rem; /* Adjust font size as needed */
+            font-weight: bold;
+            color: #FFFFFF; /* White color for the text */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .logo-icon {
+                width: 60px;
+                height: 60px;
+                margin-right: 1rem;
+            }
+            .logo-text {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-container {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem;
+            }
+            .logo-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            .logo-text {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -413,7 +463,14 @@
                         <div class="footer-widget">
                             <div class="footer-logo">
 {#                                <h4 class="title">BizAnalytic</h4>#}
-                                <img src={% static "assets/logo/logo.svg" %} alt="logo" style="width: 50%">
+{#                                <img src={% static "assets/logo/logo.svg" %} alt="logo" style="width: 50%">#}
+                                <div class="logo-container">
+                                    <!-- SVG for the BizAnalytic icon - adjusted for white fill -->
+                                    <svg class="logo-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4 22H2V12H4V22ZM8 22H6V6H8V22ZM12 22H10V2H12V22ZM16 22H14V10H16V22ZM20 22H18V16H20V22Z"/>
+                                    </svg>
+                                    <span class="logo-text">BizAnalytic</span>
+                                </div>
                             </div>
                             <p class="mt-30">{% trans "Empowering logistics operators with data-driven insights" %}</p>
                             

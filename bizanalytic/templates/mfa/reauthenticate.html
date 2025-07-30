@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load allauth %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+
+<title>{% trans "2FA Re-Authenticate" %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content={% trans "Streamline user onboarding and protect your business with our secure, AI-powered ID verification service, ensuring compliance and preventing fraud." %}>
+<meta name="author" content="">
+{% endblock head_title%}
+
+{% block css %}
+
+    {{ block.super }}
+
+{% endblock css %}
+{% block content_head %}
+
+{% endblock content_head %}
+
+{% block content_body %}
+    <div class="row ">
+    <div class="col-12 col-md-5">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">
+                    {% trans "2FA Authentication" %}
+                </h5>
+            </div>
+            <div class="card-body">
+    <p class="mb-1">{% blocktranslate %}Enter an authenticator code:{% endblocktranslate %}</p>
+            <p>{% trans "OTP or Recovery code " %}</p>
+    {% url 'mfa_reauthenticate' as action_url %}
+    <form form=form method="post" action=action_url>
+
+            {% csrf_token %}
+            {% element fields form=form unlabeled=True %}
+            {% endelement %}
+            {% if redirect_field_value %}
+                <input type="hidden"
+                       name="{{ redirect_field_name }}"
+                       value="{{ redirect_field_value }}" />
+            {% endif %}
+
+
+    <div class="text-center">
+    <button class="btn btn-success mt-2 px-5" type="submit">{% trans "Confirm" %}</button>
+        </div>
+    </form>
+            </div>
+         <div class="card-arrow">
+                <div class="card-arrow-top-left"></div>
+                <div class="card-arrow-top-right"></div>
+                <div class="card-arrow-bottom-left"></div>
+                <div class="card-arrow-bottom-right"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock content_body %}
+
+{% block js %}
+  {{ block.super }}
+<script src={% static "js/otp_code.js" %}></script>
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+
+
+{% endblock js %}

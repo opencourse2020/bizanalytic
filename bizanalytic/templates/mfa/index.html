@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load allauth i18n %}
+{% load widget_tweaks %}
+
+{% block head_title %}
+
+<title>{% trans "Two-Factor" %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content={% trans "Streamline user onboarding and protect your business with our secure, AI-powered ID verification service, ensuring compliance and preventing fraud." %}>
+<meta name="author" content="">
+{% endblock head_title%}
+
+{% block css %}
+{{ block.super }}
+
+    {% endblock css %}
+
+{% block content_head %}
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'profiles:profile' %}">{% trans "Profile" %}</a></li>
+    <li class="breadcrumb-item active">{% trans "2FA" %}</li>
+</ul>
+
+
+{% endblock content_head %}
+
+
+
+{% block content_body %}
+
+
+
+            <div class="row ">
+                <div class="col-12 col-md-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">{% trans "Two-Factor Authentication" %}</h5>
+                            <p class="small text-inverse text-opacity-50 mb-0">{% trans "Enable 2FA to your account" %}</p>
+                        </div>
+                        <div class="card-body text-center">
+                            {% if "totp" in MFA_SUPPORTED_TYPES %}
+                                <div class="panel">
+                                    <h5 class="card-title" >{% trans "Authenticator App" %}</h5>
+                                    {% if authenticators.totp %}
+                                        <p class="small text-inverse text-opacity-50">{% trans "Authentication using an authenticator app is active." %}</p>
+                                        <a href="{% url 'mfa_deactivate_totp' %}" class="btn btn-danger delete panel">
+                                            <i class="far fa-lg fa-fw me-2 fa-window-close"></i>{% trans "Deactivate" %}
+                                        </a>
+                                    {% else %}
+                                        <p class="small text-inverse text-opacity-50">{% trans "Authenticator app is not active." %}</p>
+                                        <a href="{% url 'mfa_activate_totp' %}" class="btn btn-dark panel">
+                                            {% trans "Activate" %}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            <br>
+                            {% if "recovery_codes" in MFA_SUPPORTED_TYPES %}
+                            {% with total_count=authenticators.recovery_codes.generate_codes|length unused_count=authenticators.recovery_codes.get_unused_codes|length %}
+
+                                <div class="panel">
+                                    <h5 class="card-title" >{% trans "Recovery Codes" %}</h5>
+
+                                    {% if authenticators.recovery_codes %}
+                                    {% blocktranslate count unused_count=unused_count %}There is {{ unused_count }} out of {{ total_count }} recovery codes available.{% plural %}There are {{ unused_count }} out of {{ total_count }} recovery codes available.{% endblocktranslate %}
+                            {% else %}
+                                    <p>{% trans "No Recovery Codes Setup" %}</p>
+                            {% endif %}
+
+                                    {% if is_mfa_enabled %}
+                                    <br /><br>
+                                    <div class="btn-group">
+
+                                        <a href="{% url 'mfa_generate_recovery_codes' %}" class="btn btn-outline-success"><i class="far fa-lg fa-fw me-2 fa-edit"></i>{% trans "Generate" %}</a>
+                                        <a href="{% url 'mfa_view_recovery_codes' %}" class="btn btn-outline-success"><i class="fas fa-lg fa-fw me-2 fa-eye"></i>{% trans "View" %}</a>
+                                        <a href="{% url 'mfa_download_recovery_codes' %}" class="btn btn-outline-success"><i class="fas fa-lg fa-fw me-2 fa-download"></i>{% trans "Download" %}</a>
+                                    </div>
+
+                                    {% endif %}
+                                </div>
+                                {% endwith %}
+
+                                {% endif %}
+
+
+
+
+
+                        </div>
+                        <div class="card-arrow">
+                            <div class="card-arrow-top-left"></div>
+                            <div class="card-arrow-top-right"></div>
+                            <div class="card-arrow-bottom-left"></div>
+                            <div class="card-arrow-bottom-right"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+{% endblock content_body %}
+
+{% block js %}
+{{ block.super }}
+{% endblock js %}

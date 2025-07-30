@@ -42,7 +42,7 @@ class ProfileCreateForm(SignupForm):
             user_type = self.cleaned_data["user_type"]
             user_type_class_map = {
                 "admin": models.Admin,
-                "regular": models.Member,
+                "member": models.Member,
 
             }
             user_class = user_type_class_map[user_type]

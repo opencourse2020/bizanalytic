@@ -158,14 +158,51 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
 
         # Create a report
         email_info = {
-            'subject': "Please find attached your FREE sample report",
-            'to_email': email_name,
+            'subject': "🚀 Your Monthly Logistics Performance Report is Here",
+            'to_email': [email_name,],
+            'company': cp_name,
+            'shipments': "187",
+            'avgdelivery': "2.3",
+            'percent_change': 12,
+            'ontimedelivery': 94,
+            'delayreasons': "Top 3 Reasons",
+            'suggested': "Route X, Carrier Y",
+            'logiflex_contact': "Adam Akad",
+            'phone': "+1 (832) 430-2434",
             'cc': [""],
             'bcc': [""],
             'attachments': route_file
         }
         send_email(email_info)
         message = "Report Created Succssefully"
+
+        data = {"submessage": message}
+
+        return JsonResponse(data)
+
+
+class RequestCallView(TemplateView):
+    template_name = "logiflex/call.html"
+
+
+class BookACallView(CreateView, JsonFormMixin):
+    def post(self, request, *args, **kwargs):
+        message = ""
+        cp_name = request.POST.get("cp_nm")
+        client_name = request.POST.get("client_nm")
+        email_name = request.POST.get("email_nm")
+        email_name = email_name.lower()
+
+        client = models.LogiFlexClient.objects.filter(email=email_name).first()
+        if client:
+            if not client.contact_name:
+                client.contact_name = client_name
+            if not client.company:
+                client.company = cp_name
+            client.save()
+            call = models.RequestedCall(client=client)
+            call.save()
+            message = "Thank you for choosing BizAnalytic + LogiFlex to power your freight analytics. You will be contacted As Quick As Possible"
 
         data = {"submessage": message}
 

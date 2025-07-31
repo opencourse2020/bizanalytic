@@ -1,0 +1,367 @@
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- page title -->
+    <title>BizAnalytic AI-Powered Analysis</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href={% static "vendor/transport/assets/images/favicon.png" %}>
+
+    <!-- css files -->
+    <link rel="stylesheet" href={% static "vendor/transport/assets/css/animate.css" %}>
+    <link rel="stylesheet" href={% static "vendor/transport/assets/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href={% static "vendor/transport/assets/css/magnific-popup.css" %}>
+    <link rel="stylesheet" href={% static "vendor/transport/assets/css/meanmenu.css" %}>
+    <link rel="stylesheet" href={% static "vendor/transport/assets/css/remixicon.css" %}>
+    <link rel="stylesheet" href={% static "vendor/transport/assets/css/slick.css" %}>
+    <link rel="stylesheet" href={% static "vendor/transport/assets/css/style.css" %}>
+
+
+</head>
+
+<body>
+    <!-- preloader -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- back to top -->
+    <div class="back-to-top">
+        <span><i class="ri-arrow-up-s-line"></i></span>
+    </div>
+    
+    <!-- header area starts -->
+    <header class="header-area">
+        <!-- header top -->
+        <div class="header-top" style="background-color: white">
+            <div class="container ms-1">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="header-left">
+                            <div class="logo-area">
+                            <a href="home.html"><img src={% static "assets/logo/logo1-1.png" %} alt="logo" style="width: 50%"></a>
+                        </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- menu area -->
+        <div class="menu-area">
+
+
+            <div class="mobile-menu"></div>
+        </div>
+    </header>
+    
+    <main class="main">
+        <!-- breadcrumb area starts -->
+        <section class="breadcrumb-area mb-1" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="title">LogiFlex</h1>
+                        <h2 class="title" style="color: #0cb7d6">{% trans "Logistics Analytics" %}</h2>
+                        <p style="color: white; font-size: 16px;">
+                            {% trans "Transform Your Logistics Data Into Actionable Insights" %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- contact area starts -->
+        <section class="contact-area pt-40 mb-40" id="tryfree">
+            <div class="container">
+                <div class="row justify-content-around">
+
+
+                    <div class="col-lg-5 wow fadeInLeft" data-wow-delay=".2s">
+                        <div class="about-content">
+                            <div class="section-top">
+                                <span class="sub-title">{% trans "Sample Reports" %}</span>
+                                <h3 class="title mt-10"><span>{% trans "Download a sample " %}</span> {% trans "analysis report" %}</h3>
+                            </div>
+                            <p class="mt-20">{% trans "AI-Powered Analysis of transportation data. Our professional performance report includes Analysis results, Actionable Insights, and Recommendations to achieve significant savings in Operations Costs" %}</p>
+
+                            <div class="about-items mt-30">
+                                <div class="row">
+                                    <div class="col-sm-6">
+
+                                        <div class="about-item">
+                                            <h6 class="title">{% trans "Free Report" %}</h6>
+                                            <div class="d-flex align-items-center gap-3 mt-20">
+{#                                                <img src={% static "vendor/transport/assets/images/icon-3.png" %} alt="icon">#}
+{#                                                <span>{% trans "Short Analysis of your logistics data" %}</span>#}
+                                                <div class="content-bottom">
+                                                    <ul class="check-list primary-color">
+                                                        <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span>{% trans " Simple Analysis" %}</li>
+                                                        <li><span class="icon"><i class="ri-close-circle-line text-danger"></i></span> {% trans " Actionable Insights" %}</li>
+                                                        <li><span class="icon"><i class="ri-close-circle-line text-danger"></i></span> {% trans " Recomendations" %}</li>
+                                                        <li><span class="icon"><i class="ri-close-circle-line text-danger"></i></span> {% trans " Visual Illustrations" %}</li>
+                                                    </ul>
+                                                    <a href="#" class="primary-btn primary-bg mt-30"><span class="text">{% trans "Download" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-6">
+
+                                        <div class="about-item">
+                                            <h6 class="title">{% trans "Professional Report" %}</h6>
+                                            <div class="d-flex align-items-center gap-3 mt-20">
+{#                                                <img src={% static "vendor/transport/assets/images/icon-4.png" %} alt="icon">#}
+{#                                                <span>{% trans "Comprehensive analysis and Insights" %}</span>#}
+                                                <div class="content-bottom">
+                                                    <ul class="check-list primary-color">
+                                                        <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans " Advanced Analysis" %}</li>
+                                                        <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans " Actionable Insights" %}</li>
+                                                        <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans " Recomendations" %}</li>
+                                                        <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans " Visual Illustrations" %}</li>
+                                                     </ul>
+                                                    <a href="#" class="primary-btn primary-bg mt-30"><span class="text">{% trans "Download" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <span style="font-size: 12px">{% trans "(Sample Reports with fictional data for illustration purposes only)" %}</span>
+                            </div>
+
+                            <div class="button-group mt-30">
+                                <div class="phone-text">
+                                    <img src={% static "vendor/transport/assets/images/icon-5.png" %} alt="icon">
+                                    <div class="text-part">
+                                        <span>{% trans "Need Help?" %}</span>
+                                        <h5 class="title"><a href="#">+1 (832) 430-2434</a></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-6 wow fadeInRight align-content-center" data-wow-delay=".2s">
+                        <div class="form-part">
+                            <h4 class="title text-center">{% trans "Book A Strategy Call " %}</h4>
+                            <p class="text-center">{% trans "A Professional Will Call You As Soon As Possible " %}</p>
+                            <div class="theme-form mt-40">
+                                <form action="#" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label for="company_nm">{% trans "Company Name" %}</label>
+                                            <input type="text" id="company_nm" placeholder="Enter your Company Name" required="required">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="company_nm">{% trans "Your Name" %}</label>
+                                            <input type="text" id="client_nm" placeholder="Enter your Name" required="required">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="email_nm">{% trans "Your Email Address" %}</label>
+                                            <input type="email" id="email_nm" placeholder="Enter your Email Address" required="required">
+                                        </div>
+
+                                        <div class="d-flex justify-content-center">
+                                            <button type="button" id="request_call" class="primary-btn primary-bg"><span class="text">{% trans "Generate Performance Report" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></button>
+
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+
+                                                <div id="report-message"></div>
+                                        </div>
+
+                                    </div>
+
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- cta area starts -->
+        <section class="cta-area-2 pt-120">
+            <div class="container">
+                <div class="cta-box" data-background={% static "vendor/transport/assets/images/cta-bg.jpg" %}>
+                    <div class="row align-items-center">
+                        <div class="col-lg-7">
+                            <div class="cta-content">
+                                <div class="section-top">
+                                    <h4 class="title mb-2"><span style="font-weight: normal">{% trans "Unlock the Secrets of Logistics Optimization" %}</span> </h4>
+                                    <h6>{% trans "Sign up to receive Free newsletters for business success" %}</h6>
+                                </div>
+                                <div class="cta-form mt-30">
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-12 pb-3">
+                                                <input type="text" id="company_newsletter" placeholder="Enter Your Company Name">
+                                            </div>
+                                            <div class="col-12">
+                                                <input type="email" id="email_newsletter" required="required" placeholder="Enter Your Email">
+                                            </div>
+                                            <div class="col-12 pt-3 text-end">
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="button" id="register_nl" class="btn btn-light">{% trans "Register For Free" %}</button>
+
+                                                </div>
+
+{#                                                <button type="button" class="btn bg-cyan-900 pt-2">{% trans "Register" %}</button>#}
+                                            </div>
+                                            <div class="col-12">
+                                                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                                  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                  </symbol>
+
+                                                </svg>
+                                                <div id="alert-message"></div>
+                                            </div>
+
+                                        </div>
+
+
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="cta-image">
+                                <img src={% static "vendor/transport/assets/images/cta1.png" %} alt="cta">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- footer area starts -->
+    <footer class="footer-area-3" data-background={% static "vendor/transport/assets/images/footer-bg.jpg" %}>
+        <!-- widget area -->
+        <div class="widget-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="footer-widget">
+                            <div class="footer-logo">
+{#                                <h4 class="title">BizAnalytic</h4>#}
+                                <img src={% static "assets/logo/logo2-4.png" %} alt="logo" style="width: 50%">
+
+                            </div>
+                            <p class="mt-30">{% trans "Empowering logistics operators with data-driven insights" %}</p>
+                            
+                            <div class="footer-social mt-20">
+                                <h6 class="title">{% trans "follow us" %}</h6>
+                                <ul class="mt-10">
+                                    <li><a href="#"><i class="ri-facebook-fill"></i></a></li>
+                                    <li><a href="#"><i class="ri-twitter-x-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-instagram-line"></i></a></li>
+                                    <li><a href="#"><i class="ri-linkedin-fill"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-2 offset-xl-1 col-lg-3 col-sm-6">
+                        <div class="footer-widget">
+                            <div class="widget-title">
+                                <h5 class="title">{% trans "our services" %}</h5>
+                            </div>
+                            <ul class="nav-links mt-30">
+                                <li><a href="#">LogiFlex</a></li>
+                                    <li><a href="#">KPI-Insight</a></li>
+                                    <li><a href="#">InveFlow</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+{#                    <div class="col-xl-2 offset-xl-1 col-lg-3 col-sm-6">#}
+{#                        <div class="footer-widget">#}
+{#                            <div class="widget-title">#}
+{#                                <h5 class="title">About Company</h5>#}
+{#                            </div>#}
+{#                            <ul class="nav-links mt-30">#}
+{#                                <li><a href="about.html">about us</a></li>#}
+{#                                    <li><a href="service.html">our services</a></li>#}
+{#                                    <li><a href="project.html">our projects</a></li>#}
+{#                                    <li><a href="blog.html">blog & news</a></li>#}
+{#                                    <li><a href="home.html">contact us</a></li>#}
+{#                            </ul>#}
+{#                        </div>#}
+{#                    </div>#}
+                    
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="footer-widget">
+                            <div class="widget-title">
+                                <h5 class="title">contact</h5>
+                            </div>
+                            <ul class="contact-info mt-30">
+                                <li><span class="icon"><i class="ri-mail-fill"></i></span> <a href="#">bizanalytics.us@gmail.com</a></li>
+                                <li><span class="icon"><i class="ri-map-pin-2-fill"></i></span> <a href="#">The Woodlands, Texas - 77380</a></li>
+                                <li><span class="icon"><i class="ri-phone-fill"></i></span> <a href="#">+1 (832) 430-2434</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>                
+        </div>
+
+        <!-- copyright area -->
+        <div class="copyright-area py-30">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="copyright-text">
+                            <span>Copyright &copy; <span id="date"></span> BizAnalytic. All rights reserved.</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul class="footer-menu">
+                            <li><a href="#">{% trans "Support" %}</a></li>
+                            <li><a href="#">{% trans "Terms Of Services" %}</a></li>
+                            <li><a href="#">{% trans "Privacy Policy" %}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- javascript files -->
+    <script src={% static "vendor/transport/assets/js/jquery-3.7.1.min.js" %}></script>
+    <script src={% static "vendor/transport/assets/js/bootstrap.min.js" %}></script>
+    <script src={% static "vendor/transport/assets/js/counterup.min.js" %}></script>
+    <script src={% static "vendor/transport/assets/js/easing.min.js" %}></script>
+    <script src={% static "vendor/transport/assets/js/magnific-popup.js" %}></script>
+    <script src={% static "vendor/transport/assets/js/meanmenu.min.js" %}></script>
+    <script src={% static "vendor/transport/assets/js/slick.min.js" %}></script>
+    <script src={% static "vendor/transport/assets/js/waypoints.min.js" %}></script>
+    <script src={% static "vendor/transport/assets/js/wow.min.js" %}></script>
+    <script src={% static "vendor/transport/assets/js/main.js" %}></script>
+    <script src={% static "vendor/transport/assets/js/load.js" %}></script>
+
+<script>
+
+</script>
+</body>
+
+</html>

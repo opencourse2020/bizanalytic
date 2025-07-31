@@ -56,6 +56,7 @@ class LogiFlexClient(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     company = models.CharField(max_length=150)
     email = models.CharField(max_length=150)
+    contact_name = models.CharField(max_length=100, null=True, blank=True)
     date_added = models.DateField(auto_now=True)
 
     class Meta:
@@ -89,3 +90,15 @@ class LogiflexReport(models.Model):
 
     def __str__(self):
         return str(self.client.id)
+
+
+class RequestedCall(models.Model):
+    client = models.ForeignKey(LogiFlexClient, on_delete=models.CASCADE)
+    date_requested = models.DateTimeField(auto_now=True)
+    called = models.BooleanField(default=False)
+    date_called = models.DateField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "RequestedCall"
+        verbose_name_plural = "RequestedCalls"
+        permissions = (("manage_requestedcall", "Manage RequestedCall"),)

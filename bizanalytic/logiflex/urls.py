@@ -15,11 +15,14 @@ newsletter_patterns = [
 
 report_patterns = [
     path("create/", views.SampleReportCreateView.as_view(), name="create"),
+
 ]
 
 urlpatterns = [
 
     path("", views.IndexView.as_view(), name="index"),
+    path("book-call/", views.RequestCallView.as_view(), name="book-call"),
+    path("bookcall/", views.BookACallView.as_view(), name="bookcall"),
     path(
         "newsletters/",
         include((newsletter_patterns, "bizanalytic.logiflex"), namespace="newsletters"),

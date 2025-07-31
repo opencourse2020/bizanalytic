@@ -51,10 +51,12 @@ def sendemail(context):
     elif not isinstance(to_email, list):
         to_email = [to_email]
 
-
+    print("attachments", attachments)
+    print("attachments name", attachments.name)
     # html_message = render_to_string(html_content, context)
     message = EmailMultiAlternatives(subject, plain_message, from_email, to_email)
     message.attach_alternative(html_content, "text/html")
+
     message.attach(attachments.name, attachments.read(), attachments.content_type)
     try:
         result = message.send()

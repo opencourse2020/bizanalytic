@@ -145,7 +145,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                 obj, created = models.LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name,
                                                                                         'user': user})
-                report = models.LogiflexReport(client=client, routefile=route_file)
+                report = models.LogiflexReport(client=obj, routefile=route_file)
                 report.save()
         else:
             client = models.LogiFlexClient.objects.filter(email=email_name).first()
@@ -155,7 +155,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
             else:
                 obj, created = models.LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name})
-                report = models.LogiflexReport(client=client, routefile=route_file)
+                report = models.LogiflexReport(client=obj, routefile=route_file)
                 report.save()
 
 

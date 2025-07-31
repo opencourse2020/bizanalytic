@@ -288,11 +288,11 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <label for="company_nm">{% trans "Company Name" %}</label>
-                                            <input type="text" id="company_nm" placeholder="Enter your Company Name">
+                                            <input type="text" id="company_nm" placeholder="Enter your Company Name" required="required">
                                         </div>
                                         <div class="col-12">
                                             <label for="email_nm">{% trans "Email Address" %}</label>
-                                            <input type="email" id="email_nm" placeholder="Enter your Email Address">
+                                            <input type="email" id="email_nm" placeholder="Enter your Email Address" required="required">
                                         </div>
                                         <div class="col-12 mb-4">
                                             <label for="route_fl" >{% trans "Route Data File" %}</label>
@@ -303,6 +303,11 @@
                                             <button type="button" id="generate_rp" class="primary-btn primary-bg"><span class="text">{% trans "Generate Performance Report" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></button>
 
                                         </div>
+                                        <div class="d-flex justify-content-center">
+
+                                                <div id="report-message"></div>
+                                        </div>
+
                                     </div>
 
                                     </form>
@@ -361,65 +366,6 @@
 
             </div>
         </section>
-{#        <section class="contact-area pt-120">#}
-{#            <div class="container">#}
-{#                <div class="row justify-content-center">#}
-{#                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s">#}
-{#                        <div class="contact-info">#}
-{#                            <h3 class="title">Lets Talk!</h3>#}
-{#                            <p class="mt-20" style="color: black">{% trans "Logistics service involves the planning, implementation, and control of the efficient and effective transportation, storage, and distribution of goods" %}</p>#}
-{#                            <div class="info-items mt-30">#}
-{#                                <div class="row">#}
-{#                                    <div class="col-sm-6">#}
-{#                                        <div class="single-info d-flex align-items-center gap-3">#}
-{#                                            <div class="info-icon">#}
-{#                                                <span class="icon"><i class="ri-phone-fill"></i></span>#}
-{#                                            </div>#}
-{#                                            <div class="info-text">#}
-{#                                                <h5 class="title">{% trans "Phone number" %}</h5>#}
-{#                                                <a href="#">+1 (832) 430-2434</a>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                    <div class="col-sm-6">#}
-{#                                        <div class="single-info d-flex align-items-center gap-3">#}
-{#                                            <div class="info-icon">#}
-{#                                                <span class="icon"><i class="ri-mail-fill"></i></span>#}
-{#                                            </div>#}
-{#                                            <div class="info-text">#}
-{#                                                <h5 class="title">{% trans "Email Address" %}</h5>#}
-{#                                                <a href="#">bizanalytics.us@gmail.com</a>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                    <div class="col-12">#}
-{#                                        <div class="single-info d-flex align-items-center gap-3">#}
-{#                                            <div class="info-icon">#}
-{#                                                <span class="icon"><i class="ri-map-pin-2-fill"></i></span>#}
-{#                                            </div>#}
-{#                                            <div class="info-text">#}
-{#                                                <h5 class="title">{% trans "Address" %}</h5>#}
-{#                                                <a href="#">The Woodlands, Texas - 77380</a>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{##}
-{#                            <div class="contact-social">#}
-{#                                <ul>#}
-{#                                    <li><a href="#"><i class="ri-facebook-fill"></i></a></li>#}
-{#                                    <li><a href="#"><i class="ri-twitter-x-line"></i></a></li>#}
-{#                                    <li><a href="#"><i class="ri-instagram-line"></i></a></li>#}
-{#                                    <li><a href="#"><i class="ri-linkedin-fill"></i></a></li>#}
-{#                                </ul>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{##}
-{#                </div>#}
-{#            </div>#}
-{#        </section>#}
 
         <!-- cta area starts -->
         <section class="cta-area-2 pt-120">
@@ -439,14 +385,13 @@
                                                 <input type="text" id="company_newsletter" placeholder="Enter Your Company Name">
                                             </div>
                                             <div class="col-12">
-                                                <input type="email" id="email_newsletter" placeholder="Enter Your Email">
+                                                <input type="email" id="email_newsletter" required="required" placeholder="Enter Your Email">
                                             </div>
                                             <div class="col-12 pt-3 text-end">
                                                 <div class="d-flex justify-content-center">
                                                     <button type="button" id="register_nl" class="btn btn-light">{% trans "Register For Free" %}</button>
 
                                                 </div>
-
 
 {#                                                <button type="button" class="btn bg-cyan-900 pt-2">{% trans "Register" %}</button>#}
                                             </div>
@@ -584,40 +529,44 @@
     <script src={% static "vendor/transport/assets/js/waypoints.min.js" %}></script>
     <script src={% static "vendor/transport/assets/js/wow.min.js" %}></script>
     <script src={% static "vendor/transport/assets/js/main.js" %}></script>
+    <script src={% static "vendor/transport/assets/js/load.js" %}></script>
 
-    <script>
-    $("#register_nl").click(function (){
-        let cp_name = $("#company_newsletter").val();
-        let em_nl = $("#email_newsletter").val();
-        let tp_area = "1";
-        let url = "https://bizanalytic.com/logiflex/newsletters/subscrib/";
+<script>
+    $("#generate_rp").click(function (){
+        let cp_nm = $("#company_nm").val();
+        let email_nm = $("#email_nm").val();
+        var fileName_b = $("#route_fl").val();
+        var file_b = $('#route_fl')[0].files[0]
+
+        let url = "https://bizanalytic.com/logiflex/reports/create/";
         const formData = new FormData();
-        formData.append('cp_name', cp_name);
-        formData.append('em_nl', em_nl);
-        formData.append('tp_area', tp_area);
-
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: formData,
-            processData: false,
-            contentType: false,
-            headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()},
-            success: function (data) {
-                if (data) {
-                    var result = data;
-                    var message = result.submessage;
-                    if(message){
-                        $("#alert-message").html('<div class="alert alert-success d-flex align-items-center" role="alert"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg><div>' +
-                            message + '</div>')
+        if (fileName_b && email_nm && cp_name){
+            formData.append('cp_nm', cp_nm);
+            formData.append('email_nm', email_nm);
+            formData.append('route_fl', file_b);
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()},
+                success: function (data) {
+                    if (data) {
+                        var result = data;
+                        var message = result.submessage;
+                        if(message){
+                            $("#report-message").html('<div class="alert alert-success d-flex align-items-center" role="alert"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg><div>' +
+                                message + '</div>')
+                        }
                     }
                 }
-            }
-        })
+            })
+        }
+
+
     });
 </script>
-
-
 </body>
 
 </html>

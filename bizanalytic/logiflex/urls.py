@@ -13,12 +13,20 @@ newsletter_patterns = [
     path("subscribtionlist/", views.NewsletterSubscriptionListView.as_view(), name="subscribtionlist"),
 ]
 
+report_patterns = [
+    path("create/", views.SampleReportCreateView.as_view(), name="create"),
+]
+
 urlpatterns = [
 
     path("", views.IndexView.as_view(), name="index"),
     path(
         "newsletters/",
         include((newsletter_patterns, "bizanalytic.logiflex"), namespace="newsletters"),
+    ),
+    path(
+        "reports/",
+        include((report_patterns, "bizanalytic.logiflex"), namespace="reports"),
     ),
 
 ]

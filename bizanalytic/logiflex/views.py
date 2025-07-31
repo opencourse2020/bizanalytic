@@ -155,7 +155,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                                                                               defaults={'company': cp_name})
                 report = models.LogiflexReport(client=obj, routefile=route_file)
                 report.save()
-        print("route file", route_file)
+        print("route file", report.routefile)
         # Create a report
         email_info = {
             'subject': "🚀 Your Monthly Logistics Performance Report is Here",
@@ -171,7 +171,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
             'phone': "+1 (832) 430-2434",
             'cc': [""],
             'bcc': [""],
-            'attachments': route_file
+            'attachments': report.routefile
         }
         sendemail(email_info)
         message = "Report Created Succssefully"

@@ -532,41 +532,7 @@
     <script src={% static "vendor/transport/assets/js/load.js" %}></script>
 
 <script>
-    $("#generate_rp").click(function (){
-        let cp_nm = $("#company_nm").val();
-        let email_nm = $("#email_nm").val();
-        var fileName_b = $("#route_fl").val();
-        var file_b = $('#route_fl')[0].files[0];
-        console.log(fileName_b);
 
-        let url = "https://bizanalytic.com/logiflex/reports/create/";
-        const formData = new FormData();
-        if (fileName_b && email_nm && cp_nm){
-            formData.append('cp_nm', cp_nm);
-            formData.append('email_nm', email_nm);
-            formData.append('route_file', file_b);
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: formData,
-                processData: false,
-                contentType: false,
-                headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()},
-                success: function (data) {
-                    if (data) {
-                        var result = data;
-                        var message = result.submessage;
-                        if(message){
-                            $("#report-message").html('<div class="alert alert-success d-flex align-items-center" role="alert"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg><div>' +
-                                message + '</div>')
-                        }
-                    }
-                }
-            })
-        }
-
-
-    });
 </script>
 </body>
 

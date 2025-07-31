@@ -17,6 +17,7 @@ from django.http import JsonResponse
 from . import models, forms
 from bizanalytic.profiles.mixins import JsonFormMixin
 from bizanalytic.profiles.models import User
+from .utils.mail import send_email
 # Create your views here.
 
 
@@ -131,9 +132,6 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
         email_name = email_name.lower()
         route_file = request.FILES["route_file"]
 
-        # Create a report
-
-
         # Save client and result data
         user = User.objects.filter(email=email_name).first()
         if user:
@@ -158,7 +156,15 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                 report = models.LogiflexReport(client=obj, routefile=route_file)
                 report.save()
 
-
+        # Create a report
+        email_info = {
+            'subject': "Please find attached your FREE sample report",
+            'to_email': email_name,
+            'cc': [""],
+            'bcc': [""],
+            'attachments': route_file
+        }
+        send_email(email_info)
         message = "Report Created Succssefully"
 
         data = {"submessage": message}

@@ -17,7 +17,7 @@ from django.http import JsonResponse
 from . import models, forms
 from bizanalytic.profiles.mixins import JsonFormMixin
 from bizanalytic.profiles.models import User
-from .utils.mail import send_email
+from .utils.mail import sendemail
 # Create your views here.
 
 
@@ -173,7 +173,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
             'bcc': [""],
             'attachments': route_file
         }
-        send_email(email_info)
+        sendemail(email_info)
         message = "Report Created Succssefully"
 
         data = {"submessage": message}

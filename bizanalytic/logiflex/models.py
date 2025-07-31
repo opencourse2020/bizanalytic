@@ -10,11 +10,11 @@ from bizanalytic.profiles.models import User
 
 def datafiles_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'data_files/route_files/company_id_{0}/{1}'.format(instance.id, filename)
+    return 'data_files/route_files/company_id_{0}/{1}'.format(instance.client.id, filename)
 
 def reportfiles_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'data_files/report_files/company_id_{0}/{1}'.format(instance.id, filename)
+    return 'data_files/report_files/company_id_{0}/{1}'.format(instance.client.id, filename)
 
 
 class NewsLetter_logiflex(models.Model):

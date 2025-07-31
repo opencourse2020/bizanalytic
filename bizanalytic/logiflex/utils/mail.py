@@ -51,7 +51,7 @@ def sendemail(context):
     elif not isinstance(to_email, list):
         to_email = [to_email]
 
-    file_path = os.path.join(settings.BASE_DIR, attachments.name)
+    file_path = os.path.join(settings.BASE_DIR, "/media/", attachments.name)
     print("attachments", file_path)
     # print("attachments name", attachments.name)
     # html_message = render_to_string(html_content, context)

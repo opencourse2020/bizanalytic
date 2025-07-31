@@ -129,7 +129,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
         cp_name = request.POST.get("cp_nm")
         email_name = request.POST.get("email_nm")
         email_name = email_name.lower()
-        route_file = request.FILES("route_fl")
+        route_file = request.FILES["route_file"]
 
         # Create a report
 

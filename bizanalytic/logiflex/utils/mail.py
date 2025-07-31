@@ -3,7 +3,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.conf import settings
-
+import os
 
 # Initiate logger function
 logger = logging.getLogger(__name__)
@@ -51,13 +51,14 @@ def sendemail(context):
     elif not isinstance(to_email, list):
         to_email = [to_email]
 
-    print("attachments", attachments)
-    print("attachments name", attachments.name)
+    file_path = os.path.join(settings.BASE_DIR, attachments)
+    print("attachments", file_path)
+    # print("attachments name", attachments.name)
     # html_message = render_to_string(html_content, context)
     message = EmailMultiAlternatives(subject, plain_message, from_email, to_email)
     message.attach_alternative(html_content, "text/html")
-
-    message.attach(attachments.name, attachments.read(), attachments.content_type)
+    message.attach_file(file_path)
+    # message.attach(attachments.name, attachments.read(), attachments.content_type)
     try:
         result = message.send()
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status {result}")

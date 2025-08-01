@@ -56,6 +56,7 @@ class LogiFlexClient(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     company = models.CharField(max_length=150)
     email = models.CharField(max_length=150)
+    phone = models.CharField(max_length=20)
     contact_name = models.CharField(max_length=100, null=True, blank=True)
     date_added = models.DateField(auto_now=True)
 

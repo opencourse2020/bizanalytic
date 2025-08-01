@@ -1,7 +1,7 @@
 import logging
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 import os
 
@@ -26,8 +26,9 @@ def sendemail(context):
     phone = context.get('phone')
 
     attachments = context.get('attachments')
-    html_content = 'Thank you for registering. Please find attached your Free Performance Analysis Report'
     template_name = "emails/email_template.html"
+
+
     context_data = {
         "clientname": company,
         "shipments": shipments,
@@ -52,9 +53,6 @@ def sendemail(context):
         to_email = [to_email]
 
     file_path = os.path.join(settings.BASE_DIR, "media", attachments.name)
-    print("attachments", file_path)
-    # print("attachments name", attachments.name)
-    # html_message = render_to_string(html_content, context)
     message = EmailMultiAlternatives(subject, plain_message, from_email, to_email)
     message.attach_alternative(html_content, "text/html")
     message.attach_file(file_path)

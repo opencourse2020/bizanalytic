@@ -77,6 +77,9 @@
                         <p style="color: white; font-size: 16px;">
                             {% trans "Transform Your Logistics Data Into Actionable Insights" %}
                         </p>
+                        <p style="color: #0cb7d6; font-size: 16px;">
+                            {% trans "Save Fuel & Cash" %}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -167,19 +170,29 @@
                                             <input type="text" id="company_nm" placeholder="Enter your Company Name" required="required">
                                         </div>
                                         <div class="col-12">
-                                            <label for="company_nm">{% trans "Your Name" %}</label>
+                                            <label for="client_nm">{% trans "Your Name" %}</label>
                                             <input type="text" id="client_nm" placeholder="Enter your Name" required="required">
                                         </div>
                                         <div class="col-12">
                                             <label for="email_nm">{% trans "Your Email Address" %}</label>
                                             <input type="email" id="email_nm" placeholder="Enter your Email Address" required="required">
                                         </div>
+                                        <div class="col-12">
+                                            <label for="phone_nb">{% trans "Your Phone Number" %}</label>
+                                            <input type="text" id="phone_nb" placeholder="Enter your Phone Number" required="required">
+                                        </div>
 
-                                        <div class="d-flex justify-content-center">
-                                            <button type="button" id="request_call" class="primary-btn primary-bg"><span class="text">{% trans "Book A Strategy Call" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></button>
+                                        <div class="flex-row justify-content-center">
+                                            <div class="form-check flex-column">
+                                              <input class="form-check-input" type="checkbox" value="" id="agree_call">
+                                              <label class="form-check-label" for="agree_call">
+                                                {% trans "Agree to receive a call" %}
+                                              </label>
+                                            </div>
+                                            <button type="button" id="request_call" class="primary-btn primary-bg flex-column"><span class="text">{% trans "Book A Strategy Call" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></button>
 
                                         </div>
-                                        <div class="d-flex justify-content-center">
+                                        <div class="d-flex justify-content-center pt-2">
 
                                                 <div id="report-message"></div>
                                         </div>

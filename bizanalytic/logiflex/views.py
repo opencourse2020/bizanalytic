@@ -192,6 +192,7 @@ class BookACallView(CreateView, JsonFormMixin):
         client_name = request.POST.get("client_nm")
         email_name = request.POST.get("email_nm")
         email_name = email_name.lower()
+        phone_nb = request.POST.get("phone_nb")
 
         client = models.LogiFlexClient.objects.filter(email=email_name).first()
         if client:
@@ -199,10 +200,13 @@ class BookACallView(CreateView, JsonFormMixin):
                 client.contact_name = client_name
             if not client.company:
                 client.company = cp_name
+            if not client.phone or not client.phone == phone_nb:
+                client.phone = phone_nb
             client.save()
             call = models.RequestedCall(client=client)
             call.save()
-            message = "Thank you for choosing BizAnalytic + LogiFlex to power your freight analytics. You will be contacted As Quick As Possible"
+            message = "Thank you for choosing BizAnalytic + LogiFlex to power your freight analytics. " \
+                      "You will be contacted As Quick As Possible"
 
         data = {"submessage": message}
 

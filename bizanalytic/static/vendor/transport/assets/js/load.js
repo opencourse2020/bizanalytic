@@ -81,6 +81,7 @@ $("#request_call").click(function (){
                 formData.append('cp_nm', cp_nm);
                 formData.append('email_nm', email_nm);
                 formData.append('client_nm', client_nm);
+                formData.append('phone_nb', phone_nb);
                 $.ajax({
                     type: 'POST',
                     url: url,

@@ -274,7 +274,7 @@ class WebhookView(View):
     def post(self, request, *args, **kwargs):
         payload = request.body
         sig_header = request.META['HTTP_STRIPE_SIGNATURE']
-
+        print("Payment Successful and WebHook initiated")
         try:
             # Verify webhook signature
             event = stripe.Webhook.construct_event(

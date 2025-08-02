@@ -309,6 +309,7 @@ class WebhookView(View):
             # Important: Reconcile with your database
             user_id = expanded_session.metadata.get('user_id')
             amount_paid = expanded_session.amount_total / 100  # Convert to currency
+            print(session)
             print(f"Payment was successful for session: {session['id']}")
             print(f"User ID: {user_id}")
             print(f"Payment Amount: {amount_paid}")

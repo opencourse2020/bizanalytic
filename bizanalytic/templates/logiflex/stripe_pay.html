@@ -315,7 +315,8 @@
     <script src={% static "vendor/transport/assets/js/main.js" %}></script>
     <script src={% static "vendor/transport/assets/js/load.js" %}></script>
     <script src="https://js.stripe.com/v3/"></script>
-<script type="text/javascript">
+
+    <script type="text/javascript">
         var stripe = Stripe('{{ stripe_publishable_key }}');
         var checkoutButton = document.getElementById('checkout-button');
 
@@ -327,7 +328,7 @@
                 return response.json();
             })
             .then(function(session) {
-                return stripe.redirectToCheckout({ sessionId: session.id });
+                return stripe.redirectToCheckout({ sessionId });
             })
             .then(function(result) {
                 if (result.error) {

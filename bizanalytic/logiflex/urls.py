@@ -21,7 +21,7 @@ report_patterns = [
 stripe_patterns = [
     path('', views.Payment_PageView.as_view(), name='payment_page'),
     path('create-checkout-session/', views.CreateCheckoutSessionView.as_view(), name='create_checkout_session'),
-    path('webhook/', views.WebhookView.as_view(), name='stripe_webhook'),
+    path('stripe_webhook/', views.WebhookView.as_view(), name='stripe_webhook'),
     path('success/', views.Payment_SuccessView.as_view(), name='success'),
     path('cancel/', views.Payment_FailView.as_view(), name='cancel'),
 ]

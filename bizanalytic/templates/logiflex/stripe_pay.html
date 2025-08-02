@@ -328,7 +328,7 @@
                 return response.json();
             })
             .then(function(session) {
-                return stripe.redirectToCheckout({ sessionId });
+                return stripe.redirectToCheckout({{ sessionId }});
             })
             .then(function(result) {
                 if (result.error) {

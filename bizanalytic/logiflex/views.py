@@ -255,10 +255,12 @@ def create_checkout_session(request):
                     'order_id': '141'
                 }
             )
-            return JsonResponse({'sessionId': session.id})
+            data = {"sessionId": session.id}
+            return JsonResponse(data)
 
         except (ValueError, stripe.error.StripeError) as e:
-            return JsonResponse({'error': str(e)}, status=400)
+            data = {'error': str(e)}
+            return JsonResponse(data, status=400)
 
 
 class WebhookView(View):

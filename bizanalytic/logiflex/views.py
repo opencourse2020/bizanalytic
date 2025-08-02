@@ -239,6 +239,7 @@ def create_checkout_session(request):
             #     raise ValueError("Missing price ID")
 
             # Create checkout session
+            print("Start Stripe Session")
             session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
                 line_items=[{
@@ -254,6 +255,7 @@ def create_checkout_session(request):
                     'order_id': '141'
                 }
             )
+            print("Session ID:", session.id)
             data = {"sessionId": session.id}
             return JsonResponse(data)
 

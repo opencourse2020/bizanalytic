@@ -347,7 +347,7 @@
 <script>
     $("#checkout-button").click(function (){
         var stripe = Stripe('{{ stripe_publishable_key }}');
-        let url = "/logiflex/securepay/create-checkout-session/";
+        let url = "https://bizanalytic.com/logiflex/securepay/create-checkout-session/";
         {#const formData = new FormData();#}
         {#formData.append('cp_name', cp_name);#}
         {#formData.append('em_nl', em_nl);#}

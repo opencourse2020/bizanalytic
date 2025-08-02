@@ -356,7 +356,7 @@
         $.ajax({
             type: 'POST',
             url: url,
-            data: formData,
+            {#data: formData,#}
             processData: false,
             contentType: false,
             headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()},

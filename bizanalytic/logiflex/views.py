@@ -229,7 +229,6 @@ class BookACallView(CreateView, JsonFormMixin):
         return JsonResponse(data)
 
 
-@csrf_exempt
 def create_checkout_session(request):
 
     if request.method == 'POST':

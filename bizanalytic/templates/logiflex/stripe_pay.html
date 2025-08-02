@@ -320,7 +320,7 @@
         var checkoutButton = document.getElementById('checkout-button');
 
         checkoutButton.addEventListener('click', function() {
-            fetch('/create-checkout-session/', {
+            fetch('/securepay/create-checkout-session/', {
                 method: 'POST',
             })
             .then(function(response) {

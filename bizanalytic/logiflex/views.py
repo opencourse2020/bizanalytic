@@ -288,6 +288,7 @@ class WebhookView(View):
             return HttpResponse(status=401)  # Invalid signature
 
         # Handle specific events
+        print("event type", event.type)
         if event['type'] == 'checkout.session.completed':
             session = event['data']['object']
             self.handle_successful_payment(session)

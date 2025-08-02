@@ -12,6 +12,14 @@ ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS")
 OPENAI_KEY = env.str("DJANGO_OPENAI")
 GEMINIAPI_KEY = env.str("DJANGO_GEMINIAPI")
 
+# Strip config
+STRIPE_SECRET_KEY = env.str("DJANGO_STRIPE_SECRET_KEY_TEST")
+STRIPE_PUBLISHABLE_KEY = env.str("DJANGO_STRIPE_PUBLISHABLE_KEY_TEST")
+STRIPE_WEBHOOK_SECRET = env.str("DJANGO_STRIPE_WEBHOOK_SECRET_TEST")
+STRIPE_PRICE_ID = env.str("DJANGO_STRIPE_PRICE_ID_TEST")
+FRONTEND_SUCCESS_URL = "https://bizanalytic.com/logiflex/securepay/success/"
+FRONTEND_CANCEL_URL = "https://bizanalytic.com/logiflex/securepay/cancel/"
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',

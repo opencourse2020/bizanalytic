@@ -76,6 +76,7 @@ class LogiflexReport(models.Model):
                                                               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', ],
                                                max_upload_size=20971520, blank=True, null=True)
     report = models.FileField(upload_to=reportfiles_directory_path, null=True, blank=True)
+    download_code = models.CharField(max_length=6)
     date_created = models.DateField(auto_now=True)
 
     class Meta:

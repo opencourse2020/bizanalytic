@@ -12,13 +12,25 @@ from django.views.generic import (
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.conf import settings
+from django.core.exceptions import PermissionDenied
+from django.views.decorators.csrf import csrf_exempt
+
+# Third party libraries
+import stripe
 
 from . import models, forms
 from bizanalytic.profiles.mixins import JsonFormMixin
 from bizanalytic.profiles.models import User
 from .utils.mail import sendemail
 # Create your views here.
+
+# Initiate variables
+stripe.api_key = settings.STRIPE_SECRET_KEY
+stripe_id = settings.STRIPE_PRICE_ID
+stripe_publishable = settings.STRIPE_PUBLISHABLE_KEY
+
 
 
 class IndexView(TemplateView):
@@ -127,6 +139,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
 
         # load AJAX data from the template
+        client_nm = request.POST.get("client_nm")
         cp_name = request.POST.get("cp_nm")
         email_name = request.POST.get("email_nm")
         email_name = email_name.lower()
@@ -142,7 +155,8 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
             else:
                 obj, created = models.LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name,
-                                                                                        'user': user})
+                                                                                        'user': user,
+                                                                                        'contact_name': client_nm})
                 report = models.LogiflexReport(client=obj, routefile=route_file)
                 report.save()
         else:
@@ -152,7 +166,8 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                 report.save()
             else:
                 obj, created = models.LogiFlexClient.objects.update_or_create(email=email_name,
-                                                                              defaults={'company': cp_name})
+                                                                              defaults={'company': cp_name,
+                                                                                        'contact_name': client_nm})
                 report = models.LogiflexReport(client=obj, routefile=route_file)
                 report.save()
         print("route file", report.routefile)
@@ -161,6 +176,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
             'subject': "🚀 Your Monthly Logistics Performance Report is Here",
             'to_email': [email_name,],
             'company': cp_name,
+            'client_name': client_nm,
             'shipments': "187",
             'avgdelivery': "2.3",
             'percent_change': 12,
@@ -211,3 +227,115 @@ class BookACallView(CreateView, JsonFormMixin):
         data = {"submessage": message}
 
         return JsonResponse(data)
+
+
+class CreateCheckoutSessionView(View):
+    """Initiates secure Stripe checkout session"""
+
+    def post(self, request, *args, **kwargs):
+        try:
+            # Validate input parameters
+            # price_id = request.POST.get('price_id')
+            # if not price_id:
+            #     raise ValueError("Missing price ID")
+
+            # Create checkout session
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=[{
+                    'price': stripe_id,
+                    'quantity': 1,
+                }],
+                mode='payment',
+                success_url=settings.FRONTEND_SUCCESS_URL + '?session_id={CHECKOUT_SESSION_ID}',
+                cancel_url=settings.FRONTEND_CANCEL_URL,
+                customer_email=request.user.email if request.user.is_authenticated else None,
+                metadata={
+                    'user_id': request.user.id if request.user.is_authenticated else 'anonymous',
+                    'order_id': '141'
+                }
+            )
+            return JsonResponse({'sessionId': session.id})
+
+        except (ValueError, stripe.error.StripeError) as e:
+            return JsonResponse({'error': str(e)}, status=400)
+
+
+class WebhookView(View):
+    """Handles Stripe webhooks with signature verification"""
+
+    @csrf_exempt
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        payload = request.body
+        sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+
+        try:
+            # Verify webhook signature
+            event = stripe.Webhook.construct_event(
+                payload,
+                sig_header,
+                settings.STRIPE_WEBHOOK_SECRET
+            )
+        except ValueError as e:
+            return HttpResponse(status=400)  # Invalid payload
+        except stripe.error.SignatureVerificationError as e:
+            return HttpResponse(status=401)  # Invalid signature
+
+        # Handle specific events
+        if event['type'] == 'checkout.session.completed':
+            session = event['data']['object']
+            self.handle_successful_payment(session)
+        elif event['type'] == 'charge.refunded':
+            self.handle_refund(event['data']['object'])
+        # Add other event handlers as needed
+
+        return HttpResponse(status=200)
+
+    def handle_successful_payment(self, session):
+        """Process completed payment"""
+        try:
+            # Retrieve and validate session data
+            expanded_session = stripe.checkout.Session.retrieve(
+                id=session.id,
+                expand=['line_items', 'customer']
+            )
+
+            # Important: Reconcile with your database
+            user_id = expanded_session.metadata.get('user_id')
+            amount_paid = expanded_session.amount_total / 100  # Convert to currency
+            print(f"Payment was successful for session: {session['id']}")
+            print(f"User ID: {user_id}")
+            print(f"Payment Amount: {amount_paid}")
+
+            # Implement your business logic:
+            # - Update order status
+            # - Grant access to service
+            # - Send confirmation email
+
+        except stripe.error.StripeError as e:
+            # Handle error (log and retry mechanism)
+            pass
+
+    def handle_refund(self, charge):
+        """Process refunds"""
+        # Implement your refund logic
+        pass
+
+
+class Payment_PageView(TemplateView):
+    template_name = "logiflex/stripe_pay.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs["stripe_publishable_key"] = stripe_publishable
+        return super(Payment_PageView, self).get_context_data(**kwargs)
+
+
+class Payment_SuccessView(TemplateView):
+    template_name = "logiflex/payment_success.html"
+
+
+class Payment_FailView(TemplateView):
+    template_name = "logiflex/payment_fail.html"

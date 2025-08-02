@@ -14,6 +14,7 @@ def sendemail(context):
     subject = context.get('subject')
     to_email = context.get('to_email')
     company = context.get('company')
+    client_name = context.get("client_name")
     cc = context.get('cc')
     bcc = context.get('bcc')
     shipments = context.get('shipments')
@@ -30,7 +31,7 @@ def sendemail(context):
 
 
     context_data = {
-        "clientname": company,
+        "clientname": client_name,
         "shipments": shipments,
         "avg_delivery": avg_delivery,
         "percent_change": percent_change,

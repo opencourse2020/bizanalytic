@@ -290,6 +290,10 @@
                                     {% csrf_token %}
                                     <div class="row">
                                         <div class="col-12">
+                                            <label for="client_nm">{% trans "Contact Name" %}</label>
+                                            <input type="text" id="client_nm" placeholder="Enter your Name" required="required">
+                                        </div>
+                                        <div class="col-12">
                                             <label for="company_nm">{% trans "Company Name" %}</label>
                                             <input type="text" id="company_nm" placeholder="Enter your Company Name" required="required">
                                         </div>

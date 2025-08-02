@@ -29,6 +29,7 @@ $("#register_nl").click(function (){
     });
 
 $("#generate_rp").click(function (){
+        let client_nm = $("#client_nm").val();
         let cp_nm = $("#company_nm").val();
         let email_nm = $("#email_nm").val();
         var fileName_b = $("#route_fl").val();
@@ -37,7 +38,8 @@ $("#generate_rp").click(function (){
 
         let url = "https://bizanalytic.com/logiflex/reports/create/";
         const formData = new FormData();
-        if (fileName_b && email_nm && cp_nm){
+        if (fileName_b && email_nm && cp_nm && client_nm){
+            formData.append('client_nm', client_nm);
             formData.append('cp_nm', cp_nm);
             formData.append('email_nm', email_nm);
             formData.append('route_file', file_b);
@@ -59,7 +61,11 @@ $("#generate_rp").click(function (){
                     }
                 }
             })
-        }
+        }else{
+                let message = 'You need to fill all the required information';
+            $("#report-message").html('<div class="alert alert-danger d-flex align-items-center" role="alert"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg><div>' +
+                                    message + '</div>')
+            }
 
 
     });

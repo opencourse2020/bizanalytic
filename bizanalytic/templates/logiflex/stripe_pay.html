@@ -111,6 +111,11 @@
                             <p>Get Advanced Report</p>
                             <button id="checkout-button">Buy Now</button>
                         </form>
+                        <stripe-buy-button
+                          buy-button-id="buy_btn_1RrfJs2QNXQiBdpDWFaSivoU"
+                          publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
+                        >
+                        </stripe-buy-button>
                     </div>
 
                 </div>
@@ -318,6 +323,9 @@
     <script src={% static "vendor/transport/assets/js/main.js" %}></script>
     <script src={% static "vendor/transport/assets/js/load.js" %}></script>
     <script src="https://js.stripe.com/v3/"></script>
+    <script async
+      src="https://js.stripe.com/v3/buy-button.js">
+    </script>
 
 {#    <script type="text/javascript">#}
 {#        var stripe = Stripe('{{ stripe_publishable_key }}');#}
@@ -347,6 +355,7 @@
 <script>
     $("#checkout-button").click(function (){
         var stripe = Stripe('{{ stripe_publishable_key }}');
+        console.log({{ stripe_publishable_key }});
         let url = "https://bizanalytic.com/logiflex/securepay/create-checkout-session/";
         {#const formData = new FormData();#}
         {#formData.append('cp_name', cp_name);#}
@@ -358,7 +367,7 @@
             url: url,
             {#data: formData,#}
             processData: false,
-            contentType: false,
+            contentType: 'application/json',
             headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()},
             success: function (data) {
                 if (data) {

@@ -28,10 +28,9 @@ from .utils.mail import sendemail
 
 # Initiate variables
 stripe.api_key = settings.STRIPE_SECRET_KEY
-stripe_id = settings.STRIPE_PRICE_ID
+stripe_price_id = settings.STRIPE_PRICE_ID
 stripe_publishable = settings.STRIPE_PUBLISHABLE_KEY
-
-
+stripe_webhook = settings.STRIPE_WEBHOOK_SECRET
 
 class IndexView(TemplateView):
     template_name = "../templates/logiflex/home.html"
@@ -240,20 +239,21 @@ def create_checkout_session(request):
 
             # Create checkout session
             print("Start Stripe Session")
+            print(settings.FRONTEND_SUCCESS_URL)
             session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
                 line_items=[{
-                    'price': stripe_id,
+                    'price': stripe_price_id,
                     'quantity': 1,
                 }],
                 mode='payment',
                 success_url=settings.FRONTEND_SUCCESS_URL + '?session_id={CHECKOUT_SESSION_ID}',
                 cancel_url=settings.FRONTEND_CANCEL_URL,
-                customer_email=request.user.email if request.user.is_authenticated else None,
-                metadata={
-                    'user_id': request.user.id if request.user.is_authenticated else 'anonymous',
-                    'order_id': '141'
-                }
+                # customer_email=request.user.email if request.user.is_authenticated else None,
+                # metadata={
+                #     'user_id': request.user.id if request.user.is_authenticated else 'anonymous',
+                #     'order_id': '141'
+                # }
             )
             print("Session ID:", session.id)
             data = {"sessionId": session.id}
@@ -280,7 +280,7 @@ class WebhookView(View):
             event = stripe.Webhook.construct_event(
                 payload,
                 sig_header,
-                settings.STRIPE_WEBHOOK_SECRET
+                stripe_webhook
             )
         except ValueError as e:
             return HttpResponse(status=400)  # Invalid payload

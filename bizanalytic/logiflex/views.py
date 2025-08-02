@@ -232,6 +232,7 @@ class BookACallView(CreateView, JsonFormMixin):
 class CreateCheckoutSessionView(View):
     """Initiates secure Stripe checkout session"""
 
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         try:
             # Validate input parameters

@@ -76,7 +76,7 @@ class ProfileCreateForm(SignupForm):
 
             user.save()
             profile.save()
-            client = LogiFlexClient(user=user)
+            client = LogiFlexClient(user=user, email=user.email)
             client.save()
         return user
 

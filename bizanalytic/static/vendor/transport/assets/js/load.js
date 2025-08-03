@@ -130,7 +130,7 @@ $("#generate_full_rp").click(function (){
         if ($("#agree_create").prop("checked")){
              agree_create = "1";
          }
-        if(agree_call == "1") {
+        if(agree_create == "1") {
             let url = "https://bizanalytic.com/logiflex/reports/full-report-create/";
             const formData = new FormData();
 

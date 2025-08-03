@@ -14,7 +14,9 @@ newsletter_patterns = [
 ]
 
 report_patterns = [
-    path("create/", views.SampleReportCreateView.as_view(), name="create"),
+    path("sample-report-create/", views.SampleReportCreateView.as_view(), name="sample-report-create"),
+    path('fullreport/', views.FullReportView.as_view(), name='fullreport'),
+    path('full-report-create/', views.FullReportCreateView.as_view(), name='full-report-create'),
 
 ]
 
@@ -24,6 +26,7 @@ stripe_patterns = [
     path('stripe_webhook/', views.WebhookView.as_view(), name='stripe_webhook'),
     path('success/', views.Payment_SuccessView.as_view(), name='success'),
     path('cancel/', views.Payment_FailView.as_view(), name='cancel'),
+
 ]
 
 urlpatterns = [

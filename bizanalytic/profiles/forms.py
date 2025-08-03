@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from allauth.account.forms import SignupForm, LoginForm, ResetPasswordForm
 from . import models
+from bizanalytic.logiflex.models import LogiFlexClient
 # from captcha.fields import ReCaptchaField
 
 User = get_user_model()
@@ -75,6 +76,8 @@ class ProfileCreateForm(SignupForm):
 
             user.save()
             profile.save()
+            client = LogiFlexClient(user=user)
+            client.save()
         return user
 
 

@@ -24,6 +24,7 @@ from . import models, forms
 from bizanalytic.profiles.mixins import JsonFormMixin
 from bizanalytic.profiles.models import User
 from .utils.mail import sendemail
+from .utils.tools import generatecode
 # Create your views here.
 
 # Initiate variables
@@ -149,25 +150,25 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
         if user:
             client = models.LogiFlexClient.objects.filter(user=user).first()
             if client:
-                report = models.LogiflexReport(client=client, routefile=route_file)
+                report = models.LogiflexReport(client=client, routefile=route_file, report_type="short")
                 report.save()
             else:
                 obj, created = models.LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name,
                                                                                         'user': user,
                                                                                         'contact_name': client_nm})
-                report = models.LogiflexReport(client=obj, routefile=route_file)
+                report = models.LogiflexReport(client=obj, routefile=route_file, report_type="short")
                 report.save()
         else:
             client = models.LogiFlexClient.objects.filter(email=email_name).first()
             if client:
-                report = models.LogiflexReport(client=client, routefile=route_file)
+                report = models.LogiflexReport(client=client, routefile=route_file, report_type="short")
                 report.save()
             else:
                 obj, created = models.LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name,
                                                                                         'contact_name': client_nm})
-                report = models.LogiflexReport(client=obj, routefile=route_file)
+                report = models.LogiflexReport(client=obj, routefile=route_file, report_type="short")
                 report.save()
         print("route file", report.routefile)
         # Create a report
@@ -308,11 +309,33 @@ class WebhookView(View):
             )
 
             # Important: Reconcile with your database
-            user_id = expanded_session.metadata.get('user_id')
+            # user_id = expanded_session.metadata.get('user_id')
+            user = self.request.user
+
             amount_paid = expanded_session.amount_total / 100  # Convert to currency
             email = expanded_session.customer_details.email
+            email = email.lower()
             customer_name = expanded_session.customer_details.name
             phone_nb = expanded_session.customer_details.phone
+
+            # check if client exists. if not it will be added
+            client = models.LogiFlexClient.objects.filter(email=email).first()
+            if not client:
+                if user:
+                    client = models.LogiFlexClient(user=user, email=email, contact_name=customer_name, phone=phone_nb)
+                    client.save()
+                else:
+                    client = models.LogiFlexClient(email=email, contact_name=customer_name, phone=phone_nb)
+                    client.save()
+
+            # Save payement and Create report instance with empty data
+            servicepayment = models.ServicePayment(client=client, amount=amount_paid, payment_success=True)
+            servicepayment.save()
+            downloadcode = generatecode(8)
+            report = models.LogiflexReport(client=client, payment=servicepayment, report_type="full",
+                                           download_code=downloadcode)
+            report.save()
+
             # print(session)
             print(f"Payment was successful for session: {session['id']}")
             print(f"Name: {customer_name}")
@@ -335,7 +358,7 @@ class WebhookView(View):
         pass
 
 
-class Payment_PageView(TemplateView):
+class Payment_PageView(LoginRequiredMixin, TemplateView):
     template_name = "logiflex/stripe_pay.html"
 
     def get_context_data(self, **kwargs):
@@ -343,8 +366,91 @@ class Payment_PageView(TemplateView):
         return super(Payment_PageView, self).get_context_data(**kwargs)
 
 
-class Payment_SuccessView(TemplateView):
+class Payment_SuccessView(LoginRequiredMixin, TemplateView):
     template_name = "logiflex/payment_success.html"
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        reports = models.LogiflexReport.objects.filter(client__user=user, payment__payment_success=True, report_type="full")
+        unused_reports = reports.filter(report_created=False)
+        kwargs["unused_reports"] = unused_reports
+        return super(Payment_SuccessView, self).get_context_data(**kwargs)
+
+
+class FullReportView(LoginRequiredMixin, TemplateView):
+    template_name = "logiflex/report_create.html"
+    def get_context_data(self, **kwargs):
+        pu = self.kwargs.get("pk")
+        report = models.LogiflexReport.objects.filter(pk=pu).first()
+        kwargs["contact_name"] = report.client.contact_name
+        kwargs["company"] = report.client.company
+        kwargs["email"] = report.client.email
+        kwargs["reportid"] = report.id
+        return super(FullReportView, self).get_context_data(**kwargs)
+
+
+class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
+    def post(self, request, *args, **kwargs):
+
+        # load AJAX data from the template
+        reportid = request.POST.get("cixphoto")
+        client_nm = request.POST.get("client_nm")
+        cp_name = request.POST.get("cp_nm")
+        email_name = request.POST.get("email_nm")
+        email_name = email_name.lower()
+        route_file = request.FILES["route_file"]
+
+
+        check_report = models.LogiflexReport.objects.filter(pk=reportid).first()
+        if not check_report.report_created:
+
+            # Save client and result data
+            user = self.request.user
+            client = models.LogiFlexClient.objects.filter(user=user).first()
+            if not client.contact_name:
+                client.contact_name = client_nm
+            if not client.company:
+                client.company = cp_name
+
+            client.save()
+
+            # Update report info
+            report, report_created = models.LogiflexReport.objects.update_or_create(pk=reportid,
+                                                                                    defaults={'routefile': route_file})
+
+            # Create a report file and update report record
+            report_file = ""
+            if report_file:
+                report, report_created = models.LogiflexReport.objects.update_or_create(pk=reportid,
+                                                                                        defaults={'report': report_file,
+                                                                                                  'report_created': True})
+            # Send Email to client
+            email_info = {
+                'subject': "🚀 Your Logistics Performance Report is Here",
+                'to_email': [email_name,],
+                'company': cp_name,
+                'client_name': client_nm,
+                'download_security_code'
+                'shipments': "187",
+                'avgdelivery': "2.3",
+                'percent_change': 12,
+                'ontimedelivery': 94,
+                'delayreasons': "Top 3 Reasons",
+                'suggested': "Route X, Carrier Y",
+                'logiflex_contact': "Adam Akad",
+                'phone': "+1 (832) 430-2434",
+                'cc': [""],
+                'bcc': [""],
+                'attachments': report.routefile
+            }
+            sendemail(email_info)
+            message = "Report Created Succssefully. Wait for a confirmation email from us."
+        else:
+            message = "Report Already Created Succssefully.Check the list of your reports for more details"
+
+        data = {"submessage": message}
+
+        return JsonResponse(data)
 
 
 class Payment_FailView(TemplateView):

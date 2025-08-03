@@ -23,14 +23,8 @@
     <link rel="stylesheet" href={% static "vendor/transport/assets/css/magnific-popup.css" %}>
     <link rel="stylesheet" href={% static "vendor/transport/assets/css/meanmenu.css" %}>
     <link rel="stylesheet" href={% static "vendor/transport/assets/css/remixicon.css" %}>
-    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-bs5/css/dataTables.bootstrap5.min.css" %} >
-    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" %} >
-    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" %} >
-    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/bootstrap-table/dist/bootstrap-table.min.css" %} >
     <link rel="stylesheet" href={% static "vendor/transport/assets/css/slick.css" %}>
     <link rel="stylesheet" href={% static "vendor/transport/assets/css/style.css" %}>
-
-
 
 </head>
 
@@ -56,6 +50,7 @@
                             <div class="logo-area">
                             <a href="home.html"><img src={% static "assets/logo/logo1-1.png" %} alt="logo" style="width: 50%"></a>
                         </div>
+
                         </div>
                     </div>
 
@@ -68,6 +63,7 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-6">
+
                     </div>
 
                     <div class="col-xl-8 col-lg-7 d-none d-lg-block">
@@ -94,6 +90,7 @@
                     <div class="col-12">
                         <h1 class="title">LogiFlex</h1>
                         <h2 class="title" style="color: #0cb7d6">{% trans "Logistics Analytics" %}</h2>
+
                         <p style="color: white; font-size: 16px;">
                             {% trans "Transform Your Logistics Data Into Actionable Insights" %}
                         </p>
@@ -108,54 +105,81 @@
         <!-- contact area starts -->
         <section class="contact-area pt-40 mb-40" >
             <div class="container">
-                <h5 class="title">{% trans "UnProcessed Reports" %}</h5>
-                <div id="datatable" class="mb-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <table id="datatableDefault" class="table text-nowrap w-100">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>{% trans "Client Name" %}</th>
-                                    <th>{% trans "Report Type" %}</th>
-                                    <th>{% trans "Date Created" %}</th>
-                                    <th>{% trans "Amount Paid" %}</th>
+                <div class="row justify-content-around">
 
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for report in object_list %}
-                                    <tr>
-                                        <td></td>
-                                        <td> {{ report.client.contact_name }} </td>
-                                        <td>
-                                            {%  trans "Paid Advanced Report" %}
-                                        </td>
-                                        <td>
-                                            {{ report.date_created }}
-                                        </td>
-                                        <td>
-                                            {{ report.payment.amount }}
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn btn-success"> {% trans "Create Report" %}</a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
+
+                    <div class="col-lg-5 wow fadeInLeft" data-wow-delay=".2s">
+                        <div class="row gx-xl-5 align-items-center">
+                            <div class="col-12 wow fadeInLeft" data-wow-delay=".2s">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <img src="assets/images/about-3.jpg" alt="about" class="about-image-3">
+                                        <span class="text-stroke paragraph-color third-border mt-20">Since 1920</span>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <img src="assets/images/about-4.jpg" alt="about" class="about-image-4">
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-6 wow fadeInRight align-content-center" id="tryfree" data-wow-delay=".2s">
+                        <div class="form-part">
+                            <h4 class="title text-center">{% trans "Get Your Advanced Report" %}</h4>
+                            <p class="text-center">{% trans "Upload your route data and receive performance analysis" %}</p>
+                            <div class="theme-form mt-40">
+                                <form action="#" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label for="client_nm">{% trans "Contact Name" %}</label>
+                                            <input type="text" id="client_nm" placeholder="Enter your Name" required="required" value="{{ contact_name }}">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="company_nm">{% trans "Company Name" %}</label>
+                                            <input type="text" id="company_nm" placeholder="Enter your Company Name" required="required" value="{{ company }}">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="email_nm">{% trans "Email Address" %}</label>
+                                            <input type="email" id="email_nm" placeholder="Enter your Email Address" disabled required="required" value="{{ email }}">
+                                        </div>
+                                        <div class="col-12 mb-4">
+                                            <label for="route_fl" >{% trans "Route Data File" %}</label>
+                                            <input type="file" id="route_fl" class="mb-0" placeholder="">
+                                            <span class="mt-0">{% trans "Supports .csv, .xlsx files" %}</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check ">
+                                              <input type="checkbox" value="" id="agree_create" style="width: initial">
+                                              <label class="form-check-label" for="agree_call">
+                                                {% trans "Agree to Create a Full Report" %}
+                                              </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="d-flex justify-content-center">
+                                                <button type="button" id="generate_full_rp" class="primary-btn primary-bg"><span class="text">{% trans "Generate Performance Report" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></button>
 
-                        <div class="hljs-container">
-                            <pre><code class="xml" data-url="assets/data/table-plugins/code-1.json"></code></pre>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+
+                                                <div id="report-message"></div>
+                                        </div>
+
+                                    </div>
+
+                                    </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-
-<section class="feature-area pt-120 pb-100">
+        <section class="feature-area pt-120 pb-100">
             <div class="container">
                 <div class="top-content">
                     <div class="row">
@@ -238,8 +262,8 @@
                                                   <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
                                                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                                                   </symbol>
-
                                                 </svg>
+                                                <input class="hidden" id="ci-x-photo" value="{{reportid}}" style="display: none">
                                                 <div id="alert-message"></div>
                                             </div>
 
@@ -354,21 +378,6 @@
     <script src={% static "vendor/transport/assets/js/wow.min.js" %}></script>
     <script src={% static "vendor/transport/assets/js/main.js" %}></script>
     <script src={% static "vendor/transport/assets/js/load.js" %}></script>
-    <script src={% static "assets/plugins/datatables.net/js/dataTables.min.js" %}></script>
-    	<script src={% static "assets/plugins/datatables.net-bs5/js/dataTables.bootstrap5.min.js" %}></script>
-    	<script src={% static "assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js" %}></script>
-        <script src={% static "assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js" %}></script>
-    	<script src={% static "assets/plugins/datatables.net-buttons/js/buttons.flash.min.js" %}></script>
-    	<script src={% static "assets/plugins/datatables.net-buttons/js/buttons.html5.min.js" %}></script>
-    	<script src={% static "assets/plugins/datatables.net-buttons/js/buttons.print.min.js" %}></script>
-    	<script src={% static "assets/plugins/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js" %}></script>
-    	<script src={% static "assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js" %}></script>
-        <script src={% static "assets/plugins/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js" %}></script>
-    	<script src={% static "assets/plugins/bootstrap-table/dist/bootstrap-table.min.js"%}></script>
-
-    <!-- ================== END page-js ================== -->
-
-    <script src={% static "assets/js/demo/table-plugins.analysistype.js" %}></script>
 
 <script>
 

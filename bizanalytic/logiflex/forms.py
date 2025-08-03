@@ -22,3 +22,8 @@ class NewsLetter_logiflex_subscriptionForm(forms.ModelForm):
             "company": _("Company Name"),
             "area": _("Area")
         }
+
+
+# class FullReportForm(forms.ModelForm):
+#     class Meta:
+#         model = models.LogiflexReport

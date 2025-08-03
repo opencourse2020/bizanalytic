@@ -20,7 +20,7 @@ def reportfiles_directory_path(instance, filename):
 class NewsLetter_logiflex(models.Model):
     title = models.CharField(max_length=250, null=True, blank=True)
     body = RichTextField()
-    date_created = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True)
     dispatched = models.BooleanField(default=False)
 
     class Meta:
@@ -40,7 +40,7 @@ class NewsLetter_logiflex_subscription(models.Model):
     email = models.CharField(max_length=150)
     company = models.CharField(max_length=150, null=True, blank=True)
     area = models.CharField(max_length=2, choices=areatype, null=True, blank=True)
-    date_added = models.DateField(auto_now=True)
+    date_added = models.DateField(auto_now_add=True)
     removed = models.BooleanField(default=False)
 
     class Meta:
@@ -58,7 +58,8 @@ class LogiFlexClient(models.Model):
     email = models.CharField(max_length=150)
     phone = models.CharField(max_length=20)
     contact_name = models.CharField(max_length=100, null=True, blank=True)
-    date_added = models.DateField(auto_now=True)
+    date_added = models.DateField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = "LogiFlexClient"
@@ -69,15 +70,40 @@ class LogiFlexClient(models.Model):
         return str(self.company)
 
 
-class LogiflexReport(models.Model):
+class ServicePayment(models.Model):
     client = models.ForeignKey(LogiFlexClient, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=6, decimal_places=2)
+    payment_success = models.BooleanField(default=False)
+    refund_issued = models.BooleanField(default=False)
+    refund_amount = models.DecimalField(max_digits=6, decimal_places=2)
+    date_added = models.DateTimeField(auto_now_add=True)
+    date_refund = models.DateField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "ServicePayment"
+        verbose_name_plural = "ServicePayments"
+        permissions = (("manage_servicepayment", "Manage Service Payments"),)
+
+    def __str__(self):
+        return str(self.client.id)
+
+
+class LogiflexReport(models.Model):
+    reporttype = (
+        ('short', _("Free Short Report")),
+        ('full', _("Paid Advanced Report")),
+    )
+    client = models.ForeignKey(LogiFlexClient, on_delete=models.CASCADE)
+    payment = models.ForeignKey(ServicePayment, on_delete=models.SET_NULL, null=True)
     routefile = ContentTypeRestrictedFileField(upload_to=datafiles_directory_path,
                                                content_types=['application/vnd.ms-excel', 'text/csv',
                                                               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', ],
                                                max_upload_size=20971520, blank=True, null=True)
     report = models.FileField(upload_to=reportfiles_directory_path, null=True, blank=True)
-    download_code = models.CharField(max_length=6)
-    date_created = models.DateField(auto_now=True)
+    report_type = models.CharField(max_length=5, choices=reporttype, null=True, blank=True)
+    download_code = models.CharField(max_length=8, null=True, blank=True)
+    report_created = models.BooleanField(default=False)
+    date_created = models.DateField(auto_now_add=True)
 
     class Meta:
         verbose_name = "LogiFlexReport"
@@ -104,3 +130,6 @@ class RequestedCall(models.Model):
         verbose_name = "RequestedCall"
         verbose_name_plural = "RequestedCalls"
         permissions = (("manage_requestedcall", "Manage RequestedCall"),)
+
+    def __str__(self):
+        return str(self.client.id)

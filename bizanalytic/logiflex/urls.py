@@ -15,7 +15,7 @@ newsletter_patterns = [
 
 report_patterns = [
     path("sample-report-create/", views.SampleReportCreateView.as_view(), name="sample-report-create"),
-    path('fullreport/', views.FullReportView.as_view(), name='fullreport'),
+    path('fullreport/<int:pk>/', views.FullReportView.as_view(), name='fullreport'),
     path('full-report-create/', views.FullReportCreateView.as_view(), name='full-report-create'),
 
 ]

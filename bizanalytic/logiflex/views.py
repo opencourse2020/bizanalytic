@@ -311,15 +311,21 @@ class WebhookView(View):
             # Important: Reconcile with your database
             # user_id = expanded_session.metadata.get('user_id')
             user = self.request.user
-
+            print("User Email:", user.email)
             amount_paid = expanded_session.amount_total / 100  # Convert to currency
             email = expanded_session.customer_details.email
             email = email.lower()
             customer_name = expanded_session.customer_details.name
             phone_nb = expanded_session.customer_details.phone
+            print(f"Payment was successful for session: {session['id']}")
+            print(f"Name: {customer_name}")
+            print(f"Email: {email}")
+            print(f"Phone: {phone_nb}")
+            print(f"Payment Amount: {amount_paid}")
 
             # check if client exists. if not it will be added
             client = models.LogiFlexClient.objects.filter(email=email).first()
+            print("Client_email", client.email)
             if not client:
                 if user:
                     client = models.LogiFlexClient(user=user, email=email, contact_name=customer_name, phone=phone_nb)
@@ -337,11 +343,7 @@ class WebhookView(View):
             report.save()
 
             # print(session)
-            print(f"Payment was successful for session: {session['id']}")
-            print(f"Name: {customer_name}")
-            print(f"Email: {email}")
-            print(f"Phone: {phone_nb}")
-            print(f"Payment Amount: {amount_paid}")
+
 
             # Implement your business logic:
             # - Update order status

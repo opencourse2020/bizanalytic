@@ -334,12 +334,12 @@ class WebhookView(View):
             #         client.save()
             #
             # # Save payement and Create report instance with empty data
-            # servicepayment = models.ServicePayment(client=client, amount=amount_paid, payment_success=True)
-            # servicepayment.save()
-            # downloadcode = generatecode(8)
-            # report = models.LogiflexReport(client=client, payment=servicepayment, report_type="full",
-            #                                download_code=downloadcode)
-            # report.save()
+            servicepayment = models.ServicePayment(client=client, amount=amount_paid, payment_success=True)
+            servicepayment.save()
+            downloadcode = generatecode(8)
+            report = models.LogiflexReport(client=client, payment=servicepayment, report_type="full",
+                                           download_code=downloadcode)
+            report.save()
 
             # print(session)
 

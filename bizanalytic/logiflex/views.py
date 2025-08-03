@@ -290,7 +290,7 @@ class WebhookView(View):
         # Handle specific events
         if event['type'] == 'checkout.session.completed':
             session = event['data']['object']
-            self.handle_successful_payment(session)
+            # self.handle_successful_payment(session)
             return redirect('logiflex:securepay:success')
 
         elif event['type'] == 'charge.refunded':

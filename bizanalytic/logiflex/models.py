@@ -75,7 +75,7 @@ class ServicePayment(models.Model):
     amount = models.DecimalField(max_digits=6, decimal_places=2)
     payment_success = models.BooleanField(default=False)
     refund_issued = models.BooleanField(default=False)
-    refund_amount = models.DecimalField(max_digits=6, decimal_places=2)
+    refund_amount = models.DecimalField(max_digits=6, decimal_places=2, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
     date_refund = models.DateField(null=True, blank=True)
 

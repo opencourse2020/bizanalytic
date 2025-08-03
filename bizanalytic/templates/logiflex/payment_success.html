@@ -57,6 +57,12 @@
                             <a href="home.html"><img src={% static "assets/logo/logo1-1.png" %} alt="logo" style="width: 50%"></a>
                         </div>
                         </div>
+                        <div class="email-text">
+                                <p>{% if user.is_authenticated %}
+                                        {{ user.email }}
+                                    {% endif %}
+                                </p>
+                            </div>
                     </div>
 
                 </div>

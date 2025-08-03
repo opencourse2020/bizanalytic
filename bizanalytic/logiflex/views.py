@@ -421,7 +421,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
                                                                                     defaults={'routefile': route_file})
 
             # Create a report file and update report record
-            report_file = ""
+            report_file = "done"
             if report_file:
                 report, report_created = models.LogiflexReport.objects.update_or_create(pk=reportid,
                                                                                         defaults={'report': report_file,

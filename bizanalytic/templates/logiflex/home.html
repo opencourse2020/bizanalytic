@@ -99,9 +99,12 @@
                             <div class="logo-area">
                             <a href="home.html"><img src={% static "assets/logo/logo1-1.png" %} alt="logo" style="width: 50%"></a>
                         </div>
-{#                            <div class="email-text">#}
-{#                                <span class="email-icon"><i class="ri-mail-fill"></i></span> <a href="#">info@example.com</a>#}
-{#                            </div>#}
+                            <div class="email-text">
+                                <p>{% if user.is_authenticated %}
+                                        {{ user.email }}
+                                    {% endif %}
+                                </p>
+                            </div>
                         </div>
                     </div>
 {#                    <div class="col-md-9">#}

@@ -309,9 +309,8 @@ class WebhookView(View):
             )
 
             # Important: Reconcile with your database
-            # user_id = expanded_session.metadata.get('user_id')
-            user = self.request.user
-            print("User Email:", user.email)
+            # user = self.request.user
+            # print("User Email:", user.email)
             amount_paid = expanded_session.amount_total / 100  # Convert to currency
             email = expanded_session.customer_details.email
             email = email.lower()
@@ -324,23 +323,23 @@ class WebhookView(View):
             print(f"Payment Amount: {amount_paid}")
 
             # check if client exists. if not it will be added
-            client = models.LogiFlexClient.objects.filter(email=email).first()
-            print("Client_email", client.email)
-            if not client:
-                if user:
-                    client = models.LogiFlexClient(user=user, email=email, contact_name=customer_name, phone=phone_nb)
-                    client.save()
-                else:
-                    client = models.LogiFlexClient(email=email, contact_name=customer_name, phone=phone_nb)
-                    client.save()
-
-            # Save payement and Create report instance with empty data
-            servicepayment = models.ServicePayment(client=client, amount=amount_paid, payment_success=True)
-            servicepayment.save()
-            downloadcode = generatecode(8)
-            report = models.LogiflexReport(client=client, payment=servicepayment, report_type="full",
-                                           download_code=downloadcode)
-            report.save()
+            # client = models.LogiFlexClient.objects.filter(email=email).first()
+            # print("Client_email", client.email)
+            # if not client:
+            #     if user:
+            #         client = models.LogiFlexClient(user=user, email=email, contact_name=customer_name, phone=phone_nb)
+            #         client.save()
+            #     else:
+            #         client = models.LogiFlexClient(email=email, contact_name=customer_name, phone=phone_nb)
+            #         client.save()
+            #
+            # # Save payement and Create report instance with empty data
+            # servicepayment = models.ServicePayment(client=client, amount=amount_paid, payment_success=True)
+            # servicepayment.save()
+            # downloadcode = generatecode(8)
+            # report = models.LogiflexReport(client=client, payment=servicepayment, report_type="full",
+            #                                download_code=downloadcode)
+            # report.save()
 
             # print(session)
 

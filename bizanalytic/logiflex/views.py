@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import (
     UpdateView,
     RedirectView,
@@ -288,12 +288,14 @@ class WebhookView(View):
             return HttpResponse(status=401)  # Invalid signature
 
         # Handle specific events
-        print("event type", event.type)
         if event['type'] == 'checkout.session.completed':
             session = event['data']['object']
             self.handle_successful_payment(session)
+            return redirect('logiflex:securepay:success')
+
         elif event['type'] == 'charge.refunded':
             self.handle_refund(event['data']['object'])
+            return redirect('logiflex:securepay:cancel')
         # Add other event handlers as needed
 
         return HttpResponse(status=200)
@@ -310,9 +312,14 @@ class WebhookView(View):
             # Important: Reconcile with your database
             user_id = expanded_session.metadata.get('user_id')
             amount_paid = expanded_session.amount_total / 100  # Convert to currency
-            print(session)
+            email = expanded_session.customer_details.email
+            customer_name = expanded_session.customer_details.name
+            phone_nb = expanded_session.customer_details.phone
+            # print(session)
             print(f"Payment was successful for session: {session['id']}")
-            print(f"User ID: {user_id}")
+            print(f"Name: {customer_name}")
+            print(f"Email: {email}")
+            print(f"Phone: {phone_nb}")
             print(f"Payment Amount: {amount_paid}")
 
             # Implement your business logic:

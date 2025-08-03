@@ -401,6 +401,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         email_name = email_name.lower()
         route_file = request.FILES["route_file"]
 
+        print("report ID:", reportid)
 
         check_report = models.LogiflexReport.objects.filter(pk=reportid).first()
         if not check_report.report_created:

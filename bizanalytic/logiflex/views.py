@@ -323,8 +323,8 @@ class WebhookView(View):
             print(f"Payment Amount: {amount_paid}")
 
             # check if client exists. if not it will be added
-            # client = models.LogiFlexClient.objects.filter(email=email).first()
-            # print("Client_email", client.email)
+            client = models.LogiFlexClient.objects.filter(email=email).first()
+            print("Client_email", client.email)
             # if not client:
             #     if user:
             #         client = models.LogiFlexClient(user=user, email=email, contact_name=customer_name, phone=phone_nb)

@@ -412,7 +412,7 @@ class Payment_SuccessView(LoginRequiredMixin, TemplateView):
         user = self.request.user
         servicepayment = models.ServicePayment.objects.filter(client__user=user).first()
         reports = models.LogiflexReport.objects.filter(client__user=user)
-        reports = reports.filter(report_created=True)
+        # reports = reports.filter(report_created=True)
         kwargs["reports"] = reports
         kwargs["payid"] = servicepayment.pk
         return super(Payment_SuccessView, self).get_context_data(**kwargs)

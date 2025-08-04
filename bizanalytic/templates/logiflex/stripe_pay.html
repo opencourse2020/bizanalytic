@@ -109,13 +109,126 @@
                         <form action="#">
                             {% csrf_token %}
                             <p>Get Advanced Report</p>
-                            <button id="checkout-button">Buy Now</button>
+
                         </form>
-                        <stripe-buy-button
-                          buy-button-id="buy_btn_1RrfJs2QNXQiBdpDWFaSivoU"
-                          publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
-                        >
-                        </stripe-buy-button>
+
+
+                        <div class="accordion" id="accordionPanelsStayOpenExample">
+                          <div class="accordion-item">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                {% trans "✅ One Time Advanced Report" %}
+                              </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                              <div class="accordion-body">
+                                <p>
+                                    {% trans "Get a detailed logistics performance analysis for your latest data upload. Includes cost breakdown, carrier performance, and actionable recommendations in a professional PDF report." %}
+                                </p>
+                                  <stripe-buy-button
+                                      buy-button-id="buy_btn_1RrfJs2QNXQiBdpDWFaSivoU"
+                                      publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
+                                    >
+                                    </stripe-buy-button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="accordion-item">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                                {% trans "✅ Monthly Subscription" %}
+                              </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                              <div class="accordion-body">
+                                <p>{% trans "Receive an advanced logistics analysis every month. Simply upload your latest shipment data and get a comprehensive report with deep insights, predictive trends, and optimization recommendations — tailored to your operations." %}
+                                  </p>
+                                  <stripe-buy-button
+                                      buy-button-id="buy_btn_1RsJze2QNXQiBdpDbO4r91io"
+                                      publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
+                                    >
+                                    </stripe-buy-button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="accordion-item">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                Accordion Item #3
+                              </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                              <div class="accordion-body">
+                                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <section style="font-family: Arial, sans-serif; padding: 40px; background: #f9fafc;">
+    <h2 style="text-align: center; color: #4C5B9B; font-size: 32px; margin-bottom: 20px;">LogiFlex Pricing Plans</h2>
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+
+        <!-- Free Plan -->
+        <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <h3 style="color: #4C5B9B;">Free</h3>
+            <p style="font-size: 24px; font-weight: bold;">$0</p>
+            <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
+                <li>Basic Summary Report</li>
+                <li>1 Sample Report</li>
+                <li>Includes 1 Chart</li>
+                <li>No Recommendations</li>
+                <li>48-hour Delivery</li>
+            </ul>
+            <a href="#start-free" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Start Free</a>
+        </div>
+
+        <!-- One-Time Report -->
+        <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <h3 style="color: #4C5B9B;">One-Time Report</h3>
+            <p style="font-size: 24px; font-weight: bold;">$49</p>
+            <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
+                <li>Full Advanced Report</li>
+                <li>1 Detailed Analysis</li>
+                <li>Includes All Charts</li>
+                <li>Actionable Recommendations</li>
+                <li>48-hour Delivery</li>
+            </ul>
+            <a href="#checkout-one-time" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Get Report</a>
+        </div>
+
+        <!-- Monthly Subscription -->
+        <div style="background: #eef6ff; border: 2px solid #4C5B9B; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            <h3 style="color: #4C5B9B;">Monthly Subscription</h3>
+            <p style="font-size: 24px; font-weight: bold;">$79/month</p>
+            <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
+                <li>1 Report Every Month</li>
+                <li>Advanced + Predictive Trends</li>
+                <li>Full Visualization Pack</li>
+                <li>Priority Support</li>
+                <li>Fast Turnaround</li>
+            </ul>
+            <a href="#checkout-monthly" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Subscribe Now</a>
+        </div>
+
+        <!-- Quarterly Plan -->
+        <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <h3 style="color: #4C5B9B;">Quarterly Plan</h3>
+            <p style="font-size: 24px; font-weight: bold;">$199/qtr</p>
+            <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
+                <li>3 Advanced Reports</li>
+                <li>Predictive Insights Each Month</li>
+                <li>Full Visualization Pack</li>
+                <li>Priority Support</li>
+                <li>Save vs Monthly Plan</li>
+            </ul>
+            <a href="#checkout-quarterly" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Save with Quarterly</a>
+        </div>
+
+    </div>
+</section>
+
                     </div>
 
                 </div>

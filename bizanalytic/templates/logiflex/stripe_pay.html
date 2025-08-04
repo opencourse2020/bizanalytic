@@ -111,123 +111,352 @@
                             <p>Get Advanced Report</p>
 
                         </form>
-
-
-                        <div class="accordion" id="accordionPanelsStayOpenExample">
-                          <div class="accordion-item">
-                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                                {% trans "✅ One Time Advanced Report" %}
-                              </button>
-                            </h2>
-                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                              <div class="accordion-body">
-                                <p>
-                                    {% trans "Get a detailed logistics performance analysis for your latest data upload. Includes cost breakdown, carrier performance, and actionable recommendations in a professional PDF report." %}
-                                </p>
-                                  <stripe-buy-button
-                                      buy-button-id="buy_btn_1RrfJs2QNXQiBdpDWFaSivoU"
-                                      publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
-                                    >
-                                    </stripe-buy-button>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="accordion-item">
-                            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                                {% trans "✅ Monthly Subscription" %}
-                              </button>
-                            </h2>
-                            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                              <div class="accordion-body">
-                                <p>{% trans "Receive an advanced logistics analysis every month. Simply upload your latest shipment data and get a comprehensive report with deep insights, predictive trends, and optimization recommendations — tailored to your operations." %}
-                                  </p>
-                                  <stripe-buy-button
+                        <figure class="table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Feature
+                                        </th>
+                                        <th>
+                                            <strong>Free</strong>
+                                        </th>
+                                        <th>
+                                            <strong>One-Time Report</strong>
+                                        </th>
+                                        <th style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%);">
+                                            <strong>Monthly Subscription</strong>
+                                        </th>
+                                        <th>
+                                            <strong>Quarterly Plan</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>Price</strong>
+                                        </td>
+                                        <td>
+                                            $0
+                                        </td>
+                                        <td>
+                                            $49 / report
+                                        </td>
+                                        <td style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%);">
+                                            $79 / month
+                                        </td>
+                                        <td>
+                                            $199 / quarter
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Data Upload</strong>
+                                        </td>
+                                        <td>
+                                            ✅ Yes
+                                        </td>
+                                        <td>
+                                            ✅ Yes
+                                        </td>
+                                        <td style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%);">
+                                            ✅ Yes
+                                        </td>
+                                        <td>
+                                            ✅ Yes
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Report Type</strong>
+                                        </td>
+                                        <td>
+                                            Basic Summary
+                                        </td>
+                                        <td>
+                                            Full Advanced Report
+                                        </td>
+                                        <td style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%);">
+                                            Full Advanced Report (Monthly)
+                                        </td>
+                                        <td>
+                                            Full Advanced Report (3 Months)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Number of Reports</strong>
+                                        </td>
+                                        <td>
+                                            1 Sample
+                                        </td>
+                                        <td>
+                                            1
+                                        </td>
+                                        <td style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%);">
+                                            2 Reports per month
+                                        </td>
+                                        <td>
+                                            6 (2 Reports &nbsp;each month)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Analysis Depth</strong>
+                                        </td>
+                                        <td>
+                                            Basic Metrics
+                                        </td>
+                                        <td>
+                                            Advanced Insights
+                                        </td>
+                                        <td style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%);">
+                                            Advanced + Predictive Trends
+                                        </td>
+                                        <td>
+                                            Advanced + Predictive Trends
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Visuals</strong>
+                                        </td>
+                                        <td>
+                                            1 Chart
+                                        </td>
+                                        <td>
+                                            Full Visualization Pack
+                                        </td>
+                                        <td style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%);">
+                                            Full Visualization Pack
+                                        </td>
+                                        <td>
+                                            Full Visualization Pack
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Recommendations</strong>
+                                        </td>
+                                        <td>
+                                            ❌ No
+                                        </td>
+                                        <td>
+                                            ✅ Yes
+                                        </td>
+                                        <td style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%);">
+                                            ✅ Yes
+                                        </td>
+                                        <td>
+                                            ✅ Yes
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Priority Support</strong>
+                                        </td>
+                                        <td>
+                                            ❌ No
+                                        </td>
+                                        <td>
+                                            ❌ No
+                                        </td>
+                                        <td style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%);">
+                                            ✅ Yes
+                                        </td>
+                                        <td>
+                                            ✅ Yes
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Delivery Time</strong>
+                                        </td>
+                                        <td>
+                                            48 hours
+                                        </td>
+                                        <td>
+                                            48 hours
+                                        </td>
+                                        <td style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%);">
+                                            Priority Turnaround
+                                        </td>
+                                        <td>
+                                            Priority Turnaround
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Ideal For</strong>
+                                        </td>
+                                        <td>
+                                            Testing the Tool
+                                        </td>
+                                        <td>
+                                            Occasional Analysis
+                                        </td>
+                                        <td style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%);">
+                                            Continuous Monitoring
+                                        </td>
+                                        <td>
+                                            Long-Term Savings
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>{% trans "Get" %}</strong>
+                                        </td>
+                                        <td>
+                                            <strong>{% trans "Start Free" %}</strong>
+                                        </td>
+                                        <td>
+                                            <stripe-buy-button
+                                              buy-button-id="buy_btn_1RrfJs2QNXQiBdpDWFaSivoU"
+                                              publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
+                                            >
+                                            </stripe-buy-button>
+                                        </td>
+                                        <td style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%);">
+                                            <stripe-buy-button
                                       buy-button-id="buy_btn_1RsJze2QNXQiBdpDbO4r91io"
                                       publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
                                     >
                                     </stripe-buy-button>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="accordion-item">
-                            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                Accordion Item #3
-                              </button>
-                            </h2>
-                            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-                              <div class="accordion-body">
-                                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                                        </td>
+                                        <td>
+                                            <strong>Save with Quarterly</strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </figure>
+
+{#                        <div class="accordion" id="accordionPanelsStayOpenExample">#}
+{#                          <div class="accordion-item">#}
+{#                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">#}
+{#                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">#}
+{#                                {% trans "✅ One Time Advanced Report" %}#}
+{#                              </button>#}
+{#                            </h2>#}
+{#                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">#}
+{#                              <div class="accordion-body">#}
+{#                                <p>#}
+{#                                    {% trans "Get a detailed logistics performance analysis for your latest data upload. Includes cost breakdown, carrier performance, and actionable recommendations in a professional PDF report." %}#}
+{#                                </p>#}
+{#                                  <stripe-buy-button#}
+{#                                      buy-button-id="buy_btn_1RrfJs2QNXQiBdpDWFaSivoU"#}
+{#                                      publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"#}
+{#                                    >#}
+{#                                    </stripe-buy-button>#}
+{#                              </div>#}
+{#                            </div>#}
+{#                          </div>#}
+{#                          <div class="accordion-item">#}
+{#                            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">#}
+{#                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">#}
+{#                                {% trans "✅ Monthly Subscription" %}#}
+{#                              </button>#}
+{#                            </h2>#}
+{#                            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">#}
+{#                              <div class="accordion-body">#}
+{#                                <p>{% trans "Receive an advanced logistics analysis every month. Simply upload your latest shipment data and get a comprehensive report with deep insights, predictive trends, and optimization recommendations — tailored to your operations." %}#}
+{#                                  </p>#}
+{#                                  <stripe-buy-button#}
+{#                                      buy-button-id="buy_btn_1RsJze2QNXQiBdpDbO4r91io"#}
+{#                                      publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"#}
+{#                                    >#}
+{#                                    </stripe-buy-button>#}
+{#                              </div>#}
+{#                            </div>#}
+{#                          </div>#}
+{#                          <div class="accordion-item">#}
+{#                            <h2 class="accordion-header" id="panelsStayOpen-headingThree">#}
+{#                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">#}
+{#                                Accordion Item #3#}
+{#                              </button>#}
+{#                            </h2>#}
+{#                            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">#}
+{#                              <div class="accordion-body">#}
+{#                                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.#}
+{#                              </div>#}
+{#                            </div>#}
+{#                          </div>#}
+{#                        </div>#}
                     </div>
                     <div class="col-md-6">
                         <section style="font-family: Arial, sans-serif; padding: 40px; background: #f9fafc;">
-    <h2 style="text-align: center; color: #4C5B9B; font-size: 32px; margin-bottom: 20px;">LogiFlex Pricing Plans</h2>
-    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                            <h2 style="text-align: center; color: #4C5B9B; font-size: 32px; margin-bottom: 20px;">LogiFlex Pricing Plans</h2>
+                            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
 
-        <!-- Free Plan -->
-        <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-            <h3 style="color: #4C5B9B;">Free</h3>
-            <p style="font-size: 24px; font-weight: bold;">$0</p>
-            <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
-                <li>Basic Summary Report</li>
-                <li>1 Sample Report</li>
-                <li>Includes 1 Chart</li>
-                <li>No Recommendations</li>
-                <li>48-hour Delivery</li>
-            </ul>
-            <a href="#start-free" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Start Free</a>
-        </div>
+                                <!-- Free Plan -->
+                                <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                                    <h3 style="color: #4C5B9B;">Free</h3>
+                                    <p style="font-size: 24px; font-weight: bold;">$0</p>
+                                    <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
+                                        <li>Basic Summary Report</li>
+                                        <li>1 Sample Report</li>
+                                        <li>Includes 1 Chart</li>
+                                        <li>No Recommendations</li>
+                                        <li>48-hour Delivery</li>
+                                    </ul>
+                                    <a href="#start-free" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Start Free</a>
+                                </div>
 
-        <!-- One-Time Report -->
-        <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-            <h3 style="color: #4C5B9B;">One-Time Report</h3>
-            <p style="font-size: 24px; font-weight: bold;">$49</p>
-            <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
-                <li>Full Advanced Report</li>
-                <li>1 Detailed Analysis</li>
-                <li>Includes All Charts</li>
-                <li>Actionable Recommendations</li>
-                <li>48-hour Delivery</li>
-            </ul>
-            <a href="#checkout-one-time" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Get Report</a>
-        </div>
+                                <!-- One-Time Report -->
+                                <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                                    <h3 style="color: #4C5B9B;">{% trans "One-Time Report" %}</h3>
+                                    <p style="font-size: 24px; font-weight: bold;">$49</p>
+                                    <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
+                                        <li>Full Advanced Report</li>
+                                        <li>1 Detailed Analysis</li>
+                                        <li>Includes All Charts</li>
+                                        <li>Actionable Recommendations</li>
+                                        <li>48-hour Delivery</li>
+                                    </ul>
+{#                                    <a href="#checkout-one-time" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Get Report</a>#}
+                                        <stripe-buy-button
+                                              buy-button-id="buy_btn_1RrfJs2QNXQiBdpDWFaSivoU"
+                                              publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
+                                            >
+                                            </stripe-buy-button>
+                                </div>
 
-        <!-- Monthly Subscription -->
-        <div style="background: #eef6ff; border: 2px solid #4C5B9B; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-            <h3 style="color: #4C5B9B;">Monthly Subscription</h3>
-            <p style="font-size: 24px; font-weight: bold;">$79/month</p>
-            <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
-                <li>1 Report Every Month</li>
-                <li>Advanced + Predictive Trends</li>
-                <li>Full Visualization Pack</li>
-                <li>Priority Support</li>
-                <li>Fast Turnaround</li>
-            </ul>
-            <a href="#checkout-monthly" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Subscribe Now</a>
-        </div>
+                                <!-- Monthly Subscription -->
+                                <div style="background: #eef6ff; border: 2px solid #4C5B9B; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                    <h3 style="color: #4C5B9B;">{% trans "Monthly Subscription" %}</h3>
+                                    <p style="font-size: 24px; font-weight: bold;">$79/month</p>
+                                    <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
+                                        <li>1 Report Every Month</li>
+                                        <li>Advanced + Predictive Trends</li>
+                                        <li>Full Visualization Pack</li>
+                                        <li>Priority Support</li>
+                                        <li>Fast Turnaround</li>
+                                    </ul>
+{#                                    <a href="#checkout-monthly" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Subscribe Now</a>#}
+                                <stripe-buy-button
+                                      buy-button-id="buy_btn_1RsJze2QNXQiBdpDbO4r91io"
+                                      publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
+                                    >
+                                    </stripe-buy-button>
+                                </div>
 
-        <!-- Quarterly Plan -->
-        <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-            <h3 style="color: #4C5B9B;">Quarterly Plan</h3>
-            <p style="font-size: 24px; font-weight: bold;">$199/qtr</p>
-            <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
-                <li>3 Advanced Reports</li>
-                <li>Predictive Insights Each Month</li>
-                <li>Full Visualization Pack</li>
-                <li>Priority Support</li>
-                <li>Save vs Monthly Plan</li>
-            </ul>
-            <a href="#checkout-quarterly" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Save with Quarterly</a>
-        </div>
+                                <!-- Quarterly Plan -->
+                                <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                                    <h3 style="color: #4C5B9B;">{% trans "Quarterly Plan" %}</h3>
+                                    <p style="font-size: 24px; font-weight: bold;">$199/qtr</p>
+                                    <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
+                                        <li>3 Advanced Reports</li>
+                                        <li>Predictive Insights Each Month</li>
+                                        <li>Full Visualization Pack</li>
+                                        <li>Priority Support</li>
+                                        <li>Save vs Monthly Plan</li>
+                                    </ul>
+                                    <a href="#checkout-quarterly" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Save with Quarterly</a>
+                                </div>
 
-    </div>
-</section>
+                            </div>
+                        </section>
 
                     </div>
 

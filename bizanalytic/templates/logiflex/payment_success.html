@@ -156,12 +156,16 @@
                                                 {{ report.date_created }}
                                             </td>
                                             <td>
-                                                <a href="{{ report.routefile.url }}">
-                                                {{ report.routefilename }}</a>
+                                                {% if report.routefile %}
+                                                    <a href="{{ report.routefile.url }}">
+                                                    {{ report.routefilename }}</a>
+                                                {% endif %}
                                             </td>
                                             <td>
+                                                {% if report.report %}
                                                 <a href="{{ report.report.url }}">
                                                     {{ report.reportilename }}</a>
+                                                {% endif %}
 
                                             </td>
                                         </tr>

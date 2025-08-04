@@ -354,7 +354,7 @@ class WebhookView(View):
 
             # check if client exists. if not it will be added
             client = models.LogiFlexClient.objects.filter(email=email).first()
-            print("Client_email", client.email)
+            print("Client_email:", client.email)
 
             payment_plan = models.PricingPlan.objects.filter(price=amount_paid).first()
             if payment_plan:
@@ -366,11 +366,11 @@ class WebhookView(View):
                     servicepayment.is_active = True
                     servicepayment.save()
                 else:
-                    servicepayment.client = client
-                    servicepayment.stripe_checkout_id = session['id']
-                    servicepayment.service_type = payment_plan
-                    servicepayment.is_active = True
-                    servicepayment.save()
+                    servicepayment = models.ServicePayment.objects.create(
+                                        client=client,
+                                        service_type=payment_plan,
+                                        stripe_checkout_id=session['id'],
+                                        is_active=True)
 
                 servicepayment.reset_quota_if_needed()
 

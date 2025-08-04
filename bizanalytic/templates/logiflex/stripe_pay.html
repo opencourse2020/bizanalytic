@@ -104,14 +104,14 @@
         <!-- contact area starts -->
         <section class="contact-area pt-40 mb-40" >
             <div class="container">
-                <div class="row justify-content-around">
-                    <div class="col-md-6">
+                <div class="row w-100">
+                    <div class="col">
                         <form action="#">
                             {% csrf_token %}
                             <p>Get Advanced Report</p>
 
                         </form>
-                        <figure class="table">
+                        <figure class="table" style="width: 100%">
                             <table>
                                 <thead>
                                     <tr>
@@ -305,10 +305,10 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>{% trans "Get" %}</strong>
+{#                                            <strong>{% trans "Get" %}</strong>#}
                                         </td>
                                         <td>
-                                            <strong>{% trans "Start Free" %}</strong>
+                                            <a href="{% url 'logiflex:index' %}" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Start Free</a>
                                         </td>
                                         <td>
                                             <stripe-buy-button
@@ -317,12 +317,12 @@
                                             >
                                             </stripe-buy-button>
                                         </td>
-                                        <td style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%);">
+                                        <td style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%); text-align:center;">
                                             <stripe-buy-button
-                                      buy-button-id="buy_btn_1RsJze2QNXQiBdpDbO4r91io"
-                                      publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
-                                    >
-                                    </stripe-buy-button>
+                                              buy-button-id="buy_btn_1RsJze2QNXQiBdpDbO4r91io"
+                                              publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
+                                            >
+                                            </stripe-buy-button>
                                         </td>
                                         <td>
                                             <strong>Save with Quarterly</strong>
@@ -384,7 +384,7 @@
 {#                          </div>#}
 {#                        </div>#}
                     </div>
-                    <div class="col-md-6">
+                    <div class="col">
                         <section style="font-family: Arial, sans-serif; padding: 40px; background: #f9fafc;">
                             <h2 style="text-align: center; color: #4C5B9B; font-size: 32px; margin-bottom: 20px;">LogiFlex Pricing Plans</h2>
                             <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">

@@ -138,32 +138,37 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for report in reports %}
-                                    <tr>
-                                        <td></td>
-                                        <td> {{ report.client.contact_name }} </td>
-                                        <td>
-                                            {% if report.report_type == "full" %}
-                                                {%  trans "Paid Advanced Report" %}
-                                            {% elif report.report_type == "short" %}
-                                                {% trans "Free Short Report" %}
-                                            {% endif %}
-                                        </td>
-                                        <td>
-                                            {{ report.date_created }}
-                                        </td>
-                                        <td>
-                                            <a href="{{ report.routefile.url }}">
-                                            {{ report.routefilename }}</a>
-                                        </td>
-                                        <td>
-                                            <a href="{{ report.report.url }}">
-                                                {{ report.reportilename }}</a>
+                                {% if reports == "none" %}
 
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
+                                {% else %}
+                                    {% for report in reports %}
+                                        <tr>
+                                            <td></td>
+                                            <td> {{ report.client.contact_name }} </td>
+                                            <td>
+                                                {% if report.report_type == "full" %}
+                                                    {%  trans "Paid Advanced Report" %}
+                                                {% elif report.report_type == "short" %}
+                                                    {% trans "Free Short Report" %}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {{ report.date_created }}
+                                            </td>
+                                            <td>
+                                                <a href="{{ report.routefile.url }}">
+                                                {{ report.routefilename }}</a>
+                                            </td>
+                                            <td>
+                                                <a href="{{ report.report.url }}">
+                                                    {{ report.reportilename }}</a>
+
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+
+                                {% endif %}
+                               </tbody>
                             </table>
                         </div>
 

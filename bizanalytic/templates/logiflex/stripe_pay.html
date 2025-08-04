@@ -190,16 +190,16 @@
                                             <strong>{% trans "Number of Reports" %}</strong>
                                         </td>
                                         <td>
-                                            1 {% trans " Sample" %}
+                                           {% trans "1 Sample" %}
                                         </td>
                                         <td>
-                                            1
+                                            {% trans "1 Report" %}
                                         </td>
                                         <td style="background-color:#eef6ff ;border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); ">
-                                            2 {% trans " Reports per month" %}
+                                            {% trans "2 Reports per month" %}
                                         </td>
                                         <td>
-                                            6 (2 {% trans "Reports each month" %})
+                                            {% trans "6 (2 Reports each month)" %}
                                         </td>
                                     </tr>
                                     <tr>
@@ -330,7 +330,7 @@
 
                                         </td>
                                         <td>
-                                            <a href="https://buy.stripe.com/test_7sYbIU4snaFRaKLbUw2cg01" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>
+                                            <a href="https://buy.stripe.com/test_9B6eV68IDeW71ab9Mo2cg02" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -396,14 +396,14 @@
 
                                 <!-- Free Plan -->
                                 <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                                    <h3 style="color: #4C5B9B;">Free</h3>
+                                    <h3 style="color: #4C5B9B;">{% trans "Free Short Report" %}</h3>
                                     <p style="font-size: 24px; font-weight: bold;">$0</p>
                                     <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
-                                        <li>Basic Summary Report</li>
-                                        <li>1 Sample Report</li>
-                                        <li>Includes 1 Chart</li>
-                                        <li>No Recommendations</li>
-                                        <li>48-hour Delivery</li>
+                                        <li>{% trans "Basic Summary" %}</li>
+                                        <li>{% trans "1 Sample Report" %}</li>
+                                        <li>{% trans "Includes 1 Chart" %}</li>
+                                        <li>{% trans "No Recommendations" %}</li>
+                                        <li>{% trans "48-hour Delivery" %}</li>
                                     </ul>
                                     <a href="#start-free" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Start Free</a>
                                 </div>
@@ -413,11 +413,11 @@
                                     <h3 style="color: #4C5B9B;">{% trans "One-Time Report" %}</h3>
                                     <p style="font-size: 24px; font-weight: bold;">$49</p>
                                     <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
-                                        <li>Full Advanced Report</li>
-                                        <li>1 Detailed Analysis</li>
-                                        <li>Includes All Charts</li>
-                                        <li>Actionable Recommendations</li>
-                                        <li>48-hour Delivery</li>
+                                        <li>{% trans "Full Advanced Report" %}</li>
+                                        <li>{% trans "1 Detailed Analysis" %}</li>
+                                        <li>{% trans "Includes All Charts" %}</li>
+                                        <li>{% trans "Actionable Recommendations" %}</li>
+                                        <li>{% trans "48-hour Delivery" %}</li>
                                     </ul>
 {#                                    <a href="#checkout-one-time" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Get Report</a>#}
                                         <a href="https://buy.stripe.com/test_eVq5kw3ojaFRf11e2E2cg00" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>
@@ -426,13 +426,13 @@
                                 <!-- Monthly Subscription -->
                                 <div style="background: #eef6ff; border: 2px solid #4C5B9B; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
                                     <h3 style="color: #4C5B9B;">{% trans "Monthly Subscription" %}</h3>
-                                    <p style="font-size: 24px; font-weight: bold;">$79/month</p>
+                                    <p style="font-size: 24px; font-weight: bold;">$79/{% trans "month" %}</p>
                                     <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
-                                        <li>2 Report Every Month</li>
-                                        <li>Advanced + Predictive Trends</li>
-                                        <li>Full Visualization Pack</li>
-                                        <li>Priority Support</li>
-                                        <li>Fast Turnaround</li>
+                                        <li>{% trans "2 Reports per month" %}</li>
+                                        <li>{% trans "Advanced + Predictive Trends" %}</li>
+                                        <li>{%  trans "Full Visualization Pack" %}</li>
+                                        <li>{% trans "Priority Support" %}</li>
+                                        <li>{% trans "Priority Turnaround" %}</li>
                                     </ul>
                                     <a href="https://buy.stripe.com/test_7sYbIU4snaFRaKLbUw2cg01" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>
 
@@ -441,15 +441,15 @@
                                 <!-- Quarterly Plan -->
                                 <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                                     <h3 style="color: #4C5B9B;">{% trans "Quarterly Plan" %}</h3>
-                                    <p style="font-size: 24px; font-weight: bold;">$199/qtr</p>
+                                    <p style="font-size: 24px; font-weight: bold;">$199/{% trans "quarter" %}</p>
                                     <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
-                                        <li>6 Advanced Reports</li>
-                                        <li>Predictive Insights Each Month</li>
-                                        <li>Full Visualization Pack</li>
-                                        <li>Priority Support</li>
-                                        <li>Save vs Monthly Plan</li>
+                                        <li>{% trans "6 Advanced Reports" %}</li>
+                                        <li>{% trans "Advanced + Predictive Trends" %}</li>
+                                        <li>{%  trans "Full Visualization Pack" %}</li>
+                                        <li>{% trans "Priority Support" %}</li>
+                                        <li>{% trans "Save vs Monthly Plan" %}</li>
                                     </ul>
-                                    <a href="#checkout-quarterly" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Save with Quarterly</a>
+                                    <a href="https://buy.stripe.com/test_9B6eV68IDeW71ab9Mo2cg02" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Save with Quarterly</a>
                                 </div>
 
                             </div>

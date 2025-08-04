@@ -411,10 +411,17 @@ class Payment_SuccessView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         user = self.request.user
         servicepayment = models.ServicePayment.objects.filter(client__user=user).first()
-        reports = models.LogiflexReport.objects.filter(client__user=user)
-        # reports = reports.filter(report_created=True)
-        kwargs["reports"] = reports
-        kwargs["payid"] = servicepayment.pk
+        if servicepayment:
+            reports = models.LogiflexReport.objects.filter(client__user=user)
+            # reports = reports.filter(report_created=True)
+            kwargs["reports"] = reports
+            if servicepayment.can_generate_report():
+                kwargs["payid"] = servicepayment.pk
+            else:
+                kwargs["payid"] = "none"
+        else:
+            kwargs["reports"] = "none"
+            kwargs["payid"] = "none"
         return super(Payment_SuccessView, self).get_context_data(**kwargs)
 
 

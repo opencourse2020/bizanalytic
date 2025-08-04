@@ -127,6 +127,9 @@ class ServicePayment(models.Model):
             elif self.service_type.name == 'quarterly':
                 self.reports_allowed = 6
                 self.reset_date = now() + timedelta(days=90)
+            elif self.service_type.name == 'onetime':
+                self.reports_allowed = 1
+                self.reset_date = now() + timedelta(days=30)
             self.save()
 
     def can_generate_report(self):

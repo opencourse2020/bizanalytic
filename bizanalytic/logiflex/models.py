@@ -94,8 +94,8 @@ class ServicePayment(models.Model):
         ('monthly', _("Paid Monthly Subscription")),
         ('quarterly', _("Paid Quarterly Plan")),
     )
-    client = models.ForeignKey(LogiFlexClient, on_delete=models.CASCADE)
-    stripe_checkout_id = models.CharField(max_length=200, on_delete=models.SET_NULL)
+    client = models.ForeignKey(LogiFlexClient, on_delete=models.SET_NULL, null=True)
+    stripe_checkout_id = models.CharField(max_length=200, null=True, blank=True)
     service_type = models.ForeignKey(PricingPlan, null=True, blank=True)
     is_active = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)

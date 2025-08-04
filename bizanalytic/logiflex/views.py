@@ -16,6 +16,8 @@ from django.http import JsonResponse, HttpResponse
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, get_object_or_404
 
 # Third party libraries
 import stripe
@@ -229,14 +231,10 @@ class BookACallView(CreateView, JsonFormMixin):
         return JsonResponse(data)
 
 
-def create_checkout_session(request):
+def create_checkout_sessions(request):
 
     if request.method == 'POST':
         try:
-            # Validate input parameters
-            # price_id = request.POST.get('price_id')
-            # if not price_id:
-            #     raise ValueError("Missing price ID")
 
             # Create checkout session
             print("Start Stripe Session")
@@ -264,6 +262,32 @@ def create_checkout_session(request):
             data = {'error': str(e)}
             return JsonResponse(data, status=400)
 
+
+@login_required
+def create_checkout_session(request, plan_id):
+    plan = get_object_or_404(models.PricingPlan, id=plan_id)
+
+    # Stripe Checkout Session
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        mode='subscription' if plan.name in ['monthly', 'quarterly'] else 'payment',
+        line_items=[{
+            'price': plan.stripe_price_id,
+            'quantity': 1,
+        }],
+        customer_email=request.user.email,
+        success_url=settings.FRONTEND_SUCCESS_URL + "?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url=settings.FRONTEND_CANCEL_URL,
+    )
+
+    # Save to DB
+    subscription = models.ServicePayment.objects.create(
+        client=request.user,
+        plan=plan,
+        stripe_checkout_id=session.id
+    )
+
+    return redirect(session.url)
 
 class WebhookView(View):
     """Handles Stripe webhooks with signature verification"""
@@ -331,23 +355,29 @@ class WebhookView(View):
             # check if client exists. if not it will be added
             client = models.LogiFlexClient.objects.filter(email=email).first()
             print("Client_email", client.email)
-            # if not client:
-            #     if user:
-            #         client = models.LogiFlexClient(user=user, email=email, contact_name=customer_name, phone=phone_nb)
-            #         client.save()
-            #     else:
-            #         client = models.LogiFlexClient(email=email, contact_name=customer_name, phone=phone_nb)
-            #         client.save()
-            #
-            # # Save payement and Create report instance with empty data
-            servicepayment = models.ServicePayment(client=client, amount=amount_paid, payment_success=True,
-                                                   service_type=reporttype)
-            servicepayment.save()
 
-            downloadcode = generatecode(8)
-            report = models.LogiflexReport(client=client, payment=servicepayment, report_type='full',
-                                           download_code=downloadcode)
-            report.save()
+            payment_plan = models.PricingPlan.objects.filter(price=amount_paid).first()
+            if payment_plan:
+                # Save payment and Create report instance with empty data
+                servicepayment = models.ServicePayment.objects.filter(client=client).first()
+                if servicepayment:
+                    servicepayment.stripe_checkout_id = session['id']
+                    servicepayment.service_type = payment_plan
+                    servicepayment.is_active = True
+                    servicepayment.save()
+                else:
+                    servicepayment.client = client
+                    servicepayment.stripe_checkout_id = session['id']
+                    servicepayment.service_type = payment_plan
+                    servicepayment.is_active = True
+                    servicepayment.save()
+
+                servicepayment.reset_quota_if_needed()
+
+                # downloadcode = generatecode(8)
+                # report = models.LogiflexReport(client=client, payment=servicepayment, report_type='full',
+                #                                download_code=downloadcode)
+                # report.save()
 
             # print(session)
 
@@ -380,9 +410,11 @@ class Payment_SuccessView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         user = self.request.user
-        reports = models.LogiflexReport.objects.filter(client__user=user, payment__payment_success=True, report_type="full")
-        unused_reports = reports.filter(report_created=False)
-        kwargs["unused_reports"] = unused_reports
+        servicepayment = models.ServicePayment.objects.filter(client__user=user).first()
+        reports = models.LogiflexReport.objects.filter(client__user=user)
+        reports = reports.filter(report_created=True)
+        kwargs["reports"] = reports
+        kwargs["payid"] = servicepayment.pk
         return super(Payment_SuccessView, self).get_context_data(**kwargs)
 
 
@@ -390,11 +422,16 @@ class FullReportView(LoginRequiredMixin, TemplateView):
     template_name = "logiflex/report_create.html"
     def get_context_data(self, **kwargs):
         pu = self.kwargs.get("pk")
-        report = models.LogiflexReport.objects.filter(pk=pu).first()
-        kwargs["contact_name"] = report.client.contact_name
-        kwargs["company"] = report.client.company
-        kwargs["email"] = report.client.email
-        kwargs["reportid"] = report.id
+        servicepayment = models.ServicePayment.objects.filter(pk=pu).first()
+        if servicepayment:
+            downloadcode = generatecode(8)
+            report = models.LogiflexReport(client=servicepayment.client, payment=servicepayment, report_type='full',
+                                           download_code=downloadcode)
+            report.save()
+            kwargs["contact_name"] = report.client.contact_name
+            kwargs["company"] = report.client.company
+            kwargs["email"] = report.client.email
+            kwargs["reportid"] = report.id
         return super(FullReportView, self).get_context_data(**kwargs)
 
 
@@ -403,7 +440,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
         # load AJAX data from the template
         reportid = request.POST.get("cixphoto")
-        client_nm = request.POST.get("client_nm")
+        client_name = request.POST.get("client_nm")
         cp_name = request.POST.get("cp_nm")
         email_name = request.POST.get("email_nm")
         email_name = email_name.lower()
@@ -411,14 +448,18 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
         print("report ID:", reportid)
 
-        check_report = models.LogiflexReport.objects.filter(pk=reportid).first()
-        if not check_report.report_created:
+        checkreport = models.LogiflexReport.objects.filter(pk=reportid).first()
+        clientid= checkreport.client.id
+        # client = models.LogiFlexClient.objects.filter(pk=)
+        servicepayment = models.ServicePayment.objects.filter(client_id=clientid).first()
+
+        if servicepayment.can_generate_report():
 
             # Save client and result data
             user = self.request.user
             client = models.LogiFlexClient.objects.filter(user=user).first()
             if not client.contact_name:
-                client.contact_name = client_nm
+                client.contact_name = client_name
             if not client.company:
                 client.company = cp_name
 
@@ -434,12 +475,15 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
                 report, report_created = models.LogiflexReport.objects.update_or_create(pk=reportid,
                                                                                         defaults={'report': report_file,
                                                                                                   'report_created': True})
+            # Update payment reports
+            servicepayment.mark_report_used()
+
             # Send Email to client
             email_info = {
                 'subject': "🚀 Your Logistics Performance Report is Here",
                 'to_email': [email_name,],
                 'company': cp_name,
-                'client_name': client_nm,
+                'client_name': client_name,
                 'download_security_code'
                 'shipments': "187",
                 'avgdelivery': "2.3",

@@ -3,6 +3,8 @@ from ckeditor.fields import RichTextField
 from django.utils.translation import gettext_lazy as _
 from bizanalytic.profiles.formatChecker import ContentTypeRestrictedFileField
 import os
+from datetime import timedelta
+from django.utils.timezone import now
 
 from bizanalytic.profiles.models import User
 # Create your models here.
@@ -70,29 +72,75 @@ class LogiFlexClient(models.Model):
         return str(self.company)
 
 
+class PricingPlan(models.Model):
+    PLAN_CHOICES = [
+        ('short', _("Free Short Report")),
+        ('onetime', _("One-Time Report")),
+        ('monthly', _("Paid Monthly Subscription")),
+        ('quarterly', _("Paid Quarterly Plan")),
+    ]
+    name = models.CharField(max_length=50, choices=PLAN_CHOICES)
+    price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    stripe_price_id = models.CharField(max_length=200, blank=True, null=True)  # Stripe price ID
+
+    def __str__(self):
+        return f"{self.get_name_display()} - ${self.price}"
+
+
 class ServicePayment(models.Model):
     servicetype = (
         ('short', _("Free Short Report")),
         ('onetime', _("One-Time Report")),
         ('monthly', _("Paid Monthly Subscription")),
-        ('quarter', _("Paid Quarterly Plan")),
+        ('quarterly', _("Paid Quarterly Plan")),
     )
     client = models.ForeignKey(LogiFlexClient, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=6, decimal_places=2)
-    service_type = models.CharField(max_length=7, choices=servicetype, null=True, blank=True)
-    payment_success = models.BooleanField(default=False)
-    refund_issued = models.BooleanField(default=False)
-    refund_amount = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    stripe_checkout_id = models.CharField(max_length=200, on_delete=models.SET_NULL)
+    service_type = models.ForeignKey(PricingPlan, null=True, blank=True)
+    is_active = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
-    date_refund = models.DateField(null=True, blank=True)
+    end_date = models.DateTimeField(blank=True, null=True)
+    # payment_success = models.BooleanField(default=False)
+    # amount = models.DecimalField(max_digits=6, decimal_places=2)
+    # refund_issued = models.BooleanField(default=False)
+    # refund_amount = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    # date_refund = models.DateField(null=True, blank=True)
+
+    # Report quota
+    reports_allowed = models.IntegerField(default=0)
+    reports_used = models.IntegerField(default=0)
+    reset_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         verbose_name = "ServicePayment"
         verbose_name_plural = "ServicePayments"
         permissions = (("manage_servicepayment", "Manage Service Payments"),)
 
+    def reset_quota_if_needed(self):
+        """Reset quota when billing cycle renews."""
+        if self.reset_date and now() >= self.reset_date:
+            self.reports_used = 0
+            # Reset based on plan
+            if self.service_type.name == 'monthly':
+                self.reports_allowed = 2
+                self.reset_date = now() + timedelta(days=30)
+            elif self.service_type.name == 'quarterly':
+                self.reports_allowed = 6
+                self.reset_date = now() + timedelta(days=90)
+            self.save()
+
+    def can_generate_report(self):
+        """Check if user can generate a report."""
+        self.reset_quota_if_needed()
+        return self.reports_used < self.reports_allowed
+
+    def mark_report_used(self):
+        """Increment usage after generating a report."""
+        self.reports_used += 1
+        self.save()
+
     def __str__(self):
-        return str(self.client.id)
+        return f"{self.client.id} - {self.service_type.name}"
 
 
 class LogiflexReport(models.Model):
@@ -110,7 +158,7 @@ class LogiflexReport(models.Model):
     report = models.FileField(upload_to=reportfiles_directory_path, null=True, blank=True)
     report_type = models.CharField(max_length=5, choices=reporttype, null=True, blank=True)
     download_code = models.CharField(max_length=8, null=True, blank=True)
-    report_created = models.BooleanField(default=False)
+    # report_created = models.BooleanField(default=False)
     date_created = models.DateField(auto_now_add=True)
 
     class Meta:

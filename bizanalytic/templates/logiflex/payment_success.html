@@ -114,9 +114,12 @@
         <!-- contact area starts -->
         <section class="contact-area pt-40 mb-40" >
             <div class="container">
-                <h5 class="title">{% trans "UnProcessed Reports" %}</h5>
+                <h5 class="title">{% trans "List of Processed Reports" %}</h5>
                 <div id="datatable" class="mb-5">
                     <div class="card">
+                    <div class="card-header">
+                        <a href="{% url 'logiflex:reports:fullreport' payid %}" class="btn btn-success"> {% trans "Create New Report" %}</a>
+                    </div>
                         <div class="card-body">
                             <table id="datatableDefault" class="table text-nowrap w-100">
                                 <thead>
@@ -125,26 +128,34 @@
                                     <th>{% trans "Client Name" %}</th>
                                     <th>{% trans "Report Type" %}</th>
                                     <th>{% trans "Date Created" %}</th>
-                                    <th>{% trans "Amount Paid" %}</th>
+                                    <th>{% trans "Data File" %}</th>
+                                    <th>{% trans "Report" %}</th>
 
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for report in unused_reports %}
+                                {% for report in reports %}
                                     <tr>
                                         <td></td>
                                         <td> {{ report.client.contact_name }} </td>
                                         <td>
-                                            {%  trans "Paid Advanced Report" %}
+                                            {% if report.report_type == "full" %}
+                                                {%  trans "Paid Advanced Report" %}
+                                            {% elif report.report_type == "short" %}
+                                                {% trans "Free Short Report" %}
+                                            {% endif %}
                                         </td>
                                         <td>
                                             {{ report.date_created }}
                                         </td>
                                         <td>
-                                            {{ report.payment.amount }}
+                                            <a href="{{ report.routefile.url }}">
+                                            {{ report.routefilename }}</a>
                                         </td>
                                         <td>
-                                            <a href="{% url 'logiflex:reports:fullreport' report.pk %}" class="btn btn-success"> {% trans "Create Report" %}</a>
+                                            <a href="{{ report.report.url }}">
+                                                {{ report.reportilename }}</a>
+
                                         </td>
                                     </tr>
                                 {% endfor %}

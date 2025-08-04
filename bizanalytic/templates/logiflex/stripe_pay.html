@@ -104,11 +104,12 @@
         <!-- contact area starts -->
         <section class="contact-area pt-40 mb-40" >
             <div class="container">
+                <h2 style="text-align: center; color: #4C5B9B; font-size: 32px; margin-bottom: 20px;">LogiFlex Pricing Plans</h2>
                 <div class="row w-100">
-                    <div class="col">
+                    <div class="col-12">
                         <form action="#">
                             {% csrf_token %}
-                            <p>Get Advanced Report</p>
+{#                            <p>Get Advanced Report</p>#}
 
                         </form>
                         <figure class="table" style="width: 100%">
@@ -311,18 +312,22 @@
                                             <a href="{% url 'logiflex:index' %}" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Start Free</a>
                                         </td>
                                         <td>
-                                            <stripe-buy-button
-                                              buy-button-id="buy_btn_1RrfJs2QNXQiBdpDWFaSivoU"
-                                              publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
-                                            >
-                                            </stripe-buy-button>
+{#                                            <stripe-buy-button#}
+{#                                              buy-button-id="buy_btn_1RrfJs2QNXQiBdpDWFaSivoU"#}
+{#                                              publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"#}
+{#                                             >#}
+{#                                            </stripe-buy-button>#}
+                                            <a href="https://buy.stripe.com/test_eVq5kw3ojaFRf11e2E2cg00" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>
+
                                         </td>
                                         <td style="background-color:hsl(210, 38%, 82%);border:2px double hsl(0, 0%, 0%); text-align:center;">
-                                            <stripe-buy-button
-                                              buy-button-id="buy_btn_1RsJze2QNXQiBdpDbO4r91io"
-                                              publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
-                                            >
-                                            </stripe-buy-button>
+{#                                            <stripe-buy-button#}
+{#                                              buy-button-id="buy_btn_1RsJze2QNXQiBdpDbO4r91io"#}
+{#                                              publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"#}
+{#                                            >#}
+{#                                            </stripe-buy-button>#}
+                                            <a href="https://buy.stripe.com/test_7sYbIU4snaFRaKLbUw2cg01" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>
+
                                         </td>
                                         <td>
                                             <strong>Save with Quarterly</strong>
@@ -415,11 +420,7 @@
                                         <li>48-hour Delivery</li>
                                     </ul>
 {#                                    <a href="#checkout-one-time" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Get Report</a>#}
-                                        <stripe-buy-button
-                                              buy-button-id="buy_btn_1RrfJs2QNXQiBdpDWFaSivoU"
-                                              publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
-                                            >
-                                            </stripe-buy-button>
+                                        <a href="https://buy.stripe.com/test_eVq5kw3ojaFRf11e2E2cg00" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>
                                 </div>
 
                                 <!-- Monthly Subscription -->
@@ -427,18 +428,14 @@
                                     <h3 style="color: #4C5B9B;">{% trans "Monthly Subscription" %}</h3>
                                     <p style="font-size: 24px; font-weight: bold;">$79/month</p>
                                     <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
-                                        <li>1 Report Every Month</li>
+                                        <li>2 Report Every Month</li>
                                         <li>Advanced + Predictive Trends</li>
                                         <li>Full Visualization Pack</li>
                                         <li>Priority Support</li>
                                         <li>Fast Turnaround</li>
                                     </ul>
-{#                                    <a href="#checkout-monthly" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Subscribe Now</a>#}
-                                <stripe-buy-button
-                                      buy-button-id="buy_btn_1RsJze2QNXQiBdpDbO4r91io"
-                                      publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"
-                                    >
-                                    </stripe-buy-button>
+                                    <a href="https://buy.stripe.com/test_7sYbIU4snaFRaKLbUw2cg01" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>
+
                                 </div>
 
                                 <!-- Quarterly Plan -->
@@ -446,7 +443,7 @@
                                     <h3 style="color: #4C5B9B;">{% trans "Quarterly Plan" %}</h3>
                                     <p style="font-size: 24px; font-weight: bold;">$199/qtr</p>
                                     <ul style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">
-                                        <li>3 Advanced Reports</li>
+                                        <li>6 Advanced Reports</li>
                                         <li>Predictive Insights Each Month</li>
                                         <li>Full Visualization Pack</li>
                                         <li>Priority Support</li>

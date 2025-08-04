@@ -71,8 +71,15 @@ class LogiFlexClient(models.Model):
 
 
 class ServicePayment(models.Model):
+    servicetype = (
+        ('short', _("Free Short Report")),
+        ('onetime', _("One-Time Report")),
+        ('monthly', _("Paid Monthly Subscription")),
+        ('quarter', _("Paid Quarterly Plan")),
+    )
     client = models.ForeignKey(LogiFlexClient, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=6, decimal_places=2)
+    service_type = models.CharField(max_length=7, choices=servicetype, null=True, blank=True)
     payment_success = models.BooleanField(default=False)
     refund_issued = models.BooleanField(default=False)
     refund_amount = models.DecimalField(max_digits=6, decimal_places=2, null=True)
@@ -91,7 +98,8 @@ class ServicePayment(models.Model):
 class LogiflexReport(models.Model):
     reporttype = (
         ('short', _("Free Short Report")),
-        ('full', _("Paid Advanced Report")),
+        ('full', _("Paid Report")),
+
     )
     client = models.ForeignKey(LogiFlexClient, on_delete=models.CASCADE)
     payment = models.ForeignKey(ServicePayment, on_delete=models.SET_NULL, null=True)

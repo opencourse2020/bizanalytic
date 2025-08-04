@@ -312,6 +312,12 @@ class WebhookView(View):
             # user = self.request.user
             # print("User Email:", user.email)
             amount_paid = expanded_session.amount_total / 100  # Convert to currency
+            if amount_paid == 49:
+                reporttype = "onetime"
+            elif amount_paid == 79:
+                reporttype = "monthly"
+            elif amount_paid == 199:
+                reporttype = "quarter"
             email = expanded_session.customer_details.email
             email = email.lower()
             customer_name = expanded_session.customer_details.name
@@ -334,10 +340,12 @@ class WebhookView(View):
             #         client.save()
             #
             # # Save payement and Create report instance with empty data
-            servicepayment = models.ServicePayment(client=client, amount=amount_paid, payment_success=True)
+            servicepayment = models.ServicePayment(client=client, amount=amount_paid, payment_success=True,
+                                                   service_type=reporttype)
             servicepayment.save()
+
             downloadcode = generatecode(8)
-            report = models.LogiflexReport(client=client, payment=servicepayment, report_type="full",
+            report = models.LogiflexReport(client=client, payment=servicepayment, report_type='full',
                                            download_code=downloadcode)
             report.save()
 

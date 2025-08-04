@@ -96,7 +96,7 @@ class ServicePayment(models.Model):
     )
     client = models.ForeignKey(LogiFlexClient, on_delete=models.SET_NULL, null=True)
     stripe_checkout_id = models.CharField(max_length=200, null=True, blank=True)
-    service_type = models.ForeignKey(PricingPlan, null=True, blank=True)
+    service_type = models.ForeignKey(PricingPlan, on_delete=models.SET_NULL, null=True, blank=True)
     is_active = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(blank=True, null=True)

@@ -27,7 +27,9 @@
 {% endblock main_menu%}
 
 {% block left_menu %}
-    {{ block.super }}
+    <div class="nav-right-content">
+        <a href="{% url 'logiflex:index' %}" class="primary-btn secondary-bg"><span class="text">{% trans "Try Free" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+    </div>
 {% endblock left_menu %}
 
 {% block breadcrumb %}

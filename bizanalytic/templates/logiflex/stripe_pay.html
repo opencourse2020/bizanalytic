@@ -1,108 +1,58 @@
+{% extends "logiflex_base.html" %}
 {% load i18n %}
 {% load static %}
 {% load crispy_forms_tags %}
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <!-- required meta tags -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+{% block head_title %}
+    <meta name="description" content="Choose the right plan for your logistics business – free trial, one-time advanced reports, or monthly/quarterly freight analytics subscriptions.">
+    <meta name="author" content='"freight report subscription pricing", "freight cost optimization tool for SMEs", "advanced logistics analysis at low cost", "AI freight analytics monthly plans"'>
     <!-- page title -->
-    <title>BizAnalytic AI-Powered Analysis</title>
+    <title>Affordable Freight Analytics Plans | One-Time or Subscription</title>
+{% endblock head_title %}
 
-    <!-- favicon -->
-    <link rel="shortcut icon" href={% static "vendor/transport/assets/images/favicon.png" %}>
+{% block css %}
+    {{ block.super }}
+{% endblock css %}
 
-    <!-- css files -->
-    <link rel="stylesheet" href={% static "vendor/transport/assets/css/animate.css" %}>
-    <link rel="stylesheet" href={% static "vendor/transport/assets/css/bootstrap.min.css" %}>
-    <link rel="stylesheet" href={% static "vendor/transport/assets/css/magnific-popup.css" %}>
-    <link rel="stylesheet" href={% static "vendor/transport/assets/css/meanmenu.css" %}>
-    <link rel="stylesheet" href={% static "vendor/transport/assets/css/remixicon.css" %}>
-    <link rel="stylesheet" href={% static "vendor/transport/assets/css/slick.css" %}>
-    <link rel="stylesheet" href={% static "vendor/transport/assets/css/style.css" %}>
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
 
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
 
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
 
-</head>
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
 
-<body>
-    <!-- preloader -->
-    <div id="preloader">
-        <div id="loader"></div>
-    </div>
-
-    <!-- back to top -->
-    <div class="back-to-top">
-        <span><i class="ri-arrow-up-s-line"></i></span>
-    </div>
-    
-    <!-- header area starts -->
-    <header class="header-area">
-        <!-- header top -->
-        <div class="header-top" style="background-color: white">
-            <div class="container ms-1">
-                <div class="row align-items-center">
-                    <div class="col-md-3">
-                        <div class="header-left">
-                            <div class="logo-area">
-                            <a href="home.html"><img src={% static "assets/logo/logo1-1.png" %} alt="logo" style="width: 50%"></a>
-                        </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <!-- menu area -->
-        <div class="menu-area">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-2 col-6">
-                    </div>
-
-                    <div class="col-xl-8 col-lg-7 d-none d-lg-block">
-
-                    </div>
-
-                    <div class="col-xl-2 col-lg-3 col-6 pt-1 pb-1">
-                        <div class="nav-right-content">
-                            <a href="#tryfree" class="primary-btn secondary-bg"><span class="text">{% trans "Try Free" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mobile-menu"></div>
-        </div>
-    </header>
-    
-    <main class="main">
-        <!-- breadcrumb area starts -->
-        <section class="breadcrumb-area mb-1" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+{% block breadcrumb %}
+    <section class="breadcrumb-area mb-1" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
             <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <h1 class="title">LogiFlex</h1>
-                        <h2 class="title" style="color: #0cb7d6">{% trans "Logistics Analytics" %}</h2>
+                        <h2 class="title" style="color: #0cb7d6">{% trans "Affordable Pricing" %}</h2>
                         <p style="color: white; font-size: 16px;">
-                            {% trans "Transform Your Logistics Data Into Actionable Insights" %}
+                            {% trans "Advanced Logistics Analysis at Low Cost" %}
                         </p>
                         <p style="color: white; font-size: 18px;">
-                        {% trans "Save Fuel & Cash" %}
+                        {% trans "One-Time or Subscription" %}
                         </p>
                     </div>
                 </div>
             </div>
         </section>
+{% endblock breadcrumb %}
 
+
+{% block contact_area %}
         <!-- contact area starts -->
-        <section class="contact-area pt-40 mb-40" >
+    <section class="contact-area pt-40 mb-40" >
             <div class="container">
                 <h2 class="mb-4" style="text-align: center; color: #4C5B9B; font-size: 32px; margin-bottom: 20px;">{% trans "LogiFlex Pricing Plans" %}</h2>
                 <div class="row w-100">
@@ -312,83 +262,32 @@
                                             <a href="{% url 'logiflex:index' %}" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Start Free" %}</a>
                                         </td>
                                         <td>
-{#                                            <stripe-buy-button#}
-{#                                              buy-button-id="buy_btn_1RrfJs2QNXQiBdpDWFaSivoU"#}
-{#                                              publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"#}
-{#                                             >#}
-{#                                            </stripe-buy-button>#}
-                                            <a href="https://buy.stripe.com/test_eVq5kw3ojaFRf11e2E2cg00" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>
-
+                                            {% if logedin %}
+                                                <a href="https://buy.stripe.com/test_eVq5kw3ojaFRf11e2E2cg00" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>
+                                            {% else %}
+                                                <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>
+                                            {% endif %}
                                         </td>
                                         <td style="background-color:#eef6ff ;border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); border-bottom: 2px double hsl(0, 0%, 0%);  text-align:center;">
-{#                                            <stripe-buy-button#}
-{#                                              buy-button-id="buy_btn_1RsJze2QNXQiBdpDbO4r91io"#}
-{#                                              publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"#}
-{#                                            >#}
-{#                                            </stripe-buy-button>#}
-                                            <a href="https://buy.stripe.com/test_bJe9AM6Av4htdWXaQs2cg04" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>
-
+                                            {% if logedin %}
+                                                <a href="https://buy.stripe.com/test_bJe9AM6Av4htdWXaQs2cg04" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>
+                                            {% else %}
+                                                <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>
+                                            {% endif %}
                                         </td>
                                         <td>
-                                            <a href="https://buy.stripe.com/test_00w6oAgb501dbOP7Eg2cg03" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>
+                                            {% if logedin %}
+                                                <a href="https://buy.stripe.com/test_00w6oAgb501dbOP7Eg2cg03" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>
+                                            {% else %}
+                                                <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </figure>
-
-{#                        <div class="accordion" id="accordionPanelsStayOpenExample">#}
-{#                          <div class="accordion-item">#}
-{#                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">#}
-{#                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">#}
-{#                                {% trans "✅ One Time Advanced Report" %}#}
-{#                              </button>#}
-{#                            </h2>#}
-{#                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">#}
-{#                              <div class="accordion-body">#}
-{#                                <p>#}
-{#                                    {% trans "Get a detailed logistics performance analysis for your latest data upload. Includes cost breakdown, carrier performance, and actionable recommendations in a professional PDF report." %}#}
-{#                                </p>#}
-{#                                  <stripe-buy-button#}
-{#                                      buy-button-id="buy_btn_1RrfJs2QNXQiBdpDWFaSivoU"#}
-{#                                      publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"#}
-{#                                    >#}
-{#                                    </stripe-buy-button>#}
-{#                              </div>#}
-{#                            </div>#}
-{#                          </div>#}
-{#                          <div class="accordion-item">#}
-{#                            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">#}
-{#                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">#}
-{#                                {% trans "✅ Monthly Subscription" %}#}
-{#                              </button>#}
-{#                            </h2>#}
-{#                            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">#}
-{#                              <div class="accordion-body">#}
-{#                                <p>{% trans "Receive an advanced logistics analysis every month. Simply upload your latest shipment data and get a comprehensive report with deep insights, predictive trends, and optimization recommendations — tailored to your operations." %}#}
-{#                                  </p>#}
-{#                                  <stripe-buy-button#}
-{#                                      buy-button-id="buy_btn_1RsJze2QNXQiBdpDbO4r91io"#}
-{#                                      publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5"#}
-{#                                    >#}
-{#                                    </stripe-buy-button>#}
-{#                              </div>#}
-{#                            </div>#}
-{#                          </div>#}
-{#                          <div class="accordion-item">#}
-{#                            <h2 class="accordion-header" id="panelsStayOpen-headingThree">#}
-{#                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">#}
-{#                                Accordion Item #3#}
-{#                              </button>#}
-{#                            </h2>#}
-{#                            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">#}
-{#                              <div class="accordion-body">#}
-{#                                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.#}
-{#                              </div>#}
-{#                            </div>#}
-{#                          </div>#}
-{#                        </div>#}
                     </div>
+
                     <div class="col-12">
                         <section style="font-family: Arial, sans-serif; padding: 40px; background: #f9fafc;">
                             <h2 style="text-align: center; color: #4C5B9B; font-size: 32px; margin-bottom: 20px;">{% trans "LogiFlex Pricing Plans" %}</h2>
@@ -405,7 +304,7 @@
                                         <li>❌ {% trans "No Recommendations" %}</li>
                                         <li>✅ {% trans "48-hour Delivery" %}</li>
                                     </ul>
-                                    <a href="#start-free" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Start Free</a>
+                                    <a href="{% url 'logiflex:index' %}" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Start Free</a>
                                 </div>
 
                                 <!-- One-Time Report -->
@@ -419,8 +318,11 @@
                                         <li>✅ {% trans "Actionable Recommendations" %}</li>
                                         <li>✅ {% trans "48-hour Delivery" %}</li>
                                     </ul>
-{#                                    <a href="#checkout-one-time" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Get Report</a>#}
+                                    {% if logedin %}
                                         <a href="https://buy.stripe.com/test_eVq5kw3ojaFRf11e2E2cg00" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>
+                                    {% else %}
+                                        <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>
+                                    {% endif %}
                                 </div>
 
                                 <!-- Monthly Subscription -->
@@ -434,8 +336,11 @@
                                         <li>✅ {% trans "Priority Support" %}</li>
                                         <li>✅ {% trans "Priority Turnaround" %}</li>
                                     </ul>
-                                    <a href="https://buy.stripe.com/test_bJe9AM6Av4htdWXaQs2cg04" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>
-
+                                    {% if logedin %}
+                                        <a href="https://buy.stripe.com/test_bJe9AM6Av4htdWXaQs2cg04" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>
+                                    {% else %}
+                                        <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>
+                                    {% endif %}
                                 </div>
 
                                 <!-- Quarterly Plan -->
@@ -449,7 +354,11 @@
                                         <li>✅ {% trans "Priority Support" %}</li>
                                         <li>✅ {% trans "Save vs Monthly Plan" %}</li>
                                     </ul>
-                                    <a href="https://buy.stripe.com/test_00w6oAgb501dbOP7Eg2cg03" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>
+                                    {% if logedin %}
+                                        <a href="https://buy.stripe.com/test_00w6oAgb501dbOP7Eg2cg03" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>
+                                    {% else %}
+                                        <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>
+                                    {% endif %}
                                 </div>
 
                             </div>
@@ -460,207 +369,24 @@
                 </div>
             </div>
         </section>
+{% endblock contact_area %}
 
+{% block feature_area %}
+    {{ block.super }}
+{% endblock feature_area %}
 
-<section class="feature-area pt-120 pb-100">
-            <div class="container">
-                <div class="top-content">
-                    <div class="row">
-                        <div class="col-lg-9">
-                            <h2 class="title">{% trans "Efficient transportation is Your Ultimate Competitive Advantage" %} </h2>
-                        </div>
-                        <div class="col-lg-3">
-                            <img src={% static "vendor/transport/assets/images/icon-6.png"%} alt="icon">
-                        </div>
-                    </div>
-                </div>
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
 
-                <div class="feature-items">
-                    <div class="row">
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="single-feature">
-                                <div class="icon-box white-bg mb-20">
-                                    <img src={% static "vendor/transport/assets/images/icon-7.png"%} alt="icon" class="icon">
-                                </div>
-                                <h5 class="title">{% trans "Fast Analysis" %}</h5>
-                                <p class="mt-10">{% trans "Get comprehensive reports in under 5 minutes" %}</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="single-feature">
-                                <div class="icon-box white-bg mb-20">
-                                    <img src={% static "vendor/transport/assets/images/icon-8.png"%} alt="icon" class="icon">
-                                </div>
-                                <h5 class="title">{% trans "Actionable Insights" %}</h5>
-                                <p class="mt-10">{% trans "Discover optimization opportunities and profit drivers" %}</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="single-feature">
-                                <div class="icon-box white-bg mb-20">
-                                    <img src={% static "vendor/transport/assets/images/icon-9.png" %} alt="icon" class="icon">
-                                </div>
-                                <h5 class="title">{% trans "Enterprise Security" %}</h5>
-                                <p class="mt-10">{% trans "Your data is encrypted and processed securely" %}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
 
-
-            </div>
-        </section>
-
-        <!-- cta area starts -->
-        <section class="cta-area-2 pt-120">
-            <div class="container">
-                <div class="cta-box" data-background={% static "vendor/transport/assets/images/cta-bg.jpg" %}>
-                    <div class="row align-items-center">
-                        <div class="col-lg-7">
-                            <div class="cta-content">
-                                <div class="section-top">
-                                    <h4 class="title mb-2"><span style="font-weight: normal">{% trans "Unlock the Secrets of Logistics Optimization" %}</span> </h4>
-                                    <h6>{% trans "Sign up to receive Free newsletters for business success" %}</h6>
-                                </div>
-                                <div class="cta-form mt-30">
-                                    <form action="#">
-                                        <div class="row">
-                                            <div class="col-12 pb-3">
-                                                <input type="text" id="company_newsletter" placeholder="Enter Your Company Name">
-                                            </div>
-                                            <div class="col-12">
-                                                <input type="email" id="email_newsletter" required="required" placeholder="Enter Your Email">
-                                            </div>
-                                            <div class="col-12 pt-3 text-end">
-                                                <div class="d-flex justify-content-center">
-                                                    <button type="button" id="register_nl" class="btn btn-light">{% trans "Register For Free" %}</button>
-
-                                                </div>
-
-{#                                                <button type="button" class="btn bg-cyan-900 pt-2">{% trans "Register" %}</button>#}
-                                            </div>
-                                            <div class="col-12">
-                                                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-                                                  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                                  </symbol>
-
-                                                </svg>
-                                                <div id="alert-message"></div>
-                                            </div>
-
-                                        </div>
-
-
-
-
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4">
-                            <div class="cta-image">
-                                <img src={% static "vendor/transport/assets/images/cta1.png" %} alt="cta">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- footer area starts -->
-    <footer class="footer-area-3" data-background={% static "vendor/transport/assets/images/footer-bg.jpg" %}>
-        <!-- widget area -->
-        <div class="widget-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="footer-widget">
-                            <div class="footer-logo">
-{#                                <h4 class="title">BizAnalytic</h4>#}
-                                <img src={% static "assets/logo/logo2-4.png" %} alt="logo" style="width: 50%">
-
-                            </div>
-                            <p class="mt-30">{% trans "Empowering logistics operators with data-driven insights" %}</p>
-                            
-                            <div class="footer-social mt-20">
-                                <h6 class="title">{% trans "follow us" %}</h6>
-                                <ul class="mt-10">
-                                    <li><a href="#"><i class="ri-facebook-fill"></i></a></li>
-                                    <li><a href="#"><i class="ri-twitter-x-line"></i></a></li>
-                                    <li><a href="#"><i class="ri-instagram-line"></i></a></li>
-                                    <li><a href="#"><i class="ri-linkedin-fill"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-2 offset-xl-1 col-lg-3 col-sm-6">
-                        <div class="footer-widget">
-                            <div class="widget-title">
-                                <h5 class="title">{% trans "our services" %}</h5>
-                            </div>
-                            <ul class="nav-links mt-30">
-                                <li><a href="#">LogiFlex</a></li>
-                                    <li><a href="#">KPI-Insight</a></li>
-                                    <li><a href="#">InveFlow</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="footer-widget">
-                            <div class="widget-title">
-                                <h5 class="title">contact</h5>
-                            </div>
-                            <ul class="contact-info mt-30">
-                                <li><span class="icon"><i class="ri-mail-fill"></i></span> <a href="#">bizanalytics.us@gmail.com</a></li>
-                                <li><span class="icon"><i class="ri-map-pin-2-fill"></i></span> <a href="#">The Woodlands, Texas - 77380</a></li>
-                                <li><span class="icon"><i class="ri-phone-fill"></i></span> <a href="#">+1 (832) 430-2434</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>                
-        </div>
-
-        <!-- copyright area -->
-        <div class="copyright-area py-30">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6">
-                        <div class="copyright-text">
-                            <span>Copyright &copy; <span id="date"></span> BizAnalytic. All rights reserved.</span>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <ul class="footer-menu">
-                            <li><a href="#">{% trans "Support" %}</a></li>
-                            <li><a href="#">{% trans "Terms Of Services" %}</a></li>
-                            <li><a href="#">{% trans "Privacy Policy" %}</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- javascript files -->
-    <script src={% static "vendor/transport/assets/js/jquery-3.7.1.min.js" %}></script>
-    <script src={% static "vendor/transport/assets/js/bootstrap.min.js" %}></script>
-    <script src={% static "vendor/transport/assets/js/counterup.min.js" %}></script>
-    <script src={% static "vendor/transport/assets/js/easing.min.js" %}></script>
-    <script src={% static "vendor/transport/assets/js/magnific-popup.js" %}></script>
-    <script src={% static "vendor/transport/assets/js/meanmenu.min.js" %}></script>
-    <script src={% static "vendor/transport/assets/js/slick.min.js" %}></script>
-    <script src={% static "vendor/transport/assets/js/waypoints.min.js" %}></script>
-    <script src={% static "vendor/transport/assets/js/wow.min.js" %}></script>
-    <script src={% static "vendor/transport/assets/js/main.js" %}></script>
-    <script src={% static "vendor/transport/assets/js/load.js" %}></script>
+{% block js_area %}
+    {{ block.super }}
     <script src="https://js.stripe.com/v3/"></script>
     <script async
       src="https://js.stripe.com/v3/buy-button.js">
@@ -724,6 +450,4 @@
         })
     });
 </script>
-</body>
-
-</html>
+{% endblock js_area %}

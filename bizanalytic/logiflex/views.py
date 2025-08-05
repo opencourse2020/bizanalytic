@@ -397,11 +397,16 @@ class WebhookView(View):
         pass
 
 
-class Payment_PageView(LoginRequiredMixin, TemplateView):
+class Payment_PageView(TemplateView):
     template_name = "logiflex/stripe_pay.html"
 
     def get_context_data(self, **kwargs):
-        kwargs["stripe_publishable_key"] = stripe_publishable
+        if self.request.user:
+            logedin=True
+        else:
+            logedin=False
+        kwargs["logedin"] = logedin
+        # kwargs["stripe_publishable_key"] = stripe_publishable
         return super(Payment_PageView, self).get_context_data(**kwargs)
 
 

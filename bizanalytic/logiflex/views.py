@@ -134,7 +134,7 @@ class BlogDetailView(TemplateView):
         blog = models.Blog_logiflex.objects.filter(pk=pu).first()
 
         # Latest Blogs
-        blogs = models.Blog_logiflex.objects.order_by('-created_at')[:3]
+        blogs = models.Blog_logiflex.objects.order_by('-date_created')[:3]
         kwargs["title"] = blog.title
         kwargs["body"] = blog.body
         kwargs["datecreated"] = blog.date_created

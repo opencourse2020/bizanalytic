@@ -1,0 +1,116 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+    <meta name="description" content={{ meta_description }}>
+    <meta name="author" content='"logistics performance analytics platform", "freight cost optimization tool for SMEs", "data-driven decision making in logistics", "logistics analytics SaaS for small freight companies"'>
+    <!-- page title -->
+    <title>{{ meta_title }}</title>
+{% endblock head_title %}
+
+{% block css %}
+    {{ block.super }}
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+{% block breadcrumb %}
+    {{ block.super }}
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+    <section class="blog-details pt-120">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="blog-content">
+                            <div class="blog-thumbnail mb-30">
+                                <img src="{{ picture.url }}" alt="blog">
+                            </div>
+
+                            <ul class="blog-meta mb-20">
+                                <li><a href=""><span class="icon"><i class="ri-calendar-line"></i></span> {{ datecreated }}</a></li>
+                                <li><a href=""><span class="icon"><i class="ri-user-line"></i></span> {{ category }}</a></li>
+                            </ul>
+                            <h3 class="title">{{ title }}</h3>
+                            <div class="mt-20">
+                                {{ body }}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="blog-sidebar">
+
+                            <div class="sidebar-widget">
+                                <h4 class="widget-title">{% trans "recent posts" %}</h4>
+                                {% for blog in blogs %}
+                                    <div class="single-post">
+                                        <div class="post-thumb">
+                                            <a href="{% url 'logiflex:blog:detail' blog.pk %}"><img src="{{ blog.picture.url }}" alt="post"></a>
+                                        </div>
+                                        <div class="post-content">
+                                            <a href="{% url 'logiflex:blog:detail' blog.pk %}"><span class="icon"><i class="ri-folder-open-line"></i></span>
+                                            {% if blog.category == "logi_freight" %}
+                                                Logistics & Freight
+                                            {% elif blog.category == "optimize" %}
+                                                Optimization
+                                            {% elif blog.category == "warehouse" %}
+                                                Warehousing
+                                            {% elif blog.category == "distribute" %}
+                                                Distribution
+                                            {% elif blog.category == "driver" %}
+                                                Drivers
+                                            {% endif %}
+                                            </a>
+                                            <h6 class="title"><a href="{% url 'logiflex:blog:detail' blog.pk %}">{{ blog.title }}</a></h6>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock contact_area %}
+
+{% block feature_area %}
+    {{ block.super }}
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+
+{% block js_area %}
+    {{ block.super }}
+{% endblock js_area %}
+
+

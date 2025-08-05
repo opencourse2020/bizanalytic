@@ -16,6 +16,7 @@ newsletter_patterns = [
 blog_patterns = [
     path("create/", views.BlogCreateView.as_view(), name="create"),
     path("edit/<int:pk>/", views.BlogEditView.as_view(), name="edit"),
+    path("detail/<int:pk>/", views.BlogDetailView.as_view(), name="detail"),
     path("list/", views.BlogListView.as_view(), name="list"),
 ]
 

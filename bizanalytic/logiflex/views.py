@@ -126,6 +126,28 @@ class BlogListView(UserPassesTestMixin, ListView):
         return self.request.user.is_staff
 
 
+class BlogDetailView(TemplateView):
+    template_name = "logiflex/blog.html"
+
+    def get_context_data(self, **kwargs):
+        pu = self.kwargs.get("pk")
+        blog = models.Blog_logiflex.objects.filter(pk=pu).first()
+
+        # Latest Blogs
+        blogs = models.Blog_logiflex.objects.order_by('-created_at')[:3]
+        kwargs["title"] = blog.title
+        kwargs["body"] = blog.body
+        kwargs["datecreated"] = blog.date_created
+        kwargs["picture"] = blog.picture
+        kwargs["category"] = blog.category
+        kwargs["meta_title"] = blog.meta_title
+        kwargs["meta_description"] = blog.meta_description
+        kwargs["blogs"] = blogs
+        return super(BlogDetailView, self).get_context_data(**kwargs)
+
+
+
+
 class NewsletterSubscriptionCreateView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
 

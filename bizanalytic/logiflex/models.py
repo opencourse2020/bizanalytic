@@ -209,6 +209,8 @@ class Blog_logiflex(models.Model):
     title = models.CharField(max_length=250, null=True, blank=True)
     body = RichTextField()
     category = models.CharField(max_length=20, choices=categorytype, null=True, blank=True)
+    meta_title = models.CharField(max_length=250, null=True, blank=True)
+    meta_description = models.CharField(max_length=250, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     picture = ContentTypeRestrictedFileField(upload_to=blogfiles_directory_path,
                                              content_types=['image/bmp', 'image/gif', 'image/jpeg', 'image/png', ],

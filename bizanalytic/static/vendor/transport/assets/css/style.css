@@ -279,11 +279,11 @@ img { width: 100%; height: auto; display: block; }
 .footer-menu li a:hover { color: #2ba3c4; }
 
 /* breadcrumb */
-.breadcrumb-area { text-align: center; background: no-repeat center/cover; position: relative; z-index: 1; padding: 80px 0 120px; }
+.breadcrumb-area { text-align: center; background: no-repeat center/cover; position: relative; z-index: 1; padding: 100px 0 80px; }
 
-@media (min-width: 768px) and (max-width: 991.98px) { .breadcrumb-area { padding: 80px 0 80px; } }
+@media (min-width: 768px) and (max-width: 991.98px) { .breadcrumb-area { padding: 80px 0 60px; } }
 
-@media (min-width: 576px) and (max-width: 767.98px) { .breadcrumb-area { padding: 150px 0 80px; } }
+@media (min-width: 576px) and (max-width: 767.98px) { .breadcrumb-area { padding: 100px 0 60px; } }
 
 @media (max-width: 575.98px) { .breadcrumb-area { padding: 80px 0 40px; } }
 

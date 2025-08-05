@@ -197,7 +197,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-ACCOUNT_EMAIL_VERIFICATION = "optional"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_FORMS = {"signup": "bizanalytic.profiles.forms.ProfileCreateForm", "login": "bizanalytic.profiles.forms.SignInForm",
                  'reset_password': 'bizanalytic.profiles.forms.MyResetPasswordForm'}
 LOGIN_REDIRECT_URL = "profiles:dispatch_login"

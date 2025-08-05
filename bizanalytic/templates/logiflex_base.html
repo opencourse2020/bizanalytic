@@ -94,7 +94,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-6">
                         <div class="logo-area">
-                            <a href="index.html"><img src={% static "assets/logo/logo2-4.png" %} alt="logo"></a>
+                            <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo2-4.png" %} alt="logo"></a>
                         </div>
                     </div>
 
@@ -102,19 +102,19 @@
                         {% block main_menu%}
                         <nav>
                             <ul class="main-menu">
-                                <li ><a href="index.html">{% trans "Home" %}</a>
+                                <li ><a href="#">{% trans "Home" %}</a>
 
                                 </li>
-                                <li ><a href="service.html">{% trans "Services" %}</a>
+                                <li ><a href="#">{% trans "Services" %}</a>
 
                                 </li>
 
                                 <li class="has-submenu"><a href="#">{% trans "Resources" %}</a>
                                     <ul class="submenu">
-                                        <li><a href="about.html">{% trans "About Us" %}</a></li>
-                                        <li><a href="team.html">{% trans "Blog" %}</a></li>
-                                        <li><a href="pricing.html">{% trans "Pricing" %}</a></li>
-                                        <li><a href="home.html">{% trans "Contact" %}</a></li>
+                                        <li><a href="#">{% trans "About Us" %}</a></li>
+                                        <li><a href="#">{% trans "Blog" %}</a></li>
+                                        <li><a href="{% url 'logiflex:securepay:payment_page' %}">{% trans "Pricing" %}</a></li>
+                                        <li><a href="#">{% trans "Contact" %}</a></li>
                                     </ul>
                                 </li>
                             </ul>

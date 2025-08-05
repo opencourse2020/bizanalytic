@@ -18,6 +18,10 @@ def reportfiles_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return 'data_files/report_files/company_id_{0}/{1}'.format(instance.client.id, filename)
 
+def blogfiles_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'data_files/blog_files/blog_id_{0}/{1}'.format(instance.id, filename)
+
 
 class NewsLetter_logiflex(models.Model):
     title = models.CharField(max_length=250, null=True, blank=True)
@@ -192,3 +196,29 @@ class RequestedCall(models.Model):
 
     def __str__(self):
         return str(self.client.id)
+
+
+class Blog_logiflex(models.Model):
+    categorytype = (
+        ('logi_freight', _("Logistics & Freight")),
+        ('optimize', _("Optimization")),
+        ('warehouse', _("Warehousing")),
+        ('distribute', _("Distribution")),
+        ('driver', _("Drivers")),
+    )
+    title = models.CharField(max_length=250, null=True, blank=True)
+    body = RichTextField()
+    category = models.CharField(max_length=20, choices=categorytype, null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    picture = ContentTypeRestrictedFileField(upload_to=blogfiles_directory_path,
+                                             content_types=['image/bmp', 'image/gif', 'image/jpeg', 'image/png', ],
+                                             max_upload_size=52428800, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Blog_Logiflex"
+        verbose_name_plural = "Blogs_logiflex"
+        permissions = (("manage_blog_logiflex", "Manage Logiflex Blogs"),)
+
+    def __str__(self):
+        return str(self.title)
+

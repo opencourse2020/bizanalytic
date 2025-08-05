@@ -401,7 +401,7 @@ class Payment_PageView(TemplateView):
     template_name = "logiflex/stripe_pay.html"
 
     def get_context_data(self, **kwargs):
-        if self.request.user:
+        if self.request.user.is_authenticated:
             logedin = 1
         else:
             logedin = 2

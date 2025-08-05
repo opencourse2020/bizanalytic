@@ -118,12 +118,13 @@
                                     </ul>
                                 </li>
                                 {% if user.is_authenticated %}
-                                    <li ><a href="{% url 'account_login' %}" style="display: inline-block; background: #2ba3c4; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Login" %}</a>
-                                    </li>
-                                {% else %}
-                                 <li>
+                                    <li>
                                     <a href="{% url 'account_logout' %}" style="display: inline-block; background: #eb5849; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Sign out" %}</a>
                                  </li>
+                                {% else %}
+                                    <li ><a href="{% url 'account_login' %}" style="display: inline-block; background: #2ba3c4; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Login" %}</a>
+                                    </li>
+
                                 {% endif %}
                             </ul>
                         </nav>

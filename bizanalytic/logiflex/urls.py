@@ -13,6 +13,12 @@ newsletter_patterns = [
     path("subscribtionlist/", views.NewsletterSubscriptionListView.as_view(), name="subscribtionlist"),
 ]
 
+blog_patterns = [
+    path("create/", views.BlogCreateView.as_view(), name="create"),
+    path("edit/<int:pk>/", views.BlogEditView.as_view(), name="edit"),
+    path("list/", views.BlogListView.as_view(), name="list"),
+]
+
 report_patterns = [
     path("sample-report-create/", views.SampleReportCreateView.as_view(), name="sample-report-create"),
     path('fullreport/<int:pk>/', views.FullReportView.as_view(), name='fullreport'),
@@ -37,6 +43,10 @@ urlpatterns = [
     path(
         "newsletters/",
         include((newsletter_patterns, "bizanalytic.logiflex"), namespace="newsletters"),
+    ),
+    path(
+        "blog/",
+        include((blog_patterns, "bizanalytic.logiflex"), namespace="blog"),
     ),
     path(
         "reports/",

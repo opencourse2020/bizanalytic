@@ -5,7 +5,7 @@
 
 {% block head_title %}
 
-    <title>{% trans "Create NewsLetter" %}</title>
+    <title>{{ page_title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content={% trans "Analytic Tools for Startups and small to medium Companies (SMB)" %}>
     <meta name="author" content="">
@@ -20,11 +20,11 @@
 {% block content_head %}
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">{% trans "Home" %}</a></li>
-        <li class="breadcrumb-item active">{% trans "Newsletter" %}</li>
+        <li class="breadcrumb-item active">{{ title }}</li>
     </ul>
 
     <h1 class="page-header">
-        {% trans "Edit a Newsletter" %} <small>{% trans "Add or Edit a New Logiflex Newsletter" %}</small>
+        {{ pageheader1 }} <small>{{ pageheader2 }}</small>
     </h1>
 {% endblock content_head %}
 {% block content_body %}
@@ -35,7 +35,7 @@
                 <form action="" method="post" enctype="multipart/form-data">
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center bg-inverse bg-opacity-10 fw-400">
-							{% trans "Newsletter Info" %}
+							{{ cardheader }}
 
                  </div>
                     <div class="card-body pb-2">

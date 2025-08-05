@@ -24,6 +24,13 @@ class NewsLetter_logiflex_subscriptionForm(forms.ModelForm):
         }
 
 
-# class FullReportForm(forms.ModelForm):
-#     class Meta:
-#         model = models.LogiflexReport
+class Blog_logiflexForm(forms.ModelForm):
+    class Meta:
+        model = models.Blog_logiflex
+        fields = ["title", "body", "category", "picture"]
+        labels = {
+            "title": _("Title"),
+            "body": _("Body"),
+            "category": _("Category"),
+            "picture": _("Picture")
+        }

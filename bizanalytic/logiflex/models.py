@@ -219,6 +219,9 @@ class Blog_logiflex(models.Model):
         verbose_name_plural = "Blogs_logiflex"
         permissions = (("manage_blog_logiflex", "Manage Logiflex Blogs"),)
 
+    def picturefilename(self):
+        return os.path.basename(self.picture.name)
+
     def __str__(self):
         return str(self.title)
 

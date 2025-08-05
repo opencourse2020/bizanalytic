@@ -48,6 +48,14 @@ class NewsletterCreateView(UserPassesTestMixin, CreateView):
     def test_func(self):
         return self.request.user.is_staff
 
+    def get_context_data(self, **kwargs):
+        kwargs["page_title"] = "Create NewsLetter"
+        kwargs["title"] = "Newsletter"
+        kwargs["pageheader1"] = "Edit a Newsletter"
+        kwargs["pageheader2"] = "Add or Edit a New Logiflex Newsletter"
+        kwargs["cardheader"] = "Newsletter Info"
+        return super(NewsletterCreateView, self).get_context_data(**kwargs)
+
 
 class NewsletterEditView(UserPassesTestMixin, UpdateView):
     model = models.NewsLetter_logiflex
@@ -58,10 +66,61 @@ class NewsletterEditView(UserPassesTestMixin, UpdateView):
     def test_func(self):
         return self.request.user.is_staff
 
+    def get_context_data(self, **kwargs):
+        kwargs["page_title"] = "Create NewsLetter"
+        kwargs["title"] = "Newsletter"
+        kwargs["pageheader1"] = "Edit a Newsletter"
+        kwargs["pageheader2"] = "Add or Edit a New Logiflex Newsletter"
+        kwargs["cardheader"] = "Newsletter Info"
+        return super(NewsletterEditView, self).get_context_data(**kwargs)
+
 
 class NewsletterListView(UserPassesTestMixin, ListView):
     model = models.NewsLetter_logiflex
     template_name = "logiflex/newsletter_logiflex_list.html"
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+
+class BlogCreateView(UserPassesTestMixin, CreateView):
+    model = models.Blog_logiflex
+    form_class = forms.Blog_logiflexForm
+    template_name = "logiflex/newsletter_logiflex_create.html"
+    success_url = reverse_lazy("logiflex:blog:list")
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def get_context_data(self, **kwargs):
+        kwargs["page_title"] = "Create a Blog"
+        kwargs["title"] = "Blog"
+        kwargs["pageheader1"] = "Edit a Blog"
+        kwargs["pageheader2"] = "Add or Edit a New Logiflex Blog"
+        kwargs["cardheader"] = "Blog Info"
+        return super(BlogCreateView, self).get_context_data(**kwargs)
+
+class BlogEditView(UserPassesTestMixin, UpdateView):
+    model = models.Blog_logiflex
+    form_class = forms.Blog_logiflexForm
+    template_name = "logiflex/newsletter_logiflex_create.html"
+    success_url = reverse_lazy("logiflex:blog:list")
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def get_context_data(self, **kwargs):
+        kwargs["page_title"] = "Create a Blog"
+        kwargs["title"] = "Blog"
+        kwargs["pageheader1"] = "Edit a Blog"
+        kwargs["pageheader2"] = "Add or Edit a New Logiflex Blog"
+        kwargs["cardheader"] = "Blog Info"
+        return super(BlogEditView, self).get_context_data(**kwargs)
+
+
+class BlogListView(UserPassesTestMixin, ListView):
+    model = models.Blog_logiflex
+    template_name = "logiflex/blogs_list.html"
 
     def test_func(self):
         return self.request.user.is_staff

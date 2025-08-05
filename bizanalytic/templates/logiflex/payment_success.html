@@ -86,30 +86,30 @@
                                 {% if reports == "none" %}
 
                                 {% else %}
-                                    {% for report in reports %}
+                                    {% for logireport in reports %}
                                         <tr>
                                             <td></td>
-                                            <td> {{ report.client.contact_name }} </td>
+                                            <td> {{ logireport.client.contact_name }} </td>
                                             <td>
-                                                {% if report.report_type == "full" %}
+                                                {% if logireport.report_type == "full" %}
                                                     {%  trans "Paid Advanced Report" %}
-                                                {% elif report.report_type == "short" %}
+                                                {% elif logireport.report_type == "short" %}
                                                     {% trans "Free Short Report" %}
                                                 {% endif %}
                                             </td>
                                             <td>
-                                                {{ report.date_created }}
+                                                {{ logireport.date_created }}
                                             </td>
                                             <td>
-                                                {% if report.routefile %}
-                                                    <a href="{{ report.routefile.url }}">
-                                                    {{ report.routefilename }}</a>
+                                                {% if logireport.routefile %}
+                                                    <a href="{{ logireport.routefile.url }}">
+                                                    {{ logireport.routefilename }}</a>
                                                 {% endif %}
                                             </td>
                                             <td>
-                                                {% if report.report %}
-                                                <a href="{{ report.report.url }}">
-                                                    {{ report.reportilename }}</a>
+                                                {% if logireport.report %}
+                                                <a href="{{ logireport.report.url }}">
+                                                    {{ logireport.reportilename }}</a>
                                                 {% endif %}
 
                                             </td>

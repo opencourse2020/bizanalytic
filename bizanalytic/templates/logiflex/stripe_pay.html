@@ -262,21 +262,21 @@
                                             <a href="{% url 'logiflex:index' %}" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Start Free" %}</a>
                                         </td>
                                         <td>
-                                            {% if logedin %}
+                                            {% if logedin == 1 %}
                                                 <a href="https://buy.stripe.com/test_eVq5kw3ojaFRf11e2E2cg00" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>
                                             {% else %}
                                                 <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>
                                             {% endif %}
                                         </td>
                                         <td style="background-color:#eef6ff ;border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); border-bottom: 2px double hsl(0, 0%, 0%);  text-align:center;">
-                                            {% if logedin %}
+                                            {% if logedin == 1  %}
                                                 <a href="https://buy.stripe.com/test_bJe9AM6Av4htdWXaQs2cg04" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>
                                             {% else %}
                                                 <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>
                                             {% endif %}
                                         </td>
                                         <td>
-                                            {% if logedin %}
+                                            {% if logedin == 1  %}
                                                 <a href="https://buy.stripe.com/test_00w6oAgb501dbOP7Eg2cg03" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>
                                             {% else %}
                                                 <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>
@@ -318,7 +318,7 @@
                                         <li>✅ {% trans "Actionable Recommendations" %}</li>
                                         <li>✅ {% trans "48-hour Delivery" %}</li>
                                     </ul>
-                                    {% if logedin %}
+                                    {% if logedin == 1  %}
                                         <a href="https://buy.stripe.com/test_eVq5kw3ojaFRf11e2E2cg00" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>
                                     {% else %}
                                         <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>
@@ -336,7 +336,7 @@
                                         <li>✅ {% trans "Priority Support" %}</li>
                                         <li>✅ {% trans "Priority Turnaround" %}</li>
                                     </ul>
-                                    {% if logedin %}
+                                    {% if logedin == 1  %}
                                         <a href="https://buy.stripe.com/test_bJe9AM6Av4htdWXaQs2cg04" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>
                                     {% else %}
                                         <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>
@@ -354,7 +354,7 @@
                                         <li>✅ {% trans "Priority Support" %}</li>
                                         <li>✅ {% trans "Save vs Monthly Plan" %}</li>
                                     </ul>
-                                    {% if logedin %}
+                                    {% if logedin == 1  %}
                                         <a href="https://buy.stripe.com/test_00w6oAgb501dbOP7Eg2cg03" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>
                                     {% else %}
                                         <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>

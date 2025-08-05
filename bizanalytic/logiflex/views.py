@@ -402,9 +402,9 @@ class Payment_PageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         if self.request.user:
-            logedin=True
+            logedin = 1
         else:
-            logedin=False
+            logedin = 2
         kwargs["logedin"] = logedin
         # kwargs["stripe_publishable_key"] = stripe_publishable
         return super(Payment_PageView, self).get_context_data(**kwargs)

@@ -51,7 +51,7 @@
                             </ul>
                             <h3 class="title">{{ title }}</h3>
                             <div class="mt-20">
-                                {{ body }}
+                                {{ body|safe }}
                             </div>
                         </div>
 
@@ -111,6 +111,8 @@
 
 {% block js_area %}
     {{ block.super }}
+{#    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>#}
+{#    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>#}
 {% endblock js_area %}
 
 

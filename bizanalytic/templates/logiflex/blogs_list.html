@@ -28,6 +28,7 @@
 			<h1 class="page-header">
 				{% trans "LogiFlex" %} <small>{% trans "List of Blogs" %}</small>
 			</h1>
+        <a href="{% url 'logiflex:blog:create' %}">{% trans "New Blog" %}</a>
     {% endblock content_head %}
     {% block content_body %}
         <div id="datatable" class="mb-5">

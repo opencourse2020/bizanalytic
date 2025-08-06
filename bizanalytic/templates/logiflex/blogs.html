@@ -1,0 +1,143 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+    <meta name="description" content="{{ meta_description }}">
+    <meta name="author" content='"logistics performance analytics platform", "freight cost optimization tool for SMEs", "data-driven decision making in logistics", "logistics analytics SaaS for small freight companies"'>
+    <!-- page title -->
+    <title>{{ meta_title }}</title>
+{% endblock head_title %}
+
+{% block css %}
+    {{ block.super }}
+    <style>
+    h5 {
+          margin-top: 20px;
+          padding-bottom: 20px;
+        }
+    </style>
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+{% block breadcrumb %}
+    {{ block.super }}
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+    <section class="blog-area pt-120">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        {% for blog in blogs %}
+                            <div class="single-blog-2">
+                                <div class="blog-thumbnail">
+                                    <a href="{% url 'logiflex:blog:detail' blog.pk %}"><img src="{{ blog.picture.url }}" alt="blog"></a>
+                                    <ul class="blog-meta">
+                                        <li><a href="{% url 'logiflex:blog:detail' blog.pk %}"><span class="icon"><i class="ri-calendar-line"></i></span> {{ blog.date_created }}</a></li>
+                                        <li><a href="{% url 'logiflex:blog:detail' blog.pk %}"><span class="icon"><i class="ri-user-line"></i></span> {{ blog.category }}</a></li>
+                                    </ul>
+                                </div>
+                                <div class="blog-content">
+                                    <h5 class="title"><a href="{% url 'logiflex:blog:detail' blog.pk %}">{{ blog.title }}</a></h5>
+                                    <p class="mt-20">{{ blog.cover_text }}</p>
+                                    <a href="{% url 'logiflex:blog:detail' blog.pk %}" class="page-link-url mt-20"><span class="text">{% trans "read more" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="blog-sidebar">
+
+                            <div class="sidebar-widget">
+                                <h4 class="widget-title">categories</h4>
+                                <ul>
+                                    <li><a href="#">{% trans "Logistics & Freight" %} <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
+                                    <li><a href="#">{% trans "Warehousing" %} <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
+                                    <li><a href="#">{% trans "Delivery & Distribution" %} <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
+                                    <li><a href="#">{% trans "Drivers & Trucking" %} <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
+                                    <li><a href="#">{% trans "Cost Optimization" %} <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
+                                    <li><a href="#">{% trans "Forecasting & Predictions" %} <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="sidebar-widget">
+                                <h4 class="widget-title">{% trans "recent posts" %}</h4>
+                                {% for lateblog in latestblogs %}
+                                    <div class="single-post">
+                                        <div class="post-thumb">
+                                            <a href="{% url 'logiflex:blog:detail' lateblog.pk %}"><img src="{{ lateblog.picture.url }}" alt="post"></a>
+                                        </div>
+                                        <div class="post-content">
+                                            <a href="{% url 'logiflex:blog:detail' lateblog.pk %}"><span class="icon"><i class="ri-folder-open-line"></i></span>
+                                            {% if lateblog.category == "logi_freight" %}
+                                                {% trans "Logistics & Freight" %}
+{#                                            {% elif blog.category == "optimize" %}#}
+{#                                                Optimization#}
+                                            {% elif lateblog.category == "warehouse" %}
+                                                {% trans "Warehousing" %}
+                                            {% elif lateblog.category == "distribute" %}
+                                                {% trans "Delivery & Distribution" %}
+                                            {% elif lateblog.category == "driver" %}
+                                                {% trans "Drivers & Trucking" %}
+                                            {% elif lateblog.category == "cost" %}
+                                                {% trans "Cost Optimization" %}
+                                            {% elif lateblog.category == "predict" %}
+                                                {% trans "Forecasting & Predictions" %}
+
+                                            {% endif %}
+                                            </a>
+                                            <h6 class="title"><a href="{% url 'logiflex:blog:detail' blog.pk %}">{{ lateblog.title }}</a></h6>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock contact_area %}
+
+{% block feature_area %}
+    {{ block.super }}
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+
+{% block js_area %}
+    {{ block.super }}
+{#    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>#}
+{#    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>#}
+{% endblock js_area %}
+
+

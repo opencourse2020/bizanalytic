@@ -18,6 +18,7 @@ blog_patterns = [
     path("edit/<int:pk>/", views.BlogEditView.as_view(), name="edit"),
     path("detail/<int:pk>/", views.BlogDetailView.as_view(), name="detail"),
     path("list/", views.BlogListView.as_view(), name="list"),
+    path("", views.BlogsView.as_view(), name="blogs")
 ]
 
 report_patterns = [

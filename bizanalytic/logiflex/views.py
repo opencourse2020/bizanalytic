@@ -164,7 +164,15 @@ class BlogDetailView(TemplateView):
 
 
 
+class BlogsView(TemplateView):
+    template_name = "logiflex/blogs.html"
 
+    def get_context_data(self, **kwargs):
+        blogs = models.Blog_logiflex.objects.all()
+        latestblogs = blogs.order_by('-date_created')[:3]
+        kwargs["blogs"] = blogs
+        kwargs["latestblogs"] = latestblogs
+        return super(BlogsView, self).get_context_data(**kwargs)
 class NewsletterSubscriptionCreateView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
 

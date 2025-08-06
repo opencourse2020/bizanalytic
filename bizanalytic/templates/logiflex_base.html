@@ -112,7 +112,7 @@
                                 <li class="has-submenu"><a href="#">{% trans "Resources" %}</a>
                                     <ul class="submenu">
                                         <li><a href="#">{% trans "About Us" %}</a></li>
-                                        <li><a href="#">{% trans "Blog" %}</a></li>
+                                        <li><a href="{% url 'logiflex:blog:blogs' %}">{% trans "Blog" %}</a></li>
                                         <li><a href="{% url 'logiflex:securepay:payment_page' %}">{% trans "Pricing" %}</a></li>
                                         <li><a href="#">{% trans "Contact" %}</a></li>
                                     </ul>

@@ -130,8 +130,8 @@ class BlogDetailView(TemplateView):
     template_name = "logiflex/blog.html"
 
     def get_context_data(self, **kwargs):
-        pu = self.kwargs.get("pk")
-        blog = models.Blog_logiflex.objects.filter(pk=pu).first()
+        slug = self.kwargs.get("pk")
+        blog = models.Blog_logiflex.objects.filter(slug=slug).first()
 
         # Retreive all blogs
         blogs = models.Blog_logiflex.objects.all()
@@ -168,9 +168,9 @@ class BlogDetailView(TemplateView):
         kwargs["meta_title"] = blog.meta_title
         kwargs["meta_description"] = blog.meta_description
         kwargs["insidepicture"] = blog.insidepicture
-        kwargs["related1"] = int(relatedblog[0])
-        kwargs["related2"] = int(relatedblog[1])
-        kwargs["related3"] = int(relatedblog[2])
+        kwargs["related1"] = blogs.filter(pk=int(relatedblog[0])).first().slug
+        kwargs["related2"] = blogs.filter(pk=int(relatedblog[1])).first().slug
+        kwargs["related3"] = blogs.filter(pk=int(relatedblog[2])).first().slug
         kwargs["related_title1"] = related_title1
         kwargs["related_title2"] = related_title2
         kwargs["related_title3"] = related_title3

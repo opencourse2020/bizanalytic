@@ -5,7 +5,8 @@ from bizanalytic.profiles.formatChecker import ContentTypeRestrictedFileField
 import os
 from datetime import timedelta
 from django.utils.timezone import now
-
+from django.utils.text import slugify
+from django.db.models.signals import pre_save
 from bizanalytic.profiles.models import User
 # Create your models here.
 
@@ -228,6 +229,7 @@ class Blog_logiflex(models.Model):
     insidepicture = ContentTypeRestrictedFileField(upload_to=blogfiles_directory_path,
                                              content_types=['image/bmp', 'image/gif', 'image/jpeg', 'image/png', ],
                                              max_upload_size=52428800, blank=True, null=True)
+    slug = models.SlugField(max_length=50, unique=True, null=True)
 
     class Meta:
         verbose_name = "Blog_Logiflex"
@@ -237,6 +239,29 @@ class Blog_logiflex(models.Model):
     def picturefilename(self):
         return os.path.basename(self.picture.name)
 
+    def save(self, *args, **kwargs):
+        if not self.slug:  # Generate slug only if it's not already set
+            self.slug = slugify(self.anchor_title)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return str(self.title)
 
+
+# def create_slug(instance, new_slug=None):
+#     slug = slugify(instance.anchor_title)
+#     slug = slug[:30]
+#     qs = Blog_logiflex.objects.filter(slug__startswith=slug).order_by("-id")
+#     exists = qs.exists()
+#     if exists:
+#         pki = qs.first().id + 1
+#         slug = "%s_%s" %(slug, pki)
+#     return slug
+#
+#
+# def pre_save_blog_receiver(sender, instance, *args, **kwargs):
+#     if not instance.slug:
+#         instance.slug = create_slug(instance)
+#
+#
+# pre_save.connect(pre_save_blog_receiver, sender=Blog_logiflex)

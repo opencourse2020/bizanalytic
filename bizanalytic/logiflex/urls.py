@@ -16,7 +16,7 @@ newsletter_patterns = [
 blog_patterns = [
     path("create/", views.BlogCreateView.as_view(), name="create"),
     path("edit/<int:pk>/", views.BlogEditView.as_view(), name="edit"),
-    path("detail/<int:pk>/", views.BlogDetailView.as_view(), name="detail"),
+    path("detail/<str:slug>/", views.BlogDetailView.as_view(), name="detail"),
     path("list/", views.BlogListView.as_view(), name="list"),
     path("", views.BlogsView.as_view(), name="blogs")
 ]
@@ -40,6 +40,7 @@ stripe_patterns = [
 urlpatterns = [
 
     path("", views.IndexView.as_view(), name="index"),
+    path("pricing/", views.Payment_PageView.as_view(), name='pricing'),
     path("book-call/", views.RequestCallView.as_view(), name="book-call"),
     path("bookcall/", views.BookACallView.as_view(), name="bookcall"),
     path(

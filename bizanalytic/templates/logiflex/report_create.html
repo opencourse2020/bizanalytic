@@ -64,8 +64,11 @@
                                         <div class="col-12 mb-4">
                                             <label for="route_fl" >{% trans "Route Data File" %}</label>
                                             <input type="file" id="route_fl" class="mb-0" placeholder="">
+                                            <div class="d-flex justify-content-between">
                                             <span class="mt-0">{% trans "Supports .csv, .xlsx files" %}</span>
-                                            <a href="{% static "assets/sample/freight_routes_sample.csv" %}" class="btn btn-light">{% trans "Download a csv Template File" %}</a>
+                                            <a href="{% static "assets/sample/freight_routes_sample.csv" %}" class="btn btn-gray">{% trans "Download a csv Template File" %}</a>
+
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-check ">

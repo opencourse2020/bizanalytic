@@ -29,10 +29,11 @@ class Blog_logiflexForm(forms.ModelForm):
     # body = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = models.Blog_logiflex
-        fields = ["title", "body", "category", "picture", "meta_title", "meta_description", "insidepicture", "coverpicture", "cover_text"]
+        fields = ["title", "body", "body_bottom", "category", "picture", "meta_title", "meta_description", "insidepicture", "coverpicture", "cover_text"]
         labels = {
             "title": _("Title"),
-            "body": _("Body"),
+            "body": _("Body Top"),
+            "body_bottom": _("Body Bottom"),
             "category": _("Category"),
             "cover_text": _("Cover Text"),
             "picture": _("Picture"),

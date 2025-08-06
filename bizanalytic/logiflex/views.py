@@ -150,7 +150,8 @@ class BlogDetailView(TemplateView):
         result = (search_term, category_dict[search_term]) if search_term in category_dict else None
 
         kwargs["title"] = blog.title
-        kwargs["body"] = blog.body
+        kwargs["bodytop"] = blog.body
+        kwargs["bodybottom"] = blog.body_bottom
         kwargs["datecreated"] = blog.date_created
         kwargs["picture"] = blog.picture
         kwargs["category"] = result[1] if result else None

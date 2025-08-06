@@ -139,7 +139,7 @@ class BlogDetailView(TemplateView):
             ('logi_freight', _("Logistics & Freight")),
             # ('optimize', _("Optimization")),
             ('warehouse', _("Warehousing")),
-            ('distribute', _("Distribution")),
+            ('distribute', _("Delivery & Distribution")),
             ('driver', _("Drivers & Trucking")),
             ('cost', _("Cost Optimization")),
             # ('ai_insight', _("AI-Powered Insights")),

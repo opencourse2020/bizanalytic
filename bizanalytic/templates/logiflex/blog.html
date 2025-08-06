@@ -67,6 +67,18 @@
                         <div class="blog-sidebar">
 
                             <div class="sidebar-widget">
+                                <h4 class="widget-title">categories</h4>
+                                <ul>
+                                    <li><a href="#">{% trans "Logistics & Freight" %} <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
+                                    <li><a href="#">{% trans "Warehousing" %} <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
+                                    <li><a href="#">{% trans "Delivery & Distribution" %} <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
+                                    <li><a href="#">{% trans "Drivers & Trucking" %} <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
+                                    <li><a href="#">{% trans "Cost Optimization" %} <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
+                                    <li><a href="#">{% trans "Forecasting & Predictions" %} <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="sidebar-widget">
                                 <h4 class="widget-title">{% trans "recent posts" %}</h4>
                                 {% for blog in blogs %}
                                     <div class="single-post">
@@ -82,7 +94,7 @@
                                             {% elif blog.category == "warehouse" %}
                                                 {% trans "Warehousing" %}
                                             {% elif blog.category == "distribute" %}
-                                                {% trans "Distribution" %}
+                                                {% trans "Delivery & Distribution" %}
                                             {% elif blog.category == "driver" %}
                                                 {% trans "Drivers & Trucking" %}
                                             {% elif blog.category == "cost" %}

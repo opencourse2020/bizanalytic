@@ -564,7 +564,8 @@ class FullReportView(LoginRequiredMixin, TemplateView):
     template_name = "logiflex/report_create.html"
     def get_context_data(self, **kwargs):
         pu = self.kwargs.get("pk")
-        servicepayment = models.ServicePayment.objects.filter(pk=pu).first()
+        client = models.LogiFlexClient.objects.filter(user=self.request.user).first()
+        servicepayment = models.ServicePayment.objects.filter(pk=pu, client=client).first()
         if servicepayment:
             downloadcode = generatecode(8)
             report = models.LogiflexReport(client=servicepayment.client, payment=servicepayment, report_type='full',

@@ -1,0 +1,16 @@
+ShipmentID,Date,OriginCity,DestinationCity,Distance_Miles,FuelCost_USD,DriverName,CarrierName,LoadWeight_lbs,DeliveryStatus,DeliveryTime_hrs,FreightCost_USD
+SHP001,2025-07-01,"Tulsa, OK","San Antonio, TX",598,268.35,Mike Lee,ABC Carriers,23171,Delivered,14.5,1267.81
+SHP002,2025-07-02,"Austin, TX","Dallas, TX",654,267.28,Emma Stone,ABC Carriers,17009,In-Transit,13.0,1309.41
+SHP003,2025-07-03,"Oklahoma City, OK","Houston, TX",200,74.28,Emma Stone,GHI Transport,22781,Delivered,3.8,391.31
+SHP004,2025-07-04,"Oklahoma City, OK","Dallas, TX",283,112.97,Emma Stone,ABC Carriers,22161,Delayed,5.2,620.14
+SHP005,2025-07-05,"Austin, TX","San Antonio, TX",708,278.84,Emma Stone,XYZ Freight,17983,Delivered,14.7,1396.83
+SHP006,2025-07-06,"Tulsa, OK","Austin, TX",224,88.66,Emma Stone,XYZ Freight,22073,In-Transit,4.7,460.84
+SHP007,2025-07-07,"Oklahoma City, OK","Dallas, TX",546,208.73,Chris Park,DEF Logistics,22086,In-Transit,11.8,1125.38
+SHP008,2025-07-08,"Tulsa, OK","Houston, TX",612,274.61,Chris Park,ABC Carriers,17075,Delayed,12.7,1286.6
+SHP009,2025-07-09,"Dallas, TX","Tulsa, OK",380,137.02,Chris Park,DEF Logistics,24727,Delivered,7.9,815.05
+SHP010,2025-07-10,"Dallas, TX","Austin, TX",334,118.8,Mike Lee,XYZ Freight,17271,Delivered,6.5,676.81
+SHP011,2025-07-11,"Austin, TX","Oklahoma City, OK",311,133.32,Chris Park,DEF Logistics,22076,Delivered,7.7,584.33
+SHP012,2025-07-12,"Tulsa, OK","Dallas, TX",551,241.63,John Doe,ABC Carriers,18423,Delivered,11.6,1095.25
+SHP013,2025-07-13,"Oklahoma City, OK","Tulsa, OK",455,166.13,Alex Ray,DEF Logistics,15715,Delivered,9.3,838.83
+SHP014,2025-07-14,"Austin, TX","Oklahoma City, OK",441,181.04,Chris Park,DEF Logistics,17673,Delivered,9.4,818.06
+SHP015,2025-07-15,"Austin, TX","Oklahoma City, OK",551,218.03,Sara Kim,ABC Carriers,19658,In-Transit,10.3,1042.3

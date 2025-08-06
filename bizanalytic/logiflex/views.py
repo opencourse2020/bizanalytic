@@ -36,7 +36,11 @@ stripe_publishable = settings.STRIPE_PUBLISHABLE_KEY
 stripe_webhook = settings.STRIPE_WEBHOOK_SECRET
 
 class IndexView(TemplateView):
-    template_name = "../templates/logiflex/home.html"
+    template_name = "logiflex/home.html"
+
+
+class SampleAdvancedReportView(TemplateView):
+    template_name = "logiflex/report.html"
 
 
 class NewsletterCreateView(UserPassesTestMixin, CreateView):

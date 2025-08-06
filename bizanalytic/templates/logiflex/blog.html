@@ -89,10 +89,10 @@
                                 {% for blog in blogs %}
                                     <div class="single-post">
                                         <div class="post-thumb">
-                                            <a href="{% url 'logiflex:blog:detail' blog.pk %}"><img src="{{ blog.picture.url }}" alt="post"></a>
+                                            <a href="{% url 'logiflex:blog:detail' blog.slug %}"><img src="{{ blog.picture.url }}" alt="post"></a>
                                         </div>
                                         <div class="post-content">
-                                            <a href="{% url 'logiflex:blog:detail' blog.pk %}"><span class="icon"><i class="ri-folder-open-line"></i></span>
+                                            <a href="{% url 'logiflex:blog:detail' blog.slug %}"><span class="icon"><i class="ri-folder-open-line"></i></span>
                                             {% if blog.category == "logi_freight" %}
                                                 {% trans "Logistics & Freight" %}
                                             {% elif blog.category == "warehouse" %}
@@ -108,7 +108,7 @@
 
                                             {% endif %}
                                             </a>
-                                            <h6 class="title"><a href="{% url 'logiflex:blog:detail' blog.pk %}">{{ blog.title }}</a></h6>
+                                            <h6 class="title"><a href="{% url 'logiflex:blog:detail' blog.slug %}">{{ blog.title }}</a></h6>
                                         </div>
                                     </div>
                                 {% endfor %}

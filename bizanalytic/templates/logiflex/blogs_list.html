@@ -51,11 +51,13 @@
                                                         <td><a href="{% url 'logiflex:blog:edit' blog.pk %}"> {{ blog.title }} </a> </td>
 														<td>{{ blog.date_created }}</td>
                                                         <td>{{ blog.category }}</td>
+                                                    <td>
                                                         {% if blog.picture %}
                                                             <a href="{{ blog.picture.url }}">{{ blog.picturefilename }}</a>
                                                         {% else %}
-                                                            <td><i class="fas fa-lg fa-fw me-2 fa-ban text-danger"></i></td>
+                                                            <i class="fas fa-lg fa-fw me-2 fa-ban text-danger"></i>
                                                         {% endif %}
+                                                    </td>
 													</tr>
                                                 {% endfor %}
         											</tbody>

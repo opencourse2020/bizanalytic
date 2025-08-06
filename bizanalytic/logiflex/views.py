@@ -40,7 +40,7 @@ class IndexView(TemplateView):
 
 
 class SampleAdvancedReportView(TemplateView):
-    template_name = "logiflex/report.html"
+    template_name = "logiflex/samplereport.html"
 
 
 class NewsletterCreateView(UserPassesTestMixin, CreateView):

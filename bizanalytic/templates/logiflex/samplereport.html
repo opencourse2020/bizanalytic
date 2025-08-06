@@ -1,0 +1,600 @@
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YMRH7KF20Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-YMRH7KF20Q');
+    </script>
+    <!-- required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block head_title %}
+
+        <meta name="description" content="Reduce costs, optimize routes, and boost efficiency with LogiFlex – the freight analytics platform designed for small and medium logistics operators.">
+        <meta name="author" content='"logistics performance analytics platform", "freight cost optimization tool for SMEs", "data-driven decision making in logistics", "logistics analytics SaaS for small freight companies"'>
+        <!-- page title -->
+        <title>AI-Powered Freight Analytics for Small & Medium Logistics Businesses | LogiFlex</title>
+    {% endblock head_title %}
+
+    {% block css %}
+	<!-- ================== BEGIN core-css ================== -->
+        <!-- favicon -->
+        <link rel="shortcut icon" href={% static "assets/logo/favicon.png" %}>
+
+        <!-- css files -->
+        <link rel="stylesheet" href={% static "vendor/transport/assets/css/animate.css" %}>
+        <link rel="stylesheet" href={% static "vendor/transport/assets/css/bootstrap.min.css" %}>
+        <link rel="stylesheet" href={% static "vendor/transport/assets/css/magnific-popup.css" %}>
+        <link rel="stylesheet" href={% static "vendor/transport/assets/css/meanmenu.css" %}>
+        <link rel="stylesheet" href={% static "vendor/transport/assets/css/remixicon.css" %}>
+        <link rel="stylesheet" href={% static "vendor/transport/assets/css/slick.css" %}>
+        <link rel="stylesheet" href={% static "vendor/transport/assets/css/style.css" %}>
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .report-header {
+            border-bottom: 4px solid #3b82f6;
+        }
+        .section-title {
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .metric-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+        .metric-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        .metric-value {
+            color: #1f2937;
+            font-size: 2.25rem;
+            font-weight: 700;
+        }
+        .metric-delta {
+            font-size: 1rem;
+        }
+        .insight-list li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .insight-list li::before {
+            content: '💡';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 1rem;
+        }
+        .recommendation-list li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .recommendation-list li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 1rem;
+        }
+        .prediction-list li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .prediction-list li::before {
+            content: '🔮';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 1rem;
+        }
+        #download-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+    </style>
+    <!-- ================== END core-css ================== -->
+	{% endblock css %}
+
+
+</head>
+
+<body class="bg-gray-100">
+    <button id="download-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded-full shadow-lg transition">
+        {% trans "Download as PDF" %}
+    </button>
+    <!-- preloader -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- back to top -->
+    <div class="back-to-top">
+        <span><i class="ri-arrow-up-s-line"></i></span>
+    </div>
+
+    <!-- header area starts -->
+    <header class="header-area">
+        <!-- header top -->
+
+        <!-- menu area -->
+        <div class="menu-area fixed-top">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-2 col-6">
+                        <div class="logo-area">
+                            <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo2-4.png" %} alt="logo"></a>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-8 col-lg-7 d-none d-lg-block">
+                        {% block main_menu%}
+                        <nav>
+                            <ul class="main-menu">
+                                <li ><a href="#">{% trans "Home" %}</a>
+
+                                </li>
+                                <li ><a href="#">{% trans "Services" %}</a>
+
+                                </li>
+
+                                <li class="has-submenu"><a href="#">{% trans "Resources" %}</a>
+                                    <ul class="submenu">
+                                        <li><a href="#">{% trans "About Us" %}</a></li>
+                                        <li><a href="{% url 'logiflex:blog:blogs' %}">{% trans "Blog" %}</a></li>
+                                        <li><a href="{% url 'logiflex:securepay:payment_page' %}">{% trans "Pricing" %}</a></li>
+                                        <li><a href="#">{% trans "Contact" %}</a></li>
+                                    </ul>
+                                </li>
+                                {% if user.is_authenticated %}
+                                    <li>
+                                    <a href="{% url 'account_logout' %}" style="display: inline-block; background: #eb5849; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Sign out" %}</a>
+                                 </li>
+                                {% else %}
+                                    <li ><a href="{% url 'account_login' %}" style="display: inline-block; background: #2ba3c4; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Login" %}</a>
+                                    </li>
+
+                                {% endif %}
+                            </ul>
+                        </nav>
+                        {% endblock main_menu%}
+                    </div>
+
+                    <div class="col-xl-2 col-lg-3 col-6 pt-1 pb-1">
+                        {% block left_menu %}
+                        <div class="nav-right-content">
+                            <a href="#tryfree" class="primary-btn secondary-bg"><span class="text">{% trans "Try Free" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                        </div>
+                        {% endblock left_menu %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mobile-menu"></div>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- breadcrumb area starts -->
+    {% block breadcrumb %}
+
+    {% endblock breadcrumb %}
+    {% block contact_area %}
+
+
+    <div id="report-content" class="container mx-auto p-4 md:p-8 max-w-6xl bg-white shadow-2xl my-8 rounded-lg">
+        <!-- Report Header -->
+        <header class="report-header pb-4 mb-8">
+            <h1 class="text-4xl font-bold text-gray-800">Advanced Freight Operations Analysis</h1>
+            <p class="text-lg text-gray-600">Q3 2025 Performance Review & Strategic Outlook</p>
+            <p class="text-sm text-gray-500">Generated on: <span id="report-date"></span></p>
+        </header>
+
+        <!-- Section 1: Analytics Dashboard -->
+        <section id="analytics" class="mb-12">
+            <h2 class="text-3xl section-title">Analytics Dashboard</h2>
+
+            <!-- Summary Metrics -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                <div class="metric-card">
+                    <div class="metric-label">Total Shipments</div>
+                    <div class="metric-value">200</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Total Freight Cost</div>
+                    <div class="metric-value">$199k</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Avg. Delivery Time</div>
+                    <div class="metric-value">11.1 <span class="text-xl">hrs</span></div>
+                </div>
+                <div class="metric-card bg-red-50 border-l-4 border-red-500">
+                    <div class="metric-label">Overall Delay Rate</div>
+                    <div class="metric-value text-red-600">33.5%</div>
+                </div>
+            </div>
+
+            <!-- Carrier & Route Performance -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Carrier Performance -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Carrier Performance Analysis</h3>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <canvas id="carrierDelayChart"></canvas>
+                    </div>
+                    <div class="mt-4 text-sm text-gray-600">
+                        <p><strong>Observation:</strong> GHI Transport shows the lowest delay rate and competitive cost per mile, indicating higher efficiency and reliability.</p>
+                    </div>
+                </div>
+                <!-- Problematic Routes -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Top 5 Problematic Routes by Delay Rate</h3>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="border-b">
+                                    <th class="py-2">Route</th>
+                                    <th class="text-right">Shipments</th>
+                                    <th class="text-right">Delay Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="py-2">San Antonio, TX → Dallas, TX</td>
+                                    <td class="text-right">8</td>
+                                    <td class="text-right font-bold text-red-600">50.0%</td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="py-2">Dallas, TX → Oklahoma City, OK</td>
+                                    <td class="text-right">9</td>
+                                    <td class="text-right font-bold text-red-600">44.4%</td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="py-2">Houston, TX → Austin, TX</td>
+                                    <td class="text-right">10</td>
+                                    <td class="text-right font-bold text-red-500">40.0%</td>
+                                </tr>
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="py-2">Austin, TX → San Antonio, TX</td>
+                                    <td class="text-right">9</td>
+                                    <td class="text-right font-bold text-orange-500">33.3%</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-2">Houston, TX → Tulsa, OK</td>
+                                    <td class="text-right">7</td>
+                                    <td class="text-right font-bold text-orange-500">28.6%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Key Insights -->
+        <section id="insights" class="mb-12">
+            <h2 class="text-3xl section-title">Key Insights</h2>
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-lg">
+                <ul class="insight-list text-gray-800 space-y-3">
+                    <li>
+                        <strong>High Overall Delay Rate:</strong> A third of all shipments (33.5%) are delayed, representing a significant operational bottleneck and a primary driver of hidden costs (e.g., customer dissatisfaction, contractual penalties).
+                    </li>
+                    <li>
+                        <strong>Carrier Performance Disparity:</strong> ABC Carriers is the weakest link, with a delay rate of 40.4%, which is over 12 percentage points higher than the most reliable carrier, GHI Transport (28.3%).
+                    </li>
+                    <li>
+                        <strong>"Texas Triangle" Bottleneck:</strong> Routes within the Dallas-San Antonio-Houston triangle are major hotspots for delays, with the San Antonio to Dallas lane failing to meet deadlines 50% of the time. This suggests localized issues like traffic congestion or specific yard inefficiencies.
+                    </li>
+                     <li>
+                        <strong>Cost vs. Reliability Trade-off:</strong> While all carriers have a similar average cost per mile (~$2.01), the vast difference in reliability suggests that the cheapest option is not always the most cost-effective when factoring in the hidden costs of delays.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 3: Recommendations -->
+        <section id="recommendations" class="mb-12">
+            <h2 class="text-3xl section-title">Actionable Recommendations</h2>
+            <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-r-lg">
+                <ul class="recommendation-list text-gray-800 space-y-3">
+                    <li>
+                        <strong>Re-evaluate Carrier Mix:</strong> Immediately initiate a performance review with ABC Carriers. Shift a portion of their volume (15-20%) to GHI Transport for critical shipments to mitigate risk and improve overall on-time performance.
+                    </li>
+                    <li>
+                        <strong>Conduct Route-Cause Analysis:</strong> Launch a targeted investigation into the San Antonio → Dallas corridor. Analyze time-of-day data, driver feedback, and potential alternative sub-routes to identify the specific cause of the 50% delay rate.
+                    </li>
+                    <li>
+                        <strong>Implement Performance-Based Incentives:</strong> Renegotiate contracts with carriers to include performance-based incentives tied to on-time delivery rates. This aligns carrier interests with operational goals and financially rewards reliability.
+                    </li>
+                    <li>
+                        <strong>Optimize Load Balancing:</strong> Analyze the correlation between `LoadWeight_lbs` and delays on problematic routes. If heavier loads are more prone to delays, explore load-splitting strategies during peak congestion times.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 4: Predictions -->
+        <section id="predictions">
+            <h2 class="text-3xl section-title">Predictive Outlook</h2>
+            <div class="bg-purple-50 border-l-4 border-purple-500 p-6 rounded-r-lg">
+                <ul class="prediction-list text-gray-800 space-y-3">
+                    <li>
+                        <strong>Increased Cost Exposure:</strong> If the 33.5% delay rate persists, we predict an associated increase in indirect costs (e.g., expedited freight, customer churn) of 5-8% over the next quarter.
+                    </li>
+                    <li>
+                        <strong>Fuel Cost Volatility:</strong> Routes originating from Houston show higher fuel consumption patterns. We predict that any regional spike in fuel prices will disproportionately impact the profitability of these routes by up to 12%.
+                    </li>
+                     <li>
+                        <strong>Reputation Risk:</strong> Continued reliance on underperforming carriers like ABC for key routes will likely lead to a decline in Net Promoter Score (NPS) from key accounts within the next six months.
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    {% endblock contact_area %}
+    {% block feature_area %}
+
+    {% endblock feature_area %}
+    {% block cta_area %}
+        <!-- cta area starts -->
+        <section class="cta-area-2 pt-120">
+            <div class="container">
+
+                <div class="cta-box" data-background={% static "vendor/transport/assets/images/cta-bg.jpg" %}>
+                    <div class="row align-items-center">
+                        <div class="col-lg-7">
+                            <div class="cta-content">
+                                <div class="section-top">
+                                    <h4 class="title mb-2"><span style="font-weight: normal">{% trans "Unlock the Secrets of Logistics Optimization" %}</span> </h4>
+                                    <h6>{% trans "Sign up to receive Free newsletters for business success" %}</h6>
+                                </div>
+                                <div class="cta-form mt-30">
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-12 pb-3">
+                                                <input type="text" id="company_newsletter" placeholder="Enter Your Company Name">
+                                            </div>
+                                            <div class="col-12">
+                                                <input type="email" id="email_newsletter" required="required" placeholder="Enter Your Email">
+                                            </div>
+                                            <div class="col-12 pt-3 text-end">
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="button" id="register_nl" class="btn btn-light">{% trans "Register For Free" %}</button>
+
+                                                </div>
+
+{#                                                <button type="button" class="btn bg-cyan-900 pt-2">{% trans "Register" %}</button>#}
+                                            </div>
+                                            <div class="col-12">
+                                                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                                  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                  </symbol>
+
+                                                </svg>
+                                                <div id="alert-message"></div>
+                                            </div>
+
+                                        </div>
+
+
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="cta-image">
+                                <img src={% static "vendor/transport/assets/images/cta1.png" %} alt="cta">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endblock cta_area %}
+    </main>
+    {% block footer_area %}
+    <!-- footer area starts -->
+        <footer class="footer-area-3" data-background={% static "vendor/transport/assets/images/footer-bg.jpg" %}>
+        <!-- widget area -->
+            <div class="widget-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="footer-widget">
+                                <div class="footer-logo">
+    {#                                <h4 class="title">BizAnalytic</h4>#}
+                                    <img src={% static "assets/logo/logo2-4.png" %} alt="logo" style="width: 50%">
+
+                                </div>
+                                <p class="mt-30">{% trans "Empowering logistics operators with data-driven insights" %}</p>
+
+                                <div class="footer-social mt-20">
+                                    <h6 class="title">{% trans "follow us" %}</h6>
+                                    <ul class="mt-10">
+                                        <li><a href="#"><i class="ri-facebook-fill"></i></a></li>
+                                        <li><a href="#"><i class="ri-twitter-x-line"></i></a></li>
+                                        <li><a href="#"><i class="ri-instagram-line"></i></a></li>
+                                        <li><a href="#"><i class="ri-linkedin-fill"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-2 offset-xl-1 col-lg-3 col-sm-6">
+                            <div class="footer-widget">
+                                <div class="widget-title">
+                                    <h5 class="title">{% trans "our services" %}</h5>
+                                </div>
+                                <ul class="nav-links mt-30">
+                                    <li><a href="#">LogiFlex</a></li>
+                                        <li><a href="#">KPI-Insight</a></li>
+                                        <li><a href="#">InveFlow</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="footer-widget">
+                                <div class="widget-title">
+                                    <h5 class="title">contact</h5>
+                                </div>
+                                <ul class="contact-info mt-30">
+                                    <li><span class="icon"><i class="ri-mail-fill"></i></span> <a href="#">bizanalytics.us@gmail.com</a></li>
+                                    <li><span class="icon"><i class="ri-map-pin-2-fill"></i></span> <a href="#">The Woodlands, Texas - 77380</a></li>
+                                    <li><span class="icon"><i class="ri-phone-fill"></i></span> <a href="#">+1 (832) 430-2434</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- copyright area -->
+            <div class="copyright-area py-30">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="copyright-text">
+                                <span>Copyright &copy; <span id="date"></span> BizAnalytic. All rights reserved.</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul class="footer-menu">
+                                <li><a href="#">{% trans "Support" %}</a></li>
+                                <li><a href="#">{% trans "Terms Of Services" %}</a></li>
+                                <li><a href="#">{% trans "Privacy Policy" %}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    {% endblock footer_area %}
+    {% block js_area %}
+        <!-- javascript files -->
+        <script src={% static "vendor/transport/assets/js/jquery-3.7.1.min.js" %}></script>
+        <script src={% static "vendor/transport/assets/js/bootstrap.min.js" %}></script>
+        <script src={% static "vendor/transport/assets/js/counterup.min.js" %}></script>
+        <script src={% static "vendor/transport/assets/js/easing.min.js" %}></script>
+        <script src={% static "vendor/transport/assets/js/magnific-popup.js" %}></script>
+        <script src={% static "vendor/transport/assets/js/meanmenu.min.js" %}></script>
+        <script src={% static "vendor/transport/assets/js/slick.min.js" %}></script>
+        <script src={% static "vendor/transport/assets/js/waypoints.min.js" %}></script>
+        <script src={% static "vendor/transport/assets/js/wow.min.js" %}></script>
+        <script src={% static "vendor/transport/assets/js/main.js" %}></script>
+        <script src={% static "vendor/transport/assets/js/load.js" %}></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set report date
+            document.getElementById('report-date').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            // Carrier Delay Chart
+            const ctx = document.getElementById('carrierDelayChart').getContext('2d');
+            const carrierDelayChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['ABC Carriers', 'DEF Logistics', 'GHI Transport', 'XYZ Freight'],
+                    datasets: [{
+                        label: 'Delay Rate (%)',
+                        data: [40.4, 33.3, 28.3, 31.9],
+                        backgroundColor: [
+                            'rgba(239, 68, 68, 0.6)', // red
+                            'rgba(249, 115, 22, 0.6)', // orange
+                            'rgba(34, 197, 94, 0.6)', // green
+                            'rgba(245, 158, 11, 0.6)'  // amber
+                        ],
+                        borderColor: [
+                            'rgba(239, 68, 68, 1)',
+                            'rgba(249, 115, 22, 1)',
+                            'rgba(34, 197, 94, 1)',
+                            'rgba(245, 158, 11, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Carrier Delay Rate Comparison'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 50,
+                             ticks: {
+                                callback: function(value) {
+                                    return value + '%'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // PDF Download
+            const downloadBtn = document.getElementById('download-btn');
+            downloadBtn.addEventListener('click', function() {
+                const reportContent = document.getElementById('report-content');
+                const opt = {
+                    margin:       0.5,
+                    filename:     'Freight_Operations_Analysis_Report.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true },
+                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+                // Hide button before printing
+                downloadBtn.style.display = 'none';
+                html2pdf().from(reportContent).set(opt).save().then(() => {
+                    // Show button again after saving
+                    downloadBtn.style.display = 'block';
+                });
+            });
+        });
+    </script>
+    {% endblock js_area %}
+</body>
+
+</html>

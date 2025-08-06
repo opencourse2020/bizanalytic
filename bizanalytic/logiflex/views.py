@@ -145,9 +145,13 @@ class BlogDetailView(TemplateView):
             # ('ai_insight', _("AI-Powered Insights")),
             ('predict', _("Forecasting & Predictions")),
         )
+        # get the category title
         category_dict = dict(categorytype)
         search_term = blog.category
         result = (search_term, category_dict[search_term]) if search_term in category_dict else None
+
+        # get the 3 related blogs
+        relatedblog = blog.relatedblog.split("-")
 
         kwargs["title"] = blog.title
         kwargs["bodytop"] = blog.body
@@ -158,6 +162,9 @@ class BlogDetailView(TemplateView):
         kwargs["meta_title"] = blog.meta_title
         kwargs["meta_description"] = blog.meta_description
         kwargs["insidepicture"] = blog.insidepicture
+        kwargs["related1"] = int(relatedblog[0])
+        kwargs["related2"] = int(relatedblog[1])
+        kwargs["related3"] = int(relatedblog[2])
         kwargs["blogs"] = blogs
 
         return super(BlogDetailView, self).get_context_data(**kwargs)

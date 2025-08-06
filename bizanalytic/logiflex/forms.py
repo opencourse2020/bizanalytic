@@ -1,10 +1,10 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from . import models
-from ckeditor.widgets import CKEditorWidget
+# from ckeditor.widgets import CKEditorWidget
 
 class NewsLetter_logiflexForm(forms.ModelForm):
-    body = forms.CharField(widget=CKEditorWidget())
+    # body = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = models.NewsLetter_logiflex
         fields = ["title", "body"]
@@ -26,7 +26,7 @@ class NewsLetter_logiflex_subscriptionForm(forms.ModelForm):
 
 
 class Blog_logiflexForm(forms.ModelForm):
-    body = forms.CharField(widget=CKEditorWidget())
+    # body = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = models.Blog_logiflex
         fields = ["title", "body", "category", "picture", "meta_title", "meta_description"]

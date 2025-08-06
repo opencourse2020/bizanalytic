@@ -1,0 +1,18 @@
+# robots.txt for BizAnalytic.com
+User-agent: *
+Disallow: /admin/
+Disallow: /accounts/
+Disallow: /static/
+Disallow: /media/
+Disallow: /private/
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.bizanalytic.com/sitemap.xml
+
+# Crawl-delay (optional, for heavy load protection)
+# Crawl-delay: 10
+
+# Block specific crawlers (optional)
+# User-agent: AhrefsBot
+# Disallow: /

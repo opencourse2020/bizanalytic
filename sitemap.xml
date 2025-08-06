@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- Homepage -->
+    <url>
+        <loc>https://www.bizanalytic.com/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+
+    <!-- logiflex -->
+    <url>
+        <loc>https://www.bizanalytic.com/logiflex/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+
+    <!-- Pricing Page -->
+    <url>
+        <loc>https://www.bizanalytic.com/pricing/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Blog Index -->
+    <url>
+        <loc>https://www.bizanalytic.com/blog/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Blog Posts -->
+    <url>
+        <loc>https://www.bizanalytic.com/blog/detail/real-savings-through-analytics/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.bizanalytic.com/blog/detail/track-on-time-delivery-as-a-kpi/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.bizanalytic.com/blog/detail/analytics-benefits-for-your-business/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.bizanalytic.com/blog/detail/ai-is-a-game-changer-for-freight/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.bizanalytic.com/blog/detail/reduce-hidden-costs/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.bizanalytic.com/blog/detail/which-analytics-plan-fits-your-needs/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.bizanalytic.com/blog/detail/boost-your-on-time-delivery-rates/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.bizanalytic.com/blog/detail/compete-with-the-big-players/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.bizanalytic.com/blog/detail/future-proof-your-analytics-strategy/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.bizanalytic.com/blog/detail/choose-the-right-tool-to-stay-competitive/</loc>
+        <lastmod>2025-08-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+</urlset>

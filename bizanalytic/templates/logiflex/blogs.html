@@ -53,7 +53,7 @@
                                     <ul class="blog-meta">
                                         <li><a href="{% url 'logiflex:blog:detail' blog.pk %}"><span class="icon"><i class="ri-calendar-line"></i></span> {{ blog.date_created }}</a></li>
                                         <li>
-                                            <a href="{% url 'logiflex:blog:detail' blog.pk %}"><span class="icon"><i class="ri-user-line"></i></span>
+                                            <a href="{% url 'logiflex:blog:detail' blog.pk %}"><span class="icon"><i class="ri-price-tag-fill"></i></span>
                                                 {% if blog.category == "logi_freight" %}
                                                     {% trans "Logistics & Freight" %}
                                                 {% elif blog.category == "warehouse" %}

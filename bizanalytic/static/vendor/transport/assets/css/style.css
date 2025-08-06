@@ -525,7 +525,7 @@ img { width: 100%; height: auto; display: block; }
 
 @media (max-width: 991.98px) { .pt-115 { padding-top: 75px; } }
 
-.pt-120 { padding-top: 120px; }
+.pt-120 { padding-top: 80px; }
 
 @media (max-width: 991.98px) { .pt-120 { padding-top: 80px; } }
 

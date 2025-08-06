@@ -25,7 +25,7 @@ def blogfiles_directory_path(instance, filename):
 
 class NewsLetter_logiflex(models.Model):
     title = models.CharField(max_length=250, null=True, blank=True)
-    body = RichTextField()
+    body = models.TextField(null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     dispatched = models.BooleanField(default=False)
 

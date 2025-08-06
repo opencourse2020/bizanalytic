@@ -156,7 +156,9 @@ class BlogDetailView(TemplateView):
         kwargs["category"] = result[1] if result else None
         kwargs["meta_title"] = blog.meta_title
         kwargs["meta_description"] = blog.meta_description
+        kwargs["insidepicture"] = blog.insidepicture
         kwargs["blogs"] = blogs
+
         return super(BlogDetailView, self).get_context_data(**kwargs)
 
 

@@ -168,10 +168,12 @@ class BlogsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         query = self.request.GET.get("cat")
+        allblogs = models.Blog_logiflex.objects.all()
+
         if query:
-            blogs = models.Blog_logiflex.objects.filter(category=query)
+            blogs = allblogs.filter(category=query)
         else:
-            blogs = models.Blog_logiflex.objects.all()
+            blogs = allblogs
         latestblogs = blogs.order_by('-date_created')[:3]
         kwargs["blogs"] = blogs
         kwargs["latestblogs"] = latestblogs

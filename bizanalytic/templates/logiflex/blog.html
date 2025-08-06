@@ -47,7 +47,7 @@
 
                             <ul class="blog-meta mb-20">
                                 <li><a href=""><span class="icon"><i class="ri-calendar-line"></i></span> {{ datecreated }}</a></li>
-                                <li><a href=""><span class="icon"><i class="ri-user-line"></i></span> {{ category }}</a></li>
+                                <li><a href=""><span class="icon"><i class="ri-price-tag-fill"></i></span> {{ category }}</a></li>
                             </ul>
                             <h3 class="title">{{ title }}</h3>
                             <div class="mt-20">
@@ -70,15 +70,20 @@
                                         <div class="post-content">
                                             <a href="{% url 'logiflex:blog:detail' blog.pk %}"><span class="icon"><i class="ri-folder-open-line"></i></span>
                                             {% if blog.category == "logi_freight" %}
-                                                Logistics & Freight
-                                            {% elif blog.category == "optimize" %}
-                                                Optimization
+                                                {% trans "Logistics & Freight" %}
+{#                                            {% elif blog.category == "optimize" %}#}
+{#                                                Optimization#}
                                             {% elif blog.category == "warehouse" %}
-                                                Warehousing
+                                                {% trans "Warehousing" %}
                                             {% elif blog.category == "distribute" %}
-                                                Distribution
+                                                {% trans "Distribution" %}
                                             {% elif blog.category == "driver" %}
-                                                Drivers
+                                                {% trans "Drivers & Trucking" %}
+                                            {% elif blog.category == "cost" %}
+                                                {% trans "Cost Optimization" %}
+                                            {% elif blog.category == "predict" %}
+                                                {% trans "Forecasting & Predictions" %}
+
                                             {% endif %}
                                             </a>
                                             <h6 class="title"><a href="{% url 'logiflex:blog:detail' blog.pk %}">{{ blog.title }}</a></h6>

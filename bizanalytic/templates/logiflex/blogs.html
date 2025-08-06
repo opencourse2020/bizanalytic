@@ -52,7 +52,24 @@
                                     <a href="{% url 'logiflex:blog:detail' blog.pk %}"><img src="{{ blog.picture.url }}" alt="blog"></a>
                                     <ul class="blog-meta">
                                         <li><a href="{% url 'logiflex:blog:detail' blog.pk %}"><span class="icon"><i class="ri-calendar-line"></i></span> {{ blog.date_created }}</a></li>
-                                        <li><a href="{% url 'logiflex:blog:detail' blog.pk %}"><span class="icon"><i class="ri-user-line"></i></span> {{ blog.category }}</a></li>
+                                        <li>
+                                            <a href="{% url 'logiflex:blog:detail' blog.pk %}"><span class="icon"><i class="ri-user-line"></i></span>
+                                                {% if blog.category == "logi_freight" %}
+                                                    {% trans "Logistics & Freight" %}
+                                                {% elif blog.category == "warehouse" %}
+                                                    {% trans "Warehousing" %}
+                                                {% elif blog.category == "distribute" %}
+                                                    {% trans "Delivery & Distribution" %}
+                                                {% elif blog.category == "driver" %}
+                                                    {% trans "Drivers & Trucking" %}
+                                                {% elif blog.category == "cost" %}
+                                                    {% trans "Cost Optimization" %}
+                                                {% elif blog.category == "predict" %}
+                                                    {% trans "Forecasting & Predictions" %}
+
+                                                {% endif %}
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="blog-content">

@@ -135,11 +135,25 @@ class BlogDetailView(TemplateView):
 
         # Latest Blogs
         blogs = models.Blog_logiflex.objects.order_by('-date_created')[:3]
+        categorytype = (
+            ('logi_freight', _("Logistics & Freight")),
+            # ('optimize', _("Optimization")),
+            ('warehouse', _("Warehousing")),
+            ('distribute', _("Distribution")),
+            ('driver', _("Drivers & Trucking")),
+            ('cost', _("Cost Optimization")),
+            # ('ai_insight', _("AI-Powered Insights")),
+            ('predict', _("Forecasting & Predictions")),
+        )
+        category_dict = dict(categorytype)
+        search_term = blog.category
+        result = (search_term, category_dict[search_term]) if search_term in category_dict else None
+
         kwargs["title"] = blog.title
         kwargs["body"] = blog.body
         kwargs["datecreated"] = blog.date_created
         kwargs["picture"] = blog.picture
-        kwargs["category"] = blog.category
+        kwargs["category"] = result[1] if result else None
         kwargs["meta_title"] = blog.meta_title
         kwargs["meta_description"] = blog.meta_description
         kwargs["blogs"] = blogs

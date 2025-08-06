@@ -174,7 +174,8 @@ class BlogsView(TemplateView):
             blogs = allblogs.filter(category=query)
         else:
             blogs = allblogs
-        latestblogs = blogs.order_by('-date_created')[:3]
+
+        latestblogs = allblogs.order_by('-date_created')[:3]
         kwargs["blogs"] = blogs
         kwargs["latestblogs"] = latestblogs
         return super(BlogsView, self).get_context_data(**kwargs)

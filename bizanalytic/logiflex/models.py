@@ -220,9 +220,9 @@ class Blog_logiflex(models.Model):
     picture = ContentTypeRestrictedFileField(upload_to=blogfiles_directory_path,
                                              content_types=['image/bmp', 'image/gif', 'image/jpeg', 'image/png', ],
                                              max_upload_size=52428800, blank=True, null=True)
-    coverpicture = ContentTypeRestrictedFileField(upload_to=blogfiles_directory_path,
-                                             content_types=['image/bmp', 'image/gif', 'image/jpeg', 'image/png', ],
-                                             max_upload_size=52428800, blank=True, null=True)
+    # coverpicture = ContentTypeRestrictedFileField(upload_to=blogfiles_directory_path,
+    #                                          content_types=['image/bmp', 'image/gif', 'image/jpeg', 'image/png', ],
+    #                                          max_upload_size=52428800, blank=True, null=True)
     insidepicture = ContentTypeRestrictedFileField(upload_to=blogfiles_directory_path,
                                              content_types=['image/bmp', 'image/gif', 'image/jpeg', 'image/png', ],
                                              max_upload_size=52428800, blank=True, null=True)

@@ -30,9 +30,10 @@ class Blog_logiflexForm(forms.ModelForm):
     class Meta:
         model = models.Blog_logiflex
         fields = ["title", "body", "body_bottom", "category", "picture", "meta_title", "meta_description",
-                  "insidepicture", "cover_text", "relatedblog"]
+                  "insidepicture", "cover_text", "relatedblog", "anchor_title"]
         labels = {
             "title": _("Title"),
+            "anchor_title": _("Anchor Title"),
             "body": _("Body Top"),
             "body_bottom": _("Body Bottom"),
             "category": _("Category"),

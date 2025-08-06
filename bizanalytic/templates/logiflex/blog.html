@@ -115,12 +115,13 @@
 
                             </div>
                         <div class="sidebar-widget">
+                            <h4 class="widget-title">{% trans "related posts" %}</h4>
                             <section class="related-articles">
                                 <h3>{% trans "" %}</h3>
                                 <ul>
-                                    <li><a href="{% url 'logiflex:blog:detail' related1 %}">5 Freight KPIs Every Small Logistics Company Should Track</a></li>
-                                    <li><a href="{% url 'logiflex:blog:detail' related2 %} ">The Future of Freight Analytics: Trends to Watch in 2025</a></li>
-                                    <li><a href="{% url 'logiflex:blog:detail' related3 %}">How Small Logistics Companies Can Compete with Big Players Using Data</a></li>
+                                    <li><a href="{% url 'logiflex:blog:detail' related1 %}">{{ related_title1 }}</a></li>
+                                    <li><a href="{% url 'logiflex:blog:detail' related2 %} ">{{ related_title2 }}</a></li>
+                                    <li><a href="{% url 'logiflex:blog:detail' related3 %}">{{ related_title3 }}</a></li>
                                 </ul>
                             </section>
                         </div>

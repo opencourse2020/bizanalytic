@@ -133,8 +133,11 @@ class BlogDetailView(TemplateView):
         pu = self.kwargs.get("pk")
         blog = models.Blog_logiflex.objects.filter(pk=pu).first()
 
+        # Retreive all blogs
+        blogs = models.Blog_logiflex.objects.all()
+
         # Latest Blogs
-        blogs = models.Blog_logiflex.objects.order_by('-date_created')[:3]
+        blogslatest = blogs.order_by('-date_created')[:3]
         categorytype = (
             ('logi_freight', _("Logistics & Freight")),
             # ('optimize', _("Optimization")),
@@ -152,6 +155,9 @@ class BlogDetailView(TemplateView):
 
         # get the 3 related blogs
         relatedblog = blog.relatedblog.split("-")
+        related_title1 = blogs.filter(pk=int(relatedblog[0])).first().anchor_title
+        related_title2 = blogs.filter(pk=int(relatedblog[1])).first().anchor_title
+        related_title3 = blogs.filter(pk=int(relatedblog[2])).first().anchor_title
 
         kwargs["title"] = blog.title
         kwargs["bodytop"] = blog.body
@@ -165,7 +171,10 @@ class BlogDetailView(TemplateView):
         kwargs["related1"] = int(relatedblog[0])
         kwargs["related2"] = int(relatedblog[1])
         kwargs["related3"] = int(relatedblog[2])
-        kwargs["blogs"] = blogs
+        kwargs["related_title1"] = related_title1
+        kwargs["related_title2"] = related_title2
+        kwargs["related_title3"] = related_title3
+        kwargs["blogs"] = blogslatest
 
         return super(BlogDetailView, self).get_context_data(**kwargs)
 

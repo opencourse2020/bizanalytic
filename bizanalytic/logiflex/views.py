@@ -130,7 +130,7 @@ class BlogDetailView(TemplateView):
     template_name = "logiflex/blog.html"
 
     def get_context_data(self, **kwargs):
-        slug = self.kwargs.get("pk")
+        slug = self.kwargs.get("slug")
         blog = models.Blog_logiflex.objects.filter(slug=slug).first()
 
         # Retreive all blogs

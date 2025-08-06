@@ -8,7 +8,7 @@ Disallow: /private/
 Allow: /
 
 # Sitemap location
-Sitemap: https://www.bizanalytic.com/sitemap.xml
+https://bizanalytic.com/static/sitemap.xml
 
 # Crawl-delay (optional, for heavy load protection)
 # Crawl-delay: 10

@@ -1,0 +1,105 @@
+{
+  "reportMetadata": {
+    "title": "Strategic Operations & Action Plan",
+    "subtitle": "Q3 2025 Performance Review & Margin Improvement Initiative",
+    "audience": "Prepared for the Executive Team",
+    "generatedDate": "2025-08-07"
+  },
+  "executiveSummary": {
+    "primaryFinding": "Persistent delivery delays are creating a significant, quantifiable drain on our operational margin. Our overall delay rate of 33.5% represents a hidden cost conservatively estimated at $25,000-$40,000 per quarter in potential penalties, customer churn, and reputational damage.",
+    "primaryRecommendation": "The single most impactful action we can take is to reallocate 50% of volume from our highest-risk carrier, ABC Carriers, to our top-performing strategic partner, GHI Transport. This move is projected to reduce our overall delay rate by 4 percentage points and yield an immediate operational saving of approximately $10,200 per quarter, directly improving our bottom line."
+  },
+  "diagnosticAnalysis": {
+    "carrierPerformanceMatrix": {
+      "description": "Plotting carriers by cost-efficiency vs. reliability to identify true partners.",
+      "carriers": [
+        {
+          "name": "DEF Logistics",
+          "costPerMile": 2.02,
+          "onTimeRate": 66.7,
+          "quadrant": "Low Cost / Low Perf."
+        },
+        {
+          "name": "XYZ Freight",
+          "costPerMile": 2.09,
+          "onTimeRate": 68.1,
+          "quadrant": "Reliable but Pricey"
+        },
+        {
+          "name": "ABC Carriers",
+          "costPerMile": 2.01,
+          "onTimeRate": 59.6,
+          "quadrant": "High Risk"
+        },
+        {
+          "name": "GHI Transport",
+          "costPerMile": 2.05,
+          "onTimeRate": 71.7,
+          "quadrant": "Strategic Partners"
+        }
+      ]
+    },
+    "bottleneckAnalysis": {
+      "title": "Root Cause: \"Texas Triangle\" Bottleneck",
+      "description": "The routes connecting Dallas, San Antonio, and Houston are our primary delay hotspots. Our analysis indicates this is not a random occurrence but a systemic issue.",
+      "findings": [
+        {
+          "title": "Carrier-Specific Failure",
+          "details": "ABC Carriers is responsible for over 60% of the delays on the critical San Antonio → Dallas route, despite handling less than 40% of its volume."
+        },
+        {
+          "title": "Load Weight Insignificance",
+          "details": "We found no statistically significant correlation between `LoadWeight_lbs` and delay likelihood on these routes. The issue is operational, not physical."
+        },
+        {
+          "title": "Hypothesis",
+          "details": "The bottleneck is likely due to poor local dispatching or yard management by underperforming carriers within this specific geographic zone, rather than external factors like traffic alone."
+        }
+      ]
+    }
+  },
+  "actionPlan": [
+    {
+      "priority": 1,
+      "title": "Reallocate ABC Carriers Volume",
+      "description": "Shift 50% of volume from ABC Carriers to GHI Transport.",
+      "expectedOutcome": "Reduce overall delay rate from 33.5% to ~29.5%.",
+      "estimatedImpact": "~$10,200 / quarter savings.",
+      "levelOfEffort": "Medium"
+    },
+    {
+      "priority": 2,
+      "title": "Launch \"Texas Triangle\" Probe",
+      "description": "Conduct targeted performance review with ABC and DEF for the SA-DAL-HOU zone.",
+      "expectedOutcome": "Identify specific operational failure points (e.g., yard delays).",
+      "estimatedImpact": "Potential to unlock an additional 5-10% delay reduction on key routes.",
+      "levelOfEffort": "Medium"
+    },
+    {
+      "priority": 3,
+      "title": "Implement Performance KPIs",
+      "description": "Introduce performance-based incentives in all new carrier contracts.",
+      "expectedOutcome": "Align carrier incentives with our reliability goals long-term.",
+      "estimatedImpact": "Sustained improvement in on-time performance across the board.",
+      "levelOfEffort": "High"
+    }
+  ],
+  "scenarioModeling": {
+    "carrierShiftImpact": {
+      "title": "Impact of Carrier Shift",
+      "description": "Modeling the financial and performance impact of reallocating 50% of ABC's 47 shipments to GHI Transport.",
+      "metrics": {
+        "newDelayRate": "29.5%",
+        "newTotalCost": "$198.5k",
+        "quarterlySavings": "~$10.2k"
+      }
+    },
+    "fuelCostExposure": {
+      "title": "Risk Exposure: Fuel Costs",
+      "description": "Modeling our risk exposure if regional fuel prices increase by 10%.",
+      "metrics": {
+        "projectedCostIncrease": "+$3,987.96"
+      }
+    }
+  }
+}

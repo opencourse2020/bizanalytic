@@ -18,7 +18,7 @@ from django.core.exceptions import PermissionDenied
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, get_object_or_404
-
+import json
 # Third party libraries
 import stripe
 
@@ -27,6 +27,8 @@ from bizanalytic.profiles.mixins import JsonFormMixin
 from bizanalytic.profiles.models import User
 from .utils.mail import sendemail
 from .utils.tools import generatecode
+from .utils.call_llm import generate_analysis
+
 # Create your views here.
 
 # Initiate variables
@@ -615,7 +617,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             # Update report info
             report, report_created = models.LogiflexReport.objects.update_or_create(pk=reportid,
                                                                                     defaults={'routefile': route_file})
-
+            generate_analysis(report)
             # Create a report file and update report record
             report_file = "done"
             if report_file:
@@ -656,3 +658,77 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
 class Payment_FailView(TemplateView):
     template_name = "logiflex/payment_fail.html"
+
+
+# def save_report_data(json_file_path):
+#     # Load the JSON data
+#     with open(json_file_path) as f:
+#         data = json.load(f)
+#
+#     # Save Report Metadata
+#     metadata = models.ReportMetadata.objects.create(
+#         title=data['reportMetadata']['title'],
+#         subtitle=data['reportMetadata']['subtitle'],
+#         audience=data['reportMetadata']['audience'],
+#         generated_date=data['reportMetadata']['generatedDate']
+#     )
+#
+#     # Save Executive Summary
+#     models.ExecutiveSummary.objects.create(
+#         report_metadata=metadata,
+#         primary_finding=data['executiveSummary']['primaryFinding'],
+#         primary_recommendation=data['executiveSummary']['primaryRecommendation']
+#     )
+#
+#     # Save Diagnostic Analysis
+#     diagnostic_analysis = models.DiagnosticAnalysis.objects.create(
+#         report_metadata=metadata,
+#         carrier_matrix_description=data['diagnosticAnalysis']['carrierPerformanceMatrix']['description'],
+#         bottleneck_title=data['diagnosticAnalysis']['bottleneckAnalysis']['title'],
+#         bottleneck_description=data['diagnosticAnalysis']['bottleneckAnalysis']['description']
+#     )
+#
+#     # Save Carriers
+#     for carrier_data in data['diagnosticAnalysis']['carrierPerformanceMatrix']['carriers']:
+#         models.Carrier.objects.create(
+#             name=carrier_data['name'],
+#             cost_per_mile=carrier_data['costPerMile'],
+#             on_time_rate=carrier_data['onTimeRate'],
+#             quadrant=carrier_data['quadrant']
+#         )
+#
+#     # Save Bottleneck Findings
+#     for finding_data in data['diagnosticAnalysis']['bottleneckAnalysis']['findings']:
+#         models.BottleneckFinding.objects.create(
+#             diagnostic_analysis=diagnostic_analysis,
+#             title=finding_data['title'],
+#             details=finding_data['details']
+#         )
+#
+#     # Save Action Plans
+#     for action_data in data['actionPlan']:
+#         models.ActionPlan.objects.create(
+#             report_metadata=metadata,
+#             priority=action_data['priority'],
+#             title=action_data['title'],
+#             description=action_data['description'],
+#             expected_outcome=action_data['expectedOutcome'],
+#             estimated_impact=action_data['estimatedImpact'],
+#             level_of_effort=action_data['levelOfEffort']
+#         )
+#
+#     # Save Scenario Modeling
+#     scenario_data = data['scenarioModeling']
+#     models.ScenarioModeling.objects.create(
+#         report_metadata=metadata,
+#         carrier_shift_title=scenario_data['carrierShiftImpact']['title'],
+#         carrier_shift_description=scenario_data['carrierShiftImpact']['description'],
+#         new_delay_rate=scenario_data['carrierShiftImpact']['metrics']['newDelayRate'],
+#         new_total_cost=scenario_data['carrierShiftImpact']['metrics']['newTotalCost'],
+#         quarterly_savings=scenario_data['carrierShiftImpact']['metrics']['quarterlySavings'],
+#         fuel_cost_title=scenario_data['fuelCostExposure']['title'],
+#         fuel_cost_description=scenario_data['fuelCostExposure']['description'],
+#         projected_cost_increase=scenario_data['fuelCostExposure']['metrics']['projectedCostIncrease']
+#     )
+#
+#     return metadata

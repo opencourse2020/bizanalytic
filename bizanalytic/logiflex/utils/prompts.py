@@ -1,4 +1,6 @@
-gemini_report_elite = """"Persona & Context: "Act as my strategic thinking partner, a world-class operations consultant. We are conducting a performance review for our client logistics operations with the goal of presenting a concrete action plan to the executive team. Our client's strategic priority is improving operational margin, but he cannot sacrifice his reputation for reliability."
+gemini_report_elite = """"
+client: {0}
+Persona & Context: "Act as my strategic thinking partner, a world-class operations consultant. We are conducting a performance review for our client logistics operations with the goal of presenting a concrete action plan to the executive team. Our client's strategic priority is improving operational margin, but he cannot sacrifice his reputation for reliability."
 
 Core Problem Statement: "Our client freight operations are experiencing significant hidden costs due to persistent delivery delays, which we believe are eroding his profit margins and customer trust. We need to quantify this impact and build a data-backed plan to address it."
 
@@ -26,9 +28,13 @@ Scenario Modeling & Future Outlook:
 
 Model the financial and performance impact of shifting 50% of ABC Carriers' volume to GHI Transport. What would our client new average delay rate and total cost be?
 
-What is our client risk exposure if fuel prices increase by 10% next quarter? Which routes or carriers would be most affected?"""
+What is our client risk exposure if fuel prices increase by 10% next quarter? Which routes or carriers would be most affected?
+use the attached logo for branding
+"""
 
-gemini_report_professional = """Role: "Act as a Senior Logistics Analyst."
+gemini_report_professional = """
+client = {0}
+Role: "Act as a Senior Logistics Analyst."
 
 Audience: "You are preparing a report for our client's Chief Operating Officer (COO)."
 

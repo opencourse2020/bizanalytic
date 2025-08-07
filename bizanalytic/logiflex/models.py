@@ -6,14 +6,15 @@ import os
 from datetime import timedelta
 from django.utils.timezone import now
 from django.utils.text import slugify
-from django.db.models.signals import pre_save
+# from django.db.models.signals import pre_save
 from bizanalytic.profiles.models import User
 # Create your models here.
 
 
 def datafiles_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'data_files/route_files/company_id_{0}/{1}'.format(instance.client.id, filename)
+    return 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(instance.client.id, instance.id, filename)
+
 
 def reportfiles_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -246,6 +247,73 @@ class Blog_logiflex(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+
+# **************************************************************************************************
+# ******     Models related to advanced Report     *************************************************
+# **************************************************************************************************
+
+#
+# class ReportMetadata(models.Model):
+#     report = models.ForeignKey(LogiflexReport, on_delete=models.SET_NULL, null=True)
+#     title = models.CharField(max_length=255)
+#     subtitle = models.CharField(max_length=255)
+#     audience = models.CharField(max_length=255)
+#     generated_date = models.DateField()
+#
+# class ExecutiveSummary(models.Model):
+#     report_metadata = models.OneToOneField(ReportMetadata, on_delete=models.CASCADE, related_name='executive_summary')
+#     primary_finding = models.TextField()
+#     primary_recommendation = models.TextField()
+#
+# class Carrier(models.Model):
+#     name = models.CharField(max_length=255)
+#     cost_per_mile = models.DecimalField(max_digits=5, decimal_places=2)
+#     on_time_rate = models.DecimalField(max_digits=5, decimal_places=1)
+#     quadrant = models.CharField(max_length=50)
+#
+# class DiagnosticAnalysis(models.Model):
+#     report_metadata = models.OneToOneField(ReportMetadata, on_delete=models.CASCADE, related_name='diagnostic_analysis')
+#     carrier_matrix_description = models.TextField()
+#     bottleneck_title = models.CharField(max_length=255)
+#     bottleneck_description = models.TextField()
+#
+# class BottleneckFinding(models.Model):
+#     diagnostic_analysis = models.ForeignKey(DiagnosticAnalysis, on_delete=models.CASCADE, related_name='findings')
+#     title = models.CharField(max_length=255)
+#     details = models.TextField()
+#
+# class ActionPlan(models.Model):
+#     report_metadata = models.ForeignKey(ReportMetadata, on_delete=models.CASCADE, related_name='action_plans')
+#     priority = models.IntegerField()
+#     title = models.CharField(max_length=255)
+#     description = models.TextField()
+#     expected_outcome = models.TextField()
+#     estimated_impact = models.TextField()
+#     level_of_effort = models.CharField(max_length=50)
+#
+# class ScenarioModeling(models.Model):
+#     report_metadata = models.OneToOneField(ReportMetadata, on_delete=models.CASCADE, related_name='scenario_modeling')
+#     carrier_shift_title = models.CharField(max_length=255)
+#     carrier_shift_description = models.TextField()
+#     new_delay_rate = models.CharField(max_length=50)
+#     new_total_cost = models.CharField(max_length=50)
+#     quarterly_savings = models.CharField(max_length=50)
+#     fuel_cost_title = models.CharField(max_length=255)
+#     fuel_cost_description = models.TextField()
+#     projected_cost_increase = models.CharField(max_length=50)
+#
+#
+#
+#
+#
+#
+
+
+
+
+
+
 
 
 # def create_slug(instance, new_slug=None):

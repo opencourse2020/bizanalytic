@@ -6,7 +6,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from django.conf import settings
 import google.generativeai as genai
-from .prompts import gemini_report_elite, gemini_report_professional
+from .prompts import gemini_report_elite1, gemini_report_professional1
 from django.contrib.staticfiles.storage import staticfiles_storage
 from .decorators import print_progress, log_exceptions, sleep_and_retry, limits, token_bucket
 
@@ -105,7 +105,7 @@ def generate_analysis(report):
     # 'data_files/report_files/company_id_{0}'.format(client.id)
     result = None
     print("mediaPath:", media_path)
-    prompt = gemini_report_professional.format(report.client.company)
+    prompt = gemini_report_professional1.format(report.client.company)
 
     logo = staticfiles_storage.path("assets/logo/logo1-1.png")
     # prompt = (

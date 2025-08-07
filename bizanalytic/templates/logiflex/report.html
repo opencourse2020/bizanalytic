@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +17,9 @@
     <meta name="description" content="Reduce costs, optimize routes, and boost efficiency with LogiFlex – the freight analytics platform designed for small and medium logistics operators.">
         <meta name="author" content='"logistics performance analytics platform", "freight cost optimization tool for SMEs", "data-driven decision making in logistics", "logistics analytics SaaS for small freight companies"'>
     <title>AI-Powered Freight Advanced Freight Operations Analysis Report | Logiflex</title>
+
+    <link rel="shortcut icon" href={% static "assets/logo/favicon.png" %}>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
@@ -95,8 +99,11 @@
     <div id="report-content" class="container mx-auto p-4 md:p-8 max-w-6xl bg-white shadow-2xl my-8 rounded-lg">
         <!-- Report Header -->
         <header class="report-header pb-4 mb-8">
+            <div>
+                <img src={% static "assets/logo/logo1-1.png" %} alt="logo">
+            </div>
             <h1 class="text-4xl font-extrabold text-gray-900">Strategic Operations & Action Plan</h1>
-            <p class="text-lg text-gray-600">Q3 2025 Performance Review & Margin Improvement Initiative</p>
+            <p class="text-lg text-gray-600">2025 Performance Review & Margin Improvement Initiative</p>
             <p class="text-sm text-gray-500">Prepared for the Executive Team | Generated: <span id="report-date"></span></p>
         </header>
 

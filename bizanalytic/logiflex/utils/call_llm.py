@@ -82,11 +82,11 @@ def process_id_card(file_path, generative_ai, prompt):
 @sleep_and_retry
 @limits(calls=2000, period=60)
 @token_bucket(rate=10, capacity=100)
-def call_llm_ai(file_path, generative_ai, prompt, logo):
+def call_llm_ai(file_path, generative_ai, prompt):
 
     uploaded_file = generative_ai.upload_file(file_path)
     # logo_file = generative_ai.upload_file(logo)
-
+    print("File uploaded successfully")
     result = generative_ai.generate_content(uploaded_file, prompt)
     print("result:", result)
     if result.text:
@@ -106,35 +106,15 @@ def generate_analysis(report):
     result = None
     print("mediaPath:", media_path)
     prompt = gemini_report_professional1.format(report.client.company)
-
-    logo = staticfiles_storage.path("assets/logo/logo1-1.png")
-    # prompt = (
-    #     "Please extract and parse the text from the ID card image. "
-    #     "Ensure the extracted information is formatted for database entry with the following fields: "
-    #     "Name, City of Birth, Date of Birth (DOB), Expiration Date (EXP) "
-    #     "Provide the output in a structured JSON format without any backticks. "
-    #     "Example format: "
-    #     "{"
-    #     "\"Identity\": \"C356899\", "
-    #     "\"Name\": \"John Doe\", "
-    #     "\"City of Birth\": \"Casablanca\", "
-    #     "\"Date of Birth (DOB)\": \"01/01/1970\", "
-    #     "\"Expiration Date (EXP)\": \"01/01/2030\", "
-    #     "\"Driver's License Number\": \"D1234567\", "
-    #     "\"Address\": \"123 Main St, Any town, USA\", "
-    #     "\"Gender\": \"M\""
-    #
-    #     "}"
-    # )
-
+    print("prompt:", prompt)
+    # logo = staticfiles_storage.path("assets/logo/logo1-1.png")
 
     # generative_ai = GenerativeAI("gemini-1.5-flash")
     generative_ai = GenerativeAI("gemini-2.5-flash")
     results = {}
     for file_path in media_path.glob("*.*"):
         print("file path:", file_path)
-        print("log:", logo)
-        result = call_llm_ai(file_path, generative_ai, prompt, logo)
+        result = call_llm_ai(file_path, generative_ai, prompt)
         # results = {**results, **result}
         # deletefile(file_path)
     return results

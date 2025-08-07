@@ -135,7 +135,7 @@ def generate_analysis(report):
         print("file path:", file_path)
         print("log:", logo)
         result = call_llm_ai(file_path, generative_ai, prompt, logo)
-        results = {**results, **result}
+        # results = {**results, **result}
         # deletefile(file_path)
     return results
 

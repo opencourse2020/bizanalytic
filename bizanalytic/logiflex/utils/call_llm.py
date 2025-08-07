@@ -88,9 +88,10 @@ def call_llm_ai(file_path, generative_ai, prompt, logo):
     logo_file = generative_ai.upload_file(logo)
 
     result = generative_ai.generate_content(uploaded_file, logo, prompt)
+    print("result:", result)
     if result.text:
         result_text = clean_result_text(result.text)
-        print(result_text)
+        print("result_text:", result_text)
         try:
             result_json = json.loads(result_text)
             return result_json
@@ -103,7 +104,7 @@ def generate_analysis(report):
     media_path = Path(media_folder + "data_files/route_files/company_id_" + str(report.client.id) + "/report_" + str(report.id))
     # 'data_files/report_files/company_id_{0}'.format(client.id)
     result = None
-
+    print("mediaPath:", media_path)
     prompt = gemini_report_professional.format(report.client.company)
 
     logo = staticfiles_storage.path("assets/logo/logo1-1.png")
@@ -131,6 +132,8 @@ def generate_analysis(report):
     generative_ai = GenerativeAI("gemini-2.5-flash")
     results = {}
     for file_path in media_path.glob("*.*"):
+        print("file path:", file_path)
+        print("log:", logo)
         result = call_llm_ai(file_path, generative_ai, prompt, logo)
         results = {**results, **result}
         # deletefile(file_path)

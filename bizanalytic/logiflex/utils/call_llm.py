@@ -116,7 +116,42 @@ def generate_analysis(report):
     data = df.to_dict(orient='records')
     summary = df.describe(include='all').to_string()
     client = report.client.company
-    prompt = chatgpt_prompt1
+    prompt = f"""
+Persona & Context: Act as my strategic thinking partner, a world-class operations consultant. 
+We are conducting a performance review for our client's logistics operations with the goal of presenting a concrete action plan to the executive team. 
+Our company's strategic priority for this half is improving operational margin, but we cannot sacrifice our reputation for reliability.
+
+Core Problem Statement: Our client freight operations are experiencing significant hidden costs due to persistent delivery delays, which we believe are eroding our profit margins and customer trust. 
+We need to quantify this impact and build a data-backed plan to address it.
+
+--- Client ---
+{client}
+--- DATA ---
+{data}
+
+--- SUMMARY STATISTICS ---
+{summary}
+
+Key Tasks & Hypotheses to Test:
+
+1. Executive Summary: Write a concise, hard-hitting summary for the CEO that highlights the total estimated quarterly cost of delays and the single most impactful recommendation.
+
+2. Diagnostic Analysis:
+   - Instead of just listing problematic routes, perform a root-cause analysis on the 'Texas Triangle' bottleneck. 
+     Is the issue carrier-specific, related to time-of-day, or something else?
+   - Create a 2x2 matrix plotting all carriers based on Cost per Mile (X-axis) vs. On-Time Delivery % (Y-axis) 
+     to visually identify our 'Strategic Partners' (low cost, high reliability) and 'High-Risk Partners' (high cost, low reliability).
+
+3. Prescriptive Action Plan:
+   For each recommendation, specify:
+   - Expected Outcome
+   - Estimated Impact
+   - Level of Effort
+
+4. Scenario Modeling & Future Outlook:
+   - Model the impact of shifting 50% of ABC Carriers' volume to GHI Transport.
+   - Estimate our risk exposure if fuel prices increase by 10% next quarter.
+"""
 
     # prompt = gemini_report_professional1.format(report.client.company)
     print("prompt:", prompt)

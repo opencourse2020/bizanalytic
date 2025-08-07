@@ -6,8 +6,9 @@ from contextlib import contextmanager
 from pathlib import Path
 from django.conf import settings
 import google.generativeai as genai
-from .prompts import gemini_report_elite1, gemini_report_professional1
+from .prompts import gemini_report_elite1, gemini_report_professional1, chatgpt_prompt1
 from django.contrib.staticfiles.storage import staticfiles_storage
+import pandas as pd
 from .decorators import print_progress, log_exceptions, sleep_and_retry, limits, token_bucket
 
 # DATABASE_URL = 'sqlite:///id_cards.db'
@@ -101,20 +102,32 @@ def call_llm_ai(file_path, generative_ai, prompt):
 
 # @print_progress
 def generate_analysis(report):
-    media_path = Path(media_folder + "/data_files/route_files/company_id_" + str(report.client.id) + "/report_" + str(report.id))
+    # media_path = Path(media_folder + "/data_files/route_files/company_id_" + str(report.client.id) + "/report_" + str(report.id))
+    file = report.routefile.name
+    media_path = (media_folder, file)
+    filepath = "/".join(media_path)
     # 'data_files/report_files/company_id_{0}'.format(client.id)
     result = None
-    print("mediaPath:", media_path)
-    prompt = gemini_report_professional1.format(report.client.company)
+    # print("mediaPath:", media_path)
+
+    # Load CSV with Pandas
+    df = pd.read_csv(filepath)
+
+    data = df.to_dict(orient='records')
+    summary = df.describe(include='all').to_string()
+
+    prompt = chatgpt_prompt1
+
+    # prompt = gemini_report_professional1.format(report.client.company)
     print("prompt:", prompt)
     # logo = staticfiles_storage.path("assets/logo/logo1-1.png")
 
     # generative_ai = GenerativeAI("gemini-1.5-flash")
-    generative_ai = GenerativeAI("gemini-2.5-flash")
+    # generative_ai = GenerativeAI("gemini-2.5-flash")
     results = {}
-    for file_path in media_path.glob("*.*"):
-        print("file path:", file_path)
-        result = call_llm_ai(file_path, generative_ai, prompt)
+    # for file_path in media_path.glob("*.*"):
+    #     print("file path:", file_path)
+        # result = call_llm_ai(file_path, generative_ai, prompt)
         # results = {**results, **result}
         # deletefile(file_path)
     return results

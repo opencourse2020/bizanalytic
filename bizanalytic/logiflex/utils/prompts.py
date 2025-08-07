@@ -107,3 +107,94 @@ Output: 'Present the findings in a report with an executive summary, detailed an
 return the results in json format.
 
 """
+
+
+chatgpt_prompt = """
+Persona & Context:
+Act as my strategic thinking partner, a world-class operations and logistics consultant. We are conducting a performance review for our client's freight operations. You are analyzing a dataset of {0} freight deliveries (uploaded separately) with route, carrier, distance, fuel cost, delay status, and other variables.
+
+Company Goal:
+Our strategic goal is to increase operational margin without compromising reliability.
+
+Objective:
+Diagnose the financial and operational impact of delivery delays, then develop a concrete, data-driven action plan for the executive team.
+
+Section 1: Executive Summary
+- Write a 1-paragraph summary for the CEO.
+- Include:
+  • Total estimated quarterly cost of delivery delays (from dataset).
+  • Most impactful action with projected impact (financial + delay reduction).
+
+Section 2: Diagnostic Analysis
+- Identify root cause of delay concentration in the "Texas Triangle" (Austin, Houston, Dallas/Fort Worth).
+- Use the dataset to analyze:
+  • Carrier reliability (e.g., ABC vs GHI)
+  • Time-of-day or day-of-week patterns
+  • Route distance vs. delay frequency correlation
+
+Section 3: Carrier 2x2 Matrix
+- Plot a 2x2 matrix:
+  X-axis: Cost per Mile
+  Y-axis: On-Time Delivery %
+- Label quadrants:
+  • Top-Left: Strategic Partners
+  • Bottom-Right: High-Risk Carriers
+  • Others: Monitor and Opportunity Carriers
+
+Section 4: Prescriptive Action Plan
+- For top 3 recommended actions, provide a table with:
+  | Action | Expected Outcome | Estimated Impact | Level of Effort |
+  |--------|------------------|------------------|------------------|
+
+Section 5: Scenario Modeling
+1. Carrier Swap Simulation:
+   - What happens if 50% of ABC’s volume is shifted to GHI?
+   - Recalculate average delay rate, cost per mile, and projected savings.
+
+2. Fuel Price Sensitivity:
+   - Model 10% increase in fuel prices.
+   - Identify which routes or carriers are most exposed to margin erosion.
+
+Constraints:
+- Use uploaded data only — do not invent values.
+- Prioritize concise, executive-ready insights.
+- Output in structured HTML and optionally PDF.
+- client : {1}
+"""
+
+chatgpt_prompt1 = f"""
+Persona & Context: Act as my strategic thinking partner, a world-class operations consultant. 
+We are conducting a performance review for our client's logistics operations with the goal of presenting a concrete action plan to the executive team. 
+Our company's strategic priority for this half is improving operational margin, but we cannot sacrifice our reputation for reliability.
+
+Core Problem Statement: Our client freight operations are experiencing significant hidden costs due to persistent delivery delays, which we believe are eroding our profit margins and customer trust. 
+We need to quantify this impact and build a data-backed plan to address it.
+
+--- Client ---
+{client}
+--- DATA ---
+{data}
+
+--- SUMMARY STATISTICS ---
+{summary}
+
+Key Tasks & Hypotheses to Test:
+
+1. Executive Summary: Write a concise, hard-hitting summary for the CEO that highlights the total estimated quarterly cost of delays and the single most impactful recommendation.
+
+2. Diagnostic Analysis:
+   - Instead of just listing problematic routes, perform a root-cause analysis on the 'Texas Triangle' bottleneck. 
+     Is the issue carrier-specific, related to time-of-day, or something else?
+   - Create a 2x2 matrix plotting all carriers based on Cost per Mile (X-axis) vs. On-Time Delivery % (Y-axis) 
+     to visually identify our 'Strategic Partners' (low cost, high reliability) and 'High-Risk Partners' (high cost, low reliability).
+
+3. Prescriptive Action Plan:
+   For each recommendation, specify:
+   - Expected Outcome
+   - Estimated Impact
+   - Level of Effort
+
+4. Scenario Modeling & Future Outlook:
+   - Model the impact of shifting 50% of ABC Carriers' volume to GHI Transport.
+   - Estimate our risk exposure if fuel prices increase by 10% next quarter.
+"""

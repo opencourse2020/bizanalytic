@@ -128,7 +128,7 @@ def generate_analysis(report):
 
 
     # generative_ai = GenerativeAI("gemini-1.5-flash")
-    generative_ai = GenerativeAI("gemini-1.5-flash-8b")
+    generative_ai = GenerativeAI("gemini-2.5-flash")
     results = {}
     for file_path in media_path.glob("*.*"):
         result = call_llm_ai(file_path, generative_ai, prompt, logo)

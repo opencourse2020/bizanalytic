@@ -106,5 +106,4 @@ Output: 'Present the findings in a report with an executive summary, detailed an
 
 return the results in json format.
 
-use the attached logo for branding
 """

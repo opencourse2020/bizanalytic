@@ -85,9 +85,9 @@ def process_id_card(file_path, generative_ai, prompt):
 def call_llm_ai(file_path, generative_ai, prompt, logo):
 
     uploaded_file = generative_ai.upload_file(file_path)
-    logo_file = generative_ai.upload_file(logo)
+    # logo_file = generative_ai.upload_file(logo)
 
-    result = generative_ai.generate_content(uploaded_file, logo, prompt)
+    result = generative_ai.generate_content(uploaded_file, prompt)
     print("result:", result)
     if result.text:
         result_text = clean_result_text(result.text)

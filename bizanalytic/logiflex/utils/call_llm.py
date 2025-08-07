@@ -115,7 +115,7 @@ def generate_analysis(report):
 
     data = df.to_dict(orient='records')
     summary = df.describe(include='all').to_string()
-
+    client = report.client.company
     prompt = chatgpt_prompt1
 
     # prompt = gemini_report_professional1.format(report.client.company)

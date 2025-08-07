@@ -101,7 +101,7 @@ def call_llm_ai(file_path, generative_ai, prompt, logo):
 
 # @print_progress
 def generate_analysis(report):
-    media_path = Path(media_folder + "data_files/route_files/company_id_" + str(report.client.id) + "/report_" + str(report.id))
+    media_path = Path(media_folder + "/data_files/route_files/company_id_" + str(report.client.id) + "/report_" + str(report.id))
     # 'data_files/report_files/company_id_{0}'.format(client.id)
     result = None
     print("mediaPath:", media_path)

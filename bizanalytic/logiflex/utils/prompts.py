@@ -1,4 +1,4 @@
-report_elite = """"Persona & Context: "Act as my strategic thinking partner, a world-class operations consultant. We are conducting a performance review for our client logistics operations with the goal of presenting a concrete action plan to the executive team. Our client's strategic priority is improving operational margin, but he cannot sacrifice his reputation for reliability."
+gemini_report_elite = """"Persona & Context: "Act as my strategic thinking partner, a world-class operations consultant. We are conducting a performance review for our client logistics operations with the goal of presenting a concrete action plan to the executive team. Our client's strategic priority is improving operational margin, but he cannot sacrifice his reputation for reliability."
 
 Core Problem Statement: "Our client freight operations are experiencing significant hidden costs due to persistent delivery delays, which we believe are eroding his profit margins and customer trust. We need to quantify this impact and build a data-backed plan to address it."
 
@@ -28,9 +28,9 @@ Model the financial and performance impact of shifting 50% of ABC Carriers' volu
 
 What is our client risk exposure if fuel prices increase by 10% next quarter? Which routes or carriers would be most affected?"""
 
-report_professional = """Role: "Act as a Senior Logistics Analyst."
+gemini_report_professional = """Role: "Act as a Senior Logistics Analyst."
 
-Audience: "You are preparing a report for the Chief Operating Officer (COO)."
+Audience: "You are preparing a report for our client's Chief Operating Officer (COO)."
 
 Goal: "The primary goal is to identify the top 3 actionable opportunities to reduce our overall freight costs by at least 5% in the next quarter."
 
@@ -38,7 +38,7 @@ Analysis Request: "Using the provided freight data, create an analysis that answ
 
 Which carrier offers the best true value when factoring in both freight cost and delay rates?
 
-What is the total financial impact of delays on our most problematic route (San Antonio → Dallas)?
+What is the total financial impact of delays on our client most problematic route (San Antonio → Dallas)?
 
 Is there a correlation between LoadWeight_lbs and the likelihood of a shipment being delayed?"
 

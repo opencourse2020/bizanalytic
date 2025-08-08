@@ -42,8 +42,77 @@ class IndexView(TemplateView):
 
 
 class SampleAdvancedReportView(TemplateView):
-    template_name = "logiflex/sample_report.html"
+    template_name = "logiflex/test.html"
 
+    def get_context_data(self, **kwargs):
+
+        kwargs["report"] = """### Executive Summary
+
+**Estimated Quarterly Cost of Delays:**  
+Based on our analysis of the logistics data for Mascaw, the estimated quarterly cost of delivery delays is approximately $150,000. This figure includes increased fuel costs, labor, and potential loss of business due to decreased customer satisfaction.
+
+**Most Impactful Recommendation:**  
+Our analysis indicates that optimizing carrier partnerships will yield the most significant improvement in operational margins. Specifically, shifting 50% of ABC Carriers' volume to GHI Transport, which has demonstrated higher reliability and lower cost per mile, is projected to reduce delay-related costs by approximately 20%.
+
+---
+
+### Diagnostic Analysis
+
+**Root-Cause Analysis of 'Texas Triangle' Bottleneck:**
+
+1. **Carrier-Specific Issues:**  
+   - ABC Carriers has a higher incidence of delays, particularly on routes within the Texas Triangle. This suggests potential inefficiencies or capacity issues with this carrier.
+   
+2. **Time-of-Day Factors:**  
+   - Analysis shows a higher frequency of delays during peak traffic hours, indicating that scheduling adjustments could mitigate some delays.
+
+3. **Route-Specific Challenges:**  
+   - Certain routes, particularly those involving Dallas and Houston, show consistent delays. Infrastructure or traffic congestion may be contributing factors.
+
+**2x2 Matrix: Cost per Mile vs. On-Time Delivery %**
+
+- **Strategic Partners:**  
+  - GHI Transport: Low cost per mile and high on-time delivery percentage.
+  
+- **High-Risk Partners:**  
+  - ABC Carriers: High cost per mile and low on-time delivery percentage.
+
+---
+
+### Prescriptive Action Plan
+
+1. **Optimize Carrier Partnerships:**
+   - **Expected Outcome:** Improved reliability and reduced costs.
+   - **Estimated Impact:** 20% reduction in delay-related costs.
+   - **Level of Effort:** Medium. Requires negotiation and potential contract adjustments.
+
+2. **Adjust Scheduling to Avoid Peak Hours:**
+   - **Expected Outcome:** Reduced delays during peak traffic times.
+   - **Estimated Impact:** 10% improvement in on-time delivery.
+   - **Level of Effort:** Low. Involves rescheduling existing routes.
+
+3. **Route Optimization:**
+   - **Expected Outcome:** More efficient routing to avoid congestion.
+   - **Estimated Impact:** 5% reduction in fuel costs.
+   - **Level of Effort:** High. Requires investment in route optimization software.
+
+---
+
+### Scenario Modeling & Future Outlook
+
+1. **Impact of Shifting 50% of ABC Carriers' Volume to GHI Transport:**
+   - **Expected Outcome:** Improved reliability and reduced costs.
+   - **Estimated Impact:** 20% reduction in delay-related costs.
+   - **Risk:** Potential capacity constraints with GHI Transport.
+
+2. **Risk Exposure if Fuel Prices Increase by 10%:**
+   - **Estimated Additional Cost:** Approximately $50,000 increase in quarterly fuel expenses.
+   - **Mitigation Strategy:** Implement fuel-efficient driving practices and explore alternative fuel options.
+
+---
+
+This comprehensive analysis and action plan aim to enhance Mascaw's logistics operations by reducing hidden costs and improving reliability, ultimately leading to better operational margins without compromising customer trust."""
+        return super(SampleAdvancedReportView, self).get_context_data(**kwargs)
 
 class NewsletterCreateView(UserPassesTestMixin, CreateView):
     model = models.NewsLetter_logiflex

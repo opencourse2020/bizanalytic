@@ -20,115 +20,66 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Q3 Freight Operations Performance Review</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        h1, h2, h3 {
-            color: #2C3E50;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .highlight {
-            background-color: #eaf2f8;
-        }
-    </style>
+    <title>Freight Operations Performance Review</title>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
+ <h1>Executive Summary</h1>
+    <p><strong>Total Delay Cost:</strong> {{ report.executive_summary.total_delay_cost }}</p>
+    <p><strong>Key Recommendation:</strong> {{ report.executive_summary.top_recommendation }}</p>
 
-<h1>Q3 Freight Operations Performance Review</h1>
+    <h2>Delay Trends</h2>
+    <canvas id="trendChart" width="600" height="400"></canvas>
 
-<section>
-    <h2>Section 1: Executive Summary</h2>
-    <p>
-        In Q3, Mascaw's freight operations faced significant financial impacts due to delivery delays, with an estimated total cost of $150,000. The most impactful action to address these delays is optimizing carrier selection, particularly by shifting volumes from less reliable carriers to those with better on-time performance. This strategic shift is projected to reduce delay-related costs by 20% and improve overall reliability.
-    </p>
-</section>
+    <h2>Carrier Matrix</h2>
+    <canvas id="carrierMatrix" width="600" height="400"></canvas>
 
-<section>
-    <h2>Section 2: Diagnostic Analysis</h2>
-    <h3>Root Cause Analysis</h3>
-    <p>
-        The concentration of delays in the "Texas Triangle" (Austin, Houston, Dallas/Fort Worth) is primarily attributed to the inconsistent performance of certain carriers, particularly ABC Carriers, which has a higher delay frequency compared to others. Additionally, analysis shows that delays are more frequent during peak hours and on specific days of the week, indicating potential scheduling inefficiencies.
-    </p>
-    <h3>Carrier Reliability</h3>
-    <p>
-        ABC Carriers has the highest delay rate, while GHI Transport shows better reliability. This suggests a need to reassess carrier partnerships.
-    </p>
-    <h3>Route Distance vs. Delay Frequency</h3>
-    <p>
-        Longer routes tend to have a higher frequency of delays, indicating potential issues with route planning and execution.
-    </p>
-</section>
+    <script>
+    const trendCtx = document.getElementById('trendChart').getContext('2d');
+    const trendChart = new Chart(trendCtx, {
+        type: 'line',
+        data: {
+            labels: {{ report.visuals.delay_trend.labels|safe }},
+            datasets: [{
+                label: 'Delays',
+                data: {{ report.visuals.delay_trend.data|safe }},
+                borderColor: 'rgba(255, 99, 132, 1)',
+                fill: false,
+            }, {
+                label: 'On-Time',
+                data: {{ report.visuals.ontime_trend.data|safe }},
+                borderColor: 'rgba(54, 162, 235, 1)',
+                fill: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'top' } },
+            scales: {
+                y: { beginAtZero: true },
+                x: { display: true }
+            }
+        }
+    });
 
-<section>
-    <h2>Section 3: Carrier 2x2 Matrix</h2>
-    <p>
-        <img src="carrier_2x2_matrix.png" alt="Carrier 2x2 Matrix" style="width:100%;max-width:600px;">
-    </p>
-    <p>
-        The matrix categorizes carriers based on cost per mile and on-time delivery percentage. Strategic Partners are those with low cost per mile and high on-time delivery, while High-Risk Carriers exhibit high costs and low reliability.
-    </p>
-</section>
-
-<section>
-    <h2>Section 4: Prescriptive Action Plan</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Action</th>
-                <th>Expected Outcome</th>
-                <th>Estimated Impact</th>
-                <th>Level of Effort</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Optimize Carrier Selection</td>
-                <td>Improved reliability and reduced delays</td>
-                <td>20% reduction in delay costs</td>
-                <td>Medium</td>
-            </tr>
-            <tr>
-                <td>Implement Dynamic Scheduling</td>
-                <td>Better time management and reduced peak-time delays</td>
-                <td>15% improvement in on-time delivery</td>
-                <td>High</td>
-            </tr>
-            <tr>
-                <td>Enhance Route Planning</td>
-                <td>Reduced delays on longer routes</td>
-                <td>10% reduction in fuel costs</td>
-                <td>Medium</td>
-            </tr>
-        </tbody>
-    </table>
-</section>
-
-<section>
-    <h2>Section 5: Scenario Modeling</h2>
-    <h3>Carrier Swap Simulation</h3>
-    <p>
-        Shifting 50% of ABC’s volume to GHI Transport is projected to decrease the average delay rate by 10% and reduce the cost per mile by 5%, resulting in projected savings of approximately $50,000.
-    </p>
-    <h3>Fuel Price Sensitivity</h3>
-    <p>
-        A 10% increase in fuel prices would most severely impact long-distance routes and carriers with higher fuel consumption rates, such as DEF Logistics, potentially eroding margins by up to 8%.
-    </p>
-</section>
+    const matrixCtx = document.getElementById('carrierMatrix').getContext('2d');
+    const carrierMatrix = new Chart(matrixCtx, {
+        type: 'scatter',
+        data: {
+            datasets: {{ report.visuals.carrier_matrix|safe }}
+        },
+        options: {
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: { title: { display: true, text: 'Cost per Mile' } },
+                y: { title: { display: true, text: 'On-Time Delivery %' } }
+            }
+        }
+    });
+    </script>
 
 </body>
 </html>

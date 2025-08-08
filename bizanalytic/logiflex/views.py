@@ -45,6 +45,16 @@ class SampleAdvancedReportView(TemplateView):
     template_name = "logiflex/sample_report.html"
 
 
+class AdvancedReportView(TemplateView):
+    template_name = "logiflex/report.html"
+
+    def get_context_data(self, **kwargs):
+        pu = self.kwargs.get("pk")
+        report = models.LogiflexReport.objects.filter(pk=pu).first()
+        if report:
+            kwargs["report"] = report.report_text
+        return super(AdvancedReportView, self).get_context_data(**kwargs)
+
 
 class NewsletterCreateView(UserPassesTestMixin, CreateView):
     model = models.NewsLetter_logiflex

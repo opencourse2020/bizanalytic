@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,547 +17,70 @@
         <meta name="author" content='"logistics performance analytics platform", "freight cost optimization tool for SMEs", "data-driven decision making in logistics", "logistics analytics SaaS for small freight companies"'>
     <title>AI-Powered Freight Advanced Freight Operations Analysis Report | Logiflex</title>
 
-    <link rel="shortcut icon" href={% static "assets/logo/favicon.png" %}>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .report-header {
-            border-bottom: 4px solid #4f46e5;
-        }
-        .section-title {
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            color: #111827;
-        }
-        .exec-summary {
-            background-color: #eef2ff;
-            border-left: 5px solid #4f46e5;
-        }
-        .action-card {
-            border: 1px solid #d1d5db;
-            transition: all 0.2s ease-in-out;
-        }
-        .action-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid #4f46e5;
-        }
-        .matrix-container {
-            position: relative;
-            height: 450px;
-        }
-        .matrix-container::before, .matrix-container::after {
-            content: '';
-            position: absolute;
-            background-color: #e5e7eb;
-            z-index: 0;
-        }
-        .matrix-container::before { /* Vertical line */
-            left: 50%;
-            top: 0;
-            width: 2px;
-            height: 100%;
-            transform: translateX(-50%);
-        }
-        .matrix-container::after { /* Horizontal line */
-            top: 50%;
-            left: 0;
-            height: 2px;
-            width: 100%;
-            transform: translateY(-50%);
-        }
-        .quadrant-label {
-            position: absolute;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #9ca3af;
-            text-transform: uppercase;
-        }
-        #download-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freight Operations Performance Review</title>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
-<body class="bg-gray-50">
+<body>
+ <h1>Freight Operations Performance Review</h1>
+    <p><strong>Total Delay Cost:</strong> {{ report.executive_summary.total_delay_cost }}</p>
+    <p><strong>Key Recommendation:</strong> {{ report.executive_summary.top_recommendation }}</p>
 
-    <button id="download-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-5 rounded-full shadow-lg transition">
-        Download Action Plan (PDF)
-    </button>
+    <h2>Delay Trends</h2>
+    <canvas id="trendChart" width="600" height="400"></canvas>
 
-    <div id="report-content" class="container mx-auto p-4 md:p-8 max-w-6xl bg-white shadow-2xl my-8 rounded-lg">
-        <!-- Report Header -->
-        <header class="report-header pb-4 mb-8">
-            <div>
-                <img src={% static "assets/logo/logo1-1.png" %} alt="logo" style="width: 20%;">
-                <p style="color: #3D89DF; font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;LogiFlex</p>
-            </div>
-            <h1 class="text-4xl font-extrabold text-gray-900 text-center">Strategic Operations & Action Plan</h1>
-            <p class="text-lg text-gray-600 text-center">2025 Performance Review & Margin Improvement Initiative</p>
-            <p class="text-sm text-gray-500 text-center">Prepared for the Executive Team | Generated: <span id="report-date"></span></p>
-        </header>
-
-        <!-- Executive Summary -->
-        <section id="executive-summary" class="mb-12">
-            <h2 class="text-3xl section-title">Executive Summary</h2>
-            <div class="exec-summary p-6 rounded-lg">
-                <p class="text-lg text-gray-800 leading-relaxed">
-                    This analysis reveals that persistent delivery delays are creating a significant, quantifiable drain on our operational margin. Our overall **delay rate of 33.5%** represents a hidden cost conservatively estimated at **$25,000-$40,000 per quarter** in potential penalties, customer churn, and reputational damage. The core issue stems from a performance disparity among our carriers, with certain partners creating disproportionate risk.
-                </p>
-                <p class="mt-4 text-lg text-gray-900 font-semibold">
-                    The single most impactful action we can take is to **reallocate 50% of volume from our highest-risk carrier, ABC Carriers, to our top-performing strategic partner, GHI Transport.** This move is projected to reduce our overall delay rate by 4 percentage points and yield an immediate operational saving of approximately **$10,200 per quarter**, directly improving our bottom line.
-                </p>
-            </div>
-        </section>
-
-        <!-- Diagnostic Analysis -->
-        <section id="diagnostic-analysis" class="mb-12">
-            <h2 class="text-3xl section-title">Diagnostic Analysis</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
-                <div class="lg:col-span-3">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Carrier Performance Matrix</h3>
-                    <p class="text-sm text-gray-600 mb-4">Plotting carriers by cost-efficiency vs. reliability to identify true partners.</p>
-                    <div class="matrix-container bg-white p-4 rounded-lg shadow-inner relative">
-                        <canvas id="carrierMatrixChart" style="position: relative; z-index: 1;"></canvas>
-                        <div class="quadrant-label" style="top: 10px; left: 10px;">High Risk</div>
-                        <div class="quadrant-label" style="top: 10px; right: 10px;">Strategic Partners</div>
-                        <div class="quadrant-label" style="bottom: 10px; left: 10px;">Low Cost / Low Perf.</div>
-                        <div class="quadrant-label" style="bottom: 10px; right: 10px;">Reliable but Pricey</div>
-                    </div>
-                </div>
-                <div class="lg:col-span-2">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Root Cause: "Texas Triangle" Bottleneck</h3>
-                    <div class="bg-white p-6 rounded-lg shadow-inner h-full">
-                        <p class="text-gray-700 mb-4">The routes connecting Dallas, San Antonio, and Houston are our primary delay hotspots. Our analysis indicates this is not a random occurrence but a systemic issue:</p>
-                        <ul class="list-disc list-inside space-y-3 text-gray-800">
-                            <li><strong class="text-indigo-700">Carrier-Specific Failure:</strong> ABC Carriers is responsible for over 60% of the delays on the critical San Antonio → Dallas route, despite handling less than 40% of its volume.</li>
-                            <li><strong class="text-indigo-700">Load Weight Insignificance:</strong> We found no statistically significant correlation between `LoadWeight_lbs` and delay likelihood on these routes. The issue is operational, not physical.</li>
-                             <li><strong class="text-indigo-700">Hypothesis:</strong> The bottleneck is likely due to poor local dispatching or yard management by underperforming carriers within this specific geographic zone, rather than external factors like traffic alone.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Prescriptive Action Plan -->
-        <section id="action-plan" class="mb-12">
-            <h2 class="text-3xl section-title">Prescriptive Action Plan</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Action 1 -->
-                <div class="action-card rounded-lg p-6 bg-white">
-                    <span class="font-bold text-sm text-white bg-indigo-600 py-1 px-3 rounded-full">Priority 1</span>
-                    <h4 class="font-bold text-xl my-3 text-gray-900">Reallocate ABC Carriers Volume</h4>
-                    <p class="text-gray-600 text-sm mb-4">Shift 50% of volume from ABC Carriers to GHI Transport.</p>
-                    <div class="text-xs space-y-2">
-                        <p><strong>Expected Outcome:</strong> Reduce overall delay rate from 33.5% to ~29.5%.</p>
-                        <p><strong>Estimated Impact:</strong> <span class="font-semibold text-green-600">~$10,200 / quarter savings.</span></p>
-                        <p><strong>Level of Effort:</strong> <span class="font-semibold text-yellow-600">Medium</span> (Contract renegotiation).</p>
-                    </div>
-                </div>
-                <!-- Action 2 -->
-                <div class="action-card rounded-lg p-6 bg-white">
-                    <span class="font-bold text-sm text-white bg-yellow-500 py-1 px-3 rounded-full">Priority 2</span>
-                    <h4 class="font-bold text-xl my-3 text-gray-900">Launch "Texas Triangle" Probe</h4>
-                    <p class="text-gray-600 text-sm mb-4">Conduct targeted performance review with ABC and DEF for the SA-DAL-HOU zone.</p>
-                    <div class="text-xs space-y-2">
-                        <p><strong>Expected Outcome:</strong> Identify specific operational failure points (e.g., yard delays).</p>
-                        <p><strong>Estimated Impact:</strong> Potential to unlock an additional 5-10% delay reduction on key routes.</p>
-                        <p><strong>Level of Effort:</strong> <span class="font-semibold text-yellow-600">Medium</span> (Requires ops team time).</p>
-                    </div>
-                </div>
-                <!-- Action 3 -->
-                <div class="action-card rounded-lg p-6 bg-white">
-                    <span class="font-bold text-sm text-white bg-green-500 py-1 px-3 rounded-full">Priority 3</span>
-                    <h4 class="font-bold text-xl my-3 text-gray-900">Implement Performance KPIs</h4>
-                    <p class="text-gray-600 text-sm mb-4">Introduce performance-based incentives in all new carrier contracts.</p>
-                    <div class="text-xs space-y-2">
-                        <p><strong>Expected Outcome:</strong> Align carrier incentives with our reliability goals long-term.</p>
-                        <p><strong>Estimated Impact:</strong> Sustained improvement in on-time performance across the board.</p>
-                        <p><strong>Level of Effort:</strong> <span class="font-semibold text-red-600">High</span> (Requires legal and procurement).</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Scenario Modeling & Future Outlook -->
-        <section id="modeling">
-            <h2 class="text-3xl section-title">Scenario Modeling & Future Outlook</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-gray-100 p-6 rounded-lg">
-                    <h4 class="font-bold text-lg mb-3">Impact of Carrier Shift</h4>
-                    <p class="text-sm text-gray-600 mb-4">Modeling the financial and performance impact of reallocating 50% of ABC's 47 shipments to GHI Transport.</p>
-                    <div class="flex justify-around text-center">
-                        <div>
-                            <div class="text-gray-500 text-sm">New Delay Rate</div>
-                            <div id="new-delay-rate" class="text-2xl font-bold text-green-600"></div>
-                        </div>
-                        <div>
-                            <div class="text-gray-500 text-sm">New Total Cost</div>
-                            <div id="new-total-cost" class="text-2xl font-bold text-indigo-600"></div>
-                        </div>
-                         <div>
-                            <div class="text-gray-500 text-sm">Quarterly Savings</div>
-                            <div id="quarterly-savings" class="text-2xl font-bold text-green-600"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-gray-100 p-6 rounded-lg">
-                    <h4 class="font-bold text-lg mb-3">Risk Exposure: Fuel Costs</h4>
-                    <p class="text-sm text-gray-600 mb-4">Modeling our risk exposure if regional fuel prices increase by 10% next quarter.</p>
-                     <div class="text-center">
-                        <div class="text-gray-500 text-sm">Projected Cost Increase</div>
-                        <div id="fuel-cost-increase" class="text-3xl font-bold text-red-600"></div>
-                        <p class="text-xs text-gray-500 mt-2">This highlights the need for fuel-efficient routing and carriers with modern, efficient fleets.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+    <h2>Carrier Matrix</h2>
+    <canvas id="carrierMatrix" width="600" height="400"></canvas>
 
     <script>
-        const csvData = `ShipmentID,Date,OriginCity,DestinationCity,Distance_Miles,FuelCost_USD,DriverName,CarrierName,LoadWeight_lbs,DeliveryStatus,DeliveryTime_hrs,FreightCost_USD
-SHP0001,2025-07-01,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0002,2025-07-02,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0003,2025-07-03,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0004,2025-07-04,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0005,2025-07-05,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0006,2025-07-06,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0007,2025-07-07,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0008,2025-07-08,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0009,2025-07-09,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0010,2025-07-10,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0011,2025-07-11,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0012,2025-07-12,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0013,2025-07-13,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0014,2025-07-14,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0015,2025-07-15,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0016,2025-07-16,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0017,2025-07-17,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0018,2025-07-18,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0019,2025-07-19,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0020,2025-07-20,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0021,2025-07-21,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0022,2025-07-22,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0023,2025-07-23,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0024,2025-07-24,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0025,2025-07-25,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0026,2025-07-26,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0027,2025-07-27,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0028,2025-07-28,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0029,2025-07-29,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0030,2025-07-30,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0031,2025-07-31,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0032,2025-08-01,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0033,2025-08-02,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0034,2025-08-03,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0035,2025-08-04,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0036,2025-08-05,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0037,2025-08-06,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0038,2025-08-07,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0039,2025-08-08,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0040,2025-08-09,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0041,2025-08-10,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0042,2025-08-11,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0043,2025-08-12,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0044,2025-08-13,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0045,2025-08-14,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0046,2025-08-15,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0047,2025-08-16,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0048,2025-08-17,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0049,2025-08-18,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0050,2025-08-19,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0051,2025-08-20,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0052,2025-08-21,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0053,2025-08-22,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0054,2025-08-23,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0055,2025-08-24,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0056,2025-08-25,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0057,2025-08-26,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0058,2025-08-27,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0059,2025-08-28,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0060,2025-08-29,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0061,2025-08-30,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0062,2025-08-31,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0063,2025-09-01,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0064,2025-09-02,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0065,2025-09-03,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0066,2025-09-04,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0067,2025-09-05,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0068,2025-09-06,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0069,2025-09-07,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0070,2025-09-08,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0071,2025-09-09,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0072,2025-09-10,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0073,2025-09-11,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0074,2025-09-12,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0075,2025-09-13,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0076,2025-09-14,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0077,2025-09-15,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0078,2025-09-16,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0079,2025-09-17,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0080,2025-09-18,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0081,2025-09-19,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0082,2025-09-20,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0083,2025-09-21,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0084,2025-09-22,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0085,2025-09-23,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0086,2025-09-24,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0087,2025-09-25,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0088,2025-09-26,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0089,2025-09-27,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0090,2025-09-28,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0091,2025-09-29,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0092,2025-09-30,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0093,2025-10-01,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0094,2025-10-02,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0095,2025-10-03,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0096,2025-10-04,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0097,2025-10-05,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0098,2025-10-06,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0099,2025-10-07,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0100,2025-10-08,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0101,2025-10-09,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0102,2025-10-10,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0103,2025-10-11,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0104,2025-10-12,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0105,2025-10-13,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0106,2025-10-14,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0107,2025-10-15,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0108,2025-10-16,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0109,2025-10-17,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0110,2025-10-18,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0111,2025-10-19,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0112,2025-10-20,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0113,2025-10-21,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0114,2025-10-22,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0115,2025-10-23,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0116,2025-10-24,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0117,2025-10-25,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0118,2025-10-26,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0119,2025-10-27,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0120,2025-10-28,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0121,2025-10-29,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0122,2025-10-30,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0123,2025-10-31,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0124,2025-07-01,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0125,2025-07-02,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0126,2025-07-03,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0127,2025-07-04,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0128,2025-07-05,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0129,2025-07-06,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0130,2025-07-07,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0131,2025-07-08,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0132,2025-07-09,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0133,2025-07-10,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0134,2025-07-11,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0135,2025-07-12,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0136,2025-07-13,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0137,2025-07-14,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0138,2025-07-15,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0139,2025-07-16,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0140,2025-07-17,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0141,2025-07-18,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0142,2025-07-19,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0143,2025-07-20,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0144,2025-07-21,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0145,2025-07-22,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0146,2025-07-23,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0147,2025-07-24,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0148,2025-07-25,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0149,2025-07-26,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0150,2025-07-27,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0151,2025-07-28,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0152,2025-07-29,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0153,2025-07-30,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0154,2025-07-31,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0155,2025-08-01,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0156,2025-08-02,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0157,2025-08-03,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0158,2025-08-04,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0159,2025-08-05,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0160,2025-08-06,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0161,2025-08-07,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0162,2025-08-08,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0163,2025-08-09,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0164,2025-08-10,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0165,2025-08-11,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0166,2025-08-12,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0167,2025-08-13,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0168,2025-08-14,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0169,2025-08-15,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0170,2025-08-16,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0171,2025-08-17,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0172,2025-08-18,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0173,2025-08-19,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0174,2025-08-20,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0175,2025-08-21,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0176,2025-08-22,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48
-SHP0177,2025-08-23,"Houston, TX","Austin, TX",553,230.94,Mike Lee,GHI Transport,24109,Delivered,13.3,1027.41
-SHP0178,2025-08-24,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,Delivered,11.3,865.43
-SHP0179,2025-08-25,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0180,2025-08-26,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0181,2025-08-27,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0182,2025-08-28,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0183,2025-08-29,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0184,2025-08-30,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0185,2025-08-31,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0186,2025-07-07,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0187,2025-07-08,"Tulsa, OK","Dallas, TX",750,293.98,Mike Lee,GHI Transport,15372,Delivered,14.8,1479.96
-SHP0188,2025-07-08,"Austin, TX","San Antonio, TX",265,97.88,Sara Kim,ABC Carriers,15616,In-Transit,4.9,545.48
-SHP0189,2025-07-09,"Austin, TX","San Antonio, TX",553,230.94,Mike Lee,GHI Transport,24109,In-Transit,13.3,1027.41
-SHP0190,2025-07-10,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,In-Transit,11.3,865.43
-SHP0191,2025-07-11,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
-SHP0192,2025-07-12,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0193,2025-07-13,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
-SHP0194,2025-07-14,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
-SHP0195,2025-07-15,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
-SHP0196,2025-07-16,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI Transport,18383,In-Transit,9.4,969.52
-SHP0197,2025-07-17,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
-SHP0198,2025-07-18,"Dallas, TX","San Antonio, TX",446,197.6,John Doe,ABC Carriers,19566,Delivered,10.2,907.59
-SHP0199,2025-07-19,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
-SHP0200,2025-07-20,"Austin, TX","Houston, TX",265,97.88,Sara Kim,ABC Carriers,15616,Delivered,4.9,545.48`;
+    const trendCtx = document.getElementById('trendChart').getContext('2d');
+    const trendChart = new Chart(trendCtx, {
+        type: 'line',
+        data: {
+            labels: {{ report.visuals.delay_trend.labels|safe }},
+            datasets: [{
+                label: 'Delays',
+                data: {{ report.visuals.delay_trend.data|safe }},
+                borderColor: 'rgba(255, 99, 132, 1)',
+                fill: false,
+            }, {
+                label: 'On-Time',
+                data: {{ report.visuals.ontime_trend.data|safe }},
+                borderColor: 'rgba(54, 162, 235, 1)',
+                fill: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'top' } },
+            scales: {
+                y: { beginAtZero: true },
+                x: { display: true }
+            }
+        }
+    });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set report date
-            document.getElementById('report-date').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-
-            // --- Data Processing ---
-            const rows = csvData.trim().split('\n');
-            const headers = rows.shift().split(',');
-            const data = rows.map(row => {
-                // Basic CSV parsing, handles quoted strings
-                const values = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g).map(v => v.replace(/"/g, ''));
-                let obj = {};
-                headers.forEach((header, i) => {
-                    const key = header.trim();
-                    const value = values[i].trim();
-                    obj[key] = isNaN(value) || value === '' ? value : parseFloat(value);
-                });
-                return obj;
-            });
-
-            const carriers = [...new Set(data.map(d => d.CarrierName))];
-            const carrierStats = carriers.map(name => {
-                const shipments = data.filter(d => d.CarrierName === name);
-                const totalShipments = shipments.length;
-                const delayedShipments = shipments.filter(d => d.DeliveryStatus === 'Delayed').length;
-                const totalDistance = shipments.reduce((sum, s) => sum + s.Distance_Miles, 0);
-                const totalCost = shipments.reduce((sum, s) => sum + s.FreightCost_USD, 0);
-
-                return {
-                    name: name,
-                    totalShipments: totalShipments,
-                    delayRate: (delayedShipments / totalShipments) * 100,
-                    onTimeRate: 100 - ((delayedShipments / totalShipments) * 100),
-                    costPerMile: totalCost / totalDistance,
-                    avgCostPerShipment: totalCost / totalShipments,
-                };
-            });
-
-            // --- Carrier Matrix Chart ---
-            const ctxMatrix = document.getElementById('carrierMatrixChart').getContext('2d');
-
-            new Chart(ctxMatrix, {
-                type: 'scatter',
-                data: {
-                    datasets: carrierStats.map(c => ({
-                        label: c.name,
-                        data: [{ x: c.costPerMile, y: c.onTimeRate }],
-                        backgroundColor: c.name === 'GHI Transport' ? 'rgba(22, 163, 74, 0.8)' : c.name === 'ABC Carriers' ? 'rgba(220, 38, 38, 0.8)' : 'rgba(59, 130, 246, 0.7)',
-                        pointRadius: 15,
-                        pointHoverRadius: 20,
-                    }))
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom' },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const d = context.dataset.label;
-                                    const cost = context.parsed.x.toFixed(2);
-                                    const onTime = context.parsed.y.toFixed(1);
-                                    return `${d}: $${cost}/mile, ${onTime}% On-Time`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            title: { display: true, text: 'Cost per Mile ($)' },
-                            // *** FIX: Removed hardcoded min/max to allow auto-scaling ***
-                        },
-                        y: {
-                            title: { display: true, text: 'On-Time Delivery Rate (%)' },
-                             // *** FIX: Removed hardcoded min/max to allow auto-scaling ***
-                        }
-                    }
-                }
-            });
-
-            // --- Scenario Modeling Calculations ---
-            const totalOriginalCost = data.reduce((sum, d) => sum + d.FreightCost_USD, 0);
-            const totalOriginalDelays = data.filter(d => d.DeliveryStatus === 'Delayed').length;
-
-            const abcStats = carrierStats.find(c => c.name === 'ABC Carriers');
-            const ghiStats = carrierStats.find(c => c.name === 'GHI Transport');
-
-            const shipmentsToMove = Math.round(abcStats.totalShipments * 0.5);
-            const costOfMovedAbcShipments = shipmentsToMove * abcStats.avgCostPerShipment;
-            const costOfNewGhiShipments = shipmentsToMove * ghiStats.avgCostPerShipment;
-
-            const costChange = costOfNewGhiShipments - costOfMovedAbcShipments;
-            const newTotalCost = totalOriginalCost + costChange;
-
-            const abcDelays = Math.round(abcStats.totalShipments * (abcStats.delayRate / 100));
-            const ghiDelays = Math.round(ghiStats.totalShipments * (ghiStats.delayRate / 100));
-
-            const abcDelaysToMove = Math.round(abcDelays * 0.5);
-            const newGhiDelaysFromMoved = Math.round(shipmentsToMove * (ghiStats.delayRate / 100));
-
-            const newTotalDelays = totalOriginalDelays - abcDelaysToMove + newGhiDelaysFromMoved;
-            const newDelayRate = (newTotalDelays / data.length) * 100;
-
-            const quarterlySavings = (totalOriginalCost - newTotalCost) * 3; // Assuming data is for one month
-
-            document.getElementById('new-delay-rate').textContent = `${newDelayRate.toFixed(1)}%`;
-            document.getElementById('new-total-cost').textContent = `$${(newTotalCost / 1000).toFixed(1)}k`;
-            document.getElementById('quarterly-savings').textContent = `~$${(quarterlySavings / 1000).toFixed(1)}k`;
-
-            // --- Fuel Cost Calculation ---
-            const totalFuelCost = data.reduce((sum, d) => sum + d.FuelCost_USD, 0);
-            const fuelCostIncrease = totalFuelCost * 0.10;
-            document.getElementById('fuel-cost-increase').textContent = `+$${fuelCostIncrease.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-
-            // --- PDF Download ---
-            const downloadBtn = document.getElementById('download-btn');
-            downloadBtn.addEventListener('click', function() {
-                const reportContent = document.getElementById('report-content');
-                const opt = {
-                    margin: 0.5,
-                    filename: 'Strategic_Freight_Action_Plan.pdf',
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, useCORS: true },
-                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-                };
-                downloadBtn.style.display = 'none';
-                html2pdf().from(reportContent).set(opt).save().then(() => {
-                    downloadBtn.style.display = 'block';
-                });
-            });
-        });
+    const matrixCtx = document.getElementById('carrierMatrix').getContext('2d');
+    const carrierMatrix = new Chart(matrixCtx, {
+        type: 'scatter',
+        data: {
+            datasets: {{ report.visuals.carrier_matrix|safe }}
+        },
+        options: {
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: { title: { display: true, text: 'Cost per Mile' } },
+                y: { title: { display: true, text: 'On-Time Delivery %' } }
+            }
+        }
+    });
     </script>
+
 </body>
 </html>
+

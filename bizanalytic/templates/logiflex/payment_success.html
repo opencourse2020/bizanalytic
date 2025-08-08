@@ -108,7 +108,7 @@
                                             </td>
                                             <td>
                                                 {% if logireport.report %}
-                                                <a href="{{ logireport.report.url }}">
+                                                <a href="{% url 'logiflex:reports:view' logireport.pk %}">
                                                     {{ logireport.reportilename }}</a>
                                                 {% endif %}
 

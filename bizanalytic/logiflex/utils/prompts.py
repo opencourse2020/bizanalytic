@@ -1,3 +1,7 @@
+client = ""
+data = ""
+summary = ""
+
 gemini_report_elite = """"
 client: {0}
 Persona & Context: "Act as my strategic thinking partner, a world-class operations consultant. We are conducting a performance review for our client logistics operations with the goal of presenting a concrete action plan to the executive team. Our client's strategic priority is improving operational margin, but he cannot sacrifice his reputation for reliability."

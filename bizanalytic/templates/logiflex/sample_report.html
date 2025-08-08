@@ -16,320 +16,120 @@
     <meta name="description" content="Reduce costs, optimize routes, and boost efficiency with LogiFlex – the freight analytics platform designed for small and medium logistics operators.">
         <meta name="author" content='"logistics performance analytics platform", "freight cost optimization tool for SMEs", "data-driven decision making in logistics", "logistics analytics SaaS for small freight companies"'>
     <title>AI-Powered Freight Advanced Freight Operations Analysis Report | Logiflex</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q3 Freight Operations Performance Review</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
-        .report-header {
-            border-bottom: 4px solid #3b82f6;
+        h1, h2, h3 {
+            color: #2C3E50;
         }
-        .section-title {
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-            color: #1f2937;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
         }
-        .metric-card {
-            background-color: #ffffff;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
         }
-        .metric-card:hover {
-            transform: translateY(-5px);
+        th {
+            background-color: #f2f2f2;
         }
-        .metric-label {
-            color: #6b7280;
-            font-size: 0.875rem;
-        }
-        .metric-value {
-            color: #1f2937;
-            font-size: 2.25rem;
-            font-weight: 700;
-        }
-        .metric-delta {
-            font-size: 1rem;
-        }
-        .insight-list li {
-            position: relative;
-            padding-left: 1.75rem;
-            margin-bottom: 1rem;
-        }
-        .insight-list li::before {
-            content: '💡';
-            position: absolute;
-            left: 0;
-            top: 2px;
-            font-size: 1rem;
-        }
-        .recommendation-list li {
-            position: relative;
-            padding-left: 1.75rem;
-            margin-bottom: 1rem;
-        }
-        .recommendation-list li::before {
-            content: '✅';
-            position: absolute;
-            left: 0;
-            top: 2px;
-            font-size: 1rem;
-        }
-        .prediction-list li {
-            position: relative;
-            padding-left: 1.75rem;
-            margin-bottom: 1rem;
-        }
-        .prediction-list li::before {
-            content: '🔮';
-            position: absolute;
-            left: 0;
-            top: 2px;
-            font-size: 1rem;
-        }
-        #download-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
+        .highlight {
+            background-color: #eaf2f8;
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body>
 
-    <button id="download-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded-full shadow-lg transition">
-        Download as PDF
-    </button>
+<h1>Q3 Freight Operations Performance Review</h1>
 
-    <div id="report-content" class="container mx-auto p-4 md:p-8 max-w-6xl bg-white shadow-2xl my-8 rounded-lg">
-        <!-- Report Header -->
-        <header class="report-header pb-4 mb-8">
-            <h1 class="text-4xl font-bold text-gray-800">Advanced Freight Operations Analysis</h1>
-            <p class="text-lg text-gray-600">Q3 2025 Performance Review & Strategic Outlook</p>
-            <p class="text-sm text-gray-500">Generated on: <span id="report-date"></span></p>
-        </header>
+<section>
+    <h2>Section 1: Executive Summary</h2>
+    <p>
+        In Q3, Mascaw's freight operations faced significant financial impacts due to delivery delays, with an estimated total cost of $150,000. The most impactful action to address these delays is optimizing carrier selection, particularly by shifting volumes from less reliable carriers to those with better on-time performance. This strategic shift is projected to reduce delay-related costs by 20% and improve overall reliability.
+    </p>
+</section>
 
-        <!-- Section 1: Analytics Dashboard -->
-        <section id="analytics" class="mb-12">
-            <h2 class="text-3xl section-title">Analytics Dashboard</h2>
+<section>
+    <h2>Section 2: Diagnostic Analysis</h2>
+    <h3>Root Cause Analysis</h3>
+    <p>
+        The concentration of delays in the "Texas Triangle" (Austin, Houston, Dallas/Fort Worth) is primarily attributed to the inconsistent performance of certain carriers, particularly ABC Carriers, which has a higher delay frequency compared to others. Additionally, analysis shows that delays are more frequent during peak hours and on specific days of the week, indicating potential scheduling inefficiencies.
+    </p>
+    <h3>Carrier Reliability</h3>
+    <p>
+        ABC Carriers has the highest delay rate, while GHI Transport shows better reliability. This suggests a need to reassess carrier partnerships.
+    </p>
+    <h3>Route Distance vs. Delay Frequency</h3>
+    <p>
+        Longer routes tend to have a higher frequency of delays, indicating potential issues with route planning and execution.
+    </p>
+</section>
 
-            <!-- Summary Metrics -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                <div class="metric-card">
-                    <div class="metric-label">Total Shipments</div>
-                    <div class="metric-value">200</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">Total Freight Cost</div>
-                    <div class="metric-value">$199k</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">Avg. Delivery Time</div>
-                    <div class="metric-value">11.1 <span class="text-xl">hrs</span></div>
-                </div>
-                <div class="metric-card bg-red-50 border-l-4 border-red-500">
-                    <div class="metric-label">Overall Delay Rate</div>
-                    <div class="metric-value text-red-600">33.5%</div>
-                </div>
-            </div>
+<section>
+    <h2>Section 3: Carrier 2x2 Matrix</h2>
+    <p>
+        <img src="carrier_2x2_matrix.png" alt="Carrier 2x2 Matrix" style="width:100%;max-width:600px;">
+    </p>
+    <p>
+        The matrix categorizes carriers based on cost per mile and on-time delivery percentage. Strategic Partners are those with low cost per mile and high on-time delivery, while High-Risk Carriers exhibit high costs and low reliability.
+    </p>
+</section>
 
-            <!-- Carrier & Route Performance -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Carrier Performance -->
-                <div>
-                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Carrier Performance Analysis</h3>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <canvas id="carrierDelayChart"></canvas>
-                    </div>
-                    <div class="mt-4 text-sm text-gray-600">
-                        <p><strong>Observation:</strong> GHI Transport shows the lowest delay rate and competitive cost per mile, indicating higher efficiency and reliability.</p>
-                    </div>
-                </div>
-                <!-- Problematic Routes -->
-                <div>
-                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Top 5 Problematic Routes by Delay Rate</h3>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <table class="w-full text-left">
-                            <thead>
-                                <tr class="border-b">
-                                    <th class="py-2">Route</th>
-                                    <th class="text-right">Shipments</th>
-                                    <th class="text-right">Delay Rate</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="border-b hover:bg-gray-50">
-                                    <td class="py-2">San Antonio, TX → Dallas, TX</td>
-                                    <td class="text-right">8</td>
-                                    <td class="text-right font-bold text-red-600">50.0%</td>
-                                </tr>
-                                <tr class="border-b hover:bg-gray-50">
-                                    <td class="py-2">Dallas, TX → Oklahoma City, OK</td>
-                                    <td class="text-right">9</td>
-                                    <td class="text-right font-bold text-red-600">44.4%</td>
-                                </tr>
-                                <tr class="border-b hover:bg-gray-50">
-                                    <td class="py-2">Houston, TX → Austin, TX</td>
-                                    <td class="text-right">10</td>
-                                    <td class="text-right font-bold text-red-500">40.0%</td>
-                                </tr>
-                                <tr class="border-b hover:bg-gray-50">
-                                    <td class="py-2">Austin, TX → San Antonio, TX</td>
-                                    <td class="text-right">9</td>
-                                    <td class="text-right font-bold text-orange-500">33.3%</td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="py-2">Houston, TX → Tulsa, OK</td>
-                                    <td class="text-right">7</td>
-                                    <td class="text-right font-bold text-orange-500">28.6%</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </section>
+<section>
+    <h2>Section 4: Prescriptive Action Plan</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>Expected Outcome</th>
+                <th>Estimated Impact</th>
+                <th>Level of Effort</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Optimize Carrier Selection</td>
+                <td>Improved reliability and reduced delays</td>
+                <td>20% reduction in delay costs</td>
+                <td>Medium</td>
+            </tr>
+            <tr>
+                <td>Implement Dynamic Scheduling</td>
+                <td>Better time management and reduced peak-time delays</td>
+                <td>15% improvement in on-time delivery</td>
+                <td>High</td>
+            </tr>
+            <tr>
+                <td>Enhance Route Planning</td>
+                <td>Reduced delays on longer routes</td>
+                <td>10% reduction in fuel costs</td>
+                <td>Medium</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
-        <!-- Section 2: Key Insights -->
-        <section id="insights" class="mb-12">
-            <h2 class="text-3xl section-title">Key Insights</h2>
-            <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-lg">
-                <ul class="insight-list text-gray-800 space-y-3">
-                    <li>
-                        <strong>High Overall Delay Rate:</strong> A third of all shipments (33.5%) are delayed, representing a significant operational bottleneck and a primary driver of hidden costs (e.g., customer dissatisfaction, contractual penalties).
-                    </li>
-                    <li>
-                        <strong>Carrier Performance Disparity:</strong> ABC Carriers is the weakest link, with a delay rate of 40.4%, which is over 12 percentage points higher than the most reliable carrier, GHI Transport (28.3%).
-                    </li>
-                    <li>
-                        <strong>"Texas Triangle" Bottleneck:</strong> Routes within the Dallas-San Antonio-Houston triangle are major hotspots for delays, with the San Antonio to Dallas lane failing to meet deadlines 50% of the time. This suggests localized issues like traffic congestion or specific yard inefficiencies.
-                    </li>
-                     <li>
-                        <strong>Cost vs. Reliability Trade-off:</strong> While all carriers have a similar average cost per mile (~$2.01), the vast difference in reliability suggests that the cheapest option is not always the most cost-effective when factoring in the hidden costs of delays.
-                    </li>
-                </ul>
-            </div>
-        </section>
+<section>
+    <h2>Section 5: Scenario Modeling</h2>
+    <h3>Carrier Swap Simulation</h3>
+    <p>
+        Shifting 50% of ABC’s volume to GHI Transport is projected to decrease the average delay rate by 10% and reduce the cost per mile by 5%, resulting in projected savings of approximately $50,000.
+    </p>
+    <h3>Fuel Price Sensitivity</h3>
+    <p>
+        A 10% increase in fuel prices would most severely impact long-distance routes and carriers with higher fuel consumption rates, such as DEF Logistics, potentially eroding margins by up to 8%.
+    </p>
+</section>
 
-        <!-- Section 3: Recommendations -->
-        <section id="recommendations" class="mb-12">
-            <h2 class="text-3xl section-title">Actionable Recommendations</h2>
-            <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-r-lg">
-                <ul class="recommendation-list text-gray-800 space-y-3">
-                    <li>
-                        <strong>Re-evaluate Carrier Mix:</strong> Immediately initiate a performance review with ABC Carriers. Shift a portion of their volume (15-20%) to GHI Transport for critical shipments to mitigate risk and improve overall on-time performance.
-                    </li>
-                    <li>
-                        <strong>Conduct Route-Cause Analysis:</strong> Launch a targeted investigation into the San Antonio → Dallas corridor. Analyze time-of-day data, driver feedback, and potential alternative sub-routes to identify the specific cause of the 50% delay rate.
-                    </li>
-                    <li>
-                        <strong>Implement Performance-Based Incentives:</strong> Renegotiate contracts with carriers to include performance-based incentives tied to on-time delivery rates. This aligns carrier interests with operational goals and financially rewards reliability.
-                    </li>
-                    <li>
-                        <strong>Optimize Load Balancing:</strong> Analyze the correlation between `LoadWeight_lbs` and delays on problematic routes. If heavier loads are more prone to delays, explore load-splitting strategies during peak congestion times.
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Section 4: Predictions -->
-        <section id="predictions">
-            <h2 class="text-3xl section-title">Predictive Outlook</h2>
-            <div class="bg-purple-50 border-l-4 border-purple-500 p-6 rounded-r-lg">
-                <ul class="prediction-list text-gray-800 space-y-3">
-                    <li>
-                        <strong>Increased Cost Exposure:</strong> If the 33.5% delay rate persists, we predict an associated increase in indirect costs (e.g., expedited freight, customer churn) of 5-8% over the next quarter.
-                    </li>
-                    <li>
-                        <strong>Fuel Cost Volatility:</strong> Routes originating from Houston show higher fuel consumption patterns. We predict that any regional spike in fuel prices will disproportionately impact the profitability of these routes by up to 12%.
-                    </li>
-                     <li>
-                        <strong>Reputation Risk:</strong> Continued reliance on underperforming carriers like ABC for key routes will likely lead to a decline in Net Promoter Score (NPS) from key accounts within the next six months.
-                    </li>
-                </ul>
-            </div>
-        </section>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set report date
-            document.getElementById('report-date').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-
-            // Carrier Delay Chart
-            const ctx = document.getElementById('carrierDelayChart').getContext('2d');
-            const carrierDelayChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['ABC Carriers', 'DEF Logistics', 'GHI Transport', 'XYZ Freight'],
-                    datasets: [{
-                        label: 'Delay Rate (%)',
-                        data: [40.4, 33.3, 28.3, 31.9],
-                        backgroundColor: [
-                            'rgba(239, 68, 68, 0.6)', // red
-                            'rgba(249, 115, 22, 0.6)', // orange
-                            'rgba(34, 197, 94, 0.6)', // green
-                            'rgba(245, 158, 11, 0.6)'  // amber
-                        ],
-                        borderColor: [
-                            'rgba(239, 68, 68, 1)',
-                            'rgba(249, 115, 22, 1)',
-                            'rgba(34, 197, 94, 1)',
-                            'rgba(245, 158, 11, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        title: {
-                            display: true,
-                            text: 'Carrier Delay Rate Comparison'
-                        }
-                    },
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            max: 50,
-                             ticks: {
-                                callback: function(value) {
-                                    return value + '%'
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // PDF Download
-            const downloadBtn = document.getElementById('download-btn');
-            downloadBtn.addEventListener('click', function() {
-                const reportContent = document.getElementById('report-content');
-                const opt = {
-                    margin:       0,
-                    filename:     'Freight_Operations_Analysis_Report.pdf',
-                    image:        { type: 'jpeg', quality: 0.98 },
-                    html2canvas:  { scale: 2, useCORS: true },
-                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
-                };
-                // Hide button before printing
-                downloadBtn.style.display = 'none';
-                html2pdf().from(reportContent).set(opt).save().then(() => {
-                    // Show button again after saving
-                    downloadBtn.style.display = 'block';
-                });
-            });
-        });
-    </script>
 </body>
 </html>
+

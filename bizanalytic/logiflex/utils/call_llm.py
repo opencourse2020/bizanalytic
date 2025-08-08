@@ -9,6 +9,7 @@ import google.generativeai as genai
 from .prompts import gemini_report_elite1, gemini_report_professional1, chatgpt_prompt1
 from django.contrib.staticfiles.storage import staticfiles_storage
 import pandas as pd
+from openai import OpenAI
 from .decorators import print_progress, log_exceptions, sleep_and_retry, limits, token_bucket
 
 # DATABASE_URL = 'sqlite:///id_cards.db'
@@ -19,7 +20,10 @@ GOOGLE_API_KEY = settings.GEMINIAPI_KEY
 genai.configure(api_key=GOOGLE_API_KEY)
 
 media_folder = settings.MEDIA_ROOT
-
+client = OpenAI(
+    # This is the default and can be omitted
+    api_key=settings.OPENAI_KEY,
+)
 
 class GenerativeAI:
     def __init__(self, model_name):
@@ -115,58 +119,96 @@ def generate_analysis(report):
 
     data = df.to_dict(orient='records')
     summary = df.describe(include='all').to_string()
-    client = report.client.company
+    customer = report.client.company
     prompt = f"""
-Persona & Context: Act as my strategic thinking partner, a world-class operations consultant. 
-We are conducting a performance review for our client's logistics operations with the goal of presenting a concrete action plan to the executive team. 
-Our company's strategic priority for this half is improving operational margin, but we cannot sacrifice our reputation for reliability.
+Persona & Context:
+Act as my strategic thinking partner, a world-class operations consultant with strong business intelligence and data storytelling capabilities. We are conducting a Q3 performance review for our logistics operations with the goal of presenting a comprehensive report to executives and operations managers.
 
-Core Problem Statement: Our client freight operations are experiencing significant hidden costs due to persistent delivery delays, which we believe are eroding our profit margins and customer trust. 
-We need to quantify this impact and build a data-backed plan to address it.
+Strategic Priority:
+Our company's strategic priority this quarter is improving operational margin while maintaining our reputation for reliability. The report must balance strategic insight with operational detail.
+
+Core Problem Statement:
+Our freight operations are experiencing significant hidden costs due to persistent delivery delays. We believe these delays are eroding both profit margins and customer trust. We need to quantify this impact and develop a BI-rich, data-backed action plan.
 
 --- Client ---
-{client}
+{customer}
+
+Deliverables (Output Format: JSON-structured response):
+
+1. **Executive Summary**
+   - Total estimated quarterly cost of delivery delays.
+   - One key recommendation with the highest ROI.
+   - Summary chart showing delay trends over time.
+
+2. **Analytics Section**
+   - Summary Metrics: Total shipments, on-time %, average cost per mile, average delay per route, delay causes.
+   - Visuals:
+     - Delay heatmap (by route or region).
+     - Weekly trend chart: delays vs. on-time deliveries.
+     - Histogram of delay durations.
+     - 2x2 Matrix: Carriers plotted by Cost per Mile (X-axis) vs. On-Time Delivery % (Y-axis).
+
+3. **Diagnostic Insights**
+   - Root-cause analysis of the "Texas Triangle" bottleneck.
+     - Segment by carrier, time-of-day, day-of-week.
+     - Highlight top 3 operational risks.
+   - Highlight underperforming carriers and routes with thresholds.
+
+4. **Prescriptive Recommendations**
+   - Prioritized action plan. For each:
+     - Action name
+     - Description
+     - Expected Outcome (e.g., "Reduce SA->DAL delay rate by 25%")
+     - Estimated Impact ($/quarter)
+     - Level of Effort (Low/Medium/High)
+   - Suggested KPI to track each action.
+
+5. **Predictive Modeling**
+   - Model the impact of shifting 50% of ABC Carriers’ volume to GHI Transport:
+     - New delay rate
+     - Cost differential
+   - Risk scenario if fuel prices increase by 10%:
+     - Which routes or carriers are most sensitive
+     - Mitigation strategies
+
+6. **Recommendations Dashboard Schema**
+   - Output a JSON-ready structure to feed a BI dashboard or Django frontend.
+   - Include labels, chart types, data points, and metric definitions.
+
+---
+
+Input:
+You will receive a CSV file with shipment-level data including: Origin, Destination, Carrier, Cost per Mile, On-Time status, Delay Duration (minutes), Date, and Fuel Cost Index at time of shipment.
 --- DATA ---
 {data}
 
+Assume clean data and summarize patterns at both shipment and route levels.
 --- SUMMARY STATISTICS ---
 {summary}
 
-Key Tasks & Hypotheses to Test:
-
-1. Executive Summary: Write a concise, hard-hitting summary for the CEO that highlights the total estimated quarterly cost of delays and the single most impactful recommendation.
-
-2. Diagnostic Analysis:
-   - Instead of just listing problematic routes, perform a root-cause analysis on the 'Texas Triangle' bottleneck. 
-     Is the issue carrier-specific, related to time-of-day, or something else?
-   - Create a 2x2 matrix plotting all carriers based on Cost per Mile (X-axis) vs. On-Time Delivery % (Y-axis) 
-     to visually identify our 'Strategic Partners' (low cost, high reliability) and 'High-Risk Partners' (high cost, low reliability).
-
-3. Prescriptive Action Plan:
-   For each recommendation, specify:
-   - Expected Outcome
-   - Estimated Impact
-   - Level of Effort
-
-4. Scenario Modeling & Future Outlook:
-   - Model the impact of shifting 50% of ABC Carriers' volume to GHI Transport.
-   - Estimate our risk exposure if fuel prices increase by 10% next quarter.
+Output format: JSON. Keep visuals as chart spec suggestions (e.g., matplotlib, seaborn, or Vega-Lite).
 """
+
 
     # prompt = gemini_report_professional1.format(report.client.company)
     print("prompt:", prompt)
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.3,
+
+    )
     # logo = staticfiles_storage.path("assets/logo/logo1-1.png")
 
     # generative_ai = GenerativeAI("gemini-1.5-flash")
     # generative_ai = GenerativeAI("gemini-2.5-flash")
-    results = {}
+    results = response.choices[0].message.content
     # for file_path in media_path.glob("*.*"):
     #     print("file path:", file_path)
         # result = call_llm_ai(file_path, generative_ai, prompt)
         # results = {**results, **result}
         # deletefile(file_path)
     return results
-
 
 
 def deletefile(file_path):

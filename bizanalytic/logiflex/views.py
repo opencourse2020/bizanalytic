@@ -618,12 +618,13 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             # Update report info
             report, report_created = models.LogiflexReport.objects.update_or_create(pk=reportid,
                                                                                     defaults={'routefile': route_file})
-            generate_analysis(report)
+            report_txt = generate_analysis(report)
             # Create a report file and update report record
             report_file = "done"
             if report_file:
                 report, report_created = models.LogiflexReport.objects.update_or_create(pk=reportid,
                                                                                         defaults={'report': report_file,
+                                                                                                  'report_text': report_txt,
                                                                                                   'report_created': True})
             # Update payment reports
             servicepayment.mark_report_used()

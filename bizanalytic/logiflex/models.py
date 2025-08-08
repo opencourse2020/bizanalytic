@@ -165,7 +165,7 @@ class LogiflexReport(models.Model):
                                                               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', ],
                                                max_upload_size=20971520, blank=True, null=True)
     report = models.FileField(upload_to=reportfiles_directory_path, null=True, blank=True)
-    report_text = models.TextField(null=True, blank=True)
+    report_text = models.JSONField(blank=True, null=True, default=dict)
     report_type = models.CharField(max_length=5, choices=reporttype, null=True, blank=True)
     download_code = models.CharField(max_length=8, null=True, blank=True)
     # report_created = models.BooleanField(default=False)

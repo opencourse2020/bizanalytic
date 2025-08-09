@@ -760,7 +760,7 @@ def clean_csv(request):
     # Proceed with OpenRefine cleaning
     if request.method == 'POST' and request.FILES["route_file"]:
         csv_file = request.FILES['route_file']
-        df = pd.read_csv(request.FILES['csv_file'])
+        df = pd.read_csv(request.FILES['route_file'])
         print(df.head(5))
         response = requests.post(
             'http://localhost:3333/command/core/create-project-from-upload',

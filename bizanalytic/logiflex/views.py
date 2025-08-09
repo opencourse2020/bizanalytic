@@ -764,7 +764,7 @@ def clean_csv(request):
         print(df.head(5))
         response = requests.post(
             'http://localhost:3333/command/core/create-project-from-upload',
-            files={'file': ('routes.csv', csv_file.read(), 'text/csv')},
+            files={'file': ('freight_routes_sample.csv', csv_file.read(), 'text/csv')},
             headers={"X-API-Key": settings.OPENREFINE_API_KEY, 'Content-Type': 'multipart/form-data'}  # Forward key if needed
         )
 

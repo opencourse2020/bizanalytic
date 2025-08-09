@@ -133,5 +133,9 @@
 {% endblock footer_area %}
 
 {% block js_area %}
+    <script>
+      const API_KEY = "{{ OPENREFINE_API_KEY }}";  // Rendered server-side
+    </script>
     {{ block.super }}
+
 {% endblock js_area %}

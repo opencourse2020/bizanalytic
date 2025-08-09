@@ -149,7 +149,8 @@ $("#generate_full_rp").click(function (){
                     data: formData,
                     processData: false,
                     contentType: false,
-                    headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()},
+                    headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
+                              'X-API-Key': API_KEY },
                     success: function (data) {
                         if (data) {
                             var result = data;

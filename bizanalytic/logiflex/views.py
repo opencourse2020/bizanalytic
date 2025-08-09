@@ -593,6 +593,7 @@ class FullReportView(LoginRequiredMixin, TemplateView):
             kwargs["company"] = report.client.company
             kwargs["email"] = report.client.email
             kwargs["reportid"] = report.id
+            kwargs["OPENREFINE_API_KEY"] = OPENREFINE_API_KEY
         return super(FullReportView, self).get_context_data(**kwargs)
 
 

@@ -20,6 +20,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, get_object_or_404
 import json
 import requests
+import pandas as pd
 # Third party libraries
 import stripe
 
@@ -759,10 +760,12 @@ def clean_csv(request):
     # Proceed with OpenRefine cleaning
     if request.method == 'POST' and request.FILES["route_file"]:
         csv_file = request.FILES['route_file']
+        df = pd.read_csv(request.FILES['csv_file'])
+        print(df.head(5))
         response = requests.post(
             'http://localhost:3333/command/core/create-project-from-upload',
-            files={'file': csv_file},
-            headers={"X-API-Key": settings.OPENREFINE_API_KEY}  # Forward key if needed
+            files={'file': ('routes.csv', csv_file.read(), 'text/csv')},
+            headers={"X-API-Key": settings.OPENREFINE_API_KEY, 'Content-Type': 'multipart/form-data'}  # Forward key if needed
         )
 
         project_id = response.json().get('projectId')

@@ -754,7 +754,7 @@ def clean_csv(request):
     if provided_key != settings.OPENREFINE_API_KEY:
 
         return JsonResponse({"error": "Invalid API key"}, status=401)
-
+    print("CSV Cleaning starts")
     # Proceed with OpenRefine cleaning
     if request.method == 'POST' and request.FILES["route_file"]:
         csv_file = request.FILES['route_file']
@@ -765,14 +765,14 @@ def clean_csv(request):
         )
 
         project_id = response.json().get('projectId')
-
+        print("project_id: ", project_id)
         # Step 2: Apply Cleaning Rules (Example: Cluster city names)
         operations = {
             "op": "core/mass-edit",
             "columnName": "DestinationCity",  # Replace with your column
             "expression": "value.toLowercase()"
         }
-
+        print("operations:", operations)
         requests.post(
             f'http://localhost:3333/command/core/apply-operations',
             json={"projectId": project_id, "operations": [operations]},
@@ -783,6 +783,7 @@ def clean_csv(request):
             f'http://localhost:3333/command/core/export-rows',
             params={"projectId": project_id, "format": "csv"}
         ).text
+        print("cleaned_csv:", cleaned_csv)
         data = {"submessage": cleaned_csv}
         return JsonResponse(data)
     return JsonResponse({"error": "Invalid request"}, status=400)

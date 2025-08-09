@@ -131,8 +131,10 @@ $("#generate_full_rp").click(function (){
              agree_create = "1";
          }
         if(agree_create == "1") {
+
             // let url = "https://bizanalytic.com/logiflex/reports/full-report-create/";
-            let url = "https://bizanalytic.com/logiflex/clean-csv/"
+            let url = "https://bizanalytic.com/logiflex/clean-csv/";
+            console.log("url");
             const formData = new FormData();
 
             if (fileName_b && email_nm && cp_nm && client_nm) {

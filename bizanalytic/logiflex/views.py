@@ -762,31 +762,7 @@ def clean_csv(request):
         csv_file = request.FILES['route_file']
         df = pd.read_csv(request.FILES['route_file'])
         print(df.head(5))
-        response = requests.post(
-            'http://localhost:3333/command/core/create-project-from-upload',
-            files={'file': ('freight_routes_sample.csv', csv_file.read(), 'text/csv')},
-            headers={"X-API-Key": settings.OPENREFINE_API_KEY, 'Content-Type': 'multipart/form-data'}  # Forward key if needed
-        )
-
-        project_id = response.json().get('projectId')
-        print("project_id: ", project_id)
-        # Step 2: Apply Cleaning Rules (Example: Cluster city names)
-        operations = {
-            "op": "core/mass-edit",
-            "columnName": "DestinationCity",  # Replace with your column
-            "expression": "value.toLowercase()"
-        }
-        print("operations:", operations)
-        requests.post(
-            f'http://localhost:3333/command/core/apply-operations',
-            json={"projectId": project_id, "operations": [operations]},
-        )
-
-        # Step 3: Export Cleaned Data
-        cleaned_csv = requests.get(
-            f'http://localhost:3333/command/core/export-rows',
-            params={"projectId": project_id, "format": "csv"}
-        ).text
+        cleaned_csv = df
         print("cleaned_csv:", cleaned_csv)
         data = {"submessage": cleaned_csv}
         return JsonResponse(data)

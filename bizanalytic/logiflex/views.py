@@ -752,8 +752,8 @@ def clean_csv(request):
     # Check for API key in headers
     provided_key = request.headers.get("X-API-Key")  # or request.GET.get("api_key")
     if provided_key != settings.OPENREFINE_API_KEY:
-        message = {"error": "Invalid API key"}
-        return message
+
+        return JsonResponse({"error": "Invalid API key"}, status=401)
 
     # Proceed with OpenRefine cleaning
     if request.method == 'POST' and request.FILES["route_file"]:
@@ -775,7 +775,7 @@ def clean_csv(request):
 
         requests.post(
             f'http://localhost:3333/command/core/apply-operations',
-            json={"projectId": project_id, "operations": [operations]}
+            json={"projectId": project_id, "operations": [operations]},
         )
 
         # Step 3: Export Cleaned Data

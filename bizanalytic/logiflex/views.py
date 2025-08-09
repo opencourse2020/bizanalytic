@@ -769,7 +769,7 @@ def clean_csv(request):
         # Step 2: Apply Cleaning Rules (Example: Cluster city names)
         operations = {
             "op": "core/mass-edit",
-            "columnName": "city",  # Replace with your column
+            "columnName": "DestinationCity",  # Replace with your column
             "expression": "value.toLowercase()"
         }
 

@@ -783,6 +783,6 @@ def clean_csv(request):
             f'http://localhost:3333/command/core/export-rows',
             params={"projectId": project_id, "format": "csv"}
         ).text
-
-        return JsonResponse({"cleaned_csv": cleaned_csv})
+        data = {"submessage": cleaned_csv}
+        return JsonResponse(data)
     return JsonResponse({"error": "Invalid request"}, status=400)

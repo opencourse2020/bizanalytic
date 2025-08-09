@@ -1,5 +1,8 @@
 import random
+from django.conf import settings
+import requests
 
+OPENREFINE_API_KEY = settings.OPENREFINE_API_KEY
 
 def generatecode(length):
     result = ''
@@ -21,3 +24,5 @@ def makenumericid(length):
         result += characters[random.randint(0, characters_length - 1)]
         counter += 1
     return result
+
+

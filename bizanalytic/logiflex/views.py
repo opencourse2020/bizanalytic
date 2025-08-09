@@ -19,6 +19,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, get_object_or_404
 import json
+import requests
 # Third party libraries
 import stripe
 
@@ -36,7 +37,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 stripe_price_id = settings.STRIPE_PRICE_ID
 stripe_publishable = settings.STRIPE_PUBLISHABLE_KEY
 stripe_webhook = settings.STRIPE_WEBHOOK_SECRET
-
+OPENREFINE_API_KEY = settings.OPENREFINE_API_KEY
 class IndexView(TemplateView):
     template_name = "logiflex/home.html"
 
@@ -608,6 +609,8 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
         print("report ID:", reportid)
 
+        # Check and clean file
+
         checkreport = models.LogiflexReport.objects.filter(pk=reportid).first()
         clientid= checkreport.client.id
         # client = models.LogiFlexClient.objects.filter(pk=)
@@ -744,3 +747,42 @@ class Payment_FailView(TemplateView):
 #     )
 #
 #     return metadata
+
+def clean_csv(request):
+    # Check for API key in headers
+    provided_key = request.headers.get("X-API-Key")  # or request.GET.get("api_key")
+    if provided_key != settings.OPENREFINE_API_KEY:
+        message = {"error": "Invalid API key"}
+        return message
+
+    # Proceed with OpenRefine cleaning
+    if request.method == 'POST' and request.FILES["route_file"]:
+        csv_file = request.FILES['route_file']
+        response = requests.post(
+            'http://localhost:3333/command/core/create-project-from-upload',
+            files={'file': csv_file},
+            headers={"X-API-Key": settings.OPENREFINE_API_KEY}  # Forward key if needed
+        )
+
+        project_id = response.json().get('projectId')
+
+        # Step 2: Apply Cleaning Rules (Example: Cluster city names)
+        operations = {
+            "op": "core/mass-edit",
+            "columnName": "city",  # Replace with your column
+            "expression": "value.toLowercase()"
+        }
+
+        requests.post(
+            f'http://localhost:3333/command/core/apply-operations',
+            json={"projectId": project_id, "operations": [operations]}
+        )
+
+        # Step 3: Export Cleaned Data
+        cleaned_csv = requests.get(
+            f'http://localhost:3333/command/core/export-rows',
+            params={"projectId": project_id, "format": "csv"}
+        ).text
+
+        return JsonResponse({"cleaned_csv": cleaned_csv})
+    return JsonResponse({"error": "Invalid request"}, status=400)

@@ -747,7 +747,7 @@ class Payment_FailView(TemplateView):
 #     )
 #
 #     return metadata
-
+@csrf_exempt
 def clean_csv(request):
     # Check for API key in headers
     provided_key = request.headers.get("X-API-Key")  # or request.GET.get("api_key")

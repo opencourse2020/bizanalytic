@@ -150,7 +150,7 @@ $("#generate_full_rp").click(function (){
                     processData: false,
                     contentType: false,
                     headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
-                              'X-API-Key': API_KEY },
+                              },
                     success: function (data) {
                         if (data) {
                             var result = data;

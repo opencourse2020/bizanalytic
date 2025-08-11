@@ -458,6 +458,7 @@ class ColumnNameValidator:
                 results['corrections_made'][col] = suggested
                 results['column_mapping'][col] = suggested
                 report_entry['action'] = 'auto_corrected'
+                df.rename(columns={col: suggested}, inplace=True)
 
             elif confidence > 0:
                 # Low confidence - keep original but flag for review
@@ -684,7 +685,7 @@ def test_validator(routefile, report):
     # Test date fixing
     # print("\nTesting date format fixing...")
     fixed_dates, fix_report = date_validator.fix_date_format(sample_dates, '%Y-%m-%d')
-
+    data['Date'] = fixed_dates
     date_report = date_report + "\nFIX REPORT:\n"
     date_report = date_report + f"  Successfully fixed: {fix_report['successfully_fixed']}"
     date_report = date_report + f"  Could not fix: {fix_report['could_not_fix']}"

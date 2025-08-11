@@ -125,7 +125,7 @@ $("#generate_full_rp").click(function (){
         let email_nm = $("#email_nm").val();
         var fileName_b = $("#route_fl").val();
         var file_b = $('#route_fl')[0].files[0];
-        let cixphoto = $('#ci-x-photo').val();
+        // let cixphoto = $('#ci-x-photo').val();
         let agree_create = "2";
         if ($("#agree_create").prop("checked")){
              agree_create = "1";
@@ -142,7 +142,7 @@ $("#generate_full_rp").click(function (){
                 formData.append('cp_nm', cp_nm);
                 formData.append('email_nm', email_nm);
                 formData.append('route_file', file_b);
-                formData.append('cixphoto', cixphoto);
+                // formData.append('cixphoto', cixphoto);
                 $.ajax({
                     type: 'POST',
                     url: url,

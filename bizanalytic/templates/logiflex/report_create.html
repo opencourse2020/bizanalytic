@@ -102,7 +102,6 @@
                                     <div class="col-sm-7">
                                         <img src={% static "vendor/transport/assets/images/about-3.jpg"%} alt="about" class="about-image-3">
                                         <span class="text-stroke paragraph-color third-border mt-20">{% trans "Smarter Decisions" %}</span>
-                                        <input type="hidden" id="ci-x-photo" value="{{ reportid }}" hidden>
                                     </div>
                                     <div class="col-sm-5">
                                         <img src={% static "vendor/transport/assets/images/about-4.jpg"%} alt="about" class="about-image-4">
@@ -133,9 +132,7 @@
 {% endblock footer_area %}
 
 {% block js_area %}
-    <script>
-      const API_KEY = "{{ OPENREFINE_API_KEY }}";  // Rendered server-side
-    </script>
+
     {{ block.super }}
 
 {% endblock js_area %}

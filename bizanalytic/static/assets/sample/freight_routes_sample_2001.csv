@@ -1,0 +1,201 @@
+ShipmentID,Date_ship,OriginCity,DestinationCity,Distance_,FuelCost,DriverName,CarrierName,LoadWeight_lbs,DeliveryStatus,Delivery_hrs,FreightCost
+SHP0001,7/1/2025,"Oklahoma City, OK","Austin, TX",315,117.41,Sara Kim,DEF Logistics,17448,In-Transit,7.5,648.62
+SHP0002,7/2/2025,"Austin, TX","Tulsa, OK",307,129.66,Chris Park,XYZ Freight,17810,Delivered,7.7,653.57
+SHP0003,7/3/2025,"Tulsa, OK","Houston, TX",748,273.68,Emma Stone,ABC Carriers,20250,Delayed,18.6,1486.85
+SHP0004,7/4/2025,"Austin, TX","Oklahoma City, OK",470,210.28,Sara Kim,GHI,18383,In-Transit,9.4,969.52
+SHP0005,7/5/2025,"Houston, TX","Austin, TX",354,157.45,Chris Park,XYZ Freight,22645,Delayed,6.7,684.33
+SHP0006,7/6/2025,"Oklahoma City, OK","Tulsa, OK",749,289.97,Sara Kim,GHI Transport,17909,Delayed,15.3,1600.01
+SHP0007,7/7/2025,"Houston, TX","San Antonio, TX",771,333.02,Sara Kim,XYZ Freight,18660,In-Transit,18.6,1592.34
+SHP0008,7/8/2025,"Dallas, TX","San Antonio, TX",702,280.91,Mike Lee,ABC Carriers,19109,In-Transit,17.5,1514.38
+SHP0009,7/9/2025,"San Antonio, TX","Austin, TX",506,216.52,Mike Lee,ABC Carriers,22318,In-Transit,11.6,928.7
+SHP0010,7/10/2025,"Dallas, TX","Oklahoma City, OK",343,152.59,Chris Park,GHI Transport,19951,Delayed,6.9,717.48
+SHP0011,7/11/2025,"San Antonio, TX","Tulsa, OK",765,304.98,Sara Kim,ABC Carriers,18734,Delivered,18.5,1461.02
+SHP0012,7/12/2025,Austin,"Dallas, TX",466,164.84,Emma Stone,ABC Carriers,24976,Delayed,8.8,908.37
+SHP0013,7/13/2025,"Dallas, TX","Austin, TX",603,234.11,Alex Ray,DEF,23535,In-Transit,12.8,
+SHP0014,7/14/2025,"Dallas, TX","Oklahoma City, OK",202,75.63,Alex Ray,ABC Carriers,21632,Delayed,3.8,403.38
+SHP0015,7/15/2025,"Oklahoma City, OK","Dallas, TX",756,309.84,Chris Park,DEF Logistics,19035,In-Transit,17.5,1393.89
+SHP0016,7/16/2025,"Austin, TX","Dallas, TX",305,112.31,Sara Kim,ABC Carriers,17194,Delayed,5.6,627.11
+SHP0017,7/17/2025,"Oklahoma City, OK","Dallas, TX",759,276.9,Sara Kim,XYZ Freight,24996,In-Transit,15.6,1587.54
+SHP0018,7/18/2025,"Dallas, TX","Houston, TX",289,125.09,Mike Lee,XYZ Freight,16067,Delivered,6.5,626.56
+SHP0019,7/19/2025,"Houston, ","Tulsa, OK",591,262.26,Sara Kim,XYZ Freight,15842,Delivered,14.4,1114.15
+SHP0020,7/20/2025,"Tulsa, OK","Dallas, TX",230,86.17,Chris Park,XYZ Freight,20581,Delivered,4.6,487.52
+SHP0021,7/21/2025,"Austin, TX","Tulsa, OK",386,136.44,Alex Ray,ABC Carriers,24739,In-Transit,7.8,727.43
+SHP0022,7/22/2025,"San Antonio, TX",Tulsa,569,251.29,Chris Park,ABC Carriers,21448,Delayed,10.5,1208.94
+SHP0023,7/23/2025,"Austin, TX","Dallas, TX",663,246.47,Sara Kim,ABC,17044,Delayed,13.3,1253.32
+SHP0024,7/24/2025,"Tulsa, OK","San Antonio, TX",374,153.33,Emma Stone,GHI Transport,16641,In-Transit,7.3,674.82
+SHP0025,7/25/2025,"Dallas, TX","Oklahoma City, OK",683,243.83,John Doe,XYZ Freight,23671,In-Transit,14.6,1283.69
+SHP0026,7/26/2025,"Austin, TX","Tulsa, OK",284,123.02,Sara Kim,ABC Carriers,23777,Delivered,5.9,604.5
+SHP0027,7/27/2025,"Oklahoma City, OK","Houston, TX",493,179.27,John Doe,XYZ Freight,24394,In-Transit,9.9,979.26
+SHP0028,7/28/2025,"Oklahoma City, OK","Houston, TX",569,252.04,Emma Stone,ABC Carriers,,In-Transit,13,1063.62
+SHP0029,7/29/2025,"Houston, TX","Oklahoma City, OK",515,197.01,Chris Park,GHI Transport,18420,Delayed,10.1,957.51
+SHP0030,7/30/2025,"San Antonio, TX","Tulsa, OK",509,190.77,Alex Ray,DEF Logistics,21132,In-Transit,11,1054.03
+SHP0031,7/1/2025,"Dallas, TX","Oklahoma City, OK",529,231.79,John Doe,ABC Carriers,24604,Delayed,12.4,1032.29
+SHP0032,7/2/2025,"Oklahoma City, OK","Tulsa, OK",306,121.77,Chris Park,ABC Carriers,16635,Delivered,6.2,640.92
+SHP0033,7/3/2025,"Houston, TX","Tulsa, OK",256,115.11,Sara Kim,XYZ Freight,24173,Delivered,4.7,551.52
+SHP0034,7/4/2025,"Oklahoma City, OK","Austin, TX",441,156.05,Mike Lee,ABC Carriers,24873,Delayed,9,835.53
+SHP0035,7/5/2025,Houston,"Dallas, TX",701,308.06,Chris Park,ABC Carriers,22890,In-Transit,14.5,1450.46
+SHP0036,7/6/2025,"San Antonio, TX","Oklahoma City, OK",548,241.43,Chris Park,DEF Logistics,20054,Delivered,13.6,1176.71
+SHP0037,7/7/2025,"Oklahoma City, OK","Austin, TX",799,314.11,Mike Lee,XYZ Freight,16413,Delivered,16.7,1756.09
+SHP0038,7/8/2025,"Austin, TX","San Antonio, TX",251,95.58,Chris Park,XYZ Freight,23081,Delayed,5.5,466.74
+SHP0039,7/9/2025,"San Antonio, TX","Houston, TX",456,187.79,Emma Stone,XYZ Freight,22719,Delivered,9.3,919.89
+SHP0040,7/10/2025,"Tulsa, OK","Austin, TX",319,138.05,Mike Lee,ABC Carriers,16754,Delayed,6.9,600.31
+SHP0041,7/11/2025,"Tulsa, OK","Austin, TX",450,178.64,Alex Ray,GHI Transport,22684,In-Transit,10.9,937.91
+SHP0042,7/12/2025,"Houston, TX","Dallas, TX",335,138.73,Chris Park,ABC Carriers,17517,Delayed,7.7,631.47
+SHP0043,7/13/2025,"Oklahoma City, OK","Dallas, TX",612,266.24,Alex Ray,DEF Logistics,15727,Delivered,14.3,1233.87
+SHP0044,7/14/2025,"San Antonio, TX","Austin, TX",734,320.63,Mike Lee,ABC Carriers,22469,Delivered,16,1447.85
+SHP0045,7/15/2025,"Dallas, TX","Tulsa, OK",660,265.04,Mike Lee,GHI Transport,19960,Delayed,15.3,1282.92
+SHP0046,7/16/2025,"Austin, TX","Dallas, TX",465,187.57,John Doe,GHI Transport,18082,Delayed,11.1,865.52
+SHP0047,7/17/2025,"Tulsa, OK","Austin, TX",755,299.88,Mike Lee,ABC Carriers,23809,Delivered,14.8,1428.37
+SHP0048,7/18/2025,"Tulsa, OK","Oklahoma City, OK",719,262.68,Mike Lee,GHI Transport,16924,Delayed,13.2,1546.45
+SHP0049,7/19/2025,"Austin, TX","Dallas, TX",645,248.85,Mike Lee,ABC Carriers,22673,In-Transit,14.1,1271.79
+SHP0050,7/20/2025,"Oklahoma City, OK","Houston, TX",630,231.54,Mike Lee,DEF Logistics,24538,Delayed,13.5,1192.63
+SHP0051,7/21/2025,"San Antonio, TX","Dallas, TX",671,300.11,John Doe,GHI Transport,17802,In-Transit,16.2,1228.66
+SHP0052,7/22/2025,"Tulsa, OK","San Antonio, TX",269,101.23,Sara Kim,DEF Logistics,17395,Delayed,6.1,542.62
+SHP0053,7/23/2025,"Austin, TX","San Antonio, TX",654,237.82,Sara Kim,DEF Logistics,15682,Delayed,16,1347.37
+SHP0054,7/24/2025,"Tulsa, OK","Houston, TX",592,221.63,Sara Kim,DEF Logistics,24047,Delivered,13.3,1244.94
+SHP0055,7/25/2025,"Tulsa, OK","San Antonio, TX",555,224.53,Chris Park,DEF Logistics,22964,In-Transit,12.3,1200.73
+SHP0056,7/26/2025,"Dallas, TX","Houston, TX",559,197.85,Sara Kim,GHI Transport,22297,Delivered,12.1,1103.91
+SHP0057,7/27/2025,"Austin, TX","Dallas, TX",332,143.46,John Doe,XYZ Freight,17635,Delivered,6.2,716.79
+SHP0058,7/28/2025,"Dallas, TX","Tulsa, OK",483,190.3,Alex Ray,GHI Transport,19120,In-Transit,8.8,1017
+SHP0059,7/29/2025,"Dallas, TX","Oklahoma City, OK",531,207.65,Emma Stone,GHI Transport,22904,In-Transit,12.3,1099.26
+SHP0060,7/30/2025,"San Antonio, TX","Austin, TX",449,195.57,Chris Park,XYZ Freight,20426,In-Transit,10.2,820.69
+SHP0061,7/1/2025,"Oklahoma City,","San Antonio, TX",633,255.85,Chris Park,ABC Carriers,16944,Delayed,13.9,1223.05
+SHP0062,7/2/2025,"San Antonio, TX","Oklahoma City, OK",236,82.98,Chris Park,DEF Logistics,18374,Delivered,5.9,498.33
+SHP0063,7/3/2025,"Oklahoma City, OK","Dallas, TX",436,159.92,Sara Kim,ABC Carriers,20823,Delivered,8.2,916.49
+SHP0064,7/4/2025,"Houston, TX","San Antonio, TX",666,274.25,Mike Lee,GHI Transport,23136,In-Transit,15.7,1346.15
+SHP0065,7/5/2025,"Oklahoma City, OK","Austin, TX",333,119.05,Alex Ray,DEF Logistics,20330,Delivered,8.2,672.28
+SHP0066,7/6/2025,"Oklahoma City, OK","San Antonio, TX",245,97.92,Sara Kim,DEF Logistics,16334,Delivered,5.3,456.37
+SHP0067,7/7/2025,"Austin, TX","Houston, TX",238,84.67,Chris Park,DEF Logistics,20504,Delayed,4.5,522.55
+SHP0068,7/8/2025,"Tulsa, OK","San Antonio, TX",395,141.8,Mike Lee,XYZ Freight,23802,In-Transit,7.4,811.7
+SHP0069,7/9/2025,"Dallas, TX","Houston, TX",472,194.98,John Doe,DEF Logistics,21664,In-Transit,11.2,943.78
+SHP0070,7/10/2025,"Austin, TX","San Antonio, TX",521,223.19,Emma Stone,GHI Transport,20499,Delayed,12.7,1023.81
+SHP0071,7/11/2025,"Tulsa, OK","Houston, TX",266,107.55,John Doe,XYZ Freight,15220,Delayed,5.1,563.69
+SHP0072,7/12/2025,"Tulsa, OK","Dallas, TX",416,166.58,Emma Stone,GHI Transport,21752,In-Transit,9.2,890.22
+SHP0073,7/13/2025,"San Antonio, TX","Dallas, TX",429,171.85,Emma Stone,GHI Transport,16441,Delivered,8.6,865.66
+SHP0074,7/14/2025,"Houston, TX","Tulsa, OK",501,185.6,,ABC Carriers,19045,In-Transit,9.5,914.83
+SHP0075,7/15/2025,"San Antonio, TX","Tulsa, OK",663,255.68,Sara Kim,DEF Logistics,21669,Delayed,12.2,1297.57
+SHP0076,7/16/2025,"San Antonio, TX","Dallas, TX",589,257.78,John Doe,XYZ Freight,23016,In-Transit,10.9,1235.52
+SHP0077,7/17/2025,"Austin, TX","Oklahoma City, OK",245,89.49,Sara Kim,GHI Transport,23833,Delayed,5.5,445.7
+SHP0078,7/18/2025,"Dallas, TX","Austin, TX",654,268.71,Alex Ray,XYZ Freight,18389,Delivered,12.1,1241.91
+SHP0079,7/19/2025,"San Antonio, TX","Houston, TX",416,159.29,Emma Stone,ABC Carriers,18029,Delayed,7.8,765.16
+SHP0080,7/20/2025,"Houston, TX","Oklahoma City, OK",746,335.27,John Doe,DEF Logistics,23665,In-Transit,17.1,1517.29
+SHP0081,7/21/2025,"San Antonio, TX","Oklahoma City, OK",591,221.55,Alex Ray,DEF Logistics,15765,Delivered,12.2,1125.61
+SHP0082,7/22/2025,"Tulsa, OK","Oklahoma City, OK",612,270.67,Emma Stone,DEF Logistics,21497,Delayed,14.6,1322.83
+SHP0083,7/23/2025,"Oklahoma City, OK","Austin, TX",699,280.83,Emma Stone,ABC Carriers,16013,Delivered,13.3,1347.72
+SHP0084,7/24/2025,"Tulsa, OK","Houston, TX",374,166.43,John Doe,ABC Carriers,15177,Delayed,6.9,817.71
+SHP0085,7/25/2025,"San Antonio, TX","Austin, TX",217,87.56,Alex Ray,XYZ Freight,15299,Delivered,4.4,455.93
+SHP0086,7/26/2025,"Austin, TX","Dallas, TX",274,104.39,Emma Stone,DEF Logistics,16149,In-Transit,6.6,552.1
+SHP0087,7/27/2025,"Tulsa, OK","Dallas, TX",358,160.12,Emma Stone,GHI Transport,16468,In-Transit,7.9,692.85
+SHP0088,7/28/2025,"Austin, TX","Houston, TX",680,239.14,Chris Park,GHI Transport,17314,Delayed,14.1,1413.02
+SHP0089,7/29/2025,"Tulsa, OK","Dallas, TX",509,189.16,Chris Park,DEF Logistics,19512,In-Transit,9.8,929.1
+SHP0090,7/30/2025,"Oklahoma City, OK","Austin, TX",683,291.42,Emma Stone,GHI Transport,22655,In-Transit,13.3,1349.92
+SHP0091,7/1/2025,"Tulsa, OK","Houston, TX",634,265.48,Alex Ray,ABC Carriers,17148,In-Transit,12.6,1233.16
+SHP0092,7/2/2025,"Tulsa, OK","Oklahoma City, OK",773,302.18,Alex Ray,ABC Carriers,23779,In-Transit,17.1,1539.8
+SHP0093,7/3/2025,"Houston, TX","Tulsa, OK",255,109.81,Alex Ray,ABC Carriers,24941,In-Transit,4.7,555.69
+SHP0094,7/4/2025,"Austin, TX","Oklahoma City, OK",270,119.34,Chris Park,ABC Carriers,18497,In-Transit,6.2,570.19
+SHP0095,7/5/2025,"Houston, TX","Austin, TX",696,296.49,John Doe,ABC Carriers,24758,Delivered,15.9,1266.95
+SHP0096,7/6/2025,"Dallas, TX","Austin, TX",763,267.88,Mike Lee,DEF Logistics,20975,Delayed,13.9,1661.79
+SHP0097,7/7/2025,"San Antonio, TX","Dallas, TX",688,252.16,John Doe,ABC Carriers,17842,Delayed,13.7,1399.79
+SHP0098,7/8/2025,"Oklahoma City, OK","San Antonio, TX",473,190.21,Alex Ray,XYZ Freight,24032,Delayed,10.1,980.99
+SHP0099,7/9/2025,"Tulsa, OK","Houston, TX",483,200.38,Mike Lee,ABC Carriers,23145,Delayed,11,932.95
+SHP0100,7/10/2025,"Houston, TX","Oklahoma City, OK",795,294.12,Mike Lee,ABC Carriers,15730,In-Transit,16,1741.03
+SHP0101,7/11/2025,"Austin, TX","Oklahoma City, OK",744,269,Mike Lee,GHI Transport,22397,Delayed,16.3,1585.72
+SHP0102,7/12/2025,"Dallas, TX","Oklahoma City, OK",394,154.22,Alex Ray,GHI Transport,16762,Delayed,7.4,835.08
+SHP0103,7/13/2025,"Tulsa, OK","San Antonio, TX",776,278.4,Mike Lee,XYZ Freight,17147,In-Transit,14.2,1686.7
+SHP0104,7/14/2025,"Tulsa, OK","Austin, TX",404,159.37,Alex Ray,GHI Transport,18140,Delayed,9.9,854
+SHP0105,7/15/2025,"Austin, TX","Tulsa, OK",250,92.34,Emma Stone,ABC Carriers,24045,Delayed,6,549.16
+SHP0106,7/16/2025,"San Antonio, TX","Tulsa, OK",498,216.44,Chris Park,ABC Carriers,20147,Delivered,12.1,912.91
+SHP0107,7/17/2025,"Oklahoma City, OK","Dallas, TX",210,93.98,Emma Stone,DEF Logistics,21470,Delayed,5,400.23
+SHP0108,7/18/2025,"Austin, TX","Houston, TX",241,88.65,Sara Kim,DEF Logistics,21702,Delayed,5.5,445.2
+SHP0109,7/19/2025,"Houston, TX","Oklahoma City, OK",637,255.6,Mike Lee,DEF Logistics,16854,In-Transit,14.5,1320.64
+SHP0110,7/20/2025,"Oklahoma City, OK","San Antonio, TX",717,305.25,Emma Stone,GHI Transport,16727,In-Transit,13.3,1476.98
+SHP0111,7/21/2025,"Austin, TX","Dallas, TX",729,319.42,Mike Lee,XYZ Freight,24551,Delivered,14.9,1551.81
+SHP0112,7/22/2025,"Austin, TX","Oklahoma City, OK",425,178.71,Chris Park,GHI Transport,23659,Delivered,9.3,839.59
+SHP0113,23/7/2025,"Houston, TX","Austin, TX",655,240.23,Chris Park,DEF Logistics,22119,Delayed,12.6,1287.96
+SHP0114,7/24/2025,"Oklahoma City, OK","Houston, TX",353,151.98,Sara Kim,GHI Transport,23269,Delivered,8.3,660.27
+SHP0115,7/25/2025,"Houston, TX","Austin, TX",588,206.2,Emma Stone,DEF Logistics,18534,Delayed,13.6,1137.69
+SHP0116,7/26/2025,"Tulsa, OK","Houston, TX",682,258.43,John Doe,XYZ Freight,15455,In-Transit,12.7,1472.18
+SHP0117,7/27/2025,"Houston, TX","Oklahoma City, OK",530,218.69,Emma Stone,ABC Carriers,19322,Delivered,10.5,1006.94
+SHP0118,7/28/2025,"Austin, TX","Houston, TX",711,267.04,Alex Ray,XYZ Freight,20009,Delivered,16.5,1514.27
+SHP0119,7/29/2025,"Tulsa, OK","Oklahoma City, OK",654,244.59,Chris Park,XYZ Freight,22958,In-Transit,13.7,1273.32
+SHP0120,7/30/2025,"Houston, TX","Dallas, TX",580,234.69,Chris Park,XYZ Freight,22431,Delayed,11.5,1273.34
+SHP0121,7/1/2025,"Tulsa, OK","San Antonio, TX",695,304.45,Emma Stone,DEF Logistics,23203,Delivered,14,1297.89
+SHP0122,7/2/2025,"Dallas, TX","San Antonio, TX",376,159.08,Alex Ray,ABC Carriers,15044,Delivered,6.9,717.18
+SHP0123,7/3/2025,"Austin, TX","Tulsa, OK",792,318.1,Sara Kim,GHI Transport,18559,In-Transit,18,1661.09
+SHP0124,7/4/2025,"Houston, TX","San Antonio, TX",297,126.26,Emma Stone,XYZ Freight,22608,Delayed,6.7,558.29
+SHP0125,7/5/2025,"Tulsa, OK","San Antonio, TX",593,232.71,Chris Park,DEF Logistics,23680,Delayed,11.3,1272.68
+SHP0126,7/6/2025,"San Antonio, TX","Austin, TX",759,297.43,Sara Kim,GHI Transport,21398,In-Transit,18.1,1398.58
+SHP0127,7/7/2025,"Houston, TX","Tulsa, OK",487,173.35,Alex Ray,GHI Transport,20917,Delayed,9.1,950.54
+SHP0128,7/8/2025,"Houston, TX","Tulsa, OK",339,130.4,Chris Park,DEF Logistics,19561,Delayed,6.5,682.03
+SHP0129,7/9/2025,"Houston, TX","Tulsa, OK",713,278.36,Sara Kim,XYZ Freight,16374,In-Transit,16.6,1537.57
+SHP0130,7/10/2025,"Tulsa, OK","Oklahoma City, OK",599,228.57,Alex Ray,GHI Transport,15840,In-Transit,12.7,1255.81
+SHP0131,7/11/2025,"Tulsa, OK","San Antonio, TX",332,127.95,Chris Park,XYZ Freight,23112,In-Transit,6.9,722.26
+SHP0132,7/12/2025,"Austin, TX","San Antonio, TX",429,166.74,Emma Stone,ABC Carriers,20020,In-Transit,7.9,882.49
+SHP0133,7/13/2025,"Oklahoma City, OK","Tulsa, OK",319,136.51,Sara Kim,DEF Logistics,16713,In-Transit,6.2,611.98
+SHP0134,7/14/2025,"San Antonio, TX","Austin, TX",537,232.84,Alex Ray,ABC Carriers,18798,Delivered,12.5,1008.74
+SHP0135,7/15/2025,"San Antonio, TX","Austin, TX",287,101.71,John Doe,GHI Transport,15364,Delivered,5.5,554.41
+SHP0136,7/16/2025,"Oklahoma City, OK","San Antonio, TX",638,282.05,Alex Ray,XYZ Freight,20784,In-Transit,12.8,1229.45
+SHP0137,7/17/2025,"Austin, TX","Oklahoma City, OK",423,150.09,Sara Kim,GHI Transport,18242,In-Transit,10,907.85
+SHP0138,18.7.2025,"Oklahoma City, OK","Tulsa, OK",403,173.57,Mike Lee,XYZ Freight,20675,Delayed,8.8,741.84
+SHP0139,7/19/2025,"Houston, TX","Dallas, TX",441,189.34,Mike Lee,GHI Transport,16132,Delivered,10.9,919.89
+SHP0140,7/20/2025,"Austin, TX","Tulsa, OK",294,131.17,Alex Ray,GHI Transport,15634,Delivered,6.3,568
+SHP0141,7/21/2025,"Houston, TX","San Antonio, TX",624,278.76,John Doe,ABC Carriers,23433,Delayed,13.3,1300.04
+SHP0142,7/22/2025,"Oklahoma City, OK","Tulsa, OK",227,88.16,Emma Stone,DEF Logistics,20585,Delivered,4.6,482.03
+SHP0143,7/23/2025,"Austin, TX","Houston, TX",224,89.57,Chris Park,GHI Transport,21242,Delivered,4.2,427.66
+SHP0144,7/24/2025,"Dallas, TX","San Antonio, TX",523,217.35,Alex Ray,XYZ Freight,22194,Delivered,12.8,1076.76
+SHP0145,7/25/2025,"Dallas, TX","Austin, TX",771,336.49,Sara Kim,XYZ Freight,16630,Delayed,17.3,1453.72
+SHP0146,7/26/2025,"Houston, TX","Tulsa, OK",287,113.8,Mike Lee,DEF Logistics,15339,Delivered,5.9,534.21
+SHP0147,7/27/2025,"Tulsa, OK","Oklahoma City, OK",300,107.4,Emma Stone,DEF Logistics,18770,Delayed,6.2,598.77
+SHP0148,7/28/2025,"Tulsa, OK","Austin, TX",426,150.48,Emma Stone,GHI Transport,19187,Delivered,7.9,910.82
+SHP0149,7/29/2025,"Dallas, TX","Tulsa, OK",348,136.84,Sara Kim,ABC Carriers,16290,In-Transit,6.5,685.04
+SHP0150,7/30/2025,"Houston, TX","Dallas, TX",768,344.29,Mike Lee,DEF Logistics,20315,Delivered,17.8,1554.83
+SHP0151,7/1/2025,"Tulsa, OK","Houston, TX",418,176.4,Chris Park,GHI Transport,16661,Delivered,9.3,797.23
+SHP0152,7/2/2025,"Dallas, TX","Austin, TX",580,213.78,Alex Ray,ABC Carriers,24119,Delayed,13.3,1191.08
+SHP0153,7/3/2025,"San Antonio, TX","Oklahoma City, OK",317,133.1,Mike Lee,GHI Transport,21752,In-Transit,5.8,606.58
+SHP0154,7/4/2025,"Tulsa, OK","Austin, TX",273,98.79,Sara Kim,DEF Logistics,16153,Delivered,6.1,568.01
+SHP0155,7/5/2025,"San Antonio, TX","Houston, TX",795,356.94,Alex Ray,DEF Logistics,19538,Delayed,18,1701.62
+SHP0156,7/6/2025,"Tulsa, OK","Oklahoma City, OK",671,290.31,Mike Lee,XYZ Freight,24509,In-Transit,12.6,1386.84
+SHP0157,7/7/2025,"Austin, TX","Houston, TX",662,281.45,Sara Kim,DEF Logistics,18497,Delivered,15.6,1413.13
+SHP0158,7/8/2025,"Houston, TX","Oklahoma City, OK",455,171.84,Sara Kim,ABC Carriers,15756,In-Transit,9,922.97
+SHP0159,7/9/2025,"Houston, TX","Tulsa, OK",624,238.28,Sara Kim,ABC Carriers,21776,Delivered,15.2,1332.04
+SHP0160,7/10/2025,"Tulsa, OK","Oklahoma City, OK",256,114.43,Emma Stone,ABC Carriers,19494,In-Transit,6.1,463.6
+SHP0161,7/11/2025,"Houston, TX","Austin, TX",289,127.65,John Doe,GHI Transport,20933,Delivered,7.2,592.64
+SHP0162,7/12/2025,"Dallas, TX","Houston, TX",442,165.31,Sara Kim,XYZ Freight,24766,In-Transit,9.4,862.38
+SHP0163,7/13/2025,"Oklahoma City, OK","San Antonio, TX",761,303.73,Emma Stone,ABC Carriers,21585,Delivered,16.4,1397.95
+SHP0164,7/14/2025,"Tulsa, OK","Austin, TX",208,82.83,Emma Stone,GHI Transport,23176,Delivered,4.1,429.29
+SHP0165,7/15/2025,"Dallas, TX","San Antonio, TX",631,236.37,Mike Lee,GHI Transport,24504,Delayed,12.8,1275.98
+SHP0166,7/16/2025,"Oklahoma City, OK","Austin, TX",413,173.4,Sara Kim,XYZ Freight,16113,Delayed,7.6,808.98
+SHP0167,7/17/2025,"Oklahoma City, OK","Houston, TX",533,225.55,Mike Lee,ABC Carriers,22951,In-Transit,11.9,1022.58
+SHP0168,7/18/2025,"Houston, TX","Oklahoma City, OK",236,98.33,John Doe,DEF Logistics,18232,Delayed,5.8,435.19
+SHP0169,7/19/2025,"Houston, TX","Dallas, TX",799,340.78,Emma Stone,DEF Logistics,19005,Delayed,15.4,1600.5
+SHP0170,7/20/2025,"Dallas, TX","Oklahoma City, OK",791,317.88,Mike Lee,DEF Logistics,18613,In-Transit,18.1,1725.85
+SHP0171,7/21/2025,"Dallas, TX","Austin, TX",716,279.06,Mike Lee,DEF Logistics,17473,In-Transit,14.4,1385.73
+SHP0172,7/22/2025,"Tulsa, OK","Austin, TX",620,243.25,Mike Lee,GHI Transport,24066,In-Transit,13.5,1148.05
+SHP0173,7/23/2025,"Tulsa, OK","Dallas, TX",645,279.21,John Doe,DEF Logistics,19941,Delivered,12.6,1359.88
+SHP0174,7/24/2025,"Houston, TX","San Antonio, TX",457,203.96,Sara Kim,DEF Logistics,18422,Delivered,9.2,975.52
+SHP0175,7/25/2025,"Austin, TX","Houston, TX",403,150.16,Mike Lee,GHI Transport,15764,Delayed,8.9,821.22
+SHP0176,7/26/2025,"San Antonio, TX","Austin, TX",650,259.43,John Doe,ABC Carriers,22517,Delivered,16.2,1216.31
+SHP0177,7/27/2025,"Austin, TX","Dallas, TX",792,302.26,Sara Kim,ABC Carriers,19212,In-Transit,19.3,1636.84
+SHP0178,7/28/2025,"Oklahoma City, OK","Dallas, TX",746,268.18,Emma Stone,DEF Logistics,15104,Delayed,17.5,1375.54
+SHP0179,7/29/2025,"Houston, TX","Oklahoma City, OK",260,97.47,Emma Stone,GHI Transport,23353,In-Transit,5.3,525.38
+SHP0180,7/30/2025,"Dallas, TX","Oklahoma City, OK",797,328.36,Emma Stone,XYZ Freight,19769,In-Transit,16.1,1657.98
+SHP0181,7/1/2025,"Dallas, TX","Tulsa, OK",624,269.03,Mike Lee,GHI Transport,21311,In-Transit,11.9,1277.18
+SHP0182,7/2/2025,"San Antonio, TX","Dallas, TX",211,82.22,John Doe,XYZ Freight,23529,Delayed,5.1,456.06
+SHP0183,7/3/2025,"Dallas, TX","San Antonio, TX",615,234.64,Chris Park,ABC Carriers,15618,Delayed,12.9,1262.79
+SHP0184,7/4/2025,"Oklahoma City, OK","Austin, TX",701,288.61,Sara Kim,XYZ Freight,20416,Delayed,13,1478.74
+SHP0185,7/5/2025,"Oklahoma City, OK","Dallas, TX",525,225.84,Sara Kim,GHI Transport,18149,Delayed,11.2,1091.95
+SHP0186,7/6/2025,"Dallas, TX","Houston, TX",697,257.99,Emma Stone,DEF Logistics,24351,Delivered,15.2,1274.42
+SHP0187,7/7/2025,"Austin, TX","Houston, TX",750,293.98,Mike Lee,GHI Transport,15372,Delivered,14.8,1479.96
+SHP0188,7/8/2025,"Austin, TX","San Antonio, TX",265,97.88,Sara Kim,ABC Carriers,15616,In-Transit,4.9,545.48
+SHP0189,7/9/2025,"Austin, TX","San Antonio, TX",553,230.94,Mike Lee,GHI Transport,24109,In-Transit,13.3,1027.41
+SHP0190,7/10/2025,"Houston, TX","Tulsa, OK",479,188.94,Sara Kim,DEF Logistics,21937,In-Transit,11.3,865.43
+SHP0191,7/11/2025,"Dallas, TX","Oklahoma City, OK",410,182.14,John Doe,ABC Carriers,16370,Delayed,9.2,776.52
+SHP0192,7/12/2025,"San Antonio, TX","Dallas, TX",599,266.61,Emma Stone,DEF Logistics,19068,Delayed,11.5,1133.83
+SHP0193,7/13/2025,"Houston, TX","San Antonio, TX",614,257.01,Mike Lee,XYZ Freight,20188,Delivered,11.5,1300.59
+SHP0194,7/14/2025,"Tulsa, OK","San Antonio, TX",332,129.27,Emma Stone,GHI Transport,22531,In-Transit,6.3,600.75
+SHP0195,7/15/2025,"San Antonio, TX","Dallas, TX",763,288.88,Chris Park,DEF Logistics,24913,In-Transit,15.9,1644.37
+SHP0196,7/16/2025,"Austin, TX","Tulsa, OK",394,141.22,Chris Park,GHI Transport,17612,In-Transit,7.4,813.08
+SHP0197,7/17/2025,"Austin, TX","Tulsa, OK",261,107.16,Alex Ray,GHI Transport,18552,In-Transit,6,484.59
+SHP0198,7/18/2025,"Austin, TX","Dallas, TX",475,169.17,John Doe,ABC Carriers,19729,Delayed,9,1015.26
+SHP0199,7/19/2025,"Austin, TX","Tulsa, OK",764,281.02,John Doe,GHI Transport,17930,Delayed,16.8,1636.94
+SHP0200,7/20/2025,"San Antonio, TX","Austin, TX",656,270.75,Chris Park,DEF Logistics,19932,Delivered,16.3,1379.65

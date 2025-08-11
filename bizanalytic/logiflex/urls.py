@@ -27,6 +27,7 @@ report_patterns = [
     path('view/<int:pk>/', views.AdvancedReportView.as_view(), name='view'),
     path('full-report-create/', views.FullReportCreateView.as_view(), name='full-report-create'),
     path('samplereport/', views.SampleAdvancedReportView.as_view(), name='samplereport'),
+    path('list/', views.Payment_SuccessView.as_view(), name='list'),
 
 ]
 

@@ -23,13 +23,15 @@ import requests
 import pandas as pd
 # Third party libraries
 import stripe
+from datetime import datetime
 
 from . import models, forms
 from bizanalytic.profiles.mixins import JsonFormMixin
 from bizanalytic.profiles.models import User
-from .utils.mail import sendemail
+from .utils.mail import sendemail ,senduploadmail
 from .utils.tools import generatecode
 from .utils.call_llm import generate_analysis
+from .utils.pre_process_datafile import test_validator
 
 # Create your views here.
 
@@ -38,7 +40,8 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 stripe_price_id = settings.STRIPE_PRICE_ID
 stripe_publishable = settings.STRIPE_PUBLISHABLE_KEY
 stripe_webhook = settings.STRIPE_WEBHOOK_SECRET
-OPENREFINE_API_KEY = settings.OPENREFINE_API_KEY
+
+
 class IndexView(TemplateView):
     template_name = "logiflex/home.html"
 
@@ -594,7 +597,7 @@ class FullReportView(LoginRequiredMixin, TemplateView):
             kwargs["company"] = report.client.company
             kwargs["email"] = report.client.email
             kwargs["reportid"] = report.id
-            kwargs["OPENREFINE_API_KEY"] = OPENREFINE_API_KEY
+
         return super(FullReportView, self).get_context_data(**kwargs)
 
 
@@ -630,43 +633,34 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
             client.save()
 
-            # Update report info
-            report, report_created = models.LogiflexReport.objects.update_or_create(pk=reportid,
-                                                                                    defaults={'routefile': route_file})
-            report_txt = generate_analysis(report)
-            # Create a report file and update report record
-            report_file = "done"
-            if report_file:
-                report, report_created = models.LogiflexReport.objects.update_or_create(pk=reportid,
-                                                                                        defaults={'report': report_file,
-                                                                                                  'report_text': report_txt,
-                                                                                                  'report_created': True})
-            # Update payment reports
-            servicepayment.mark_report_used()
 
-            # Send Email to client
+            logireport, report_created = models.LogiflexReport.objects.update_or_create(pk=reportid,
+                                                                                    defaults={'client': client})
+            # Clean and validate route file and generate logs
+            column_report, date_report, cities_report, routefilename = test_validator(route_file, logireport)
+
+            # update route file
+            logireport.routefile = routefilename
+            logireport.save()
+
+            # Save log data
+            logiflex_log, log_created = models.LogEntry.objects.create(report=logireport, column_report=column_report,
+                                                                       date_report=date_report, citi_report=cities_report)
+
+            # Send a confirmation Email to client
             email_info = {
-                'subject': "🚀 Your Logistics Performance Report is Here",
-                'to_email': [email_name,],
-                'company': cp_name,
-                'client_name': client_name,
-                'download_security_code'
-                'shipments': "187",
-                'avgdelivery': "2.3",
-                'percent_change': 12,
-                'ontimedelivery': 94,
-                'delayreasons': "Top 3 Reasons",
-                'suggested': "Route X, Carrier Y",
-                'logiflex_contact': "Adam Akad",
-                'phone': "+1 (832) 430-2434",
-                'cc': [""],
-                'bcc': [""],
-                'attachments': report.routefile
+                'subject': "Your Fleet Efficiency Report is in Progress 🚚📊",
+                'to_email': [email_name, ],
+                'client': client_name,
+                'report_list_link': "https://bizanalytic.com/logiflex/reports/list/",
+                'cuurentyear': datetime.now().year
             }
-            sendemail(email_info)
-            message = "Report Created Succssefully. Wait for a confirmation email from us."
+            senduploadmail(email_info)
+
+
+            message = "Report Uploaded Succssefully. Wait for a confirmation email from us."
         else:
-            message = "Report Already Created Succssefully.Check the list of your reports for more details"
+            message = "Report Already Uploaded Succssefully.Check the list of your reports for more details"
 
         data = {"submessage": message}
 
@@ -751,11 +745,7 @@ class Payment_FailView(TemplateView):
 #     return metadata
 @csrf_exempt
 def clean_csv(request):
-    # Check for API key in headers
-    provided_key = request.headers.get("X-API-Key")  # or request.GET.get("api_key")
-    if provided_key != settings.OPENREFINE_API_KEY:
 
-        return JsonResponse({"error": "Invalid API key"}, status=401)
     print("CSV Cleaning starts")
     # Proceed with OpenRefine cleaning
     if request.method == 'POST' and request.FILES["route_file"]:

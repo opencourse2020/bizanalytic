@@ -158,6 +158,10 @@ class LogiflexReport(models.Model):
         ('full', _("Paid Report")),
 
     )
+    status = (
+        ('inprocess', _("In Process")),
+        ('ready', _("Download")),
+    )
     client = models.ForeignKey(LogiFlexClient, on_delete=models.CASCADE)
     payment = models.ForeignKey(ServicePayment, on_delete=models.SET_NULL, null=True)
     routefile = ContentTypeRestrictedFileField(upload_to=datafiles_directory_path,
@@ -168,7 +172,7 @@ class LogiflexReport(models.Model):
     report_text = models.JSONField(blank=True, null=True, default=dict)
     report_type = models.CharField(max_length=5, choices=reporttype, null=True, blank=True)
     download_code = models.CharField(max_length=8, null=True, blank=True)
-    # report_created = models.BooleanField(default=False)
+    report_status = models.CharField(max_length=10, choices=status, default="inprocess")
     date_created = models.DateField(auto_now_add=True)
 
     class Meta:
@@ -250,6 +254,21 @@ class Blog_logiflex(models.Model):
         return str(self.title)
 
 
+class LogEntry(models.Model):
+    report = models.ForeignKey(LogiflexReport, on_delete=models.CASCADE)
+    date_added = models.DateField(auto_now_add=True)
+    column_report = models.TextField(null=True, blank=True)
+    date_report = models.TextField(null=True, blank=True)
+    citi_report = models.TextField(null=True, blank=True)
+    level = models.CharField(max_length=20, null=True, blank=True)
+
+    class Meta:
+        verbose_name = "LogEntry"
+        verbose_name_plural = "LogEntries"
+        permissions = (("manage_logentry", "Manage LogEntries"),)
+
+    def __str__(self):
+        return f"[{self.report.id}] {self.level} ({self.date_added})"
 # **************************************************************************************************
 # ******     Models related to advanced Report     *************************************************
 # **************************************************************************************************

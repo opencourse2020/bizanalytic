@@ -1,0 +1,374 @@
+﻿city,state,state_name
+Los Angeles,CA,California
+San Diego,CA,California
+Sacramento,CA,California
+San Jose,CA,California
+Fresno,CA,California
+San Francisco,CA,California
+Oakland,CA,California
+Long Beach,CA,California
+Pasadena,CA,California
+Glendale,CA,California
+Bakersfield,CA,California
+Stockton,CA,California
+San Bernardino,CA,California
+Anaheim,CA,California
+Irvine,CA,California
+Riverside,CA,California
+Burbank,CA,California
+Inglewood,CA,California
+Berkeley,CA,California
+Santa Monica,CA,California
+Jacksonville,FL,Florida
+Tampa,FL,Florida
+Miami,FL,Florida
+Orlando,FL,Florida
+St. Petersburg,FL,Florida
+Fort Lauderdale,FL,Florida
+Tallahassee,FL,Florida
+Gainesville,FL,Florida
+Hollywood,FL,Florida
+Clearwater,FL,Florida
+Boca Raton,FL,Florida
+Daytona Beach,FL,Florida
+Largo,FL,Florida
+Plantation,FL,Florida
+West Palm Beach,FL,Florida
+Lakeland,FL,Florida
+Palm Bay,FL,Florida
+Chicago,IL,Illinois
+Springfield,IL,Illinois
+Peoria,IL,Illinois
+Rockford,IL,Illinois
+Aurora,IL,Illinois
+Joliet,IL,Illinois
+Schaumburg,IL,Illinois
+Champaign,IL,Illinois
+Bloomington,IL,Illinois
+Decatur,IL,Illinois
+East St. Louis,IL,Illinois
+Indianapolis,IN,Indiana
+Fort Wayne,IN,Indiana
+Evansville,IN,Indiana
+South Bend,IN,Indiana
+Jeffersonville,IN,Indiana
+Gary,IN,Indiana
+Terre Haute,IN,Indiana
+Anderson,IN,Indiana
+Hammond,IN,Indiana
+Muncie,IN,Indiana
+Lafayette,IN,Indiana
+Carmel,IN,Indiana
+Phoenix,AZ,Arizona
+Tucson,AZ,Arizona
+Mesa,AZ,Arizona
+Scottsdale,AZ,Arizona
+Gilbert,AZ,Arizona
+Tempe,AZ,Arizona
+Chandler,AZ,Arizona
+Marana,AZ,Arizona
+Atlanta,GA,Georgia
+Macon,GA,Georgia
+Savannah,GA,Georgia
+Augusta,GA,Georgia
+South Fulton,GA,Georgia
+Athens,GA,Georgia
+Marietta,GA,Georgia
+Sandy Springs,GA,Georgia
+Seattle,WA,Washington
+Tacoma,WA,Washington
+Spokane,WA,Washington
+Vancouver,WA,Washington
+Spokane Valley,WA,Washington
+Bellevue,WA,Washington
+Kent,WA,Washington
+Everett,WA,Washington
+Houston,TX,Texas
+Dallas,TX,Texas
+El Paso,TX,Texas
+San Antonio,TX,Texas
+Austin,TX,Texas
+Fort Worth,TX,Texas
+Fort Bliss,TX,Texas
+Corpus Christi,TX,Texas
+Lubbock,TX,Texas
+Amarillo,TX,Texas
+Waco,TX,Texas
+Irving,TX,Texas
+Beaumont,TX,Texas
+Denton,TX,Texas
+Abilene,TX,Texas
+Tyler,TX,Texas
+Wichita Falls,TX,Texas
+Garland,TX,Texas
+Plano,TX,Texas
+Midland,TX,Texas
+San Angelo,TX,Texas
+Longview,TX,Texas
+Huntsville,TX,Texas
+Grand Prairie,TX,Texas
+College Station,TX,Texas
+McAllen,TX,Texas
+League City,TX,Texas
+Bryan,TX,Texas
+Brownsville,TX,Texas
+Richardson,TX,Texas
+Lewisville,TX,Texas
+Mesquite,TX,Texas
+Killeen,TX,Texas
+The Woodlands,TX,Texas
+Laredo,TX,Texas
+Galveston,TX,Texas
+Round Rock,TX,Texas
+Sugar Land,TX,Texas
+Pearland,TX,Texas
+Odessa,TX,Texas
+Victoria,TX,Texas
+Gatesville,TX,Texas
+Conroe,TX,Texas
+Temple,TX,Texas
+Nacogdoches,TX,Texas
+Texas City,TX,Texas
+Port Arthur,TX,Texas
+New York,NY,New York
+Manhattan,NY,New York
+Queens,NY,New York
+Brooklyn,NY,New York
+Albany,NY,New York
+Rochester,NY,New York
+Buffalo,NY,New York
+Bronx,NY,New York
+Syracuse,NY,New York
+Staten Island,NY,New York
+Yonkers,NY,New York
+Schenectady,NY,New York
+White Plains,NY,New York
+Uniondale,NY,New York
+Utica,NY,New York
+Roanoke,VA,Virginia
+Richmond,VA,Virginia
+Arlington,VA,Virginia
+Norfolk,VA,Virginia
+Virginia Beach,VA,Virginia
+Newport News,VA,Virginia
+Hampton,VA,Virginia
+McLean,VA,Virginia
+Lynchburg,VA,Virginia
+Chesapeake,VA,Virginia
+Charlottesville,VA,Virginia
+Suffolk,VA,Virginia
+Oklahoma City,OK,Oklahoma
+Tulsa,OK,Oklahoma
+Norman,OK,Oklahoma
+Lawton,OK,Oklahoma
+Midwest City,OK,Oklahoma
+Stillwater,OK,Oklahoma
+Enid,OK,Oklahoma
+Albuquerque,NM,New Mexico
+Las Cruces,NM,New Mexico
+Santa Fe,NM,New Mexico
+Rio Rancho,NM,New Mexico
+Santa Clara,NM,New Mexico
+New Orleans,LA,Louisiana
+Baton Rouge,LA,Louisiana
+Shreveport,LA,Louisiana
+Metairie,LA,Louisiana
+Lake Charles,LA,Louisiana
+Monroe,LA,Louisiana
+Alexandria,LA,Louisiana
+Kenner,LA,Louisiana
+Bossier City,LA,Louisiana
+Central,LA,Louisiana
+Slidell,LA,Louisiana
+Wichita,KS,Kansas
+Topeka,KS,Kansas
+Overland Park,KS,Kansas
+Shawnee,KS,Kansas
+Lenexa,KS,Kansas
+Lawrence,KS,Kansas
+Mission,KS,Kansas
+Leawood,KS,Kansas
+Olathe,KS,Kansas
+Anchorage,AK,Alaska
+Juneau,AK,Alaska
+Fairbanks,AK,Alaska
+Meadow Lakes,AK,Alaska
+Kalifornsky,AK,Alaska
+Kodiak,AK,Alaska
+Little Rock,AR,Arkansas
+Fort Smith,AR,Arkansas
+North Little Rock,AR,Arkansas
+Jonesboro,AR,Arkansas
+Pine Bluff,AR,Arkansas
+Rogers,AR,Arkansas
+Fayetteville,AR,Arkansas
+Detroit,MI,Michigan
+Lansing,MI,Michigan
+Grand Rapids,MI,Michigan
+Flint,MI,Michigan
+Kalamazoo,MI,Michigan
+Dearborn,MI,Michigan
+Ann Arbor,MI,Michigan
+Warren,MI,Michigan
+Southfield,MI,Michigan
+Troy,MI,Michigan
+Kentwood,MI,Michigan
+Forest Hills,MI,Michigan
+Kansas City,MO,Missouri
+St. Louis,MO,Missouri
+Jefferson City,MO,Missouri
+Independence,MO,Missouri
+Columbia,MO,Missouri
+St. Joseph,MO,Missouri
+Wildwood,MO,Missouri
+Lee's Summit,MO,Missouri
+Jackson,MS,Mississippi
+Gulfport,MS,Mississippi
+Biloxi,MS,Mississippi
+Meridian,MS,Mississippi
+Salt Lake City,UT,Utah
+West Valley City,UT,Utah
+Ogden,UT,Utah
+Sandy,UT,Utah
+Provo,UT,Utah
+Las Vegas,NV,Nevada
+Paradise,NV,Nevada
+Reno,NV,Nevada
+Henderson,NV,Nevada
+North Las Vegas,NV,Nevada
+Spring Valley,NV,Nevada
+Sunrise Manor,NV,Nevada
+Enterprise,NV,Nevada
+Carson City,NV,Nevada
+Portland,OR,Oregon
+Beaverton,OR,Oregon
+Salem,OR,Oregon
+Eugene,OR,Oregon
+Gresham,OR,Oregon
+Corvallis,OR,Oregon
+Hillsboro,OR,Oregon
+Bend,OR,Oregon
+Milwaukee,WI,Wisconsin
+Madison,WI,Wisconsin
+Green Bay,WI,Wisconsin
+Racine,WI,Wisconsin
+Salem Lakes,WI,Wisconsin
+Appleton,WI,Wisconsin
+Oshkosh,WI,Wisconsin
+Caledonia,WI,Wisconsin
+Minneapolis,MN,Minnesota
+St. Paul,MN,Minnesota
+Duluth,MN,Minnesota
+St. Cloud,MN,Minnesota
+Columbus,OH,Ohio
+Cincinnati,OH,Ohio
+Cleveland,OH,Ohio
+Toledo,OH,Ohio
+Akron,OH,Ohio
+Dayton,OH,Ohio
+Canton,OH,Ohio
+Youngstown,OH,Ohio
+Beavercreek,OH,Ohio
+Lexington,KY,Kentucky
+Louisville,KY,Kentucky
+Frankfort,KY,Kentucky
+Covington,KY,Kentucky
+Lyndon,KY,Kentucky
+Jeffersontown,KY,Kentucky
+Bowling Green,KY,Kentucky
+Hillview,KY,Kentucky
+Somerset,KY,Kentucky
+Burnside,KY,Kentucky
+Huntington,WV,West Virginia
+Charleston,WV,West Virginia
+Morgantown,WV,West Virginia
+Martinsburg,WV,West Virginia
+Philadelphia,PA,Pennsylvania
+Pittsburgh,PA,Pennsylvania
+Erie,PA,Pennsylvania
+Harrisburg,PA,Pennsylvania
+Wilkes-Barre,PA,Pennsylvania
+Scranton,PA,Pennsylvania
+Allentown,PA,Pennsylvania
+Reading,PA,Pennsylvania
+Lancaster,PA,Pennsylvania
+Memphis,TN,Tennessee
+Nashville,TN,Tennessee
+Knoxville,TN,Tennessee
+Chattanooga,TN,Tennessee
+Murfreesboro,TN,Tennessee
+Johnson City,TN,Tennessee
+Clarksville,TN,Tennessee
+Kingsport,TN,Tennessee
+Franklin,TN,Tennessee
+Bartlett,TN,Tennessee
+Lebanon,TN,Tennessee
+Cookeville,TN,Tennessee
+Des Moines,IA,Iowa
+West Des Moines,IA,Iowa
+Cedar Rapids,IA,Iowa
+Davenport,IA,Iowa
+Sioux City,IA,Iowa
+Iowa City,IA,Iowa
+Ames,IA,Iowa
+Dubuque,IA,Iowa
+Waterloo,IA,Iowa
+Clinton,IA,Iowa
+Omaha,NE,Nebraska
+Lincoln,NE,Nebraska
+Kearney,NE,Nebraska
+Papillion,NE,Nebraska
+Billings,MT,Montana
+Butte,MT,Montana
+Helena,MT,Montana
+Missoula,MT,Montana
+Great Falls,MT,Montana
+Fargo,ND,North Dakota
+Bismarck,ND,North Dakota
+Grand Forks,ND,North Dakota
+Minot,ND,North Dakota
+Sioux Falls,SD,South Dakota
+Rapid City,SD,South Dakota
+Newark,NJ,New Jersey
+Trenton,NJ,New Jersey
+Paterson,NJ,New Jersey
+Jersey City,NJ,New Jersey
+Hartford,CT,Connecticut
+New Haven,CT,Connecticut
+Waterbury,CT,Connecticut
+Stamford,CT,Connecticut
+Norwalk,CT,Connecticut
+Bridgeport,CT,Connecticut
+New Britain,CT,Connecticut
+Wauregan,CT,Connecticut
+Boston,MA,Massachusetts
+Worcester,MA,Massachusetts
+Newton,MA,Massachusetts
+Fall River,MA,Massachusetts
+Cambridge,MA,Massachusetts
+Lynn,MA,Massachusetts
+New Bedford,MA,Massachusetts
+Lowell,MA,Massachusetts
+Waltham,MA,Massachusetts
+Brockton,MA,Massachusetts
+Framingham,MA,Massachusetts
+Chicopee,MA,Massachusetts
+Northampton,MA,Massachusetts
+Auburn,ME,Maine
+Lewiston,ME,Maine
+Biddeford,ME,Maine
+Providence,RI,Rhode Island
+Cranston,RI,Rhode Island
+Warwick,RI,Rhode Island
+Pawtucket,RI,Rhode Island
+East Providence,RI,Rhode Island
+Manchester,NH,New Hampshire
+Nashua,NH,New Hampshire
+Portsmouth,NH,New Hampshire
+Concord,NH,New Hampshire
+Montpelier,VT,Vermont
+Burlington,VT,Vermont
+South Burlington,VT,Vermont
+South Barre,VT,Vermont
+Ascutney,VT,Vermont
+North Hyde Park,VT,Vermont

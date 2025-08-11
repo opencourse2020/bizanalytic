@@ -11,7 +11,6 @@ ADMIN_URL = env.str("DJANGO_ADMIN_URL")
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS")
 OPENAI_KEY = env.str("DJANGO_OPENAI")
 GEMINIAPI_KEY = env.str("DJANGO_GEMINIAPI")
-OPENREFINE_API_KEY = env.str("DJANGO_OPENREFINE_API_KEY")
 
 # Strip config
 STRIPE_SECRET_KEY = env.str("DJANGO_STRIPE_SECRET_KEY_TEST")
@@ -87,11 +86,16 @@ LOGGING = {
             "maxBytes": 1024 * 1024 * 5,
             "backupCount": 5,
         },
+        'db_handler': {
+                'class': 'db_log_handler.DBHandler', # Assuming custom handler or django-db-logger's handler
+                'level': 'INFO', # Or desired logging level
+            },
     },
     "loggers": {
         "django": {
-            "handlers": ["console", "mail_admins", "rotating_file"],
+            "handlers": ["console", "mail_admins", "rotating_file", "db_handler"],
             "level": "INFO",
+            "propagate": False,
         },
     },
 }

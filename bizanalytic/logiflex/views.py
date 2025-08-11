@@ -609,6 +609,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         email_name = request.POST.get("email_nm")
         email_name = email_name.lower()
         route_file = request.FILES["route_file"]
+        route_filename = request.POST.get("filename")
 
         client = models.LogiFlexClient.objects.filter(user=self.request.user).first()
         servicepayment = models.ServicePayment.objects.filter(client=client).first()
@@ -629,7 +630,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
                                                               download_code=downloadcode,
                                                               report_type='full')
             # Clean and validate route file and generate logs
-            column_report, date_report, cities_report, routefilename = test_validator(route_file, logireport)
+            column_report, date_report, cities_report, routefilename = test_validator(route_file, logireport, route_filename)
 
             # update route file
             logireport.routefile = routefilename

@@ -142,7 +142,7 @@ $("#generate_full_rp").click(function (){
                 formData.append('cp_nm', cp_nm);
                 formData.append('email_nm', email_nm);
                 formData.append('route_file', file_b);
-                // formData.append('cixphoto', cixphoto);
+                formData.append('filename', fileName_b);
                 $.ajax({
                     type: 'POST',
                     url: url,

@@ -657,7 +657,7 @@ class CityStateNormalizer:
 
 
 # Example usage and testing
-def test_validator(routefile, report):
+def test_validator(routefile, report, routefilename):
 
 # load us cities file
     us_cities = pd.read_csv(uscities_file)
@@ -705,7 +705,8 @@ def test_validator(routefile, report):
     cities_report = cities_report + clean_df  # Cleaned data
     cities_report = cities_report + "\nUnknown cities for review"
     cities_report = cities_report + review_df  # Unknown cities for review
-    filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(report.client.id, report.id, report.routefilename())
+    filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(report.client.id, report.id, routefilename)
+    print("filename: ", filename)
     filepath = settings.MEDIA_ROOT + "/" + filename
     data.to_csv(filepath, index=False)
 

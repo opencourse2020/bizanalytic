@@ -588,15 +588,12 @@ class FullReportView(LoginRequiredMixin, TemplateView):
         pu = self.kwargs.get("pk")
         client = models.LogiFlexClient.objects.filter(user=self.request.user).first()
         servicepayment = models.ServicePayment.objects.filter(pk=pu, client=client).first()
-        if servicepayment:
-            downloadcode = generatecode(8)
-            report = models.LogiflexReport(client=servicepayment.client, payment=servicepayment, report_type='full',
-                                           download_code=downloadcode)
-            report.save()
-            kwargs["contact_name"] = report.client.contact_name
-            kwargs["company"] = report.client.company
-            kwargs["email"] = report.client.email
-            kwargs["reportid"] = report.id
+        if servicepayment and servicepayment.can_generate_report():
+
+            kwargs["contact_name"] = servicepayment.client.contact_name
+            kwargs["company"] = servicepayment.client.company
+            kwargs["email"] = servicepayment.client.email
+            # kwargs["reportid"] = servicepayment.client.id
 
         return super(FullReportView, self).get_context_data(**kwargs)
 
@@ -605,27 +602,21 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
 
         # load AJAX data from the template
-        reportid = request.POST.get("cixphoto")
+
+        # clientid = request.POST.get("cixphoto")
         client_name = request.POST.get("client_nm")
         cp_name = request.POST.get("cp_nm")
         email_name = request.POST.get("email_nm")
         email_name = email_name.lower()
         route_file = request.FILES["route_file"]
 
-        print("report ID:", reportid)
-
-        # Check and clean file
-
-        checkreport = models.LogiflexReport.objects.filter(pk=reportid).first()
-        clientid= checkreport.client.id
-        # client = models.LogiFlexClient.objects.filter(pk=)
-        servicepayment = models.ServicePayment.objects.filter(client_id=clientid).first()
+        client = models.LogiFlexClient.objects.filter(user=self.request.user).first()
+        servicepayment = models.ServicePayment.objects.filter(client=client).first()
 
         if servicepayment.can_generate_report():
 
             # Save client and result data
             user = self.request.user
-            client = models.LogiFlexClient.objects.filter(user=user).first()
             if not client.contact_name:
                 client.contact_name = client_name
             if not client.company:
@@ -633,9 +624,10 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
             client.save()
 
-
-            logireport, report_created = models.LogiflexReport.objects.update_or_create(pk=reportid,
-                                                                                    defaults={'client': client})
+            downloadcode = generatecode(8)
+            logireport = models.LogiflexReport.objects.create(client=client, payment=servicepayment,
+                                                              download_code=downloadcode,
+                                                              report_type='full')
             # Clean and validate route file and generate logs
             column_report, date_report, cities_report, routefilename = test_validator(route_file, logireport)
 
@@ -644,8 +636,8 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             logireport.save()
 
             # Save log data
-            logiflex_log, log_created = models.LogEntry.objects.create(report=logireport, column_report=column_report,
-                                                                       date_report=date_report, citi_report=cities_report)
+            logiflex_log = models.LogEntry.objects.create(report=logireport, column_report=column_report,
+                                                          date_report=date_report, citi_report=cities_report)
 
             # Send a confirmation Email to client
             email_info = {

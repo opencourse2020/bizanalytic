@@ -86,16 +86,11 @@ LOGGING = {
             "maxBytes": 1024 * 1024 * 5,
             "backupCount": 5,
         },
-        'db_handler': {
-                'class': 'db_log_handler.DBHandler', # Assuming custom handler or django-db-logger's handler
-                'level': 'INFO', # Or desired logging level
-            },
     },
     "loggers": {
         "django": {
-            "handlers": ["console", "mail_admins", "rotating_file", "db_handler"],
+            "handlers": ["console", "mail_admins", "rotating_file"],
             "level": "INFO",
-            "propagate": False,
         },
     },
 }

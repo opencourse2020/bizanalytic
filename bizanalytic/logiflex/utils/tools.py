@@ -1,7 +1,6 @@
 import random
 from django.conf import settings
 import requests
-import logging
 from bizanalytic.logiflex.models import LogEntry
 
 def generatecode(length):

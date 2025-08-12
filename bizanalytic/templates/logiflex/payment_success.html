@@ -74,6 +74,7 @@
                                     <th>{% trans "Data File" %}</th>
                                     <th>{% trans "Upload Time" %}</th>
                                     <th>{% trans "Report" %}</th>
+                                    <th>{% trans "Expected Delivery" %}</th>
                                     <th>{% trans "Date Created" %}</th>
 
 
@@ -88,7 +89,9 @@
                                     {% for logireport in reports %}
                                         <tr>
                                             <td>{{ logireport.report_number }}</td>
-
+                                            <td>
+                                               logireport.report_id
+                                            </td>
                                             <td>
                                                logireport.report_type
                                             </td>
@@ -100,12 +103,8 @@
                                                 {% endif %}
                                             </td>
                                             <td>
-                                                {{ logireport.date_created }}
+                                                {{ logireport.date_created|date:"F j, Y g:i A" }}
                                             </td>
-                                            <td>
-                                                {{ logireport.time_created }}
-                                            </td>
-
                                             <td>
                                                 {% if logireport.report_status == "Download" %}
 {#                                                    <a href="{% url 'logiflex:reports:view' logireport.pk %}" class="btn btn-info btn-sm">#}
@@ -115,6 +114,9 @@
                                                     <span style="color: #9d0006">{{ logireport.report_status }}</span>
                                                 {% endif %}
 
+                                            </td>
+                                            <td>
+                                                {{ logireport.expected_delivery|date:"F j, Y g:i A" }}
                                             </td>
                                             <td>
                                                 {{ logireport.report_date|date:"F j, Y g:i A" }}

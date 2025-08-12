@@ -189,9 +189,6 @@ class LogiflexReport(models.Model):
         permissions = (("manage_Logiflexreport", "Manage LogiFlex Reports"),)
 
     def save(self, *args, **kwargs):
-
-        if not self.expected_delivery:
-            self.expected_delivery = self.date_created + 1
         if self.report_date and self.report_date > self.expected_delivery:
             self.report_status = "Late"
         super().save(*args, **kwargs)

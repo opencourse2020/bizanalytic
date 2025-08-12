@@ -689,10 +689,15 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
                                                               download_code=downloadcode,
                                                               report_type='Paid',
                                                               report_number=latest_report.report_number+1)
+            # add route file
             logireport.routefile = route_file
+            # add report ID
             currentyear = datetime.now().year
             idl = "{:06d}".format(logireport.pk)
             logireport.report_id = f"RPT-{currentyear}-{idl}"
+            # add expected_delivery
+            logireport.expected_delivery = logireport.date_created + 1
+
             logireport.save()
             # Clean and validate route file and generate logs
             column_report, date_report, cities_report, routefilename = test_validator(route_file, logireport, route_filename)

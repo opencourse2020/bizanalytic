@@ -128,10 +128,10 @@ class ServicePayment(models.Model):
             self.reports_used = 0
             # Reset based on plan
             if self.service_type.name == 'monthly':
-                self.reports_allowed = 2
+                self.reports_allowed = 40
                 self.reset_date = now() + timedelta(days=30)
             elif self.service_type.name == 'quarterly':
-                self.reports_allowed = 6
+                self.reports_allowed = 135
                 self.reset_date = now() + timedelta(days=90)
             elif self.service_type.name == 'onetime':
                 self.reports_allowed = 1

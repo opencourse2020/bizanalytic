@@ -92,8 +92,11 @@
                                             <td>
                                                 {{ logireport.report_id }}
                                             </td>
-                                            <td>
-                                                <span class="badge bg-success">{{ logireport.report_type }}</span>
+                                            <td>{% if logireport.report_type == "Paid" %}
+                                                    <span class="badge bg-success">{{ logireport.report_type }}</span>
+                                                {% else %}
+                                                    <span class="badge bg-warning-200">{{ logireport.report_type }}</span>
+                                                {% endif %}
                                             </td>
                                             <td>
                                                 {% if logireport.routefile %}

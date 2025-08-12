@@ -106,10 +106,10 @@
                                                 {{ logireport.date_created|date:"F j, Y g:i A" }}
                                             </td>
                                             <td>
-                                                {% if logireport.report_status == "Download" %}
+                                                {% if logireport.report_status == "download" %}
 {#                                                    <a href="{% url 'logiflex:reports:view' logireport.pk %}" class="btn btn-info btn-sm">#}
                                                 <a href="{{ logireport.report.url }}" class="btn btn-info btn-sm">
-                                                    {{ logireport.report_status }}</a>
+                                                    <span style="text-transform: uppercase;">{{ logireport.report_status }}</span></a>
                                                 {% else %}
                                                     <span style="color: #9d0006">{{ logireport.report_status }}</span>
                                                 {% endif %}

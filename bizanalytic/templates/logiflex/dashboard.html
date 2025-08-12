@@ -56,11 +56,11 @@
                                 <div class="skill-wrapper">
                                     <div class="progress-content mb-10 d-flex align-items-center justify-content-between">
                                         <h6>{% trans "Reports Delivered On Time" %}</h6>
-                                        <h6>{{ finished_reports }}%</h6>
+                                        <h6>{{ ontime_reports }}%</h6>
                                     </div>
 
                                     <div class="progress">
-                                        <div class="progress-bar progressbar-active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="max-width:{{ finished_reports }}%;"></div>
+                                        <div class="progress-bar progressbar-active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="max-width:{{ ontime_reports }}%;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -109,27 +109,46 @@
                     <div class="row">
                         <div class="col-lg-4 col-sm-6 wow fadeIn" data-wow-delay=".2s">
                             <div class="single-service-2">
-                                <img src={% static "vendor/transport/assets/images/icon-18.png" %} alt="icon" class="service-icon">
-                                <h5 class="title"><a href="">peedyCare Transport Shuttle Services Seamless</a></h5>
-                                <a href="" class="primary-btn primary-bg mt-20"><span class="text">read more</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                                <img src={% static "vendor/transport/assets/images/on-time.png" %} alt="icon" class="service-icon">
+                                <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=download">{% trans "On Time Reports" %}</a></h5>
+                                {% for ot_report in latest_ontime_reports %}
+                                    <span>{{ ot_report.report_id }}-{{ ot_report.date_created|date:'Y-m-d H:i'  }}</span>
+                                {% endfor %}
+                                <a href="" class="primary-btn primary-bg mt-20"><span class="text">{% trans "More Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                             </div>
                         </div>
-
                         <div class="col-lg-4 col-sm-6 wow fadeIn" data-wow-delay=".3s">
                             <div class="single-service-2">
-                                <img src={% static "vendor/transport/assets/images/icon-19.png" %} alt="icon" class="service-icon">
-                                <h5 class="title"><a href="">Moving you forward, one ride at a time Swift</a></h5>
-                                <a href="" class="primary-btn primary-bg mt-20"><span class="text">read more</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                                <img src={% static "vendor/transport/assets/images/process.png" %} alt="icon" class="service-icon">
+                                <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=processing">{% trans "In Process Reports" %}</a></h5>
+                                {% for p_report in latest_processing_reports %}
+                                    <span>{{ p_report.report_id }}-{{ p_report.date_created|date:'Y-m-d H:i'  }}</span>
+                                {% endfor %}
+                                <a href="{% url 'logiflex:reports:list' %}?cat=processing" class="primary-btn primary-bg mt-20"><span class="text">{% trans "More Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 wow fadeIn" data-wow-delay=".4s">
+                            <div class="single-service-2">
+                                <img src={% static "vendor/transport/assets/images/cancelled.png" %} alt="icon" class="service-icon">
+                                <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=canceled">{% trans "Canceled Reports" %}</a></h5>
+                                {% for c_report in latest_canceled_reports %}
+                                    <span>{{ c_report.report_id }}-{{ c_report.date_created|date:'Y-m-d H:i'  }}</span>
+                                {% endfor %}
+                                <a href="{% url 'logiflex:reports:list' %}?cat=canceled" class="primary-btn primary-bg mt-20"><span class="text">{% trans "More Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 wow fadeIn" data-wow-delay=".3s">
+                            <div class="single-service-2">
+                                <img src={% static "vendor/transport/assets/images/being-late.png" %} alt="icon" class="service-icon">
+                                <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=late">{% trans "Late Reports" %}</a></h5>
+                                {% for l_report in latest_late_reports %}
+                                    <span>{{ l_report.report_id }}-{{ l_report.date_created|date:'Y-m-d H:i'  }}</span>
+                                {% endfor %}
+                                <a href="{% url 'logiflex:reports:list' %}?cat=late" class="primary-btn primary-bg mt-20"><span class="text">{% trans "More Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-sm-6 wow fadeIn" data-wow-delay=".4s">
-                            <div class="single-service-2">
-                                <img src={% static "vendor/transport/assets/images/icon-12.png" %} alt="icon" class="service-icon">
-                                <h5 class="title"><a href="">solutions for all your needs ride with us</a></h5>
-                                <a href="" class="primary-btn primary-bg mt-20"><span class="text">read more</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 </div>

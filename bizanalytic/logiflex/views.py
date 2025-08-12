@@ -54,16 +54,32 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         pu = self.request.user
         reports = models.LogiflexReport.objects.filter(client__user=pu)
         total_reports = reports.count()
-        finished_reports = reports.filter(report_status="Download").count()
-        processing_reports = reports.filter(report_status="Processing").count()
-        canceled_reports = reports.filter(report_status="Canceled").count()
-        late_reports = reports.filter(expected_delivery__lt=datetime.now(), report_status="Processing").count() + \
-                       reports.filter(report_status="Late").count()
+        if total_reports == 0:
+            total_reports = 1
 
-        kwargs["finished_reports"] = math.ceil((finished_reports/total_reports)*100)
-        kwargs["processing_reports"] = math.ceil((processing_reports/total_reports)*100)
-        kwargs["canceled_reports"] = math.ceil((canceled_reports/total_reports)*100)
-        kwargs["late_reports"] = math.ceil((late_reports/total_reports)*100)
+        ontime_reports = reports.filter(report_status="Download")
+        num_ontime_reports = ontime_reports.count()
+        ontime_reports = ontime_reports.order_by('report_number')[:3]
+        processing_reports = reports.filter(report_status="Processing")
+        num_processing_reports = processing_reports.count()
+        processing_reports = processing_reports.order_by('report_number')[:3]
+        canceled_reports = reports.filter(report_status="Canceled")
+        num_canceled_reports = canceled_reports.count()
+        canceled_reports = canceled_reports.order_by('report_number')[:3]
+        num_late_reports = reports.filter(expected_delivery__lt=datetime.now(), report_status="Processing").count() + \
+                       reports.filter(report_status="Late").count()
+        finished_reports = num_ontime_reports + num_late_reports
+        late_reports = reports.filter(expected_delivery__lt=datetime.now(), report_status="Processing").order_by('report_number')[:3]
+        if finished_reports == 0:
+            finished_reports = 1
+        kwargs["latest_ontime_reports"] = ontime_reports
+        kwargs["latest_processing_reports"] = processing_reports
+        kwargs["latest_canceled_reports"] = canceled_reports
+        kwargs["latest_late_reports"] = late_reports
+        kwargs["ontime_reports"] = math.ceil((num_ontime_reports/total_reports)*100)
+        kwargs["processing_reports"] = math.ceil((num_processing_reports/total_reports)*100)
+        kwargs["canceled_reports"] = math.ceil((num_canceled_reports/total_reports)*100)
+        kwargs["late_reports"] = math.ceil((num_late_reports/finished_reports)*100)
         return super(DashboardView, self).get_context_data(**kwargs)
 
 
@@ -599,10 +615,16 @@ class Payment_SuccessView(LoginRequiredMixin, TemplateView):
     template_name = "logiflex/payment_success.html"
 
     def get_context_data(self, **kwargs):
+        query = self.request.GET.get("cat").lower()
+
         user = self.request.user
         servicepayment = models.ServicePayment.objects.filter(client__user=user).first()
         if servicepayment:
-            reports = models.LogiflexReport.objects.filter(client__user=user)
+            if query:
+                if query in ["processing", "download", "canceled", "late"]:
+                    reports = models.LogiflexReport.objects.filter(client__user=user, report_status=query)
+            else:
+                reports = models.LogiflexReport.objects.filter(client__user=user)
             # reports = reports.filter(report_created=True)
             kwargs["reports"] = reports.order_by('-report_number')
             if servicepayment.can_generate_report():

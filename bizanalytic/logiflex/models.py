@@ -159,10 +159,10 @@ class LogiflexReport(models.Model):
 
     )
     status = (
-        ('Processing', _("Processing")),
-        ('Download', _("Download")),
-        ('Canceled', _("Canceled")),
-        ('Late', _("Late")),
+        ('processing', _("Processing")),
+        ('download', _("Download")),
+        ('canceled', _("Canceled")),
+        ('late', _("Late")),
     )
     report_id = models.CharField(max_length=50, null=True, blank=True)
     report_number = models.IntegerField(null=True, blank=True, default=0)

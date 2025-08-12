@@ -162,6 +162,10 @@ $("#generate_full_rp").click(function (){
                                 $("#report-message").html('<div class="alert alert-success d-flex align-items-center" role="alert"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg><div>' +
                                     message + '</div>');
                                 $("#report-message").show();
+                                var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+                                var toastList = toastElList.map(function (toastEl) {
+                                  return new bootstrap.Toast(toastEl, option)
+                                })
                             }
                         }
                     }

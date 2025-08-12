@@ -189,10 +189,7 @@ class LogiflexReport(models.Model):
         permissions = (("manage_Logiflexreport", "Manage LogiFlex Reports"),)
 
     def save(self, *args, **kwargs):
-        if not self.report_id:  # Generate slug only if it's not already set
-            currentyear = datetime.now().year
-            idl = "{:06d}".format(self.pk)
-            self.report_id = f"RPT-{currentyear}-{idl}"
+
         if not self.expected_delivery:
             self.expected_delivery = self.date_created + 1
         if self.report_date and self.report_date > self.expected_delivery:

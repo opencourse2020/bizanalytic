@@ -690,6 +690,9 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
                                                               report_type='Paid',
                                                               report_number=latest_report.report_number+1)
             logireport.routefile = route_file
+            currentyear = datetime.now().year
+            idl = "{:06d}".format(logireport.pk)
+            logireport.report_id = f"RPT-{currentyear}-{idl}"
             logireport.save()
             # Clean and validate route file and generate logs
             column_report, date_report, cities_report, routefilename = test_validator(route_file, logireport, route_filename)

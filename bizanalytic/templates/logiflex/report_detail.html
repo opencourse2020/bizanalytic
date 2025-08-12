@@ -54,7 +54,21 @@
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Report Status" %}</h5>
-                        <p class="text-success fw-bold" style="font-size: 20px;">80%</p>
+                        <p class="text-success fw-bold" style="font-size: 20px;">
+                            {% if report.report_status == "processing" %}
+                                80%
+                            {% elif report.report_status == "download" %}
+                                {% if report.report %}
+                                    <a href="{{ report.report.url }}" class="btn btn-success btn-sm">{% trans "Download" %}</a>
+                                {% else %}
+                                    {% trans "Under Final Review" %}
+                                {% endif %}
+                            {% elif report.report_status == "canceled" %}
+                                <span class="badge bg-warning">{% trans "Canceled" %}</span>
+                            {% elif report.report_status == "late" %}
+                                <span class="badge bg-danger">{% trans "Late!! We appologize. Comming Soon" %}</span>
+                            {% endif %}
+                        </p>
                         <p class="text-muted">{% trans "Report completion progress" %}</p>
                     </div>
                 </div>

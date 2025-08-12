@@ -106,23 +106,23 @@
                                                 {% endif %}
                                             </td>
                                             <td>
-                                                {{ logireport.date_created|date:"F j, Y g:i A" }}
+                                                {{ logireport.date_created|date:'Y-m-d H:i' }}
                                             </td>
                                             <td>
                                                 {% if logireport.report_status == "download" %}
 {#                                                    <a href="{% url 'logiflex:reports:view' logireport.pk %}" class="btn btn-info btn-sm">#}
                                                 <a href="{{ logireport.report.url }}" class="btn btn-info btn-sm">
-                                                    <span style="text-transform: uppercase;">{{ logireport.report_status }}</span></a>
+                                                    <span style="text-transform: uppercase;font-size: 12px;">{{ logireport.report_status }}</span></a>
                                                 {% else %}
-                                                    <span style="text-transform: uppercase; color: #9d0006">{{ logireport.report_status }}</span>
+                                                    <span style="text-transform: uppercase; color: #9d0006;font-size: 12px;">{{ logireport.report_status }}</span>
                                                 {% endif %}
 
                                             </td>
                                             <td>
-                                                {{ logireport.expected_delivery|date:"F j, Y g:i A" }}
+                                                {{ logireport.expected_delivery|date:'Y-m-d H:i' }}
                                             </td>
                                             <td>
-                                                {{ logireport.report_date|date:"F j, Y g:i A" }}
+                                                {{ logireport.report_date|date:'Y-m-d H:i' }}
                                             </td>
 
                                         </tr>

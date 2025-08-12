@@ -24,7 +24,7 @@ import math
 import pandas as pd
 # Third party libraries
 import stripe
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from . import models, forms
 from bizanalytic.profiles.mixins import JsonFormMixin
@@ -696,7 +696,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             idl = "{:06d}".format(logireport.pk)
             logireport.report_id = f"RPT-{currentyear}-{idl}"
             # add expected_delivery
-            logireport.expected_delivery = logireport.date_created + 1
+            logireport.expected_delivery = logireport.date_created + timedelta(days=1)
 
             logireport.save()
             # Clean and validate route file and generate logs

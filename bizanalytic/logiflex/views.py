@@ -576,7 +576,7 @@ class Payment_SuccessView(LoginRequiredMixin, TemplateView):
         if servicepayment:
             reports = models.LogiflexReport.objects.filter(client__user=user)
             # reports = reports.filter(report_created=True)
-            kwargs["reports"] = reports
+            kwargs["reports"] = reports.order_by('-report_number')
             if servicepayment.can_generate_report():
                 kwargs["payid"] = servicepayment.pk
             else:
@@ -631,9 +631,11 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             client.save()
 
             downloadcode = generatecode(8)
+            latest_report = models.LogiflexReport.objects.filter(client=client).latest()
             logireport = models.LogiflexReport.objects.create(client=client, payment=servicepayment,
                                                               download_code=downloadcode,
-                                                              report_type='full')
+                                                              report_type='full',
+                                                              report_number=latest_report.report_number+1)
             logireport.routefile = route_file
             logireport.save()
             # Clean and validate route file and generate logs

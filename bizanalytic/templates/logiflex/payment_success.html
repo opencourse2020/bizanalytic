@@ -92,7 +92,7 @@
                                 {% else %}
                                     {% for logireport in reports %}
                                         <tr>
-                                            <td></td>
+                                            <td>{{ logireport.report_number }}</td>
 
                                             <td>
                                                 {% if logireport.report_type == "full" %}

@@ -35,9 +35,9 @@
                     <div class="col-12 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <h1 class="title">LogiFlex - </h1>
-                            <span class="title" style="color: #0cb7d6; font-size: 60px">&nbsp;{% trans "Report Details" %}&nbsp;-&nbsp;</span>
+                            <span class="title" style="color: #0cb7d6; font-size: 60px">&nbsp;{% trans "Report Details" %}</span>
                         </div>
-                        <p style="color: white; font-size: 18px;">{{ report.report_id }}</p>
+                        <p style="color: white; font-size: 18px;">{% trans "Report ID:" %}&nbsp;{{ report.report_id }}</p>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Report Status" %}</h5>
-                        <p class="display-4 text-success fw-bold">80%</p>
+                        <p class="text-success fw-bold" style="font-size: 20px;">80%</p>
                         <p class="text-muted">{% trans "Report completion progress" %}</p>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Expected Delivery" %}</h5>
-                        <p class="fw-bold">{{ report.expected_delivery|date:"F j, Y" }}&nbsp;- &nbsp;<span style="color: #0cb7d6;">{{ report.expected_delivery|date:"H:i:s" }}</span></p>
+                        <p class="fw-bold" style="font-size: 20px;">{{ report.expected_delivery|date:"F j, Y" }}&nbsp;- &nbsp;<span style="color: #0cb7d6;">{{ report.expected_delivery|date:"H:i:s" }}</span></p>
                         <p class="text-muted">{% trans "Estimated completion time" %}</p>
                     </div>
                 </div>

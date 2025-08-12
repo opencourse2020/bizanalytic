@@ -178,7 +178,7 @@ class LogiflexReport(models.Model):
     report_text = models.JSONField(blank=True, null=True, default=dict)
     report_type = models.CharField(max_length=5, choices=reporttype, null=True, blank=True)
     download_code = models.CharField(max_length=8, null=True, blank=True)
-    report_status = models.CharField(max_length=10, choices=status, default="Processing")
+    report_status = models.CharField(max_length=10, choices=status, default="processing")
     date_created = models.DateTimeField(auto_now_add=True)
     report_date = models.DateTimeField(null=True)
     expected_delivery = models.DateTimeField(null=True, blank=True)

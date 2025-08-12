@@ -57,19 +57,19 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         if total_reports == 0:
             total_reports = 1
 
-        ontime_reports = reports.filter(report_status="Download")
+        ontime_reports = reports.filter(report_status="download")
         num_ontime_reports = ontime_reports.count()
         ontime_reports = ontime_reports.order_by('report_number')[:3]
-        processing_reports = reports.filter(report_status="Processing")
+        processing_reports = reports.filter(report_status="processing")
         num_processing_reports = processing_reports.count()
         processing_reports = processing_reports.order_by('report_number')[:3]
-        canceled_reports = reports.filter(report_status="Canceled")
+        canceled_reports = reports.filter(report_status="canceled")
         num_canceled_reports = canceled_reports.count()
         canceled_reports = canceled_reports.order_by('report_number')[:3]
-        num_late_reports = reports.filter(expected_delivery__lt=datetime.now(), report_status="Processing").count() + \
-                       reports.filter(report_status="Late").count()
+        num_late_reports = reports.filter(expected_delivery__lt=datetime.now(), report_status="processing").count() + \
+                       reports.filter(report_status="late").count()
         finished_reports = num_ontime_reports + num_late_reports
-        late_reports = reports.filter(expected_delivery__lt=datetime.now(), report_status="Processing").order_by('report_number')[:3]
+        late_reports = reports.filter(expected_delivery__lt=datetime.now(), report_status="processing").order_by('report_number')[:3]
         if finished_reports == 0:
             finished_reports = 1
         kwargs["latest_ontime_reports"] = ontime_reports

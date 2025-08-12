@@ -302,28 +302,35 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
 
         # Save client and result data
         user = User.objects.filter(email=email_name).first()
+
         if user:
             client = models.LogiFlexClient.objects.filter(user=user).first()
             if client:
-                report = models.LogiflexReport(client=client, routefile=route_file, report_type="short")
+                latest_report = models.LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
+                report = models.LogiflexReport(client=client, routefile=route_file, report_type="short",
+                                               report_number=latest_report.report_number+1)
                 report.save()
             else:
                 obj, created = models.LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name,
                                                                                         'user': user,
                                                                                         'contact_name': client_nm})
-                report = models.LogiflexReport(client=obj, routefile=route_file, report_type="short")
+
+                report = models.LogiflexReport(client=obj, routefile=route_file, report_type="short",
+                                               report_number=1)
                 report.save()
         else:
             client = models.LogiFlexClient.objects.filter(email=email_name).first()
             if client:
-                report = models.LogiflexReport(client=client, routefile=route_file, report_type="short")
+                latest_report = models.LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
+                report = models.LogiflexReport(client=client, routefile=route_file, report_type="short",
+                                               report_number=latest_report.report_number+1)
                 report.save()
             else:
                 obj, created = models.LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name,
                                                                                         'contact_name': client_nm})
-                report = models.LogiflexReport(client=obj, routefile=route_file, report_type="short")
+                report = models.LogiflexReport(client=obj, routefile=route_file, report_type="short", report_number=1)
                 report.save()
 
         column_report, date_report, cities_report, routefilename = test_validator(route_file, report,

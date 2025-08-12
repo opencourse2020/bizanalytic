@@ -159,10 +159,10 @@ class LogiflexReport(models.Model):
 
     )
     status = (
-        ('In-Process', _("In-Process")),
+        ('Processing', _("Processing")),
         ('Download', _("Download")),
     )
-    report_number = models.IntegerField(null=True, blank=True)
+    report_number = models.IntegerField(null=True, blank=True, default=0)
     client = models.ForeignKey(LogiFlexClient, on_delete=models.CASCADE)
     payment = models.ForeignKey(ServicePayment, on_delete=models.SET_NULL, null=True)
     routefile = ContentTypeRestrictedFileField(upload_to=datafiles_directory_path,
@@ -175,7 +175,7 @@ class LogiflexReport(models.Model):
     report_text = models.JSONField(blank=True, null=True, default=dict)
     report_type = models.CharField(max_length=5, choices=reporttype, null=True, blank=True)
     download_code = models.CharField(max_length=8, null=True, blank=True)
-    report_status = models.CharField(max_length=10, choices=status, default="inprocess")
+    report_status = models.CharField(max_length=10, choices=status, default="Processing")
     date_created = models.DateField(auto_now_add=True)
     time_created = models.TimeField(auto_now_add=True, null=True)
     report_date = models.DateTimeField(null=True)

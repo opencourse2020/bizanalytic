@@ -35,7 +35,7 @@
                     <div class="col-12 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <h1 class="title">LogiFlex - </h1>
-                            <span class="title" style="color: #0cb7d6; font-size: 60px">&nbsp;{% trans "Report Details" %}</span>
+                            <span class="title" style="color: #0cb7d6; font-size: 40px">&nbsp;{% trans "Report Details" %}</span>
                         </div>
                         <p style="color: white; font-size: 18px;">{% trans "Report ID:" %}&nbsp;{{ report.report_id }}</p>
                     </div>
@@ -45,7 +45,7 @@
 {% endblock breadcrumb %}
 
 {% block contact_area %}
-    <section class="service-area-2 biography-area py-120" data-background={% static "vendor/transport/assets/images/service-bg-2.jpg"%}>
+    <section class="service-area-2 biography-area py-20" data-background={% static "vendor/transport/assets/images/service-bg-2.jpg"%}>
         <div class="container py-4">
 
        <!-- Report Info Section -->
@@ -74,7 +74,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Uploaded File" %}</h5>
-                        <p class="fw-bold">{{ report.routefilename }}</p>
+                        <p class="fw-bold" style="font-size: 20px;">{{ report.routefilename }}</p>
                         <p class="text-muted">{% trans "File successfully processed" %}</p>
                     </div>
                 </div>

@@ -154,8 +154,8 @@ class ServicePayment(models.Model):
 
 class LogiflexReport(models.Model):
     reporttype = (
-        ('short', _("Free Short Report")),
-        ('full', _("Paid Report")),
+        ('Free', _("Free")),
+        ('Paid', _("Paid")),
 
     )
     status = (
@@ -177,9 +177,9 @@ class LogiflexReport(models.Model):
     report_type = models.CharField(max_length=5, choices=reporttype, null=True, blank=True)
     download_code = models.CharField(max_length=8, null=True, blank=True)
     report_status = models.CharField(max_length=10, choices=status, default="Processing")
-    date_created = models.DateField(auto_now_add=True)
-    time_created = models.TimeField(auto_now_add=True, null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
     report_date = models.DateTimeField(null=True)
+    expected_delivery = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name = "LogiFlexReport"
@@ -191,6 +191,8 @@ class LogiflexReport(models.Model):
             currentyear = datetime.now().year
             idl = "{:06d}".format(self.id)
             self.report_id = f"RPT-{currentyear}-{idl}"
+        if not self.expected_delivery:
+            self.expected_delivery = self.date_created + 1
         super().save(*args, **kwargs)
 
     def routefilename(self):

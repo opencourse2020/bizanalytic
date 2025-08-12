@@ -307,7 +307,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
             client = models.LogiFlexClient.objects.filter(user=user).first()
             if client:
                 latest_report = models.LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
-                report = models.LogiflexReport(client=client, routefile=route_file, report_type="short",
+                report = models.LogiflexReport(client=client, routefile=route_file, report_type="Free",
                                                report_number=latest_report.report_number+1)
                 report.save()
             else:
@@ -316,21 +316,21 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                                                                                         'user': user,
                                                                                         'contact_name': client_nm})
 
-                report = models.LogiflexReport(client=obj, routefile=route_file, report_type="short",
+                report = models.LogiflexReport(client=obj, routefile=route_file, report_type="Free",
                                                report_number=1)
                 report.save()
         else:
             client = models.LogiFlexClient.objects.filter(email=email_name).first()
             if client:
                 latest_report = models.LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
-                report = models.LogiflexReport(client=client, routefile=route_file, report_type="short",
+                report = models.LogiflexReport(client=client, routefile=route_file, report_type="Free",
                                                report_number=latest_report.report_number+1)
                 report.save()
             else:
                 obj, created = models.LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name,
                                                                                         'contact_name': client_nm})
-                report = models.LogiflexReport(client=obj, routefile=route_file, report_type="short", report_number=1)
+                report = models.LogiflexReport(client=obj, routefile=route_file, report_type="Free", report_number=1)
                 report.save()
 
         column_report, date_report, cities_report, routefilename = test_validator(route_file, report,
@@ -539,7 +539,7 @@ class WebhookView(View):
                 servicepayment.reset_quota_if_needed()
 
                 # downloadcode = generatecode(8)
-                # report = models.LogiflexReport(client=client, payment=servicepayment, report_type='full',
+                # report = models.LogiflexReport(client=client, payment=servicepayment, report_type='Paid',
                 #                                download_code=downloadcode)
                 # report.save()
 
@@ -641,7 +641,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             latest_report = models.LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
             logireport = models.LogiflexReport.objects.create(client=client, payment=servicepayment,
                                                               download_code=downloadcode,
-                                                              report_type='full',
+                                                              report_type='Paid',
                                                               report_number=latest_report.report_number+1)
             logireport.routefile = route_file
             logireport.save()

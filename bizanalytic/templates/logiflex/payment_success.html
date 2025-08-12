@@ -69,9 +69,9 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>{% trans "Report ID" %}</th>
                                     <th>{% trans "Report Type" %}</th>
-                                    <th>{% trans "Route Data File" %}</th>
-                                    <th>{% trans "Upload Date" %}</th>
+                                    <th>{% trans "Data File" %}</th>
                                     <th>{% trans "Upload Time" %}</th>
                                     <th>{% trans "Report" %}</th>
                                     <th>{% trans "Date Created" %}</th>
@@ -90,11 +90,7 @@
                                             <td>{{ logireport.report_number }}</td>
 
                                             <td>
-                                                {% if logireport.report_type == "full" %}
-                                                    {%  trans "Paid Advanced Report" %}
-                                                {% elif logireport.report_type == "short" %}
-                                                    {% trans "Free Short Report" %}
-                                                {% endif %}
+                                               logireport.report_type
                                             </td>
                                             <td>
                                                 {% if logireport.routefile %}

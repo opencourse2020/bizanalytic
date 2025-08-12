@@ -615,14 +615,17 @@ class Payment_SuccessView(LoginRequiredMixin, TemplateView):
     template_name = "logiflex/payment_success.html"
 
     def get_context_data(self, **kwargs):
-        query = self.request.GET.get("cat").lower()
+        query = self.request.GET.get("cat")
 
         user = self.request.user
         servicepayment = models.ServicePayment.objects.filter(client__user=user).first()
         if servicepayment:
             if query:
+                query = query.lower()
                 if query in ["processing", "download", "canceled", "late"]:
                     reports = models.LogiflexReport.objects.filter(client__user=user, report_status=query)
+                else:
+                    reports = models.LogiflexReport.objects.filter(client__user=user)
             else:
                 reports = models.LogiflexReport.objects.filter(client__user=user)
             # reports = reports.filter(report_created=True)

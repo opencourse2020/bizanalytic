@@ -628,7 +628,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             downloadcode = generatecode(8)
             logireport = models.LogiflexReport.objects.create(client=client, payment=servicepayment,
                                                               download_code=downloadcode,
-                                                              report_type='full')
+                                                              report_type='full', routefile=route_file)
             # Clean and validate route file and generate logs
             column_report, date_report, cities_report, routefilename = test_validator(route_file, logireport, route_filename)
 

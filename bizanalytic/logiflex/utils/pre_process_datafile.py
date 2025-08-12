@@ -708,8 +708,11 @@ def test_validator(routefile, report, routefilename):
     cities_report = cities_report + review_df  # Unknown cities for review
     directory_path = 'data_files/route_files/company_id_{0}/report_{1}'.format(report.client.id, report.id)
 
-    if not os.path.exists(directory_path):
-        os.makedirs(directory_path)
+    # if not os.path.exists(directory_path):
+    #     os.makedirs(directory_path)
+    if report.routefile:
+        if os.path.isfile(report.routefile.path):
+            os.remove(report.routefile.path)
 
     filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(report.client.id, report.id, routefilename)
     print("filename: ", filename)

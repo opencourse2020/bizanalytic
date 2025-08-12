@@ -163,6 +163,7 @@ class LogiflexReport(models.Model):
         ('Download', _("Download")),
     )
     report_number = models.IntegerField(null=True, blank=True)
+    client = models.ForeignKey(LogiFlexClient, on_delete=models.CASCADE)
     payment = models.ForeignKey(ServicePayment, on_delete=models.SET_NULL, null=True)
     routefile = ContentTypeRestrictedFileField(upload_to=datafiles_directory_path,
                                                content_types=['application/vnd.ms-excel', 'text/csv',

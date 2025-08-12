@@ -45,6 +45,9 @@ stripe_webhook = settings.STRIPE_WEBHOOK_SECRET
 class IndexView(TemplateView):
     template_name = "logiflex/home.html"
 
+class DashboardView(TemplateView):
+    template_name = "logiflex/dashboard.html"
+
 
 class SampleAdvancedReportView(TemplateView):
     template_name = "logiflex/sample_report.html"

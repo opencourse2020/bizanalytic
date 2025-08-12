@@ -43,6 +43,7 @@ stripe_patterns = [
 urlpatterns = [
 
     path("", views.IndexView.as_view(), name="index"),
+    path("dashboard/", views.DashboardView.as_view(), name="dashboard"),
     path('clean-csv/', views.clean_csv, name='clean_csv'),
     path("pricing/", views.Payment_PageView.as_view(), name='pricing'),
     path("book-call/", views.RequestCallView.as_view(), name="book-call"),

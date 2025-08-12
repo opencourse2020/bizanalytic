@@ -47,6 +47,19 @@ class IndexView(TemplateView):
     template_name = "logiflex/home.html"
 
 
+class RouteFileView(TemplateView):
+    template_name = "logiflex/report_detail.html"
+    def get_context_data(self, **kwargs):
+        pu = self.kwargs.get("pk")
+        report = models.LogiflexReport.objects.filter(pk=pu).first()
+        if report:
+            kwargs["report"] = report
+        else:
+            kwargs["report"] = ""
+
+        return super(RouteFileView, self).get_context_data(**kwargs)
+
+
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = "logiflex/dashboard.html"
 

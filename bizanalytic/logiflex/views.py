@@ -298,6 +298,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
         email_name = request.POST.get("email_nm")
         email_name = email_name.lower()
         route_file = request.FILES["route_file"]
+        route_filename = route_file.name
 
         # Save client and result data
         user = User.objects.filter(email=email_name).first()
@@ -324,27 +325,31 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                                                                                         'contact_name': client_nm})
                 report = models.LogiflexReport(client=obj, routefile=route_file, report_type="short")
                 report.save()
-        print("route file", report.routefile)
-        # Create a report
+
+        column_report, date_report, cities_report, routefilename = test_validator(route_file, report,
+                                                                                  route_filename)
+
+        # update route file
+        # logireport.routefile = routefilename
+        # logireport.save()
+
+        # Save log data
+        logiflex_log = models.LogEntry.objects.create(report=report, column_report=column_report,
+                                                      date_report=date_report, citi_report=cities_report)
+
+        # Send a confirmation Email to client
         email_info = {
-            'subject': "🚀 Your Monthly Logistics Performance Report is Here",
-            'to_email': [email_name,],
-            'company': cp_name,
-            'client_name': client_nm,
-            'shipments': "187",
-            'avgdelivery': "2.3",
-            'percent_change': 12,
-            'ontimedelivery': 94,
-            'delayreasons': "Top 3 Reasons",
-            'suggested': "Route X, Carrier Y",
-            'logiflex_contact': "Adam Akad",
-            'phone': "+1 (832) 430-2434",
-            'cc': [""],
-            'bcc': [""],
-            'attachments': report.routefile
+            'subject': "Your Fleet Efficiency Report is in Progress 🚚📊",
+            'to_email': [email_name, ],
+            'client': client_nm,
+            'report_list_link': "https://bizanalytic.com/logiflex/reports/list/",
+            'cuurentyear': datetime.now().year
         }
-        sendemail(email_info)
-        message = "Report Created Succssefully"
+        senduploadmail(email_info)
+
+        message = "Report Uploaded Succssefully. Wait for a confirmation email from us."
+
+
 
         data = {"submessage": message}
 
@@ -629,14 +634,14 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             logireport = models.LogiflexReport.objects.create(client=client, payment=servicepayment,
                                                               download_code=downloadcode,
                                                               report_type='full')
-            logireport.routefile =route_file
+            logireport.routefile = route_file
             logireport.save()
             # Clean and validate route file and generate logs
             column_report, date_report, cities_report, routefilename = test_validator(route_file, logireport, route_filename)
 
             # update route file
-            logireport.routefile = routefilename
-            logireport.save()
+            # logireport.routefile = routefilename
+            # logireport.save()
 
             # Save log data
             logiflex_log = models.LogEntry.objects.create(report=logireport, column_report=column_report,

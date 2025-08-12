@@ -117,7 +117,7 @@
 
                                             <td>
                                                 {% if logireport.report %}
-                                                <a href="{% url 'logiflex:reports:view' logireport.pk %}">
+                                                <a href="{% url 'logiflex:reports:view' logireport.pk %}" class="btn btn-primary">
                                                     {{ logireport.report_status }}</a>
                                                 {% else %}
                                                     {{ logireport.report_status }}

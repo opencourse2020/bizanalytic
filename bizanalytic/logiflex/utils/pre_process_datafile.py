@@ -1,4 +1,5 @@
 import re
+import os
 import difflib
 import pandas as pd
 from datetime import datetime, date
@@ -705,6 +706,11 @@ def test_validator(routefile, report, routefilename):
     cities_report = cities_report + clean_df  # Cleaned data
     cities_report = cities_report + "\nUnknown cities for review"
     cities_report = cities_report + review_df  # Unknown cities for review
+    directory_path = 'data_files/route_files/company_id_{0}/report_{1}'.format(report.client.id, report.id)
+
+    if not os.path.exists(directory_path):
+        os.makedirs(directory_path)
+
     filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(report.client.id, report.id, routefilename)
     print("filename: ", filename)
     filepath = settings.MEDIA_ROOT + "/" + filename

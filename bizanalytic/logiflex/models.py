@@ -168,7 +168,7 @@ class LogiflexReport(models.Model):
                                                content_types=['application/vnd.ms-excel', 'text/csv',
                                                               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', ],
                                                max_upload_size=5242880, blank=True, null=True)
-    report = models.ContentTypeRestrictedFileField(upload_to=reportfiles_directory_path,
+    report = ContentTypeRestrictedFileField(upload_to=reportfiles_directory_path,
                                                    content_types=['application/pdf'],
                                                    max_upload_size=5242880, null=True, blank=True)
     report_text = models.JSONField(blank=True, null=True, default=dict)

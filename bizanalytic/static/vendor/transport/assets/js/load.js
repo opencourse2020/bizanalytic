@@ -139,7 +139,7 @@ $("#generate_full_rp").click(function (){
 
             if (fileName_b && email_nm && cp_nm && client_nm) {
                 $("#loadingstate").show();
-                $("#report-message").hide();
+                // $("#report-message").hide();
                 formData.append('client_nm', client_nm);
                 formData.append('cp_nm', cp_nm);
                 formData.append('email_nm', email_nm);

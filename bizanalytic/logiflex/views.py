@@ -757,3 +757,4 @@ def clean_csv(request):
         data = {"submessage": cleaned_csv}
         return JsonResponse(data)
     return JsonResponse({"error": "Invalid request"}, status=400)
+

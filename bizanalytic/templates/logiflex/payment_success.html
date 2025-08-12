@@ -90,10 +90,10 @@
                                         <tr>
                                             <td>{{ logireport.report_number }}</td>
                                             <td>
-                                               logireport.report_id
+                                                {{ logireport.report_id }}
                                             </td>
                                             <td>
-                                               logireport.report_type
+                                                {{ logireport.report_type }}
                                             </td>
                                             <td>
                                                 {% if logireport.routefile %}
@@ -111,7 +111,7 @@
                                                 <a href="{{ logireport.report.url }}" class="btn btn-info btn-sm">
                                                     <span style="text-transform: uppercase;">{{ logireport.report_status }}</span></a>
                                                 {% else %}
-                                                    <span style="color: #9d0006">{{ logireport.report_status }}</span>
+                                                    <span style="text-transform: uppercase; color: #9d0006">{{ logireport.report_status }}</span>
                                                 {% endif %}
 
                                             </td>

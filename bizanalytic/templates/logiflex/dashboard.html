@@ -111,19 +111,19 @@
                             <div class="single-service-2">
                                 <img src={% static "vendor/transport/assets/images/on-time.png" %} alt="icon" class="service-icon">
                                 <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=download">{% trans "On Time Reports" %}</a></h5>
-                                {% for ot_report in latest_ontime_reports %}
-                                    <span>{{ ot_report.report_id }}-{{ ot_report.date_created|date:'Y-m-d H:i'  }}</span>
-                                {% endfor %}
-                                <a href="" class="primary-btn primary-bg mt-20"><span class="text">{% trans "More Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+{#                                {% for ot_report in latest_ontime_reports %}#}
+{#                                    <span>{{ ot_report.report_id }}-{{ ot_report.date_created|date:'Y-m-d H:i'  }}</span>#}
+{#                                {% endfor %}#}
+                                <a href="{% url 'logiflex:reports:list' %}?cat=download" class="primary-btn primary-bg mt-20"><span class="text">{% trans "More Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-6 wow fadeIn" data-wow-delay=".3s">
                             <div class="single-service-2">
                                 <img src={% static "vendor/transport/assets/images/process.png" %} alt="icon" class="service-icon">
                                 <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=processing">{% trans "In Process Reports" %}</a></h5>
-                                {% for p_report in latest_processing_reports %}
-                                    <span>{{ p_report.report_id }}-{{ p_report.date_created|date:'Y-m-d H:i'  }}</span>
-                                {% endfor %}
+{#                                {% for p_report in latest_processing_reports %}#}
+{#                                    <span>{{ p_report.report_id }}-{{ p_report.date_created|date:'Y-m-d H:i'  }}</span>#}
+{#                                {% endfor %}#}
                                 <a href="{% url 'logiflex:reports:list' %}?cat=processing" class="primary-btn primary-bg mt-20"><span class="text">{% trans "More Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                             </div>
                         </div>
@@ -131,9 +131,9 @@
                             <div class="single-service-2">
                                 <img src={% static "vendor/transport/assets/images/cancelled.png" %} alt="icon" class="service-icon">
                                 <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=canceled">{% trans "Canceled Reports" %}</a></h5>
-                                {% for c_report in latest_canceled_reports %}
-                                    <span>{{ c_report.report_id }}-{{ c_report.date_created|date:'Y-m-d H:i'  }}</span>
-                                {% endfor %}
+{#                                {% for c_report in latest_canceled_reports %}#}
+{#                                    <span>{{ c_report.report_id }}-{{ c_report.date_created|date:'Y-m-d H:i'  }}</span>#}
+{#                                {% endfor %}#}
                                 <a href="{% url 'logiflex:reports:list' %}?cat=canceled" class="primary-btn primary-bg mt-20"><span class="text">{% trans "More Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                             </div>
                         </div>
@@ -141,9 +141,9 @@
                             <div class="single-service-2">
                                 <img src={% static "vendor/transport/assets/images/being-late.png" %} alt="icon" class="service-icon">
                                 <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=late">{% trans "Late Reports" %}</a></h5>
-                                {% for l_report in latest_late_reports %}
-                                    <span>{{ l_report.report_id }}-{{ l_report.date_created|date:'Y-m-d H:i'  }}</span>
-                                {% endfor %}
+{#                                {% for l_report in latest_late_reports %}#}
+{#                                    <span>{{ l_report.report_id }}-{{ l_report.date_created|date:'Y-m-d H:i'  }}</span>#}
+{#                                {% endfor %}#}
                                 <a href="{% url 'logiflex:reports:list' %}?cat=late" class="primary-btn primary-bg mt-20"><span class="text">{% trans "More Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                             </div>
                         </div>

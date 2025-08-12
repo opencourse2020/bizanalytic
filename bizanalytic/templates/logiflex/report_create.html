@@ -130,18 +130,18 @@
 
 <!-- footer area starts -->
 {% block footer_area %}
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-  <div id="toast_report" class="toast hide text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header" id="message_title">
-      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-      <strong class="me-auto" >{% trans "Alert" %}</strong>
-      <small>{% trans "Now" %}</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body" id="message_body">
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+      <div id="toast_report" class="toast hide text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+{#        <div class="toast-header" id="message_title">#}
+{#          <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>#}
+{#          <strong class="me-auto" >{% trans "Alert" %}</strong>#}
+{#          <small>{% trans "Now" %}</small>#}
+{#          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>#}
+{#        </div>#}
+        <div class="toast-body" id="message_body">
 
-    </div>
-  </div>
+        </div>
+      </div>
 </div>
     {{ block.super }}
 {% endblock footer_area %}

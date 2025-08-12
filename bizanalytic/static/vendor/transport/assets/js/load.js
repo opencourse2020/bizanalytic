@@ -164,6 +164,7 @@ $("#generate_full_rp").click(function (){
                                 $("#report-message").show();
                                 var f = $("#toast_report");
                                 var a = new bootstrap.Toast(f);
+                                $("#message_body").html(message);
                                 a.show()
                             }
                         }

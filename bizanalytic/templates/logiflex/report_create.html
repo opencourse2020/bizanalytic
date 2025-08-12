@@ -131,15 +131,15 @@
 <!-- footer area starts -->
 {% block footer_area %}
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-  <div id="toast_report" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
+  <div id="toast_report" class="toast hide text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header" id="message_title">
       <img src="..." class="rounded me-2" alt="...">
-      <strong class="me-auto">Bootstrap</strong>
-      <small>11 mins ago</small>
+      <strong class="me-auto" >{% trans "Alert" %}</strong>
+{#      <small>11 mins ago</small>#}
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
-    <div class="toast-body">
-      Hello, world! This is a toast message.
+    <div class="toast-body" id="message_body">
+
     </div>
   </div>
 </div>

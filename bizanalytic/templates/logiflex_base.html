@@ -110,8 +110,12 @@
                         {% block main_menu%}
                         <nav>
                             <ul class="main-menu">
-                                <li ><a href="{% url 'logiflex:dashboard' %}">{% trans "Dashboard" %}</a>
-
+                                <li >
+                                    {% if user.is_authenticated %}
+                                        <a href="{% url 'logiflex:dashboard' %}">{% trans "Dashboard" %}</a>
+                                    {% else %}
+                                        <a href="{% url 'logiflex:index' %}">{% trans "Home" %}</a>
+                                    {% endif %}
                                 </li>
                                 <li ><a href="#">{% trans "Services" %}</a>
 

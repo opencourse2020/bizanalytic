@@ -114,7 +114,7 @@
 {#                                {% for ot_report in latest_ontime_reports %}#}
 {#                                    <span>{{ ot_report.report_id }}-{{ ot_report.date_created|date:'Y-m-d H:i'  }}</span>#}
 {#                                {% endfor %}#}
-                                <a href="{% url 'logiflex:reports:list' %}?cat=download" class="primary-btn primary-bg mt-20"><span class="text">{% trans "More Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                                <a href="{% url 'logiflex:reports:list' %}?cat=download" class="primary-btn primary-bg mt-20"><span class="text">{{ latest_ontime_reports.count }}&nbsp;{% trans "Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-6 wow fadeIn" data-wow-delay=".3s">
@@ -124,7 +124,7 @@
 {#                                {% for p_report in latest_processing_reports %}#}
 {#                                    <span>{{ p_report.report_id }}-{{ p_report.date_created|date:'Y-m-d H:i'  }}</span>#}
 {#                                {% endfor %}#}
-                                <a href="{% url 'logiflex:reports:list' %}?cat=processing" class="primary-btn primary-bg mt-20"><span class="text">{% trans "More Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                                <a href="{% url 'logiflex:reports:list' %}?cat=processing" class="primary-btn primary-bg mt-20"><span class="text">{{ latest_processing_reports.count }}&nbsp;{% trans "Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-6 wow fadeIn" data-wow-delay=".4s">
@@ -134,7 +134,7 @@
 {#                                {% for c_report in latest_canceled_reports %}#}
 {#                                    <span>{{ c_report.report_id }}-{{ c_report.date_created|date:'Y-m-d H:i'  }}</span>#}
 {#                                {% endfor %}#}
-                                <a href="{% url 'logiflex:reports:list' %}?cat=canceled" class="primary-btn primary-bg mt-20"><span class="text">{% trans "More Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                                <a href="{% url 'logiflex:reports:list' %}?cat=canceled" class="primary-btn primary-bg mt-20"><span class="text">{{ latest_canceled_reports.count }}&nbsp;{% trans "Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-6 wow fadeIn" data-wow-delay=".3s">
@@ -144,7 +144,7 @@
 {#                                {% for l_report in latest_late_reports %}#}
 {#                                    <span>{{ l_report.report_id }}-{{ l_report.date_created|date:'Y-m-d H:i'  }}</span>#}
 {#                                {% endfor %}#}
-                                <a href="{% url 'logiflex:reports:list' %}?cat=late" class="primary-btn primary-bg mt-20"><span class="text">{% trans "More Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                                <a href="{% url 'logiflex:reports:list' %}?cat=late" class="primary-btn primary-bg mt-20"><span class="text">{{ latest_late_reports.count }}&nbsp;{% trans "Reports" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                             </div>
                         </div>
 

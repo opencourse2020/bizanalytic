@@ -105,7 +105,7 @@
                                                 {% if logireport.routefile %}
                                                     <a href="{{ logireport.routefile.url }}" class="btn btn-outline-primary">{% trans "View" %}</a>
                                                 {% else %}
-                                                {% trans "In-Process" %}
+                                                <span style="color: #9d0006">{% trans "In-Process" %}</span>
                                                 {% endif %}
                                             </td>
                                             <td>
@@ -116,11 +116,11 @@
                                             </td>
 
                                             <td>
-                                                {% if logireport.report %}
+                                                {% if logireport.report_status == "Download" %}
                                                 <a href="{% url 'logiflex:reports:view' logireport.pk %}" class="btn btn-primary">
                                                     {{ logireport.report_status }}</a>
                                                 {% else %}
-                                                    {{ logireport.report_status }}
+                                                    <span style="color: #9d0006">{{ logireport.report_status }}</span>
                                                 {% endif %}
 
                                             </td>

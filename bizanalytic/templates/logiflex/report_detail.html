@@ -61,7 +61,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Expected Delivery" %}</h5>
-                        <p class="display-4 fw-bold">{{ report.expected_delivery|date: "F j, Y H:i:s" }}</p>
+                        <p class="display-4 fw-bold">{{ report.expected_delivery|date:"Y-m-d H:i:s" }}</p>
                         <p class="text-muted">{% trans "Estimated completion time" %}</p>
                     </div>
                 </div>

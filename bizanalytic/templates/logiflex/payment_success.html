@@ -103,7 +103,7 @@
                                             </td>
                                             <td>
                                                 {% if logireport.routefile %}
-                                                    <a href="{{ logireport.routefile.url }}">{% trans "View" %}</a>
+                                                    <a href="{{ logireport.routefile.url }}" class="btn btn-outline-primary">{% trans "View" %}</a>
                                                 {% else %}
                                                 {% trans "In-Process" %}
                                                 {% endif %}

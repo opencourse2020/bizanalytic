@@ -74,11 +74,15 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>{% trans "Client Name" %}</th>
                                     <th>{% trans "Report Type" %}</th>
-                                    <th>{% trans "Date Created" %}</th>
-                                    <th>{% trans "Data File" %}</th>
+                                    <th>{% trans "Route Data File" %}</th>
+                                    <th>{% trans "Upload Date" %}</th>
+                                    <th>{% trans "Upload Time" %}</th>
                                     <th>{% trans "Report" %}</th>
+                                    <th>{% trans "Date Created" %}</th>
+
+
+
 
                                 </tr>
                                 </thead>
@@ -89,7 +93,7 @@
                                     {% for logireport in reports %}
                                         <tr>
                                             <td></td>
-                                            <td> {{ logireport.client.contact_name }} </td>
+
                                             <td>
                                                 {% if logireport.report_type == "full" %}
                                                     {%  trans "Paid Advanced Report" %}
@@ -98,14 +102,19 @@
                                                 {% endif %}
                                             </td>
                                             <td>
+                                                {% if logireport.routefile %}
+                                                    <a href="{{ logireport.routefile.url }}">{% trans "View" %}</a>
+                                                {% else %}
+                                                {% trans "In-Process" %}
+                                                {% endif %}
+                                            </td>
+                                            <td>
                                                 {{ logireport.date_created }}
                                             </td>
                                             <td>
-                                                {% if logireport.routefile %}
-                                                    <a href="{{ logireport.routefile.url }}">
-                                                    {{ logireport.routefilename }}</a>
-                                                {% endif %}
+                                                {{ logireport.time_created }}
                                             </td>
+
                                             <td>
                                                 {% if logireport.report %}
                                                 <a href="{% url 'logiflex:reports:view' logireport.pk %}">
@@ -115,6 +124,10 @@
                                                 {% endif %}
 
                                             </td>
+                                            <td>
+                                                {{ logireport.report_date|date:"F j, Y g:i A" }}
+                                            </td>
+
                                         </tr>
                                     {% endfor %}
 

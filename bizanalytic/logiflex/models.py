@@ -159,8 +159,8 @@ class LogiflexReport(models.Model):
 
     )
     status = (
-        ('inprocess', _("In Process")),
-        ('ready', _("Download")),
+        ('In-Process', _("In-Process")),
+        ('Download', _("Download")),
     )
     client = models.ForeignKey(LogiFlexClient, on_delete=models.CASCADE)
     payment = models.ForeignKey(ServicePayment, on_delete=models.SET_NULL, null=True)
@@ -174,6 +174,8 @@ class LogiflexReport(models.Model):
     download_code = models.CharField(max_length=8, null=True, blank=True)
     report_status = models.CharField(max_length=10, choices=status, default="inprocess")
     date_created = models.DateField(auto_now_add=True)
+    time_created = models.TimeField(auto_now=False, auto_now_add=False)
+    report_date = models.DateTimeField(null=True)
 
     class Meta:
         verbose_name = "LogiFlexReport"

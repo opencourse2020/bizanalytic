@@ -161,6 +161,8 @@ class LogiflexReport(models.Model):
     status = (
         ('Processing', _("Processing")),
         ('Download', _("Download")),
+        ('Canceled', _("Canceled")),
+        ('Late', _("Late")),
     )
     report_id = models.CharField(max_length=50, null=True, blank=True)
     report_number = models.IntegerField(null=True, blank=True, default=0)
@@ -193,6 +195,8 @@ class LogiflexReport(models.Model):
             self.report_id = f"RPT-{currentyear}-{idl}"
         if not self.expected_delivery:
             self.expected_delivery = self.date_created + 1
+        if self.report_date and self.report_date > self.expected_delivery:
+            self.report_status = "Late"
         super().save(*args, **kwargs)
 
     def routefilename(self):

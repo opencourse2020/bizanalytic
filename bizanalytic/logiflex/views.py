@@ -20,6 +20,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, get_object_or_404
 import json
 import requests
+import math
 import pandas as pd
 # Third party libraries
 import stripe
@@ -45,8 +46,25 @@ stripe_webhook = settings.STRIPE_WEBHOOK_SECRET
 class IndexView(TemplateView):
     template_name = "logiflex/home.html"
 
-class DashboardView(TemplateView):
+
+class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = "logiflex/dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        pu = self.request.user
+        reports = models.LogiflexReport.objects.filter(client__user=pu)
+        total_reports = reports.count()
+        finished_reports = reports.filter(report_status="Download").count()
+        processing_reports = reports.filter(report_status="Processing").count()
+        canceled_reports = reports.filter(report_status="Canceled").count()
+        late_reports = reports.filter(expected_delivery__lt=datetime.now(), report_status="Processing").count() + \
+                       reports.filter(report_status="Late").count()
+
+        kwargs["finished_reports"] = math.ceil((finished_reports/total_reports)*100)
+        kwargs["processing_reports"] = math.ceil((processing_reports/total_reports)*100)
+        kwargs["canceled_reports"] = math.ceil((canceled_reports/total_reports)*100)
+        kwargs["late_reports"] = math.ceil((late_reports/total_reports)*100)
+        return super(DashboardView, self).get_context_data(**kwargs)
 
 
 class SampleAdvancedReportView(TemplateView):

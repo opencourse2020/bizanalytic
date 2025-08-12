@@ -55,8 +55,8 @@
                             <div class="skills-section mt-20">
                                 <div class="skill-wrapper">
                                     <div class="progress-content mb-10 d-flex align-items-center justify-content-between">
-                                        <h6>Product Delivery</h6>
-                                        <h6>80%</h6>
+                                        <h6>{% trans "Reports Delivered On Time" %}</h6>
+                                        <h6>{{ finished_reports }}%</h6>
                                     </div>
 
                                     <div class="progress">
@@ -68,8 +68,8 @@
                             <div class="skills-section mt-20">
                                 <div class="skill-wrapper">
                                     <div class="progress-content mb-10 d-flex align-items-center justify-content-between">
-                                        <h6>Quick Response</h6>
-                                        <h6>90%</h6>
+                                        <h6>{% trans "In Process Reports" %}</h6>
+                                        <h6>{{ processing_reports }}%</h6>
                                     </div>
 
                                     <div class="progress">
@@ -81,8 +81,20 @@
                             <div class="skills-section mt-20">
                                 <div class="skill-wrapper">
                                     <div class="progress-content mb-10 d-flex align-items-center justify-content-between">
-                                        <h6>Customer Satisfaction</h6>
-                                        <h6>85%</h6>
+                                        <h6>{% trans "Canceled Reports" %}</h6>
+                                        <h6>{{ canceled_reports }}%</h6>
+                                    </div>
+
+                                    <div class="progress">
+                                        <div class="progress-bar progressbar-active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="max-width:85%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skills-section mt-20">
+                                <div class="skill-wrapper">
+                                    <div class="progress-content mb-10 d-flex align-items-center justify-content-between">
+                                        <h6>{% trans "Late Reports" %}</h6>
+                                        <h6>{{ late_reports }}%</h6>
                                     </div>
 
                                     <div class="progress">

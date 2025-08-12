@@ -72,10 +72,10 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         late_reports = reports.filter(expected_delivery__lt=datetime.now(), report_status="processing").order_by('report_number')[:3]
         if finished_reports == 0:
             finished_reports = 1
-        kwargs["latest_ontime_reports"] = ontime_reports.count()
-        kwargs["latest_processing_reports"] = processing_reports.count()
-        kwargs["latest_canceled_reports"] = canceled_reports.count()
-        kwargs["latest_late_reports"] = late_reports.count()
+        kwargs["latest_ontime_reports"] = num_ontime_reports
+        kwargs["latest_processing_reports"] = num_processing_reports
+        kwargs["latest_canceled_reports"] = num_canceled_reports
+        kwargs["latest_late_reports"] = num_late_reports
         kwargs["ontime_reports"] = math.ceil((num_ontime_reports/total_reports)*100)
         kwargs["processing_reports"] = math.ceil((num_processing_reports/total_reports)*100)
         kwargs["canceled_reports"] = math.ceil((num_canceled_reports/total_reports)*100)

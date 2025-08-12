@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from bizanalytic.profiles.formatChecker import ContentTypeRestrictedFileField
 import os
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.utils.timezone import now
 from django.utils.text import slugify
 # from django.db.models.signals import pre_save
@@ -162,6 +162,7 @@ class LogiflexReport(models.Model):
         ('Processing', _("Processing")),
         ('Download', _("Download")),
     )
+    report_id = models.CharField(max_length=50, null=True, blank=True)
     report_number = models.IntegerField(null=True, blank=True, default=0)
     client = models.ForeignKey(LogiFlexClient, on_delete=models.CASCADE)
     payment = models.ForeignKey(ServicePayment, on_delete=models.SET_NULL, null=True)
@@ -184,6 +185,13 @@ class LogiflexReport(models.Model):
         verbose_name = "LogiFlexReport"
         verbose_name_plural = "LogiFlexReports"
         permissions = (("manage_Logiflexreport", "Manage LogiFlex Reports"),)
+
+    def save(self, *args, **kwargs):
+        if not self.report_id:  # Generate slug only if it's not already set
+            currentyear = datetime.now().year
+            idl = "{:06d}".format(self.id)
+            self.report_id = f"RPT-{currentyear}-{idl}"
+        super().save(*args, **kwargs)
 
     def routefilename(self):
         return os.path.basename(self.routefile.name)

@@ -631,7 +631,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             client.save()
 
             downloadcode = generatecode(8)
-            latest_report = models.LogiflexReport.objects.filter(client=client).latest()
+            latest_report = models.LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
             logireport = models.LogiflexReport.objects.create(client=client, payment=servicepayment,
                                                               download_code=downloadcode,
                                                               report_type='full',

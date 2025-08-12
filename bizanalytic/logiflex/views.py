@@ -609,7 +609,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         email_name = request.POST.get("email_nm")
         email_name = email_name.lower()
         route_file = request.FILES["route_file"]
-        route_filename = request.POST.get("filename")
+        route_filename = route_file.name
 
         client = models.LogiFlexClient.objects.filter(user=self.request.user).first()
         servicepayment = models.ServicePayment.objects.filter(client=client).first()

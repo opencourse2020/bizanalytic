@@ -162,7 +162,9 @@ $("#generate_full_rp").click(function (){
                                 $("#report-message").html('<div class="alert alert-success d-flex align-items-center" role="alert"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg><div>' +
                                     message + '</div>');
                                 $("#report-message").show();
-                                $("#toast_report").show()
+                                var f = $("#toast_report");
+                                var a = new bootstrap.Toast(f);
+                                a.show()
                             }
                         }
                     }

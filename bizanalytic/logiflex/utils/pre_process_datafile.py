@@ -663,7 +663,7 @@ def test_validator(routefile, report, routefilename):
 # load us cities file
     us_cities = pd.read_csv(uscities_file)
 # Load sample data
-    data = pd.read_csv(routefile)
+    data = pd.read_csv(report.routefile)
 
     """Test the validator with sample data"""
     validator = ColumnNameValidator()

@@ -97,7 +97,9 @@
                  <div class="card shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Column Names Modifications" %}</h5>
-                        <p>{{ logcolumn|safe }}</p>
+                        {% for item in logcolumn %}
+                            <p>{{ item|safe }}
+                        {% endfor %}
 {#                        <p class="text-muted">{% trans "File successfully processed" %}</p>#}
                     </div>
                 </div>

@@ -707,7 +707,7 @@ def test_validator(routefile, report, routefilename):
             date_report = date_report + f"  '{fix['original']}' -> '{fix['fixed']}' (was {fix['original_format']})"
 
     orig_cities = data[['OriginCity', 'DestinationCity']]
-
+    print("Origine cities:", orig_cities.columns)
     normalizer = CityStateNormalizer(orig_cities, us_cities)
     clean_df, review_df = normalizer.normalize()
 

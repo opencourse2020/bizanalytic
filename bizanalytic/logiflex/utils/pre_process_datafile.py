@@ -603,8 +603,10 @@ class CityStateNormalizer:
         self.df = df.copy()
         self.state_default = state_default.upper()
         self.fuzzy_cutoff = fuzzy_cutoff
-        self.cityreport = 0
-        self.statereport = 0
+        self.cityreport_origin = 0
+        self.statereport_origin = 0
+        self.cityreport_destin = 0
+        self.statereport_destin = 0
 
         # Build reference dict
         self.known_map = {self._clean_city(row["city"]): row["state"].upper()
@@ -655,6 +657,7 @@ class CityStateNormalizer:
     def normalize_column(self, col):
         """Normalize one city column."""
         normalized = []
+        guessed_city = ""
         # print("column analyzed:", col)
         # print(self.df[col].head(5))
         # print(self.df.columns)
@@ -665,13 +668,19 @@ class CityStateNormalizer:
             # print(f"{city} - {state}")
                 guessed_city = self._guess_city(city)
             else:
-                self.cityreport += 1
+                if col == "OriginCity":
+                    self.cityreport_origin += 1
+                else:
+                    self.cityreport_destin += 1
 
             # If fuzzy match found
             if guessed_city:
                 city = guessed_city
                 if not state:
-                    self.statereport += 1
+                    if col == "OriginCity":
+                        self.statereport_origin += 1
+                    else:
+                        self.statereport_destin += 1
                     state = self.known_map[city]
                     self.unknown_cities.append({"Column": col, "Original": val})
                     print("city:", city, "-", state)
@@ -697,7 +706,7 @@ class CityStateNormalizer:
             if col not in self.df.columns:
                 raise ValueError(f"Missing required column: {col}")
             self.normalize_column(col)
-        return self.df, pd.DataFrame(self.unknown_cities), self.cityreport, self.statereport
+        return self.df, pd.DataFrame(self.unknown_cities), self.cityreport_origin, self.statereport_origin, self.cityreport_destin, self.statereport_destin
 
 
 # Example usage and testing
@@ -750,7 +759,7 @@ def test_validator(routefile, report, routefilename):
     orig_cities = data[['OriginCity', 'DestinationCity']]
     # print("Origine cities:", orig_cities.columns)
     normalizer = CityStateNormalizer(orig_cities, us_cities)
-    clean_df, review_df, missingcities, missingstates = normalizer.normalize()
+    clean_df, review_df, misscities_origin, missgstates_origin, misscities_destin, missgstates_destin = normalizer.normalize()
     # print("clean_df")
     # print(clean_df.index)
     # print(clean_df.info())
@@ -762,9 +771,13 @@ def test_validator(routefile, report, routefilename):
 
     cities_report = "Cleaned data\n"
     cities_report = cities_report + "@@#@@"
-    cities_report = cities_report + f"Number of missing City names: {missingcities}"
+    cities_report = cities_report + f"Number of missing City names in Original cities column: {misscities_origin}"
     cities_report = cities_report + "@@#@@"
-    cities_report = cities_report + f"Number of missing State names: {missingstates}"
+    cities_report = cities_report + f"Number of missing State names in Original cities column: {missgstates_origin}"
+    cities_report = cities_report + "@@#@@"
+    cities_report = cities_report + f"Number of missing City names in Destination cities column: {misscities_destin}"
+    cities_report = cities_report + "@@#@@"
+    cities_report = cities_report + f"Number of missing State names in Destination cities column: {missgstates_destin}"
     # cities_report = cities_report + "@@#@@"
     # cities_report = cities_report + "\nUnknown cities for review"
     # cities_report = cities_report + review_df  # Unknown cities for review

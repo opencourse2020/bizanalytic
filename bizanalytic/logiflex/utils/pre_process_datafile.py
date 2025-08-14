@@ -653,7 +653,7 @@ class CityStateNormalizer:
             normalized.append(f"{city}, {state}")
         print("lenght of normalized: ", len(normalized))
         print("Normalized data:", normalized)
-        self.df = self.df.drop(col, axis=1)
+        # self.df = self.df.drop(col, axis=1)
         self.df[col] = normalized
 
     def normalize(self):

@@ -108,7 +108,9 @@
                  <div class="card shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Date Column Modifications" %}</h5>
-                        <p>{{ logdate|safe }}</p>
+                        {% for itemdate in logdate %}
+                            <p>{{ itemdate|safe }}
+                        {% endfor %}
                     </div>
                 </div>
             </div>

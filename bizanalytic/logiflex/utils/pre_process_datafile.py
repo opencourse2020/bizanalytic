@@ -309,7 +309,7 @@ class DateValidator:
                 date_message = date_message + f"  💡 {rec}"
                 date_message = date_message + "@@#@@"
 
-        date_message = date_message + "\n" + "=" * 60
+        date_message = date_message + "\n" + "=" * 10
         return date_message
 
 class ColumnNameValidator:
@@ -589,7 +589,7 @@ class ColumnNameValidator:
                 column_result = column_result + f"  ⚠️  {error}"
                 column_result = column_result + "@@#@@"
 
-        column_result = column_result + "\n" + "=" * 50
+        column_result = column_result + "\n" + "=" * 10
         return column_result
 
 class CityStateNormalizer:
@@ -603,6 +603,8 @@ class CityStateNormalizer:
         self.df = df.copy()
         self.state_default = state_default.upper()
         self.fuzzy_cutoff = fuzzy_cutoff
+        self.cityreport = 0
+        self.statereport = 0
 
         # Build reference dict
         self.known_map = {self._clean_city(row["city"]): row["state"].upper()
@@ -659,13 +661,17 @@ class CityStateNormalizer:
         for val in self.df[col]:
             # print("val:", val)
             city, state = self._split_city_state(val)
+            if city:
             # print(f"{city} - {state}")
-            guessed_city = self._guess_city(city)
+                guessed_city = self._guess_city(city)
+            else:
+                self.cityreport += 1
 
             # If fuzzy match found
             if guessed_city:
                 city = guessed_city
                 if not state:
+                    self.statereport += 1
                     state = self.known_map[city]
                     self.unknown_cities.append({"Column": col, "Original": val})
                     # print("city:", city, "-", state)
@@ -691,7 +697,7 @@ class CityStateNormalizer:
             if col not in self.df.columns:
                 raise ValueError(f"Missing required column: {col}")
             self.normalize_column(col)
-        return self.df, pd.DataFrame(self.unknown_cities)
+        return self.df, pd.DataFrame(self.unknown_cities), self.cityreport, self.statereport
 
 
 # Example usage and testing
@@ -725,20 +731,26 @@ def test_validator(routefile, report, routefilename):
     # print("\nTesting date format fixing...")
     fixed_dates, fix_report = date_validator.fix_date_format(sample_dates, '%Y-%m-%d')
     data['Date'] = fixed_dates
+    date_report = date_report + "@@#@@"
     date_report = date_report + "\nFIX REPORT:\n"
+    date_report = date_report + "@@#@@"
     date_report = date_report + f"  Successfully fixed: {fix_report['successfully_fixed']}"
+    date_report = date_report + "@@#@@"
     date_report = date_report + f"  Could not fix: {fix_report['could_not_fix']}"
+    date_report = date_report + "@@#@@"
     date_report = date_report + f"  Already correct: {fix_report['already_correct']}"
 
     if fix_report['fixes_made']:
+        date_report = date_report + "@@#@@"
         date_report = date_report + "\nFIXES MADE:"
         for fix in fix_report['fixes_made'][:5]:  # Show first 5
+            date_report = date_report + "@@#@@"
             date_report = date_report + f"  '{fix['original']}' -> '{fix['fixed']}' (was {fix['original_format']})"
 
     orig_cities = data[['OriginCity', 'DestinationCity']]
     # print("Origine cities:", orig_cities.columns)
     normalizer = CityStateNormalizer(orig_cities, us_cities)
-    clean_df, review_df = normalizer.normalize()
+    clean_df, review_df, missingcities, missingstates = normalizer.normalize()
     # print("clean_df")
     # print(clean_df.index)
     # print(clean_df.info())
@@ -749,9 +761,13 @@ def test_validator(routefile, report, routefilename):
 
 
     cities_report = "Cleaned data\n"
-    cities_report = cities_report + clean_df  # Cleaned data
-    cities_report = cities_report + "\nUnknown cities for review"
-    cities_report = cities_report + review_df  # Unknown cities for review
+    cities_report = cities_report + "@@#@@"
+    cities_report = cities_report + f"Number of missing City names: {missingcities}"
+    cities_report = cities_report + "@@#@@"
+    cities_report = cities_report + f"Number of missing State names: {missingstates}"
+    # cities_report = cities_report + "@@#@@"
+    # cities_report = cities_report + "\nUnknown cities for review"
+    # cities_report = cities_report + review_df  # Unknown cities for review
     directory_path = 'data_files/route_files/company_id_{0}/report_{1}'.format(report.client.id, report.id)
 
     # if not os.path.exists(directory_path):

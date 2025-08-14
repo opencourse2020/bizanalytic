@@ -646,6 +646,7 @@ class CityStateNormalizer:
             #         state = state or self.state_default
 
             normalized.append(f"{city}, {state}")
+        self.df = self.df.drop(col, axis=1)
         self.df[col] = normalized
 
     def normalize(self):

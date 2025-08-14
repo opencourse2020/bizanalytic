@@ -3,7 +3,7 @@ import numpy as np
 from scipy import stats
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
-
+import json
 
 # 1- Cleaning Data
 def clean_data(report):
@@ -363,3 +363,143 @@ def predict_cost(df):
     return high_variance, low_variance
 
 
+def run_analysis(logireport):
+    # Start Local Analysis
+
+    # 1- Load csv to pandas dataframe
+    # dff = pd.read_csv(logireport.routefile)
+
+    print("Prepare for cleaning")
+    print("****************************************")
+    print("File", logireport.routefile)
+    # print(dff.head(5))
+
+    # 2- Prepare data
+    df = clean_data(logireport)
+    df = calculate_kpis(df)
+    summary = []
+    # *****************************************************************************************************************************
+    # 3- Start Carrier Analysis
+
+    # to add to summary
+    carrier_stats = prepare_carrier_stats(df)
+    summary.append("Carrier performance analysis based on: ontime rate (delivered shipments), "
+                   "average freight cost, median distance in miles, average cost per mile "
+                   "(FuelCost_USD/Distance_Miles, average cost per pound "
+                   "(FreightCost_USD/LoadWeight_lbs), Total Shipments (total delivered):")
+    summary.append(carrier_stats.to_markdown())
+    summary.append("\n")
+
+    efficient_carriers = calculate_cost_efficiency(carrier_stats)
+
+    # to add to summary
+    efficientcarriers = efficient_carriers[['AvgCostPerMile', 'AvgCostPerPound']].to_markdown()
+    summary.append("the cost-efficient data table is:")
+    summary.append(efficientcarriers)
+    summary.append("\n")
+    summary.append("The most efficient carrier:")
+    efficient_carriers = efficient_carriers.reset_index()
+    most_efficient_carriers = efficient_carriers['CarrierName'][0]
+    summary.append(most_efficient_carriers)
+    summary.append("\n")
+
+    reliable_carriers = reliability_analysis(carrier_stats)
+
+    # to add to summary
+    reliablecarriers = reliable_carriers[['OnTimeRate', 'TotalShipments']].to_markdown()
+    summary.append("the reliability data table is:")
+    summary.append(reliablecarriers)
+    summary.append("\n")
+    summary.append("The most reliable carrier:")
+    reliable_carriers = reliable_carriers.reset_index()
+    most_reliable_carriers = reliable_carriers['CarrierName'][0]
+    summary.append(most_reliable_carriers)
+    summary.append("\n")
+
+    # Visualizations
+    # 1. Cost vs. Reliability (Scatter Plot) [ x='AvgFreightCost', y='OnTimeRate', data=carrier_stats ]
+    # 2. Cost Distribution (Boxplot)  [ data=df, x='CarrierName', y='CostPerMile' ]
+
+    results_df, worst_carrier = run_contingency_analysis(df)
+
+    # to add to summary
+    contingency_result = []
+
+    for idx, row in results_df.iterrows():
+        competitor = row['Competitor']
+        odds_ratio = row['Odds_Ratio']
+        p_value = row['P_Value']
+        contingency_result.append(
+            f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier} (p={p_value:.4f})")
+
+    summary.append("Contingency table, worst carrier compared to competitors in function of ontime rate:")
+    summary.extend(contingency_result)
+    summary.append("\n")
+
+    # *****************************************************************************************************************************
+    # 4- Start Driver Analysis
+
+    driver_stats = prepare_driver_stats(df)
+
+    # to add to summary
+    driverstats = driver_stats.to_markdown()
+    summary.append("Driver performance analysis based on: Total Miles, Median MPG, Median Speed, and OnTime Rate ")
+    summary.append(driverstats)
+    summary.append("\n")
+
+    # to add to summary
+    topdrivers = []
+    bottomdrivers = []
+    for driverstat in ['TotalMiles', 'MedianMPG', 'MedianSpeed', 'OnTimeRate']:
+        topdriverss, bottomdriverss = performance_benchmarking(driver_stats, driverstat)
+        topdrivers.extend(topdriverss)
+        topdrivers.append("\n")
+        bottomdrivers.extend(bottomdriverss)
+        bottomdrivers.append("\n")
+
+    summary.extend(topdrivers)
+    summary.extend(bottomdrivers)
+    summary.append("\n")
+
+    mpg_outliers = identify_outliers(driver_stats)
+    summary.append("outlier drivers with miles per gallon (MPG) Z-score greater than 2 sigma ")
+    summary.append(mpg_outliers.to_markdown())
+    summary.append("Recommended Actions: e.g., Recommend eco-driving training for these drivers.")
+    summary.append("\n")
+
+    # Action: Recommend eco-driving training for these drivers.
+
+    # Visualizations
+    # 1- Driver Efficiency Matrix - scatterplot  (data=driver_stats, x='MedianSpeed', y='MedianMPG')
+    # Quadrant Analysis:
+    # Top - Right(Ideal): High speed + high efficiency
+    # Bottom - Right(Risky): Fast but inefficient
+    # Top - Left(Caution): Efficient but slow
+    # 2- Driver Performance Distribution - boxplot ( data=df,  x='DriverName', y='MilesPerHour')
+    # Which driver has the widest speed variability (potential unsafe driving).
+
+    # *****************************************************************************************************************************
+    # 5- Start Route Analysis
+
+    route_stats = prepare_route_stats(df)
+    summary.append("Route Efficiency Analysis based on: ontime rate (delivered shipments), "
+                   "average cost per mile (FuelCost_USD/Distance_Miles, average distance and others:")
+    summary.append(route_stats.to_markdown())
+    summary.append("\n")
+
+    high_cost_routes = analyze_cost_anomalies(route_stats)
+    summary.append("Z-score analysis for average cost per mile anomalies. identify routes with z-score > 2:")
+    summary.append(high_cost_routes[['AvgCostPerMile', 'CostZScore']].to_markdown())
+    summary.append("Recommended Actions: e.g., Investigate root causes for these 2σ outliers.")
+    summary.append("\n")
+
+    # Convert the summary array to json format to be stored as text in the database
+    json_string = json.dumps(summary)
+    logireport.report_summary = json_string
+    logireport.save()
+
+    # high_variance, low_variance = predict_cost(df)
+
+    # Visualizations
+    # 1- Cost Efficiency Heatmap (data=route_stats, columns='DestinationCity', values='AvgCostPerMile', title=Route Cost Efficiency Heatmap)
+    # 2- Speed vs. Cost Bubble Chart - scatterplot (data=route_stats, x='MedianSpeed', y='AvgCostPerMile', title='Route Efficiency: Speed vs. Cost')

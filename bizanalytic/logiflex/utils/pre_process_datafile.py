@@ -626,6 +626,7 @@ class CityStateNormalizer:
         normalized = []
         for val in self.df[col]:
             city, state = self._split_city_state(val)
+            print(f"{city} - {state}")
             guessed_city = self._guess_city(city)
 
             # If fuzzy match found

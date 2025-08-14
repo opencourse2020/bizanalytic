@@ -55,10 +55,13 @@ class RouteFileView(TemplateView):
         log_message = models.LogEntry.objects.filter(report=report).first()
         if log_message.column_report:
             logcol = log_message.column_report.split("@@#@@")
+        if log_message.date_report:
+            logdate = log_message.date_report.split("@@#@@")
+
         if report:
             kwargs["report"] = report
             kwargs["logcolumn"] = logcol
-            kwargs["logdate"] = log_message.date_report
+            kwargs["logdate"] = logdate
             kwargs["logcity"] = log_message.citi_report
         else:
             kwargs["report"] = ""

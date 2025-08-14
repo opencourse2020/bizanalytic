@@ -251,43 +251,63 @@ class DateValidator:
         date_message = ""
         """Print a formatted date validation report"""
         date_message = f"=== DATE VALIDATION REPORT: {results['column_name']} ===\n"
+        date_message = date_message + "@@#@@"
 
         # Summary statistics
         date_message = date_message + "SUMMARY:\n"
+        date_message = date_message + "@@#@@"
         date_message = date_message + f"  Total values: {results['total_values']}"
+        date_message = date_message + "@@#@@"
         date_message = date_message + f"  Valid dates: {results['valid_dates']}"
+        date_message = date_message + "@@#@@"
         date_message = date_message + f"  Invalid dates: {results['invalid_dates']}"
+        date_message = date_message + "@@#@@"
         date_message = date_message + f"  Empty dates: {results['empty_dates']}"
+        date_message = date_message + "@@#@@"
         date_message = date_message + f"  Ambiguous dates: {results['ambiguous_dates']}"
+        date_message = date_message + "@@#@@"
         date_message = date_message + f"  Overall valid: {'✓' if results['is_valid'] else '✗'}\n"
+        date_message = date_message + "@@#@@"
 
         # Date formats found
         if results['date_formats_found']:
             date_message = date_message + "DATE FORMATS DETECTED:\n"
+            date_message = date_message + "@@#@@"
             for fmt, count in results['date_formats_found'].items():
                 date_message = date_message + f"  {fmt}: {count} occurrences"
+                date_message = date_message + "@@#@@"
             date_message = date_message + f"  Most common: {results['most_common_format']}\n"
+            date_message = date_message + "@@#@@"
 
         # Date range
         if results['date_range']:
             date_message = date_message + "DATE RANGE:\n"
+            date_message = date_message + "@@#@@"
             date_message = date_message + f"  From: {results['date_range']['min_date'].strftime('%Y-%m-%d')}"
+            date_message = date_message + "@@#@@"
             date_message = date_message + f"  To: {results['date_range']['max_date'].strftime('%Y-%m-%d')}"
+            date_message = date_message + "@@#@@"
             date_message = date_message + f"  Span: {results['date_range']['span_days']} days\n"
+            date_message = date_message + "@@#@@"
 
         # Issues
         if results['issues']:
             date_message = date_message + "ISSUES FOUND:\n"
+            date_message = date_message + "@@#@@"
             for issue in results['issues'][:10]:  # Show first 10 issues
                 date_message = date_message + f"  ⚠️  {issue}"
+                date_message = date_message + "@@#@@"
             if len(results['issues']) > 10:
                 date_message = date_message + f"  ... and {len(results['issues']) - 10} more issues\n"
+                date_message = date_message + "@@#@@"
 
         # Recommendations
         if results['recommendations']:
             date_message = date_message + "RECOMMENDATIONS:\n"
+            date_message = date_message + "@@#@@"
             for rec in results['recommendations']:
                 date_message = date_message + f"  💡 {rec}"
+                date_message = date_message + "@@#@@"
 
         date_message = date_message + "\n" + "=" * 60
         return date_message
@@ -551,16 +571,16 @@ class ColumnNameValidator:
             column_result = column_result + "\n"
             column_result = column_result + "@@#@@"
             # Print detailed report
-        column_result = column_result + "DETAILED REPORT:\n"
-        column_result = column_result + "@@#@@"
-        column_result = column_result + f"{'Index':<5} {'Original':<20} {'Suggested':<20} {'Confidence':<10} {'Action':<15}\n"
-        column_result = column_result + "@@#@@"
-        column_result = column_result + "-" * 75
-        column_result = column_result + "@@#@@"
-
-        for entry in results['validation_report']:
-            column_result = column_result + f"{entry['index']:<5} {entry['original'][:19]:<20} {entry['suggested'][:19]:<20} " f"{entry['confidence']:<10.2f} {entry['action']:<15}\n"
-            column_result = column_result + "@@#@@"
+        # column_result = column_result + "DETAILED REPORT:\n"
+        # column_result = column_result + "@@#@@"
+        # column_result = column_result + f"{'Index':<5} {'Original':<20} {'Suggested':<20} {'Confidence':<10} {'Action':<15}\n"
+        # column_result = column_result + "@@#@@"
+        # column_result = column_result + "-" * 75
+        # column_result = column_result + "@@#@@"
+        #
+        # for entry in results['validation_report']:
+        #     column_result = column_result + f"{entry['index']:<5} {entry['original'][:19]:<20} {entry['suggested'][:19]:<20} " f"{entry['confidence']:<10.2f} {entry['action']:<15}\n"
+        #     column_result = column_result + "@@#@@"
         # Print errors/warnings
         if results['errors']:
             column_result = column_result + f"\nERRORS/WARNINGS:\n"

@@ -35,9 +35,10 @@
                     <div class="col-12 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <h1 class="title">LogiFlex - </h1>
-                            <span class="title" style="color: #0cb7d6; font-size: 40px">&nbsp;{% trans "Report Details" %}</span>
+                            <span class="title" style="color: #0cb7d6; font-size: 40px">&nbsp;{% trans "Report" %} -</span>
+                            <p style="color: white; font-size: 18px;">{% trans "Report ID:" %}&nbsp;{{ report.report_id }}</p>
                         </div>
-                        <p style="color: white; font-size: 18px;">{% trans "Report ID:" %}&nbsp;{{ report.report_id }}</p>
+
                     </div>
                 </div>
             </div>
@@ -53,23 +54,8 @@
             <div class="col-md-4">
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
-                        <h5 class="card-title">{% trans "Report Status" %}</h5>
-                        <p class="text-success fw-bold" style="font-size: 20px;">
-                            {% if report.report_status == "processing" %}
-                                80%
-                            {% elif report.report_status == "download" %}
-                                {% if report.report %}
-                                    <a href="{{ report.report.url }}" class="btn btn-success btn-sm">{% trans "Download" %}</a>
-                                {% else %}
-                                    {% trans "Under Final Review" %}
-                                {% endif %}
-                            {% elif report.report_status == "canceled" %}
-                                <span class="badge bg-warning">{% trans "Canceled" %}</span>
-                            {% elif report.report_status == "late" %}
-                                <span class="badge bg-danger">{% trans "Late!! We appologize. Comming Soon" %}</span>
-                            {% endif %}
-                        </p>
-                        <p class="text-muted">{% trans "Report completion progress" %}</p>
+                        <h5 class="card-title">{% trans "Carrier Cost vs. Reliability Analysis" %}</h5>
+                        <div id="CarrierCostReliabilityBubbleChart"></div>
                     </div>
                 </div>
             </div>
@@ -78,8 +64,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Expected Delivery" %}</h5>
-                        <p class="fw-bold" style="font-size: 20px;">{{ report.expected_delivery|date:"F j, Y" }}&nbsp;- &nbsp;<span style="color: #0cb7d6;">{{ report.expected_delivery|date:"H:i:s" }}</span></p>
-                        <p class="text-muted">{% trans "Estimated completion time" %}</p>
+
                     </div>
                 </div>
             </div>
@@ -88,8 +73,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Uploaded File" %}</h5>
-                        <p class="fw-bold" style="font-size: 20px;">{{ report.routefilename }}</p>
-                        <p class="text-muted">{% trans "File successfully processed" %}</p>
+
                     </div>
                 </div>
             </div>
@@ -97,9 +81,7 @@
             <div class="col-md-4">
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
-                        <h5 class="card-title">{% trans "Full Report" %}</h5>
-                        <a href="{% url 'logiflex:reports"reportview' %}" class="btn btn-success btn-lg">V{% trans "View Full Report" %}</a>
-                        <p class="text-muted">{% trans "Check Your Full Advanced Analytical Report" %}</p>
+
                     </div>
                 </div>
             </div>
@@ -107,31 +89,22 @@
             <div class="col-md-4">
                  <div class="card shadow-sm">
                     <div class="card-body text-center">
-                        <h5 class="card-title">{% trans "Column Names Modifications" %}</h5>
-                        {% for item in logcolumn %}
-                            <p>{{ item|safe }}
-                        {% endfor %}
-{#                        <p class="text-muted">{% trans "File successfully processed" %}</p>#}
+
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                  <div class="card shadow-sm">
                     <div class="card-body text-center">
-                        <h5 class="card-title">{% trans "Date Column Modifications" %}</h5>
-                        {% for itemdate in logdate %}
-                            <p>{{ itemdate|safe }}
-                        {% endfor %}
+
+
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                  <div class="card shadow-sm">
                     <div class="card-body text-center">
-                        <h5 class="card-title">{% trans "Citie Column Modifications" %}</h5>
-                        {% for itemcity in logcity %}
-                            <p>{{ itemcity|safe }}
-                        {% endfor %}
+
                     </div>
                 </div>
             </div>
@@ -157,6 +130,8 @@
 
 {% block js_area %}
     {{ block.super }}
+    <script src={% static "assets/plugins/apexcharts/distro/apexcharts.min.js" %}></script>
+    <script src={% static "assets/js/pages/chart-apex.pmf.js" %}></script>
 {% endblock js_area %}
 
 

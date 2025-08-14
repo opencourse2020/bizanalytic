@@ -73,6 +73,10 @@ class RouteFileView(TemplateView):
         return super(RouteFileView, self).get_context_data(**kwargs)
 
 
+class ReportView(TemplateView):
+    template_name = "logiflex/report_view.html"
+
+
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = "logiflex/dashboard.html"
 

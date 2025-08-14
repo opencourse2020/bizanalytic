@@ -250,7 +250,7 @@ class DateValidator:
     def print_date_validation_report(self, results: Dict):
         date_message = ""
         """Print a formatted date validation report"""
-        date_message = f"=== DATE VALIDATION REPORT: {results['column_name']} ===\n"
+        date_message = f"=== DATE VALIDATION REPORT ===\n"
         date_message = date_message + "@@#@@"
 
         # Summary statistics
@@ -769,15 +769,15 @@ def test_validator(routefile, report, routefilename):
     data.update(clean_df['DestinationCity'])
 
 
-    cities_report = "Cleaned data\n"
+    cities_report = "=== DATE VALIDATION REPORT ===\n"
     cities_report = cities_report + "@@#@@"
-    cities_report = cities_report + f"Number of missing City names in Original cities column: {misscities_origin}"
+    cities_report = cities_report + f"Missing City names in Original cities column: {misscities_origin}"
     cities_report = cities_report + "@@#@@"
-    cities_report = cities_report + f"Number of missing State names in Original cities column: {missgstates_origin}"
+    cities_report = cities_report + f"Missing State names in Original cities column: {missgstates_origin}"
     cities_report = cities_report + "@@#@@"
-    cities_report = cities_report + f"Number of missing City names in Destination cities column: {misscities_destin}"
+    cities_report = cities_report + f"Missing City names in Destination cities column: {misscities_destin}"
     cities_report = cities_report + "@@#@@"
-    cities_report = cities_report + f"Number of missing State names in Destination cities column: {missgstates_destin}"
+    cities_report = cities_report + f"Missing State names in Destination cities column: {missgstates_destin}"
     # cities_report = cities_report + "@@#@@"
     # cities_report = cities_report + "\nUnknown cities for review"
     # cities_report = cities_report + review_df  # Unknown cities for review

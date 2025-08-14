@@ -534,15 +534,15 @@ class ColumnNameValidator:
         """Print a formatted validation report"""
         column_result = "=== COLUMN VALIDATION REPORT ===\n"
 
-        column_result = column_result + f"Total columns: {len(results['original_columns'])}"
-        column_result = column_result + f"Corrections made: {len(results['corrections_made'])}"
+        column_result = column_result + f"\nTotal columns: {len(results['original_columns'])}\n"
+        column_result = column_result + f"Corrections made: {len(results['corrections_made'])}\n"
         column_result = column_result + f"Errors/Warnings: {len(results['errors'])}\n"
 
         # Print corrections made
         if results['corrections_made']:
-            column_result = column_result + "CORRECTIONS MADE:"
+            column_result = column_result + "CORRECTIONS MADE:\n"
             for original, corrected in results['corrections_made'].items():
-                column_result = column_result + f"  '{original}' -> '{corrected}'"
+                column_result = column_result + f"  '{original}' -> '{corrected}'\n"
 
             column_result = column_result + "\n"
 
@@ -552,16 +552,17 @@ class ColumnNameValidator:
         column_result = column_result + "-" * 75
 
         for entry in results['validation_report']:
-            column_result = column_result + f"{entry['index']:<5} {entry['original'][:19]:<20} {entry['suggested'][:19]:<20} " f"{entry['confidence']:<10.2f} {entry['action']:<15}"
+            column_result = column_result + f"{entry['index']:<5} {entry['original'][:19]:<20} {entry['suggested'][:19]:<20} " f"{entry['confidence']:<10.2f} {entry['action']:<15}\n"
 
         # Print errors/warnings
         if results['errors']:
-            column_result = column_result + f"\nERRORS/WARNINGS:"
+            column_result = column_result + f"\nERRORS/WARNINGS:\n"
             for error in results['errors']:
                 column_result = column_result + f"  ⚠️  {error}"
 
         column_result = column_result + "\n" + "=" * 50
-        return  column_result
+        column_result = column_result.to_markdown()
+        return column_result
 
 class CityStateNormalizer:
     def __init__(self, df: pd.DataFrame, us_city_state_ref: pd.DataFrame, state_default="TX", fuzzy_cutoff=0.8):

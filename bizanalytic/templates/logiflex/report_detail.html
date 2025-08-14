@@ -118,7 +118,9 @@
                  <div class="card shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Citie Column Modifications" %}</h5>
-                        <p>{{ logcity|safe }}</p>
+                        {% for itemcity in logcity %}
+                            <p>{{ itemcity|safe }}
+                        {% endfor %}
                     </div>
                 </div>
             </div>

@@ -57,12 +57,14 @@ class RouteFileView(TemplateView):
             logcol = log_message.column_report.split("@@#@@")
         if log_message.date_report:
             logdate = log_message.date_report.split("@@#@@")
+        if log_message.citi_report:
+            logcity = log_message.citi_report.split("@@#@@")
 
         if report:
             kwargs["report"] = report
             kwargs["logcolumn"] = logcol
             kwargs["logdate"] = logdate
-            kwargs["logcity"] = log_message.citi_report
+            kwargs["logcity"] = logcity
         else:
             kwargs["report"] = ""
             kwargs["logcolumn"] = ""

@@ -674,7 +674,7 @@ class CityStateNormalizer:
                     self.statereport += 1
                     state = self.known_map[city]
                     self.unknown_cities.append({"Column": col, "Original": val})
-                    # print("city:", city, "-", state)
+                    print("city:", city, "-", state)
             # else:
             #     # Try geocoding if not in known list
             #     geo_state = self._geocode_state(city)

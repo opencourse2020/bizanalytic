@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 # 1- Cleaning Data
 def clean_data(report):
     df = pd.read_csv(report.routefile)
+    print("File after load", report.routefile)
     print(df.head(5))
     print(df.columns)
     # 1- Remove Duplicate ShipmentID

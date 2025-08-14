@@ -176,6 +176,7 @@ class LogiflexReport(models.Model):
                                                    content_types=['application/pdf'],
                                                    max_upload_size=5242880, null=True, blank=True)
     report_text = models.JSONField(blank=True, null=True, default=dict)
+    report_summary = models.TextField(null=True, blank=True)
     report_type = models.CharField(max_length=5, choices=reporttype, null=True, blank=True)
     download_code = models.CharField(max_length=8, null=True, blank=True)
     report_status = models.CharField(max_length=10, choices=status, default="processing")

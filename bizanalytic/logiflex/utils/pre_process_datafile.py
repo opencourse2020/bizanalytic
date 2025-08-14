@@ -711,8 +711,8 @@ def test_validator(routefile, report, routefilename):
     normalizer = CityStateNormalizer(orig_cities, us_cities)
     clean_df, review_df = normalizer.normalize()
     print("clean_df")
-    print(clean_df.head(5))
-    print(clean_df.info())
+    print(clean_df.index)
+    # print(clean_df.info())
     data = data.drop(['OriginCity', 'DestinationCity'], axis=1)
     data = pd.concat([data, clean_df], axis=0, ignore_index=True)
 
@@ -729,7 +729,7 @@ def test_validator(routefile, report, routefilename):
     #         os.remove(report.routefile.path)
     print("Data before saving to csv file")
     print(data.head(5))
-    print(data.info())
+    print(data.index)
     filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(report.client.id, report.id, routefilename)
     print("filename: ", filename)
     filepath = settings.MEDIA_ROOT + "/" + filename

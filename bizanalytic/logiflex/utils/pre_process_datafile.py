@@ -624,6 +624,9 @@ class CityStateNormalizer:
     def normalize_column(self, col):
         """Normalize one city column."""
         normalized = []
+        print("column analyzed:", col)
+        print(self.df[col].head(5))
+        print(self.df.columns)
         for val in self.df[col]:
             print("val:", val)
             city, state = self._split_city_state(val)

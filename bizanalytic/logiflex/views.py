@@ -720,8 +720,10 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
             # 1- Load csv to pandas dataframe
             dff = pd.read_csv(logireport.routefile)
+
             print("Prepare for cleaning")
             print("****************************************")
+            print("File", logireport.routefile)
             print(dff.head(5))
 
             # 2- Prepare data

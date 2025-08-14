@@ -625,6 +625,7 @@ class CityStateNormalizer:
         """Normalize one city column."""
         normalized = []
         for val in self.df[col]:
+            print("val:", val)
             city, state = self._split_city_state(val)
             print(f"{city} - {state}")
             guessed_city = self._guess_city(city)

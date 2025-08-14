@@ -646,6 +646,7 @@ class CityStateNormalizer:
             #         state = state or self.state_default
 
             normalized.append(f"{city}, {state}")
+            print("normalized: ", len(normalized))
         self.df = self.df.drop(col, axis=1)
         self.df[col] = normalized
 
@@ -663,6 +664,7 @@ def test_validator(routefile, report, routefilename):
 
 # load us cities file
     us_cities = pd.read_csv(uscities_file)
+    print(us_cities.head(5))
 # Load sample data
     data = pd.read_csv(report.routefile)
 

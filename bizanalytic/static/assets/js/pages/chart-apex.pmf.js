@@ -7,78 +7,78 @@ Website: http://www.seantheme.com/hud/
 
 var handleRenderApexChart = function(full_df) {
 
-	Apex = {
-		title: {
-			style: {
-				fontSize: '14px',
-				fontWeight: '600',
-				fontFamily: app.font.bodyFontFamily,
-				color: app.color.bodyColor
-			}
-		},
-		legend: {
-			show:true,
-			fontFamily: app.font.bodyFontFamily,
-			labels: { colors: app.color.bodyColor }
-		},
-		tooltip: {
-			style: {
-        fontSize: '12px',
-        fontFamily: app.font.bodyFontFamily
-      }
-		},
-		grid: { borderColor: app.color.borderColor },
-		dataLabels: {
-			style: {
-				fontSize: '12px',
-				fontFamily: app.font.bodyFontFamily,
-				fontWeight: '600',
-				colors: undefined
-  		}
-		},
-		xaxis: {
-			axisBorder: {
-				show: true,
-				color: app.color.borderColor,
-				height: 1,
-				width: '100%',
-				offsetX: 0,
-				offsetY: -1
-			},
-			axisTicks: {
-				show: true,
-				borderType: 'solid',
-				color: app.color.borderColor,
-				height: 6,
-				offsetX: 0,
-				offsetY: 0
-			},
-      labels: {
-				style: {
-					colors: app.color.bodyColor,
-					fontSize: '12px',
-					fontFamily: app.font.bodyFontFamily,
-					fontWeight: app.font.bodyFontWeight,
-					cssClass: 'apexcharts-xaxis-label',
-				}
-			}
-		},
-		yaxis: {
-			labels: {
-				formatter: function (val) {
-					return val.toFixed(0);
-				},
-				style: {
-					colors: app.color.bodyColor,
-					fontSize: '12px',
-					fontFamily: app.font.bodyFontFamily,
-					fontWeight: app.font.bodyFontWeight,
-					cssClass: 'apexcharts-yaxis-label',
-				},
-
-			}
-		}
-	};
+	// Apex = {
+	// 	title: {
+	// 		style: {
+	// 			fontSize: '14px',
+	// 			fontWeight: '600',
+	// 			fontFamily: app.font.bodyFontFamily,
+	// 			color: app.color.bodyColor
+	// 		}
+	// 	},
+	// 	legend: {
+	// 		show:true,
+	// 		fontFamily: app.font.bodyFontFamily,
+	// 		labels: { colors: app.color.bodyColor }
+	// 	},
+	// 	tooltip: {
+	// 		style: {
+    //     fontSize: '12px',
+    //     fontFamily: app.font.bodyFontFamily
+    //   }
+	// 	},
+	// 	grid: { borderColor: app.color.borderColor },
+	// 	dataLabels: {
+	// 		style: {
+	// 			fontSize: '12px',
+	// 			fontFamily: app.font.bodyFontFamily,
+	// 			fontWeight: '600',
+	// 			colors: undefined
+  	// 	}
+	// 	},
+	// 	xaxis: {
+	// 		axisBorder: {
+	// 			show: true,
+	// 			color: app.color.borderColor,
+	// 			height: 1,
+	// 			width: '100%',
+	// 			offsetX: 0,
+	// 			offsetY: -1
+	// 		},
+	// 		axisTicks: {
+	// 			show: true,
+	// 			borderType: 'solid',
+	// 			color: app.color.borderColor,
+	// 			height: 6,
+	// 			offsetX: 0,
+	// 			offsetY: 0
+	// 		},
+    //   labels: {
+	// 			style: {
+	// 				colors: app.color.bodyColor,
+	// 				fontSize: '12px',
+	// 				fontFamily: app.font.bodyFontFamily,
+	// 				fontWeight: app.font.bodyFontWeight,
+	// 				cssClass: 'apexcharts-xaxis-label',
+	// 			}
+	// 		}
+	// 	},
+	// 	yaxis: {
+	// 		labels: {
+	// 			formatter: function (val) {
+	// 				return val.toFixed(0);
+	// 			},
+	// 			style: {
+	// 				colors: app.color.bodyColor,
+	// 				fontSize: '12px',
+	// 				fontFamily: app.font.bodyFontFamily,
+	// 				fontWeight: app.font.bodyFontWeight,
+	// 				cssClass: 'apexcharts-yaxis-label',
+	// 			},
+	//
+	// 		}
+	// 	}
+	// };
 
 // apexScatterChart
 	var apexScatterChartOptions = {
@@ -87,7 +87,7 @@ var handleRenderApexChart = function(full_df) {
 			type: 'scatter',
 			zoom: { enabled: true, type: 'xy' }
 		},
-		colors: [app.color.theme, app.color.warning, 'rgba('+ app.color.bodyColorRgb + ', .5)'],
+		// colors: [app.color.theme, app.color.warning, 'rgba('+ app.color.bodyColorRgb + ', .5)'],
 		series: [
 			{ name: 'SAMPLE A', data: [[16.4, 5.4],[21.7, 2],[25.4, 3],[19, 2],[10.9, 1],[13.6, 3.2],[10.9, 7.4],[10.9, 0],[10.9, 8.2],[16.4, 0],[16.4, 1.8],[13.6, 0.3],[13.6, 0],[29.9, 0],[27.1, 2.3],[16.4, 0],[13.6, 3.7],[10.9, 5.2],[16.4, 6.5],[10.9, 0],[24.5, 7.1],[10.9, 0],[8.1, 4.7],[19, 0],[21.7, 1.8],[27.1, 0],[24.5, 0],[27.1, 0],[29.9, 1.5],[27.1, 0.8],[22.1, 2]] }, 
 			{ name: 'SAMPLE B', data: [[36.4, 13.4],[1.7, 11],[5.4, 8],[9, 17],[1.9, 4],[3.6, 12.2],[1.9, 14.4],[1.9, 9],[1.9, 13.2],[1.4, 7],[6.4, 8.8],[3.6, 4.3],[1.6, 10],[9.9, 2],[7.1, 15],[1.4, 0],[3.6, 13.7],[1.9, 15.2],[6.4, 16.5],[0.9, 10],[4.5, 17.1],[10.9, 10],[0.1, 14.7],[9, 10],[12.7, 11.8],[2.1, 10],[2.5, 10],[27.1, 10],[2.9, 11.5],[7.1, 10.8],[2.1, 12]] }, 

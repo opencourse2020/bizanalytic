@@ -710,6 +710,9 @@ def test_validator(routefile, report, routefilename):
     # print("Origine cities:", orig_cities.columns)
     normalizer = CityStateNormalizer(orig_cities, us_cities)
     clean_df, review_df = normalizer.normalize()
+    print("clean_df")
+    print(clean_df.head(5))
+    print(clean_df.info())
     data = data.drop(['OriginCity', 'DestinationCity'], axis=1)
     data = pd.concat([data, clean_df], axis=0, ignore_index=True)
 

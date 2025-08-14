@@ -10,6 +10,7 @@
 
 {% block css %}
     {{ block.super }}
+    <link href={% static "assets/css/app.min.css" %} rel="stylesheet">
 {% endblock css %}
 
 {% block header_left %}
@@ -131,6 +132,7 @@
 {% block js_area %}
     {{ block.super }}
     <script src={% static "assets/plugins/apexcharts/distro/apexcharts.min.js" %}></script>
+    <script src={% static "assets/js/app.min.js" %}></script>
     <script src={% static "assets/js/pages/chart-apex.pmf.js" %}></script>
      <script>
     /* Controller

@@ -718,6 +718,7 @@ def test_validator(routefile, report, routefilename):
     data.update(clean_df['OriginCity'])
     data.update(clean_df['DestinationCity'])
 
+
     cities_report = "Cleaned data\n"
     cities_report = cities_report + clean_df  # Cleaned data
     cities_report = cities_report + "\nUnknown cities for review"

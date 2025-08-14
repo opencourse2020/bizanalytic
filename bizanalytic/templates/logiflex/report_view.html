@@ -137,8 +137,8 @@
 ------------------------------------------------ */
 $(document).ready(function() {
 
-    full_df = {{ full_df|safe }};
-
+    {#full_df = {{ full_df|safe }};#}
+    full_df = "none";
     handleRenderApexChart(full_df);
 	{#handleRenderApexChart(full_df);#}
 

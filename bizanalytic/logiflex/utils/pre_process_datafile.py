@@ -549,7 +549,7 @@ class ColumnNameValidator:
             # Print detailed report
         column_result = column_result + "DETAILED REPORT:\n"
         column_result = column_result + f"{'Index':<5} {'Original':<20} {'Suggested':<20} {'Confidence':<10} {'Action':<15}\n"
-        print("-" * 75)
+        column_result = column_result + "-" * 75
 
         for entry in results['validation_report']:
             column_result = column_result + f"{entry['index']:<5} {entry['original'][:19]:<20} {entry['suggested'][:19]:<20} " f"{entry['confidence']:<10.2f} {entry['action']:<15}"
@@ -580,7 +580,7 @@ class CityStateNormalizer:
                           for _, row in us_city_state_ref.iterrows()}
         self.unknown_cities = []  # For manual review
         # self.geolocator = Nominatim(user_agent="city_state_normalizer")
-        print(self.known_map)
+        # print(self.known_map)
 
     def _clean_city(self, city):
         """Normalize city string: remove noise, title case."""

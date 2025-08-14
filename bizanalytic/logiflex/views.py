@@ -714,7 +714,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             logireport.save()
 
             # Clean and validate route file and generate logs
-            # column_report, date_report, cities_report, routefilename = test_validator(route_file, logireport, route_filename)
+            column_report, date_report, cities_report, routefilename = test_validator(route_file, logireport, route_filename)
 
             # Start Local Analysis
 

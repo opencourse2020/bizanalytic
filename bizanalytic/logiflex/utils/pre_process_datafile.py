@@ -736,8 +736,9 @@ def test_validator(routefile, report, routefilename):
     filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(report.client.id, report.id, routefilename)
     print("filename: ", filename)
     filepath = settings.MEDIA_ROOT + "/" + filename
-    data.to_csv(filepath, index=False)
-
+    f = open(filepath, 'w')
+    data.to_csv(f, index=False)
+    f.close() # Explicitly close the file
 
     return column_report, date_report, cities_report, filename
 

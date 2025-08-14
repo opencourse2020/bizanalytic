@@ -7,60 +7,60 @@ from sklearn.model_selection import train_test_split
 
 # 1- Cleaning Data
 def clean_data(report):
-    df = pd.read_csv(report.routefile)
+    df_clean = pd.read_csv(report.routefile)
     print("File after load", report.routefile)
-    print(df.head(5))
-    print(df.columns)
+    print(df_clean.head(5))
+    print(df_clean.columns)
     # 1- Remove Duplicate ShipmentID
-    df.drop_duplicates(subset=['ShipmentID'], inplace=True)
+    df_clean.drop_duplicates(subset=['ShipmentID'], inplace=True)
 
     # 2- Clean and prepare categorical data columns
     # CarrierName
-    distinct_CarrierName = df['CarrierName'].unique()
+    distinct_CarrierName = df_clean['CarrierName'].unique()
     print("CarrierName")
     print(distinct_CarrierName)
 
     # DriverName
-    distinct_DriverName = df['DriverName'].unique()
+    distinct_DriverName = df_clean['DriverName'].unique()
     print("DriverName")
     print(distinct_DriverName)
 
     # DeliveryStatus
-    distinct_DeliveryStatus = df['DeliveryStatus'].unique()
+    distinct_DeliveryStatus = df_clean['DeliveryStatus'].unique()
     print("DeliveryStatus")
     print(distinct_DeliveryStatus)
 
     # OriginCity
-    distinct_OriginCity = df['OriginCity'].unique()
+    distinct_OriginCity = df_clean['OriginCity'].unique()
     print("OriginCity")
     print(distinct_OriginCity)
 
     # DestinationCity
-    distinct_DestinationCity = df['DestinationCity'].unique()
+    distinct_DestinationCity = df_clean['DestinationCity'].unique()
     print("DestinationCity")
     print(distinct_DestinationCity)
 
     # 3- Clean and prepare Numerical Data columns
     # enfore numerical type on numerical columns
-    df['Distance_Miles'] = pd.to_numeric(df['Distance_Miles'], errors='coerce')
-    df['LoadWeight_lbs'] = pd.to_numeric(df['LoadWeight_lbs'], errors='coerce')
-    df['FuelCost_USD'] = pd.to_numeric(df['FuelCost_USD'], errors='coerce')
-    df['FreightCost_USD'] = pd.to_numeric(df['FreightCost_USD'], errors='coerce')
-    df['DeliveryTime_hrs'] = pd.to_numeric(df['DeliveryTime_hrs'], errors='coerce')
+    df_clean['Distance_Miles'] = pd.to_numeric(df_clean['Distance_Miles'], errors='coerce')
+    df_clean['LoadWeight_lbs'] = pd.to_numeric(df_clean['LoadWeight_lbs'], errors='coerce')
+    df_clean['FuelCost_USD'] = pd.to_numeric(df_clean['FuelCost_USD'], errors='coerce')
+    df_clean['FreightCost_USD'] = pd.to_numeric(df_clean['FreightCost_USD'], errors='coerce')
+    df_clean['DeliveryTime_hrs'] = pd.to_numeric(df_clean['DeliveryTime_hrs'], errors='coerce')
 
     # fill in the missing values
-    df['Distance_Miles'].fillna(df['Distance_Miles'].mean(), inplace=True)
-    df['LoadWeight_lbs'].fillna(df['LoadWeight_lbs'].mean(), inplace=True)
-    df['FuelCost_USD'].fillna(df['FuelCost_USD'].mean(), inplace=True)
-    df['FreightCost_USD'].fillna(df['FreightCost_USD'].mean(), inplace=True)
-    df['DeliveryTime_hrs'].fillna(df['DeliveryTime_hrs'].mean(), inplace=True)
+    df_clean['Distance_Miles'].fillna(df_clean['Distance_Miles'].mean(), inplace=True)
+    df_clean['LoadWeight_lbs'].fillna(df_clean['LoadWeight_lbs'].mean(), inplace=True)
+    df_clean['FuelCost_USD'].fillna(df_clean['FuelCost_USD'].mean(), inplace=True)
+    df_clean['FreightCost_USD'].fillna(df_clean['FreightCost_USD'].mean(), inplace=True)
+    df_clean['DeliveryTime_hrs'].fillna(df_clean['DeliveryTime_hrs'].mean(), inplace=True)
 
     # 4- Clean and prepare Date Data columns
-    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
-    df['Date'].fillna(df['Date'].mode()[0], inplace=True)
+    df_clean['Date'] = pd.to_datetime(df_clean['Date'], errors='coerce')
+    df_clean['Date'].fillna(df_clean['Date'].mode()[0], inplace=True)
 
     # 5- Remove In-Transit data
-    delivery_data = df[df['DeliveryStatus'].isin(['Delivered', 'Delayed'])]
+    delivery_data = df_clean[df_clean['DeliveryStatus'].isin(['Delivered', 'Delayed'])]
     return delivery_data
 
 

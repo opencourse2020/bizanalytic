@@ -719,15 +719,15 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             # Start Local Analysis
 
             # 1- Load csv to pandas dataframe
-            dff = pd.read_csv(logireport.routefile)
+            # dff = pd.read_csv(logireport.routefile)
 
             print("Prepare for cleaning")
             print("****************************************")
             print("File", logireport.routefile)
-            print(dff.head(5))
+            # print(dff.head(5))
 
             # 2- Prepare data
-            df = clean_data(dff)
+            df = clean_data(logireport)
             df = calculate_kpis(df)
             summary = []
             # *****************************************************************************************************************************

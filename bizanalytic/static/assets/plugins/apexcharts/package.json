@@ -6,17 +6,17 @@
     "type": "git",
     "url": "https://github.com/apexcharts/apexcharts.js.git"
   },
-  "main": "dist/apexcharts.common.js",
+  "main": "distro/apexcharts.common.js",
   "es2020": "dist/apexcharts.esm.js",
-  "module": "dist/apexcharts.esm.js",
+  "module": "distro/apexcharts.esm.js",
   "unpkg": "dist/apexcharts.js",
   "jsdelivr": "dist/apexcharts.js",
   "typings": "types/apexcharts.d.ts",
   "files": [
     "src",
-    "dist/*.js",
-    "dist/*.css",
-    "dist/locales/*.json",
+    "distro/*.js",
+    "distro/*.css",
+    "distro/locales/*.json",
     "types/*.d.ts"
   ],
   "scripts": {

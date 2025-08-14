@@ -533,35 +533,43 @@ class ColumnNameValidator:
     def print_validation_report(self, results: Dict):
         """Print a formatted validation report"""
         column_result = "=== COLUMN VALIDATION REPORT ===\n"
-
+        column_result = column_result + "@@#@@"
         column_result = column_result + f"\nTotal columns: {len(results['original_columns'])}\n"
+        column_result = column_result + "@@#@@"
         column_result = column_result + f"Corrections made: {len(results['corrections_made'])}\n"
+        column_result = column_result + "@@#@@"
         column_result = column_result + f"Errors/Warnings: {len(results['errors'])}\n"
+        column_result = column_result + "@@#@@"
 
         # Print corrections made
         if results['corrections_made']:
             column_result = column_result + "CORRECTIONS MADE:\n"
+            column_result = column_result + "@@#@@"
             for original, corrected in results['corrections_made'].items():
                 column_result = column_result + f"  '{original}' -> '{corrected}'\n"
-
+                column_result = column_result + "@@#@@"
             column_result = column_result + "\n"
-
+            column_result = column_result + "@@#@@"
             # Print detailed report
         column_result = column_result + "DETAILED REPORT:\n"
+        column_result = column_result + "@@#@@"
         column_result = column_result + f"{'Index':<5} {'Original':<20} {'Suggested':<20} {'Confidence':<10} {'Action':<15}\n"
+        column_result = column_result + "@@#@@"
         column_result = column_result + "-" * 75
+        column_result = column_result + "@@#@@"
 
         for entry in results['validation_report']:
             column_result = column_result + f"{entry['index']:<5} {entry['original'][:19]:<20} {entry['suggested'][:19]:<20} " f"{entry['confidence']:<10.2f} {entry['action']:<15}\n"
-
+            column_result = column_result + "@@#@@"
         # Print errors/warnings
         if results['errors']:
             column_result = column_result + f"\nERRORS/WARNINGS:\n"
+            column_result = column_result + "@@#@@"
             for error in results['errors']:
                 column_result = column_result + f"  ⚠️  {error}"
+                column_result = column_result + "@@#@@"
 
         column_result = column_result + "\n" + "=" * 50
-        column_result = column_result.to_markdown()
         return column_result
 
 class CityStateNormalizer:

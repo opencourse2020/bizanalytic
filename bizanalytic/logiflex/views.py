@@ -53,9 +53,11 @@ class RouteFileView(TemplateView):
         pu = self.kwargs.get("pk")
         report = models.LogiflexReport.objects.filter(pk=pu).first()
         log_message = models.LogEntry.objects.filter(report=report).first()
+        if log_message.column_report:
+            logcol = log_message.column_report.split("@@#@@")
         if report:
             kwargs["report"] = report
-            kwargs["logcolumn"] = log_message.column_report
+            kwargs["logcolumn"] = logcol.to_markdown()
             kwargs["logdate"] = log_message.date_report
             kwargs["logcity"] = log_message.citi_report
         else:

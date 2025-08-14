@@ -132,6 +132,24 @@
     {{ block.super }}
     <script src={% static "assets/plugins/apexcharts/distro/apexcharts.min.js" %}></script>
     <script src={% static "assets/js/pages/chart-apex.pmf.js" %}></script>
+     <script>
+    /* Controller
+------------------------------------------------ */
+$(document).ready(function() {
+
+    full_df = {{ full_df|safe }};
+
+    handleRenderApexChart(full_df);
+	{#handleRenderApexChart(full_df);#}
+
+	$(document).on('theme-reload', function() {
+		{#$('#churncontractiondonut, #apexLineChart, #apexColumnChart, #apexAreaChart, #apexBarChart, #apexMixedChart, #apexCandlestickChart, #apexBubbleChart, #apexScatterChart, #apexHeatmapChart, #apexPieChart, #apexRadialBarChart, #apexRadarChart').empty();#}
+        $('#CarrierCostReliabilityBubbleChart').empty();
+
+		handleRenderApexChart(full_df);
+	});
+});
+    </script>
 {% endblock js_area %}
 
 

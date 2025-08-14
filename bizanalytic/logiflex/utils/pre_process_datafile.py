@@ -624,13 +624,13 @@ class CityStateNormalizer:
     def normalize_column(self, col):
         """Normalize one city column."""
         normalized = []
-        print("column analyzed:", col)
-        print(self.df[col].head(5))
-        print(self.df.columns)
+        # print("column analyzed:", col)
+        # print(self.df[col].head(5))
+        # print(self.df.columns)
         for val in self.df[col]:
-            print("val:", val)
+            # print("val:", val)
             city, state = self._split_city_state(val)
-            print(f"{city} - {state}")
+            # print(f"{city} - {state}")
             guessed_city = self._guess_city(city)
 
             # If fuzzy match found
@@ -639,7 +639,7 @@ class CityStateNormalizer:
                 if not state:
                     state = self.known_map[city]
                     self.unknown_cities.append({"Column": col, "Original": val})
-                    print("city:", city, "-", state)
+                    # print("city:", city, "-", state)
             # else:
             #     # Try geocoding if not in known list
             #     geo_state = self._geocode_state(city)
@@ -651,8 +651,8 @@ class CityStateNormalizer:
             #         state = state or self.state_default
 
             normalized.append(f"{city}, {state}")
-        print("lenght of normalized: ", len(normalized))
-        print("Normalized data:", normalized)
+        # print("lenght of normalized: ", len(normalized))
+        # print("Normalized data:", normalized)
         # self.df = self.df.drop(col, axis=1)
         self.df[col] = normalized
 
@@ -707,7 +707,7 @@ def test_validator(routefile, report, routefilename):
             date_report = date_report + f"  '{fix['original']}' -> '{fix['fixed']}' (was {fix['original_format']})"
 
     orig_cities = data[['OriginCity', 'DestinationCity']]
-    print("Origine cities:", orig_cities.columns)
+    # print("Origine cities:", orig_cities.columns)
     normalizer = CityStateNormalizer(orig_cities, us_cities)
     clean_df, review_df = normalizer.normalize()
     data = data.drop(['OriginCity', 'DestinationCity'], axis=1)

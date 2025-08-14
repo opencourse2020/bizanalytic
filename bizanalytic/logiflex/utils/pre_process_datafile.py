@@ -732,7 +732,7 @@ def test_validator(routefile, report, routefilename):
     #         os.remove(report.routefile.path)
     print("Data before saving to csv file")
     print(data.head(5))
-    print(data.index)
+    print(data.columns)
     filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(report.client.id, report.id, routefilename)
     print("filename: ", filename)
     filepath = settings.MEDIA_ROOT + "/" + filename

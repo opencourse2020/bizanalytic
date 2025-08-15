@@ -57,9 +57,25 @@ class RouteFileView(TemplateView):
         df = pd.read_csv(report.routefile)
 
         # Get route file information
+
         carriers = df['CarrierName'].unique()
+        null_carriers = df['CarrierName'].isnull().sum()
+        if null_carriers > 0:
+            carriers_cleaned = df.dropna(subset=['CarrierName'])
+            carriers = carriers_cleaned['CarrierName'].unique()
+
         drivers = df['DriverName'].unique()
+        null_drivers = df['DriverName'].isnull().sum()
+        if null_drivers > 0:
+            drivers_cleaned = df.dropna(subset=['DriverName'])
+            drivers = drivers_cleaned['DriverName'].unique()
+
         deliverystatus = df['DeliveryStatus'].unique()
+        null_deliverystatus = df['DeliveryStatus'].isnull().sum()
+        if null_deliverystatus > 0:
+            deliverystatus_cleaned = df.dropna(subset=['DeliveryStatus'])
+            deliverystatus = deliverystatus_cleaned['DeliveryStatus'].unique()
+
         distance_str, fuelcost_str, loadweight_str, deliveryhrs_str = process_route_info(df.describe())
 
         log_message = models.LogEntry.objects.filter(report=report).first()
@@ -76,8 +92,11 @@ class RouteFileView(TemplateView):
             kwargs["logdate"] = logdate
             kwargs["logcity"] = logcity
             kwargs["carriers"] = carriers
+            kwargs["null_carriers"] = null_carriers
             kwargs["drivers"] = drivers
+            kwargs["null_drivers"] = null_drivers
             kwargs["deliverystatus"] = deliverystatus
+            kwargs["null_deliverystatus"] = null_deliverystatus
             kwargs["distance_str"] = distance_str
             kwargs["fuelcost_str"] = fuelcost_str
             kwargs["loadweight_str"] = loadweight_str

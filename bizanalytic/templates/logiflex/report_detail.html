@@ -115,26 +115,35 @@
                  <div class="card shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title mb-1">{% trans "Important Information" %}</h5>
-                        <p style="font-weight: bold">{% trans "Carriers" %}</p>
+                        <p style="font-weight: bold">{{ carriers|length }}&nbsp;{% trans "Carriers" %}</p>
                         <p>
                         {% for carrier in carriers %}
-                            {{ carrier }} -
+                            {% if not carrier == "nan" %}
+                                {{ carrier }} -
+                            {% endif %}
                         {% endfor %}
                         </p>
+                        <p class="text-muted">{% trans "Number of missing Carriers data: " %}{{ null_carriers }}</p>
                         <br>
-                        <p style="font-weight: bold">{% trans "Drivers" %}</p>
+                        <p style="font-weight: bold">{{ drivers|length }}&nbsp;{% trans "Drivers" %}</p>
                         <p>
                         {% for driver in drivers %}
-                            {{ driver }} -
+                            {% if not driver == "nan" %}
+                                {{ driver }} -
+                            {% endif %}
                         {% endfor %}
                         </p>
+                        <p class="text-muted">{% trans "Number of missing Drivers data: " %}{{ null_drivers }}</p>
                         <br>
-                        <p style="font-weight: bold">{% trans "Delivery Status" %}</p>
+                        <p style="font-weight: bold">{{ deliverystatus|length }}&nbsp;{% trans "Delivery Status" %}</p>
                         <p>
                         {% for status in deliverystatus %}
-                            {{ status }}
+                            {% if not status == "nan" %}
+                                {{ status }}
+                            {% endif %}
                         {% endfor %}
                         </p>
+                        <p class="text-muted">{% trans "Number of missing Delivery Status data: " %}{{ null_deliverystatus }}</p>
                         <br>
                         <h6 class="card-title">{% trans "Important Statistics" %}</h6>
                         <p>

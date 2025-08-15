@@ -65,7 +65,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Expected Delivery" %}</h5>
-
+                            <div id="plot_div"></div>
                     </div>
                 </div>
             </div>
@@ -132,6 +132,7 @@
 {% block js_area %}
     {{ block.super }}
     <script src={% static "assets/plugins/apexcharts/distro/apexcharts.min.js" %}></script>
+    <script src={% static "assets/plugins/Danfo/bundle.js" %}></script>
 {#    <script src={% static "assets/js/app.min.js" %}></script>#}
     <script src={% static "assets/js/pages/chart-apex.pmf.js" %}></script>
      <script>
@@ -140,7 +141,7 @@
 $(document).ready(function() {
 
     {#full_df = {{ full_df|safe }};#}
-    full_df = "none";
+    full_df = {{ carrierstats|safe }};
     handleRenderApexChart(full_df);
 	{#handleRenderApexChart(full_df);#}
 
@@ -151,6 +152,20 @@ $(document).ready(function() {
 		handleRenderApexChart(full_df);
 	});
 });
+    </script>
+    <script>
+
+          dfd.readCSV("https://raw.githubusercontent.com/pandas-dev/pandas/master/doc/data/titanic.csv")
+            .then(df => {
+
+              df.plot("plot_div").scatter({
+                config: { x: "Age", y: "Fare" }
+              })
+
+            }).catch(err => {
+              console.log(err);
+            })
+
     </script>
 {% endblock js_area %}
 

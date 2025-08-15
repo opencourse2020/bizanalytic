@@ -6,6 +6,7 @@ Website: http://www.seantheme.com/hud/
 */
 
 var handleRenderApexChart = function(full_df) {
+	df = new dfd.DataFrame(full_df);
 
 	// Apex = {
 	// 	title: {

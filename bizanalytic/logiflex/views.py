@@ -76,6 +76,18 @@ class RouteFileView(TemplateView):
 class ReportView(TemplateView):
     template_name = "logiflex/report_view.html"
 
+    def get_context_data(self, **kwargs):
+        pu = self.kwargs.get("pk")
+        user = self.request.user
+
+        report = models.LogiflexReport.objects.filter(client__user=user, pk=pu).first()
+        if report:
+            df = clean_data(report)
+            df = calculate_kpis(df)
+            carrier_stats = prepare_carrier_stats(df).reset_index()
+            kwargs["carrierstats"] = carrier_stats
+        return super(ReportView, self).get_context_data(**kwargs)
+
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = "logiflex/dashboard.html"

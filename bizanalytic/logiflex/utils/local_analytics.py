@@ -503,3 +503,25 @@ def run_analysis(logireport):
     # Visualizations
     # 1- Cost Efficiency Heatmap (data=route_stats, columns='DestinationCity', values='AvgCostPerMile', title=Route Cost Efficiency Heatmap)
     # 2- Speed vs. Cost Bubble Chart - scatterplot (data=route_stats, x='MedianSpeed', y='AvgCostPerMile', title='Route Efficiency: Speed vs. Cost')
+
+
+def process_route_info(ds):
+    distance = []
+    fuelcost = []
+    loadweight = []
+    deliveryhrs = []
+    freightcost = []
+
+    for index, row in ds.iterrows():
+        distance.append(row['Distance_Miles'].item())
+        fuelcost.append(row['FuelCost_USD'].item())
+        loadweight.append(row['LoadWeight_lbs'].item())
+        deliveryhrs.append(row['DeliveryTime_hrs'].item())
+        freightcost.append(row['FreightCost_USD'].item())
+
+    distance_str = f"Distance: count: {distance[0]} - Average: {distance[1]} - Min: {distance[3]} - Max {distance[7]}"
+    fuelcost_str = f"FuelCost: count: {fuelcost[0]} - Average: {fuelcost[1]} - Min: {fuelcost[3]} - Max {fuelcost[7]}"
+    loadweight_str = f"LoadWeight: count: {loadweight[0]} - Average: {loadweight[1]} - Min: {loadweight[3]} - Max {loadweight[7]}"
+    deliveryhrs_str = f"DeliveryHrs: count: {deliveryhrs[0]} - Average: {deliveryhrs[1]} - Min: {deliveryhrs[3]} - Max {deliveryhrs[7]}"
+
+    return distance_str, fuelcost_str, loadweight_str, deliveryhrs_str

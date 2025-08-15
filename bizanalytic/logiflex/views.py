@@ -52,6 +52,16 @@ class RouteFileView(TemplateView):
     def get_context_data(self, **kwargs):
         pu = self.kwargs.get("pk")
         report = models.LogiflexReport.objects.filter(pk=pu).first()
+
+        # load route file
+        df = pd.read_csv(report.routefile)
+
+        # Get route file information
+        carriers = df['CarrierName'].unique()
+        drivers = df['DriverName'].unique()
+        deliverystatus = df['DeliveryStatus'].unique()
+        distance_str, fuelcost_str, loadweight_str, deliveryhrs_str = process_route_info(df.describe())
+
         log_message = models.LogEntry.objects.filter(report=report).first()
         if log_message.column_report:
             logcol = log_message.column_report.split("@@#@@")
@@ -65,6 +75,14 @@ class RouteFileView(TemplateView):
             kwargs["logcolumn"] = logcol
             kwargs["logdate"] = logdate
             kwargs["logcity"] = logcity
+            kwargs["carriers"] = carriers
+            kwargs["drivers"] = drivers
+            kwargs["deliverystatus"] = deliverystatus
+            kwargs["distance_str"] = distance_str
+            kwargs["fuelcost_str"] = fuelcost_str
+            kwargs["loadweight_str"] = loadweight_str
+            kwargs["deliveryhrs_str"] = deliveryhrs_str
+
         else:
             kwargs["report"] = ""
             kwargs["logcolumn"] = ""

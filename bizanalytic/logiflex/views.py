@@ -127,7 +127,8 @@ class ReportView(TemplateView):
 
         report = models.LogiflexReport.objects.filter(client__user=user, pk=pu).first()
         if report:
-            df = clean_data(report)
+            dff = pd.read_csv(report.routefile)
+            df = clean_data(dff)
             df = calculate_kpis(df)
             carrier_stats = prepare_carrier_stats(df).reset_index()
             print(carrier_stats)

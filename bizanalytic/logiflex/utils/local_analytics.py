@@ -363,7 +363,7 @@ def predict_cost(df):
     return high_variance, low_variance
 
 
-def run_analysis(df):
+def run_analysis(dff):
     # Start Local Analysis
 
     # 1- Load csv to pandas dataframe
@@ -375,7 +375,7 @@ def run_analysis(df):
     # print(dff.head(5))
 
     # 2- Prepare data
-    df = clean_data(df)
+    df = clean_data(dff)
     df = calculate_kpis(df)
     summary = []
     # *****************************************************************************************************************************

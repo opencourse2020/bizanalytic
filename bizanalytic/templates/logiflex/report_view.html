@@ -158,7 +158,7 @@ $(document).ready(function() {
         df = new dfd.DataFrame(full_df);
 
         df.plot("plot_div").scatter({
-                  config: {x: "AvgFreightCost", y: "OnTimeRate"}
+                  config: {x: "AvgFreightCost", y: "OnTimeRate", labels: "CarrierName"}
               });
 
 

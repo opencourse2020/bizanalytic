@@ -144,6 +144,7 @@ $(document).ready(function() {
     full_df = {{ carrierstats|safe }};
 
     df = new dfd.DataFrame(full_df);
+    console.log(df.describ());
 	let carrierdata = df[['AvgFreightCost', 'OnTimeRate']];
 	console.log(carrierdata);
 	let numcarrieres = df['CarrierName'].count()

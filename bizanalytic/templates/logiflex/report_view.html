@@ -154,7 +154,7 @@ $(document).ready(function() {
 });
     </script>
     <script>
-        full_df = {{ carrierstats }};
+        full_df = {{ carrierstats|safe }};
         df = new dfd.DataFrame(full_df);
 
         df.plot("plot_div").scatter({

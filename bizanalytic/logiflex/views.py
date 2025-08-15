@@ -86,8 +86,16 @@ class RouteFileView(TemplateView):
         if log_message.citi_report:
             logcity = log_message.citi_report.split("@@#@@")
 
+        # Report status percentage
+        reportstatus = 50
+        if report.report_text:
+            reportstatus = 100
+        elif report.report_status:
+            reportstatus = 80
+
         if report:
             kwargs["report"] = report
+            kwargs["reportstatus"] = reportstatus
             kwargs["logcolumn"] = logcol
             kwargs["logdate"] = logdate
             kwargs["logcity"] = logcity

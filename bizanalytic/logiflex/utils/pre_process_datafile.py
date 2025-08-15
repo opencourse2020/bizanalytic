@@ -797,5 +797,5 @@ def test_validator(routefile, report, routefilename):
     data.to_csv(f, index=False)
     f.close() # Explicitly close the file
 
-    return column_report, date_report, cities_report, filename
+    return column_report, date_report, cities_report, filename, data
 

@@ -792,9 +792,15 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             logireport.save()
 
             # Clean and validate route file and generate logs
-            column_report, date_report, cities_report, routefilename = test_validator(route_file, logireport, route_filename)
+            column_report, date_report, cities_report, routefilename, df = test_validator(route_file, logireport, route_filename)
 
+            # Run Analysis
+            summary = run_analysis(df)
 
+            # Convert the summary array to json format to be stored as text in the database
+            json_string = json.dumps(summary)
+            logireport.report_summary = json_string
+            logireport.save()
             # update route file
             # logireport.routefile = routefilename
             # logireport.save()

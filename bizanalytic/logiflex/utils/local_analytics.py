@@ -6,11 +6,11 @@ from sklearn.model_selection import train_test_split
 import json
 
 # 1- Cleaning Data
-def clean_data(report):
-    df_clean = pd.read_csv(report.routefile)
-    print("File after load", report.routefile)
-    print(df_clean.head(5))
-    print(df_clean.columns)
+def clean_data(df_clean):
+    # df_clean = pd.read_csv(report.routefile)
+    # print("File after load", report.routefile)
+    # print(df_clean.head(5))
+    # print(df_clean.columns)
     # 1- Remove Duplicate ShipmentID
     df_clean.drop_duplicates(subset=['ShipmentID'], inplace=True)
 
@@ -363,7 +363,7 @@ def predict_cost(df):
     return high_variance, low_variance
 
 
-def run_analysis(logireport):
+def run_analysis(df):
     # Start Local Analysis
 
     # 1- Load csv to pandas dataframe
@@ -371,12 +371,12 @@ def run_analysis(logireport):
 
     print("Prepare for cleaning")
     print("****************************************")
-    print("File", logireport.routefile)
+    # print("File", logireport.routefile)
     # print(dff.head(5))
 
     # 2- Prepare data
-    df = clean_data(logireport)
-    df = calculate_kpis(df)
+    # df = clean_data(logireport)
+    # df = calculate_kpis(df)
     summary = []
     # *****************************************************************************************************************************
     # 3- Start Carrier Analysis
@@ -493,10 +493,8 @@ def run_analysis(logireport):
     summary.append("Recommended Actions: e.g., Investigate root causes for these 2σ outliers.")
     summary.append("\n")
 
-    # Convert the summary array to json format to be stored as text in the database
-    json_string = json.dumps(summary)
-    logireport.report_summary = json_string
-    logireport.save()
+    return summary
+
 
     # high_variance, low_variance = predict_cost(df)
 

@@ -793,7 +793,9 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
             # Clean and validate route file and generate logs
             column_report, date_report, cities_report, routefilename, df = test_validator(route_file, logireport, route_filename)
-
+            print("df columns after cleaning")
+            print(df.columns)
+            print(df.head(5))
             # Run Analysis
             summary = run_analysis(df)
 

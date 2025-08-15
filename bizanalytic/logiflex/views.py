@@ -85,9 +85,10 @@ class ReportView(TemplateView):
             df = clean_data(report)
             df = calculate_kpis(df)
             carrier_stats = prepare_carrier_stats(df).reset_index()
+            print(carrier_stats)
             carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
             # print("carrier stats")
-            print(carrier_stats)
+
             kwargs["carrierstats"] = carrier_stats
         return super(ReportView, self).get_context_data(**kwargs)
 

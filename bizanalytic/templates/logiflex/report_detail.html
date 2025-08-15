@@ -173,6 +173,14 @@
                         {% for item in logcolumn %}
                             {% if "CORRECTIONS MADE:" in item  %}
                             <p style="font-weight: 600; color: black;">{{ item|safe }}</p>
+                            {% elif "COLUMN VALIDATION REPORT" in item %}
+                                <p style="font-weight: 600; color: black;">{{ item|safe }}</p>
+                            {% elif "Total columns" in item %}
+                                <p style="color: black;">{{ item|safe }}</p>
+                            {% elif "Corrections made" in item %}
+                                <p style="color: black;">{{ item|safe }}</p>
+                            {% elif "Errors/Warnings" in item %}
+                                <p style="color: black;">{{ item|safe }}</p>
                             {% else %}
                             <p style="background: #dcf4ea;">{{ item|safe }}</p>
                             {% endif %}
@@ -197,6 +205,10 @@
                                 <p style="background: #eb5849; color: black">{{ itemdate|safe }}</p>
                             {% elif "Empty dates" in itemdate %}
                                 <p style="background: #eb5849; color: black">{{ itemdate|safe }}</p>
+                            {% elif "DATE FORMATS DETECTED" in itemdate %}
+                                <p style="font-weight: 600; color: black;">{{ itemdate|safe }}</p>
+                            {% elif "RECOMMENDATIONS" in itemdate %}
+                                <p style="font-weight: 600; color: black;">{{ itemdate|safe }}</p>
                             {% else %}
                                 <p>{{ itemdate|safe }}</p>
                             {% endif %}

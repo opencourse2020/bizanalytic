@@ -171,21 +171,35 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Column Names Modifications" %}</h5>
                         {% for item in logcolumn %}
-                            <p>{{ item|safe }}
+                            {% if item == "CORRECTIONS MADE:" %}
+                            <p style="font-weight: 600; color: black;">{{ item|safe }}</p>
+                            {% else %}
+                            <p style="background: #dcf4ea;">{{ item|safe }}</p>
+                            {% endif %}
                         {% endfor %}
                         <br>
                         <span>===================================</span>
                         <span>===================================</span>
                         <h5 class="card-title">{% trans "Citie Column Modifications" %}</h5>
                         {% for itemcity in logcity %}
-                            <p>{{ itemcity|safe }}
+                            <p>{{ itemcity|safe }}</p>
                         {% endfor %}
                         <br>
                         <span>===================================</span>
                         <span>===================================</span>
                         <h5 class="card-title">{% trans "Date Column Modifications" %}</h5>
                         {% for itemdate in logdate %}
-                            <p>{{ itemdate|safe }}
+                            {% if itemdate == "FIX REPORT:" %}
+                                <p style="font-weight: 600; color: black;">{{ itemdate|safe }}</p>
+                            {% elif "Valid dates" in itemdate %}
+                                <p style="background: #dcf4ea;">{{ itemdate|safe }}</p>
+                            {% elif "Invalid dates" in itemdate %}
+                                <p style="background: #eb5849;">{{ itemdate|safe }}</p>
+                            {% elif "Empty dates" in itemdate %}
+                                <p style="background: #eb5849;">{{ itemdate|safe }}</p>
+                            {% else %}
+                                {{ itemdate|safe }}
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>

@@ -563,7 +563,7 @@ class ColumnNameValidator:
 
         # Print corrections made
         if results['corrections_made']:
-            column_result = column_result + "CORRECTIONS MADE:\n"
+            column_result = column_result + "CORRECTIONS MADE:"
             column_result = column_result + "@@#@@"
             for original, corrected in results['corrections_made'].items():
                 column_result = column_result + f"  '{original}' -> '{corrected}'\n"
@@ -740,7 +740,7 @@ def test_validator(routefile, report, routefilename):
     fixed_dates, fix_report = date_validator.fix_date_format(sample_dates, '%Y-%m-%d')
     data['Date'] = fixed_dates
     date_report = date_report + "@@#@@"
-    date_report = date_report + "\nFIX REPORT:\n"
+    date_report = date_report + "FIX REPORT:"
     date_report = date_report + "@@#@@"
     date_report = date_report + f"  Successfully fixed: {fix_report['successfully_fixed']}"
     date_report = date_report + "@@#@@"

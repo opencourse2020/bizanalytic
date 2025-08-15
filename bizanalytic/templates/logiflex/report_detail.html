@@ -106,40 +106,43 @@
             <div class="col-md-4"></div>
         </div>
 
-        <div class="d-flex justify-content-center">
-            <h2>{% trans "Route File Processing Report" %}</h2>
+        <div class="d-flex justify-content-center pt-4">
+            <h4>{% trans "Route File Processing Report" %}</h4>
         </div>
         <div class="row g-4">
             <div class="col-md-8">
                  <div class="card shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title mb-1">{% trans "Data Description" %}</h5>
-                        <p class="bold-text">{% trans "Carriers" %}</p>
+                        <p style="font-weight: bold">{% trans "Carriers" %}</p>
+                        <p>
                         {% for carrier in carriers %}
-                            <p>{{ carrier }}</p>
+                            {{ carrier }} -
                         {% endfor %}
+                        </p>
                         <br>
-                        <p class="bold-text">{% trans "Drivers" %}</p>
+                        <p style="font-weight: bold">{% trans "Drivers" %}</p>
+                        <p>
                         {% for driver in drivers %}
-                            <p>{{ driver }}</p>
+                            {{ driver }} -
                         {% endfor %}
+                        </p>
                         <br>
-                        <p class="bold-text">{% trans "Delivery Status" %}</p>
+                        <p style="font-weight: bold">{% trans "Delivery Status" %}</p>
+                        <p>
                         {% for status in deliverystatus %}
-                            <p>{{ status }}</p>
+                            {{ status }}
                         {% endfor %}
+                        </p>
                         <br>
-                        <p class="bold-text">{% trans "Important Statistics" %}</p>
+                        <h6 class="card-title">{% trans "Important Statistics" %}</h6>
                         <p>
                             {{ distance_str }}
                         </p>
-                        <br>
                         <p>{{ fuelcost_str }}</p>
-                        <br>
                         <p>{{ loadweight_str }}</p>
-                        <br>
                         <p>{{ deliveryhrs_str }}</p>
-                        <br>
+
 {#                        <p class="text-muted">{% trans "File successfully processed" %}</p>#}
                     </div>
                 </div>

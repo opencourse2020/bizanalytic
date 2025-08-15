@@ -375,8 +375,8 @@ def run_analysis(df):
     # print(dff.head(5))
 
     # 2- Prepare data
-    # df = clean_data(logireport)
-    # df = calculate_kpis(df)
+    df = clean_data(df)
+    df = calculate_kpis(df)
     summary = []
     # *****************************************************************************************************************************
     # 3- Start Carrier Analysis

@@ -141,7 +141,7 @@
 $(document).ready(function() {
 
     {#full_df = {{ full_df|safe }};#}
-    full_df = {{ carrierstats|safe }};
+    full_df = "";
     handleRenderApexChart(full_df);
 	{#handleRenderApexChart(full_df);#}
 
@@ -154,8 +154,8 @@ $(document).ready(function() {
 });
     </script>
     <script>
-        full_df = {{ carrierstats|safe }};
-        df = new dfd.DataFrame(full_df);
+        {#full_df = {{ carrierstats|safe }};#}
+        df = new dfd.DataFrame({{ carrierstats|safe }});
 
         df.plot("plot_div").scatter({
                   config: {x: "AvgFreightCost", y: "OnTimeRate"}

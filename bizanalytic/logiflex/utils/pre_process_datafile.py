@@ -589,7 +589,6 @@ class ColumnNameValidator:
                 column_result = column_result + f"  ⚠️  {error}"
                 column_result = column_result + "@@#@@"
 
-        column_result = column_result + "\n" + "=" * 10
         return column_result
 
 class CityStateNormalizer:

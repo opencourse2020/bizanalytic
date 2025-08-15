@@ -10,8 +10,9 @@ var handleRenderApexChart = function(full_df) {
 	let carrierdata = df[['AvgFreightCost', 'OnTimeRate']];
 	let numcarrieres = df['CarrierName'].count()
 	let carrierscatterdata = [];
-	for (const row of df.itertuples())
+	for (const row of df.itertuples()){
 		carrierscatterdata.push("{ name: '" + row.CarrierName +"', data: "  [[row.AvgFreightCost, row.OnTimeRate]] + " },");
+		}
     // console.log(`Index: ${row._index}, Col1: ${row.col1}, Col2: ${row.col2}, Col3: ${row.col3}`);
   	console.log(carrierscatterdata);
 

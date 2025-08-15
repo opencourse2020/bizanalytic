@@ -171,7 +171,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">{% trans "Column Names Modifications" %}</h5>
                         {% for item in logcolumn %}
-                            {% if item == "CORRECTIONS MADE:" %}
+                            {% if "CORRECTIONS MADE:" in item  %}
                             <p style="font-weight: 600; color: black;">{{ item|safe }}</p>
                             {% else %}
                             <p style="background: #dcf4ea;">{{ item|safe }}</p>
@@ -189,16 +189,16 @@
                         <span>===================================</span>
                         <h5 class="card-title">{% trans "Date Column Modifications" %}</h5>
                         {% for itemdate in logdate %}
-                            {% if itemdate == "FIX REPORT:" %}
+                            {% if "FIX REPORT:" in itemdate %}
                                 <p style="font-weight: 600; color: black;">{{ itemdate|safe }}</p>
                             {% elif "Valid dates" in itemdate %}
                                 <p style="background: #dcf4ea;">{{ itemdate|safe }}</p>
                             {% elif "Invalid dates" in itemdate %}
-                                <p style="background: #eb5849;">{{ itemdate|safe }}</p>
+                                <p style="background: #eb5849; color: black">{{ itemdate|safe }}</p>
                             {% elif "Empty dates" in itemdate %}
-                                <p style="background: #eb5849;">{{ itemdate|safe }}</p>
+                                <p style="background: #eb5849; color: black">{{ itemdate|safe }}</p>
                             {% else %}
-                                {{ itemdate|safe }}
+                                <p>{{ itemdate|safe }}</p>
                             {% endif %}
                         {% endfor %}
                     </div>

@@ -554,7 +554,7 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 20) -> str:
         competitor = row['Competitor']
         odds_ratio = row['Odds_Ratio']
         # p_value = row['P_Value']
-        contingency_matrix = contingency_matrix.append(f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier}")
+        contingency_matrix.append(f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier}")
 
     return (
         f"Columns: {cols}\n"

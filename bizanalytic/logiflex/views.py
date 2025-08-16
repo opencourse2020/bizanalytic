@@ -161,7 +161,7 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                 csv_text = read_csv_into_text_and_df(report.routefile)
                 # Compact summary for prompt to control tokens (use this instead of full CSV if large)
                 summary_for_prompt = summarize_df_for_prompt(df, max_rows=25)
-                print("summary_for_prompt:", summary_for_prompt)
+
                 user_prompt = f"""
                             Analyze freight route data for client: {report.client.company}.
         
@@ -184,7 +184,7 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                             - STRICTLY return a single JSON object matching the provided schema.
                             - Include Chart.js-ready configs in summary_json.charts[].config (full chart config).
                             """
-
+                print("user_prompt: ", user_prompt)
                 # Call Responses API with JSON schema enforcement
 
                 resp = client.responses.create(model="gpt-4.1",

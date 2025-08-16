@@ -271,3 +271,19 @@ JSON_SCHEMA = {
         "required": ["markdown_report","summary_json"]
     }
 }
+
+# text={"format": {"type": "json_schema",
+#             "name": "calendar_event",
+#             "schema": {
+#                 "type": "object",
+#                 "properties": {
+#                     "name": {"type": "string"},
+#                     "date": {"type": "string"},
+#                     "participants": {"type": "array", "items": {"type": "string"}},
+#                 },
+#                 "required": ["name", "date", "participants"],
+#                 "additionalProperties": False,
+#             },
+#             "strict": True,
+#         }
+#     },

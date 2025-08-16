@@ -154,64 +154,74 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
         log = models.LogEntry.objects.filter(report=report).first()
 
         if report:
-            df = pd.read_csv(report.routefile)
+            if not report.report_text:
+                df = pd.read_csv(report.routefile)
 
-        # run summary analysis
-        csv_text = read_csv_into_text_and_df(report.routefile)
-        # Compact summary for prompt to control tokens (use this instead of full CSV if large)
-        summary_for_prompt = summarize_df_for_prompt(df, max_rows=25)
-        user_prompt = f"""
-                    Analyze freight route data for client: {report.client.company}.
+                # run summary analysis
+                csv_text = read_csv_into_text_and_df(report.routefile)
+                # Compact summary for prompt to control tokens (use this instead of full CSV if large)
+                summary_for_prompt = summarize_df_for_prompt(df, max_rows=25)
+                user_prompt = f"""
+                            Analyze freight route data for client: {report.client.company}.
+        
+                            Objective:
+                            - Executive-ready Fleet Efficiency Report with BI charts, KPIs, and actionable recommendations.
+                            - Include city/state already normalized in the data.
+        
+                            Data notes:
+                            - The dataset is already cleaned to 'City, ST' format for origins/destinations.
+                            - Potential data issues flagged by preprocessing are provided below.
+        
+                            Preprocessing flags:
+                            {json.dumps(log.flags, indent=2)}
+        
+                            Dataset (compact summary for analysis):
+                            {summary_for_prompt}
+                            
+                            Output:
+                            - STRICTLY return a single JSON object matching the provided schema.
+                            - Include Chart.js-ready configs in summary_json.charts[].config (full chart config).
+                            """
 
-                    Objective:
-                    - Executive-ready Fleet Efficiency Report with BI charts, KPIs, and actionable recommendations.
-                    - Include city/state already normalized in the data.
+                # Call Responses API with JSON schema enforcement
 
-                    Data notes:
-                    - The dataset is already cleaned to 'City, ST' format for origins/destinations.
-                    - Potential data issues flagged by preprocessing are provided below.
+                resp = client.responses.create(model="gpt-5",
+                                              temperature=0.2,
+                                              max_output_tokens=3500,
+                                              response_format={"type": "json_schema", "json_schema": JSON_SCHEMA},
+                                              input=[
+                                                  {"role": "system", "content": SYSTEM_PROMPT},
+                                                  {"role": "user", "content": user_prompt}],)
+                try:
+                    raw = resp.output_text
+                except Exception:
+                    # Fallback: dig into content structure
+                    raw = ""
+                    if hasattr(resp, "output") and resp.output:
+                        # collect all text parts
+                        for blk in resp.output:
+                            if hasattr(blk, "content"):
+                                for c in blk.content:
+                                    if getattr(c, "type", "") == "output_text":
+                                        raw += c.text
+                report.report_text = raw
+                report.save()
+            else:
+                raw = report.report_text
 
-                    Preprocessing flags:
-                    {json.dumps(log.flags, indent=2)}
+            data = json.loads(raw)
+            client_name = report.client.company
+            markdown_report = data.get("markdown_report", "")
+            summary_json = data.get("summary_json", {})
 
-                    Dataset (compact summary for analysis):
-                    {summary_for_prompt}
-                    
-                    Output:
-                    - STRICTLY return a single JSON object matching the provided schema.
-                    - Include Chart.js-ready configs in summary_json.charts[].config (full chart config).
-                    """
+        else:
+            client_name = ""
+            markdown_report = ""
+            summary_json = ""
 
-        # Call Responses API with JSON schema enforcement
-
-        resp = client.responses.create(model="gpt-5",
-                                      temperature=0.2,
-                                      max_output_tokens=3500,
-                                      response_format={"type": "json_schema", "json_schema": JSON_SCHEMA},
-                                      input=[
-                                          {"role": "system", "content": SYSTEM_PROMPT},
-                                          {"role": "user", "content": user_prompt}],)
-        try:
-            raw = resp.output_text
-        except Exception:
-            # Fallback: dig into content structure
-            raw = ""
-            if hasattr(resp, "output") and resp.output:
-                # collect all text parts
-                for blk in resp.output:
-                    if hasattr(blk, "content"):
-                        for c in blk.content:
-                            if getattr(c, "type", "") == "output_text":
-                                raw += c.text
-        report.report_text = raw
-        report.save()
-        data = json.loads(raw)
-
-        # Prepare context for template
-
-        kwargs["client_name"] = report.client.company
-        kwargs["markdown_report"] = data.get("markdown_report", "")
-        kwargs["summary_json"] = data.get("summary_json", {}),
+        kwargs["client_name"] = client_name
+        kwargs["markdown_report"] = markdown_report
+        kwargs["summary_json"] = summary_json
         return super(ReportSummaryView, self).get_context_data(**kwargs)
 
 

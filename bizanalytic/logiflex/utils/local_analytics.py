@@ -527,6 +527,7 @@ def process_route_info(ds):
 
 def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 20) -> str:
     """Compact summary to control tokens in prompt while preserving signal."""
+    contingency_matrix = ["contingency analysis based on on time deliveries rate: "]
     cols = ", ".join(df.columns.astype(str).tolist())
 
     info = {
@@ -546,9 +547,10 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 20) -> str:
     reliability = reliability[['OnTimeRate', 'TotalShipments']].to_markdown()
     carrier_stats = carrier_stats.to_markdown()
     results_df, worst_carrier = run_contingency_analysis(df_clean)
-    contingency_matrix = ["contingency analysis based on on time deliveries rate: "]
-    print(contingency_matrix)
+
+
     for idx, row in results_df.iterrows():
+        print(contingency_matrix)
         competitor = row['Competitor']
         odds_ratio = row['Odds_Ratio']
         # p_value = row['P_Value']
@@ -563,7 +565,7 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 20) -> str:
         f"Routes Stats: {route_stats}"
         f"most efficient carrier: {cost_efficiency}"
         f"Most Reliable Carrier: {reliability}"
-        f"Worst Carrier in terms of delayed shipment: {worst_carrier}"
+        f"Carrier with lowest on-time rate: {worst_carrier}"
         f"{contingency_matrix}"
     )
 

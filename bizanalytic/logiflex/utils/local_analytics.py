@@ -525,18 +525,44 @@ def process_route_info(ds):
     return distance_str, fuelcost_str, loadweight_str, deliveryhrs_str
 
 
-def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 20) -> str:
+def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 30) -> str:
     """Compact summary to control tokens in prompt while preserving signal."""
     cols = ", ".join(df.columns.astype(str).tolist())
-    sample = df.head(max_rows).to_csv(index=False)
+
     info = {
         "rows": len(df),
         "columns": len(df.columns),
     }
+    # Summary of kpis
+    df_clean = df[df['DeliveryStatus'].isin(['Delivered', 'Delayed'])]
+    df_clean = calculate_kpis(df_clean)
+    sample = df_clean.head(max_rows).to_csv(index=False)
+    carrier_stats = prepare_carrier_stats(df_clean).to_markdown()
+    driver_stats = prepare_driver_stats(df_clean).to_markdown()
+    route_stats = prepare_route_stats(df_clean).to_markdown()
+    cost_efficiency = calculate_cost_efficiency(carrier_stats).head(1)
+    cost_efficiency = cost_efficiency[['AvgCostPerMile', 'AvgCostPerPound']].to_markdown()
+    reliability = reliability_analysis(carrier_stats).head(1)
+    reliability = reliability[['OnTimeRate', 'TotalShipments']].to_markdown()
+    results_df, worst_carrier = run_contingency_analysis(df_clean)
+    contingency = []
+    for idx, row in results_df.iterrows():
+        competitor = row['Competitor']
+        odds_ratio = row['Odds_Ratio']
+        # p_value = row['P_Value']
+        contingency = contingency.append(f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier}")
+
     return (
         f"Columns: {cols}\n"
-        f"Shape: rows={info['rows']}, cols={info['columns']}\n"
+        f"Shape: rows={len(df_clean)}, cols={info['columns']}\n"
         f"Sample (first {max_rows} rows):\n{sample}"
+        f"carriers stats: {carrier_stats}"
+        f"Drivers stats: {driver_stats}"
+        f"Routes Stats: {route_stats}"
+        f"most efficient carrier: {cost_efficiency}"
+        f"Most Reliable Carrier: {reliability}"
+        f"Worst Carrier in terms of delayed shipment: {worst_carrier}"
+        f"contingency analysis based on on time deliveries rate: {contingency}"
     )
 
 

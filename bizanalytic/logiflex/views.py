@@ -171,6 +171,7 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                             Data notes:
                             - The dataset is already cleaned to 'City, ST' format for origins/destinations.
                             - Potential data issues flagged by preprocessing are provided below.
+                            - only delivered and delayed shipments are considered for calculations. In-Transit cannot be used as we don't know if they will late or on time
         
                             Preprocessing flags:
                             {json.dumps(log.flags, indent=2)}

@@ -13,6 +13,7 @@ staticfolder = settings.STATIC_ROOT
 
 uscities_file = staticfolder + "/assets/sample/major_uscities.csv"
 sample_data = staticfolder + "/assets/sample/freight_routes_sample_2001.csv"
+ussates_file = staticfolder + "/assets/sample/usa-states.csv"
 
 class DateValidator:
     def __init__(self):
@@ -727,7 +728,9 @@ def test_validator(routefile, report, routefilename):
 
 # load us cities file
     us_cities = pd.read_csv(uscities_file)
-    print(us_cities.head(5))
+    us_states = pd.read_csv(ussates_file)
+
+    # print(us_cities.head(5))
 # Load sample data
     data = pd.read_csv(report.routefile)
 
@@ -771,7 +774,7 @@ def test_validator(routefile, report, routefilename):
 
     orig_cities = data[['OriginCity', 'DestinationCity']]
     # print("Origine cities:", orig_cities.columns)
-    normalizer = CityStateNormalizer(orig_cities, us_cities)
+    normalizer = CityStateNormalizer(orig_cities, us_cities, us_states)
     clean_df, review_df, misscities_origin, missgstates_origin, misscities_destin, missgstates_destin, flags = normalizer.normalize()
     # print("clean_df")
     # print(clean_df.index)

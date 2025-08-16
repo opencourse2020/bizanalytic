@@ -206,7 +206,7 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                                                                                                         "value": {"type": ["string","number"]},
                                                                                                         "note": {"type": "string"}
                                                                                                     },
-                                                                                                    "required": ["metric","value"],
+                                                                                                    "required": ["metric", "value", "note"],
                                                                                                     "additionalProperties": False,
                                                                                                 }
                                                                                             },

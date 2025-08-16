@@ -309,7 +309,7 @@ text = {"format": {"type": "json_schema", "name": "freight_bi_dual_output",
                                                "value": {"type": ["string","number"]},
                                                "note": {"type": "string"}
                                            },
-                                           "required": ["metric","value"],
+                                           "required": ["metric","value","note"],
                                            "additionalProperties": False,
                                        }
                                    },

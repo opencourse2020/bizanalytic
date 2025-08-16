@@ -525,7 +525,7 @@ def process_route_info(ds):
     return distance_str, fuelcost_str, loadweight_str, deliveryhrs_str
 
 
-def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 30) -> str:
+def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 20) -> str:
     """Compact summary to control tokens in prompt while preserving signal."""
     cols = ", ".join(df.columns.astype(str).tolist())
 
@@ -546,12 +546,13 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 30) -> str:
     reliability = reliability[['OnTimeRate', 'TotalShipments']].to_markdown()
     carrier_stats = carrier_stats.to_markdown()
     results_df, worst_carrier = run_contingency_analysis(df_clean)
-    contingency = ["contingency analysis based on on time deliveries rate: "]
+    contingency_matrix = ["contingency analysis based on on time deliveries rate: "]
+    print(contingency_matrix)
     for idx, row in results_df.iterrows():
         competitor = row['Competitor']
         odds_ratio = row['Odds_Ratio']
         # p_value = row['P_Value']
-        contingency = contingency.append(f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier}")
+        contingency_matrix = contingency_matrix.append(f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier}")
 
     return (
         f"Columns: {cols}\n"
@@ -563,7 +564,7 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 30) -> str:
         f"most efficient carrier: {cost_efficiency}"
         f"Most Reliable Carrier: {reliability}"
         f"Worst Carrier in terms of delayed shipment: {worst_carrier}"
-        f"{contingency}"
+        f"{contingency_matrix}"
     )
 
 

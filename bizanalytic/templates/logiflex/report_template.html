@@ -64,7 +64,7 @@
     <div class="card shadow-sm mb-4">
       <div class="card-header"><strong>Executive Report</strong></div>
       <div class="card-body">
-        <div id="markdown_container" class="prose"></div>
+        <div id="markdown_container" class="prose">{{ markdown_report|safe|json_script:"md_json" }}</div>
       </div>
     </div>
 

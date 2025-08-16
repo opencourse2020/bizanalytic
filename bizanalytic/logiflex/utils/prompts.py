@@ -290,3 +290,61 @@ JSON_SCHEMA = {
 #             "strict": True,
 #         }
 #     },
+
+text = {"format": {"type": "json_schema", "name": "freight_bi_dual_output",
+                   "schema": {
+                       "type": "object",
+                       "properties": {
+                           "markdown_report": {"type": "string"},
+                           "summary_json": {
+                               "type": "object",
+                               "properties": {
+                                   "client": {"type": "string"},
+                                   "kpis": {
+                                       "type": "array",
+                                       "items": {
+                                           "type": "object",
+                                           "properties": {
+                                               "metric": {"type": "string"},
+                                               "value": {"type": ["string","number"]},
+                                               "note": {"type": "string"}
+                                           },
+                                           "required": ["metric","value"],
+                                           "additionalProperties": False,
+                                       }
+                                   },
+                                   "charts": {
+                                       "type": "array",
+                                       "items": {
+                                           "type": "object",
+                                           "properties": {
+                                               "title": {"type": "string"},
+                                               "type": {"type": "string"},   # bar|line|pie|scatter
+                                               "config": {"type": "object"}  # Full Chart.js config: {type,data,options}
+                                           },
+                                           "required": ["title","type","config"],
+                                           "additionalProperties": False,
+                                       }
+                                   },
+                                   "data_quality": {
+                                       "type": "object",
+                                       "properties": {
+                                           "flags": {"type": "array", "items": {"type": "string"}}
+                                       },
+                                       "required": ["flags"],
+                                       "additionalProperties": False,
+                                   },
+                                   "recommendations": {
+                                       "type": "array",
+                                       "items": {"type": "string"}
+                                   }
+                               },
+                               "required": ["client", "kpis", "charts", "data_quality", "recommendations"],
+                               "additionalProperties": False,
+                           }
+                       },
+                       "required": ["markdown_report","summary_json"],
+                       "additionalProperties": False,
+                   },
+                   "strict": True,
+                   }}

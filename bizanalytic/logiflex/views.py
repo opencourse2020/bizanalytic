@@ -234,6 +234,7 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                                                                                             }
                                                                                         },
                                                                                         "required": ["client", "kpis", "charts", "data_quality", "recommendations"],
+                                                                                        "additionalProperties": False,
                                                                                     }
                                                                                 },
                                                                                 "required": ["markdown_report","summary_json"],

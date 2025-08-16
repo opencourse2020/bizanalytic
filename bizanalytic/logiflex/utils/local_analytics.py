@@ -550,7 +550,7 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 20) -> str:
 
 
     for idx, row in results_df.iterrows():
-        print(contingency_matrix)
+        print("contingency_matrix:", contingency_matrix)
         competitor = row['Competitor']
         odds_ratio = row['Odds_Ratio']
         # p_value = row['P_Value']

@@ -217,7 +217,17 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                                                                                                     "properties": {
                                                                                                         "title": {"type": "string"},
                                                                                                         "type": {"type": "string"},   # bar|line|pie|scatter
-                                                                                                        "config": {"type": "object"}  # Full Chart.js config: {type,data,options}
+                                                                                                        "config": {
+                                                                                                               "type": "object",
+                                                                                                                "properties": {
+                                                                                                                        "type": {"type": "string"},
+                                                                                                                        "data": {"type": "string"},
+                                                                                                                        "options": {"type": "string"},
+                                                                                                                        },
+                                                                                                                "required": ["type","data","options"],
+                                                                                                                "additionalProperties": False,
+
+                                                                                                                }  # Full Chart.js config: {type,data,options}
                                                                                                     },
                                                                                                     "required": ["title","type","config"],
                                                                                                     "additionalProperties": False,
@@ -243,7 +253,7 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                                                                                 "required": ["markdown_report","summary_json"],
                                                                                 "additionalProperties": False,
                                                                             },
-                                                                            "strict": True,
+                                                                            # "strict": True,
                                                             }},
                                               input=[
                                                   {"role": "system", "content": SYSTEM_PROMPT},

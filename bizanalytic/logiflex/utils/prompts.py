@@ -275,23 +275,24 @@ JSON_SCHEMA = {
     "strict": True,
 }
 
-# text={"format": {"type": "json_schema",
-#             "name": "freight_bi_dual_output",
-#             "schema": {
-#                 "type": "object",
-#                 "properties": {
-#                     "name": {"type": "string"},
-#                     "date": {"type": "string"},
-#                     "participants": {"type": "array", "items": {"type": "string"}},
-#                 },
-#                 "required": ["name", "date", "participants"],
-#                 "additionalProperties": False,
-#             },
-#             "strict": True,
-#         }
-#     },
+text={"format": {"type": "json_schema",
+            "name": "freight_bi_dual_output",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string"},
+                    "date": {"type": "string"},
+                    "participants": {"type": "array", "items": {"type": "string"}},
+                },
+                "required": ["name", "date", "participants"],
+                "additionalProperties": False,
+            },
+            "strict": True,
+        }
+    },
 
-text = {"format": {"type": "json_schema", "name": "freight_bi_dual_output",
+text = {"format": {"type": "json_schema",
+                   "name": "freight_bi_dual_output",
                    "schema": {
                        "type": "object",
                        "properties": {
@@ -309,7 +310,7 @@ text = {"format": {"type": "json_schema", "name": "freight_bi_dual_output",
                                                "value": {"type": ["string","number"]},
                                                "note": {"type": "string"}
                                            },
-                                           "required": ["metric","value","note"],
+                                            "required": ["metric","value","note"],
                                            "additionalProperties": False,
                                        }
                                    },
@@ -320,7 +321,17 @@ text = {"format": {"type": "json_schema", "name": "freight_bi_dual_output",
                                            "properties": {
                                                "title": {"type": "string"},
                                                "type": {"type": "string"},   # bar|line|pie|scatter
-                                               "config": {"type": "object"}  # Full Chart.js config: {type,data,options}
+                                               "config": {
+                                                   "type": "object",
+                                                    "properties": {
+                                                            "type": {"type": "string"},
+                                                            "data": {"type": "string"},
+                                                            "options": {"type": "string"},
+                                                            },
+                                                    "required": ["type","data","options"],
+                                                    "additionalProperties": False,
+
+                                                    }  # Full Chart.js config: {type,data,options}
                                            },
                                            "required": ["title","type","config"],
                                            "additionalProperties": False,

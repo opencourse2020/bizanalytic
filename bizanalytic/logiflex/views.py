@@ -206,7 +206,8 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                                                                                                         "value": {"type": ["string","number"]},
                                                                                                         "note": {"type": "string"}
                                                                                                     },
-                                                                                                    "required": ["metric","value"]
+                                                                                                    "required": ["metric","value"],
+                                                                                                    "additionalProperties": False,
                                                                                                 }
                                                                                             },
                                                                                             "charts": {
@@ -218,7 +219,8 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                                                                                                         "type": {"type": "string"},   # bar|line|pie|scatter
                                                                                                         "config": {"type": "object"}  # Full Chart.js config: {type,data,options}
                                                                                                     },
-                                                                                                    "required": ["title","type","config"]
+                                                                                                    "required": ["title","type","config"],
+                                                                                                    "additionalProperties": False,
                                                                                                 }
                                                                                             },
                                                                                             "data_quality": {
@@ -226,7 +228,8 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                                                                                                 "properties": {
                                                                                                     "flags": {"type": "array", "items": {"type": "string"}}
                                                                                                 },
-                                                                                                "required": ["flags"]
+                                                                                                "required": ["flags"],
+                                                                                                "additionalProperties": False,
                                                                                             },
                                                                                             "recommendations": {
                                                                                                 "type": "array",

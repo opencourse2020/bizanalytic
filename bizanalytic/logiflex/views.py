@@ -188,7 +188,7 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                 resp = client.responses.create(model="gpt-4.1",
                                               temperature=0.2,
                                               max_output_tokens=3500,
-                                              text={"type": "json_schema", "json_schema": JSON_SCHEMA},
+                                              text={"format": {"type": "json_schema", "json_schema": JSON_SCHEMA}},
                                               input=[
                                                   {"role": "system", "content": SYSTEM_PROMPT},
                                                   {"role": "user", "content": user_prompt}],)

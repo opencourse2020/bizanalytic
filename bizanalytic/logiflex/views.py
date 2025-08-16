@@ -185,10 +185,10 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
 
                 # Call Responses API with JSON schema enforcement
 
-                resp = client.responses.create(model="gpt-5",
+                resp = client.responses.create(model="gpt-4.1",
                                               temperature=0.2,
                                               max_output_tokens=3500,
-                                              response_format={"type": "json_schema", "json_schema": JSON_SCHEMA},
+                                              text={"type": "json_schema", "json_schema": JSON_SCHEMA},
                                               input=[
                                                   {"role": "system", "content": SYSTEM_PROMPT},
                                                   {"role": "user", "content": user_prompt}],)

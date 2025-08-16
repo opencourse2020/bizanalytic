@@ -100,12 +100,11 @@
                                             </td>
                                             <td>
                                                 {%  if logireport.report_status == "canceled" %}
-                                                    {% if logireport.routefile %}
-                                                        <a href="{% url 'logiflex:reports:detail' logireport.pk %}" class="btn btn-outline-primary btn-sm">{% trans "View" %}</a>
-                                                    {% else %}
-                                                    <span style="text-transform: uppercase; color: #9d0006">{% trans "In-Process" %}</span>
-                                                    {% endif %}
                                                     <span style="text-transform: uppercase; color: #9d0006">{% trans "Canceled" %}</span>
+                                                {% elif logireport.routefile %}
+                                                    <a href="{% url 'logiflex:reports:detail' logireport.pk %}" class="btn btn-outline-primary btn-sm">{% trans "View" %}</a>
+                                                {% else %}
+                                                    <span style="text-transform: uppercase; color: #9d0006">{% trans "In-Process" %}</span>
                                                 {% endif %}
                                             </td>
                                             <td>

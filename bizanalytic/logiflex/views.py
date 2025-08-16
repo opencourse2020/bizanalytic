@@ -188,7 +188,58 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                 resp = client.responses.create(model="gpt-4.1",
                                               temperature=0.2,
                                               max_output_tokens=3500,
-                                              text={"format": {"type": "json_schema", JSON_SCHEMA}},
+                                              text={"format": {"type": "json_schema", "name": "freight_bi_dual_output",
+                                                                            "schema": {
+                                                                                "type": "object",
+                                                                                "properties": {
+                                                                                    "markdown_report": {"type": "string"},
+                                                                                    "summary_json": {
+                                                                                        "type": "object",
+                                                                                        "properties": {
+                                                                                            "client": {"type": "string"},
+                                                                                            "kpis": {
+                                                                                                "type": "array",
+                                                                                                "items": {
+                                                                                                    "type": "object",
+                                                                                                    "properties": {
+                                                                                                        "metric": {"type": "string"},
+                                                                                                        "value": {"type": ["string","number"]},
+                                                                                                        "note": {"type": "string"}
+                                                                                                    },
+                                                                                                    "required": ["metric","value"]
+                                                                                                }
+                                                                                            },
+                                                                                            "charts": {
+                                                                                                "type": "array",
+                                                                                                "items": {
+                                                                                                    "type": "object",
+                                                                                                    "properties": {
+                                                                                                        "title": {"type": "string"},
+                                                                                                        "type": {"type": "string"},   # bar|line|pie|scatter
+                                                                                                        "config": {"type": "object"}  # Full Chart.js config: {type,data,options}
+                                                                                                    },
+                                                                                                    "required": ["title","type","config"]
+                                                                                                }
+                                                                                            },
+                                                                                            "data_quality": {
+                                                                                                "type": "object",
+                                                                                                "properties": {
+                                                                                                    "flags": {"type": "array", "items": {"type": "string"}}
+                                                                                                },
+                                                                                                "required": ["flags"]
+                                                                                            },
+                                                                                            "recommendations": {
+                                                                                                "type": "array",
+                                                                                                "items": {"type": "string"}
+                                                                                            }
+                                                                                        },
+                                                                                        "required": ["client","kpis","charts","data_quality","recommendations"]
+                                                                                    }
+                                                                                },
+                                                                                "required": ["markdown_report","summary_json"]
+                                                                            },
+                                                                            "strict": True,
+                                                            }},
                                               input=[
                                                   {"role": "system", "content": SYSTEM_PROMPT},
                                                   {"role": "user", "content": user_prompt}],)

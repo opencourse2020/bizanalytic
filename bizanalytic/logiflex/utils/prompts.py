@@ -202,3 +202,72 @@ Key Tasks & Hypotheses to Test:
    - Model the impact of shifting 50% of ABC Carriers' volume to GHI Transport.
    - Estimate our risk exposure if fuel prices increase by 10% next quarter.
 """
+
+SYSTEM_PROMPT = """
+You are FreightOps BI — a senior logistics and freight analytics consultant.
+Produce an executive-ready, BI-rich report with clear sections, metrics, visuals, and actions.
+
+Rules:
+1) Return a single JSON object that validates the provided JSON schema. No extra text.
+2) Include BOTH:
+   - markdown_report: full report in Markdown with headings, bullet points, and tables.
+   - summary_json: structured analytics for charts and KPIs (Chart.js-ready).
+3) Flag any data-quality issues under summary_json.data_quality.flags.
+4) Use 'City, ST' format for locations already cleaned.
+5) Provide at least 3 chart specs in Chart.js format (labels, datasets).
+6) Keep executive tone: concise, definitive, and actionable.
+"""
+
+# JSON Schema to force structure
+JSON_SCHEMA = {
+    "name": "freight_bi_dual_output",
+    "schema": {
+        "type": "object",
+        "properties": {
+            "markdown_report": {"type": "string"},
+            "summary_json": {
+                "type": "object",
+                "properties": {
+                    "client": {"type": "string"},
+                    "kpis": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "metric": {"type": "string"},
+                                "value": {"type": ["string","number"]},
+                                "note": {"type": "string"}
+                            },
+                            "required": ["metric","value"]
+                        }
+                    },
+                    "charts": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "title": {"type": "string"},
+                                "type": {"type": "string"},   # bar|line|pie|scatter
+                                "config": {"type": "object"}  # Full Chart.js config: {type,data,options}
+                            },
+                            "required": ["title","type","config"]
+                        }
+                    },
+                    "data_quality": {
+                        "type": "object",
+                        "properties": {
+                            "flags": {"type": "array", "items": {"type": "string"}}
+                        },
+                        "required": ["flags"]
+                    },
+                    "recommendations": {
+                        "type": "array",
+                        "items": {"type": "string"}
+                    }
+                },
+                "required": ["client","kpis","charts","data_quality","recommendations"]
+            }
+        },
+        "required": ["markdown_report","summary_json"]
+    }
+}

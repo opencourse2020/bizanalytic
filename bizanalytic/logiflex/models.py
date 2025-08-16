@@ -275,6 +275,7 @@ class LogEntry(models.Model):
     date_report = models.TextField(null=True, blank=True)
     citi_report = models.TextField(null=True, blank=True)
     level = models.CharField(max_length=20, null=True, blank=True)
+    flags = models.TextField(null=True, blank=True)
 
     class Meta:
         verbose_name = "LogEntry"

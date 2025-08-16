@@ -1,0 +1,181 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+    {{ block.super }}
+{% endblock head_title %}
+
+{% block css %}
+    {{ block.super }}
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+    .prose h2, .prose h3 { margin-top: 1.25rem; }
+    .chart-card { min-height: 420px; }
+  </style>
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+{% block breadcrumb %}
+     <section class="breadcrumb-area mb-1" style="padding: 80px 0 20px" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <h1 class="title">LogiFlex - </h1>
+                            <span class="title" style="color: #0cb7d6; font-size: 40px">&nbsp;{% trans "Report Details" %}</span>
+                        </div>
+                        <p style="color: white; font-size: 18px;">{% trans "Report ID:" %}&nbsp;{{ report.report_id }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+<section class="report-area">
+<div class="container py-4">
+    <header class="d-flex align-items-center justify-content-between mb-4">
+      <div>
+        <h1 class="h3 mb-0">Fleet Efficiency Report</h1>
+        <div class="text-muted">Client: {{ client_name }}</div>
+      </div>
+      <a href="{% url 'fleet_report' %}" class="btn btn-outline-secondary">New Report</a>
+    </header>
+
+    <!-- Report Markdown -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-header"><strong>Executive Report</strong></div>
+      <div class="card-body">
+        <div id="markdown_container" class="prose"></div>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    {% if summary_json.kpis %}
+    <div class="row g-3 mb-4">
+      {% for k in summary_json.kpis %}
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <div class="text-muted small">{{ k.metric }}</div>
+            <div class="h4 mb-0">{{ k.value }}</div>
+            {% if k.note %}<div class="small text-secondary">{{ k.note }}</div>{% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Charts -->
+    {% if summary_json.charts %}
+    <div class="row g-3">
+      {% for ch in summary_json.charts %}
+      <div class="col-lg-6">
+        <div class="card chart-card shadow-sm">
+          <div class="card-header"><strong>{{ ch.title }}</strong> <span class="text-muted small">({{ ch.type }})</span></div>
+          <div class="card-body">
+            <canvas id="chart_{{ forloop.counter }}"></canvas>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Data Quality -->
+    {% if summary_json.data_quality.flags %}
+    <div class="card shadow-sm my-4">
+      <div class="card-header">
+        <strong>Data Quality Notes</strong>
+      </div>
+      <div class="card-body">
+        <ul class="mb-0">
+          {% for f in summary_json.data_quality.flags %}
+          <li>{{ f }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Recommendations -->
+    {% if summary_json.recommendations %}
+    <div class="card shadow-sm mb-5">
+      <div class="card-header"><strong>Actionable Recommendations</strong></div>
+      <div class="card-body">
+        <ol class="mb-0">
+          {% for r in summary_json.recommendations %}
+          <li>{{ r }}</li>
+          {% endfor %}
+        </ol>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+
+
+</section>
+{% endblock contact_area %}
+
+{% block feature_area %}
+
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+
+{% endblock cta_area %}
+
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+
+{% block js_area %}
+    {{ block.super }}
+    <script>
+    // Safely inject server-provided data
+    const markdownReport = {{ markdown_report|safe|json_script:"md_json" }};
+    const summaryData = {{ summary_json|safe|json_script:"summary_json" }};
+  </script>
+
+  <script>
+    // Render Markdown to HTML
+    const md = JSON.parse(document.getElementById("md_json").textContent);
+    document.getElementById("markdown_container").innerHTML = marked.parse(md);
+
+    // Build Chart.js charts from model-provided configs
+    const sdata = JSON.parse(document.getElementById("summary_json").textContent);
+    if (sdata && sdata.charts) {
+      sdata.charts.forEach((c, idx) => {
+        const canvasId = "chart_" + (idx + 1);
+        const ctx = document.getElementById(canvasId);
+        if (!ctx || !c.config) return;
+        // Expecting full Chart.js config object: { type, data, options }
+        new Chart(ctx, c.config);
+      });
+    }
+  </script>
+{% endblock js_area %}
+
+

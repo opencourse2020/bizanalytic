@@ -592,7 +592,7 @@ class ColumnNameValidator:
         return column_result
 
 class CityStateNormalizer:
-    def __init__(self, df: pd.DataFrame, us_city_state_ref: pd.DataFrame, state_default="TX", fuzzy_cutoff=0.8):
+    def __init__(self, df: pd.DataFrame, us_city_state_ref: pd.DataFrame, us_state_ref: pd.DataFrame, state_default="TX", fuzzy_cutoff=0.8):
         """
         :param df: DataFrame containing OriginCity and DestinationCity columns.
         :param us_city_state_ref: DataFrame with columns ['City', 'State'] for all known US cities.
@@ -606,10 +606,14 @@ class CityStateNormalizer:
         self.statereport_origin = 0
         self.cityreport_destin = 0
         self.statereport_destin = 0
+        self.flags = []
 
         # Build reference dict
         self.known_map = {self._clean_city(row["city"]): row["state"].upper()
                           for _, row in us_city_state_ref.iterrows()}
+
+        self.known_states_map = {row["name"].lower(): row["code"].upper()
+                          for _, row in us_state_ref.iterrows()}
         self.unknown_cities = []  # For manual review
         # self.geolocator = Nominatim(user_agent="city_state_normalizer")
         # print(self.known_map)
@@ -631,13 +635,14 @@ class CityStateNormalizer:
             return self._clean_city(parts[0]), parts[1].upper()
         return self._clean_city(parts[0]), None
 
-    def _guess_city(self, city):
+    def _guess_city(self, city, state, col):
         """Guess closest city from known map using fuzzy matching."""
         if not city:
             return None
         if city in self.known_map:
             return city
         matches = get_close_matches(city, self.known_map.keys(), n=1, cutoff=self.fuzzy_cutoff)
+        self.flags.append(f"column: {col}, cleaned city: {matches[0]}, in state: {state} reason: added_state_autocorrect_city")
         return matches[0] if matches else None
 
     def _geocode_state(self, city):
@@ -665,7 +670,7 @@ class CityStateNormalizer:
             city, state = self._split_city_state(val)
             if city:
             # print(f"{city} - {state}")
-                guessed_city = self._guess_city(city)
+                guessed_city = self._guess_city(city, state, col)
             else:
                 if col == "OriginCity":
                     self.cityreport_origin += 1
@@ -680,9 +685,18 @@ class CityStateNormalizer:
                         self.statereport_origin += 1
                     else:
                         self.statereport_destin += 1
-                    state = self.known_map[city]
+                else:
+                    if len(state) == 2:
+                        state = self.known_map[city]
+                    elif len(state) > 2:
+                        state = self.known_states_map[state]
+                        self.flags.append(f"column: {col}, cleaned city: {city}, in state: {state} added_state")
+
                     self.unknown_cities.append({"Column": col, "Original": val})
-                    print("city:", city, "-", state)
+                    # print("city:", city, "-", state)
+            else:
+                self.flags.append(f"column: {col}, cleaned city: {city}, in state: {state} added_state_unknown_city")
+
             # else:
             #     # Try geocoding if not in known list
             #     geo_state = self._geocode_state(city)
@@ -705,7 +719,7 @@ class CityStateNormalizer:
             if col not in self.df.columns:
                 raise ValueError(f"Missing required column: {col}")
             self.normalize_column(col)
-        return self.df, pd.DataFrame(self.unknown_cities), self.cityreport_origin, self.statereport_origin, self.cityreport_destin, self.statereport_destin
+        return self.df, pd.DataFrame(self.unknown_cities), self.cityreport_origin, self.statereport_origin, self.cityreport_destin, self.statereport_destin, self.flags
 
 
 # Example usage and testing
@@ -758,7 +772,7 @@ def test_validator(routefile, report, routefilename):
     orig_cities = data[['OriginCity', 'DestinationCity']]
     # print("Origine cities:", orig_cities.columns)
     normalizer = CityStateNormalizer(orig_cities, us_cities)
-    clean_df, review_df, misscities_origin, missgstates_origin, misscities_destin, missgstates_destin = normalizer.normalize()
+    clean_df, review_df, misscities_origin, missgstates_origin, misscities_destin, missgstates_destin, flags = normalizer.normalize()
     # print("clean_df")
     # print(clean_df.index)
     # print(clean_df.info())
@@ -797,5 +811,5 @@ def test_validator(routefile, report, routefilename):
     data.to_csv(f, index=False)
     f.close() # Explicitly close the file
 
-    return column_report, date_report, cities_report, filename, data
+    return column_report, date_report, cities_report, filename, data, flags
 

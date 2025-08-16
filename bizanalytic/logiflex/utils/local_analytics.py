@@ -523,3 +523,30 @@ def process_route_info(ds):
     deliveryhrs_str = f"DeliveryHrs: count: {deliveryhrs[0]} - Average: {deliveryhrs[1]} - Min: {deliveryhrs[3]} - Max {deliveryhrs[7]}"
 
     return distance_str, fuelcost_str, loadweight_str, deliveryhrs_str
+
+
+def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 20) -> str:
+    """Compact summary to control tokens in prompt while preserving signal."""
+    cols = ", ".join(df.columns.astype(str).tolist())
+    sample = df.head(max_rows).to_csv(index=False)
+    info = {
+        "rows": len(df),
+        "columns": len(df.columns),
+    }
+    return (
+        f"Columns: {cols}\n"
+        f"Shape: rows={info['rows']}, cols={info['columns']}\n"
+        f"Sample (first {max_rows} rows):\n{sample}"
+    )
+
+
+def read_csv_into_text_and_df(file_obj) -> tuple[str, pd.DataFrame]:
+    data = file_obj.read()
+    # Reset pointer for safety if needed
+    if hasattr(file_obj, "seek"):
+        file_obj.seek(0)
+    # df = pd.read_csv(io.BytesIO(data))
+    # also return as plain text for prompt
+    csv_text = data.decode("utf-8", errors="ignore")
+    return csv_text
+

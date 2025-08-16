@@ -30,7 +30,7 @@ report_patterns = [
     path('list/', views.Payment_SuccessView.as_view(), name='list'),
     path('detail/<int:pk>/', views.RouteFileView.as_view(), name='detail'),
     path('reportview/<int:pk>/', views.ReportView.as_view(), name="reportview"),
-
+    path('summary/<int:pk>/', views.ReportSummaryView.as_view(), name="summary"),
 ]
 
 stripe_patterns = [

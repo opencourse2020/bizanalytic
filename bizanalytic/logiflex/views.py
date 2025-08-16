@@ -25,7 +25,7 @@ import pandas as pd
 # Third party libraries
 import stripe
 from datetime import datetime, timedelta
-
+from openai import OpenAI
 from . import models, forms
 from bizanalytic.profiles.mixins import JsonFormMixin
 from bizanalytic.profiles.models import User
@@ -34,6 +34,7 @@ from .utils.tools import generatecode
 from .utils.call_llm import generate_analysis
 from .utils.pre_process_datafile import test_validator
 from .utils.local_analytics import *
+from .utils.prompts import SYSTEM_PROMPT, JSON_SCHEMA
 # Create your views here.
 
 # Initiate variables
@@ -41,6 +42,10 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 stripe_price_id = settings.STRIPE_PRICE_ID
 stripe_publishable = settings.STRIPE_PUBLISHABLE_KEY
 stripe_webhook = settings.STRIPE_WEBHOOK_SECRET
+OPENAI_KEY = settings.OPENAI_KEY
+
+
+client = OpenAI(api_key=OPENAI_KEY)
 
 
 class IndexView(TemplateView):
@@ -137,6 +142,77 @@ class ReportView(TemplateView):
 
             kwargs["carrierstats"] = carrier_stats
         return super(ReportView, self).get_context_data(**kwargs)
+
+
+class ReportSummaryView(LoginRequiredMixin, TemplateView):
+    template_name = "logiflex/report_template.html"
+
+    def get_context_data(self, **kwargs):
+        pu = self.kwargs.get("pk")
+        user = self.request.user
+        report = models.LogiflexReport.objects.filter(client__user=user, pk=pu).first()
+        log = models.LogEntry.objects.filter(report=report).first()
+
+        if report:
+            df = pd.read_csv(report.routefile)
+
+        # run summary analysis
+        csv_text = read_csv_into_text_and_df(report.routefile)
+        # Compact summary for prompt to control tokens (use this instead of full CSV if large)
+        summary_for_prompt = summarize_df_for_prompt(df, max_rows=25)
+        user_prompt = f"""
+                    Analyze freight route data for client: {report.client.company}.
+
+                    Objective:
+                    - Executive-ready Fleet Efficiency Report with BI charts, KPIs, and actionable recommendations.
+                    - Include city/state already normalized in the data.
+
+                    Data notes:
+                    - The dataset is already cleaned to 'City, ST' format for origins/destinations.
+                    - Potential data issues flagged by preprocessing are provided below.
+
+                    Preprocessing flags:
+                    {json.dumps(log.flags, indent=2)}
+
+                    Dataset (compact summary for analysis):
+                    {summary_for_prompt}
+                    
+                    Output:
+                    - STRICTLY return a single JSON object matching the provided schema.
+                    - Include Chart.js-ready configs in summary_json.charts[].config (full chart config).
+                    """
+
+        # Call Responses API with JSON schema enforcement
+
+        resp = client.responses.create(model="gpt-5",
+                                      temperature=0.2,
+                                      max_output_tokens=3500,
+                                      response_format={"type": "json_schema", "json_schema": JSON_SCHEMA},
+                                      input=[
+                                          {"role": "system", "content": SYSTEM_PROMPT},
+                                          {"role": "user", "content": user_prompt}],)
+        try:
+            raw = resp.output_text
+        except Exception:
+            # Fallback: dig into content structure
+            raw = ""
+            if hasattr(resp, "output") and resp.output:
+                # collect all text parts
+                for blk in resp.output:
+                    if hasattr(blk, "content"):
+                        for c in blk.content:
+                            if getattr(c, "type", "") == "output_text":
+                                raw += c.text
+        report.report_text = raw
+        report.save()
+        data = json.loads(raw)
+
+        # Prepare context for template
+
+        kwargs["client_name"] = report.client.company
+        kwargs["markdown_report"] = data.get("markdown_report", "")
+        kwargs["summary_json"] = data.get("summary_json", {}),
+        return super(ReportSummaryView, self).get_context_data(**kwargs)
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
@@ -793,11 +869,12 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             logireport.save()
 
             # Clean and validate route file and generate logs
-            column_report, date_report, cities_report, routefilename, df = test_validator(route_file, logireport, route_filename)
-            print("df columns after cleaning")
-            print(df.columns)
-            print(df.head(5))
-            # Run Analysis
+            column_report, date_report, cities_report, routefilename, df, flags = test_validator(route_file, logireport, route_filename)
+            # print("df columns after cleaning")
+            # print(df.columns)
+            # print(df.head(5))
+
+            # Run local Analysis
             summary = run_analysis(df)
 
             # Convert the summary array to json format to be stored as text in the database
@@ -810,7 +887,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
             # Save log data
             logiflex_log = models.LogEntry.objects.create(report=logireport, column_report=column_report,
-                                                          date_report=date_report, citi_report=cities_report)
+                                                          date_report=date_report, citi_report=cities_report, flags=flags)
 
             # Send a confirmation Email to client
             email_info = {

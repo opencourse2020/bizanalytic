@@ -546,7 +546,7 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 30) -> str:
     reliability = reliability[['OnTimeRate', 'TotalShipments']].to_markdown()
     carrier_stats = carrier_stats.to_markdown()
     results_df, worst_carrier = run_contingency_analysis(df_clean)
-    contingency = []
+    contingency = ["contingency analysis based on on time deliveries rate: "]
     for idx, row in results_df.iterrows():
         competitor = row['Competitor']
         odds_ratio = row['Odds_Ratio']
@@ -563,7 +563,7 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 30) -> str:
         f"most efficient carrier: {cost_efficiency}"
         f"Most Reliable Carrier: {reliability}"
         f"Worst Carrier in terms of delayed shipment: {worst_carrier}"
-        f"contingency analysis based on on time deliveries rate: {contingency}"
+        f"{contingency}"
     )
 
 

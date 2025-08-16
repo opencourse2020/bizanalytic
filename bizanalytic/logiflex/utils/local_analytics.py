@@ -540,7 +540,8 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 20) -> str:
     sample = df_clean.head(max_rows).to_csv(index=False)
     carrier_stats = prepare_carrier_stats(df_clean)
     driver_stats = prepare_driver_stats(df_clean).to_csv(index=False)
-    route_stats = prepare_route_stats(df_clean).to_csv(index=False)
+    route_stats = prepare_route_stats(df_clean)
+    route_stats = route_stats[['AvgDistance', 'AvgCostPerMile', 'OnTimeRate']].to_csv(index=False)
     cost_efficiency = calculate_cost_efficiency(carrier_stats).head(1)
     cost_efficiency = cost_efficiency[['AvgCostPerMile', 'AvgCostPerPound']].to_markdown()
     reliability = reliability_analysis(carrier_stats).head(1)
@@ -562,7 +563,7 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 20) -> str:
         f"Sample (first {max_rows} rows):\n{sample}"
         f"carriers stats: {carrier_stats}\n"
         f"Drivers stats: {driver_stats}\n"
-        f"Routes Stats: {route_stats[['AvgDistance', 'AvgCostPerMile', 'OnTimeRate']].to_markdown()}"
+        f"Routes Stats: {route_stats}"
         f"most efficient carrier: {cost_efficiency}\n"
         f"Most Reliable Carrier: {reliability}\n"
         f"Carrier with lowest on-time rate: {worst_carrier}"

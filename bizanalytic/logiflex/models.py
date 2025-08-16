@@ -183,6 +183,7 @@ class LogiflexReport(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     report_date = models.DateTimeField(null=True)
     expected_delivery = models.DateTimeField(null=True, blank=True)
+    report_prompt = models.TextField(null=True, blank=True)
 
     class Meta:
         verbose_name = "LogiFlexReport"

@@ -184,7 +184,11 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                             - STRICTLY return a single JSON object matching the provided schema.
                             - Include Chart.js-ready configs in summary_json.charts[].config (full chart config).
                             """
+                if not report.report_prompt:
+                    report.report_prompt = user_prompt
+                    report.save()
                 print("user_prompt: ", user_prompt)
+
                 # Call Responses API with JSON schema enforcement
 
                 resp = client.responses.create(model="gpt-4.1",

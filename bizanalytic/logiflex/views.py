@@ -243,7 +243,7 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                                                                                 "required": ["markdown_report","summary_json"],
                                                                                 "additionalProperties": False,
                                                                             },
-                                                                            # "strict": True,
+                                                                            "strict": True,
                                                             }},
                                               input=[
                                                   {"role": "system", "content": SYSTEM_PROMPT},

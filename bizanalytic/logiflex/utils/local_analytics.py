@@ -537,13 +537,14 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 30) -> str:
     df_clean = df[df['DeliveryStatus'].isin(['Delivered', 'Delayed'])]
     df_clean = calculate_kpis(df_clean)
     sample = df_clean.head(max_rows).to_csv(index=False)
-    carrier_stats = prepare_carrier_stats(df_clean).to_markdown()
+    carrier_stats = prepare_carrier_stats(df_clean)
     driver_stats = prepare_driver_stats(df_clean).to_markdown()
     route_stats = prepare_route_stats(df_clean).to_markdown()
     cost_efficiency = calculate_cost_efficiency(carrier_stats).head(1)
     cost_efficiency = cost_efficiency[['AvgCostPerMile', 'AvgCostPerPound']].to_markdown()
     reliability = reliability_analysis(carrier_stats).head(1)
     reliability = reliability[['OnTimeRate', 'TotalShipments']].to_markdown()
+    carrier_stats = carrier_stats.to_markdown()
     results_df, worst_carrier = run_contingency_analysis(df_clean)
     contingency = []
     for idx, row in results_df.iterrows():

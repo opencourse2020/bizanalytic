@@ -151,9 +151,9 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
         pu = self.kwargs.get("pk")
         user = self.request.user
         report = models.LogiflexReport.objects.filter(client__user=user, pk=pu).first()
-        log = models.LogEntry.objects.filter(report=report).first()
 
         if report:
+            log = models.LogEntry.objects.filter(report=report).first()
             if not report.report_text:
                 df = pd.read_csv(report.routefile)
 
@@ -205,6 +205,7 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                                     if getattr(c, "type", "") == "output_text":
                                         raw += c.text
                 report.report_text = raw
+                report.report_status = "download"
                 report.save()
             else:
                 raw = report.report_text

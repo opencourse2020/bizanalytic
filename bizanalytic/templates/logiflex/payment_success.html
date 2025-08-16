@@ -99,20 +99,23 @@
                                                 {% endif %}
                                             </td>
                                             <td>
-                                                {% if logireport.routefile %}
-                                                    <a href="{% url 'logiflex:reports:detail' logireport.pk %}" class="btn btn-outline-primary btn-sm">{% trans "View" %}</a>
-                                                {% else %}
-                                                <span style="color: #9d0006">{% trans "In-Process" %}</span>
+                                                {%  if logireport.report_status == "canceled" %}
+                                                    {% if logireport.routefile %}
+                                                        <a href="{% url 'logiflex:reports:detail' logireport.pk %}" class="btn btn-outline-primary btn-sm">{% trans "View" %}</a>
+                                                    {% else %}
+                                                    <span style="text-transform: uppercase; color: #9d0006">{% trans "In-Process" %}</span>
+                                                    {% endif %}
+                                                    <span style="text-transform: uppercase; color: #9d0006">{% trans "Canceled" %}</span>
                                                 {% endif %}
                                             </td>
                                             <td>
                                                 {{ logireport.date_created|date:'Y-m-d H:i' }}
                                             </td>
                                             <td>
-                                                {% if logireport.report_status == "download" %}
+                                                {% if logireport.report_status == "download" or logireport.report_status == "processing"%}
 {#                                                    <a href="{% url 'logiflex:reports:view' logireport.pk %}" class="btn btn-info btn-sm">#}
-                                                <a href="{{ logireport.report.url }}" class="btn btn-info btn-sm">
-                                                    <span style="text-transform: uppercase;font-size: 12px;">{{ logireport.report_status }}</span></a>
+                                                <a href="{% url 'logiflex:reports:summary' logireport.pk %}" class="btn btn-info btn-sm">
+                                                    <span style="text-transform: uppercase;font-size: 12px;">{% trans "View Report" %}</span></a>
                                                 {% else %}
                                                     <span style="text-transform: uppercase; color: #9d0006;font-size: 12px;">{{ logireport.report_status }}...</span>
                                                 {% endif %}

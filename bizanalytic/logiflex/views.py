@@ -282,7 +282,8 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
             else:
                 raw = report.report_text
 
-            data = json.loads(raw)
+            # data = json.loads(raw)
+            data = raw
             client_name = report.client.company
             markdown_report = data.get("markdown_report", "")
             summary_json = data.get("summary_json", {})

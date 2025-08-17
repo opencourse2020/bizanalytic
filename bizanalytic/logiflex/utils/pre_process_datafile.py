@@ -618,9 +618,9 @@ class CityStateNormalizer:
         self.known_states_map = {row["name"].lower(): row["code"].upper()
                           for _, row in us_state_ref.iterrows()}
 
-        self.known_states_diesel = {row["State"].lower(): row["Diesel"]
+        self.known_states_diesel = {row["State"].upper(): row["Diesel"]
                                  for _, row in state_diesel_price.iterrows()}
-        print(self.known_states_diesel)
+        # print(self.known_states_diesel)
         self.unknown_cities = []  # For manual review
         # self.geolocator = Nominatim(user_agent="city_state_normalizer")
         # print(self.known_map)

@@ -609,7 +609,7 @@ class CityStateNormalizer:
         self.cityreport_destin = 0
         self.statereport_destin = 0
         self.flags = []
-        self.dieselprices = []
+        # self.dieselprices = []
 
         # Build reference dict
         self.known_map = {self._clean_city(row["city"]): row["state"].upper()
@@ -668,6 +668,7 @@ class CityStateNormalizer:
     def normalize_column(self, col):
         """Normalize one city column."""
         normalized = []
+        dieselprices = []
         guessed_city = ""
         # print("column analyzed:", col)
         # print(self.df[col].head(5))
@@ -703,10 +704,10 @@ class CityStateNormalizer:
 
                     self.unknown_cities.append({"Column": col, "Original": val})
                     # print("city:", city, "-", state)
-                self.dieselprices.append(self.known_states_diesel[state])
+                dieselprices.append(self.known_states_diesel[state])
             else:
                 self.flags.append(f"column: {col}, cleaned city: {city}, in state: {state} added_state_unknown_city")
-                self.dieselprices.append(None)
+                dieselprices.append(None)
 
             # else:
             #     # Try geocoding if not in known list
@@ -720,6 +721,7 @@ class CityStateNormalizer:
 
             normalized.append(f"{city}, {state}")
         # print("lenght of normalized: ", len(normalized))
+        print(dieselprices)
         # print("Normalized data:", normalized)
         # self.df = self.df.drop(col, axis=1)
         self.df[col] = normalized

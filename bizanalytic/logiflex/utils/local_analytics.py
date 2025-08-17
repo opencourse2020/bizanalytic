@@ -9,9 +9,7 @@ from .prompts import SYSTEM_PROMPT
 from bizanalytic.logiflex.models import LogiflexReport
 from openai import OpenAI
 from django.conf import settings
-from celery import Celery
 
-app = Celery()
 
 OPENAI_KEY = settings.OPENAI_KEY
 client = OpenAI(api_key=OPENAI_KEY)
@@ -596,7 +594,6 @@ def read_csv_into_text_and_df(file_obj) -> tuple[str, pd.DataFrame]:
     csv_text = data.decode("utf-8", errors="ignore")
     return csv_text
 
-@app.task(time_limit=60)
 @shared_task(name='run_llm_analysis')
 def run_LLM_analysis(flags, pu):
     report = LogiflexReport.objects.filter(pk=pu).first()

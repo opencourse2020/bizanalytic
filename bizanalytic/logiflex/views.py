@@ -953,7 +953,8 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             logireport.save()
 
             # Clean and validate route file and generate logs
-            column_report, date_report, cities_report, routefilename, df, flags = test_validator.delay(logireport.pk, route_filename)
+            asynch_preprocess = test_validator.delay(logireport.pk, route_filename)
+            column_report, date_report, cities_report, routefilename, df, flags = asynch_preprocess.get()
             # print("df columns after cleaning")
             # print(df.columns)
             # print(df.head(5))

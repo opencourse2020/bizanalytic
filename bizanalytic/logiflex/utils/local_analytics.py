@@ -626,7 +626,7 @@ def run_LLM_analysis(flags, pu):
     if not report.report_prompt:
         report.report_prompt = user_prompt
         report.save()
-    # print("user_prompt: ", user_prompt)
+    print("user_prompt: ", user_prompt)
 
     # Call Responses API with JSON schema enforcement
 

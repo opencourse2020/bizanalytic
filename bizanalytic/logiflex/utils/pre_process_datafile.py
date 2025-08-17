@@ -725,7 +725,7 @@ class CityStateNormalizer:
         # print("Normalized data:", normalized)
         # self.df = self.df.drop(col, axis=1)
         self.df[col] = normalized
-        self.df['Diesel_Price'] = self.dieselprices
+        self.df['Diesel_Price'] = dieselprices
 
     def normalize(self):
         """Normalize both OriginCity and DestinationCity."""

@@ -32,7 +32,7 @@ DATABASES = {
 }
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
-
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 # google
 

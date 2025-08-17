@@ -609,7 +609,7 @@ class CityStateNormalizer:
         self.cityreport_destin = 0
         self.statereport_destin = 0
         self.flags = []
-        # self.dieselprices = []
+        self.dieselprices = []
 
         # Build reference dict
         self.known_map = {self._clean_city(row["city"]): row["state"].upper()
@@ -704,10 +704,12 @@ class CityStateNormalizer:
 
                     self.unknown_cities.append({"Column": col, "Original": val})
                     # print("city:", city, "-", state)
-                dieselprices.append(self.known_states_diesel[state])
+                if col == "OriginCity":
+                    dieselprices.append(self.known_states_diesel[state])
             else:
                 self.flags.append(f"column: {col}, cleaned city: {city}, in state: {state} added_state_unknown_city")
-                dieselprices.append(None)
+                if col == "OriginCity":
+                    dieselprices.append(3.142)
 
             # else:
             #     # Try geocoding if not in known list
@@ -725,7 +727,7 @@ class CityStateNormalizer:
         # print("Normalized data:", normalized)
         # self.df = self.df.drop(col, axis=1)
         self.df[col] = normalized
-        self.df['Diesel_Price'] = dieselprices
+        self.dieselprices = dieselprices
 
     def normalize(self):
         """Normalize both OriginCity and DestinationCity."""
@@ -733,7 +735,7 @@ class CityStateNormalizer:
             if col not in self.df.columns:
                 raise ValueError(f"Missing required column: {col}")
             self.normalize_column(col)
-        return self.df, pd.DataFrame(self.unknown_cities), self.cityreport_origin, self.statereport_origin, self.cityreport_destin, self.statereport_destin, self.flags
+        return self.df, pd.DataFrame(self.unknown_cities), self.cityreport_origin, self.statereport_origin, self.cityreport_destin, self.statereport_destin, self.flags, self.dieselprices
 
 
 # Example usage and testing
@@ -789,7 +791,7 @@ def test_validator(routefile, report, routefilename):
     orig_cities = data[['OriginCity', 'DestinationCity']]
     # print("Origine cities:", orig_cities.columns)
     normalizer = CityStateNormalizer(orig_cities, us_cities, us_states, state_diesel_price)
-    clean_df, review_df, misscities_origin, missgstates_origin, misscities_destin, missgstates_destin, flags = normalizer.normalize()
+    clean_df, review_df, misscities_origin, missgstates_origin, misscities_destin, missgstates_destin, flags, dieselprices = normalizer.normalize()
     # print("clean_df")
     # print(clean_df.index)
     # print(clean_df.info())
@@ -797,6 +799,7 @@ def test_validator(routefile, report, routefilename):
     # data = pd.concat([data, clean_df], axis=0, ignore_index=True)
     data.update(clean_df['OriginCity'])
     data.update(clean_df['DestinationCity'])
+    data['Diesel_Price'] = dieselprices
 
 
     cities_report = "=== DATE VALIDATION REPORT ===\n"

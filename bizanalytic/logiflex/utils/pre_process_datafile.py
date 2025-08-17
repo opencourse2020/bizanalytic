@@ -8,7 +8,8 @@ from difflib import get_close_matches
 import time
 from django.conf import settings
 from celery import shared_task
-from bizanalytic.logiflex.models import LogiflexReport
+from bizanalytic.logiflex.models import LogiflexReport, LogEntry
+from .local_analytics import *
 
 staticfolder = settings.STATIC_ROOT
 
@@ -814,25 +815,28 @@ def test_validator(reportid, routefilename):
     cities_report = cities_report + f"Missing City names in Destination cities column: {misscities_destin}"
     cities_report = cities_report + "@@#@@"
     cities_report = cities_report + f"Missing State names in Destination cities column: {missgstates_destin}"
-    # cities_report = cities_report + "@@#@@"
-    # cities_report = cities_report + "\nUnknown cities for review"
-    # cities_report = cities_report + review_df  # Unknown cities for review
+
     directory_path = 'data_files/route_files/company_id_{0}/report_{1}'.format(report.client.id, report.id)
 
-    # if not os.path.exists(directory_path):
-    #     os.makedirs(directory_path)
-    # if report.routefile:
-    #     if os.path.isfile(report.routefile.path):
-    #         os.remove(report.routefile.path)
+
     print("Data before saving to csv file")
     print(data.head(5))
     print(data.columns)
     filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(report.client.id, report.id, routefilename)
     print("filename: ", filename)
     filepath = settings.MEDIA_ROOT + "/" + filename
-    f = open(filepath, 'w')
-    data.to_csv(f, index=False)
-    f.close() # Explicitly close the file
+    # f = open(filepath, 'w')
+    data.to_csv(filepath, index=False)
 
-    return column_report, date_report, cities_report, filename, data, flags
+    # Run analysis
+    summary = run_analysis(data)
+    json_string = json.dumps(summary)
+    report.report_summary = json_string
+    report.save()
+
+    logiflex_log = LogEntry.objects.create(report=report, column_report=column_report,
+                                                          date_report=date_report, citi_report=cities_report, flags=flags)
+    # f.close() # Explicitly close the file
+
+    return flags
 

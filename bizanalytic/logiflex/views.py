@@ -954,25 +954,25 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
             # Clean and validate route file and generate logs
             asynch_preprocess = test_validator.delay(logireport.pk, route_filename)
-            column_report, date_report, cities_report, routefilename, df, flags = asynch_preprocess.get()
+            flags = asynch_preprocess.get()
             # print("df columns after cleaning")
             # print(df.columns)
             # print(df.head(5))
 
             # Run local Analysis
-            summary = run_analysis(df)
+            # summary = run_analysis(df)
 
             # Convert the summary array to json format to be stored as text in the database
-            json_string = json.dumps(summary)
-            logireport.report_summary = json_string
-            logireport.save()
+            # json_string = json.dumps(summary)
+            # logireport.report_summary = json_string
+            # logireport.save()
             # update route file
             # logireport.routefile = routefilename
             # logireport.save()
 
             # Save log data
-            logiflex_log = models.LogEntry.objects.create(report=logireport, column_report=column_report,
-                                                          date_report=date_report, citi_report=cities_report, flags=flags)
+            # logiflex_log = models.LogEntry.objects.create(report=logireport, column_report=column_report,
+            #                                               date_report=date_report, citi_report=cities_report, flags=flags)
 
             # Send a confirmation Email to client
             email_info = {

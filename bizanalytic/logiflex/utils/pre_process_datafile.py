@@ -14,6 +14,7 @@ staticfolder = settings.STATIC_ROOT
 uscities_file = staticfolder + "/assets/sample/major_uscities.csv"
 sample_data = staticfolder + "/assets/sample/freight_routes_sample_2001.csv"
 ussates_file = staticfolder + "/assets/sample/usa-states.csv"
+dieselprices_file = staticfolder + "/assets/sample/diesel_prices.csv"
 
 class DateValidator:
     def __init__(self):
@@ -593,7 +594,7 @@ class ColumnNameValidator:
         return column_result
 
 class CityStateNormalizer:
-    def __init__(self, df: pd.DataFrame, us_city_state_ref: pd.DataFrame, us_state_ref: pd.DataFrame, state_default="TX", fuzzy_cutoff=0.8):
+    def __init__(self, df: pd.DataFrame, us_city_state_ref: pd.DataFrame, us_state_ref: pd.DataFrame, state_diesel_price: pd.DataFrame, state_default="TX", fuzzy_cutoff=0.8):
         """
         :param df: DataFrame containing OriginCity and DestinationCity columns.
         :param us_city_state_ref: DataFrame with columns ['City', 'State'] for all known US cities.
@@ -608,6 +609,7 @@ class CityStateNormalizer:
         self.cityreport_destin = 0
         self.statereport_destin = 0
         self.flags = []
+        self.dieselprices = []
 
         # Build reference dict
         self.known_map = {self._clean_city(row["city"]): row["state"].upper()
@@ -615,6 +617,10 @@ class CityStateNormalizer:
 
         self.known_states_map = {row["name"].lower(): row["code"].upper()
                           for _, row in us_state_ref.iterrows()}
+
+        self.known_states_diesel = {row["State"].lower(): row["Diesel"]
+                                 for _, row in state_diesel_price.iterrows()}
+
         self.unknown_cities = []  # For manual review
         # self.geolocator = Nominatim(user_agent="city_state_normalizer")
         # print(self.known_map)
@@ -682,6 +688,8 @@ class CityStateNormalizer:
             if guessed_city:
                 city = guessed_city
                 if not state:
+                    state = self.known_map[city]
+
                     if col == "OriginCity":
                         self.statereport_origin += 1
                     else:
@@ -695,8 +703,10 @@ class CityStateNormalizer:
 
                     self.unknown_cities.append({"Column": col, "Original": val})
                     # print("city:", city, "-", state)
+                self.dieselprices.append(self.known_states_diesel[state])
             else:
                 self.flags.append(f"column: {col}, cleaned city: {city}, in state: {state} added_state_unknown_city")
+                self.dieselprices.append(None)
 
             # else:
             #     # Try geocoding if not in known list
@@ -713,6 +723,7 @@ class CityStateNormalizer:
         # print("Normalized data:", normalized)
         # self.df = self.df.drop(col, axis=1)
         self.df[col] = normalized
+        self.df['Diesel_Price'] = self.dieselprices
 
     def normalize(self):
         """Normalize both OriginCity and DestinationCity."""
@@ -729,6 +740,7 @@ def test_validator(routefile, report, routefilename):
 # load us cities file
     us_cities = pd.read_csv(uscities_file)
     us_states = pd.read_csv(ussates_file)
+    state_diesel_price = pd.read_csv(dieselprices_file)
 
     # print(us_cities.head(5))
 # Load sample data
@@ -774,7 +786,7 @@ def test_validator(routefile, report, routefilename):
 
     orig_cities = data[['OriginCity', 'DestinationCity']]
     # print("Origine cities:", orig_cities.columns)
-    normalizer = CityStateNormalizer(orig_cities, us_cities, us_states)
+    normalizer = CityStateNormalizer(orig_cities, us_cities, us_states, state_diesel_price)
     clean_df, review_df, misscities_origin, missgstates_origin, misscities_destin, missgstates_destin, flags = normalizer.normalize()
     # print("clean_df")
     # print(clean_df.index)

@@ -76,7 +76,7 @@ def calculate_kpis(df):
     df['OnTime'] = np.where(df['DeliveryStatus'] == 'Delivered', 1, 0)
     df['MilesPerHour'] = df['Distance_Miles'] / df['DeliveryTime_hrs']
     df['StopsPerDay'] = 24 / df['DeliveryTime_hrs']  # Theoretical max if working 24h
-    df['FuelEfficiency'] = df['Distance_Miles'] / (df['FuelCost_USD'] / 3.50)  # MPG assuming $3.50/gallon
+    df['FuelEfficiency'] = df['Distance_Miles'] / (df['FuelCost_USD'] / df['Diesel_Price'])  # MPG assuming $3.50/gallon
     return df
 
 # *************************************************************************************************************

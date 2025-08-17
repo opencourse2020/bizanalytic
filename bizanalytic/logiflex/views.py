@@ -959,7 +959,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             # print(df.head(5))
 
             # Run local Analysis
-            summary = run_analysis.delay(df)
+            summary = run_analysis(df)
 
             # Convert the summary array to json format to be stored as text in the database
             json_string = json.dumps(summary)

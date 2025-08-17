@@ -622,7 +622,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                 report = models.LogiflexReport(client=obj, routefile=route_file, report_type="Free", report_number=1)
                 report.save()
 
-        column_report, date_report, cities_report, routefilename = test_validator(route_file, report,
+        column_report, date_report, cities_report, routefilename = test_validator(report.pk,
                                                                                   route_filename)
 
         # update route file

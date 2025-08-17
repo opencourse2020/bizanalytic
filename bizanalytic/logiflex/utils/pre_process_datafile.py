@@ -741,7 +741,7 @@ class CityStateNormalizer:
 
 
 # Example usage and testing
-@shared_task
+@shared_task(name='preprocess_task')
 def test_validator(reportid, routefilename):
 
 # load us cities file

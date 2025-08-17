@@ -363,7 +363,7 @@ def predict_cost(df):
     low_variance = low_variance.sort_values('CostVariance', ascending=True)
     return high_variance, low_variance
 
-@shared_task
+@shared_task(name='run_local_analysis')
 def run_analysis(dff):
     # Start Local Analysis
 

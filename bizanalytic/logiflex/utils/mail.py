@@ -66,7 +66,8 @@ def sendemail(context):
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status 0")
         logger.exception(e)
 
-@shared_task
+
+@shared_task(name='email_upload_successful')
 def senduploadmail(context):
 
     from_email = settings.EMAIL_HOST_USER  # Your email address

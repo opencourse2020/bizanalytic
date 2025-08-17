@@ -70,13 +70,15 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "guardian",
     "django_extensions",
+    "django_celery_results",
     # "admin_honeypot",
     # "honeypot",
     # "captcha",
     'ckeditor',
     'corsheaders',
     "bizanalytic.profiles.apps.ProfilesConfig",
-    "bizanalytic.logiflex.apps.LogiflexConfig"
+    "bizanalytic.logiflex.apps.LogiflexConfig",
+
 
 ]
 

@@ -620,7 +620,7 @@ class CityStateNormalizer:
 
         self.known_states_diesel = {row["State"].lower(): row["Diesel"]
                                  for _, row in state_diesel_price.iterrows()}
-
+        print(self.known_states_diesel)
         self.unknown_cities = []  # For manual review
         # self.geolocator = Nominatim(user_agent="city_state_normalizer")
         # print(self.known_map)

@@ -5,6 +5,16 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 import json
 from celery import shared_task
+from .prompts import SYSTEM_PROMPT
+from bizanalytic.logiflex.models import LogiflexReport
+from openai import OpenAI
+from django.conf import settings
+from celery import Celery
+
+app = Celery()
+
+OPENAI_KEY = settings.OPENAI_KEY
+client = OpenAI(api_key=OPENAI_KEY)
 
 # 1- Cleaning Data
 def clean_data(df_clean):
@@ -526,7 +536,7 @@ def process_route_info(ds):
     return distance_str, fuelcost_str, loadweight_str, deliveryhrs_str
 
 
-def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 20) -> str:
+def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 10) -> str:
     """Compact summary to control tokens in prompt while preserving signal."""
     contingency_matrix = ["contingency analysis based on on time deliveries rate: "]
     cols = ", ".join(df.columns.astype(str).tolist())
@@ -542,7 +552,10 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 20) -> str:
     carrier_stats = prepare_carrier_stats(df_clean)
     driver_stats = prepare_driver_stats(df_clean).to_csv(index=False)
     route_stats = prepare_route_stats(df_clean)
-    route_stats = route_stats[['AvgDistance', 'AvgCostPerMile', 'OnTimeRate']].to_csv(index=False)
+    best_routes = route_stats.tail(3)
+    worst_routes = route_stats.head(3)
+    best_routes = best_routes[['AvgDistance', 'AvgCostPerMile', 'OnTimeRate']].to_csv(index=False)
+    worst_routes = worst_routes[['AvgDistance', 'AvgCostPerMile', 'OnTimeRate']].to_csv(index=False)
     cost_efficiency = calculate_cost_efficiency(carrier_stats).head(1)
     cost_efficiency = cost_efficiency[['AvgCostPerMile', 'AvgCostPerPound']].to_markdown()
     reliability = reliability_analysis(carrier_stats).head(1)
@@ -564,7 +577,8 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 20) -> str:
         f"Sample (first {max_rows} rows):\n{sample}"
         f"carriers kpis: {carrier_stats}\n"
         f"Drivers kpis: {driver_stats}\n"
-        f"Routes kpis: {route_stats}"
+        f"Best Routes in terms of average cost per mile: {best_routes}"
+        f"Worst Routes in terms of average cost per mile: {worst_routes}"
         f"most efficient carrier: {cost_efficiency}\n"
         f"Most Reliable Carrier: {reliability}\n"
         f"Carrier with lowest on-time rate: {worst_carrier}"
@@ -582,3 +596,131 @@ def read_csv_into_text_and_df(file_obj) -> tuple[str, pd.DataFrame]:
     csv_text = data.decode("utf-8", errors="ignore")
     return csv_text
 
+@app.task(time_limit=60)
+@shared_task(name='run_llm_analysis')
+def run_LLM_analysis(flags, pu):
+    report = LogiflexReport.objects.filter(pk=pu).first()
+    df = pd.read_csv(report.routefile)
+    summary_for_prompt = summarize_df_for_prompt(df, max_rows=10)
+
+    client_name = report.client.company
+    user_prompt = f"""
+                                Analyze freight route data for client: {client_name}.
+
+                                Objective:
+                                - Executive-ready Fleet Efficiency Report with BI charts, KPIs, and actionable recommendations.
+                                - Include city/state already normalized in the data.
+
+                                Data notes:
+                                - The dataset is already cleaned to 'City, ST' format for origins/destinations.
+                                - Potential data issues flagged by preprocessing are provided below.
+                                - only delivered and delayed shipments are considered for calculations. In-Transit cannot be used as we don't know if they will late or on time
+
+                                Preprocessing flags:
+                                {flags}
+
+                                Dataset (compact summary for analysis):
+                                {summary_for_prompt}
+
+                                Output:
+                                - STRICTLY return a single JSON object matching the provided schema.
+                                - Include Chart.js-ready configs in summary_json.charts[].config (full chart config).
+                                """
+    if not report.report_prompt:
+        report.report_prompt = user_prompt
+        report.save()
+    # print("user_prompt: ", user_prompt)
+
+    # Call Responses API with JSON schema enforcement
+
+    resp = client.responses.create(model="gpt-4.1",
+                                   temperature=0.2,
+                                   max_output_tokens=3500,
+                                   text={"format": {"type": "json_schema", "name": "freight_bi_dual_output",
+                                                    "schema": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "markdown_report": {"type": "string"},
+                                                            "summary_json": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "client": {"type": "string"},
+                                                                    "kpis": {
+                                                                        "type": "array",
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "metric": {"type": "string"},
+                                                                                "value": {"type": ["string", "number"]},
+                                                                                "note": {"type": "string"}
+                                                                            },
+                                                                            "required": ["metric", "value", "note"],
+                                                                            "additionalProperties": False,
+                                                                        }
+                                                                    },
+                                                                    "charts": {
+                                                                        "type": "array",
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "title": {"type": "string"},
+                                                                                "type": {"type": "string"},
+                                                                                # bar|line|pie|scatter
+                                                                                "config": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "type": {"type": "string"},
+                                                                                        "data": {"type": "string"},
+                                                                                        "options": {"type": "string"},
+                                                                                    },
+                                                                                    "required": ["type", "data",
+                                                                                                 "options"],
+                                                                                    "additionalProperties": False,
+
+                                                                                }
+                                                                                # Full Chart.js config: {type,data,options}
+                                                                            },
+                                                                            "required": ["title", "type", "config"],
+                                                                            "additionalProperties": False,
+                                                                        }
+                                                                    },
+                                                                    "data_quality": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "flags": {"type": "array",
+                                                                                      "items": {"type": "string"}}
+                                                                        },
+                                                                        "required": ["flags"],
+                                                                        "additionalProperties": False,
+                                                                    },
+                                                                    "recommendations": {
+                                                                        "type": "array",
+                                                                        "items": {"type": "string"}
+                                                                    }
+                                                                },
+                                                                "required": ["client", "kpis", "charts", "data_quality",
+                                                                             "recommendations"],
+                                                                "additionalProperties": False,
+                                                            }
+                                                        },
+                                                        "required": ["markdown_report", "summary_json"],
+                                                        "additionalProperties": False,
+                                                    },
+                                                    # "strict": True,
+                                                    }},
+                                   input=[
+                                       {"role": "system", "content": SYSTEM_PROMPT},
+                                       {"role": "user", "content": user_prompt}], )
+    try:
+        raw = resp.output_text
+    except Exception:
+        # Fallback: dig into content structure
+        raw = ""
+        if hasattr(resp, "output") and resp.output:
+            # collect all text parts
+            for blk in resp.output:
+                if hasattr(blk, "content"):
+                    for c in blk.content:
+                        if getattr(c, "type", "") == "output_text":
+                            raw += c.text
+    return raw

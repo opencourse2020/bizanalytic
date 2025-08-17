@@ -154,128 +154,16 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
 
         if report:
             log = models.LogEntry.objects.filter(report=report).first()
+            flags = json.dumps(log.flags, indent=2)
             if not report.report_text:
-                df = pd.read_csv(report.routefile)
+
 
                 # run summary analysis
                 csv_text = read_csv_into_text_and_df(report.routefile)
                 # Compact summary for prompt to control tokens (use this instead of full CSV if large)
-                summary_for_prompt = summarize_df_for_prompt(df, max_rows=10)
+                asynch_preprocess = run_LLM_analysis.delay(flags, pu)
+                raw = asynch_preprocess.get()
 
-                user_prompt = f"""
-                            Analyze freight route data for client: {report.client.company}.
-        
-                            Objective:
-                            - Executive-ready Fleet Efficiency Report with BI charts, KPIs, and actionable recommendations.
-                            - Include city/state already normalized in the data.
-        
-                            Data notes:
-                            - The dataset is already cleaned to 'City, ST' format for origins/destinations.
-                            - Potential data issues flagged by preprocessing are provided below.
-                            - only delivered and delayed shipments are considered for calculations. In-Transit cannot be used as we don't know if they will late or on time
-        
-                            Preprocessing flags:
-                            {json.dumps(log.flags, indent=2)}
-        
-                            Dataset (compact summary for analysis):
-                            {summary_for_prompt}
-                            
-                            Output:
-                            - STRICTLY return a single JSON object matching the provided schema.
-                            - Include Chart.js-ready configs in summary_json.charts[].config (full chart config).
-                            """
-                if not report.report_prompt:
-                    report.report_prompt = user_prompt
-                    report.save()
-                print("user_prompt: ", user_prompt)
-
-                # Call Responses API with JSON schema enforcement
-
-                resp = client.responses.create(model="gpt-4.1",
-                                              temperature=0.2,
-                                              max_output_tokens=3500,
-                                              text={"format": {"type": "json_schema", "name": "freight_bi_dual_output",
-                                                                            "schema": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "markdown_report": {"type": "string"},
-                                                                                    "summary_json": {
-                                                                                        "type": "object",
-                                                                                        "properties": {
-                                                                                            "client": {"type": "string"},
-                                                                                            "kpis": {
-                                                                                                "type": "array",
-                                                                                                "items": {
-                                                                                                    "type": "object",
-                                                                                                    "properties": {
-                                                                                                        "metric": {"type": "string"},
-                                                                                                        "value": {"type": ["string","number"]},
-                                                                                                        "note": {"type": "string"}
-                                                                                                    },
-                                                                                                    "required": ["metric", "value", "note"],
-                                                                                                    "additionalProperties": False,
-                                                                                                }
-                                                                                            },
-                                                                                            "charts": {
-                                                                                                "type": "array",
-                                                                                                "items": {
-                                                                                                    "type": "object",
-                                                                                                    "properties": {
-                                                                                                        "title": {"type": "string"},
-                                                                                                        "type": {"type": "string"},   # bar|line|pie|scatter
-                                                                                                        "config": {
-                                                                                                               "type": "object",
-                                                                                                                "properties": {
-                                                                                                                        "type": {"type": "string"},
-                                                                                                                        "data": {"type": "string"},
-                                                                                                                        "options": {"type": "string"},
-                                                                                                                        },
-                                                                                                                "required": ["type","data","options"],
-                                                                                                                "additionalProperties": False,
-
-                                                                                                                }  # Full Chart.js config: {type,data,options}
-                                                                                                    },
-                                                                                                    "required": ["title","type","config"],
-                                                                                                    "additionalProperties": False,
-                                                                                                }
-                                                                                            },
-                                                                                            "data_quality": {
-                                                                                                "type": "object",
-                                                                                                "properties": {
-                                                                                                    "flags": {"type": "array", "items": {"type": "string"}}
-                                                                                                },
-                                                                                                "required": ["flags"],
-                                                                                                "additionalProperties": False,
-                                                                                            },
-                                                                                            "recommendations": {
-                                                                                                "type": "array",
-                                                                                                "items": {"type": "string"}
-                                                                                            }
-                                                                                        },
-                                                                                        "required": ["client", "kpis", "charts", "data_quality", "recommendations"],
-                                                                                        "additionalProperties": False,
-                                                                                    }
-                                                                                },
-                                                                                "required": ["markdown_report","summary_json"],
-                                                                                "additionalProperties": False,
-                                                                            },
-                                                                            # "strict": True,
-                                                            }},
-                                              input=[
-                                                  {"role": "system", "content": SYSTEM_PROMPT},
-                                                  {"role": "user", "content": user_prompt}],)
-                try:
-                    raw = resp.output_text
-                except Exception:
-                    # Fallback: dig into content structure
-                    raw = ""
-                    if hasattr(resp, "output") and resp.output:
-                        # collect all text parts
-                        for blk in resp.output:
-                            if hasattr(blk, "content"):
-                                for c in blk.content:
-                                    if getattr(c, "type", "") == "output_text":
-                                        raw += c.text
                 report.report_text = raw
                 report.report_status = "download"
                 report.save()

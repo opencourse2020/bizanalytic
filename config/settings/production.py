@@ -35,6 +35,8 @@ CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_RESULT_EXTENDED = True
+# Add a one-minute timeout to all Celery tasks.
+CELERYD_TASK_SOFT_TIME_LIMIT = 55
 
 # google
 

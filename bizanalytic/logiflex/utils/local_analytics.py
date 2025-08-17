@@ -4,6 +4,7 @@ from scipy import stats
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 import json
+from celery import shared_task
 
 # 1- Cleaning Data
 def clean_data(df_clean):
@@ -362,7 +363,7 @@ def predict_cost(df):
     low_variance = low_variance.sort_values('CostVariance', ascending=True)
     return high_variance, low_variance
 
-
+@shared_task
 def run_analysis(dff):
     # Start Local Analysis
 

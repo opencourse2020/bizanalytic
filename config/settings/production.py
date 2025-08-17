@@ -31,6 +31,9 @@ DATABASES = {
     }
 }
 
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+
 # google
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

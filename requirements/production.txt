@@ -11,3 +11,5 @@ django-anymail==10.3  # https://github.com/anymail/django-anymail
 
 # others
 stripe==12.4.0
+redis==6.4.0
+celery==5.5.3

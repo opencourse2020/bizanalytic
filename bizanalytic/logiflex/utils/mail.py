@@ -4,6 +4,7 @@ from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 import os
+from celery import shared_task
 
 # Initiate logger function
 logger = logging.getLogger(__name__)
@@ -65,7 +66,7 @@ def sendemail(context):
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status 0")
         logger.exception(e)
 
-
+@shared_task
 def senduploadmail(context):
 
     from_email = settings.EMAIL_HOST_USER  # Your email address

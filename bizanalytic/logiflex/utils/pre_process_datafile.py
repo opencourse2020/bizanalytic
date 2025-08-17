@@ -7,6 +7,7 @@ from typing import Dict, List, Tuple, Optional, Union
 from difflib import get_close_matches
 import time
 from django.conf import settings
+from celery import shared_task
 
 
 staticfolder = settings.STATIC_ROOT
@@ -740,6 +741,7 @@ class CityStateNormalizer:
 
 
 # Example usage and testing
+@shared_task
 def test_validator(routefile, report, routefilename):
 
 # load us cities file

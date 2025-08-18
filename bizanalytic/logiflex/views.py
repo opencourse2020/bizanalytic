@@ -992,9 +992,9 @@ class AdminReportsListView(UserPassesTestMixin, TemplateView):
             if query in ["processing", "late", "download", "canceled"]:
                 reports = LogiflexReport.objects.filter(report_status=query)
             else:
-                reports = LogiflexReport.objects.filter(report_approved=False)
+                reports = LogiflexReport.objects.filter(report_approved=False, report_status__in=['processing', 'late'])
         else:
-            reports = LogiflexReport.objects.filter(report_approved=False)
+            reports = LogiflexReport.objects.filter(report_approved=False, report_status__in=['processing', 'late'])
         # reports = reports.filter(report_created=True)
         kwargs["reports"] = reports.order_by('-report_number')
 

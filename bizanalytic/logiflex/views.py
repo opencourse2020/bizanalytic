@@ -27,6 +27,7 @@ import stripe
 from datetime import datetime, timedelta
 from openai import OpenAI
 from . import models, forms
+from .models import NewsLetter_logiflex, Blog_logiflex, NewsLetter_logiflex_subscription
 from bizanalytic.profiles.mixins import JsonFormMixin
 from bizanalytic.profiles.models import User
 from .utils.mail import sendemail ,senduploadmail
@@ -239,7 +240,7 @@ class AdvancedReportView(TemplateView):
 
 
 class NewsletterCreateView(UserPassesTestMixin, CreateView):
-    model = models.NewsLetter_logiflex
+    model = NewsLetter_logiflex
     form_class = forms.NewsLetter_logiflexForm
     template_name = "logiflex/newsletter_logiflex_create.html"
     success_url = reverse_lazy("logiflex:newsletters:list")
@@ -257,7 +258,7 @@ class NewsletterCreateView(UserPassesTestMixin, CreateView):
 
 
 class NewsletterEditView(UserPassesTestMixin, UpdateView):
-    model = models.NewsLetter_logiflex
+    model = NewsLetter_logiflex
     form_class = forms.NewsLetter_logiflexForm
     template_name = "logiflex/newsletter_logiflex_create.html"
     success_url = reverse_lazy("logiflex:newsletters:list")
@@ -275,7 +276,7 @@ class NewsletterEditView(UserPassesTestMixin, UpdateView):
 
 
 class NewsletterListView(UserPassesTestMixin, ListView):
-    model = models.NewsLetter_logiflex
+    model = NewsLetter_logiflex
     template_name = "logiflex/newsletter_logiflex_list.html"
 
     def test_func(self):
@@ -283,7 +284,7 @@ class NewsletterListView(UserPassesTestMixin, ListView):
 
 
 class BlogCreateView(UserPassesTestMixin, CreateView):
-    model = models.Blog_logiflex
+    model = Blog_logiflex
     form_class = forms.Blog_logiflexForm
     template_name = "logiflex/newsletter_logiflex_create.html"
     success_url = reverse_lazy("logiflex:blog:list")
@@ -300,7 +301,7 @@ class BlogCreateView(UserPassesTestMixin, CreateView):
         return super(BlogCreateView, self).get_context_data(**kwargs)
 
 class BlogEditView(UserPassesTestMixin, UpdateView):
-    model = models.Blog_logiflex
+    model = Blog_logiflex
     form_class = forms.Blog_logiflexForm
     template_name = "logiflex/newsletter_logiflex_create.html"
     success_url = reverse_lazy("logiflex:blog:list")
@@ -318,7 +319,7 @@ class BlogEditView(UserPassesTestMixin, UpdateView):
 
 
 class BlogListView(UserPassesTestMixin, ListView):
-    model = models.Blog_logiflex
+    model = Blog_logiflex
     template_name = "logiflex/blogs_list.html"
 
     def test_func(self):
@@ -330,10 +331,10 @@ class BlogDetailView(TemplateView):
 
     def get_context_data(self, **kwargs):
         slug = self.kwargs.get("slug")
-        blog = models.Blog_logiflex.objects.filter(slug=slug).first()
+        blog = Blog_logiflex.objects.filter(slug=slug).first()
 
         # Retreive all blogs
-        blogs = models.Blog_logiflex.objects.all()
+        blogs = Blog_logiflex.objects.all()
 
         # Latest Blogs
         blogslatest = blogs.order_by('-date_created')[:3]
@@ -383,7 +384,7 @@ class BlogsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         query = self.request.GET.get("cat")
-        allblogs = models.Blog_logiflex.objects.all()
+        allblogs = Blog_logiflex.objects.all()
 
         if query:
             blogs = allblogs.filter(category=query)
@@ -409,7 +410,7 @@ class NewsletterSubscriptionCreateView(CreateView, JsonFormMixin):
         tp_area = int(request.POST.get("tp_area"))
 
         # Search the database for the email
-        subs = models.NewsLetter_logiflex_subscription.objects.filter(email=email_nl).first()
+        subs = NewsLetter_logiflex_subscription.objects.filter(email=email_nl).first()
 
         # Check if data exists or not in the database
         message = ""
@@ -440,7 +441,7 @@ class NewsletterSubscriptionCreateView(CreateView, JsonFormMixin):
                 area = "lo"
             elif tp_area == 2:
                 area = "ki"
-            subscription = models.NewsLetter_logiflex_subscription(email=email_nl, company=cp_name, area=area)
+            subscription = NewsLetter_logiflex_subscription(email=email_nl, company=cp_name, area=area)
             subscription.save()
 
         data = {"submessage": message}
@@ -449,7 +450,7 @@ class NewsletterSubscriptionCreateView(CreateView, JsonFormMixin):
 
 
 class NewsletterSubscriptionEditView(UserPassesTestMixin, UpdateView):
-    model = models.NewsLetter_logiflex_subscription
+    model = NewsLetter_logiflex_subscription
     form_class = forms.NewsLetter_logiflex_subscriptionForm
     template_name = "logiflex/newslettersubscrib_logiflex_create.html"
     success_url = reverse_lazy("logiflex:newsletters:list")
@@ -459,7 +460,7 @@ class NewsletterSubscriptionEditView(UserPassesTestMixin, UpdateView):
 
 
 class NewsletterSubscriptionListView(UserPassesTestMixin, ListView):
-    model = models.NewsLetter_logiflex_subscription
+    model = NewsLetter_logiflex_subscription
     template_name = "logiflex/newslettersubscription_logiflex_list.html"
 
     def test_func(self):

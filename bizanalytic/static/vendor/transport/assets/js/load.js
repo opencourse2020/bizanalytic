@@ -185,7 +185,7 @@ $("#generate_full_rp").click(function (){
 
 $('body').on('click', '[data-active]', function() {
     let cixphoto =  $(this).data('active');
-
+    console.log(cixphoto);
     let url = "https://bizanalytic.com/logiflex/rx-apr/";
     const formData = new FormData();
 

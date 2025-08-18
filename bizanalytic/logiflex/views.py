@@ -157,20 +157,19 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
         if report:
             log = LogEntry.objects.filter(report=report).first()
             flags = json.dumps(log.flags, indent=2)
-            if not report.report_text:
-
-
-                # run summary analysis
-                csv_text = read_csv_into_text_and_df(report.routefile)
-                # Compact summary for prompt to control tokens (use this instead of full CSV if large)
-                asynch_preprocess = run_LLM_analysis.delay(flags, pu)
-                raw = asynch_preprocess.get()
-
-                # report.report_text = raw
-                # report.report_status = "download"
-                # report.save()
-            else:
+            if report.report_text:
                 raw = report.report_text
+                #
+                # # run summary analysis
+                # csv_text = read_csv_into_text_and_df(report.routefile)
+                # # Compact summary for prompt to control tokens (use this instead of full CSV if large)
+                # asynch_preprocess = run_LLM_analysis.delay(flags, pu)
+                # raw = asynch_preprocess.get()
+                #
+                # # report.report_text = raw
+                # # report.report_status = "download"
+                # # report.save()
+
 
             data = json.loads(raw)
             # data = raw
@@ -536,8 +535,6 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
 
         message = "Report Uploaded Succssefully. Wait for a confirmation email from us."
 
-
-
         data = {"submessage": message}
 
         return JsonResponse(data)
@@ -867,7 +864,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
             # Send a confirmation Email to client
             email_info = {
-                'subject': "Your Fleet Efficiency Report is in Progress 🚚📊",
+                'subject': _("Your Fleet Efficiency Report is in Progress 🚚📊"),
                 'to_email': [email_name, ],
                 'client': client_name,
                 'report_list_link': "https://bizanalytic.com/logiflex/reports/list/",
@@ -876,9 +873,9 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             senduploadmail.delay(email_info)
 
 
-            message = "Report Uploaded Succssefully. Wait for a confirmation email from us."
+            message = _("Report Uploaded Succssefully. Wait for a confirmation email from us.")
         else:
-            message = "Report Already Uploaded Succssefully.Check the list of your reports for more details"
+            message = _("Report Already Uploaded Succssefully.Check the list of your reports for more details")
 
         data = {"submessage": message}
 
@@ -976,3 +973,49 @@ def clean_csv(request):
         return JsonResponse(data)
     return JsonResponse({"error": "Invalid request"}, status=400)
 
+
+class AdminReportsListView(UserPassesTestMixin, TemplateView):
+    template_name = "logiflex/report_admin_list.html"
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def get_context_data(self, **kwargs):
+        query = self.request.GET.get("cat")
+
+        if query:
+            query = query.lower()
+            if query in ["processing", "late", "download", "canceled"]:
+                reports = LogiflexReport.objects.filter(report_status=query)
+            else:
+                reports = LogiflexReport.objects.filter(report_approved=False)
+        else:
+            reports = LogiflexReport.objects.filter(report_approved=False)
+        # reports = reports.filter(report_created=True)
+        kwargs["reports"] = reports.order_by('-report_number')
+
+        return super(AdminReportsListView, self).get_context_data(**kwargs)
+
+
+class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
+    def post(self, request, *args, **kwargs):
+        reportid = int(request.POST.get("rx_cfr_ci"))
+
+        if reportid:
+            report = LogiflexReport.objects.filter(pk=reportid).first()
+            if not report.report_approved:
+                report.report_approved = True
+                report.report_date = datetime.now()
+                report.save()
+                message = _("Report Approved Successfully")
+                status = "success"
+            else:
+                message = _("Report Already Approved")
+                status = "success"
+        else:
+            message = _("Report doesn't exist")
+            status = "fail"
+
+        data = {"submessage": message, "rpstatus": status}
+
+        return JsonResponse(data)

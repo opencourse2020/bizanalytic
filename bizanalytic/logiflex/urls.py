@@ -3,6 +3,9 @@ from . import views
 
 app_name = "logiflex"
 
+admin_patterns = [
+    path("reports/", views.AdminReportsListView.as_view(), name="reports"),
+]
 
 newsletter_patterns = [
     path("create/", views.NewsletterCreateView.as_view(), name="create"),
@@ -45,6 +48,7 @@ stripe_patterns = [
 urlpatterns = [
 
     path("", views.IndexView.as_view(), name="index"),
+    path("rx-apr/", views.AdminApproveReportView.as_view(), "rx-apr"),
     path("dashboard/", views.DashboardView.as_view(), name="dashboard"),
     path('clean-csv/', views.clean_csv, name='clean_csv'),
     path("pricing/", views.Payment_PageView.as_view(), name='pricing'),
@@ -65,6 +69,10 @@ urlpatterns = [
     path(
         "securepay/",
         include((stripe_patterns, "bizanalytic.logiflex"), namespace="securepay"),
+    ),
+    path(
+        "admin/",
+        include((admin_patterns, "bizanalytic.logiflex"), namespace="admin"),
     ),
 
 ]

@@ -594,7 +594,7 @@ def read_csv_into_text_and_df(file_obj) -> tuple[str, pd.DataFrame]:
     csv_text = data.decode("utf-8", errors="ignore")
     return csv_text
 
-@shared_task(name='run_llm_analysis')
+# @shared_task(name='run_llm_analysis')
 def run_LLM_analysis(flags, pu):
     report = LogiflexReport.objects.filter(pk=pu).first()
     df = pd.read_csv(report.routefile)
@@ -729,7 +729,8 @@ def run_LLM_analysis(flags, pu):
 
 @shared_task(name='run_all_llm_analysis')
 def run_All_LLM_Analysis():
-    reports = LogiflexReport.objects.filter(report_type="Paid", report_text={}, report_status__in=['processing', 'late'])
+    reports = LogiflexReport.objects.filter(report_type="Paid", report_text={},
+                                            report_status__in=['processing', 'late'], report_approved=False)
     print("Reports to be analyzed")
     # print(reports)
     if reports:
@@ -739,8 +740,8 @@ def run_All_LLM_Analysis():
             if log:
                 flags = json.dumps(log.flags, indent=2)
 
-            asynch_preprocess = run_LLM_analysis.delay(flags, report.pk)
-            raw = asynch_preprocess.get()
+            raw = run_LLM_analysis.delay(flags, report.pk)
+            # raw = asynch_preprocess.get()
             numreports= reports.count()
     else:
         numreports = 0

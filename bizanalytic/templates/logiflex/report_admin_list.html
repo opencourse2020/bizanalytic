@@ -1,0 +1,180 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+    <meta name="description" content="Choose the right plan for your logistics business – free trial, one-time advanced reports, or monthly/quarterly freight analytics subscriptions.">
+    <meta name="author" content='"freight report subscription pricing", "freight cost optimization tool for SMEs", "advanced logistics analysis at low cost", "AI freight analytics monthly plans"'>
+    <!-- page title -->
+    <title>Affordable Freight Analytics Plans | One-Time or Subscription</title>
+{% endblock head_title %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-bs5/css/dataTables.bootstrap5.min.css" %} >
+    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" %} >
+    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" %} >
+    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/bootstrap-table/dist/bootstrap-table.min.css" %} >
+    {{ block.super }}
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    <div class="nav-right-content">
+        <a href="{% url 'logiflex:index' %}" class="primary-btn secondary-bg"><span class="text">{% trans "Try Free" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+    </div>
+{% endblock left_menu %}
+
+{% block breadcrumb %}
+    <section class="breadcrumb-area mb-1" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="title">LogiFlex</h1>
+                        <h2 class="title" style="color: #0cb7d6">{% trans "Fleet Efficiency Reports" %}</h2>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+        <!-- contact area starts -->
+<section class="contact-area pt-40 mb-40" >
+            <div class="container">
+                <h5 class="title">{% trans "List of Processed Reports" %}</h5>
+                <div id="datatable" class="mb-5">
+                    <div class="card">
+                    <div class="card-header">
+                        {% if payid == "none" %}
+                            <a href="{% url 'logiflex:pricing' %}" class="btn btn-success"> {% trans "Create New Report" %}</a>
+                        {% else %}
+                            <a href="{% url 'logiflex:reports:fullreport' payid %}" class="btn btn-success"> {% trans "Create New Report" %}</a>
+                        {% endif %}
+                    </div>
+                        <div class="card-body">
+                            <table id="datatableDefault" class="table text-nowrap w-100">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{% trans "Client" %}</th>
+                                    <th>{% trans "Report ID" %}</th>
+                                    <th>{% trans "Report Type" %}</th>
+                                    <th>{% trans "Data File" %}</th>
+                                    <th>{% trans "Upload Time" %}</th>
+                                    <th>{% trans "Expected Delivery" %}</th>
+                                    <th>{% trans "Approve" %}</th>
+                                    <th>{% trans "Final Report" %}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if reports == "none" %}
+
+                                {% else %}
+                                    {% for logireport in reports %}
+                                        <tr>
+                                            <td>{{ logireport.client.company }}</td>
+                                            <td>
+                                                {{ logireport.report_id }}
+                                            </td>
+                                            <td>{% if logireport.report_type == "Paid" %}
+                                                    <span class="badge bg-success">{{ logireport.report_type }}</span>
+                                                {% else %}
+                                                    <span class="badge bg-warning">{{ logireport.report_type }}</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                    <a href="{% url 'logiflex:reports:detail' logireport.pk %}" class="btn btn-outline-primary btn-sm">{% trans "View" %}</a>
+                                            </td>
+                                            <td>
+                                                {{ logireport.date_created|date:'Y-m-d H:i' }}
+                                            </td>
+                                            <td>
+                                                {{ logireport.expected_delivery|date:'Y-m-d H:i' }}
+                                            </td>
+                                            <td>
+                                                <div class="btn btn-info btn-sm " data-active="{{ logireport.pk }}">
+                                                    <span style="text-transform: uppercase;font-size: 12px;">{% trans "Approve" %}</span></div>
+
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'logiflex:reports:summary' logireport.pk %}" class="btn btn-info btn-sm">
+                                                    <span style="text-transform: uppercase;font-size: 12px;">{% trans "View Report" %}</span></a>
+                                            </td>
+
+                                        </tr>
+                                    {% endfor %}
+
+                                {% endif %}
+                               </tbody>
+                            </table>
+                        </div>
+
+                        <div class="hljs-container">
+                            <pre><code class="xml" data-url="assets/data/table-plugins/code-1.json"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock contact_area %}
+
+{% block feature_area %}
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+{% endblock cta_area %}
+
+ <!-- footer area starts -->
+{% block footer_area %}
+    <form action="#" enctype="multipart/form-data">
+                                    {% csrf_token %}
+    </form>
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+      <div id="toast_successreport" class="toast hide text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+
+        <div class="toast-body" id="message_body">
+
+        </div>
+      </div>
+    </div>
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+      <div id="toast_failreport" class="toast hide text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+
+        <div class="toast-body" id="message_body">
+
+        </div>
+      </div>
+    </div>
+{% endblock footer_area %}
+{% block js_area %}
+    {{ block.super }}
+    <script src={% static "assets/plugins/datatables.net/js/dataTables.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-bs5/js/dataTables.bootstrap5.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js" %}></script>
+        <script src={% static "assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons/js/buttons.flash.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons/js/buttons.html5.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons/js/buttons.print.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js" %}></script>
+        <script src={% static "assets/plugins/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js" %}></script>
+    	<script src={% static "assets/plugins/bootstrap-table/dist/bootstrap-table.min.js"%}></script>
+
+    <script src={% static "assets/js/demo/table-plugins.demo.js" %}></script>
+
+{% endblock js_area %}

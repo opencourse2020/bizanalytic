@@ -58,11 +58,7 @@
                 <div id="datatable" class="mb-5">
                     <div class="card">
                     <div class="card-header">
-                        {% if payid == "none" %}
-                            <a href="{% url 'logiflex:pricing' %}" class="btn btn-success"> {% trans "Create New Report" %}</a>
-                        {% else %}
-                            <a href="{% url 'logiflex:reports:fullreport' payid %}" class="btn btn-success"> {% trans "Create New Report" %}</a>
-                        {% endif %}
+
                     </div>
                         <div class="card-body">
                             <table id="datatableDefault" class="table text-nowrap w-100">

@@ -152,7 +152,10 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         pu = self.kwargs.get("pk")
         user = self.request.user
-        report = LogiflexReport.objects.filter(client__user=user, pk=pu).first()
+        if user.is_staff:
+            report = LogiflexReport.objects.filter(pk=pu).first()
+        else:
+            report = LogiflexReport.objects.filter(client__user=user, pk=pu).first()
 
         if report:
             log = LogEntry.objects.filter(report=report).first()

@@ -189,7 +189,7 @@ $('body').on('click', '[data-active]', function() {
     let url = "https://bizanalytic.com/logiflex/rx-apr/";
     const formData = new FormData();
 
-    formData.append('cixphoto', cixphoto);
+    formData.append('rx_cfr_ci', cixphoto);
     $.ajax({
         type: 'POST',
         url: url,

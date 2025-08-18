@@ -1027,7 +1027,10 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                 # print(json.loads(summary_json))
                 kpiss = []
                 for kpi in summary_json:
-                    print(kpi)
+                    if kpi == "kpis":
+                        print(summary_json[kpi])
+                    else:
+                        print(kpi)
                     # kpiss.append({"metric": kpi.metric, "value": kpi.value})
 
                 # Send a confirmation Email to client

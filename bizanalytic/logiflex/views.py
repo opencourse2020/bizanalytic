@@ -26,8 +26,9 @@ import pandas as pd
 import stripe
 from datetime import datetime, timedelta
 from openai import OpenAI
-from . import models, forms
-from .models import NewsLetter_logiflex, Blog_logiflex, NewsLetter_logiflex_subscription
+# from . import models, forms
+from .forms import *
+from .models import *
 from bizanalytic.profiles.mixins import JsonFormMixin
 from bizanalytic.profiles.models import User
 from .utils.mail import sendemail ,senduploadmail
@@ -57,7 +58,7 @@ class RouteFileView(TemplateView):
     template_name = "logiflex/report_detail.html"
     def get_context_data(self, **kwargs):
         pu = self.kwargs.get("pk")
-        report = models.LogiflexReport.objects.filter(pk=pu).first()
+        report = LogiflexReport.objects.filter(pk=pu).first()
 
         # load route file
         df = pd.read_csv(report.routefile)
@@ -84,7 +85,7 @@ class RouteFileView(TemplateView):
 
         distance_str, fuelcost_str, loadweight_str, deliveryhrs_str = process_route_info(df.describe())
 
-        log_message = models.LogEntry.objects.filter(report=report).first()
+        log_message = LogEntry.objects.filter(report=report).first()
         if log_message.column_report:
             logcol = log_message.column_report.split("@@#@@")
         if log_message.date_report:
@@ -131,7 +132,7 @@ class ReportView(TemplateView):
         pu = self.kwargs.get("pk")
         user = self.request.user
 
-        report = models.LogiflexReport.objects.filter(client__user=user, pk=pu).first()
+        report = LogiflexReport.objects.filter(client__user=user, pk=pu).first()
         if report:
             dff = pd.read_csv(report.routefile)
             df = clean_data(dff)
@@ -151,10 +152,10 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         pu = self.kwargs.get("pk")
         user = self.request.user
-        report = models.LogiflexReport.objects.filter(client__user=user, pk=pu).first()
+        report = LogiflexReport.objects.filter(client__user=user, pk=pu).first()
 
         if report:
-            log = models.LogEntry.objects.filter(report=report).first()
+            log = LogEntry.objects.filter(report=report).first()
             flags = json.dumps(log.flags, indent=2)
             if not report.report_text:
 
@@ -193,7 +194,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         pu = self.request.user
-        reports = models.LogiflexReport.objects.filter(client__user=pu)
+        reports = LogiflexReport.objects.filter(client__user=pu)
         total_reports = reports.count()
         if total_reports == 0:
             total_reports = 1
@@ -233,7 +234,7 @@ class AdvancedReportView(TemplateView):
 
     def get_context_data(self, **kwargs):
         pu = self.kwargs.get("pk")
-        report = models.LogiflexReport.objects.filter(pk=pu).first()
+        report = LogiflexReport.objects.filter(pk=pu).first()
         if report:
             kwargs["report"] = report.report_text
         return super(AdvancedReportView, self).get_context_data(**kwargs)
@@ -241,7 +242,7 @@ class AdvancedReportView(TemplateView):
 
 class NewsletterCreateView(UserPassesTestMixin, CreateView):
     model = NewsLetter_logiflex
-    form_class = forms.NewsLetter_logiflexForm
+    form_class = NewsLetter_logiflexForm
     template_name = "logiflex/newsletter_logiflex_create.html"
     success_url = reverse_lazy("logiflex:newsletters:list")
 
@@ -259,7 +260,7 @@ class NewsletterCreateView(UserPassesTestMixin, CreateView):
 
 class NewsletterEditView(UserPassesTestMixin, UpdateView):
     model = NewsLetter_logiflex
-    form_class = forms.NewsLetter_logiflexForm
+    form_class = NewsLetter_logiflexForm
     template_name = "logiflex/newsletter_logiflex_create.html"
     success_url = reverse_lazy("logiflex:newsletters:list")
 
@@ -285,7 +286,7 @@ class NewsletterListView(UserPassesTestMixin, ListView):
 
 class BlogCreateView(UserPassesTestMixin, CreateView):
     model = Blog_logiflex
-    form_class = forms.Blog_logiflexForm
+    form_class = Blog_logiflexForm
     template_name = "logiflex/newsletter_logiflex_create.html"
     success_url = reverse_lazy("logiflex:blog:list")
 
@@ -300,9 +301,10 @@ class BlogCreateView(UserPassesTestMixin, CreateView):
         kwargs["cardheader"] = "Blog Info"
         return super(BlogCreateView, self).get_context_data(**kwargs)
 
+
 class BlogEditView(UserPassesTestMixin, UpdateView):
     model = Blog_logiflex
-    form_class = forms.Blog_logiflexForm
+    form_class = Blog_logiflexForm
     template_name = "logiflex/newsletter_logiflex_create.html"
     success_url = reverse_lazy("logiflex:blog:list")
 
@@ -451,7 +453,7 @@ class NewsletterSubscriptionCreateView(CreateView, JsonFormMixin):
 
 class NewsletterSubscriptionEditView(UserPassesTestMixin, UpdateView):
     model = NewsLetter_logiflex_subscription
-    form_class = forms.NewsLetter_logiflex_subscriptionForm
+    form_class = NewsLetter_logiflex_subscriptionForm
     template_name = "logiflex/newslettersubscrib_logiflex_create.html"
     success_url = reverse_lazy("logiflex:newsletters:list")
 
@@ -482,33 +484,33 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
         user = User.objects.filter(email=email_name).first()
 
         if user:
-            client = models.LogiFlexClient.objects.filter(user=user).first()
+            client = LogiFlexClient.objects.filter(user=user).first()
             if client:
-                latest_report = models.LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
-                report = models.LogiflexReport(client=client, routefile=route_file, report_type="Free",
+                latest_report = LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
+                report = LogiflexReport(client=client, routefile=route_file, report_type="Free",
                                                report_number=latest_report.report_number+1)
                 report.save()
             else:
-                obj, created = models.LogiFlexClient.objects.update_or_create(email=email_name,
+                obj, created = LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name,
                                                                                         'user': user,
                                                                                         'contact_name': client_nm})
 
-                report = models.LogiflexReport(client=obj, routefile=route_file, report_type="Free",
+                report = LogiflexReport(client=obj, routefile=route_file, report_type="Free",
                                                report_number=1)
                 report.save()
         else:
-            client = models.LogiFlexClient.objects.filter(email=email_name).first()
+            client = LogiFlexClient.objects.filter(email=email_name).first()
             if client:
-                latest_report = models.LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
-                report = models.LogiflexReport(client=client, routefile=route_file, report_type="Free",
+                latest_report = LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
+                report = LogiflexReport(client=client, routefile=route_file, report_type="Free",
                                                report_number=latest_report.report_number+1)
                 report.save()
             else:
-                obj, created = models.LogiFlexClient.objects.update_or_create(email=email_name,
+                obj, created = LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name,
                                                                                         'contact_name': client_nm})
-                report = models.LogiflexReport(client=obj, routefile=route_file, report_type="Free", report_number=1)
+                report = LogiflexReport(client=obj, routefile=route_file, report_type="Free", report_number=1)
                 report.save()
 
         column_report, date_report, cities_report, routefilename = test_validator(report.pk,
@@ -519,7 +521,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
         # logireport.save()
 
         # Save log data
-        logiflex_log = models.LogEntry.objects.create(report=report, column_report=column_report,
+        logiflex_log = LogEntry.objects.create(report=report, column_report=column_report,
                                                       date_report=date_report, citi_report=cities_report)
 
         # Send a confirmation Email to client
@@ -554,7 +556,7 @@ class BookACallView(CreateView, JsonFormMixin):
         email_name = email_name.lower()
         phone_nb = request.POST.get("phone_nb")
 
-        client = models.LogiFlexClient.objects.filter(email=email_name).first()
+        client = LogiFlexClient.objects.filter(email=email_name).first()
         if client:
             if not client.contact_name:
                 client.contact_name = client_name
@@ -563,7 +565,7 @@ class BookACallView(CreateView, JsonFormMixin):
             if not client.phone or not client.phone == phone_nb:
                 client.phone = phone_nb
             client.save()
-            call = models.RequestedCall(client=client)
+            call = RequestedCall(client=client)
             call.save()
             message = "Thank you for choosing BizAnalytic + LogiFlex to power your freight analytics. " \
                       "You will be contacted As Quick As Possible"
@@ -607,7 +609,7 @@ def create_checkout_sessions(request):
 
 @login_required
 def create_checkout_session(request, plan_id):
-    plan = get_object_or_404(models.PricingPlan, id=plan_id)
+    plan = get_object_or_404(PricingPlan, id=plan_id)
 
     # Stripe Checkout Session
     session = stripe.checkout.Session.create(
@@ -623,7 +625,7 @@ def create_checkout_session(request, plan_id):
     )
 
     # Save to DB
-    subscription = models.ServicePayment.objects.create(
+    subscription = ServicePayment.objects.create(
         client=request.user,
         plan=plan,
         stripe_checkout_id=session.id
@@ -695,20 +697,20 @@ class WebhookView(View):
             print(f"Payment Amount: {amount_paid}")
 
             # check if client exists. if not it will be added
-            client = models.LogiFlexClient.objects.filter(email=email).first()
+            client = LogiFlexClient.objects.filter(email=email).first()
             print("Client_email:", client.email)
 
-            payment_plan = models.PricingPlan.objects.filter(price=amount_paid).first()
+            payment_plan = PricingPlan.objects.filter(price=amount_paid).first()
             if payment_plan:
                 # Save payment and Create report instance with empty data
-                servicepayment = models.ServicePayment.objects.filter(client=client).first()
+                servicepayment = ServicePayment.objects.filter(client=client).first()
                 if servicepayment:
                     servicepayment.stripe_checkout_id = session['id']
                     servicepayment.service_type = payment_plan
                     servicepayment.is_active = True
                     servicepayment.save()
                 else:
-                    servicepayment = models.ServicePayment.objects.create(
+                    servicepayment = ServicePayment.objects.create(
                                         client=client,
                                         service_type=payment_plan,
                                         stripe_checkout_id=session['id'],
@@ -717,7 +719,7 @@ class WebhookView(View):
                 servicepayment.reset_quota_if_needed()
 
                 # downloadcode = generatecode(8)
-                # report = models.LogiflexReport(client=client, payment=servicepayment, report_type='Paid',
+                # report = LogiflexReport(client=client, payment=servicepayment, report_type='Paid',
                 #                                download_code=downloadcode)
                 # report.save()
 
@@ -759,16 +761,16 @@ class Payment_SuccessView(LoginRequiredMixin, TemplateView):
         query = self.request.GET.get("cat")
 
         user = self.request.user
-        servicepayment = models.ServicePayment.objects.filter(client__user=user).first()
+        servicepayment = ServicePayment.objects.filter(client__user=user).first()
         if servicepayment:
             if query:
                 query = query.lower()
                 if query in ["processing", "download", "canceled", "late"]:
-                    reports = models.LogiflexReport.objects.filter(client__user=user, report_status=query)
+                    reports = LogiflexReport.objects.filter(client__user=user, report_status=query)
                 else:
-                    reports = models.LogiflexReport.objects.filter(client__user=user)
+                    reports = LogiflexReport.objects.filter(client__user=user)
             else:
-                reports = models.LogiflexReport.objects.filter(client__user=user)
+                reports = LogiflexReport.objects.filter(client__user=user)
             # reports = reports.filter(report_created=True)
             kwargs["reports"] = reports.order_by('-report_number')
             if servicepayment.can_generate_report():
@@ -785,8 +787,8 @@ class FullReportView(LoginRequiredMixin, TemplateView):
     template_name = "logiflex/report_create.html"
     def get_context_data(self, **kwargs):
         pu = self.kwargs.get("pk")
-        client = models.LogiFlexClient.objects.filter(user=self.request.user).first()
-        servicepayment = models.ServicePayment.objects.filter(pk=pu, client=client).first()
+        client = LogiFlexClient.objects.filter(user=self.request.user).first()
+        servicepayment = ServicePayment.objects.filter(pk=pu, client=client).first()
         if servicepayment and servicepayment.can_generate_report():
 
             kwargs["contact_name"] = servicepayment.client.contact_name
@@ -810,8 +812,8 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         route_file = request.FILES["route_file"]
         route_filename = route_file.name
 
-        client = models.LogiFlexClient.objects.filter(user=self.request.user).first()
-        servicepayment = models.ServicePayment.objects.filter(client=client).first()
+        client = LogiFlexClient.objects.filter(user=self.request.user).first()
+        servicepayment = ServicePayment.objects.filter(client=client).first()
 
         if servicepayment.can_generate_report():
 
@@ -825,8 +827,8 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             client.save()
 
             downloadcode = generatecode(8)
-            latest_report = models.LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
-            logireport = models.LogiflexReport.objects.create(client=client, payment=servicepayment,
+            latest_report = LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
+            logireport = LogiflexReport.objects.create(client=client, payment=servicepayment,
                                                               download_code=downloadcode,
                                                               report_type='Paid',
                                                               report_number=latest_report.report_number+1)
@@ -860,7 +862,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             # logireport.save()
 
             # Save log data
-            # logiflex_log = models.LogEntry.objects.create(report=logireport, column_report=column_report,
+            # logiflex_log = LogEntry.objects.create(report=logireport, column_report=column_report,
             #                                               date_report=date_report, citi_report=cities_report, flags=flags)
 
             # Send a confirmation Email to client
@@ -893,7 +895,7 @@ class Payment_FailView(TemplateView):
 #         data = json.load(f)
 #
 #     # Save Report Metadata
-#     metadata = models.ReportMetadata.objects.create(
+#     metadata = ReportMetadata.objects.create(
 #         title=data['reportMetadata']['title'],
 #         subtitle=data['reportMetadata']['subtitle'],
 #         audience=data['reportMetadata']['audience'],
@@ -901,14 +903,14 @@ class Payment_FailView(TemplateView):
 #     )
 #
 #     # Save Executive Summary
-#     models.ExecutiveSummary.objects.create(
+#     ExecutiveSummary.objects.create(
 #         report_metadata=metadata,
 #         primary_finding=data['executiveSummary']['primaryFinding'],
 #         primary_recommendation=data['executiveSummary']['primaryRecommendation']
 #     )
 #
 #     # Save Diagnostic Analysis
-#     diagnostic_analysis = models.DiagnosticAnalysis.objects.create(
+#     diagnostic_analysis = DiagnosticAnalysis.objects.create(
 #         report_metadata=metadata,
 #         carrier_matrix_description=data['diagnosticAnalysis']['carrierPerformanceMatrix']['description'],
 #         bottleneck_title=data['diagnosticAnalysis']['bottleneckAnalysis']['title'],
@@ -917,7 +919,7 @@ class Payment_FailView(TemplateView):
 #
 #     # Save Carriers
 #     for carrier_data in data['diagnosticAnalysis']['carrierPerformanceMatrix']['carriers']:
-#         models.Carrier.objects.create(
+#         Carrier.objects.create(
 #             name=carrier_data['name'],
 #             cost_per_mile=carrier_data['costPerMile'],
 #             on_time_rate=carrier_data['onTimeRate'],
@@ -926,7 +928,7 @@ class Payment_FailView(TemplateView):
 #
 #     # Save Bottleneck Findings
 #     for finding_data in data['diagnosticAnalysis']['bottleneckAnalysis']['findings']:
-#         models.BottleneckFinding.objects.create(
+#         BottleneckFinding.objects.create(
 #             diagnostic_analysis=diagnostic_analysis,
 #             title=finding_data['title'],
 #             details=finding_data['details']
@@ -934,7 +936,7 @@ class Payment_FailView(TemplateView):
 #
 #     # Save Action Plans
 #     for action_data in data['actionPlan']:
-#         models.ActionPlan.objects.create(
+#         ActionPlan.objects.create(
 #             report_metadata=metadata,
 #             priority=action_data['priority'],
 #             title=action_data['title'],
@@ -946,7 +948,7 @@ class Payment_FailView(TemplateView):
 #
 #     # Save Scenario Modeling
 #     scenario_data = data['scenarioModeling']
-#     models.ScenarioModeling.objects.create(
+#     ScenarioModeling.objects.create(
 #         report_metadata=metadata,
 #         carrier_shift_title=scenario_data['carrierShiftImpact']['title'],
 #         carrier_shift_description=scenario_data['carrierShiftImpact']['description'],

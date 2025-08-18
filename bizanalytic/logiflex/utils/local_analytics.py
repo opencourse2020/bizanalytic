@@ -729,15 +729,19 @@ def run_LLM_analysis(flags, pu):
 
 @shared_task(name='run_all_llm_analysis')
 def run_All_LLM_Analysis():
-    report = LogiflexReport.objects.filter(report_type="Paid", report_text={}, report_status__in=['processing', 'late']).first()
+    reports = LogiflexReport.objects.filter(report_type="Paid", report_text={}, report_status__in=['processing', 'late'])
     print("Reports to be analyzed")
     # print(reports)
-    # for report in reports:
-    log = LogEntry.objects.filter(report=report).first()
-    flags = ""
-    if log:
-        flags = json.dumps(log.flags, indent=2)
+    if reports:
+        for report in reports:
+            log = LogEntry.objects.filter(report=report).first()
+            flags = ""
+            if log:
+                flags = json.dumps(log.flags, indent=2)
 
-    asynch_preprocess = run_LLM_analysis.delay(flags, report.pk)
-    raw = asynch_preprocess.get()
-    return f"{report.pk} are processed"
+            asynch_preprocess = run_LLM_analysis.delay(flags, report.pk)
+            raw = asynch_preprocess.get()
+            numreports= reports.count()
+    else:
+        numreports = 0
+    return f"{numreports} are processed"

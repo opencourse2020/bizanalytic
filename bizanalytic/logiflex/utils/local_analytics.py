@@ -728,7 +728,7 @@ def run_LLM_analysis(flags, pu):
 
 
 @shared_task(name='run_all_llm_analysis')
-def run_all_llm_analysis():
+def run_All_LLM_Analysis():
     reports = LogiflexReport.objects.filter(report_type="Paid", report_text="", report_status__in=['processing', 'late'])
 
     for report in reports:

@@ -1026,7 +1026,7 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                 summary_json = data.get("summary_json", {})
                 # print(json.loads(summary_json))
                 kpiss = []
-                for kpi in summary_json.kpis:
+                for kpi in summary_json:
                     print(kpi)
                     # kpiss.append({"metric": kpi.metric, "value": kpi.value})
 

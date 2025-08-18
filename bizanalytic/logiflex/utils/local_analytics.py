@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 import json
 from celery import shared_task
 from .prompts import SYSTEM_PROMPT
-from bizanalytic.logiflex.models import LogiflexReport
+from bizanalytic.logiflex.models import *
 from openai import OpenAI
 from django.conf import settings
 
@@ -725,3 +725,15 @@ def run_LLM_analysis(flags, pu):
     report.report_status = "download"
     report.save()
     return raw
+
+
+@shared_task(name='run_all_llm_analysis')
+def run_all_llm_analysis():
+    reports = LogiflexReport.objects.filter(report_type="Paid", report_text="", report_status__in=['processing', 'late'])
+
+    for report in reports:
+        log = LogEntry.objects.filter(report=report).first()
+        flags = json.dumps(log.flags, indent=2)
+        asynch_preprocess = run_LLM_analysis.delay(flags, report.pk)
+        raw = asynch_preprocess.get()
+    return f"{reports.count()} are processed"

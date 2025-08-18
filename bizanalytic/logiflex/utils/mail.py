@@ -117,7 +117,7 @@ def sendapprovedreportmail(context):
     'current_year' : context.get('curentyear'),
     }
     template_name = "emails/report_approved.html"
-
+    print("Approved email will be sent ")
 
     html_content = render_to_string(
         template_name=template_name,
@@ -135,6 +135,7 @@ def sendapprovedreportmail(context):
     try:
         result = message.send()
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status {result}")
+        print("Approved email sent successfully ")
     except Exception as e:
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status 0")
         logger.exception(e)

@@ -31,7 +31,7 @@ from .forms import *
 from .models import *
 from bizanalytic.profiles.mixins import JsonFormMixin
 from bizanalytic.profiles.models import User
-from .utils.mail import sendemail ,senduploadmail
+from .utils.mail import sendemail ,senduploadmail, sendapprovedreportmail
 from .utils.tools import generatecode
 from .utils.call_llm import generate_analysis
 from .utils.pre_process_datafile import test_validator
@@ -1010,6 +1010,10 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
         print("Report ID: ", reportid)
         if reportid:
             report = LogiflexReport.objects.filter(pk=reportid).first()
+            email_name = report.client.email
+            client_name = report.client.contact_name
+            company = report.client.company
+
             if not report.report_approved:
                 report.report_approved = True
                 report.report_date = datetime.now()
@@ -1017,6 +1021,18 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                 report.save()
                 message = _("Report Approved Successfully")
                 status = "success"
+
+                # Send a confirmation Email to client
+                email_info = {
+                    'subject': _("Your Fleet Efficiency Report is Ready for your View 🚚📊"),
+                    'to_email': [email_name, ],
+                    'client': client_name,
+                    'company': company,
+                    'report_list_link': "https://bizanalytic.com/logiflex/reports/list/",
+                    'cuurentyear': datetime.now().year
+                }
+                sendapprovedreportmail.delay(email_info)
+
             else:
                 message = _("Report Already Approved")
                 status = "success"

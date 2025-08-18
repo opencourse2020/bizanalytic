@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Fleet Efficiency Report Update</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f6f8fa;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .header {
+      background-color: #1f4e79;
+      color: #ffffff;
+      padding: 20px;
+      text-align: center;
+    }
+    .content {
+      padding: 20px;
+      line-height: 1.5;
+      color: #333333;
+    }
+    .cta {
+      text-align: center;
+      margin: 30px 0;
+    }
+    .cta a {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #1f4e79;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+    .footer {
+      font-size: 12px;
+      color: #888888;
+      padding: 15px;
+      text-align: center;
+      background-color: #f6f8fa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>FleetOps Analytics</h2>
+    </div>
+    <div class="content">
+      <p>Hi {{ client_name }} at ({{ company }})</p>
+
+      <p>We’ve crunched the numbers — and your <strong>LogiFlex performance report</strong> is ready. Here's a snapshot of how your operations performed this month:</p>
+
+      <div class="cta">
+        <a href="{{ dashboard_link }}">View Dashboard</a>
+      </div>
+      <p>If you have any questions in the meantime, feel free to reply to this email or contact our support team.</p>
+      <p>Best regards,<br>
+         The FleetOps Analytics Team</p>
+    </div>
+    <div class="footer">
+      © {{ current_year }} FleetOps Analytics. All rights reserved.
+    </div>
+  </div>
+</body>
+</html>

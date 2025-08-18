@@ -101,3 +101,40 @@ def senduploadmail(context):
     except Exception as e:
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status 0")
         logger.exception(e)
+
+
+@shared_task(name='email_approved')
+def sendapprovedreportmail(context):
+
+    from_email = settings.EMAIL_HOST_USER  # Your email address
+    subject = context.get('subject')
+    to_email = context.get('to_email')
+
+    context_data = {
+    'dashboard_link' : context.get('report_list_link'),
+    'client_name' : context.get('client'),
+    'company': context.get('company'),
+    'current_year' : context.get('cuurentyear'),
+    }
+    template_name = "emails/report_approved.html"
+
+
+    html_content = render_to_string(
+        template_name=template_name,
+        context=context_data
+    )
+    plain_message = strip_tags(html_content)
+
+    if not to_email:
+        raise ValueError("The 'to_email' address must be provided and cannot be empty.")
+    elif not isinstance(to_email, list):
+        to_email = [to_email]
+
+    message = EmailMultiAlternatives(subject, plain_message, from_email, to_email)
+    message.attach_alternative(html_content, "text/html")
+    try:
+        result = message.send()
+        logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status {result}")
+    except Exception as e:
+        logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status 0")
+        logger.exception(e)

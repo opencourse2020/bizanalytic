@@ -734,7 +734,10 @@ def run_All_LLM_Analysis():
     # print(reports)
     # for report in reports:
     log = LogEntry.objects.filter(report=report).first()
-    flags = json.dumps(log.flags, indent=2)
+    flags = ""
+    if log:
+        flags = json.dumps(log.flags, indent=2)
+
     asynch_preprocess = run_LLM_analysis.delay(flags, report.pk)
     raw = asynch_preprocess.get()
     return f"{report.pk} are processed"

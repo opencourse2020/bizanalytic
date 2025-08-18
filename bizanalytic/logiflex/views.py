@@ -161,7 +161,7 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
             log = LogEntry.objects.filter(report=report).first()
             flags = json.dumps(log.flags, indent=2)
             if report.report_text:
-                raw = report.report_text
+
                 #
                 # # run summary analysis
                 # csv_text = read_csv_into_text_and_df(report.routefile)
@@ -173,7 +173,7 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                 # # report.report_status = "download"
                 # # report.save()
 
-
+                raw = report.report_text
                 data = json.loads(raw)
             # data = raw
             client_name = report.client.company
@@ -1021,6 +1021,12 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                 report.save()
                 message = _("Report Approved Successfully")
                 status = "success"
+                raw = report.report_text
+                data = json.loads(raw)
+                summary_json = data.get("summary_json", {})
+                kpis = []
+                for kpi in summary_json:
+                    kpis.append({"metric": kpi.metric, "value": kpi.value})
 
                 # Send a confirmation Email to client
                 email_info = {
@@ -1028,6 +1034,7 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                     'to_email': [email_name, ],
                     'client': client_name,
                     'company': company,
+                    'kpis': kpis,
                     'report_list_link': "https://bizanalytic.com/logiflex/reports/list/",
                     'curentyear': datetime.now().year
                 }

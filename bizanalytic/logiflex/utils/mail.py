@@ -115,6 +115,7 @@ def sendapprovedreportmail(context):
     'client_name' : context.get('client'),
     'company': context.get('company'),
     'current_year' : context.get('curentyear'),
+    'kpis': context.get('kpis'),
     }
     template_name = "emails/report_approved.html"
     print("Approved email will be sent ")

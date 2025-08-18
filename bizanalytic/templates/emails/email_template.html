@@ -83,19 +83,17 @@
 
     <div class="section-title">📊 Key Metrics</div>
     <div class="metrics">
-      <div class="metric">• <strong>Shipments Tracked:</strong> {{ shipments }}</div>
-      <div class="metric">• <strong>Average Delivery Time:</strong> {{ avg_delivery }} days
-          {% if percent_change > 0 %}
-            <span style="color: green;">(↑ {{ percent_change }}%)</span></div>
-          {% elif percent_change < 0 %}
-            <span style="color: red;">(↓ {{ percent_change }}%)</span></div>
-          {% else %}
-              <span style="color: green;">( {{ percent_change }}%)</span></div>
-          {% endif %}
-      <div class="metric">• <strong>On-Time Delivery Rate:</strong> {{ ontime_delivery }}%</div>
-      <div class="metric">• <strong>Top Delay Causes:</strong> [{{ delay_reasons }}]</div>
-      <div class="metric">• <strong>Suggested Optimizations:</strong> {{ suggested }}</div>
-    </div>
+    {% for k in kpis %}
+        {% if k.metric == "On-Time Delivery Rate" %}
+            <div class="metric">• <strong>{{ k.metric }}:</strong> {{ k.value }}%</div>
+        {% elif k.metric == "Avg Freight Cost" or k.metric == "Avg Cost per Mile" or k.metric == "Avg Cost per Pound" %}
+            <div class="metric">• <strong>{{ k.metric }}:</strong> ${{ k.value }}</div>
+        {% else %}
+            <div class="metric">• <strong>{{ k.metric }}:</strong> {{ k.value }}</div>
+        {% endif %}
+    {% endfor %}
+
+
 
 
     <a href="https://bizanalytic.com/logiflex/book-call/" class="button" style="color: white">📅 Book a Strategy Call</a>

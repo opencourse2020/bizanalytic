@@ -548,8 +548,8 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 10) -> str:
     df_clean = calculate_kpis(df_clean)
     sample = df_clean.head(max_rows).to_csv(index=False)
     carrier_stats = prepare_carrier_stats(df_clean)
-    driver_stats = prepare_driver_stats(df_clean).to_csv(index=False)
-    route_stats = prepare_route_stats(df_clean)
+    driver_stats = prepare_driver_stats(df_clean).reset_index().to_csv(index=False)
+    route_stats = prepare_route_stats(df_clean).reset_index()
     best_routes = route_stats.tail(3)
     worst_routes = route_stats.head(3)
     best_routes = best_routes[['AvgDistance', 'AvgCostPerMile', 'OnTimeRate']].to_csv(index=False)
@@ -558,7 +558,7 @@ def summarize_df_for_prompt(df: pd.DataFrame, max_rows: int = 10) -> str:
     cost_efficiency = cost_efficiency[['AvgCostPerMile', 'AvgCostPerPound']].to_markdown()
     reliability = reliability_analysis(carrier_stats).head(1)
     reliability = reliability[['OnTimeRate', 'TotalShipments']].to_markdown()
-    carrier_stats = carrier_stats.to_markdown()
+    carrier_stats = carrier_stats.to_csv(index=False)
     results_df, worst_carrier = run_contingency_analysis(df_clean)
 
 

@@ -166,14 +166,14 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
     // Safely inject server-provided data
-    {#const markdownReport = {{ markdown_report|safe|json_script:"md_json" }};#}
+    const markdownReport = {{ markdown_report|safe|json_script:"md_json" }};
     const summaryData = {{ summary_json|safe|json_script:"summary_json" }};
   </script>
 
   <script>
     // Render Markdown to HTML
-    {#const md = JSON.parse(document.getElementById("md_json").textContent);#}
-    {#document.getElementById("markdown_container").innerHTML = marked.parse(md);#}
+    const md = JSON.parse(document.getElementById("md_json").textContent);
+    document.getElementById("markdown_container").innerHTML = marked.parse(md);
 
     // Build Chart.js charts from model-provided configs
     const sdata = JSON.parse(document.getElementById("summary_json").textContent);

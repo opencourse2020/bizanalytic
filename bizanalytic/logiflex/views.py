@@ -1002,6 +1002,9 @@ class AdminReportsListView(UserPassesTestMixin, TemplateView):
 
 
 class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
+    def test_func(self):
+        return self.request.user.is_staff
+
     def post(self, request, *args, **kwargs):
         reportid = int(request.POST.get("rx_cfr_ci"))
 

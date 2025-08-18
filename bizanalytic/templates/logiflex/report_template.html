@@ -10,7 +10,7 @@
 
 {% block css %}
     {{ block.super }}
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
     <style>
     .prose h2, .prose h3 { margin-top: 1.25rem; }
     .prose h2
@@ -163,6 +163,7 @@
 
 {% block js_area %}
     {{ block.super }}
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
     // Safely inject server-provided data
     const markdownReport = {{ markdown_report|safe|json_script:"md_json" }};

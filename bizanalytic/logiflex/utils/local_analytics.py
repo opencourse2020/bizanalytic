@@ -625,7 +625,7 @@ def run_LLM_analysis(flags, pu):
                                 """
     if not report.report_prompt:
         report.report_prompt = user_prompt
-        report.save()
+
     print("user_prompt: ", user_prompt)
 
     # Call Responses API with JSON schema enforcement
@@ -720,4 +720,8 @@ def run_LLM_analysis(flags, pu):
                     for c in blk.content:
                         if getattr(c, "type", "") == "output_text":
                             raw += c.text
+
+    report.report_text = raw
+    report.report_status = "download"
+    report.save()
     return raw

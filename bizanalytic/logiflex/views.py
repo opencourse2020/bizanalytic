@@ -164,9 +164,9 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
                 asynch_preprocess = run_LLM_analysis.delay(flags, pu)
                 raw = asynch_preprocess.get()
 
-                report.report_text = raw
-                report.report_status = "download"
-                report.save()
+                # report.report_text = raw
+                # report.report_status = "download"
+                # report.save()
             else:
                 raw = report.report_text
 

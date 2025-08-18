@@ -1029,7 +1029,7 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                     'client': client_name,
                     'company': company,
                     'report_list_link': "https://bizanalytic.com/logiflex/reports/list/",
-                    'cuurentyear': datetime.now().year
+                    'curentyear': datetime.now().year
                 }
                 sendapprovedreportmail.delay(email_info)
 

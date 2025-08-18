@@ -114,7 +114,7 @@ def sendapprovedreportmail(context):
     'dashboard_link' : context.get('report_list_link'),
     'client_name' : context.get('client'),
     'company': context.get('company'),
-    'current_year' : context.get('cuurentyear'),
+    'current_year' : context.get('curentyear'),
     }
     template_name = "emails/report_approved.html"
 

@@ -1015,9 +1015,9 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
             company = report.client.company
 
             if not report.report_approved:
-                report.report_approved = True
+                # report.report_approved = True
                 report.report_date = datetime.now()
-                report.report_status = "download"
+                # report.report_status = "download"
                 report.save()
                 message = _("Report Approved Successfully")
                 status = "success"

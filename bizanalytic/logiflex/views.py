@@ -1007,7 +1007,7 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
 
     def post(self, request, *args, **kwargs):
         reportid = int(request.POST.get("rx_cfr_ci"))
-
+        print("Report ID: ", reportid)
         if reportid:
             report = LogiflexReport.objects.filter(pk=reportid).first()
             if not report.report_approved:

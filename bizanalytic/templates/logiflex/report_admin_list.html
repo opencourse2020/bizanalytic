@@ -81,6 +81,7 @@
                                 {% else %}
                                     {% for logireport in reports %}
                                         <tr>
+                                            <td>{{ logireport.report_number }}</td>
                                             <td>{{ logireport.client.company }}</td>
                                             <td>
                                                 {{ logireport.report_id }}

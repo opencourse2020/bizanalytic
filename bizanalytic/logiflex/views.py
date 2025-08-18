@@ -1024,9 +1024,9 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                 raw = report.report_text
                 data = json.loads(raw)
                 summary_json = data.get("summary_json", {})
-                kpis = []
-                for kpi in summary_json:
-                    kpis.append({"metric": kpi.metric, "value": kpi.value})
+                kpiss = []
+                for kpi in summary_json.kpis:
+                    kpiss.append({"metric": kpi.metric, "value": kpi.value})
 
                 # Send a confirmation Email to client
                 email_info = {
@@ -1034,7 +1034,7 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                     'to_email': [email_name, ],
                     'client': client_name,
                     'company': company,
-                    'kpis': kpis,
+                    'kpis': kpiss,
                     'report_list_link': "https://bizanalytic.com/logiflex/reports/list/",
                     'curentyear': datetime.now().year
                 }

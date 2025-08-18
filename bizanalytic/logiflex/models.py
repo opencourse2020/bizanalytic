@@ -193,7 +193,7 @@ class LogiflexReport(models.Model):
         permissions = (("manage_Logiflexreport", "Manage LogiFlex Reports"),)
 
     def save(self, *args, **kwargs):
-        if self.report_date and timezone.make_aware(self.report_date) > timezone.make_aware(self.expected_delivery):
+        if self.report_date and timezone.make_aware(self.report_date) > self.expected_delivery:
             self.report_status = "late"
         super().save(*args, **kwargs)
 

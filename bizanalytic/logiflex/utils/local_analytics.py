@@ -9,7 +9,7 @@ from .prompts import SYSTEM_PROMPT
 from bizanalytic.logiflex.models import *
 from openai import OpenAI
 from django.conf import settings
-
+from datetime import datetime
 
 OPENAI_KEY = settings.OPENAI_KEY
 client = OpenAI(api_key=OPENAI_KEY)
@@ -723,6 +723,7 @@ def run_LLM_analysis(flags, pu):
 
     report.report_text = raw
     report.report_status = "download"
+    report.report_date = datetime.now()
     report.save()
     return raw
 
@@ -740,7 +741,7 @@ def run_All_LLM_Analysis():
             if log:
                 flags = json.dumps(log.flags, indent=2)
 
-            raw = run_LLM_analysis.delay(flags, report.pk)
+            raw = run_LLM_analysis(flags, report.pk)
             # raw = asynch_preprocess.get()
             numreports= reports.count()
     else:

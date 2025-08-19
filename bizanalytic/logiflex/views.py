@@ -218,7 +218,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
                        reports.filter(report_status="late").count()
         finished_reports = num_ontime_reports + num_late_reports
         late_reports = reports.filter(expected_delivery__lt=datetime.now(), report_status="processing").order_by('report_number')[:3]
-        new_reports = reports.filter(viewed=False)
+        new_reports = reports.filter(viewed=False, report_approved=True)
         if finished_reports == 0:
             finished_reports = 1
         kwargs["latest_ontime_reports"] = num_ontime_reports

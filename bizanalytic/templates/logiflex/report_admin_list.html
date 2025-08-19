@@ -58,7 +58,7 @@
                 <div id="datatable" class="mb-5">
                     <div class="card">
                     <div class="card-header">
-
+                        <div class="button btn-success" id="updategas">Update Gas Prices</div>
                     </div>
                         <div class="card-body">
                             <table id="datatableDefault" class="table text-nowrap w-100">
@@ -173,5 +173,40 @@
     	<script src={% static "assets/plugins/bootstrap-table/distro/bootstrap-table.min.js"%}></script>
 
     <script src={% static "assets/js/demo/table-plugins.demo.js" %}></script>
+    <script>
+    $("#updategas").click(function (){
+        let url = "https://bizanalytic.com/logiflex/updateprices/";
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: "",
+            processData: false,
+            contentType: false,
+            headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function (data) {
+                if (data) {
+                    var result = data;
+                    var message = result.submessage;
+                    var status = result.rpstatus;
+                    if (message) {
+                        if (status == "success"){
+                            var f = $("#toast_successreport");
+                            var a = new bootstrap.Toast(f);
+                            $("#message_body").html(message);
+                            a.show()
+                        }else{
+                            var f = $("#toast_failreport");
+                            var a = new bootstrap.Toast(f);
+                            $("#message_body").html(message);
+                            a.show()
+                        }
+                    }
+                }
+            }
+                    })
 
+
+        });
+    </script>
 {% endblock js_area %}

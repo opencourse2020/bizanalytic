@@ -34,7 +34,7 @@ from bizanalytic.profiles.models import User
 from .utils.mail import sendemail ,senduploadmail, sendapprovedreportmail
 from .utils.tools import generatecode
 from .utils.call_llm import generate_analysis
-from .utils.pre_process_datafile import test_validator
+from .utils.pre_process_datafile import *
 from .utils.local_analytics import *
 from .utils.prompts import SYSTEM_PROMPT, JSON_SCHEMA
 # Create your views here.
@@ -1051,6 +1051,57 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
             message = _("Report doesn't exist")
             status = "fail"
 
+        data = {"submessage": message, "rpstatus": status}
+
+        return JsonResponse(data)
+
+
+class UpdateGasPricesView(UserPassesTestMixin, CreateView, JsonFormMixin):
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def post(self, request, *args, **kwargs):
+        us_cities = pd.read_csv(uscities_file)
+        us_states = pd.read_csv(ussates_file)
+        state_gas_prices = pd.read_csv(gasprices_file)
+
+        city_instances = []
+        for index, row in us_cities.iterrows():
+            c_instance = City(
+                cityname=row['city'],
+                state_name=row['state_name'],
+                state_code=row['state'],
+                # Map other columns to model fields
+            )
+            city_instances.append(c_instance)
+
+        City.objects.bulk_create(city_instances)
+
+        state_instances = []
+        for index, row in us_states.iterrows():
+            s_instance = State(
+                state_name=row['name'],
+                state_code=row['code'],
+                # Map other columns to model fields
+            )
+            state_instances.append(s_instance)
+
+        State.objects.bulk_create(state_instances)
+
+        gas_instances = []
+        for index, row in state_gas_prices.iterrows():
+            g_instance = State(
+                state_name=row['name'],
+                state_code=row['code'],
+                # Map other columns to model fields
+            )
+            gas_instances.append(g_instance)
+
+        GasPriceState.objects.bulk_create(gas_instances)
+
+
+        status = "success"
+        message = "Data Added Successfully"
         data = {"submessage": message, "rpstatus": status}
 
         return JsonResponse(data)

@@ -17,6 +17,7 @@ uscities_file = staticfolder + "/assets/sample/major_uscities.csv"
 sample_data = staticfolder + "/assets/sample/freight_routes_sample_2001.csv"
 ussates_file = staticfolder + "/assets/sample/usa-states.csv"
 dieselprices_file = staticfolder + "/assets/sample/diesel_prices.csv"
+gasprices_file = staticfolder + "/assets/sample/gas_prices.csv"
 
 class DateValidator:
     def __init__(self):

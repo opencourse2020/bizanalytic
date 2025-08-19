@@ -48,6 +48,7 @@ stripe_patterns = [
 urlpatterns = [
 
     path("", views.IndexView.as_view(), name="index"),
+    path("updateprices/", views.UpdateGasPricesView.as_view(), "updateprices"),
     path("rx-apr/", views.AdminApproveReportView.as_view(), name="rx-apr"),
     path("dashboard/", views.DashboardView.as_view(), name="dashboard"),
     path('clean-csv/', views.clean_csv, name='clean_csv'),

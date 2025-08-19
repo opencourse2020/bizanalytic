@@ -288,6 +288,52 @@ class LogEntry(models.Model):
 
     def __str__(self):
         return f"[{self.report.id}] {self.level} ({self.date_added})"
+
+
+class City(models.Model):
+    cityname = models.CharField(max_length=100, null=True, blank=True)
+    state_name = models.CharField(max_length=100, null=True, blank=True)
+    state_code = models.CharField(max_length=6, null=True, blank=True)
+
+    class Meta:
+        verbose_name = "City"
+        verbose_name_plural = "Cities"
+        permissions = (("manage_city", "Manage Cities"),)
+
+    def __str__(self):
+        return f"{str(self.cityname)}, {str(self.state_code)}"
+
+
+class State(models.Model):
+    state_name = models.CharField(max_length=100, null=True, blank=True)
+    state_code = models.CharField(max_length=6, null=True, blank=True)
+
+    class Meta:
+        verbose_name = "State"
+        verbose_name_plural = "States"
+        permissions = (("manage_state", "Manage States"),)
+
+    def __str__(self):
+        return f"{str(self.state_name)}, {str(self.state_code)}"
+
+
+class GasPriceState(models.Model):
+    state_code = models.CharField(max_length=6, null=True, blank=True)
+    premiumprice = models.DecimalField(max_digits=6, decimal_places=3)
+    regularprice = models.DecimalField(max_digits=6, decimal_places=3)
+    midgradeprice = models.DecimalField(max_digits=6, decimal_places=3)
+    dieselprice = models.DecimalField(max_digits=6, decimal_places=3)
+
+    class Meta:
+        verbose_name = "GasPrice"
+        verbose_name_plural = "GasPrices"
+        permissions = (("manage_gasprice", "Manage GasPrices"),)
+
+    def __str__(self):
+        return f"{str(self.state_code)}, Prem: {str(self.premiumprice)}, Reg: {str(self.regularprice)}, Mid: {str(self.midgradeprice)}, Dies: {str(self.dieselprice)}"
+
+
+
 # **************************************************************************************************
 # ******     Models related to advanced Report     *************************************************
 # **************************************************************************************************

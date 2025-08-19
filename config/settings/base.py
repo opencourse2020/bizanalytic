@@ -118,6 +118,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "bizanalytic.profiles.context_processors.loginaccountform",
                 "bizanalytic.profiles.context_processors.signupaccountform",
+                "bizanalytic.logiflex.context_processors.client_active",
             ],
 
         },

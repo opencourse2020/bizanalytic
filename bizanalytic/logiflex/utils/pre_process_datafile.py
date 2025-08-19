@@ -8,7 +8,7 @@ from difflib import get_close_matches
 import time
 from django.conf import settings
 from celery import shared_task
-from bizanalytic.logiflex.models import LogiflexReport, LogEntry
+from bizanalytic.logiflex.models import *
 from .local_analytics import *
 
 staticfolder = settings.STATIC_ROOT
@@ -747,9 +747,13 @@ class CityStateNormalizer:
 def test_validator(reportid, routefilename):
 
 # load us cities file
-    us_cities = pd.read_csv(uscities_file)
-    us_states = pd.read_csv(ussates_file)
-    state_diesel_price = pd.read_csv(dieselprices_file)
+    uscities = City.objects.all().values()
+    us_cities = pd.DataFrame(uscities)
+    usstates = State.objects.all().values()
+    us_states = pd.DataFrame(usstates)
+    gasprices = GasPriceState.objects.all().values()
+    state_diesel_price = pd.DataFrame(gasprices)
+
     report = LogiflexReport.objects.filter(pk=reportid).first()
     # print(us_cities.head(5))
 # Load sample data

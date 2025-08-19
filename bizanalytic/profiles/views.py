@@ -164,7 +164,7 @@ class ProfileView(LoginRequiredMixin, RedirectView):
 
 class DispatchLoginView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
-        if hasattr(self.request.user.is_staff):
+        if self.request.user.is_staff:
             return reverse_lazy("logiflex:admin:reports")
         elif hasattr(self.request.user, "admin"):
             return reverse_lazy("logiflex:dashboard")

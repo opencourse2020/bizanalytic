@@ -1061,38 +1061,42 @@ class UpdateGasPricesView(UserPassesTestMixin, CreateView, JsonFormMixin):
         return self.request.user.is_staff
 
     def post(self, request, *args, **kwargs):
-        us_cities = pd.read_csv(uscities_file)
-        us_states = pd.read_csv(ussates_file)
+        # us_cities = pd.read_csv(uscities_file)
+        # us_states = pd.read_csv(ussates_file)
         state_gas_prices = pd.read_csv(gasprices_file)
 
-        city_instances = []
-        for index, row in us_cities.iterrows():
-            c_instance = City(
-                cityname=row['city'],
-                state_name=row['state_name'],
-                state_code=row['state'],
-                # Map other columns to model fields
-            )
-            city_instances.append(c_instance)
-
-        City.objects.bulk_create(city_instances)
-
-        state_instances = []
-        for index, row in us_states.iterrows():
-            s_instance = State(
-                state_name=row['name'],
-                state_code=row['code'],
-                # Map other columns to model fields
-            )
-            state_instances.append(s_instance)
-
-        State.objects.bulk_create(state_instances)
+        # city_instances = []
+        # for index, row in us_cities.iterrows():
+        #     c_instance = City(
+        #         cityname=row['city'],
+        #         state_name=row['state_name'],
+        #         state_code=row['state'],
+        #         # Map other columns to model fields
+        #     )
+        #     city_instances.append(c_instance)
+        #
+        # City.objects.bulk_create(city_instances)
+        #
+        # state_instances = []
+        # for index, row in us_states.iterrows():
+        #     s_instance = State(
+        #         state_name=row['name'],
+        #         state_code=row['code'],
+        #         # Map other columns to model fields
+        #     )
+        #     state_instances.append(s_instance)
+        #
+        # State.objects.bulk_create(state_instances)
 
         gas_instances = []
         for index, row in state_gas_prices.iterrows():
             g_instance = State(
-                state_name=row['name'],
                 state_code=row['code'],
+                premiumprice=row['Premium'],
+                regularprice=row['Regular'],
+                midgradeprice=row['Mid-Grade'],
+                dieselprice=row['Diesel'],
+
                 # Map other columns to model fields
             )
             gas_instances.append(g_instance)

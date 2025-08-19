@@ -1090,7 +1090,7 @@ class UpdateGasPricesView(UserPassesTestMixin, CreateView, JsonFormMixin):
 
         gas_instances = []
         for index, row in state_gas_prices.iterrows():
-            g_instance = State(
+            g_instance = GasPriceState(
                 state_code=row['code'],
                 premiumprice=row['Premium'],
                 regularprice=row['Regular'],

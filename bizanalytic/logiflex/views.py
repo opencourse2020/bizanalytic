@@ -156,6 +156,9 @@ class ReportSummaryView(LoginRequiredMixin, TemplateView):
             report = LogiflexReport.objects.filter(pk=pu).first()
         else:
             report = LogiflexReport.objects.filter(client__user=user, pk=pu).first()
+            if not report.viewed:
+                report.viewed = True
+                report.save()
 
         if report:
             log = LogEntry.objects.filter(report=report).first()
@@ -215,6 +218,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
                        reports.filter(report_status="late").count()
         finished_reports = num_ontime_reports + num_late_reports
         late_reports = reports.filter(expected_delivery__lt=datetime.now(), report_status="processing").order_by('report_number')[:3]
+        new_reports = reports.filter(viewed=False)
         if finished_reports == 0:
             finished_reports = 1
         kwargs["latest_ontime_reports"] = num_ontime_reports
@@ -225,6 +229,8 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         kwargs["processing_reports"] = math.ceil((num_processing_reports/total_reports)*100)
         kwargs["canceled_reports"] = math.ceil((num_canceled_reports/total_reports)*100)
         kwargs["late_reports"] = math.ceil((num_late_reports/finished_reports)*100)
+        kwargs["newreports"] = new_reports
+
         return super(DashboardView, self).get_context_data(**kwargs)
 
 

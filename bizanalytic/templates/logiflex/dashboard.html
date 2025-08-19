@@ -50,7 +50,9 @@
 
 
                 <div class="col-lg-5 wow fadeInLeft" data-wow-delay=".2s">
-                    <div class="member-skill">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="member-skill">
                             <span class="sub-title" style="color: #0cb7d6; font-size: 24px">{% trans "REPORTS STATUS" %}</span>
                             <div class="skills-section mt-20">
                                 <div class="skill-wrapper">
@@ -103,6 +105,29 @@
                                 </div>
                             </div>
                         </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                <div class="blog-sidebar">
+
+                                    <div class="sidebar-widget">
+                                        <h4 class="widget-title">{% trans "New Analytical Reports" %}</h4>
+                                        <ul>
+                                            {% for newreport in newreports %}
+                                                <li><a href="">{{ newreport.report_id }}&nbsp;-&nbsp;{{ newreport.report_date }} <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-lg-6 wow fadeInRight align-content-center" data-wow-delay=".2s">
                     <div class="service-items mt-50">

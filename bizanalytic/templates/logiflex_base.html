@@ -40,20 +40,20 @@
         <link rel="stylesheet" href={% static "vendor/transport/assets/css/remixicon.css" %}>
         <link rel="stylesheet" href={% static "vendor/transport/assets/css/slick.css" %}>
         <link rel="stylesheet" href={% static "vendor/transport/assets/css/style.css" %}>
-{#        <style>#}
-{#        .mean-nav#}
-{#        {#}
+        <style>
+        .mean-nav
+        {
             {#height: 278px;#}
-{#        }#}
-{#        .mean-nav .main-menu .nav-right-content .user-logo .user-name#}
-{#        {#}
-{#            left: 55px;#}
-{#        }#}
-{#        .mean-nav .main-menu .nav-right-content#}
-{#        {#}
-{#            top: 0px;#}
-{#        }#}
-{#        </style>#}
+        }
+        .mean-nav .main-menu .nav-right-content .user-logo .user-name
+        {
+            left: 55px;
+        }
+        .mean-nav .main-menu .nav-right-content
+        {
+            top: 0px;
+        }
+        </style>
     <!-- ================== END core-css ================== -->
 	{% endblock css %}
 
@@ -152,7 +152,7 @@
                             <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg" style="padding: 0px; width: 100%">
 
                                     <img src="{{ user.picture.url }}" alt="Profile" height="60" style="box-sizing: border-box;border-radius: 30px;overflow-clip-margin: content-box;overflow: clip;max-width: 25%;max-height: 100%;vertical-align: middle;height: 40px;width: 100%;margin-bottom: 0px;">
-                                <span class="text user-name" style="top: -20px;>{{ user.first_name }}</span>
+                                <span class="text user-name" style="top: -20px;">{{ user.first_name }}</span>
                                 </a>
                         </div>
                                     </li>

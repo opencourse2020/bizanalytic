@@ -41,9 +41,14 @@
         <link rel="stylesheet" href={% static "vendor/transport/assets/css/slick.css" %}>
         <link rel="stylesheet" href={% static "vendor/transport/assets/css/style.css" %}>
         <style>
-        .mean-nav
+        .main-menu .nav-right-content
         {
-            {#height: 278px;#}
+            position: relative;
+            top: 2px;
+        }
+        .main-menu .nav-right-content .user-name
+        {
+            left: 15px;
         }
         .mobile-menu .mean-nav .main-menu .nav-right-content .user-name
         {
@@ -154,7 +159,7 @@
                                      </li>
                                     <li class="user-logo" style="width: 200px;">
                                         <div class="nav-right-content" style="align-items: center;width: 100%;max-width: 100%;justify-content: center; text-align: center;">
-                                            <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg" style="padding: 0px; width: 100%; position: relative;top: 20px;">
+                                            <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg" style="padding: 0px; width: 100%;">
 
                                                 <img src="{{ user.picture.url }}" alt="Profile" height="60" style="box-sizing: border-box;border-radius: 30px;overflow-clip-margin: content-box;overflow: clip;max-width: 25%;max-height: 100%;vertical-align: middle;height: 40px;width: 100%;margin-bottom: 0px;">
                                                 <span class="text user-name" style="top: -20px;">{{ user.first_name }}</span>

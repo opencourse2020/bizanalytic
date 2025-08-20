@@ -43,7 +43,7 @@
         <style>
         .mean-nav
         {
-            height: 278px;
+            {#height: 278px;#}
         }
         .mean-nav .main-menu .nav-right-content .user-logo .user-name
         {
@@ -152,7 +152,7 @@
                             <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg" style="padding: 0px; width: 100%">
 
                                     <img src="{{ user.picture.url }}" alt="Profile" height="60" style="box-sizing: border-box;border-radius: 30px;overflow-clip-margin: content-box;overflow: clip;max-width: 25%;max-height: 100%;vertical-align: middle;height: 40px;width: 100%;margin-bottom: 0px;">
-                                <span class="text user-name" style="top: -20px; left: 10px;">{{ user.first_name }}</span>
+                                <span class="text user-name" style="top: -20px;>{{ user.first_name }}</span>
                                 </a>
                         </div>
                                     </li>

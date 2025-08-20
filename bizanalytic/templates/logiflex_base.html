@@ -55,10 +55,10 @@
         {
             left: 65px;
         }
-        .mobile-menu .mean-nav .main-menu .login-info
-        {
-            width: 250px;
-        }
+        {#.mobile-menu .mean-nav .main-menu .login-info#}
+        {#{#}
+        {#    width: 250px;#}
+        {#}#}
         .mobile-menu .mean-nav .main-menu .nav-right-content .user-logo
         {
             width: 250px;
@@ -161,7 +161,7 @@
                                 </li>
                                 {% if user.is_authenticated %}
                                     <li class="login-info">
-                                        <a href="{% url 'account_logout' %}" style="display: inline-block; background: #eb5849; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Sign out" %}</a>
+                                        <a href="{% url 'account_logout' %}" style="display: inline-block; background: #eb5849; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; width: 100px;">{% trans "Sign out" %}</a>
                                      </li>
                                     <li class="user-logo" style="width: 250px; float: right;">
                                         <div class="nav-right-content" style="align-items: center;width: 100%;max-width: 100%;justify-content: center; text-align: center;">

@@ -66,7 +66,7 @@
                                             <input type="file" id="route_fl" class="mb-0" placeholder="">
                                             <div class="d-flex justify-content-between mt-1">
                                             <span class="mt-0">{% trans "Supports .csv, .xlsx files" %}</span>
-                                            <a href="{% static "assets/sample/freight_routes_sample.csv" %}" class="btn btn-outline-danger">&nbsp;{% trans "Download a csv Template File" %}&nbsp;</a>
+
 
                                             </div>
                                         </div>
@@ -102,8 +102,28 @@
                             <div class="col-12 wow fadeInLeft" data-wow-delay=".2s">
                                 <div class="row">
                                     <div class="col-sm-7">
+
+{#                                        <span class="text-stroke paragraph-color third-border mt-20">{% trans "Smarter Decisions" %}</span>#}
+                                        <span class="text-stroke  third-border mt-20">
+                                            <ol type="1">
+                                                <li>
+                                                    <a href="{% static "assets/sample/freight_routes_sample.csv" %}" class="btn btn-outline-danger">&nbsp;{% trans "Download the csv Template File" %}&nbsp;</a>
+                                                </li>
+                                                <li>
+                                                    {% trans "Use the template to fill your data" %}
+                                                </li>
+                                                <li>
+                                                    {% trans "Upload Your .csv (text) or .xlsx (Excel) file" %}
+                                                </li>
+                                                <li>
+                                                    {% trans "Run the Similution" %}
+                                                </li>
+
+                                            </ol>
+
+
+                                        </span>
                                         <img src={% static "vendor/transport/assets/images/about-3.jpg"%} alt="about" class="about-image-3">
-                                        <span class="text-stroke paragraph-color third-border mt-20">{% trans "Smarter Decisions" %}</span>
                                     </div>
                                     <div class="col-sm-5">
                                         <img src={% static "vendor/transport/assets/images/about-4.jpg"%} alt="about" class="about-image-4">

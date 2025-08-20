@@ -163,15 +163,19 @@
                                     <li class="login-info">
                                         <a href="{% url 'account_logout' %}" style="display: inline-block; background: #eb5849; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; width: 100px;">{% trans "Sign out" %}</a>
                                      </li>
-                                    <li class="user-logo" style="width: 250px; float: right;">
-                                        <div class="nav-right-content" style="align-items: center;width: 100%;max-width: 100%;justify-content: center; text-align: center;">
-                                            <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg" style="padding: 0px; width: 100%;">
+                                    {% if user.picture %}
+                                        <li class="user-logo" style="width: 250px; float: right;">
+                                            <div class="nav-right-content" style="align-items: center;width: 100%;max-width: 100%;justify-content: center; text-align: center;">
+                                                <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg" style="padding: 0px; width: 100%;">
 
-                                                <img src="{{ user.picture.url }}" alt="Profile" height="60" style="box-sizing: border-box;border-radius: 30px;overflow-clip-margin: content-box;overflow: clip;max-width: 25%;max-height: 100%;vertical-align: middle;height: 40px;width: 100%;margin-bottom: 0px;">
-                                                <span class="text user-name" style="top: -20px;">{{ user.first_name }}</span>
-                                            </a>
-                                        </div>
-                                    </li>
+                                                    <img src="{{ user.picture.url }}" alt="Profile" height="60" style="box-sizing: border-box;border-radius: 30px;overflow-clip-margin: content-box;overflow: clip;max-width: 25%;max-height: 100%;vertical-align: middle;height: 40px;width: 100%;margin-bottom: 0px;">
+                                                    <span class="text user-name" style="top: -20px;">{{ user.first_name }}</span>
+                                                </a>
+                                            </div>
+                                        </li>
+{#                                        {% else %}#}
+{#                                            <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg"><span class="text">{{ user.first_name }}</span><span class="icon"><i class="ri-account-circle-line"></i></span></a>#}
+                                        {% endif %}
                                 {% else %}
                                     <li ><a href="{% url 'account_login' %}" style="display: inline-block; background: #2ba3c4; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Login" %}</a>
                                     </li>
@@ -191,20 +195,16 @@
                         </div>
                     </div>
                 {% else %}
-                    {% if not user.picture %}
-{#                    <div class="col-xl-2 col-lg-3 col-6 pt-1 pb-1" style="text-align: center;">#}
-{##}
-{#                    </div>#}
-{#                    {% else %}#}
+
                         <div class="col-xl-2 col-lg-3 col-6 pt-1 pb-1">
 
                         <div class="nav-right-content">
                             <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg"><span class="text">{{ user.first_name }}</span><span class="icon"><i class="ri-account-circle-line"></i></span></a>
                         </div>
                         </div>
-                    {% endif %}
 
-                            {% endif %}
+
+                {% endif %}
                         </div>
                         {% endblock left_menu %}
                     </div>

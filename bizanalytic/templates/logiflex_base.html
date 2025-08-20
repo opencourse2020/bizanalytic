@@ -45,14 +45,19 @@
         {
             {#height: 278px;#}
         }
-        .mean-nav .main-menu .nav-right-content .user-logo .user-name
+        .mobile-menu .mean-nav .main-menu .nav-right-content .user-name
         {
             left: 55px;
         }
-        .mean-nav .main-menu .nav-right-content
+        .mobile-menu .mean-nav .main-menu .nav-right-content .user-logo
+        {
+            width: 200px;
+        }
+        .mobile-menu .mean-nav .main-menu .nav-right-content
         {
             top: 0px;
         }
+        .main-menu u
         </style>
     <!-- ================== END core-css ================== -->
 	{% endblock css %}
@@ -120,7 +125,7 @@
                         </div>
                     </div>
 
-                    <div class="col-xl-8 col-lg-7 d-none d-lg-block">
+                    <div class="col d-none d-lg-block">
                         {% block main_menu%}
                         <nav>
                             <ul class="main-menu">
@@ -145,16 +150,16 @@
                                 </li>
                                 {% if user.is_authenticated %}
                                     <li>
-                                    <a href="{% url 'account_logout' %}" style="display: inline-block; background: #eb5849; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Sign out" %}</a>
-                                 </li>
-                                    <li class="user-logo">
-                                    <div class="nav-right-content" style="align-items: center;width: 100%;max-width: 100%;justify-content: center; text-align: center;">
-                            <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg" style="padding: 0px; width: 100%">
+                                        <a href="{% url 'account_logout' %}" style="display: inline-block; background: #eb5849; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Sign out" %}</a>
+                                     </li>
+                                    <li class="user-logo" style="width: 200px;">
+                                        <div class="nav-right-content" style="align-items: center;width: 100%;max-width: 100%;justify-content: center; text-align: center;">
+                                            <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg" style="padding: 0px; width: 100%">
 
-                                    <img src="{{ user.picture.url }}" alt="Profile" height="60" style="box-sizing: border-box;border-radius: 30px;overflow-clip-margin: content-box;overflow: clip;max-width: 25%;max-height: 100%;vertical-align: middle;height: 40px;width: 100%;margin-bottom: 0px;">
-                                <span class="text user-name" style="top: -20px;">{{ user.first_name }}</span>
-                                </a>
-                        </div>
+                                                <img src="{{ user.picture.url }}" alt="Profile" height="60" style="box-sizing: border-box;border-radius: 30px;overflow-clip-margin: content-box;overflow: clip;max-width: 25%;max-height: 100%;vertical-align: middle;height: 40px;width: 100%;margin-bottom: 0px;">
+                                                <span class="text user-name" style="top: -20px;">{{ user.first_name }}</span>
+                                            </a>
+                                        </div>
                                     </li>
                                 {% else %}
                                     <li ><a href="{% url 'account_login' %}" style="display: inline-block; background: #2ba3c4; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Login" %}</a>
@@ -175,11 +180,11 @@
                         </div>
                     </div>
                 {% else %}
-                    {% if user.picture %}
-                    <div class="col-xl-2 col-lg-3 col-6 pt-1 pb-1" style="text-align: center;">
-
-                    </div>
-                    {% else %}
+                    {% if not user.picture %}
+{#                    <div class="col-xl-2 col-lg-3 col-6 pt-1 pb-1" style="text-align: center;">#}
+{##}
+{#                    </div>#}
+{#                    {% else %}#}
                         <div class="col-xl-2 col-lg-3 col-6 pt-1 pb-1">
 
                         <div class="nav-right-content">

@@ -149,7 +149,13 @@
                             {% if not clientactive %}
                                 <a href="#tryfree" class="primary-btn secondary-bg"><span class="text">{% trans "Try Free" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                             {% else %}
-                                <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg"><span class="text">{% trans "PROFILE" %}</span> <span class="icon"><i class="ri-account-circle-line"></i></span></a>
+
+                                    {% if user.picture %}
+                                        <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg"><span class="text">{{ user.first_name }}</span><img src="{{ user.picture.url }}" alt="Profile" height="60"></a>
+                                    {% else %}
+                                        <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg"><span class="text">{{ user.first_name }}</span><span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                                    {% endif %}
+
                             {% endif %}
                         </div>
                         {% endblock left_menu %}

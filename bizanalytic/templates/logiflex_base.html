@@ -40,6 +40,20 @@
         <link rel="stylesheet" href={% static "vendor/transport/assets/css/remixicon.css" %}>
         <link rel="stylesheet" href={% static "vendor/transport/assets/css/slick.css" %}>
         <link rel="stylesheet" href={% static "vendor/transport/assets/css/style.css" %}>
+        <style>
+        .mean-nav
+        {
+            height: 278px;
+        }
+        .mean-nav .main-menu .nav-right-content .user-logo .user-name
+        {
+            left: 55px;
+        }
+        .mean-nav .main-menu .nav-right-content
+        {
+            top: 0px;
+        }
+        </style>
     <!-- ================== END core-css ================== -->
 	{% endblock css %}
 
@@ -133,12 +147,12 @@
                                     <li>
                                     <a href="{% url 'account_logout' %}" style="display: inline-block; background: #eb5849; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Sign out" %}</a>
                                  </li>
-                                    <li>
+                                    <li class="user-logo">
                                     <div class="nav-right-content" style="align-items: center;width: 100%;max-width: 100%;justify-content: center; text-align: center;">
                             <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg" style="padding: 0px; width: 100%">
 
                                     <img src="{{ user.picture.url }}" alt="Profile" height="60" style="box-sizing: border-box;border-radius: 30px;overflow-clip-margin: content-box;overflow: clip;max-width: 25%;max-height: 100%;vertical-align: middle;height: 40px;width: 100%;margin-bottom: 0px;">
-                                <span class="text" style="top: -20px; left: 10px;">{{ user.first_name }}</span>
+                                <span class="text user-name" style="top: -20px; left: 10px;">{{ user.first_name }}</span>
                                 </a>
                         </div>
                                     </li>

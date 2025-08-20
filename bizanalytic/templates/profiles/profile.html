@@ -17,7 +17,7 @@
 
 {% block content_head %}
 <ul class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/">{% trans "Home" %}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'logiflex:dashboard' %}">{% trans "Home" %}</a></li>
     <li class="breadcrumb-item active">{% trans "Profile" %}</li>
 </ul>
 

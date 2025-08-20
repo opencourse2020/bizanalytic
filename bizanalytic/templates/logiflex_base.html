@@ -55,6 +55,10 @@
         {
             left: 65px;
         }
+        .mobile-menu .mean-nav .main-menu .login-info
+        {
+            width: 250px;
+        }
         .mobile-menu .mean-nav .main-menu .nav-right-content .user-logo
         {
             width: 250px;
@@ -156,10 +160,10 @@
                                     </ul>
                                 </li>
                                 {% if user.is_authenticated %}
-                                    <li>
+                                    <li class="login-info">
                                         <a href="{% url 'account_logout' %}" style="display: inline-block; background: #eb5849; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Sign out" %}</a>
                                      </li>
-                                    <li class="user-logo" style="width: 200px;">
+                                    <li class="user-logo" style="width: 250px; float: right;">
                                         <div class="nav-right-content" style="align-items: center;width: 100%;max-width: 100%;justify-content: center; text-align: center;">
                                             <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg" style="padding: 0px; width: 100%;">
 

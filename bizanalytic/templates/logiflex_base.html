@@ -154,11 +154,11 @@
                 {% else %}
                     {% if user.picture %}
                     <div class="col-xl-1 col-lg-1 col-6 pt-1 pb-1" style="text-align: center;">
-                        <div class="nav-right-content" style="align-items: end;">
-                            <a href="/profiles/" class="primary-btn secondary-bg" style="padding: 0px;">
+                        <div class="nav-right-content" style="align-items: center;width: 100%;max-width: 100%;justify-content: center;">
+                            <a href="/profiles/" class="primary-btn secondary-bg" style="padding: 0px; width: 100%">
 
-                                    <img src="{{ user.picture.url }}" alt="Profile" height="60" style="box-sizing: border-box; border-radius: 30px;overflow-clip-margin: content-box; overflow: clip; max-width: 100%;max-height: 100%; vertical-align: middle; height: 40px; width: 100%;margin-bottom: 0px;">
-                                <span class="text" style="top: 10px">{{ user.first_name }}</span>
+                                    <img src="{{ user.picture.url }}" alt="Profile" height="60" style="box-sizing: border-box;border-radius: 30px;overflow-clip-margin: content-box;overflow: clip;max-width: 25%;max-height: 100%;vertical-align: middle;height: 40px;width: 100%;margin-bottom: 0px;">
+                                <span class="text" style="top: -20px">{{ user.first_name }}</span>
                                 </a>
                         </div>
                     </div>

@@ -149,6 +149,8 @@ class ReportView(TemplateView):
                     p_value = row['P_Value']
                     contingency_result.append(
                         f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier} (p={p_value:.4f})")
+                report.contingency_result = contingency_result
+                report.save()
             else:
                 contingency_result = report.contingency_result
 
@@ -161,7 +163,7 @@ class ReportView(TemplateView):
             # print("carrier stats")
             kwargs["costmile"] = cost_mile
             kwargs["carrierstats"] = carrier_stats
-            kwargs["contigency"] = report.contingency_result
+            kwargs["contigency"] = contingency_result
         return super(ReportView, self).get_context_data(**kwargs)
 
 

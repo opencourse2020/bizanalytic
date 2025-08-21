@@ -118,14 +118,27 @@
                                                     <a href="{% static "assets/sample/freight_routes_sample.csv" %}" class="btn btn-outline-danger">&nbsp;{% trans "Download the csv Template File" %}&nbsp;</a>
                                                 </li>
                                                 <li style="margin-bottom: 6px;">
-                                                    {% trans "Use the template to fill your data" %}
+                                                    {% trans "Use the template for your data" %}
+                                                </li>
+                                                <li>
+                                                    {% trans "Use the same columns to fill your data" %}
+                                                    <span>[ShipmentID] - [Date] - [OriginCity] - [DestinationCity] - [Distance_Miles] - [FuelCost_USD] - [DriverName] - [CarrierName] -[LoadWeight_lbs] - [DeliveryStatus] - [DeliveryTime_hrs] - [FreightCost_USD] </span>
+
+                                                </li>
+                                                <li>
+                                                    {% trans "Make sure there is no missing data" %}
+                                                    <span>{% trans "A missing column or data may delai your report" %}</span>
                                                 </li>
                                                 <li style="margin-bottom: 6px;">
                                                     {% trans "Upload Your .csv (text) or .xlsx (Excel) file" %}
                                                 </li>
                                                 <li>
-                                                    {% trans "Run the Similution" %}
+                                                    {% trans "Agree to Create a Full Report" %}
                                                 </li>
+                                                <li>
+                                                    {% trans "Generate Performance Report" %}
+                                                </li>
+
 
                                             </ol>
 

@@ -27,9 +27,7 @@
 {% endblock main_menu%}
 
 {% block left_menu %}
-    <div class="nav-right-content">
-        <a href="{% url 'logiflex:index' %}" class="primary-btn secondary-bg"><span class="text">{% trans "Try Free" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
-    </div>
+   {{ block.super }}
 {% endblock left_menu %}
 
 {% block breadcrumb %}
@@ -55,7 +53,7 @@
     <section class="pricing-area pt-120">
             <div class="container">
             <h2>{% trans "FreightOps Pricing" %}</h2>
-                <p>Simple, flexible plans designed for <strong> SMB logistics operators.</strong>
+                <p style="margin-bottom: 40px; font-size: 18px;">Simple, flexible plans designed for <strong> SMB logistics operators.</strong>
                             No complicated user licenses. Pay for insights, not for software you won’t use.</p>
 
 

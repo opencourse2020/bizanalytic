@@ -20,15 +20,17 @@ var handleRenderApexChart = function(full_df, costpermile) {
     // console.log(`Index: ${row._index}, Col1: ${row.col1}, Col2: ${row.col2}, Col3: ${row.col3}`);
   	// console.log(carrierscatterdata);
 
+    let group_df = dfcost.groupby(["CarrierName"]);
 
 	const seriesdata =[];
-
+    const costdata =[];
 	for (let i = 0; i < df.shape[0]; i++) {
 		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgCostPerMile"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
+        let a = group_df.getGroup([df.iloc({rows: [i]})["CarrierName"].values[0]]);
+        costdata.push({x: df.iloc({rows: [i]})["CarrierName"].values[0], y: a.values})
 	}
 
-	const costdata =[];
-	let group_df = dfcost.groupby(["CarrierName"]);
+
 	// console.log(group_df);
 	// for (let i = 0; i < dfcost.shape[0]; i++) {
 	// 	console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
@@ -37,41 +39,12 @@ var handleRenderApexChart = function(full_df, costpermile) {
 	// 	costdata.push({x: dfcost.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgCostPerMile"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
 	// }
 
-
-	var options = {
+// Fuel Cost per Mile Distribution by Carrier
+	var apexCostMileChartOptions = {
           series: [
           {
             type: 'boxPlot',
-            data: [
-              {
-                x: 'Jan 2015',
-                y: [54, 66, 69, 75, 88]
-              },
-              {
-                x: 'Jan 2016',
-                y: [43, 65, 69, 76, 81]
-              },
-              {
-                x: 'Jan 2017',
-                y: [31, 39, 45, 51, 59]
-              },
-              {
-                x: 'Jan 2018',
-                y: [39, 46, 55, 65, 71]
-              },
-              {
-                x: 'Jan 2019',
-                y: [29, 31, 35, 39, 44]
-              },
-              {
-                x: 'Jan 2020',
-                y: [41, 49, 58, 61, 67]
-              },
-              {
-                x: 'Jan 2021',
-                y: [54, 59, 66, 71, 88]
-              }
-            ]
+            data: costdata
           }
         ],
           chart: {
@@ -85,8 +58,8 @@ var handleRenderApexChart = function(full_df, costpermile) {
         plotOptions: {
           boxPlot: {
             colors: {
-              upper: '#5C4742',
-              lower: '#A5978B'
+              upper: '#08e791',
+              lower: '#4a89dc'
             }
           }
         }
@@ -190,30 +163,8 @@ var handleRenderApexChart = function(full_df, costpermile) {
 		}
 	}
 
-// Fuel Cost per Mile Distribution by Carrier
-	var apexCostMileChartOptions = {
-		chart: {
-			height: 350,
-			type: 'scatter',
-			zoom: { enabled: true, type: 'xy' }
-		},
-		// colors: [app.color.theme, app.color.warning, 'rgba('+ app.color.bodyColorRgb + ', .5)'],
-		series: seriesdata,
-		xaxis: {
-			tickAmount: 10,
-			labels: {
-				formatter: function(val) { return parseFloat(val).toFixed(3) }
-			},
-			title: {
-				text: 'Average Cost/Mile ($)'
-			}
-		},
-		yaxis: { tickAmount: 7,
-		title: {
-            text: 'On-Time Delivery Rate (%)'
-          }
-		}
-	}
+
+
 
 	var apexScatterChart = new ApexCharts(
 		document.querySelector('#CarrierCostReliabilityChart'),
@@ -221,6 +172,9 @@ var handleRenderApexChart = function(full_df, costpermile) {
 	);
 	apexScatterChart.render();
 
+    var apexCostMilechart = new ApexCharts(document.querySelector("#CarrierCostPerMile"),
+        apexCostMileChartOptions);
+    apexCostMilechart.render();
 	// apexMixedChart
 
 

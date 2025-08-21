@@ -158,6 +158,12 @@ $(document).ready(function() {
     console.log(dfcost);
     let group_df = dfcost.groupby(["CarrierName"]);
     let a = group_df.getGroup(["ABC Carriers"]);
+    let b = group_df.getGroup(["XYZ Freight"]);
+    let c = group_df.getGroup(["DEF Logistics"]);
+    let d = group_df.getGroup(["GHI Transport"]);
+    console.log(b["CostPerMile"].values);
+    console.log(c["CostPerMile"].values);
+    console.log(d["CostPerMile"].values);
     console.log(a["CostPerMile"].values);
     a.print();
     {#for (let i = 0; i < df.shape[0]; i++) {#}

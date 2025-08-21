@@ -151,7 +151,8 @@ $(document).ready(function() {
 
     {#full_df = {{ carrierstats|safe }};#}
     full_df = {{ carrierstats|safe }};
-    costpermile = {{ costmile|safe }}
+    costpermile = {{ costmile|safe }};
+    console.log(costpermile);
     handleRenderApexChart(full_df, costpermile);
 	{#handleRenderApexChart(full_df);#}
 

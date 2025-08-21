@@ -143,6 +143,7 @@
     <script src={% static "assets/plugins/apexcharts/distro/apexcharts.min.js" %}></script>
     <script src={% static "assets/plugins/Danfo/bundle.min.js" %}></script>
 {#    <script src={% static "assets/js/app.min.js" %}></script>#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src={% static "assets/js/pages/chart-apex.pmf.js" %}></script>
      <script>
     /* Controller
@@ -163,10 +164,18 @@ $(document).ready(function() {
     let b = group_df.getGroup(["XYZ Freight"]);
     let c = group_df.getGroup(["DEF Logistics"]);
     let d = group_df.getGroup(["GHI Transport"]);
-    console.log(b["CostPerMile"].values);
-    console.log(c["CostPerMile"].values);
-    console.log(d["CostPerMile"].values);
-    console.log(a["CostPerMile"].values);
+
+    const median = d3.quantile(b["CostPerMile"].values, 0.5);
+    const q1 = d3.quartil(b["CostPerMile"].values, 0.25);
+    const min = d3.min(b["CostPerMile"].values);
+    const max = d3.max(b["CostPerMile"].values);
+    const q3 = d3.quartil(b["CostPerMile"].values, 0.75);
+
+    console.log('min:', min);
+    console.log('q1:', q1);
+    console.log('median:', median);
+    console.log('q3:', q3);
+    console.log('max:', max);
     a.print();
     {#for (let i = 0; i < df.shape[0]; i++) {#}
     {#    console.log()#}

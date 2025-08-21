@@ -10,6 +10,9 @@
 
 {% block css %}
     {{ block.super }}
+    <style>
+    .chart-card { min-height: 420px; }
+    </style>
 {#    <link href={% static "assets/css/app.min.css" %} rel="stylesheet">#}
 {% endblock css %}
 
@@ -52,20 +55,25 @@
 
        <!-- Report Info Section -->
         <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card shadow-sm">
+            <div class="col-md-6">
+                <div class="card shadow-sm chart-card">
+                    <div class="card-header">
+                        {% trans "Carrier Cost vs. Reliability Analysis" %}
+                    </div>
                     <div class="card-body text-center">
-                        <h5 class="card-title">{% trans "Carrier Cost vs. Reliability Analysis" %}</h5>
+
                         <div id="CarrierCostReliabilityChart"></div>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4">
-                <div class="card shadow-sm">
+                <div class="card shadow-sm chart-card">
+                    <div class="card-header">
+                        {% trans "Fuel Cost per Mile Distribution by Carrier" %}
+                    </div>
                     <div class="card-body text-center">
-                        <h5 class="card-title">{% trans "Expected Delivery" %}</h5>
-                            <div id="plot_div"></div>
+                            <div id="CarrierCostPerMile"></div>
                     </div>
                 </div>
             </div>

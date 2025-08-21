@@ -138,8 +138,10 @@ class ReportView(TemplateView):
             df = clean_data(dff)
             df = calculate_kpis(df)
             carrier_stats = prepare_carrier_stats(df).reset_index()
-            print(carrier_stats)
             carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
+
+            cost_mile = df['CostPerMile'].reset_index()
+            print(cost_mile)
             # print("carrier stats")
 
             kwargs["carrierstats"] = carrier_stats

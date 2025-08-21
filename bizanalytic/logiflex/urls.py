@@ -26,7 +26,7 @@ blog_patterns = [
 
 report_patterns = [
     path("sample-report-create/", views.SampleReportCreateView.as_view(), name="sample-report-create"),
-    path('fullreport/<int:pk>/', views.FullReportView.as_view(), name='fullreport'),
+    path('fullreport/', views.FullReportView.as_view(), name='fullreport'),
     path('view/<int:pk>/', views.AdvancedReportView.as_view(), name='view'),
     path('full-report-create/', views.FullReportCreateView.as_view(), name='full-report-create'),
     path('samplereport/', views.SampleAdvancedReportView.as_view(), name='samplereport'),

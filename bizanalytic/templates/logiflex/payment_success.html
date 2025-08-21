@@ -69,7 +69,7 @@
                         {% if payid == "none" %}
                             <a href="{% url 'logiflex:pricing' %}" class="btn btn-success"> {% trans "Create New Report" %}</a>
                         {% else %}
-                            <a href="{% url 'logiflex:reports:fullreport' payid %}" class="btn btn-success"> {% trans "Create New Report" %}</a>
+                            <a href="{% url 'logiflex:reports:fullreport' %}" class="btn btn-success"> {% trans "Create New Report" %}</a>
                         {% endif %}
                     </div>
                         <div class="card-body">

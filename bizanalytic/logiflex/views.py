@@ -793,9 +793,10 @@ class Payment_SuccessView(LoginRequiredMixin, TemplateView):
 class FullReportView(LoginRequiredMixin, TemplateView):
     template_name = "logiflex/report_create.html"
     def get_context_data(self, **kwargs):
-        pu = self.kwargs.get("pk")
+        # pu = self.kwargs.get("pk")
         client = LogiFlexClient.objects.filter(user=self.request.user).first()
-        servicepayment = ServicePayment.objects.filter(pk=pu, client=client).first()
+
+        servicepayment = ServicePayment.objects.filter(client=client).first()
         if servicepayment and servicepayment.can_generate_report():
 
             kwargs["contact_name"] = servicepayment.client.contact_name

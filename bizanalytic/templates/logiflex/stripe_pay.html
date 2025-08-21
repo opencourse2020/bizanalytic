@@ -80,7 +80,7 @@
                                 <ul class="check-list primary-color">
                                     <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans "Up to 3 reports / month" %}</li>
                                     <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans "Actionable Recommendations" %}</li>
-                                    <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans "Route efficiency score & cost savings insights" %}</li>
+                                    <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans "Route efficiency & cost savings insights" %}</li>
                                     <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans "Upload CSV, get report in minutes" %}</li>
                                     <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans "Email support" %}</li>
                                 </ul>
@@ -106,7 +106,7 @@
                             </div>
 
                             <div class="content-bottom">
-                                <img src="assets/images/popular-badge.png" alt="badge" class="popular-badge">
+                                <img src={% static "vendor/transport/assets/images/popular-badge.png"%} alt="badge" class="popular-badge">
 
                                 <ul class="check-list primary-color">
                                     <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans "Up to 10 reports / month" %}</li>
@@ -150,10 +150,10 @@
                     </div>
             </div>
 
-                <h1 data-start="1257" data-end="1274">
-                    Why FreightOps?
+                <h1 data-start="1257" data-end="1274" style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
+                    {% trans "Why FreightOps?" %}
                 </h1>
-                <p data-start="1275" data-end="1475">
+                <p data-start="1275" data-end="1475" style="margin-bottom: 40px;">
                     ✅ No training required — upload your data, get insights instantly.<br>
                     ✅ Affordable — costs <strong data-start="1365" data-end="1376">5× less</strong> than full dispatch software.<br>
                     ✅ Flexible — use reports when you need them (no wasted licenses).
@@ -161,11 +161,11 @@
 
             <hr class="mt-20 mb-20">
 
-                <p data-start="1482" data-end="1518">
+                <h4 data-start="1482" data-end="1518" style="margin-top: 100px; margin-bottom: 40px">
                     📊 <strong data-start="1485" data-end="1518">Side-by-Side Comparison Table</strong>
-                </p>
+                </h4>
                 <div class="_tableContainer_1rjym_1">
-                    <div class="_tableWrapper_1rjym_13 group flex w-fit flex-col-reverse" tabindex="-1">
+                    <div class="_tableWrapper_1rjym_13 group flex w-fit flex-col-reverse" tabindex="-1" style="width: 100%;">
                         <figure class="table">
                             <table class="w-fit min-w-(--thread-content-width)" data-start="1520" data-end="1924">
                                 <thead data-start="1520" data-end="1587">
@@ -244,7 +244,7 @@
                         </figure>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-40">
                     <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
                         <div class="section-top text-center">
 

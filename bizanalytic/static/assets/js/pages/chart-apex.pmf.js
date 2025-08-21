@@ -116,9 +116,16 @@ var handleRenderApexChart = function(full_df) {
 			tickAmount: 10,
 			labels: {
 				formatter: function(val) { return parseFloat(val).toFixed(1) }
+			},
+			title: {
+				text: 'Average Freight Cost ($)'
 			}
 		},
-		yaxis: { tickAmount: 7 }
+		yaxis: { tickAmount: 7,
+		title: {
+            text: 'On-Time Delivery Rate (%)'
+          }
+		}
 	}
 	var apexScatterChart = new ApexCharts(
 		document.querySelector('#CarrierCostReliabilityChart'),

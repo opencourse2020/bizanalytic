@@ -151,15 +151,15 @@ $(document).ready(function() {
 
     {#full_df = {{ carrierstats|safe }};#}
     full_df = {{ carrierstats|safe }};
-
-    handleRenderApexChart(full_df);
+    costpermile = {{ costmile|safe }}
+    handleRenderApexChart(full_df, costpermile);
 	{#handleRenderApexChart(full_df);#}
 
 	$(document).on('theme-reload', function() {
 		{#$('#churncontractiondonut, #apexLineChart, #apexColumnChart, #apexAreaChart, #apexBarChart, #apexMixedChart, #apexCandlestickChart, #apexBubbleChart, #apexScatterChart, #apexHeatmapChart, #apexPieChart, #apexRadialBarChart, #apexRadarChart').empty();#}
-        $('#CarrierCostReliabilityBubbleChart').empty();
+        $('#CarrierCostReliabilityChart').empty();
 
-		handleRenderApexChart(full_df);
+		handleRenderApexChart(full_df, costpermile);
 	});
 });
     </script>

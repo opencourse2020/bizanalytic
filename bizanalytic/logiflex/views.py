@@ -141,9 +141,10 @@ class ReportView(TemplateView):
             carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
 
             cost_mile = df[['CarrierName', 'CostPerMile']]
+            cost_mile = json.loads(cost_mile.to_json(orient='records'))
             print(cost_mile)
             # print("carrier stats")
-
+            kwargs["costmile"] = cost_mile
             kwargs["carrierstats"] = carrier_stats
         return super(ReportView, self).get_context_data(**kwargs)
 

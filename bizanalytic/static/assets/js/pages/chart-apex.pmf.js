@@ -23,9 +23,9 @@ var handleRenderApexChart = function(full_df) {
 
 	for (let i = 0; i < df.shape[0]; i++) {
 		console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
-		console.log(df.iloc({rows: [i]})["AvgFreightCost"].values[0]);
+		console.log(df.iloc({rows: [i]})["AvgCostPerMile"].values[0]);
 		console.log(df.iloc({rows: [i]})["OnTimeRate"].values[0]);
-		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgFreightCost"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
+		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgCostPerMile"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
 	}
 	// var options = {series: seriesdata};
 	console.log(seriesdata);

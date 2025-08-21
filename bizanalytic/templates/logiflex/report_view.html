@@ -166,10 +166,10 @@ $(document).ready(function() {
     let d = group_df.getGroup(["GHI Transport"]);
 
     const median = d3.quantile(b["CostPerMile"].values, 0.5);
-    const q1 = d3.quartile(b["CostPerMile"].values, 0.25);
+    const q1 = d3.quantile(b["CostPerMile"].values, 0.25);
     const min = d3.min(b["CostPerMile"].values);
     const max = d3.max(b["CostPerMile"].values);
-    const q3 = d3.quartile(b["CostPerMile"].values, 0.75);
+    const q3 = d3.quantile(b["CostPerMile"].values, 0.75);
 
     console.log('min:', min);
     console.log('q1:', q1);

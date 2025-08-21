@@ -156,6 +156,8 @@ $(document).ready(function() {
 
     dfcost = new dfd.DataFrame(costpermile);
     console.log(dfcost);
+    let group_df = dfcost.groupby(["CarrierName"]);
+    console.log(group_df["XYZ Freight"]);
     handleRenderApexChart(full_df, costpermile);
 	{#handleRenderApexChart(full_df);#}
 

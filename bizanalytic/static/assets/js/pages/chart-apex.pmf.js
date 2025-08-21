@@ -28,7 +28,7 @@ var handleRenderApexChart = function(full_df, costpermile) {
 	}
 
 	const costdata =[];
-	let group_df = df.groupby(["CarrierName"]);
+	let group_df = dfcost.groupby(["CarrierName"]);
 	console.log(group_df);
 	// for (let i = 0; i < dfcost.shape[0]; i++) {
 	// 	console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);

@@ -153,6 +153,9 @@ $(document).ready(function() {
     full_df = {{ carrierstats|safe }};
     costpermile = {{ costmile|safe }};
     console.log(costpermile);
+
+    dfcost = new dfd.DataFrame(costpermile);
+    console.log(dfcost);
     handleRenderApexChart(full_df, costpermile);
 	{#handleRenderApexChart(full_df);#}
 

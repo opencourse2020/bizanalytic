@@ -115,10 +115,10 @@ var handleRenderApexChart = function(full_df) {
 		xaxis: {
 			tickAmount: 10,
 			labels: {
-				formatter: function(val) { return parseFloat(val).toFixed(1) }
+				formatter: function(val) { return parseFloat(val).toFixed(3) }
 			},
 			title: {
-				text: 'Average Freight Cost ($)'
+				text: 'Average Cost/Mile ($)'
 			}
 		},
 		yaxis: { tickAmount: 7,

@@ -147,13 +147,15 @@
                                         <a href="{% url 'logiflex:index' %}">{% trans "Home" %}</a>
                                     {% endif %}
                                 </li>
-                                <li ><a href="#">{% trans "Services" %}</a>
-
+                                <li class="has-submenu"><a href="#">{% trans "Services" %}</a>
+                                    <ul class="submenu">
+                                        <li><a href="{% url 'logiflex:aboutus' %}">{% trans "LogiFlex - FreighOps" %}</a></li>
+                                    </ul>
                                 </li>
 
                                 <li class="has-submenu"><a href="#">{% trans "Resources" %}</a>
                                     <ul class="submenu">
-                                        <li><a href="#">{% trans "About Us" %}</a></li>
+                                        <li><a href="{% url 'logiflex:aboutus' %}">{% trans "About Us" %}</a></li>
                                         <li><a href="{% url 'logiflex:blog:blogs' %}">{% trans "Blog" %}</a></li>
                                         <li><a href="{% url 'logiflex:pricing' %}">{% trans "Pricing" %}</a></li>
                                         <li><a href="#">{% trans "Contact" %}</a></li>

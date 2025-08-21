@@ -55,6 +55,7 @@ urlpatterns = [
     path("pricing/", views.Payment_PageView.as_view(), name='pricing'),
     path("book-call/", views.RequestCallView.as_view(), name="book-call"),
     path("bookcall/", views.BookACallView.as_view(), name="bookcall"),
+    path("aboutus/", views.AboutUsView.as_view(), name="aboutus"),
     path(
         "newsletters/",
         include((newsletter_patterns, "bizanalytic.logiflex"), namespace="newsletters"),

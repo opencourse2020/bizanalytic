@@ -1115,3 +1115,7 @@ class UpdateGasPricesView(UserPassesTestMixin, CreateView, JsonFormMixin):
         data = {"submessage": message, "rpstatus": status}
 
         return JsonResponse(data)
+
+
+class AboutUsView(TemplateView):
+    template_name = "logiflex/aboutus.html"

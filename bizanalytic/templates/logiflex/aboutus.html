@@ -1,0 +1,168 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+    {{ block.super }}
+{% endblock head_title %}
+
+{% block css %}
+    {{ block.super }}
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+{% block breadcrumb %}
+    <section class="breadcrumb-area mb-1" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="title">About Us</h2>
+                        <p style="color: white; font-size: 16px;">
+                            {% trans "Smarter Decisions for Freight Operators" %}
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+    <section class="about-area-3 py-120">
+            <div class="container">
+                <div class="row gx-xl-5 align-items-center">
+                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s">
+                        <div class="about-content">
+                            <div class="section-top">
+                                <span class="sub-title">About us</span>
+                                <h3 class="title mt-10"><span>Seamless logistics Analysis</span> for Smarter Decisions</h3>
+                            </div>
+                            <p class="mt-20" data-start="277" data-end="596">
+                                    At <strong data-start="280" data-end="295">BizAnalytic</strong>, we believe that small and medium freight operators deserve the same powerful tools that large logistics companies use—without the steep costs or technical complexity. That’s why we created <strong data-start="486" data-end="500">FreightOps</strong>, an AI-powered reporting platform designed specifically for freight and logistics businesses.
+                            </p>
+                                <p data-start="598" data-end="907">
+                                    Our mission is simple: <strong data-start="621" data-end="686">make freight operations smarter, faster, and more profitable.</strong> We know that managing routes, deliveries, and costs is already challenging enough. You shouldn’t have to spend hours crunching spreadsheets or investing in enterprise systems that are too expensive and over-engineered.
+                                </p>
+                                <p data-start="909" data-end="1055">
+                                    With FreightOps, all it takes is a single upload of your route data. Within minutes, you receive a <strong data-start="1008" data-end="1052">professional report packed with insights</strong>:
+                                </p>
+                                <ul data-start="1056" data-end="1218">
+                                    <li data-start="1056" data-end="1092">
+                                        <p data-start="1058" data-end="1092">
+                                            Route efficiency and performance
+                                        </p>
+                                    </li>
+                                    <li data-start="1093" data-end="1138">
+                                        <p data-start="1095" data-end="1138">
+                                            Cost breakdowns and savings opportunities
+                                        </p>
+                                    </li>
+                                    <li data-start="1139" data-end="1168">
+                                        <p data-start="1141" data-end="1168">
+                                            On-time delivery analysis
+                                        </p>
+                                    </li>
+                                    <li data-start="1169" data-end="1218">
+                                        <p data-start="1171" data-end="1218">
+                                            Fleet utilization and productivity benchmarks
+                                        </p>
+                                    </li>
+                                </ul>
+                                <p data-start="1220" data-end="1384">
+                                    We go beyond numbers. Each report includes clear recommendations, so you don’t just see how your operations are performing—you understand <strong data-start="1358" data-end="1382">how to improve them.</strong>
+                                </p>
+                                <p data-start="1386" data-end="1651">
+                                    Our team brings deep expertise in <strong data-start="1420" data-end="1483">supply chain management, logistics, and advanced analytics.</strong> We combine industry knowledge with the latest in AI technology to deliver tools that help you compete, grow, and thrive in today’s fast-moving logistics environment.
+                                </p>
+                                <p data-start="1653" data-end="1893">
+                                    Whether you’re a regional freight carrier, a delivery fleet, or a growing logistics company, <strong data-start="1746" data-end="1799">our goal is to be your trusted analytics partner.</strong> We make decision-making easier, more data-driven, and always aligned with your bottom line.
+                                </p>
+                                <p data-start="1895" data-end="1943">
+                                    <strong data-start="1895" data-end="1941">BizAnalytic – Turning Data Into Decisions.</strong>
+                                </p>
+                            <div class="about-items mt-30">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="about-item">
+                                            <h6 class="title">{% trans "Actionable Intelligence" %}</h6>
+                                            <div class="d-flex align-items-center gap-3 mt-20">
+                                                <img src={% static "vendor/transport/assets/images/icon-4.png"%} alt="icon">
+                                                <span>{% trans "Benchmarks, Comparisons, and Recommendations" %}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="about-item">
+                                            <h6 class="title">{% trans "AI-Powered Freight Analytics" %}</h6>
+                                            <div class="d-flex align-items-center gap-3 mt-20">
+                                                <img src={% static "vendor/transport/assets/images/icon-3.png"%} alt="icon">
+                                                <span>{% trans "Route Efficiency, Carrier Performance, Cost Drivers" %}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="button-group mt-30">
+                                <div class="phone-text">
+                                    <img src="assets/images/icon-5.png" alt="icon">
+                                    <div class="text-part">
+                                        <span>Need Help?</span>
+                                        <h5 class="title"><a href="#">Contact Us</a></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 wow fadeInRight" data-wow-delay=".2s">
+                        <div class="about-images">
+                            <img src={% static "vendor/transport/assets/images/about-1.jpg"%} alt="about" class="about-image-1">
+                            <img src={% static "vendor/transport/assets/images/about-2.jpg"%} alt="about" class="about-image-2">
+                            <div class="devilery-text">
+                                <img src={% static "vendor/transport/assets/images/icon-2.png"%} alt="icon">
+                                <h5 class="title">fast report delivery</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock contact_area %}
+
+{% block feature_area %}
+    {{ block.super }}
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+
+{% block js_area %}
+    {{ block.super }}
+{% endblock js_area %}
+
+

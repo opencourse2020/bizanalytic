@@ -140,7 +140,7 @@ class ReportView(TemplateView):
             carrier_stats = prepare_carrier_stats(df).reset_index()
             carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
 
-            cost_mile = df['CostPerMile'].reset_index()
+            cost_mile = df[['CarrierName', 'CostPerMile']]
             print(cost_mile)
             # print("carrier stats")
 

@@ -137,6 +137,21 @@ class ReportView(TemplateView):
             dff = pd.read_csv(report.routefile)
             df = clean_data(dff)
             df = calculate_kpis(df)
+            contingency_result = []
+            if not report.contingency_result:
+                results_df, worst_carrier = run_contingency_analysis(df)
+
+                # to add to summary
+
+                for idx, row in results_df.iterrows():
+                    competitor = row['Competitor']
+                    odds_ratio = row['Odds_Ratio']
+                    p_value = row['P_Value']
+                    contingency_result.append(
+                        f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier} (p={p_value:.4f})")
+            else:
+                contingency_result = report.contingency_result
+
             carrier_stats = prepare_carrier_stats(df).reset_index()
             carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
 
@@ -146,6 +161,7 @@ class ReportView(TemplateView):
             # print("carrier stats")
             kwargs["costmile"] = cost_mile
             kwargs["carrierstats"] = carrier_stats
+            kwargs["contigency"] = report.contingency_result
         return super(ReportView, self).get_context_data(**kwargs)
 
 

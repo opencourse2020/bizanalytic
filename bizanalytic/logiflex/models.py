@@ -187,6 +187,7 @@ class LogiflexReport(models.Model):
     report_prompt = models.TextField(null=True, blank=True)
     report_approved = models.BooleanField(default=False)
     viewed = models.BooleanField(default=False)
+    contingency_result = models.JSONField(default=list)
 
     class Meta:
         verbose_name = "LogiFlexReport"

@@ -834,9 +834,11 @@ def test_validator(reportid, routefilename):
     data.to_csv(filepath, index=False)
 
     # Run analysis
-    summary = run_analysis(data)
+    summary, contingency_result = run_analysis(data)
+
     json_string = json.dumps(summary)
     report.report_summary = json_string
+    report.contingency_result = contingency_result
     report.save()
 
     logiflex_log = LogEntry.objects.create(report=report, column_report=column_report,

@@ -502,7 +502,7 @@ def run_analysis(dff):
     summary.append("Recommended Actions: e.g., Investigate root causes for these 2σ outliers.")
     summary.append("\n")
 
-    return summary
+    return summary, contingency_result
 
 
     # high_variance, low_variance = predict_cost(df)

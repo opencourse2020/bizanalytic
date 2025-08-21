@@ -16,6 +16,16 @@
     <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" %} >
     <link rel="stylesheet" type="text/css" href={% static "assets/plugins/bootstrap-table/dist/bootstrap-table.min.css" %} >
     {{ block.super }}
+    <style>
+    @media (max-width: 575.98px) {
+        .breadcrumb-area .title2{
+            font-size: 30px;
+        }
+        .breadcrumb-area .title1{
+            font-size: 40px;
+        }
+    }
+    </style>
 {% endblock css %}
 
 {% block header_left %}
@@ -39,8 +49,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 d-flex justify-content-center align-items-center">
-                        <h1 class="title">LogiFlex - </h1>
-                        <span class="title" style="color: #0cb7d6; font-size: 60px">&nbsp;{% trans "Fleet Efficiency Reports" %}</span>
+                        <h1 class="title title1" style="font-size: 40px;">LogiFlex</h1>
+                        <span class="title title2" style="color: #0cb7d6; font-size: 30px">&nbsp;{% trans "Fleet Efficiency Reports" %}</span>
 
                     </div>
                 </div>

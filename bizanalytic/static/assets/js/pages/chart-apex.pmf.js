@@ -7,8 +7,8 @@ Website: http://www.seantheme.com/hud/
 
 var handleRenderApexChart = function(full_df) {
 	df = new dfd.DataFrame(full_df);
-	let carrierdata = df[['CarrierName', 'AvgFreightCost', 'OnTimeRate']];
-	console.log(carrierdata);
+	// let carrierdata = df[['CarrierName', 'AvgFreightCost', 'OnTimeRate']];
+	// console.log(carrierdata);
 	let numcarrieres = df['CarrierName'].count()
 	console.log(numcarrieres);
 	let carrierscatterdata = [];
@@ -25,7 +25,8 @@ var handleRenderApexChart = function(full_df) {
 		cdata = {name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgFreightCost"].values[0], df.iloc({rows: [i]})["AvgFreightCost"].values[OnTimeRate]]]};
 		seriesdata.push({cdata})
 	}
-	var options = {series: seriesdata};
+	// var options = {series: seriesdata};
+	console.log(seriesdata);
 
 	// Apex = {
 	// 	title: {

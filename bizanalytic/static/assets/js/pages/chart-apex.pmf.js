@@ -22,7 +22,7 @@ var handleRenderApexChart = function(full_df) {
 	const seriesdata =[];
 
 	for (let i = 0; i < df.shape[0]; i++) {
-		cdata = {name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgFreightCost"].values[0], df.iloc({rows: [i]})["AvgFreightCost"].values[OnTimeRate]]]};
+		cdata = {name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgFreightCost"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]};
 		seriesdata.push({cdata})
 	}
 	// var options = {series: seriesdata};

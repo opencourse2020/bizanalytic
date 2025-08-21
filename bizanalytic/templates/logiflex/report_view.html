@@ -158,7 +158,7 @@ $(document).ready(function() {
     console.log(dfcost);
     let group_df = dfcost.groupby(["CarrierName"]);
     let a = group_df.getGroup(["ABC Carriers"]);
-    console.log(a["CostPerMile"].values[0]);
+    console.log(a["CostPerMile"].values);
     a.print();
     {#for (let i = 0; i < df.shape[0]; i++) {#}
     {#    console.log()#}

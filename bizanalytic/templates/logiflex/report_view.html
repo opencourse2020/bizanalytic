@@ -157,7 +157,11 @@ $(document).ready(function() {
     dfcost = new dfd.DataFrame(costpermile);
     console.log(dfcost);
     let group_df = dfcost.groupby(["CarrierName"]);
-    console.log(group_df);
+    let seriesdata = [];
+    for (let i = 0; i < group_df.shape[0]; i++) {
+		console.log(group_df.iloc({ rows: [i] }));
+	}
+
     handleRenderApexChart(full_df, costpermile);
 	{#handleRenderApexChart(full_df);#}
 

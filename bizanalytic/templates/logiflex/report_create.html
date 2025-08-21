@@ -51,10 +51,11 @@
                         <h2>{% trans "FreightOps Advanced Analytical Report" %}</h2>
                     </div>
                     {#                    <div class="col-lg-1"></div>#}
+                    <h4 class="title text-center" style="margin-top: 20px">{% trans "Get Your Advanced Report" %}</h4>
+                            <p class="text-center">{% trans "Upload your route data and receive performance analysis" %}</p>
                     <div class="col-lg-6 wow fadeInRight align-content-center" id="tryfree" data-wow-delay=".2s">
                         <div class="form-part">
-                            <h4 class="title text-center">{% trans "Get Your Advanced Report" %}</h4>
-                            <p class="text-center">{% trans "Upload your route data and receive performance analysis" %}</p>
+
                             <div class="theme-form mt-40">
                                 <form action="#" enctype="multipart/form-data">
                                     {% csrf_token %}
@@ -106,10 +107,12 @@
                                     </form>
                             </div>
                         </div>
+                        <div class="about-images" style="margin-top: 20px;">
                         <div class="devilery-text" style="width: 100%; padding: 20px;">
                                 <h5 class="title">{% trans "Smarter Freight Decisions, Made Simple" %}</h5>
                             <p> At <strong>BizAnaltytic</strong>, we help small and medium freight operators unlock the power of data—without the complexity. Just upload your route file, and our AI-powered platform delivers clear, professional reports that show where you can save costs, improve routes, and boost efficiency. No spreadsheets, no guesswork—just insights that drive smarter decisions and better results.</p>
                             </div>
+                        </div>
                     </div>
                     <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s">
                         <div class="row gx-xl-5 align-items-center">

@@ -30,7 +30,12 @@ var handleRenderApexChart = function(full_df, costpermile) {
         let a = group_df.getGroup([df.iloc({rows: [i]})["CarrierName"].values[0]]);
 		// console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
 		// console.log(a.values[1]);
-        costdata.push({x: df.iloc({rows: [i]})["CarrierName"].values[0], y: a["CostPerMile"].values})
+		const median = d3.quantile(a["CostPerMile"].values, 0.5);
+		const q1 = d3.quantile(a["CostPerMile"].values, 0.25);
+		const min = d3.min(a["CostPerMile"].values);
+		const max = d3.max(a["CostPerMile"].values);
+		const q3 = d3.quantile(a["CostPerMile"].values, 0.75);
+        costdata.push({x: df.iloc({rows: [i]})["CarrierName"].values[0], y: [min, q1, median, q3, max]})
 		// console.log(costdata);
 	}
 

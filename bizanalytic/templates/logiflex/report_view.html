@@ -162,7 +162,7 @@ $(document).ready(function() {
     a.print();
     {#for (let i = 0; i < df.shape[0]; i++) {#}
     {#    console.log()#}
-    {#}#}
+
 
 
     handleRenderApexChart(full_df, costpermile);
@@ -170,23 +170,23 @@ $(document).ready(function() {
 
 	$(document).on('theme-reload', function() {
 		{#$('#churncontractiondonut, #apexLineChart, #apexColumnChart, #apexAreaChart, #apexBarChart, #apexMixedChart, #apexCandlestickChart, #apexBubbleChart, #apexScatterChart, #apexHeatmapChart, #apexPieChart, #apexRadialBarChart, #apexRadarChart').empty();#}
-        $('#CarrierCostReliabilityChart').empty();
+        $('#CarrierCostReliabilityChart, #CarrierCostPerMile' ).empty();
 
 		handleRenderApexChart(full_df, costpermile);
 	});
 });
     </script>
-    <script>
-        full_df = {{ carrierstats|safe }};
-
-        df = new dfd.DataFrame(full_df);
-
-        df.plot("plot_div").scatter({
-                  config: {x: "AvgFreightCost", y: "OnTimeRate", labels: "CarrierName"}
-              });
-
-
-    </script>
+{#    <script>#}
+{#        full_df = {{ carrierstats|safe }};#}
+{##}
+{#        df = new dfd.DataFrame(full_df);#}
+{##}
+{#        df.plot("plot_div").scatter({#}
+{#                  config: {x: "AvgFreightCost", y: "OnTimeRate", labels: "CarrierName"}#}
+{#              });#}
+{##}
+{##}
+{#    </script>#}
 {% endblock js_area %}
 
 

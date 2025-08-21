@@ -12,13 +12,13 @@ var handleRenderApexChart = function(full_df, costpermile) {
 	// let carrierdata = df[['CarrierName', 'AvgFreightCost', 'OnTimeRate']];
 	// console.log(carrierdata);
 	let numcarrieres = df['CarrierName'].count()
-	console.log(numcarrieres);
+	// console.log(numcarrieres);
 	let carrierscatterdata = [];
 	// for (const row of df.itertuples()){
 	// 	carrierscatterdata.push("{ name: '" + row.CarrierName +"', data: "  [[row.AvgFreightCost, row.OnTimeRate]] + " },");
 	// 	}
     // console.log(`Index: ${row._index}, Col1: ${row.col1}, Col2: ${row.col2}, Col3: ${row.col3}`);
-  	console.log(carrierscatterdata);
+  	// console.log(carrierscatterdata);
 
 
 	const seriesdata =[];
@@ -29,7 +29,7 @@ var handleRenderApexChart = function(full_df, costpermile) {
 
 	const costdata =[];
 	let group_df = dfcost.groupby(["CarrierName"]);
-	console.log(group_df);
+	// console.log(group_df);
 	// for (let i = 0; i < dfcost.shape[0]; i++) {
 	// 	console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
 	// 	console.log(df.iloc({rows: [i]})["AvgCostPerMile"].values[0]);

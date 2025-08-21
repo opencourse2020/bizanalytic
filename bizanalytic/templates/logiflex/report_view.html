@@ -156,7 +156,9 @@ $(document).ready(function() {
 
     dfcost = new dfd.DataFrame(costpermile);
     console.log(dfcost);
+    dfcost.sortValues("CostPerMile", { inplace: true })
     let group_df = dfcost.groupby(["CarrierName"]);
+
     let a = group_df.getGroup(["ABC Carriers"]);
     let b = group_df.getGroup(["XYZ Freight"]);
     let c = group_df.getGroup(["DEF Logistics"]);

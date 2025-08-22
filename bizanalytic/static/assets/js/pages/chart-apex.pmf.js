@@ -29,7 +29,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		const costmileval =  df.iloc({rows: [i]})["AvgCostPerMile"].values[0];
 		const roundedString = costmileval.toFixed(3); // Output: "4.69" (as a string)
     	const roundedNumber = parseFloat(roundedString);
-
+		console.log("Cost Per Mile", costmileval, roundedString, roundedNumber);
 		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[roundedNumber, df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
         let a = group_df.getGroup([df.iloc({rows: [i]})["CarrierName"].values[0]]);
 		// console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
@@ -48,6 +48,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		const ontimeval =  dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]*100;
 		const roundedString = ontimeval.toFixed(2); // Output: "4.69" (as a string)
     	const roundedNumber = parseFloat(roundedString);
+		console.log("Ontime rate", ontimeval, roundedString, roundedNumber);
 		driverseriesdata.push({
 			name: dfdriver.iloc({rows: [i]})["DriverName"].values[0],
 			data: [[dfdriver.iloc({rows: [i]})["MedianMPG"].values[0], roundedNumber]]

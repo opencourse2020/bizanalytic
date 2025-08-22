@@ -800,6 +800,7 @@ def prepare_driver_analysis(driver_stats):
             topleft.append(index)
         else:
             bottomleft.append(index)
+    driver_actions = []
     bottom_right = ""
     bottom_left = ""
     top_right = ""
@@ -823,7 +824,7 @@ def prepare_driver_analysis(driver_stats):
             if i < len(topleft):
                 drivers += ", "
         top_left = f"<strong class='bottom'>{drivers}</strong>: High Reliability but High Fuel Consumption"
-
+        driver_actions.append(f"Consider providing training to <strong class='bottom'>{drivers}</strong>. Also Check Trucks' overall state and Scheduled Maintenance.")
     if bottomright:
         drivers = ""
         i = 0
@@ -833,7 +834,7 @@ def prepare_driver_analysis(driver_stats):
             if i < len(bottomright):
                 drivers += ", "
         bottom_right = f"<strong class='bottom'>{drivers}</strong>: Low Fuel Consumption but not as Reliable as other drivers"
-
+        driver_actions.append(f"Incentivize <strong class='bottom'>{drivers}</strong> to improve overall Reliability")
     if bottomleft:
         drivers = ""
         i = 0
@@ -843,5 +844,7 @@ def prepare_driver_analysis(driver_stats):
             if i < len(bottomleft):
                 drivers += ", "
         bottom_left = f"<strong class='worst'>{drivers}</strong>: Inefficient and Unreliable drivers"
+        driver_actions.append(f"Recommend Eco-Driving training for these drivers: <strong class='worst'>{drivers}</strong>")
 
-    return top_right, top_left, bottom_right, bottom_left
+
+    return top_right, top_left, bottom_right, bottom_left, driver_actions

@@ -129,6 +129,14 @@
                         <li>{{ bottom_right|safe }}</li>
                         <li>{{ bottom_left|safe }}</li>
                         </ul>
+                        <strong>Actions:</strong><br>
+                        <ol type="1">
+                            {% for daction in driver_actions %}
+                            <li>
+                                {{ daction|safe }}
+                            </li>
+                            {% endfor %}
+                        </ol>
                     </div>
                 </div>
             </div>

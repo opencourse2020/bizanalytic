@@ -744,6 +744,7 @@ def prepare_data_report(df):
 
     # Carrier Contingency Analysis
     results_df, worst_carrier = run_contingency_analysis(df)
+    costreliability_action = []
     contingency_result = []
     contingency_action = []
     for idx, row in results_df.iterrows():
@@ -773,9 +774,9 @@ def prepare_data_report(df):
     iqr = q3['CostPerMile'] - q1['CostPerMile']
     min_iqr_index = iqr.idxmin()
     lowiqr = q3.iloc[min_iqr_index]['CarrierName']
-    costreliability_action = []
-    costreliability_action = costreliability_action.append(f"Opportunity to negotiate consistent rates with <strong class='comp'>{hcar}</strong>")
-    costreliability_action = costreliability_action.append(f"Shift more Shipments to <strong class='comp'>{lowiqr}</strong> If the goal is better predictability & cost stability.")
+
+    costreliability_action.append(f"Opportunity to negotiate consistent rates with <strong class='comp'>{hcar}</strong>")
+    costreliability_action.append(f"Shift more Shipments to <strong class='comp'>{lowiqr}</strong> If the goal is better predictability & cost stability.")
 
 
     return hcarvar, lcarvar, costreliability_action, contingency_result, contingency_action

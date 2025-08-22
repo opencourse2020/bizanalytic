@@ -139,7 +139,7 @@ class ReportView(TemplateView):
             df = calculate_kpis(df)
             carrier_stats = prepare_carrier_stats(df).reset_index()
             carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
-            driver_stats = prepare_driver_stats(df)
+            driver_stats = prepare_driver_stats(df).reset_index()
             driver_stats = json.loads(driver_stats.to_json(orient='records'))
 
             # Carrier Contingency and Reliability Vs Cost Analysis

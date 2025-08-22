@@ -752,12 +752,12 @@ def prepare_data_report(df):
         odds_ratio = row['Odds_Ratio']
         p_value = row['P_Value']
         contingency_result.append(
-            f"<strong class='comp'>{competitor}</strong class='odds'> is <strong>{odds_ratio:.2f}x</strong> to deliver on time than <strong class='worst'>{worst_carrier}</strong>")
+            f"<strong class='comp'>{competitor}</strong> is <strong class='odds'>{odds_ratio:.2f}x</strong> to deliver on time than <strong class='worst'>{worst_carrier}</strong>")
 
     if results_df['Competitor'].count() >= 2:
-        contingency_action.append(f"Move some of the Shipments from {worst_carrier} to {results_df.iloc[0]['Competitor']} and {results_df.iloc[1]['Competitor']}")
+        contingency_action.append(f"Move some of the Shipments from <strong class='worst'>{worst_carrier}</strong> to <strong class='comp'>{results_df.iloc[0]['Competitor']}</strong> and <strong class='comp'>{results_df.iloc[1]['Competitor']}</strong>")
     elif results_df['Competitor'].count() == 1:
-        contingency_action.append(f"Move some of the Shipments from {worst_carrier} to {results_df.iloc[0]['Competitor']}")
+        contingency_action.append(f"Move some of the Shipments from <strong class='worst'>{worst_carrier}</strong> to <strong class='comp'>{results_df.iloc[0]['Competitor']}</strong>")
 
     # Carrier Reliability Vs Cost Analysis
     q3 = df.groupby('CarrierName')['CostPerMile'].quantile(0.75).reset_index()
@@ -775,7 +775,7 @@ def prepare_data_report(df):
     min_iqr_index = iqr.idxmin()
     lowiqr = q3.iloc[min_iqr_index]['CarrierName']
 
-    costreliability_action.append(f"Opportunity to negotiate consistent rates with <strong class='comp'>{hcar}</strong>")
+    costreliability_action.append(f"Negotiate consistent rates with <strong class='comp'>{hcar}</strong>")
     costreliability_action.append(f"Shift more Shipments to <strong class='comp'>{lowiqr}</strong> If the goal is better predictability & cost stability.")
 
 

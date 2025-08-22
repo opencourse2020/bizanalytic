@@ -54,7 +54,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		});
 	}
 	const mpgmedian = dfdriver["MedianMPG"].median();
-	const ontimemedian = dfdriver["OnTimeRate"].median();
+	const ontimemedian = dfdriver["OnTimeRate"].median()*100;
 
 // Fuel Cost per Mile Distribution by Carrier
 	var apexCostMileChartOptions = {

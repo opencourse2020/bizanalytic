@@ -18,6 +18,9 @@
         .comp {color: #03afa6;}
         .odds {color: black;}
         .worst {color: darkred;}
+        ol {
+            padding-left: 0rem;
+        }
     </style>
 {#    <link href={% static "assets/css/app.min.css" %} rel="stylesheet">#}
 {% endblock css %}
@@ -101,7 +104,7 @@
                             <li>{{ lcarvar|safe }}</li>
 
                         </ul>
-                    <strong>Actions:</strong><br>
+                        <strong>Actions:</strong><br>
                         <ol type="1">
                             {% for action in costreliability_action %}
                             <li>{{ action|safe }}</li>

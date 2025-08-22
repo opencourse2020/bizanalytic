@@ -137,7 +137,9 @@ class ReportView(TemplateView):
             dff = pd.read_csv(report.routefile)
             df = clean_data(dff)
             df = calculate_kpis(df)
-            carrier_stats = prepare_carrier_stats(df).reset_index()
+            carrier_stats = prepare_carrier_stats(df)
+            carrier_stats["AvgCostPerMile"] = carrier_stats["AvgCostPerMile"].round(3)
+            carrier_stats = carrier_stats.reset_index()
             carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
             driver_stats = prepare_driver_stats(df)
             top_right, top_left, bottom_right, bottom_left, driver_actions = prepare_driver_analysis(driver_stats)
@@ -163,6 +165,7 @@ class ReportView(TemplateView):
 
 
             cost_mile = df[['CarrierName', 'CostPerMile']]
+            cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)
             cost_mile = json.loads(cost_mile.to_json(orient='records'))
             kwargs["costmile"] = cost_mile
             kwargs["carrierstats"] = carrier_stats

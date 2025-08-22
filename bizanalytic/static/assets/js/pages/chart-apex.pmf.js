@@ -26,11 +26,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	const seriesdata =[];
     const costdata =[];
 	for (let i = 0; i < df.shape[0]; i++) {
-		const costmileval =  df.iloc({rows: [i]})["AvgCostPerMile"].values[0];
-		const roundedString = costmileval.toFixed(3); // Output: "4.69" (as a string)
-    	const roundedNumber = parseFloat(roundedString);
-		console.log("Cost Per Mile", costmileval, roundedString, roundedNumber);
-		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[roundedNumber, df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
+		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgCostPerMile"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
         let a = group_df.getGroup([df.iloc({rows: [i]})["CarrierName"].values[0]]);
 		// console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
 		// console.log(a.values[1]);
@@ -155,7 +151,7 @@ var apexScatterDriverChartOptions = {
 		xaxis: {
 			tickAmount: 10,
 			labels: {
-				formatter: function(val) { return parseFloat(val).toFixed(3) }
+				// formatter: function(val) { return parseFloat(val).toFixed(3) }
 			},
 			title: {
 				text: 'Fuel Efficiency (MPG)'

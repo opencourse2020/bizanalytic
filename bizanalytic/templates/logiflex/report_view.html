@@ -216,6 +216,7 @@ $(document).ready(function() {
     full_df = {{ carrierstats|safe }};
     df_driver = {{ driverstats|safe }}
     costpermile = {{ costmile|safe }};
+    console.log(full_df);
     console.log(df_driver);
 
     dfcost = new dfd.DataFrame(costpermile);

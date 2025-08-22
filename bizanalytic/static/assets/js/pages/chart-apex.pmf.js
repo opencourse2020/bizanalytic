@@ -147,7 +147,7 @@ var apexScatterDriverChartOptions = {
 		xaxis: {
 			tickAmount: 10,
 			labels: {
-				formatter: function(val) { return parseFloat(val).toFixed(4) }
+				formatter: function(val) { return parseFloat(val).toFixed(3) }
 			},
 			title: {
 				text: 'Fuel Efficiency (MPG)'

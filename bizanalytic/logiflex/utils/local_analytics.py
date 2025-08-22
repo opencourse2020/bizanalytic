@@ -801,6 +801,7 @@ def prepare_driver_analysis(driver_stats):
         else:
             bottomleft.append(index)
     driver_actions = []
+    drivers_training = ""
     bottom_right = ""
     bottom_left = ""
     top_right = ""
@@ -824,7 +825,8 @@ def prepare_driver_analysis(driver_stats):
             if i < len(topleft):
                 drivers += ", "
         top_left = f"<strong class='bottom'>{drivers}</strong>: High Reliability but High Fuel Consumption"
-        driver_actions.append(f"Consider providing training to <strong class='bottom'>{drivers}</strong>. Also Check Trucks' overall state and Scheduled Maintenance.")
+        drivers_training = drivers
+
     if bottomright:
         drivers = ""
         i = 0
@@ -834,17 +836,19 @@ def prepare_driver_analysis(driver_stats):
             if i < len(bottomright):
                 drivers += ", "
         bottom_right = f"<strong class='bottom'>{drivers}</strong>: Low Fuel Consumption but not as Reliable as other drivers"
-        driver_actions.append(f"Incentivize <strong class='bottom'>{drivers}</strong> to improve overall Reliability")
+        driver_actions.append(f"Incentivize <strong class='bottom'>{drivers}</strong> to improve overall Reliability.")
     if bottomleft:
         drivers = ""
         i = 0
         for driver in bottomleft:
             drivers += driver
+            drivers_training += driver
             i = i + 1
             if i < len(bottomleft):
                 drivers += ", "
+                drivers_training += ", "
         bottom_left = f"<strong class='worst'>{drivers}</strong>: Inefficient and Unreliable drivers"
-        driver_actions.append(f"Recommend Eco-Driving training for these drivers: <strong class='worst'>{drivers}</strong>")
-
+        driver_actions.append(f"Recommend Eco-Driving training for these drivers: <strong class='worst'>{drivers_training}</strong>")
+        driver_actions.append(f"Check Trucks' Mechanical state, Fuel Quality and Scheduled Maintenance.")
 
     return top_right, top_left, bottom_right, bottom_left, driver_actions

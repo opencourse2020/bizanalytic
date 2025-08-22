@@ -127,8 +127,10 @@ var apexScatterDriverChartOptions = {
 				  x: mpgmedian,
 				  borderColor: '#086bda',
 				  label: {
+					borderColor: '#086bda',
 					style: {
 					  color: '#fff',
+					  background: '#086bda'
 					},
 					text: 'MPG'
 				  }

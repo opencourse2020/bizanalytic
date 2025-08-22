@@ -162,8 +162,8 @@ class ReportView(TemplateView):
             q3m = q3['CostPerMile'] - median['CostPerMile']
             mq1 = median['CostPerMile'] - q1['CostPerMile']
             giqr = abs(q3m - mq1)
-            hcar = q3.iloc[giqr.max()]['CarrierName']
-            lcar = q3.iloc[giqr.min()]['CarrierName']
+            hcar = q3.iloc[giqr.idxmax()]['CarrierName']
+            lcar = q3.iloc[giqr.idxmin()]['CarrierName']
             hcarvar = f"{hcar} has the widest cost variance (high risk due to volatility)\n"
             hcarvar = hcarvar + f"(opportunity to negotiate consistent rates with {hcar})"
             lcarvar = f"{lcar} has more consistent cost variance"

@@ -75,7 +75,13 @@
                         {% for item in contigency %}
                             <li> {{ item|safe }}</li>
                         {% endfor %}
+                    <strong>Action:</strong><br>
                     </ul>
+                    <ol type="1">
+                        {% for cont_action in contingency_action %}
+                        <li> {{ cont_action }}</li>
+                        {% endfor %}
+                    </ol>
                     </div>
                 </div>
             </div>
@@ -92,8 +98,14 @@
                         <ul style="list-style-type:disc;">
                             <li>{{ hcarvar|safe }}</li>
                             <li>{{ lcarvar|safe }}</li>
-                            <li>{{ lowiqrvar|safe }}</li>
+                            <strong>Action:</strong><br>
+
                         </ul>
+                        <ol type="1">
+                            {% for action in costreliability_action %}
+                            <li>{{ action }}</li>
+                            {% endfor %}
+                        </ol>
                     </div>
                 </div>
             </div>

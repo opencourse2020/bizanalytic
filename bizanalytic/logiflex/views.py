@@ -142,17 +142,19 @@ class ReportView(TemplateView):
 
             # Carrier Contingency and Reliability Vs Cost Analysis
             if not report.contingency_result:
-                hcarvar, lcarvar, lowiqrvar, contingency_result = prepare_data_report(df)
+                hcarvar, lcarvar, costreliability_action, contingency_result, contingency_action = prepare_data_report(df)
                 report.contingency_result = contingency_result
                 report.highvariance = hcarvar
                 report.lowvariance = lcarvar
-                report.predictable = lowiqrvar
+                report.costreliability_action = costreliability_action
+                report.contingency_action = contingency_action
                 report.save()
             else:
                 contingency_result = report.contingency_result
                 hcarvar = report.highvariance
                 lcarvar = report.lowvariance
-                lowiqrvar = report.predictable
+                costreliability_action = report.costreliability_action
+                contingency_action = report.contingency_action
 
             cost_mile = df[['CarrierName', 'CostPerMile']]
             cost_mile = json.loads(cost_mile.to_json(orient='records'))
@@ -161,7 +163,9 @@ class ReportView(TemplateView):
             kwargs["contigency"] = contingency_result
             kwargs["hcarvar"] = hcarvar
             kwargs["lcarvar"] = lcarvar
-            kwargs["lowiqrvar"] = lowiqrvar
+            kwargs["costreliability_action"] = costreliability_action
+            kwargs["contingency_action"] = contingency_action
+
         return super(ReportView, self).get_context_data(**kwargs)
 
 

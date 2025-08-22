@@ -190,7 +190,9 @@ class LogiflexReport(models.Model):
     contingency_result = models.JSONField(default=list)
     highvariance = models.CharField(max_length=255, null=True, blank=True)
     lowvariance = models.CharField(max_length=255, null=True, blank=True)
-    predictable = models.CharField(max_length=255, null=True, blank=True)
+    costreliability_action = models.JSONField(default=list)
+    contingency_action = models.JSONField(default=list)
+    predictable = models.JSONField(max_length=255, null=True, blank=True)
 
     class Meta:
         verbose_name = "LogiFlexReport"

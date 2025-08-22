@@ -191,6 +191,7 @@ def run_contingency_analysis(delivery_data):
 
     # Convert results to DataFrame
     results_df = pd.DataFrame(results)
+    results_df = results_df.sort_values('Odds_Ratio', ascending=False)
     return results_df, worst_carrier
 
 # *************************************************************************************************************
@@ -429,17 +430,7 @@ def run_analysis(dff):
     # 1. Cost vs. Reliability (Scatter Plot) [ x='AvgFreightCost', y='OnTimeRate', data=carrier_stats ]
     # 2. Cost Distribution (Boxplot)  [ data=df, x='CarrierName', y='CostPerMile' ]
 
-    results_df, worst_carrier = run_contingency_analysis(df)
-
-    # to add to summary
-    contingency_result = []
-
-    for idx, row in results_df.iterrows():
-        competitor = row['Competitor']
-        odds_ratio = row['Odds_Ratio']
-        p_value = row['P_Value']
-        contingency_result.append(
-            f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier} (p={p_value:.4f})")
+    hcarvar, lcarvar, costreliability_action, contingency_result, contingency_action = prepare_data_report(df)
 
     summary.append("Contingency table, worst carrier compared to competitors in function of ontime rate:")
     summary.extend(contingency_result)
@@ -502,7 +493,7 @@ def run_analysis(dff):
     summary.append("Recommended Actions: e.g., Investigate root causes for these 2σ outliers.")
     summary.append("\n")
 
-    return summary, contingency_result
+    return summary, hcarvar, lcarvar, costreliability_action, contingency_result, contingency_action
 
 
     # high_variance, low_variance = predict_cost(df)
@@ -754,12 +745,17 @@ def prepare_data_report(df):
     # Carrier Contingency Analysis
     results_df, worst_carrier = run_contingency_analysis(df)
     contingency_result = []
+    contingency_action = []
     for idx, row in results_df.iterrows():
         competitor = row['Competitor']
         odds_ratio = row['Odds_Ratio']
         p_value = row['P_Value']
         contingency_result.append(
             f"<strong class='comp'>{competitor}</strong class='odds'> is <strong>{odds_ratio:.2f}x</strong> to deliver on time than <strong class='worst'>{worst_carrier}</strong>")
+    if results_df.count() >= 2:
+        contingency_action.append(f"Move some of the Shipments from {worst_carrier} to {results_df.iloc[0]['Competitor']} and {results_df.iloc[1]['Competitor']}")
+    elif results_df.count() == 1:
+        contingency_action.append(f"Move some of the Shipments from {worst_carrier} to {results_df.iloc[0]['Competitor']}")
 
     # Carrier Reliability Vs Cost Analysis
     q3 = df.groupby('CarrierName')['CostPerMile'].quantile(0.75).reset_index()
@@ -771,12 +767,14 @@ def prepare_data_report(df):
     hcar = q3.iloc[giqr.idxmax()]['CarrierName']
     lcar = q3.iloc[giqr.idxmin()]['CarrierName']
     hcarvar = f"<strong class='comp'>{hcar}</strong> has the widest cost variance (high risk due to volatility)<br>"
-    hcarvar = hcarvar + f"<strong>Action:</strong> opportunity to negotiate consistent rates with <strong class='comp'>{hcar}</strong>"
     lcarvar = f"<strong class='comp'>{lcar}</strong> has more consistent cost variance"
 
     iqr = q3['CostPerMile'] - q1['CostPerMile']
     min_iqr_index = iqr.idxmin()
     lowiqr = q3.iloc[min_iqr_index]['CarrierName']
-    lowiqrvar = f"If the goal is predictability & cost stability, <strong class='comp'>{lowiqr}</strong> is the best candidate."
+    costreliability_action = []
+    costreliability_action = costreliability_action.append(f"Opportunity to negotiate consistent rates with <strong class='comp'>{hcar}</strong>")
+    costreliability_action = costreliability_action.append(f"Shift more Shipments to <strong class='comp'>{lowiqr}</strong> If the goal is better predictability & cost stability.")
 
-    return hcarvar, lcarvar, lowiqrvar, contingency_result
+
+    return hcarvar, lcarvar, costreliability_action, contingency_result, contingency_action

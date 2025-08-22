@@ -834,11 +834,17 @@ def test_validator(reportid, routefilename):
     data.to_csv(filepath, index=False)
 
     # Run analysis
-    summary, contingency_result = run_analysis(data)
+    summary, hcarvar, lcarvar, costreliability_action, contingency_result, contingency_action = run_analysis(data)
 
     json_string = json.dumps(summary)
     report.report_summary = json_string
     report.contingency_result = contingency_result
+    report.highvariance = hcarvar
+    report.lowvariance = lcarvar
+    if contingency_result:
+        report.costreliability_action = costreliability_action
+    if contingency_action:
+        report.costreliability_action = contingency_action
     report.save()
 
     logiflex_log = LogEntry.objects.create(report=report, column_report=column_report,

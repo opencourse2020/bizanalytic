@@ -5,9 +5,9 @@ Author: Sean Ngu
 Website: http://www.seantheme.com/hud/
 */
 
-var handleRenderApexChart = function(full_df, costpermile) {
+var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	df = new dfd.DataFrame(full_df);
-
+	dfdriver = new dfd.DataFrame(df_driver);
 	dfcost = new dfd.DataFrame(costpermile);
 	dfcost.sortValues("CostPerMile", { inplace: true })
 	// let carrierdata = df[['CarrierName', 'AvgFreightCost', 'OnTimeRate']];
@@ -39,15 +39,13 @@ var handleRenderApexChart = function(full_df, costpermile) {
 		// console.log(costdata);
 	}
 
-
-	// console.log(group_df);
-	// for (let i = 0; i < dfcost.shape[0]; i++) {
-	// 	console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
-	// 	console.log(df.iloc({rows: [i]})["AvgCostPerMile"].values[0]);
-	// 	console.log(df.iloc({rows: [i]})["OnTimeRate"].values[0]);
-	// 	costdata.push({x: dfcost.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgCostPerMile"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
-	// }
-
+	const driverseriesdata =[];
+	for (let i = 0; i < dfdriver.shape[0]; i++) {
+		driverseriesdata.push({
+			name: dfdriver.iloc({rows: [i]})["CarrierName"].values[0],
+			data: [[dfdriver.iloc({rows: [i]})["MedianMPG"].values[0], dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]]]
+		});
+	}
 // Fuel Cost per Mile Distribution by Carrier
 	var apexCostMileChartOptions = {
           series: [
@@ -74,78 +72,6 @@ var handleRenderApexChart = function(full_df, costpermile) {
         }
         };
 
-	// Apex = {
-	// 	title: {
-	// 		style: {
-	// 			fontSize: '14px',
-	// 			fontWeight: '600',
-	// 			fontFamily: app.font.bodyFontFamily,
-	// 			color: app.color.bodyColor
-	// 		}
-	// 	},
-	// 	legend: {
-	// 		show:true,
-	// 		fontFamily: app.font.bodyFontFamily,
-	// 		labels: { colors: app.color.bodyColor }
-	// 	},
-	// 	tooltip: {
-	// 		style: {
-    //     fontSize: '12px',
-    //     fontFamily: app.font.bodyFontFamily
-    //   }
-	// 	},
-	// 	grid: { borderColor: app.color.borderColor },
-	// 	dataLabels: {
-	// 		style: {
-	// 			fontSize: '12px',
-	// 			fontFamily: app.font.bodyFontFamily,
-	// 			fontWeight: '600',
-	// 			colors: undefined
-  	// 	}
-	// 	},
-	// 	xaxis: {
-	// 		axisBorder: {
-	// 			show: true,
-	// 			color: app.color.borderColor,
-	// 			height: 1,
-	// 			width: '100%',
-	// 			offsetX: 0,
-	// 			offsetY: -1
-	// 		},
-	// 		axisTicks: {
-	// 			show: true,
-	// 			borderType: 'solid',
-	// 			color: app.color.borderColor,
-	// 			height: 6,
-	// 			offsetX: 0,
-	// 			offsetY: 0
-	// 		},
-    //   labels: {
-	// 			style: {
-	// 				colors: app.color.bodyColor,
-	// 				fontSize: '12px',
-	// 				fontFamily: app.font.bodyFontFamily,
-	// 				fontWeight: app.font.bodyFontWeight,
-	// 				cssClass: 'apexcharts-xaxis-label',
-	// 			}
-	// 		}
-	// 	},
-	// 	yaxis: {
-	// 		labels: {
-	// 			formatter: function (val) {
-	// 				return val.toFixed(0);
-	// 			},
-	// 			style: {
-	// 				colors: app.color.bodyColor,
-	// 				fontSize: '12px',
-	// 				fontFamily: app.font.bodyFontFamily,
-	// 				fontWeight: app.font.bodyFontWeight,
-	// 				cssClass: 'apexcharts-yaxis-label',
-	// 			},
-	//
-	// 		}
-	// 	}
-	// };
 
 // Carrier Cost vs. Reliability Analysis
 	var apexScatterChartOptions = {
@@ -172,7 +98,29 @@ var handleRenderApexChart = function(full_df, costpermile) {
 		}
 	}
 
-
+var apexScatterDriverChartOptions = {
+		chart: {
+			height: 350,
+			type: 'scatter',
+			zoom: { enabled: true, type: 'xy' }
+		},
+		// colors: [app.color.theme, app.color.warning, 'rgba('+ app.color.bodyColorRgb + ', .5)'],
+		series: driverseriesdata,
+		xaxis: {
+			tickAmount: 10,
+			labels: {
+				formatter: function(val) { return parseFloat(val).toFixed(3) }
+			},
+			title: {
+				text: 'Fuel Efficiency (MPG)'
+			}
+		},
+		yaxis: { tickAmount: 7,
+		title: {
+            text: 'On-Time Delivery Rate (%)'
+          }
+		}
+	}
 
 
 	var apexScatterChart = new ApexCharts(
@@ -184,7 +132,13 @@ var handleRenderApexChart = function(full_df, costpermile) {
     var apexCostMilechart = new ApexCharts(document.querySelector("#CarrierCostPerMile"),
         apexCostMileChartOptions);
     apexCostMilechart.render();
+
 	// apexMixedChart
+	var apexScatterChart = new ApexCharts(
+		document.querySelector('#DriverMpgOnTime'),
+		apexScatterDriverChartOptions
+	);
+	apexScatterChart.render();
 
 
 	// apexPieChart

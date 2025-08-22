@@ -113,6 +113,19 @@
                     </div>
                 </div>
             </div>
+        <div class="col-md-6">
+                <div class="card shadow-sm chart-card">
+                    <div class="card-header">
+                        {% trans "Driver Productivity Matrix: On-Time Rate Vs. Median MPG" %}
+                    </div>
+                    <div class="card-body text-center">
+                            <div id="DriverMpgOnTime"></div>
+                    </div>
+                    <div class="card-footer">
+
+                    </div>
+                </div>
+            </div>
 
             <div class="col-md-4">
                 <div class="card shadow-sm">
@@ -187,6 +200,7 @@ $(document).ready(function() {
 
     {#full_df = {{ carrierstats|safe }};#}
     full_df = {{ carrierstats|safe }};
+    df_driver = {{ driverstats|safe }}
     costpermile = {{ costmile|safe }};
     console.log(costpermile);
 
@@ -217,7 +231,7 @@ $(document).ready(function() {
 
 
 
-    handleRenderApexChart(full_df, costpermile);
+    handleRenderApexChart(full_df, costpermile, df_driver);
 	{#handleRenderApexChart(full_df);#}
 
 	$(document).on('theme-reload', function() {

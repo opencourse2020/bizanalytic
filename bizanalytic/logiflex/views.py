@@ -139,6 +139,8 @@ class ReportView(TemplateView):
             df = calculate_kpis(df)
             carrier_stats = prepare_carrier_stats(df).reset_index()
             carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
+            driver_stats = prepare_driver_stats(df)
+            driver_stats = json.loads(driver_stats.to_json(orient='records'))
 
             # Carrier Contingency and Reliability Vs Cost Analysis
             if not report.contingency_result:
@@ -165,7 +167,7 @@ class ReportView(TemplateView):
             kwargs["lcarvar"] = lcarvar
             kwargs["costreliability_action"] = costreliability_action
             kwargs["contingency_action"] = contingency_action
-
+            kwargs["driverstats"] = driver_stats
         return super(ReportView, self).get_context_data(**kwargs)
 
 

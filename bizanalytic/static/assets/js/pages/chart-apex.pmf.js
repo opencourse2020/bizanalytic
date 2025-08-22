@@ -46,6 +46,9 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 			data: [[dfdriver.iloc({rows: [i]})["MedianMPG"].values[0], dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]]]
 		});
 	}
+	mpgmedian = dfdriver["MedianMPG"].median();
+	ontimemedian = dfdriver["OnTimeRate"].median();
+
 // Fuel Cost per Mile Distribution by Carrier
 	var apexCostMileChartOptions = {
           series: [
@@ -104,6 +107,34 @@ var apexScatterDriverChartOptions = {
 			type: 'scatter',
 			zoom: { enabled: true, type: 'xy' }
 		},
+		annotations: {
+		  yaxis: [
+			{
+			  y: ontimemedian,
+			  borderColor: '#00E396',
+			  label: {
+				borderColor: '#00E396',
+				style: {
+				  color: '#fff',
+				  background: '#00E396'
+				},
+				text: 'On-Time'
+			  }
+			}
+		  ],
+			xaxis: [
+				{
+				  x: new Date('23 Nov 2017').getTime(),
+				  borderColor: '#086bda',
+				  label: {
+					style: {
+					  color: '#fff',
+					},
+					text: 'MPG'
+				  }
+				}
+			  ],
+		},
 		// colors: [app.color.theme, app.color.warning, 'rgba('+ app.color.bodyColorRgb + ', .5)'],
 		series: driverseriesdata,
 		xaxis: {
@@ -119,7 +150,8 @@ var apexScatterDriverChartOptions = {
 		title: {
             text: 'On-Time Delivery Rate (%)'
           }
-		}
+		},
+
 	}
 
 

@@ -795,9 +795,9 @@ def prepare_driver_analysis(driver_stats):
         if row['MedianMPG'] > mpgmedian and row['OnTimeRate'] > ontimemedian:
             topright.append(index)
         elif row['MedianMPG'] > mpgmedian and row['OnTimeRate'] < ontimemedian:
-            topleft.append(index)
-        elif row['MedianMPG'] < mpgmedian and row['OnTimeRate'] > ontimemedian:
             bottomright.append(index)
+        elif row['MedianMPG'] < mpgmedian and row['OnTimeRate'] > ontimemedian:
+            topleft.append(index)
         else:
             bottomleft.append(index)
     bottom_right = ""
@@ -822,7 +822,7 @@ def prepare_driver_analysis(driver_stats):
             i = i + 1
             if i < len(topleft):
                 drivers += ", "
-        top_left = f"<strong class='comp'>{drivers}</strong>: High Reliability but High Fuel Consumption"
+        top_left = f"<strong class='bottom'>{drivers}</strong>: High Reliability but High Fuel Consumption"
 
     if bottomright:
         drivers = ""
@@ -832,7 +832,7 @@ def prepare_driver_analysis(driver_stats):
             i = i + 1
             if i < len(bottomright):
                 drivers += ", "
-        bottom_right = f"<strong class='comp'>{drivers}</strong>: Low Fuel Consumption but not as Reliable as other drivers"
+        bottom_right = f"<strong class='bottom'>{drivers}</strong>: Low Fuel Consumption but not as Reliable as other drivers"
 
     if bottomleft:
         drivers = ""

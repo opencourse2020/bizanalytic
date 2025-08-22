@@ -148,7 +148,7 @@ class ReportView(TemplateView):
                     odds_ratio = row['Odds_Ratio']
                     p_value = row['P_Value']
                     contingency_result.append(
-                        f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier}")
+                        f"<strong>{competitor}</strong> is <strong>{odds_ratio:.2f}x</strong> to deliver on time than <strong>{worst_carrier}</strong>")
                 report.contingency_result = contingency_result
                 report.save()
             else:

@@ -66,9 +66,11 @@
                         <div id="CarrierCostReliabilityChart"></div>
                     </div>
                     <div class="card-footer">
+                    <ul>
                         {% for item in contigency %}
-                            <p> {{ item }}</p>
+                            <li> {{ item }}</li>
                         {% endfor %}
+                    </ul>
                     </div>
                 </div>
             </div>
@@ -82,9 +84,11 @@
                             <div id="CarrierCostPerMile"></div>
                     </div>
                     <div class="card-footer">
-                        <p>{{ hcarvar|safe }}</p>
-                        <p>{{ lcarvar|safe }}</p>
-                        <p>{{ lowiqrvar|safe }}</p>
+                        <ul>
+                            <li>{{ hcarvar|safe }}</li>
+                            <li>{{ lcarvar|safe }}</li>
+                            <li>{{ lowiqrvar|safe }}</li>
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -68,7 +68,7 @@
                     <div class="card-footer">
                     <ul>
                         {% for item in contigency %}
-                            <li> {{ item }}</li>
+                            <li> {{ item|safe }}</li>
                         {% endfor %}
                     </ul>
                     </div>

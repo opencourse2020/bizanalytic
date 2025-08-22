@@ -780,3 +780,68 @@ def prepare_data_report(df):
 
 
     return hcarvar, lcarvar, costreliability_action, contingency_result, contingency_action
+
+
+def prepare_driver_analysis(df):
+    driver_stats = prepare_driver_stats(df).reset_index()
+    mpgmedian = driver_stats['MedianMPG'].median()
+    ontimemedian = driver_stats['OnTimeRate'].median()
+
+    topright = []
+    topleft = []
+    bottomright = []
+    bottomleft = []
+    for index, row in driver_stats.iterrows():
+        if row['MedianMPG'] > mpgmedian and row['OnTimeRate'] > ontimemedian:
+            topright.append(index)
+        elif row['MedianMPG'] > mpgmedian and row['OnTimeRate'] < ontimemedian:
+            topleft.append(index)
+        elif row['MedianMPG'] < mpgmedian and row['OnTimeRate'] > ontimemedian:
+            bottomright.append(index)
+        else:
+            bottomleft.append(index)
+    bottom_right = ""
+    bottom_left = ""
+    top_right = ""
+    top_left = ""
+    if topright:
+        drivers = ""
+        i = 0
+        for driver in topright:
+            drivers += driver
+            i = i + 1
+            if i < len(topright):
+                drivers += ", "
+        top_right = f"<strong class='comp'>{drivers}</strong>: High Efficiency + High Reliability"
+
+    if topleft:
+        drivers = ""
+        i = 0
+        for driver in topleft:
+            drivers += driver
+            i = i + 1
+            if i < len(topleft):
+                drivers += ", "
+        top_left = f"<strong class='comp'>{drivers}</strong>: High Reliability but High Fuel Consumption"
+
+    if bottomright:
+        drivers = ""
+        i = 0
+        for driver in bottomright:
+            drivers += driver
+            i = i + 1
+            if i < len(bottomright):
+                drivers += ", "
+        bottom_right = f"<strong class='comp'>{drivers}</strong>: Low Fuel Consumption but not as Reliable as other drivers"
+
+    if bottomleft:
+        drivers = ""
+        i = 0
+        for driver in bottomleft:
+            drivers += driver
+            i = i + 1
+            if i < len(bottomleft):
+                drivers += ", "
+        bottom_left = f"<strong class='worst'>{drivers}</strong>: Inefficient and Unreliable drivers"
+
+    return top_right, top_left, bottom_right, bottom_left

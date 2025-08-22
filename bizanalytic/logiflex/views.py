@@ -139,7 +139,9 @@ class ReportView(TemplateView):
             df = calculate_kpis(df)
             carrier_stats = prepare_carrier_stats(df).reset_index()
             carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
-            driver_stats = prepare_driver_stats(df).reset_index()
+            driver_stats = prepare_driver_stats(df)
+            top_right, top_left, bottom_right, bottom_left = prepare_driver_analysis(driver_stats)
+            driver_stats = driver_stats.reset_index()
             driver_stats = json.loads(driver_stats.to_json(orient='records'))
 
             # Carrier Contingency and Reliability Vs Cost Analysis
@@ -158,6 +160,8 @@ class ReportView(TemplateView):
                 costreliability_action = report.costreliability_action
                 contingency_action = report.contingency_action
 
+
+
             cost_mile = df[['CarrierName', 'CostPerMile']]
             cost_mile = json.loads(cost_mile.to_json(orient='records'))
             kwargs["costmile"] = cost_mile
@@ -168,6 +172,10 @@ class ReportView(TemplateView):
             kwargs["costreliability_action"] = costreliability_action
             kwargs["contingency_action"] = contingency_action
             kwargs["driverstats"] = driver_stats
+            kwargs["top_right"] = top_right
+            kwargs["top_left"] = top_left
+            kwargs["bottom_right"] = bottom_right
+            kwargs["bottom_left"] = bottom_left
         return super(ReportView, self).get_context_data(**kwargs)
 
 

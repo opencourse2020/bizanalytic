@@ -825,7 +825,7 @@ def prepare_driver_analysis(driver_stats):
             if i < len(topleft):
                 drivers += ", "
         top_left = f"<strong class='bottom'>{drivers}</strong>: High Reliability but High Fuel Consumption"
-        drivers_training = drivers
+        drivers_training = drivers + ", "
 
     if bottomright:
         drivers = ""

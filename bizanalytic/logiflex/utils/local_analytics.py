@@ -752,9 +752,9 @@ def prepare_data_report(df):
         p_value = row['P_Value']
         contingency_result.append(
             f"<strong class='comp'>{competitor}</strong class='odds'> is <strong>{odds_ratio:.2f}x</strong> to deliver on time than <strong class='worst'>{worst_carrier}</strong>")
-    if results_df.count() >= 2:
+    if results_df['Competitor'].count().item() >= 2:
         contingency_action.append(f"Move some of the Shipments from {worst_carrier} to {results_df.iloc[0]['Competitor']} and {results_df.iloc[1]['Competitor']}")
-    elif results_df.count() == 1:
+    elif results_df['Competitor'].count().item() == 1:
         contingency_action.append(f"Move some of the Shipments from {worst_carrier} to {results_df.iloc[0]['Competitor']}")
 
     # Carrier Reliability Vs Cost Analysis

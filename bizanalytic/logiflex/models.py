@@ -188,6 +188,9 @@ class LogiflexReport(models.Model):
     report_approved = models.BooleanField(default=False)
     viewed = models.BooleanField(default=False)
     contingency_result = models.JSONField(default=list)
+    highvariance = models.CharField(max_length=255, null=True, blank=True)
+    lowvariance = models.CharField(max_length=255, null=True, blank=True)
+    predictable = models.CharField(max_length=255, null=True, blank=True)
 
     class Meta:
         verbose_name = "LogiFlexReport"

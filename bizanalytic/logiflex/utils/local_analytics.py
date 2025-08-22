@@ -747,3 +747,36 @@ def run_All_LLM_Analysis():
     else:
         numreports = 0
     return f"{numreports} are processed"
+
+
+def prepare_data_report(df):
+
+    # Carrier Contingency Analysis
+    results_df, worst_carrier = run_contingency_analysis(df)
+    contingency_result = []
+    for idx, row in results_df.iterrows():
+        competitor = row['Competitor']
+        odds_ratio = row['Odds_Ratio']
+        p_value = row['P_Value']
+        contingency_result.append(
+            f"<strong class='comp'>{competitor}</strong class='odds'> is <strong>{odds_ratio:.2f}x</strong> to deliver on time than <strong class='worst'>{worst_carrier}</strong>")
+
+    # Carrier Reliability Vs Cost Analysis
+    q3 = df.groupby('CarrierName')['CostPerMile'].quantile(0.75).reset_index()
+    q1 = df.groupby('CarrierName')['CostPerMile'].quantile(0.25).reset_index()
+    median = df.groupby('CarrierName')['CostPerMile'].median().reset_index()
+    q3m = q3['CostPerMile'] - median['CostPerMile']
+    mq1 = median['CostPerMile'] - q1['CostPerMile']
+    giqr = abs(q3m - mq1)
+    hcar = q3.iloc[giqr.idxmax()]['CarrierName']
+    lcar = q3.iloc[giqr.idxmin()]['CarrierName']
+    hcarvar = f"<strong class='comp'>{hcar}</strong> has the widest cost variance (high risk due to volatility)<br>"
+    hcarvar = hcarvar + f"<strong>Action:</strong> opportunity to negotiate consistent rates with <strong class='comp'>{hcar}</strong>"
+    lcarvar = f"<strong class='comp'>{lcar}</strong> has more consistent cost variance"
+
+    iqr = q3['CostPerMile'] - q1['CostPerMile']
+    min_iqr_index = iqr.idxmin()
+    lowiqr = q3.iloc[min_iqr_index]['CarrierName']
+    lowiqrvar = f"If the goal is predictability & cost stability, <strong class='comp'>{lowiqr}</strong> is the best candidate."
+
+    return hcarvar, lcarvar, lowiqrvar, contingency_result

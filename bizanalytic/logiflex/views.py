@@ -137,46 +137,25 @@ class ReportView(TemplateView):
             dff = pd.read_csv(report.routefile)
             df = clean_data(dff)
             df = calculate_kpis(df)
-            contingency_result = []
+            carrier_stats = prepare_carrier_stats(df).reset_index()
+            carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
+
+            # Carrier Contingency and Reliability Vs Cost Analysis
             if not report.contingency_result:
-                results_df, worst_carrier = run_contingency_analysis(df)
-
-                # to add to summary
-
-                for idx, row in results_df.iterrows():
-                    competitor = row['Competitor']
-                    odds_ratio = row['Odds_Ratio']
-                    p_value = row['P_Value']
-                    contingency_result.append(
-                        f"<strong class='comp'>{competitor}</strong class='odds'> is <strong>{odds_ratio:.2f}x</strong> to deliver on time than <strong class='worst'>{worst_carrier}</strong>")
+                hcarvar, lcarvar, lowiqrvar, contingency_result = prepare_data_report(df)
                 report.contingency_result = contingency_result
+                report.highvariance = hcarvar
+                report.lowvariance = lcarvar
+                report.predictable = lowiqrvar
                 report.save()
             else:
                 contingency_result = report.contingency_result
+                hcarvar = report.highvariance
+                lcarvar = report.lowvariance
+                lowiqrvar = report.predictable
 
-            carrier_stats = prepare_carrier_stats(df).reset_index()
-            carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
-            q3 = df.groupby('CarrierName')['CostPerMile'].quantile(0.75).reset_index()
-            q1 = df.groupby('CarrierName')['CostPerMile'].quantile(0.25).reset_index()
-            median = df.groupby('CarrierName')['CostPerMile'].median().reset_index()
-            q3m = q3['CostPerMile'] - median['CostPerMile']
-            mq1 = median['CostPerMile'] - q1['CostPerMile']
-            giqr = abs(q3m - mq1)
-            hcar = q3.iloc[giqr.idxmax()]['CarrierName']
-            lcar = q3.iloc[giqr.idxmin()]['CarrierName']
-            hcarvar = f"<strong class='comp'>{hcar}</strong> has the widest cost variance (high risk due to volatility)\n"
-            hcarvar = hcarvar + f"(opportunity to negotiate consistent rates with <strong class='comp'>{hcar}</strong>)"
-            lcarvar = f"<strong class='comp'>{lcar}</strong> has more consistent cost variance"
-
-            iqr = q3['CostPerMile'] - q1['CostPerMile']
-            # min_iqr = iqr.min()
-            min_iqr_index = iqr.idxmin()
-            lowiqr = q3.iloc[min_iqr_index]['CarrierName']
-            lowiqrvar = f"If the goal is predictability & cost stability, <strong class='comp'>{lowiqr}</strong> is the best candidate."
             cost_mile = df[['CarrierName', 'CostPerMile']]
             cost_mile = json.loads(cost_mile.to_json(orient='records'))
-            print(cost_mile)
-            # print("carrier stats")
             kwargs["costmile"] = cost_mile
             kwargs["carrierstats"] = carrier_stats
             kwargs["contigency"] = contingency_result

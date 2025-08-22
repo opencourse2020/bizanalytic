@@ -46,8 +46,8 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 			data: [[dfdriver.iloc({rows: [i]})["MedianMPG"].values[0], dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]]]
 		});
 	}
-	mpgmedian = dfdriver["MedianMPG"].median();
-	ontimemedian = dfdriver["OnTimeRate"].median();
+	const mpgmedian = dfdriver["MedianMPG"].median();
+	const ontimemedian = dfdriver["OnTimeRate"].median();
 
 // Fuel Cost per Mile Distribution by Carrier
 	var apexCostMileChartOptions = {
@@ -124,7 +124,7 @@ var apexScatterDriverChartOptions = {
 		  ],
 			xaxis: [
 				{
-				  x: new Date('23 Nov 2017').getTime(),
+				  x: mpgmedian,
 				  borderColor: '#086bda',
 				  label: {
 					style: {

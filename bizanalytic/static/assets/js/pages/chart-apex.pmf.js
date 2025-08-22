@@ -38,16 +38,13 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
         costdata.push({x: df.iloc({rows: [i]})["CarrierName"].values[0], y: [min, q1, median, q3, max]})
 		// console.log(costdata);
 	}
+	console.log("seriesdata", seriesdata);
 
 	const driverseriesdata =[];
 	for (let i = 0; i < dfdriver.shape[0]; i++) {
-		const ontimeval =  dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]*100;
-		const roundedString = ontimeval.toFixed(2); // Output: "4.69" (as a string)
-    	const roundedNumber = parseFloat(roundedString);
-		console.log("Ontime rate", ontimeval, roundedString, roundedNumber);
 		driverseriesdata.push({
 			name: dfdriver.iloc({rows: [i]})["DriverName"].values[0],
-			data: [[dfdriver.iloc({rows: [i]})["MedianMPG"].values[0], roundedNumber]]
+			data: [[dfdriver.iloc({rows: [i]})["MedianMPG"].values[0], dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]*100]]
 		});
 	}
 	const mpgmedian = dfdriver["MedianMPG"].median();
@@ -151,7 +148,7 @@ var apexScatterDriverChartOptions = {
 		xaxis: {
 			tickAmount: 10,
 			labels: {
-				// formatter: function(val) { return parseFloat(val).toFixed(3) }
+				formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},
 			title: {
 				text: 'Fuel Efficiency (MPG)'

@@ -42,7 +42,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	const driverseriesdata =[];
 	for (let i = 0; i < dfdriver.shape[0]; i++) {
 		driverseriesdata.push({
-			name: dfdriver.iloc({rows: [i]})["CarrierName"].values[0],
+			name: dfdriver.iloc({rows: [i]})["DriverName"].values[0],
 			data: [[dfdriver.iloc({rows: [i]})["MedianMPG"].values[0], dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]]]
 		});
 	}

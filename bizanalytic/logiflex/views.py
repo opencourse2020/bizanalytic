@@ -727,16 +727,13 @@ class WebhookView(View):
             # user = self.request.user
             # print("User Email:", user.email)
             amount_paid = expanded_session.amount_total / 100  # Convert to currency
-            if amount_paid == 49:
-                reporttype = "onetime"
-            elif amount_paid == 79:
-                reporttype = "monthly"
-            elif amount_paid == 199:
-                reporttype = "quarter"
+
             email = expanded_session.customer_details.email
             email = email.lower()
             customer_name = expanded_session.customer_details.name
             phone_nb = expanded_session.customer_details.phone
+            print(f"Line items: {expanded_session.line_items}")
+            # stripe_price_id = expanded_session.line_items.data[].price.id
             print(f"Payment was successful for session: {session['id']}")
             print(f"Name: {customer_name}")
             print(f"Email: {email}")

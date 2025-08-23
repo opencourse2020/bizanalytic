@@ -5,7 +5,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 import json
 from celery import shared_task
-from .prompts import SYSTEM_PROMPT
+from .prompts import *
 from bizanalytic.logiflex.models import *
 from openai import OpenAI
 from django.conf import settings
@@ -716,6 +716,136 @@ def run_LLM_analysis(flags, pu):
     report.report_status = "download"
     report.report_date = datetime.now()
     report.save()
+    return raw
+
+
+def run_carrier_analysis(flags, carrier_stats, client_name):
+    summary_for_prompt = carrier_stats
+
+    user_prompt = f"""
+                                    Analyze freight route data for client: {client_name}.
+    
+                                    Objective:
+                                    - Executive-ready Fleet Efficiency Report KPIs, and actionable recommendations.
+                                    
+                                    Data notes:
+                                    - The dataset represent a summary of carriers performance Comparative Table with some kpis
+                                    
+                                    Preprocessing flags:
+                                    {flags}
+    
+                                    Dataset (compact summary for analysis):
+                                    {summary_for_prompt}
+                                    """
+
+    # Call Responses API with JSON schema enforcement
+    resp = client.responses.create(model="gpt-4.1",
+                                   temperature=0.2,
+                                   max_output_tokens=3500,
+
+                                   input=[
+                                       {"role": "system", "content": carrier_system_prompt},
+                                       {"role": "user", "content": user_prompt}], )
+    try:
+        raw = resp.output_text
+    except Exception:
+        # Fallback: dig into content structure
+        raw = ""
+        if hasattr(resp, "output") and resp.output:
+            # collect all text parts
+            for blk in resp.output:
+                if hasattr(blk, "content"):
+                    for c in blk.content:
+                        if getattr(c, "type", "") == "output_text":
+                            raw += c.text
+
+    return raw
+
+
+def run_driver_analysis(flags, driver_stats, client_name):
+
+    user_prompt = f"""
+                        Analyze freight route data for client: {client_name}.
+
+                        Objective:
+                        - Executive-ready Fleet Efficiency Report KPIs, and actionable recommendations.
+
+                        Data notes:
+                        - The dataset represent a summary of drivers performance Comparative Table with some kpis
+
+                        Preprocessing flags:
+                        {flags}
+
+                        Dataset (compact summary for analysis):
+                        {driver_stats}
+                        """
+
+    # Call Responses API with JSON schema enforcement
+    resp = client.responses.create(model="gpt-4.1",
+                                   temperature=0.2,
+                                   max_output_tokens=3500,
+
+                                   input=[
+                                       {"role": "system", "content": driver_system_prompt},
+                                       {"role": "user", "content": user_prompt}], )
+    try:
+        raw = resp.output_text
+    except Exception:
+        # Fallback: dig into content structure
+        raw = ""
+        if hasattr(resp, "output") and resp.output:
+            # collect all text parts
+            for blk in resp.output:
+                if hasattr(blk, "content"):
+                    for c in blk.content:
+                        if getattr(c, "type", "") == "output_text":
+                            raw += c.text
+
+
+    return raw
+
+
+def run_route_analysis(flags, route_stats, client_name):
+
+    summary_for_prompt = route_stats
+
+    user_prompt = f"""
+                                    Analyze freight route data for client: {client_name}.
+
+                                    Objective:
+                                    - Executive-ready Fleet Efficiency Report KPIs, and actionable recommendations.
+
+                                    Data notes:
+                                    - The dataset represent a summary of routes performance Comparative Table with some kpis
+
+                                    Preprocessing flags:
+                                    {flags}
+
+                                    Dataset (compact summary for analysis):
+                                    {summary_for_prompt}
+                                    """
+
+    # Call Responses API with JSON schema enforcement
+    resp = client.responses.create(model="gpt-4.1",
+                                   temperature=0.2,
+                                   max_output_tokens=3500,
+
+                                   input=[
+                                       {"role": "system", "content": route_system_prompt},
+                                       {"role": "user", "content": user_prompt}], )
+    try:
+        raw = resp.output_text
+    except Exception:
+        # Fallback: dig into content structure
+        raw = ""
+        if hasattr(resp, "output") and resp.output:
+            # collect all text parts
+            for blk in resp.output:
+                if hasattr(blk, "content"):
+                    for c in blk.content:
+                        if getattr(c, "type", "") == "output_text":
+                            raw += c.text
+
     return raw
 
 

@@ -81,10 +81,11 @@ class LogiFlexClient(models.Model):
 
 class PricingPlan(models.Model):
     PLAN_CHOICES = [
-        ('short', _("Free Short Report")),
-        ('onetime', _("One-Time Report")),
-        ('monthly', _("Paid Monthly Subscription")),
-        ('quarterly', _("Paid Quarterly Plan")),
+        ('onetime_lite', _("One-Time Lite Report")),
+        ('onetime_advanced', _("One-Time Advanced Report")),
+        ('starter', _("Starter Monthly Subscription")),
+        ('pro', _("Pro Monthly Subscription")),
+        ('quarterly', _("Pro Quarterly Plan")),
     ]
     name = models.CharField(max_length=50, choices=PLAN_CHOICES)
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
@@ -96,10 +97,11 @@ class PricingPlan(models.Model):
 
 class ServicePayment(models.Model):
     servicetype = (
-        ('short', _("Free Short Report")),
-        ('onetime', _("One-Time Report")),
-        ('monthly', _("Paid Monthly Subscription")),
-        ('quarterly', _("Paid Quarterly Plan")),
+        ('onetime_lite', _("One-Time Lite Report")),
+        ('onetime_advanced', _("One-Time Advanced Report")),
+        ('starter', _("Starter Monthly Subscription")),
+        ('pro', _("Pro Monthly Subscription")),
+        ('quarterly', _("Pro Quarterly Plan")),
     )
     client = models.ForeignKey(LogiFlexClient, on_delete=models.SET_NULL, null=True)
     stripe_checkout_id = models.CharField(max_length=200, null=True, blank=True)
@@ -107,6 +109,8 @@ class ServicePayment(models.Model):
     is_active = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField(blank=True, null=True)
+    lite_credits = models.SmallIntegerField(default=0)
+    advanced_credits = models.SmallIntegerField(default=0)
     # payment_success = models.BooleanField(default=False)
     # amount = models.DecimalField(max_digits=6, decimal_places=2)
     # refund_issued = models.BooleanField(default=False)
@@ -178,6 +182,9 @@ class LogiflexReport(models.Model):
                                                    max_upload_size=5242880, null=True, blank=True)
     report_text = models.JSONField(blank=True, null=True, default=dict)
     report_summary = models.TextField(null=True, blank=True)
+    report_carrier = models.TextField(null=True, blank=True)
+    report_driver = models.TextField(null=True, blank=True)
+    report_route = models.TextField(null=True, blank=True)
     report_type = models.CharField(max_length=5, choices=reporttype, null=True, blank=True)
     download_code = models.CharField(max_length=8, null=True, blank=True)
     report_status = models.CharField(max_length=10, choices=status, default="processing")

@@ -92,9 +92,9 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		// colors: [app.color.theme, app.color.warning, 'rgba('+ app.color.bodyColorRgb + ', .5)'],
 		series: seriesdata,
 		xaxis: {
-			// tickAmount: 10,
+			tickAmount: undefined,
 			labels: {
-				formatter: function(val) { return parseFloat(val).toFixed(3) }
+				formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},
 			title: {
 				text: 'Average Cost/Mile ($)'

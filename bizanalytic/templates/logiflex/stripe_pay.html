@@ -97,6 +97,34 @@
   }
 }
     </style>
+
+    <style>
+    .ribbon-container {
+    width: 6.5rem;
+    height: 6.625rem;
+    overflow: hidden;
+    position: absolute;
+    top: -1px;
+    right: -1px
+}
+
+.ribbon {
+    text-align: center;
+    font-size: .8125rem;
+    line-height: 1.6924;
+    font-weight: 500;
+    text-transform: uppercase;
+    position: relative;
+    padding: .3125rem 0;
+    left: -.6875rem;
+    top: 1.563rem;
+    width: 9.375rem;
+    z-index: 10;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    box-shadow: 0 4px 6px rgba(0,0,0,.1)
+}
+    </style>
 {% endblock css %}
 
 {% block header_left %}
@@ -176,6 +204,9 @@
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".3s">
                         <div class="single-pricing-2 popular">
                             <div class="content-top">
+                                <div class="ribbon-container">
+								<div class="ribbon bg-indigo text-white">Top value</div>
+							    </div>
                                 <div class="pricing-title text-center">
                                     <h4 class="title">🚛 Pro</h4>
                                 </div>
@@ -183,12 +214,12 @@
                                     <div class="d-flex align-items-center gap-2">
                                         <h3 class="price">$79</h3>
                                         <span>/{% trans "Month" %}</span>
-                                        <div class="app-download">
-                                          <label id="first-title">AI + Expert-Verified</label>
-                                          <label id="second-title">Advanced Report</label>
-                                          <i class="fa fa-brands bounce"></i>
-                                          <a class="close-download-app fa fa-close"></a>
-                                      </div>
+{#                                        <div class="app-download">#}
+{#                                          <label id="first-title">AI + Expert-Verified</label>#}
+{#                                          <label id="second-title">Advanced Report</label>#}
+{#                                          <i class="fa fa-brands bounce"></i>#}
+{#                                          <a class="close-download-app fa fa-close"></a>#}
+{#                                      </div>#}
                                     </div>
                                     <img src={% static "vendor/transport/assets/images/icon-20.png" %} alt="icon" class="price-icon">
                                 </div>

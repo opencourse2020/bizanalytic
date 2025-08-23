@@ -14,20 +14,22 @@
     {{ block.super }}
     <style>
     .app-download {
+        width: 0px;
+        height: 0px;
       display: flex;
       justify-content: space-around;
       align-items: center;
       direction: rtl;
       background-color: #dc1e4d;
       top: 0;
-      position: fixed;
+      position: relative;
       flex-direction: column;
       z-index: 100;
       left: 2rem;
       border-bottom-right-radius: 50%;
       border-bottom-left-radius: 50%;
       box-shadow: 1px 2px 14px 5px #00000070;
-      padding: 1rem;
+      padding: 0rem;
       &:focus {
         outline: none;
       }
@@ -233,9 +235,11 @@
 
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".3s">
                         <div class="single-pricing-2 popular">
-                            <div class="ribbon-container">
-								<div class="ribbon bg-indigo text-white" style="box-sizing: border-box">Top value</div>
-							    </div>
+                            <div class="app-download">
+                                <label id="first-title" style="color: white">Best</label>
+                                <label id="second-title" style="color: white">Value</label>
+                                <i class="ri-vip-crown-2-fill bounce" style="color: goldenrod"></i>
+                            </div>
                             <div class="content-top">
 
                                 <div class="pricing-title text-center">
@@ -245,11 +249,7 @@
                                     <div class="d-flex align-items-center gap-2">
                                         <h3 class="price">$79</h3>
                                         <span>/{% trans "Month" %}</span>
-                                        <div class="app-download">
-                                          <label id="first-title">Best</label>
-                                          <label id="second-title">Value</label>
-                                          <i class="ri-vip-crown-2-fill bounce"></i>
-                                      </div>
+
                                     </div>
                                     <img src={% static "vendor/transport/assets/images/icon-20.png" %} alt="icon" class="price-icon">
                                 </div>

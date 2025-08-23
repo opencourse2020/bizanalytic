@@ -251,9 +251,9 @@ $(document).ready(function() {
 
 	$(document).on('theme-reload', function() {
 		{#$('#churncontractiondonut, #apexLineChart, #apexColumnChart, #apexAreaChart, #apexBarChart, #apexMixedChart, #apexCandlestickChart, #apexBubbleChart, #apexScatterChart, #apexHeatmapChart, #apexPieChart, #apexRadialBarChart, #apexRadarChart').empty();#}
-        $('#CarrierCostReliabilityChart, #CarrierCostPerMile' ).empty();
+        $('#CarrierCostReliabilityChart, #CarrierCostPerMile, #DriverMpgOnTime' ).empty();
 
-		handleRenderApexChart(full_df, costpermile);
+		handleRenderApexChart(full_df, costpermile, df_driver);
 	});
 });
     </script>

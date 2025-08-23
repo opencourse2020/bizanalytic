@@ -92,7 +92,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		// colors: [app.color.theme, app.color.warning, 'rgba('+ app.color.bodyColorRgb + ', .5)'],
 		series: seriesdata,
 		xaxis: {
-			tickAmount: undefined,
+			tickAmount: 10,
 			labels: {
 				formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},

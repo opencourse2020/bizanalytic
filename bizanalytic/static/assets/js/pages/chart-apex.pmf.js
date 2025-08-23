@@ -49,8 +49,8 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	}
 	const drivermpgmedian = dfdriver["MedianMPG"].median();
 	const driverontimemedian = dfdriver["OnTimeRate"].median()*100;
-	const carrierfreightcostmedian = df["AvgFreightCost"].median();
-	const carrierontimemedian = df["OnTimeRate"].median();
+	const carrierfreightcostmedian = d3.quantile(df["AvgFreightCost"].values(), 0.75);
+	const carrierontimemedian = d3.quantile(df["OnTimeRate"].values(), 0.75);
 
 // Fuel Cost per Mile Distribution by Carrier
 	var apexCostMileChartOptions = {

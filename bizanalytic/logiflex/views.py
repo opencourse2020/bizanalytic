@@ -162,7 +162,7 @@ class ReportView(TemplateView):
                 costreliability_action = report.costreliability_action
                 contingency_action = report.contingency_action
 
-
+            print(carrier_stats)
 
             cost_mile = df[['CarrierName', 'CostPerMile']]
             cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)

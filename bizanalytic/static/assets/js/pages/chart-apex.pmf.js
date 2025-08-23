@@ -26,7 +26,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	const seriesdata =[];
     const costdata =[];
 	for (let i = 0; i < df.shape[0]; i++) {
-		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgCostPerMile"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
+		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgCostPerMile"].values[0]*10, df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
         let a = group_df.getGroup([df.iloc({rows: [i]})["CarrierName"].values[0]]);
 		// console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
 		// console.log(a.values[1]);

@@ -26,7 +26,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	const seriesdata =[];
     const costdata =[];
 	for (let i = 0; i < df.shape[0]; i++) {
-		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgCostPerMile"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
+		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgFreightCost"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
         let a = group_df.getGroup([df.iloc({rows: [i]})["CarrierName"].values[0]]);
 		// console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
 		// console.log(a.values[1]);
@@ -49,7 +49,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	}
 	const drivermpgmedian = dfdriver["MedianMPG"].median();
 	const driverontimemedian = dfdriver["OnTimeRate"].median()*100;
-	const carriercostmilemedian = df["AvgCostPerMile"].median();
+	const carrierfreightcostmedian = df["AvgFreightCost"].median();
 	const carrierontimemedian = df["OnTimeRate"].median();
 
 // Fuel Cost per Mile Distribution by Carrier
@@ -108,7 +108,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		  ],
 			xaxis: [
 				{
-				  x: carriercostmilemedian,
+				  x: carrierfreightcostmedian,
 				  borderColor: '#086bda',
 				  label: {
 					borderColor: '#086bda',
@@ -129,7 +129,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 				formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},
 			title: {
-				text: 'Average Cost/Mile ($)'
+					text: 'Average Freight Cost ($)'
 			}
 		},
 		yaxis: { tickAmount: 7,

@@ -26,7 +26,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	const seriesdata =[];
     const costdata =[];
 	for (let i = 0; i < df.shape[0]; i++) {
-		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgCostPerMile"].values[0]*10, df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
+		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgCostPerMile"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
         let a = group_df.getGroup([df.iloc({rows: [i]})["CarrierName"].values[0]]);
 		// console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
 		// console.log(a.values[1]);
@@ -47,8 +47,10 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 			data: [[dfdriver.iloc({rows: [i]})["MedianMPG"].values[0], dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]*100]]
 		});
 	}
-	const mpgmedian = dfdriver["MedianMPG"].median();
-	const ontimemedian = dfdriver["OnTimeRate"].median()*100;
+	const drivermpgmedian = dfdriver["MedianMPG"].median();
+	const driverontimemedian = dfdriver["OnTimeRate"].median()*100;
+	const carriercostmilemedian = df["AvgCostPerMile"].median();
+	const carrierontimemedian = df["OnTimeRate"].median();
 
 // Fuel Cost per Mile Distribution by Carrier
 	var apexCostMileChartOptions = {
@@ -89,6 +91,36 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 			type: 'scatter',
 			zoom: { enabled: true, type: 'xy' }
 		},
+		annotations: {
+		  yaxis: [
+			{
+			  y: carrierontimemedian,
+			  borderColor: '#00E396',
+			  label: {
+				borderColor: '#00E396',
+				style: {
+				  color: '#fff',
+				  background: '#00E396'
+				},
+				text: 'On-Time'
+			  }
+			}
+		  ],
+			xaxis: [
+				{
+				  x: carriercostmilemedian,
+				  borderColor: '#086bda',
+				  label: {
+					borderColor: '#086bda',
+					style: {
+					  color: '#fff',
+					  background: '#086bda'
+					},
+					text: 'Cost/Mile'
+				  }
+				}
+			  ],
+		},
 		// colors: [app.color.theme, app.color.warning, 'rgba('+ app.color.bodyColorRgb + ', .5)'],
 		series: seriesdata,
 		xaxis: {
@@ -116,7 +148,7 @@ var apexScatterDriverChartOptions = {
 		annotations: {
 		  yaxis: [
 			{
-			  y: ontimemedian,
+			  y: driverontimemedian,
 			  borderColor: '#00E396',
 			  label: {
 				borderColor: '#00E396',
@@ -130,7 +162,7 @@ var apexScatterDriverChartOptions = {
 		  ],
 			xaxis: [
 				{
-				  x: mpgmedian,
+				  x: drivermpgmedian,
 				  borderColor: '#086bda',
 				  label: {
 					borderColor: '#086bda',

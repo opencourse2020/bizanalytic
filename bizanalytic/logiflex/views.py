@@ -145,6 +145,9 @@ class ReportView(TemplateView):
             top_right, top_left, bottom_right, bottom_left, driver_actions = prepare_driver_analysis(driver_stats)
             driver_stats = driver_stats.reset_index()
             driver_stats = json.loads(driver_stats.to_json(orient='records'))
+            route_stats = prepare_route_stats(df)
+            route_stats = route_stats.reset_index()
+            route_stats = json.loads(route_stats.to_json(orient='records'))
 
             # Carrier Contingency and Reliability Vs Cost Analysis
             if not report.contingency_result:
@@ -162,7 +165,7 @@ class ReportView(TemplateView):
                 costreliability_action = report.costreliability_action
                 contingency_action = report.contingency_action
 
-            print(driver_stats)
+            print(route_stats)
 
             cost_mile = df[['CarrierName', 'CostPerMile']]
             cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)

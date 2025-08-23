@@ -96,13 +96,6 @@ class PricingPlan(models.Model):
 
 
 class ServicePayment(models.Model):
-    servicetype = (
-        ('onetime_lite', _("One-Time Lite Report")),
-        ('onetime_advanced', _("One-Time Advanced Report")),
-        ('starter', _("Starter Monthly Subscription")),
-        ('pro', _("Pro Monthly Subscription")),
-        ('quarterly', _("Pro Quarterly Plan")),
-    )
     client = models.ForeignKey(LogiFlexClient, on_delete=models.SET_NULL, null=True)
     stripe_checkout_id = models.CharField(max_length=200, null=True, blank=True)
     service_type = models.ForeignKey(PricingPlan, on_delete=models.SET_NULL, null=True, blank=True)
@@ -111,15 +104,9 @@ class ServicePayment(models.Model):
     end_date = models.DateTimeField(blank=True, null=True)
     lite_credits = models.SmallIntegerField(default=0)
     advanced_credits = models.SmallIntegerField(default=0)
-    # payment_success = models.BooleanField(default=False)
-    # amount = models.DecimalField(max_digits=6, decimal_places=2)
-    # refund_issued = models.BooleanField(default=False)
-    # refund_amount = models.DecimalField(max_digits=6, decimal_places=2, null=True)
-    # date_refund = models.DateField(null=True, blank=True)
-
-    # Report quota
-    reports_allowed = models.IntegerField(default=0)
-    reports_used = models.IntegerField(default=0)
+    advanced_reports_allowed = models.SmallIntegerField(default=0)
+    reports_allowed = models.SmallIntegerField(default=0)
+    reports_used = models.SmallIntegerField(default=0)
     reset_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -132,15 +119,21 @@ class ServicePayment(models.Model):
         if self.reset_date and now() >= self.reset_date:
             self.reports_used = 0
             # Reset based on plan
-            if self.service_type.name == 'monthly':
-                self.reports_allowed = 40
+            if self.service_type.name == 'starter':
+                self.reports_allowed = 3
+                # self.advanced_reports_allowed = 1
+                self.reset_date = now() + timedelta(days=30)
+            elif self.service_type.name == 'pro':
+                self.reports_allowed = 10
+                self.advanced_reports_allowed = 2
                 self.reset_date = now() + timedelta(days=30)
             elif self.service_type.name == 'quarterly':
-                self.reports_allowed = 135
+                self.reports_allowed = 25
+                self.advanced_reports_allowed = 4
                 self.reset_date = now() + timedelta(days=90)
-            elif self.service_type.name == 'onetime':
-                self.reports_allowed = 1
-                self.reset_date = now() + timedelta(days=30)
+            # elif self.service_type.name == 'onetime_lite':
+            #     self.reports_allowed = 1
+            #     self.reset_date = now() + timedelta(days=30)
             self.save()
 
     def can_generate_report(self):

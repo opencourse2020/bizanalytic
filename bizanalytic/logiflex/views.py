@@ -732,7 +732,7 @@ class WebhookView(View):
             email = email.lower()
             customer_name = expanded_session.customer_details.name
             phone_nb = expanded_session.customer_details.phone
-            print(f"Line items: {expanded_session.line_items.data[0].price.id}")
+            print(f"Line items: {expanded_session.line_items}")
             # stripe_price_id = expanded_session.line_items.data[].price.id
             print(f"Payment was successful for session: {session['id']}")
             print(f"Name: {customer_name}")
@@ -743,24 +743,25 @@ class WebhookView(View):
             # check if client exists. if not it will be added
             client = LogiFlexClient.objects.filter(email=email).first()
             print("Client_email:", client.email)
+            stripid = expanded_session.line_items.data[0].price.id
+            if stripid:
+                payment_plan = PricingPlan.objects.filter(stripe_price_id=stripid).first()
+                if payment_plan:
+                    # Save payment and Create report instance with empty data
+                    servicepayment = ServicePayment.objects.filter(client=client).first()
+                    if servicepayment:
+                        servicepayment.stripe_checkout_id = session['id']
+                        servicepayment.service_type = payment_plan
+                        servicepayment.is_active = True
+                        servicepayment.save()
+                    else:
+                        servicepayment = ServicePayment.objects.create(
+                                            client=client,
+                                            service_type=payment_plan,
+                                            stripe_checkout_id=session['id'],
+                                            is_active=True)
 
-            payment_plan = PricingPlan.objects.filter(price=amount_paid).first()
-            if payment_plan:
-                # Save payment and Create report instance with empty data
-                servicepayment = ServicePayment.objects.filter(client=client).first()
-                if servicepayment:
-                    servicepayment.stripe_checkout_id = session['id']
-                    servicepayment.service_type = payment_plan
-                    servicepayment.is_active = True
-                    servicepayment.save()
-                else:
-                    servicepayment = ServicePayment.objects.create(
-                                        client=client,
-                                        service_type=payment_plan,
-                                        stripe_checkout_id=session['id'],
-                                        is_active=True)
-
-                servicepayment.reset_quota_if_needed()
+                    servicepayment.reset_quota_if_needed()
 
                 # downloadcode = generatecode(8)
                 # report = LogiflexReport(client=client, payment=servicepayment, report_type='Paid',

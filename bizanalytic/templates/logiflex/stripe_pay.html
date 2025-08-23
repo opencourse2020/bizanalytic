@@ -124,6 +124,36 @@
     transform: rotate(45deg);
     box-shadow: 0 4px 6px rgba(0,0,0,.1)
 }
+.bg-indigo {
+    background-color: #5c6bc0!important
+}
+@media (min-width: 769px) {
+    .custom-scrollbars * {
+        -ms-overflow-style:-ms-autohiding-scrollbar;
+        scrollbar-width: thin;
+        scrollbar-color: #999 #eee
+    }
+
+    .custom-scrollbars ::-webkit-scrollbar {
+        height: .4rem;
+        width: .4rem
+    }
+
+    .custom-scrollbars ::-webkit-scrollbar-track {
+        background: #eee
+    }
+
+    .custom-scrollbars ::-webkit-scrollbar-thumb {
+        background-color: #999;
+        border-radius: .4rem
+    }
+}
+    .text-white {
+    color: #fff!important
+}
+    *,::after,::before {
+    box-sizing: border-box
+}
     </style>
 {% endblock css %}
 
@@ -203,10 +233,11 @@
 
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".3s">
                         <div class="single-pricing-2 popular">
-                            <div class="content-top">
-                                <div class="ribbon-container">
+                            <div class="ribbon-container">
 								<div class="ribbon bg-indigo text-white">Top value</div>
 							    </div>
+                            <div class="content-top">
+
                                 <div class="pricing-title text-center">
                                     <h4 class="title">🚛 Pro</h4>
                                 </div>

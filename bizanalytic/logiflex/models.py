@@ -105,6 +105,7 @@ class ServicePayment(models.Model):
     lite_credits = models.SmallIntegerField(default=0)
     advanced_credits = models.SmallIntegerField(default=0)
     advanced_reports_allowed = models.SmallIntegerField(default=0)
+    advanced_reports_used = models.SmallIntegerField(default=0)
     reports_allowed = models.SmallIntegerField(default=0)
     reports_used = models.SmallIntegerField(default=0)
     reset_date = models.DateTimeField(blank=True, null=True)
@@ -139,12 +140,57 @@ class ServicePayment(models.Model):
     def can_generate_report(self):
         """Check if user can generate a report."""
         self.reset_quota_if_needed()
-        return self.reports_used < self.reports_allowed
+        if self.reports_used >= self.reports_allowed:
+            if self.lite_credits > 0:
+                return True
+            else:
+                return False
+        else:
+            return True
 
     def mark_report_used(self):
         """Increment usage after generating a report."""
-        self.reports_used += 1
+        if self.reports_used < self.reports_allowed:
+            self.reports_used += 1
+        elif self.lite_credits > 0:
+            self.lite_credits -= 1
         self.save()
+
+    def can_generate_advanced_report(self):
+        """Check if user can generate a report."""
+        self.reset_quota_if_needed()
+        if self.advanced_reports_used >= self.advanced_reports_allowed:
+            if self.advanced_credits > 0:
+                return True
+            else:
+                return False
+        else:
+            return True
+
+    def mark_advanced_report_used(self):
+        """Increment usage after generating a report."""
+        if self.advanced_reports_used < self.advanced_reports_allowed:
+            self.advanced_reports_used += 1
+        elif self.advanced_credits > 0:
+            self.advanced_credits -= 1
+        self.save()
+
+    def __str__(self):
+        return f"{self.client.id} - {self.service_type.name}"
+
+
+class PaymentsHistory(models.Model):
+    client = models.ForeignKey(LogiFlexClient, on_delete=models.SET_NULL, null=True)
+    stripe_checkout_id = models.CharField(max_length=200, null=True, blank=True)
+    service_type = models.ForeignKey(PricingPlan, on_delete=models.SET_NULL, null=True, blank=True)
+    amount_paid = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    quantity = models.SmallIntegerField(default=1)
+    payment_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "PaymentsHistory"
+        verbose_name_plural = "PaymentsHistories"
+        permissions = (("manage_paymenthistory", "Manage Payments History"),)
 
     def __str__(self):
         return f"{self.client.id} - {self.service_type.name}"

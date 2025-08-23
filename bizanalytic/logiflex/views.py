@@ -734,34 +734,52 @@ class WebhookView(View):
             phone_nb = expanded_session.customer_details.phone
             print(f"Line items: {expanded_session.line_items}")
             # stripe_price_id = expanded_session.line_items.data[].price.id
-            print(f"Payment was successful for session: {session['id']}")
-            print(f"Name: {customer_name}")
-            print(f"Email: {email}")
-            print(f"Phone: {phone_nb}")
-            print(f"Payment Amount: {amount_paid}")
-
+            # print(f"Payment was successful for session: {session['id']}")
+            # print(f"Name: {customer_name}")
+            # print(f"Email: {email}")
+            # print(f"Phone: {phone_nb}")
+            # print(f"Payment Amount: {amount_paid}")
+            stripid = expanded_session.line_items.data[0].price.id
+            quantity = expanded_session.line_items.data[0].quantity
             # check if client exists. if not it will be added
             client = LogiFlexClient.objects.filter(email=email).first()
-            print("Client_email:", client.email)
-            stripid = expanded_session.line_items.data[0].price.id
+            if not client:
+                client = LogiFlexClient.objects.create(email=email, phone=phone_nb, contact_name=customer_name)
+            # print("Client_email:", client.email)
+
             if stripid:
                 payment_plan = PricingPlan.objects.filter(stripe_price_id=stripid).first()
                 if payment_plan:
                     # Save payment and Create report instance with empty data
-                    servicepayment = ServicePayment.objects.filter(client=client).first()
-                    if servicepayment:
-                        servicepayment.stripe_checkout_id = session['id']
-                        servicepayment.service_type = payment_plan
-                        servicepayment.is_active = True
-                        servicepayment.save()
-                    else:
-                        servicepayment = ServicePayment.objects.create(
-                                            client=client,
-                                            service_type=payment_plan,
-                                            stripe_checkout_id=session['id'],
-                                            is_active=True)
+                        servicepayment = ServicePayment.objects.filter(client=client).first()
+                        if servicepayment:
+                            if payment_plan.name == "onetime_lite":
+                                servicepayment.lite_credits += quantity
+                            elif payment_plan.name == "onetime_advanced":
+                                servicepayment.advanced_credits += quantity
+                            servicepayment.stripe_checkout_id = session['id']
+                            servicepayment.service_type = payment_plan
+                            servicepayment.is_active = True
+                            servicepayment.save()
 
-                    servicepayment.reset_quota_if_needed()
+
+                        else:
+                            advancedcredits = 0
+                            if payment_plan.name == "starter":
+                                advancedcredits = 1
+                            servicepayment = ServicePayment.objects.create(
+                                                client=client,
+                                                service_type=payment_plan,
+                                                stripe_checkout_id=session['id'],
+                                                is_active=True,
+                                                advanced_credits=advancedcredits)
+
+                        servicepayment.reset_quota_if_needed()
+                        paymenthistory = PaymentsHistory.objects.create(
+                            client=client,
+                            service_type=payment_plan,
+                            stripe_checkout_id=session['id'],
+                            amount_paid=amount_paid, quantity=quantity)
 
                 # downloadcode = generatecode(8)
                 # report = LogiflexReport(client=client, payment=servicepayment, report_type='Paid',

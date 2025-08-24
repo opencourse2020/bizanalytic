@@ -12,7 +12,7 @@ from django.views.generic import (
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.utils import timezone, ti
+from django.utils import timezone
 from django.http import JsonResponse, HttpResponse
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
@@ -32,7 +32,7 @@ from .forms import *
 from .models import *
 from bizanalytic.profiles.mixins import JsonFormMixin
 from bizanalytic.profiles.models import User
-from .utils.mail import sendemail ,senduploadmail, sendapprovedreportmail
+from .utils.mail import sendemail, senduploadmail, sendapprovedreportmail
 from .utils.tools import generatecode
 from .utils.call_llm import generate_analysis
 from .utils.pre_process_datafile import *

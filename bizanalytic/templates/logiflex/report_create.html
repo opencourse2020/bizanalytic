@@ -82,14 +82,15 @@
                                             <input type="email" id="email_nm" placeholder="Enter your Email Address" disabled required="required" value="{{ email }}">
                                         </div>
                                         <div class="col-12" >
-                                            <span class="" style="padding: 4px; display: table-cell; border: 2px solid #b6b6b6; border-radius: 20px;">
-                                                <div class="form-check form-check-inline">
+                                            <label>{% trans "Report Type" %}</label>
+                                            <span class="" style="padding: 4px; display: table-cell; border: 2px solid #b6b6b6; border-radius: 20px; width: 36rem;">
+                                                <div class="form-check form-check-inline" style="margin-top: 20px; margin-left: 20px;">
                                                   <input class="form-check-input" type="radio" name="flexRadioDefault" id="LiteOption" style="width: initial;" checked>
                                                   <label class="form-check-label" for="LiteOption" style="padding-left: 10px; top: 14px; position: relative;">
                                                     {% trans "Lite Report" %}
                                                   </label>
                                                 </div>
-                                                <div class="form-check form-check-inline">
+                                                <div class="form-check form-check-inline" style="padding-left: 40px; margin-left: 40px; margin-top: 20px;">
                                                   <input class="form-check-input" type="radio" name="flexRadioDefault" id="AdvancedOption" style="width: initial;">
                                                   <label class="form-check-label" for="AdvancedOption" style="padding-left: 10px; top: 14px; position: relative;">
                                                     {% trans "Advanced Report" %}

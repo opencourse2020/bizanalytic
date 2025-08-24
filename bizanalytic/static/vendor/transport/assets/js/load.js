@@ -133,9 +133,9 @@ $("#generate_full_rp").click(function (){
              agree_create = "1";
          }
         if(agree_create === "1") {
-            if (cixview === 1){
+            if (cixview === "1"){
                 let url = "https://bizanalytic.com/logiflex/reports/full-report-create/";
-            }else if (cixview === 2){
+            }else if (cixview === "2"){
                 let url = "https://bizanalytic.com/logiflex/reports/full-newclientreport-create/";
             }
 

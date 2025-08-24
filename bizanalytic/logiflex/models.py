@@ -229,7 +229,7 @@ class LogiflexReport(models.Model):
     download_code = models.CharField(max_length=8, null=True, blank=True)
     report_status = models.CharField(max_length=10, choices=status, default="processing")
     flags = models.TextField(max_length=1000, null=True, blank=True)
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(default=timezone.now)
     report_date = models.DateTimeField(null=True)
     expected_delivery = models.DateTimeField(null=True, blank=True)
     report_prompt = models.TextField(null=True, blank=True)

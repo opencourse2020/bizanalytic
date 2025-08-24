@@ -12,6 +12,7 @@ from django.views.generic import (
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone, ti
 from django.http import JsonResponse, HttpResponse
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
@@ -1011,7 +1012,7 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
 
             if not report.report_approved:
                 report.report_approved = True
-                report.report_date = datetime.now()
+                report.report_date = timezone.now()
                 report.report_status = "download"
                 report.save()
                 message = _("Report Approved Successfully")

@@ -128,6 +128,7 @@ $("#generate_full_rp").click(function (){
         let cixphoto = $('#ci-x-photo').val();
         let cixview = $('#ci-x-view').val();
         let urlref = "";
+        console.log(cixview);
 
         let agree_create = "2";
         if ($("#agree_create").prop("checked")){
@@ -141,6 +142,7 @@ $("#generate_full_rp").click(function (){
             }else if (cixview == "2"){
                 urlref = "https://bizanalytic.com/logiflex/reports/full-newclientreport-create/";
             }
+            console.log(urlref);
             const formData = new FormData();
 
             if (fileName_b && email_nm && cp_nm && client_nm) {
@@ -152,6 +154,7 @@ $("#generate_full_rp").click(function (){
                 formData.append('route_file', file_b);
                 formData.append('filename', fileName_b);
                 formData.append('cixphoto', cixphoto);
+                console.log("Before ajax", urlref);
                 $.ajax({
                     type: 'POST',
                     url: urlref,

@@ -155,6 +155,7 @@ $("#generate_full_rp").click(function (){
                 formData.append('filename', fileName_b);
                 formData.append('cixphoto', cixphoto);
                 formData.append('reptyp', reptyp);
+                console.log("url", urlref);
                 $.ajax({
                     type: 'POST',
                     url: urlref,

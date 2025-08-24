@@ -10,6 +10,12 @@
 
 {% block css %}
     {{ block.super }}
+    <style>
+    ol {
+        color: black;
+        font-size: 14px;
+    }
+    </style>
 {% endblock css %}
 
 {% block header_left %}
@@ -108,12 +114,7 @@
                                     </form>
                             </div>
                         </div>
-                        <div class="about-images" style="margin-top: 20px;">
-                        <div class="devilery-text" style="width: 100%; padding: 20px; position: relative; left: 0px; top: 0px;">
-                            <h5 class="title">{% trans "Smarter Freight Decisions"%} <span style="color:#F8BC1E;"> {% trans "Made Simple" %}</span></h5>
-                            <p style="color: white"> At <strong>BizAnaltytic</strong>, we help small and medium freight operators unlock the power of data—without the complexity. Just upload your route file, and our AI-powered platform delivers clear, professional reports that show where you can save costs, improve routes, and boost efficiency. No spreadsheets, no guesswork—just insights that drive smarter decisions and better results.</p>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s">
                         <div class="row gx-xl-5 align-items-center">
@@ -125,27 +126,27 @@
                                         <p style="margin-bottom: 20px; text-align: center;">{% trans "To reduce time of Analysis, please respect the bellow instructions!" %}</p>
                                         <span class="" style="padding: 10px; display: table-cell; border: 4px solid #F8BC1E; border-radius: 20px; font-size: 18px;">
                                             <ol type="1">
-                                                <li style="margin-bottom: 6px; margin-top: 6px;">
+                                                <li style="margin-bottom: 10px; font-size:  margin-top: 10px;">
                                                     <a href="{% static "assets/sample/freight_routes_sample.csv" %}" class="btn btn-outline-danger">&nbsp;{% trans "Download the csv Template File" %}&nbsp;</a>
                                                 </li>
-                                                <li style="margin-bottom: 6px;">
+                                                <li style="margin-bottom: 10px;">
                                                     {% trans "Use the template for your data" %}
                                                 </li>
-                                                <li style="margin-bottom: 6px;">
+                                                <li style="margin-bottom: 10px;">
                                                     <span>{% trans "Use the same columns to fill your data" %}</span>
                                                     <br>
                                                     <span>[ShipmentID] - [Date] - [OriginCity] - [DestinationCity] - [Distance_Miles] - [FuelCost_USD] - [DriverName] - [CarrierName] -[LoadWeight_lbs] - [DeliveryStatus] - [DeliveryTime_hrs] - [FreightCost_USD] </span>
 
                                                 </li>
-                                                <li style="margin-bottom: 6px;">
+                                                <li style="margin-bottom: 10px;">
                                                     <span>{% trans "Make sure there is no missing data" %}</span>
                                                     <br>
                                                     <span>{% trans "A missing column or data may delai your report" %}</span>
                                                 </li>
-                                                <li style="margin-bottom: 6px;">
+                                                <li style="margin-bottom: 10px;">
                                                     {% trans "Upload Your .csv (text) or .xlsx (Excel) file" %}
                                                 </li>
-                                                <li style="margin-bottom: 6px;">
+                                                <li style="margin-bottom: 10px;">
                                                     {% trans "Agree to Create a Full Report" %}
                                                 </li>
                                                 <li>
@@ -172,6 +173,14 @@
 
                         </div>
                     </div>
+                    <div class="col">
+                    <div class="about-images" style="margin-top: 20px;">
+                        <div class="devilery-text" style="width: 100%; padding: 20px; position: relative; left: 0px; top: 0px;">
+                            <h5 class="title">{% trans "Smarter Freight Decisions"%} <span style="color:#F8BC1E;"> {% trans "Made Simple" %}</span></h5>
+                            <p style="color: white"> At <strong>BizAnaltytic</strong>, we help small and medium freight operators unlock the power of data—without the complexity. Just upload your route file, and our AI-powered platform delivers clear, professional reports that show where you can save costs, improve routes, and boost efficiency. No spreadsheets, no guesswork—just insights that drive smarter decisions and better results.</p>
+                            </div>
+                        </div>
+                        </div>
                 </div>
             </div>
         </section>

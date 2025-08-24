@@ -1017,10 +1017,13 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                 report.save()
                 message = _("Report Approved Successfully")
                 status = "success"
+
+                # Prepare data for customer email
                 raw = report.report_text
                 data = json.loads(raw)
                 summary_json = data.get("summary_json", {})
                 # print(json.loads(summary_json))
+                kpiss = ""
                 for kpi in summary_json:
                     if kpi == "kpis":
                         kpiss = summary_json[kpi]

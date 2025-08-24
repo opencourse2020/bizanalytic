@@ -615,13 +615,13 @@ class CityStateNormalizer:
         self.dieselprices = []
 
         # Build reference dict
-        self.known_map = {self._clean_city(row["city"]): row["state"].upper()
+        self.known_map = {self._clean_city(row["cityname"]): row["state_code"].upper()
                           for _, row in us_city_state_ref.iterrows()}
 
-        self.known_states_map = {row["name"].lower(): row["code"].upper()
+        self.known_states_map = {row["state_name"].lower(): row["state_code"].upper()
                           for _, row in us_state_ref.iterrows()}
 
-        self.known_states_diesel = {row["State"].upper(): row["Diesel"]
+        self.known_states_diesel = {row["state_code"].upper(): row["dieselprice"]
                                  for _, row in state_diesel_price.iterrows()}
         # print(self.known_states_diesel)
         self.unknown_cities = []  # For manual review

@@ -127,14 +127,16 @@ $("#generate_full_rp").click(function (){
         let file_b = $('#route_fl')[0].files[0];
         let cixphoto = $('#ci-x-photo').val();
         let cixview = $('#ci-x-view').val();
-
+        console.log(cixview);
         let agree_create = "2";
         if ($("#agree_create").prop("checked")){
              agree_create = "1";
          }
         if(agree_create === "1") {
             if (cixview == "1"){
+                console.log("User signed");
                 let url = "https://bizanalytic.com/logiflex/reports/full-report-create/";
+
             }else if (cixview == "2"){
                 let url = "https://bizanalytic.com/logiflex/reports/full-newclientreport-create/";
             }

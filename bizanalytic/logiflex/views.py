@@ -854,7 +854,15 @@ class FullReportView(LoginRequiredMixin, TemplateView):
         client = LogiFlexClient.objects.filter(user=self.request.user).first()
         clienttype = 0
         servicepayment = ServicePayment.objects.filter(client=client).first()
-        if servicepayment and servicepayment.can_generate_report():
+        if servicepayment:
+            if servicepayment.can_generate_report():
+                kwargs["lite_allowed"] = 1
+            else:
+                kwargs["lite_allowed"] = 0
+            if servicepayment.can_generate_advanced_report():
+                kwargs["advanced_allowed"] = 1
+            else:
+                kwargs["advanced_allowed"] = 0
 
             kwargs["contact_name"] = servicepayment.client.contact_name
             kwargs["company"] = servicepayment.client.company
@@ -875,11 +883,20 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         cp_name = request.POST.get("cp_nm")
         email_name = request.POST.get("email_nm")
         email_name = email_name.lower()
+        reportype = request.POST.get("reptyp")
         route_file = request.FILES["route_file"]
         route_filename = route_file.name
         reportid = None
         client = LogiFlexClient.objects.filter(user=self.request.user).first()
         servicepayment = ServicePayment.objects.filter(client=client).first()
+
+        report_type = None
+        # Check report type
+        if reportype == "1":
+            report_type = "lite"
+        elif reportype == "2":
+            report_type = "advanced"
+
 
         if servicepayment.can_generate_report():
 
@@ -896,7 +913,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             latest_report = LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
             logireport = LogiflexReport.objects.create(client=client, payment=servicepayment,
                                                               download_code=downloadcode,
-                                                              report_type='Paid',
+                                                              report_type=report_type,
                                                               report_number=latest_report.report_number+1)
             # add route file
             logireport.routefile = route_file
@@ -933,7 +950,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
             # Send a confirmation Email to client
             email_info = {
-                'subject': _("Your Fleet Efficiency Report is in Progress 🚚📊"),
+                'subject': _(f"Your Fleet {report_type.capitalize()} Efficiency Report is in Progress 🚚📊"),
                 'to_email': [email_name, ],
                 'client': client_name,
                 'report_list_link': f"https://bizanalytic.com/logiflex/reports/detail/{logireport.id}/",
@@ -1140,6 +1157,15 @@ class FullReportNewClientView(TemplateView):
         clienttype = 0
         servicepayment = ServicePayment.objects.filter(client_id=pu).select_related("client").first()
         if servicepayment and servicepayment.can_generate_report():
+
+            if servicepayment.can_generate_report():
+                kwargs["lite_allowed"] = 1
+            else:
+                kwargs["lite_allowed"] = 0
+            if servicepayment.can_generate_advanced_report():
+                kwargs["advanced_allowed"] = 1
+            else:
+                kwargs["advanced_allowed"] = 0
 
             kwargs["contact_name"] = servicepayment.client.contact_name
             kwargs["company"] = servicepayment.client.company

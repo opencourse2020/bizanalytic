@@ -200,8 +200,8 @@ class PaymentsHistory(models.Model):
 class LogiflexReport(models.Model):
     reporttype = (
         ('Free', _("Free")),
-        ('Paid', _("Paid")),
-
+        ('lite', _("Lite")),
+        ('advanced', _("Advanced")),
     )
     status = (
         ('processing', _("Processing")),
@@ -225,7 +225,7 @@ class LogiflexReport(models.Model):
     report_carrier = models.TextField(null=True, blank=True)
     report_driver = models.TextField(null=True, blank=True)
     report_route = models.TextField(null=True, blank=True)
-    report_type = models.CharField(max_length=5, choices=reporttype, null=True, blank=True)
+    report_type = models.CharField(max_length=25, choices=reporttype, null=True, blank=True)
     download_code = models.CharField(max_length=8, null=True, blank=True)
     report_status = models.CharField(max_length=10, choices=status, default="processing")
     flags = models.TextField(max_length=1000, null=True, blank=True)

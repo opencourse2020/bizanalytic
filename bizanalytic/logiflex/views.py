@@ -927,7 +927,9 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             logireport.save()
 
             # Clean and validate route file and generate logs
+            print("Step 1")
             asynch_preprocess = test_validator.delay(logireport.pk, route_filename)
+            print("Step 2")
             flags = asynch_preprocess.get()
             # print("df columns after cleaning")
             # print(df.columns)
@@ -1191,6 +1193,15 @@ class FullNewClientReportCreateView(CreateView, JsonFormMixin):
         email_name = email_name.lower()
         route_file = request.FILES["route_file"]
         route_filename = route_file.name
+        reportype = request.POST.get("reptyp")
+
+        report_type = None
+        # Check report type
+        if reportype == "1":
+            report_type = "lite"
+        elif reportype == "2":
+            report_type = "advanced"
+
         reportid = None
         # client = LogiFlexClient.objects.filter(user=self.request.user).first()
         if clientid:
@@ -1211,7 +1222,7 @@ class FullNewClientReportCreateView(CreateView, JsonFormMixin):
                 latest_report = LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
                 logireport = LogiflexReport.objects.create(client=client, payment=servicepayment,
                                                                   download_code=downloadcode,
-                                                                  report_type='Paid',
+                                                                  report_type=report_type,
                                                                   report_number=latest_report.report_number+1)
                 # add route file
                 logireport.routefile = route_file
@@ -1233,7 +1244,7 @@ class FullNewClientReportCreateView(CreateView, JsonFormMixin):
 
                 # Send a confirmation Email to client
                 email_info = {
-                    'subject': _("Your Fleet Efficiency Report is in Progress 🚚📊"),
+                    'subject': _(f"Your Fleet {report_type.capitalize()} Efficiency Report is in Progress 🚚📊"),
                     'to_email': [email_name, ],
                     'client': client_name,
                     'report_list_link': f"https://bizanalytic.com/logiflex/reports/detail/{logireport.id}/",

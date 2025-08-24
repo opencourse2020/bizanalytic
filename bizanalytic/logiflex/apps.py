@@ -5,3 +5,6 @@ class LogiflexConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'bizanalytic.logiflex'
     verbose_name = "logiflex"
+
+    def ready(self):
+        import bizanalytic.logiflex.signals

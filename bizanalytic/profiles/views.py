@@ -25,6 +25,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from . import forms, models
 from .mixins import (MemberRequiredMixin, AdminRequiredMixin, AdminAllowedMixing, JsonFormMixin)
 # from datetime import datetime, date, timedelta
+from allauth.account.views import confirm_email
 User = get_user_model()
 
 
@@ -171,8 +172,8 @@ class DispatchLoginView(RedirectView):
         elif hasattr(self.request.user, "member"):
             return reverse_lazy("logiflex:dashboard")
 
-        else:
-            return reverse_lazy("logiflex:dashboard")
+        # else:
+        #     return reverse_lazy("logiflex:dashboard")
 
         return super().get_redirect_url(*args, **kwargs)
 

@@ -69,6 +69,7 @@ class LogiFlexClient(models.Model):
     contact_name = models.CharField(max_length=100, null=True, blank=True)
     date_added = models.DateField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+    activated = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "LogiFlexClient"
@@ -227,6 +228,7 @@ class LogiflexReport(models.Model):
     report_type = models.CharField(max_length=5, choices=reporttype, null=True, blank=True)
     download_code = models.CharField(max_length=8, null=True, blank=True)
     report_status = models.CharField(max_length=10, choices=status, default="processing")
+    flags = models.TextField(max_length=1000, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     report_date = models.DateTimeField(null=True)
     expected_delivery = models.DateTimeField(null=True, blank=True)

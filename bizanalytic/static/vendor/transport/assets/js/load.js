@@ -123,17 +123,22 @@ $("#generate_full_rp").click(function (){
         let client_nm = $("#client_nm").val();
         let cp_nm = $("#company_nm").val();
         let email_nm = $("#email_nm").val();
-        var fileName_b = $("#route_fl").val();
-        var file_b = $('#route_fl')[0].files[0];
-        // let cixphoto = $('#ci-x-photo').val();
+        let fileName_b = $("#route_fl").val();
+        let file_b = $('#route_fl')[0].files[0];
+        let cixphoto = $('#ci-x-photo').val();
+        let cixview = $('#ci-x-view').val();
+
         let agree_create = "2";
         if ($("#agree_create").prop("checked")){
              agree_create = "1";
          }
-        if(agree_create == "1") {
+        if(agree_create === "1") {
+            if (cixview === 1){
+                let url = "https://bizanalytic.com/logiflex/reports/full-report-create/";
+            }else if (cixview === 2){
+                let url = "https://bizanalytic.com/logiflex/reports/full-newclientreport-create/";
+            }
 
-            let url = "https://bizanalytic.com/logiflex/reports/full-report-create/";
-            // let url = "https://bizanalytic.com/logiflex/clean-csv/";
             console.log(url);
             const formData = new FormData();
 
@@ -145,6 +150,7 @@ $("#generate_full_rp").click(function (){
                 formData.append('email_nm', email_nm);
                 formData.append('route_file', file_b);
                 formData.append('filename', fileName_b);
+                formData.append('cixphoto', cixphoto);
                 $.ajax({
                     type: 'POST',
                     url: url,
@@ -155,18 +161,27 @@ $("#generate_full_rp").click(function (){
                               },
                     success: function (data) {
                         if (data) {
-                            var result = data;
-                            var message = result.submessage;
+                            let result = data;
+                            let message = result.submessage;
+                            let status = result.repstatus;
+                            let rid = result.repid;
                             $("#loadingstate").hide();
                             if (message) {
-                                // $("#report-message").html('<div class="alert alert-success d-flex align-items-center" role="alert"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg><div>' +
-                                //     message + '</div>');
-                                // $("#report-message").show();
-                                var f = $("#toast_report");
-                                var a = new bootstrap.Toast(f);
-                                $("#message_body").html(message);
-                                a.show()
-                            }
+                                if (status == "success"){
+                                    var f = $("#toast_successreport");
+                                    var a = new bootstrap.Toast(f);
+                                    $("#message_body").html(message);
+                                    a.show()
+                                    if (rid !== null){
+                                        window.location.href = "https://bizanalytic.com/logiflex/reports/detail/" + rid + "/";
+                                    }
+                                }else{
+                                    var f = $("#toast_failreport");
+                                    var a = new bootstrap.Toast(f);
+                                    $("#message_body").html(message);
+                                    a.show()
+                    }
+                }
                         }
                     }
                 })

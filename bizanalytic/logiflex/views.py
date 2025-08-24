@@ -851,15 +851,16 @@ class FullReportView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         # pu = self.kwargs.get("pk")
         client = LogiFlexClient.objects.filter(user=self.request.user).first()
-
+        clienttype = 0
         servicepayment = ServicePayment.objects.filter(client=client).first()
         if servicepayment and servicepayment.can_generate_report():
 
             kwargs["contact_name"] = servicepayment.client.contact_name
             kwargs["company"] = servicepayment.client.company
             kwargs["email"] = servicepayment.client.email
-            # kwargs["reportid"] = servicepayment.client.id
-
+            kwargs["clientid"] = servicepayment.client.id
+            clienttype = 1
+        kwargs["clienttype"] = clienttype
         return super(FullReportView, self).get_context_data(**kwargs)
 
 
@@ -875,7 +876,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         email_name = email_name.lower()
         route_file = request.FILES["route_file"]
         route_filename = route_file.name
-
+        reportid = None
         client = LogiFlexClient.objects.filter(user=self.request.user).first()
         servicepayment = ServicePayment.objects.filter(client=client).first()
 
@@ -934,17 +935,20 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
                 'subject': _("Your Fleet Efficiency Report is in Progress 🚚📊"),
                 'to_email': [email_name, ],
                 'client': client_name,
-                'report_list_link': "https://bizanalytic.com/logiflex/reports/list/",
+                'report_list_link': f"https://bizanalytic.com/logiflex/reports/detail/{logireport.id}/",
                 'cuurentyear': datetime.now().year
             }
             senduploadmail.delay(email_info)
 
 
             message = _("Report Uploaded Succssefully. Wait for a confirmation email from us.")
+            repstatus = "success"
+            reportid = logireport.id
         else:
             message = _("Report Already Uploaded Succssefully.Check the list of your reports for more details")
+            repstatus = "fail"
 
-        data = {"submessage": message}
+        data = {"submessage": message, "repstatus": repstatus, "repid": reportid}
 
         return JsonResponse(data)
 
@@ -953,78 +957,6 @@ class Payment_FailView(TemplateView):
     template_name = "logiflex/payment_fail.html"
 
 
-# def save_report_data(json_file_path):
-#     # Load the JSON data
-#     with open(json_file_path) as f:
-#         data = json.load(f)
-#
-#     # Save Report Metadata
-#     metadata = ReportMetadata.objects.create(
-#         title=data['reportMetadata']['title'],
-#         subtitle=data['reportMetadata']['subtitle'],
-#         audience=data['reportMetadata']['audience'],
-#         generated_date=data['reportMetadata']['generatedDate']
-#     )
-#
-#     # Save Executive Summary
-#     ExecutiveSummary.objects.create(
-#         report_metadata=metadata,
-#         primary_finding=data['executiveSummary']['primaryFinding'],
-#         primary_recommendation=data['executiveSummary']['primaryRecommendation']
-#     )
-#
-#     # Save Diagnostic Analysis
-#     diagnostic_analysis = DiagnosticAnalysis.objects.create(
-#         report_metadata=metadata,
-#         carrier_matrix_description=data['diagnosticAnalysis']['carrierPerformanceMatrix']['description'],
-#         bottleneck_title=data['diagnosticAnalysis']['bottleneckAnalysis']['title'],
-#         bottleneck_description=data['diagnosticAnalysis']['bottleneckAnalysis']['description']
-#     )
-#
-#     # Save Carriers
-#     for carrier_data in data['diagnosticAnalysis']['carrierPerformanceMatrix']['carriers']:
-#         Carrier.objects.create(
-#             name=carrier_data['name'],
-#             cost_per_mile=carrier_data['costPerMile'],
-#             on_time_rate=carrier_data['onTimeRate'],
-#             quadrant=carrier_data['quadrant']
-#         )
-#
-#     # Save Bottleneck Findings
-#     for finding_data in data['diagnosticAnalysis']['bottleneckAnalysis']['findings']:
-#         BottleneckFinding.objects.create(
-#             diagnostic_analysis=diagnostic_analysis,
-#             title=finding_data['title'],
-#             details=finding_data['details']
-#         )
-#
-#     # Save Action Plans
-#     for action_data in data['actionPlan']:
-#         ActionPlan.objects.create(
-#             report_metadata=metadata,
-#             priority=action_data['priority'],
-#             title=action_data['title'],
-#             description=action_data['description'],
-#             expected_outcome=action_data['expectedOutcome'],
-#             estimated_impact=action_data['estimatedImpact'],
-#             level_of_effort=action_data['levelOfEffort']
-#         )
-#
-#     # Save Scenario Modeling
-#     scenario_data = data['scenarioModeling']
-#     ScenarioModeling.objects.create(
-#         report_metadata=metadata,
-#         carrier_shift_title=scenario_data['carrierShiftImpact']['title'],
-#         carrier_shift_description=scenario_data['carrierShiftImpact']['description'],
-#         new_delay_rate=scenario_data['carrierShiftImpact']['metrics']['newDelayRate'],
-#         new_total_cost=scenario_data['carrierShiftImpact']['metrics']['newTotalCost'],
-#         quarterly_savings=scenario_data['carrierShiftImpact']['metrics']['quarterlySavings'],
-#         fuel_cost_title=scenario_data['fuelCostExposure']['title'],
-#         fuel_cost_description=scenario_data['fuelCostExposure']['description'],
-#         projected_cost_increase=scenario_data['fuelCostExposure']['metrics']['projectedCostIncrease']
-#     )
-#
-#     return metadata
 @csrf_exempt
 def clean_csv(request):
 
@@ -1102,7 +1034,7 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                     'client': client_name,
                     'company': company,
                     'kpis': kpiss,
-                    'report_list_link': "https://bizanalytic.com/logiflex/reports/list/",
+                    'report_list_link': f"https://bizanalytic.com/logiflex/reports/list/",
                     'curentyear': datetime.now().year
                 }
                 sendapprovedreportmail.delay(email_info)
@@ -1176,3 +1108,119 @@ class UpdateGasPricesView(UserPassesTestMixin, CreateView, JsonFormMixin):
 
 class AboutUsView(TemplateView):
     template_name = "logiflex/aboutus.html"
+
+
+class PaymentSuccessfulView(RedirectView):
+
+    def get_redirect_url(self, *args, **kwargs):
+        query = self.request.GET.get("cat")
+        if self.request.user:
+            return reverse_lazy("logiflex:dashboard")
+        elif query:
+            client = LogiFlexClient.objects.filter(servicepayment__stripe_checkout_id=query)\
+                .select_related("user").first()
+            # payment = ServicePayment.objects.filter(stripe_checkout_id=query).select_related("client").first()
+            if client.user or client.activated:
+                return reverse_lazy("logiflex:dashboard")
+            elif client:
+                return reverse("logiflex:reports:newfullreport", kwargs={"pk": client.id})
+
+        return super().get_redirect_url(*args, **kwargs)
+
+
+class FullReportNewClientView(TemplateView):
+    template_name = "logiflex/report_create.html"
+    def get_context_data(self, **kwargs):
+        pu = self.kwargs.get("pk")
+        # client = LogiFlexClient.objects.filter(pk=pu).first()
+        clienttype = 0
+        servicepayment = ServicePayment.objects.filter(client_id=pu).select_related("client").first()
+        if servicepayment and servicepayment.can_generate_report():
+
+            kwargs["contact_name"] = servicepayment.client.contact_name
+            kwargs["company"] = servicepayment.client.company
+            kwargs["email"] = servicepayment.client.email
+            clienttype = 2
+
+        kwargs["clienttype"] = clienttype
+
+            # kwargs["reportid"] = servicepayment.client.id
+
+        return super(FullReportNewClientView, self).get_context_data(**kwargs)
+
+
+class FullNewClientReportCreateView(CreateView, JsonFormMixin):
+    def post(self, request, *args, **kwargs):
+
+        # load AJAX data from the template
+
+        clientid = request.POST.get("cixphoto")
+        client_name = request.POST.get("client_nm")
+        cp_name = request.POST.get("cp_nm")
+        email_name = request.POST.get("email_nm")
+        email_name = email_name.lower()
+        route_file = request.FILES["route_file"]
+        route_filename = route_file.name
+        reportid = None
+        # client = LogiFlexClient.objects.filter(user=self.request.user).first()
+        if clientid:
+            servicepayment = ServicePayment.objects.filter(client_id=clientid, client__email=email_name).select_related("client").first()
+
+            if servicepayment.can_generate_report():
+                client = servicepayment.client
+                # Save client and result data
+                # user = servicepayment.client.user
+                if not client.contact_name:
+                    client.contact_name = client_name
+                if not client.company:
+                    client.company = cp_name
+                client.activated = True
+                client.save()
+
+                downloadcode = generatecode(8)
+                latest_report = LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
+                logireport = LogiflexReport.objects.create(client=client, payment=servicepayment,
+                                                                  download_code=downloadcode,
+                                                                  report_type='Paid',
+                                                                  report_number=latest_report.report_number+1)
+                # add route file
+                logireport.routefile = route_file
+                # add report ID
+                currentyear = datetime.now().year
+                idl = "{:06d}".format(logireport.pk)
+                logireport.report_id = f"RPT-{currentyear}-{idl}"
+                # add expected_delivery
+                logireport.expected_delivery = logireport.date_created + timedelta(days=1)
+
+                logireport.save()
+
+                # Clean and validate route file and generate logs
+                asynch_preprocess = test_validator.delay(logireport.pk, route_filename)
+                flags = asynch_preprocess.get()
+                if flags:
+                    logireport.flags = flags
+                    logireport.save()
+
+                # Send a confirmation Email to client
+                email_info = {
+                    'subject': _("Your Fleet Efficiency Report is in Progress 🚚📊"),
+                    'to_email': [email_name, ],
+                    'client': client_name,
+                    'report_list_link': f"https://bizanalytic.com/logiflex/reports/detail/{logireport.id}/",
+                    'cuurentyear': datetime.now().year
+                }
+                senduploadmail.delay(email_info)
+
+                message = _("Report Uploaded Succssefully. Wait for a confirmation email from us.")
+                repstatus = "success"
+                reportid = logireport.id
+            else:
+                message = _("Report Already Uploaded Succssefully.Check the list of your reports for more details")
+                repstatus = "fail"
+        else:
+            message = _("Report cannot be created. Check with the Admin")
+            repstatus = "fail"
+
+        data = {"submessage": message, "status": repstatus, "repid": reportid}
+
+        return JsonResponse(data)

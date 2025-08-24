@@ -996,8 +996,7 @@ class AdminReportsListView(UserPassesTestMixin, TemplateView):
         return super(AdminReportsListView, self).get_context_data(**kwargs)
 
 
-class AdminApproveReportView(UserPassesTestMixin, View, JsonFormMixin):
-    # model = LogiflexReport
+class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
     def test_func(self):
         return self.request.user.is_staff
 

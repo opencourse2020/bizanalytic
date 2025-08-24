@@ -78,6 +78,20 @@
                                             <label for="email_nm">{% trans "Email Address" %}</label>
                                             <input type="email" id="email_nm" placeholder="Enter your Email Address" disabled required="required" value="{{ email }}">
                                         </div>
+                                        <div class="col-12">
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="radio" name="flexRadioDefault" id="LiteOption" checked>
+                                              <label class="form-check-label" for="flexRadioDefault1">
+                                                {% trans "Lite Report" %}
+                                              </label>
+                                            </div>
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="radio" name="flexRadioDefault" id="AdvancedOption" >
+                                              <label class="form-check-label" for="flexRadioDefault2">
+                                                {% trans "Advanced Report" %}
+                                              </label>
+                                            </div>
+                                        </div>
                                         <div class="col-12 mb-4">
                                             <label for="route_fl" >{% trans "Route Data File" %}</label>
                                             <input type="file" id="route_fl" class="mb-0" placeholder="">

@@ -130,24 +130,19 @@ $("#generate_full_rp").click(function (){
         var reptyp = $("input[name='reporttype']:checked").val();
 
         let urlref = "";
-        console.log("Report Type:", reptyp);
         let agree_create = "2";
         if ($("#agree_create").prop("checked")){
              agree_create = "1";
          }
-        console.log("Agree Value: ", agree_create);
         if(agree_create === "1") {
-            console.log("Agree is on");
             if (cixview == "1"){
                 urlref = "https://bizanalytic.com/logiflex/reports/full-report-create/";
             }else if (cixview == "2"){
                 urlref = "https://bizanalytic.com/logiflex/reports/full-newclientreport-create/";
             }
-            console.log("URL:", urlref);
             const formData = new FormData();
 
             if (fileName_b && email_nm && cp_nm && client_nm && reptyp != null) {
-                console.log("URL before ajax:", urlref);
                 $("#loadingstate").show();
                 // $("#report-message").hide();
                 formData.append('client_nm', client_nm);
@@ -157,7 +152,6 @@ $("#generate_full_rp").click(function (){
                 formData.append('filename', fileName_b);
                 formData.append('cixphoto', cixphoto);
                 formData.append('reptyp', reptyp);
-                console.log("url", urlref);
                 $.ajax({
                     type: 'POST',
                     url: urlref,

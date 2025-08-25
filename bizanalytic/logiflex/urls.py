@@ -43,6 +43,7 @@ stripe_patterns = [
     path('create-checkout-session/', views.create_checkout_session, name='create_checkout_session'),
     path('stripe_webhook/', views.WebhookView.as_view(), name='stripe_webhook'),
     path('success/', views.Payment_SuccessView.as_view(), name='success'),
+    path('payment-successful/', views.PaymentSuccessfulView.as_view(), name="payment-successful"),
     path('cancel/', views.Payment_FailView.as_view(), name='cancel'),
 
 ]

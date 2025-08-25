@@ -740,7 +740,7 @@ class WebhookView(View):
             # print(f"Email: {email}")
             # print(f"Phone: {phone_nb}")
             # print(f"Payment Amount: {amount_paid}")
-            stripid = expanded_session.line_items.data[0].price.id
+            strippriceid = expanded_session.line_items.data[0].price.id
             quantity = expanded_session.line_items.data[0].quantity
             # check if client exists. if not it will be added
             client = LogiFlexClient.objects.filter(email=email).first()
@@ -748,8 +748,8 @@ class WebhookView(View):
                 client = LogiFlexClient.objects.create(email=email, phone=phone_nb, contact_name=customer_name)
             # print("Client_email:", client.email)
 
-            if stripid:
-                payment_plan = PricingPlan.objects.filter(stripe_price_id=stripid).first()
+            if strippriceid:
+                payment_plan = PricingPlan.objects.filter(stripe_price_id=strippriceid).first()
                 if payment_plan:
                     # Save payment and Create report instance with empty data
                         servicepayment = ServicePayment.objects.filter(client=client).first()
@@ -765,15 +765,14 @@ class WebhookView(View):
 
 
                         else:
-                            advancedcredits = 0
-                            if payment_plan.name == "starter":
-                                advancedcredits = 1
+                            # advancedcredits = 0
+                            # if payment_plan.name == "starter":
+                            #     advancedcredits = 1
                             servicepayment = ServicePayment.objects.create(
                                                 client=client,
                                                 service_type=payment_plan,
                                                 stripe_checkout_id=session['id'],
-                                                is_active=True,
-                                                advanced_credits=advancedcredits)
+                                                is_active=True)
 
                         servicepayment.reset_quota_if_needed()
                         paymenthistory = PaymentsHistory.objects.create(

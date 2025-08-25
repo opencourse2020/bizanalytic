@@ -889,6 +889,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         client = LogiFlexClient.objects.filter(user=self.request.user).first()
         servicepayment = ServicePayment.objects.filter(client=client).first()
 
+
         report_type = None
         # Check report type
         if reportype == "1":

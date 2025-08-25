@@ -762,7 +762,7 @@ class WebhookView(View):
                             servicepayment.service_type = payment_plan
                             servicepayment.is_active = True
                             servicepayment.save()
-
+                            servicepayment.reset_quota_if_needed()
 
                         else:
                             # advancedcredits = 0
@@ -773,8 +773,8 @@ class WebhookView(View):
                                                 service_type=payment_plan,
                                                 stripe_checkout_id=session['id'],
                                                 is_active=True)
+                            servicepayment.set_quota()
 
-                        servicepayment.reset_quota_if_needed()
                         paymenthistory = PaymentsHistory.objects.create(
                             client=client,
                             service_type=payment_plan,

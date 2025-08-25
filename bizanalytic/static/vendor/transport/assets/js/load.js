@@ -130,7 +130,7 @@ $("#generate_full_rp").click(function (){
         var reptyp = $("input[name='reporttype']:checked").val();
 
         let urlref = "";
-
+        console.log("Report Type:", reptyp);
         let agree_create = "2";
         if ($("#agree_create").prop("checked")){
              agree_create = "1";

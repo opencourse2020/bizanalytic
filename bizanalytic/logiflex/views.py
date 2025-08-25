@@ -1136,7 +1136,7 @@ class PaymentSuccessfulView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         query = self.request.GET.get("cat")
-        if self.request.user:
+        if self.request.user.is_authenticated:
             return reverse_lazy("logiflex:dashboard")
         elif query:
             client = LogiFlexClient.objects.filter(servicepayment__stripe_checkout_id=query)\

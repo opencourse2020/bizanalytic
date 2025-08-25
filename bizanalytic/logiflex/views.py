@@ -911,10 +911,14 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
             downloadcode = generatecode(8)
             latest_report = LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
+            latest_number = 1
+            if latest_report:
+                latest_number = latest_report.report_number + 1
+
             logireport = LogiflexReport.objects.create(client=client, payment=servicepayment,
                                                               download_code=downloadcode,
                                                               report_type=report_type,
-                                                              report_number=latest_report.report_number+1)
+                                                              report_number=latest_number)
             # add route file
             logireport.routefile = route_file
             # add report ID

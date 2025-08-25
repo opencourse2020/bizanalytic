@@ -888,19 +888,24 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         reportid = None
         client = LogiFlexClient.objects.filter(user=self.request.user).first()
         servicepayment = ServicePayment.objects.filter(client=client).first()
-
+        lite_report = 0
+        advanced_report = 0
 
         report_type = None
         # Check report type
         if reportype == "1":
             report_type = "lite"
+            if servicepayment.can_generate_report():
+                lite_report = 1
         elif reportype == "2":
             report_type = "advanced"
+            if servicepayment.can_generate_advanced_report():
+                advanced_report = 1
 
         print("client: ", client.pk)
         print("Service Payment:", servicepayment.pk)
-        if servicepayment.can_generate_report():
-            print("you can generate lite reports")
+        if lite_report or advanced_report:
+            print("you can generate reports")
             # Save client and result data
             user = self.request.user
             if not client.contact_name:
@@ -930,6 +935,10 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             logireport.expected_delivery = logireport.date_created + timedelta(days=1)
 
             logireport.save()
+            if lite_report == 1:
+                servicepayment.mark_report_used()
+            elif advanced_report == 1:
+                servicepayment.mark_advanced_report_used()
 
             # Clean and validate route file and generate logs
             print("Step 1")

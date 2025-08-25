@@ -896,9 +896,10 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         elif reportype == "2":
             report_type = "advanced"
 
-
+        print("client: ", client.pk)
+        print("Service Payment:", servicepayment.pk)
         if servicepayment.can_generate_report():
-
+            print("you can generate lite reports")
             # Save client and result data
             user = self.request.user
             if not client.contact_name:

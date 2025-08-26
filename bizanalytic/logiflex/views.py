@@ -142,6 +142,12 @@ class ReportView(TemplateView):
             # Carrier Analysis
             carrier_stats = prepare_carrier_stats(df)
             carrier_stats["AvgCostPerMile"] = carrier_stats["AvgCostPerMile"].round(3)
+            carrier_stats["AvgFreightCost"] = carrier_stats["AvgFreightCost"].round(3)
+            carrier_stats["AvgCostPerPound"] = carrier_stats["AvgCostPerPound"].round(3)
+            carrier_ontime = carrier_stats["OnTimeRate"].max()
+            carrier_costpermile = carrier_stats["AvgCostPerMile"].min()
+            carrier_freightcost = carrier_stats["AvgFreightCost"].min()
+            carrier_costpound = carrier_stats["AvgCostPerPound"].min()
             carrier_stats = carrier_stats.reset_index()
             carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
             # Carrier Contingency and Reliability Vs Cost Analysis
@@ -172,6 +178,11 @@ class ReportView(TemplateView):
             route_stats = route_stats.reset_index()
             route_stats = json.loads(route_stats.to_json(orient='records'))
 
+            kwargs["reporttype"] = report.report_type
+            kwargs["carrier_ontime"] = carrier_ontime
+            kwargs["carrier_costpermile"] = carrier_costpermile
+            kwargs["carrier_freightcost"] = carrier_freightcost
+            kwargs["carrier_costpound"] = carrier_costpound
             if report.report_type == "lite":
 
                 # Carrier Cost Reliability Analysis
@@ -213,7 +224,7 @@ class ReportView(TemplateView):
                 kwargs["highcostvariance"] = highcostvariance
                 kwargs["lowcostvariance"] = lowcostvariance
                 kwargs["costreliability_action"] = costreliability_action
-            kwargs["reporttype"] = report.report_type
+
 
         return super(ReportView, self).get_context_data(**kwargs)
 

@@ -72,11 +72,11 @@
                             <div class="d-flex align-items-center gap-3">
                                 <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                 <div class="counter-number d-flex">
-                                    <h3 class="counter">500</h3>
+                                    <h3 class="counter">{{ carrier_ontime }}</h3>
                                     <h3>+</h3>
                                 </div>
                             </div>
-                            <span class="title mt-10">project complete</span>
+                            <span class="title mt-10">Best On-Time Rate</span>
                         </div>
                     </div>
 
@@ -85,11 +85,11 @@
                             <div class="d-flex align-items-center gap-3">
                                 <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                 <div class="counter-number d-flex">
-                                    <h3 class="counter">400</h3>
+                                    <h3 class="counter">{{ carrier_freightcost }}</h3>
                                     <h3>+</h3>
                                 </div>
                             </div>
-                            <span class="title mt-10">Customer review</span>
+                            <span class="title mt-10">Lowest Freight Cost </span>
                         </div>
                     </div>
 
@@ -98,11 +98,11 @@
                             <div class="d-flex align-items-center gap-3">
                                 <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                 <div class="counter-number d-flex">
-                                    <h3 class="counter">100</h3>
+                                    <h3 class="counter">{{ carrier_costpermile }}</h3>
                                     <h3>+</h3>
                                 </div>
                             </div>
-                            <span class="title mt-10">winning award</span>
+                            <span class="title mt-10">Lowest Cost Per Mile</span>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6">
@@ -110,11 +110,11 @@
                             <div class="d-flex align-items-center gap-3">
                                 <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                 <div class="counter-number d-flex">
-                                    <h3 class="counter">400</h3>
+                                    <h3 class="counter">{{ carrier_costpound }}</h3>
                                     <h3>+</h3>
                                 </div>
                             </div>
-                            <span class="title mt-10">Customer review</span>
+                            <span class="title mt-10">Lowest Cost Per Pound</span>
                         </div>
                     </div>
                 </div>

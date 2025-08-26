@@ -156,8 +156,8 @@ class ReportView(TemplateView):
                 report.save()
             else:
                 contingency_result = report.contingency_result
-                hcarvar = report.highvariance
-                lcarvar = report.lowvariance
+                highcostvariance = report.highvariance
+                lowcostvariance = report.lowvariance
                 costreliability_action = report.costreliability_action
                 contingency_action = report.contingency_action
 

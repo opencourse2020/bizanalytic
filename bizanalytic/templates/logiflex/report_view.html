@@ -165,12 +165,18 @@
                 {% if reporttype == "advanced" %}
                     <div class="card-footer">
                         <ul>
-                        <li>{{ top_right|safe }}</li>
-                        {% if top_left %}
-                            <li>{{ top_left|safe }}</li>
-                        {% endif %}
-                        <li>{{ bottom_right|safe }}</li>
-                        <li>{{ bottom_left|safe }}</li>
+                            {% if top_right %}
+                                <li>{{ top_right|safe }}</li>
+                            {% endif %}
+                            {% if top_left %}
+                                <li>{{ top_left|safe }}</li>
+                            {% endif %}
+                            {% if bottom_right %}
+                                <li>{{ bottom_right|safe }}</li>
+                            {% endif %}
+                            {% if bottom_left %}
+                                <li>{{ bottom_left|safe }}</li>
+                            {% endif %}
                         </ul>
                         <strong>Actions:</strong><br>
                         <ol type="1">
@@ -199,10 +205,18 @@
                              <div id="DriverCostPerMile" style="min-height: 365px;">
                              <strong>Key Insights</strong><br>
                              <ul style="list-style-type:disc;">
-                                <li>{{ top_right|safe }}</li>
-                                <li>{{ top_left|safe }}</li>
-                                <li>{{ bottom_right|safe }}</li>
-                                <li>{{ bottom_left|safe }}</li>
+                                {% if top_right %}
+                                    <li>{{ top_right|safe }}</li>
+                                {% endif %}
+                                 {% if top_left %}
+                                    <li>{{ top_left|safe }}</li>
+                                 {% endif %}
+                                {% if bottom_right %}
+                                    <li>{{ bottom_right|safe }}</li>
+                                {% endif %}
+                                 {% if bottom_left %}
+                                    <li>{{ bottom_left|safe }}</li>
+                                 {% endif %}
 
                              </ul>
                             <br><strong>Actions:</strong><br>

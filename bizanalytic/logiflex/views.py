@@ -189,7 +189,8 @@ class ReportView(TemplateView):
                 kwargs["bottom_right"] = bottom_right
                 kwargs["bottom_left"] = bottom_left
                 kwargs["driver_actions"] = driver_actions
-                # kwargs["costmile"] = json.loads("{'0'}")
+                cost_mile = '{"0":"0"}'
+                kwargs["costmile"] = json.loads(cost_mile)
             elif report.report_type == "advanced":
 
                 # Carrier Cost Reliability Analysis

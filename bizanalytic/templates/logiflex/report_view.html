@@ -243,11 +243,16 @@
 ------------------------------------------------ */
 $(document).ready(function() {
 
-    {#full_df = {{ carrierstats|safe }};#}
+    var rt = {{ reporttype }};
     full_df = {{ carrierstats|safe }};
     df_driver = {{ driverstats|safe }};
+    var costpermile = "0";
+    if (rt === "advanced"){
+        costpermile = {{ costmile|safe }};
+    }else if (rt === "lite"){
+        costpermile = "0";
+    }
 
-    costpermile = {{ costmile|safe }};
 
     console.log(costpermile);
     console.log(df_driver);
@@ -284,7 +289,11 @@ $(document).ready(function() {
 
 	$(document).on('theme-reload', function() {
 		{#$('#churncontractiondonut, #apexLineChart, #apexColumnChart, #apexAreaChart, #apexBarChart, #apexMixedChart, #apexCandlestickChart, #apexBubbleChart, #apexScatterChart, #apexHeatmapChart, #apexPieChart, #apexRadialBarChart, #apexRadarChart').empty();#}
-        $('#CarrierCostReliabilityChart, #CarrierCostPerMile, #DriverMpgOnTime' ).empty();
+        if (costpermile !== "0") {
+            $('#CarrierCostReliabilityChart, #CarrierCostPerMile, #DriverMpgOnTime').empty();
+        }else {
+            $('#CarrierCostReliabilityChart, #DriverMpgOnTime').empty();
+        }
 
 		handleRenderApexChart(full_df, costpermile, df_driver);
 	});

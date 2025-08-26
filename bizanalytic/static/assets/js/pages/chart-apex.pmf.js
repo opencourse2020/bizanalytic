@@ -8,9 +8,14 @@ Website: http://www.seantheme.com/hud/
 var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	df = new dfd.DataFrame(full_df);
 	dfdriver = new dfd.DataFrame(df_driver);
-	dfcost = new dfd.DataFrame(costpermile);
-	dfcost.print();
-	dfcost.sortValues("CostPerMile", { inplace: true })
+	if (costpermile !== "0"){
+		dfcost = new dfd.DataFrame(costpermile);
+		dfcost.print();
+		dfcost.sortValues("CostPerMile", { inplace: true })
+		let group_df = dfcost.groupby(["CarrierName"]);
+	}
+
+
 	// let carrierdata = df[['CarrierName', 'AvgFreightCost', 'OnTimeRate']];
 	// console.log(carrierdata);
 	let numcarrieres = df['CarrierName'].count()
@@ -22,21 +27,23 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
     // console.log(`Index: ${row._index}, Col1: ${row.col1}, Col2: ${row.col2}, Col3: ${row.col3}`);
   	// console.log(carrierscatterdata);
 
-    let group_df = dfcost.groupby(["CarrierName"]);
+
 
 	const seriesdata =[];
     const costdata =[];
 	for (let i = 0; i < df.shape[0]; i++) {
 		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgFreightCost"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
-        let a = group_df.getGroup([df.iloc({rows: [i]})["CarrierName"].values[0]]);
-		// console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
-		// console.log(a.values[1]);
-		const median = d3.quantile(a["CostPerMile"].values, 0.5);
-		const q1 = d3.quantile(a["CostPerMile"].values, 0.25);
-		const min = d3.min(a["CostPerMile"].values);
-		const max = d3.max(a["CostPerMile"].values);
-		const q3 = d3.quantile(a["CostPerMile"].values, 0.75);
-        costdata.push({x: df.iloc({rows: [i]})["CarrierName"].values[0], y: [min, q1, median, q3, max]})
+        if (costpermile !== "0") {
+			let a = group_df.getGroup([df.iloc({rows: [i]})["CarrierName"].values[0]]);
+			// console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
+			// console.log(a.values[1]);
+			const median = d3.quantile(a["CostPerMile"].values, 0.5);
+			const q1 = d3.quantile(a["CostPerMile"].values, 0.25);
+			const min = d3.min(a["CostPerMile"].values);
+			const max = d3.max(a["CostPerMile"].values);
+			const q3 = d3.quantile(a["CostPerMile"].values, 0.75);
+			costdata.push({x: df.iloc({rows: [i]})["CarrierName"].values[0], y: [min, q1, median, q3, max]})
+		}
 		// console.log(costdata);
 	}
 	console.log("seriesdata", seriesdata);
@@ -201,11 +208,11 @@ var apexScatterDriverChartOptions = {
 		apexScatterChartOptions
 	);
 	apexScatterChart.render();
-
-    var apexCostMilechart = new ApexCharts(document.querySelector("#CarrierCostPerMile"),
-        apexCostMileChartOptions);
-    apexCostMilechart.render();
-
+	if (costpermile !== "0") {
+		var apexCostMilechart = new ApexCharts(document.querySelector("#CarrierCostPerMile"),
+			apexCostMileChartOptions);
+		apexCostMilechart.render();
+	}
 	// apexMixedChart
 	var apexScatterChart = new ApexCharts(
 		document.querySelector('#DriverMpgOnTime'),

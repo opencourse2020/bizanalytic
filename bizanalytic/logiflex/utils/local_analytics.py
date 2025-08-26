@@ -883,7 +883,7 @@ def prepare_data_report(df):
         p_value = row['P_Value']
         contingency_result.append(
             f"<strong class='comp'>{competitor}</strong> is <strong class='odds'>{odds_ratio:.2f}x</strong> to deliver on time than <strong class='worst'>{worst_carrier}</strong>")
-
+    print("Result number of competitors", results_df['Competitor'].count())
     if results_df['Competitor'].count() >= 2:
         contingency_action.append(f"Move some of the Shipments from <strong class='worst'>{worst_carrier}</strong> to <strong class='comp'>{results_df.iloc[0]['Competitor']}</strong> and <strong class='comp'>{results_df.iloc[1]['Competitor']}</strong>")
     elif results_df['Competitor'].count() == 1:

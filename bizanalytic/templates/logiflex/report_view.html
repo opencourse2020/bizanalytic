@@ -75,18 +75,20 @@
                         <div id="CarrierCostReliabilityChart"></div>
                     </div>
                     <div class="card-footer">
-                    <ul style="list-style-type:disc;">
-                        {% for item in contigency %}
-                            <li> {{ item|safe }}</li>
-                        {% endfor %}
+                        {% if reporttype == "advanced" %}
+                            <ul style="list-style-type:disc;">
+                                {% for item in contigency %}
+                                    <li> {{ item|safe }}</li>
+                                {% endfor %}
 
-                    </ul>
-                    <strong>Actions:</strong><br>
-                    <ol type="1">
-                        {% for cont_action in contingency_action %}
-                        <li> {{ cont_action|safe }}</li>
-                        {% endfor %}
-                    </ol>
+                            </ul>
+                            <strong>Actions:</strong><br>
+                            <ol type="1">
+                                {% for cont_action in contingency_action %}
+                                <li> {{ cont_action|safe }}</li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -94,15 +96,43 @@
             <div class="col-md-6">
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
-                        {% trans "Fuel Cost per Mile Distribution by Carrier" %}
+                        {% if reporttype == "lite" %}
+                            {% trans "Key Insights and Recommended Actions" %}
+                        {% elif reporttype == "advanced" %}
+                            {% trans "Fuel Cost per Mile Distribution by Carrier" %}
+                        {% endif %}
+
                     </div>
                     <div class="card-body text-center">
+                         {% if reporttype == "lite" %}
+                             <strong>Key Insights</strong><br>
+                             <ul style="list-style-type:disc;">
+                                {% for item in contigency %}
+                                    <li> {{ item|safe }}</li>
+                                {% endfor %}
+                                <li>{{ highcostvariance|safe }}</li>
+                                 <li>{{ lowcostvariance|safe }}</li>
+
+                             </ul>
+                            <strong>Actions:</strong><br>
+                            <ol type="1">
+                                {% for cont_action in contingency_action %}
+                                    <li> {{ cont_action|safe }}</li>
+                                {% endfor %}
+                                {% for action in costreliability_action %}
+                                    <li>{{ action|safe }}</li>
+                                {% endfor %}
+                            </ol>
+                        {% elif reporttype == "advanced" %}
                             <div id="CarrierCostPerMile"></div>
+                        {% endif %}
+
                     </div>
                     <div class="card-footer">
+                    {% if reporttype == "advanced" %}
                         <ul style="list-style-type:disc;">
-                            <li>{{ hcarvar|safe }}</li>
-                            <li>{{ lcarvar|safe }}</li>
+                            <li>{{ highcostvariance|safe }}</li>
+                            <li>{{ lowcostvariance|safe }}</li>
 
                         </ul>
                         <strong>Actions:</strong><br>
@@ -111,6 +141,7 @@
                             <li>{{ action|safe }}</li>
                             {% endfor %}
                         </ol>
+                    {% endif %}
                     </div>
                 </div>
             </div>

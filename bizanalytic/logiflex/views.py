@@ -138,24 +138,19 @@ class ReportView(TemplateView):
             dff = pd.read_csv(report.routefile)
             df = clean_data(dff)
             df = calculate_kpis(df)
+
+            # Carrier Analysis
             carrier_stats = prepare_carrier_stats(df)
             carrier_stats["AvgCostPerMile"] = carrier_stats["AvgCostPerMile"].round(3)
             carrier_stats = carrier_stats.reset_index()
             carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
-            driver_stats = prepare_driver_stats(df)
-            top_right, top_left, bottom_right, bottom_left, driver_actions = prepare_driver_analysis(driver_stats)
-            driver_stats = driver_stats.reset_index()
-            driver_stats = json.loads(driver_stats.to_json(orient='records'))
-            route_stats = prepare_route_stats(df)
-            route_stats = route_stats.reset_index()
-            route_stats = json.loads(route_stats.to_json(orient='records'))
-
             # Carrier Contingency and Reliability Vs Cost Analysis
             if not report.contingency_result:
-                hcarvar, lcarvar, costreliability_action, contingency_result, contingency_action = prepare_data_report(df)
+                highcostvariance, lowcostvariance, costreliability_action, contingency_result, contingency_action = prepare_data_report(
+                    df)
                 report.contingency_result = contingency_result
-                report.highvariance = hcarvar
-                report.lowvariance = lcarvar
+                report.highvariance = highcostvariance
+                report.lowvariance = lowcostvariance
                 report.costreliability_action = costreliability_action
                 report.contingency_action = contingency_action
                 report.save()
@@ -166,24 +161,56 @@ class ReportView(TemplateView):
                 costreliability_action = report.costreliability_action
                 contingency_action = report.contingency_action
 
-            print(route_stats)
+            # Drivers Analysis
+            driver_stats = prepare_driver_stats(df)
+            top_right, top_left, bottom_right, bottom_left, driver_actions = prepare_driver_analysis(driver_stats)
+            driver_stats = driver_stats.reset_index()
+            driver_stats = json.loads(driver_stats.to_json(orient='records'))
 
-            cost_mile = df[['CarrierName', 'CostPerMile']]
-            cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)
-            cost_mile = json.loads(cost_mile.to_json(orient='records'))
-            kwargs["costmile"] = cost_mile
-            kwargs["carrierstats"] = carrier_stats
-            kwargs["contigency"] = contingency_result
-            kwargs["hcarvar"] = hcarvar
-            kwargs["lcarvar"] = lcarvar
-            kwargs["costreliability_action"] = costreliability_action
-            kwargs["contingency_action"] = contingency_action
-            kwargs["driverstats"] = driver_stats
-            kwargs["top_right"] = top_right
-            kwargs["top_left"] = top_left
-            kwargs["bottom_right"] = bottom_right
-            kwargs["bottom_left"] = bottom_left
-            kwargs["driver_actions"] = driver_actions
+            # Routes Analysis
+            route_stats = prepare_route_stats(df)
+            route_stats = route_stats.reset_index()
+            route_stats = json.loads(route_stats.to_json(orient='records'))
+
+            if report.report_type == "lite":
+
+                # Carrier Cost Reliability Analysis
+                kwargs["carrierstats"] = carrier_stats
+                kwargs["contigency"] = contingency_result
+                kwargs["contingency_action"] = contingency_action
+
+                # Driver On-time Rate Vs. MPG Analysis
+                kwargs["driverstats"] = driver_stats
+                kwargs["top_right"] = top_right
+                kwargs["top_left"] = top_left
+                kwargs["bottom_right"] = bottom_right
+                kwargs["bottom_left"] = bottom_left
+                kwargs["driver_actions"] = driver_actions
+
+            elif report.report_type == "advanced":
+
+                # Carrier Cost Reliability Analysis
+                kwargs["carrierstats"] = carrier_stats
+                kwargs["contigency"] = contingency_result
+                kwargs["contingency_action"] = contingency_action
+
+                # Driver On-time Rate Vs. MPG Analysis
+                kwargs["driverstats"] = driver_stats
+                kwargs["top_right"] = top_right
+                kwargs["top_left"] = top_left
+                kwargs["bottom_right"] = bottom_right
+                kwargs["bottom_left"] = bottom_left
+                kwargs["driver_actions"] = driver_actions
+                # Carrier Cost Per Mile Analysis
+                cost_mile = df[['CarrierName', 'CostPerMile']]
+                cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)
+                cost_mile = json.loads(cost_mile.to_json(orient='records'))
+                kwargs["costmile"] = cost_mile
+                kwargs["highcostvariance"] = highcostvariance
+                kwargs["lowcostvariance"] = lowcostvariance
+                kwargs["costreliability_action"] = costreliability_action
+            kwargs["reporttype"] = report.report_type
+
         return super(ReportView, self).get_context_data(**kwargs)
 
 

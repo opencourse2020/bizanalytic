@@ -262,31 +262,31 @@ $(document).ready(function() {
     }
 
 
-    console.log(costpermile);
-    console.log(df_driver);
-
-    dfcost = new dfd.DataFrame(costpermile);
-    console.log(dfcost);
-    dfcost.sortValues("CostPerMile", { inplace: true })
-    let group_df = dfcost.groupby(["CarrierName"]);
-
-    let a = group_df.getGroup(["ABC Carriers"]);
-    let b = group_df.getGroup(["XYZ Freight"]);
-    let c = group_df.getGroup(["DEF Logistics"]);
-    let d = group_df.getGroup(["GHI Transport"]);
-
-    const median = d3.quantile(b["CostPerMile"].values, 0.5);
-    const q1 = d3.quantile(b["CostPerMile"].values, 0.25);
-    const min = d3.min(b["CostPerMile"].values);
-    const max = d3.max(b["CostPerMile"].values);
-    const q3 = d3.quantile(b["CostPerMile"].values, 0.75);
-
-    console.log('min:', min);
-    console.log('q1:', q1);
-    console.log('median:', median);
-    console.log('q3:', q3);
-    console.log('max:', max);
-    a.print();
+    {#console.log(costpermile);#}
+    {#console.log(df_driver);#}
+    {##}
+    {#dfcost = new dfd.DataFrame(costpermile);#}
+    {#console.log(dfcost);#}
+    {#dfcost.sortValues("CostPerMile", { inplace: true })#}
+    {#let group_df = dfcost.groupby(["CarrierName"]);#}
+    {##}
+    {#let a = group_df.getGroup(["ABC Carriers"]);#}
+    {#let b = group_df.getGroup(["XYZ Freight"]);#}
+    {#let c = group_df.getGroup(["DEF Logistics"]);#}
+    {#let d = group_df.getGroup(["GHI Transport"]);#}
+    {##}
+    {#const median = d3.quantile(b["CostPerMile"].values, 0.5);#}
+    {#const q1 = d3.quantile(b["CostPerMile"].values, 0.25);#}
+    {#const min = d3.min(b["CostPerMile"].values);#}
+    {#const max = d3.max(b["CostPerMile"].values);#}
+    {#const q3 = d3.quantile(b["CostPerMile"].values, 0.75);#}
+    {##}
+    {#console.log('min:', min);#}
+    {#console.log('q1:', q1);#}
+    {#console.log('median:', median);#}
+    {#console.log('q3:', q3);#}
+    {#console.log('max:', max);#}
+    {#a.print();#}
     {#for (let i = 0; i < df.shape[0]; i++) {#}
     {#    console.log()#}
 

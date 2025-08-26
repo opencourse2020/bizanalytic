@@ -108,6 +108,7 @@
 
                          {% if reporttype == "lite" %}
                              <div class="card-body " style="padding-left: 40px;">
+                             <div id="CarrierCostPerMile">
                              <strong>Key Insights</strong><br>
                              <ul style="list-style-type:disc;">
                                 {% for item in contigency %}
@@ -127,7 +128,7 @@
                                 {% endfor %}
                             </ol>
                              </div>
-
+                             </div>
                         {% elif reporttype == "advanced" %}
                              <div class="card-body text-center">
                             <div id="CarrierCostPerMile"></div>

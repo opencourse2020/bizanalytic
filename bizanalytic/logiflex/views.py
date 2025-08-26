@@ -142,7 +142,7 @@ class ReportView(TemplateView):
             # Carrier Analysis
             carrier_stats = prepare_carrier_stats(df)
             carrier_stats["AvgCostPerMile"] = carrier_stats["AvgCostPerMile"].round(3)
-            carrier_stats["AvgFreightCost"] = carrier_stats["AvgFreightCost"].round(3)
+            carrier_stats["AvgFreightCost"] = carrier_stats["AvgFreightCost"].round(2)
             carrier_stats["AvgCostPerPound"] = carrier_stats["AvgCostPerPound"].round(3)
             carrier_ontime = carrier_stats["OnTimeRate"].max()
             carrier_costpermile = carrier_stats["AvgCostPerMile"].min()

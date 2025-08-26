@@ -842,7 +842,7 @@ def test_validator(reportid, routefilename):
     report.highvariance = hcarvar
     report.lowvariance = lcarvar
     print("contingency_actions: ", contingency_action)
-    if contingency_result:
+    if costreliability_action:
         report.costreliability_action = costreliability_action
     if contingency_action:
         report.contingency_action = contingency_action

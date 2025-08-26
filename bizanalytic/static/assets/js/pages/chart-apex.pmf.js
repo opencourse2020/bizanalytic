@@ -134,7 +134,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		xaxis: {
 			tickAmount: 10,
 			labels: {
-				formatter: function(val) { return parseFloat(val).toFixed(2) }
+				// formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},
 			title: {
 					text: 'Average Freight Cost ($)'

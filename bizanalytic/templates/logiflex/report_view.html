@@ -99,7 +99,7 @@
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
                         {% if reporttype == "lite" %}
-                            {% trans "Key Insights and Recommended Actions" %}
+                            {% trans "Carriers Key Insights and Recommended Actions" %}
                         {% elif reporttype == "advanced" %}
                             {% trans "Fuel Cost per Mile Distribution by Carrier" %}
                         {% endif %}
@@ -108,7 +108,7 @@
 
                          {% if reporttype == "lite" %}
                              <div class="card-body " style="padding-left: 40px;">
-                             <div id="CarrierCostPerMile">
+                             <div id="CarrierCostPerMile" style="min-height: 365px;">
                              <strong>Key Insights</strong><br>
                              <ul style="list-style-type:disc;">
                                 {% for item in contigency %}
@@ -118,7 +118,7 @@
                                  <li>{{ lowcostvariance|safe }}</li>
 
                              </ul>
-                            <strong>Actions:</strong><br>
+                            <br><strong>Actions:</strong><br>
                             <ol type="1">
                                 {% for cont_action in contingency_action %}
                                     <li> {{ cont_action|safe }}</li>
@@ -162,6 +162,7 @@
                     <div class="card-body text-center">
                             <div id="DriverMpgOnTime"></div>
                     </div>
+                {% if reporttype == "advanced" %}
                     <div class="card-footer">
                         <ul>
                         <li>{{ top_right|safe }}</li>
@@ -178,15 +179,50 @@
                             {% endfor %}
                         </ol>
                     </div>
+                {% endif %}
                 </div>
             </div>
 
             <div class="col-md-4">
-                <div class="card shadow-sm">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{% trans "Uploaded File" %}</h5>
-
+                <div class="card shadow-sm chart-card">
+                    <div class="card-header">
+                        {% if reporttype == "lite" %}
+                            {% trans "Driver Key Insights and Recommended Actions" %}
+                        {% elif reporttype == "advanced" %}
+                            {% trans "Fuel Cost per Mile Distribution by Driver" %}
+                        {% endif %}
                     </div>
+                    {% if reporttype == "lite" %}
+                             <div class="card-body " style="padding-left: 40px;">
+                             <div id="DriverCostPerMile" style="min-height: 365px;">
+                             <strong>Key Insights</strong><br>
+                             <ul style="list-style-type:disc;">
+                                <li>{{ top_right|safe }}</li>
+                                <li>{{ top_left|safe }}</li>
+                                <li>{{ bottom_right|safe }}</li>
+                                <li>{{ bottom_left|safe }}</li>
+
+                             </ul>
+                            <br><strong>Actions:</strong><br>
+                            <ol type="1">
+                                {% for daction in driver_actions %}
+                            <li>
+                                {{ daction|safe }}
+                            </li>
+                            {% endfor %}
+                            </ol>
+                             </div>
+                             </div>
+                        {% elif reporttype == "advanced" %}
+                             <div class="card-body text-center">
+                            <div id="DriverCostPerMile"></div>
+                             </div>
+                        {% endif %}
+
+                {% if reporttype == "advanced" %}
+                    <div class="card-footer">
+                    </div>
+                {% endif %}
                 </div>
             </div>
             <div class="col-md-4"></div>

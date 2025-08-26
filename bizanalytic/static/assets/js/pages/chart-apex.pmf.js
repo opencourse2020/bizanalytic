@@ -9,6 +9,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	df = new dfd.DataFrame(full_df);
 	dfdriver = new dfd.DataFrame(df_driver);
 	dfcost = new dfd.DataFrame(costpermile);
+	dfcost.print();
 	dfcost.sortValues("CostPerMile", { inplace: true })
 	// let carrierdata = df[['CarrierName', 'AvgFreightCost', 'OnTimeRate']];
 	// console.log(carrierdata);

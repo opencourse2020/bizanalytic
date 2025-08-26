@@ -178,6 +178,9 @@ class ReportView(TemplateView):
                 kwargs["carrierstats"] = carrier_stats
                 kwargs["contigency"] = contingency_result
                 kwargs["contingency_action"] = contingency_action
+                kwargs["highcostvariance"] = highcostvariance
+                kwargs["lowcostvariance"] = lowcostvariance
+                kwargs["costreliability_action"] = costreliability_action
 
                 # Driver On-time Rate Vs. MPG Analysis
                 kwargs["driverstats"] = driver_stats
@@ -186,7 +189,7 @@ class ReportView(TemplateView):
                 kwargs["bottom_right"] = bottom_right
                 kwargs["bottom_left"] = bottom_left
                 kwargs["driver_actions"] = driver_actions
-
+                kwargs["costmile"] = json.loads({0})
             elif report.report_type == "advanced":
 
                 # Carrier Cost Reliability Analysis

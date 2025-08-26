@@ -844,7 +844,7 @@ def test_validator(reportid, routefilename):
     if contingency_result:
         report.costreliability_action = costreliability_action
     if contingency_action:
-        report.costreliability_action = contingency_action
+        report.contingency_action = contingency_action
     report.save()
 
     logiflex_log = LogEntry.objects.create(report=report, column_report=column_report,

@@ -48,9 +48,9 @@
         <div class="container">
             <div class="row justify-content-around">
                 {% if report_allowed == 1 %}
-                    <div class="col-12 d-flex mb-20"><a href="{% url 'logiflex:reports:fullreport' %}" class="btn btn-success">{% trans "Create New Report" %}</a> </div>
+                    <div class="col-12 text-center mb-20"><a href="{% url 'logiflex:reports:fullreport' %}" class="btn btn-success">{% trans "Create New Report" %}</a> </div>
                 {% else %}
-                    <div class="col-12 d-flex mb-20"><a href="{% url 'logiflex:reports:fullreport' %}" class="btn btn-success disabled">{% trans "Create New Report" %}</a> </div>
+                    <div class="col-12 text-center mb-20"><a href="{% url 'logiflex:reports:fullreport' %}" class="btn btn-success disabled">{% trans "Create New Report" %}</a> </div>
                 {% endif %}
                 <div class="col-lg-5 wow fadeInLeft" data-wow-delay=".2s">
                     <div class="row">

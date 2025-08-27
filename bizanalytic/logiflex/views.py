@@ -283,6 +283,18 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         pu = self.request.user
+        servicepayment = ServicePayment.objects.filter(client__user_id=pu).first()
+        report_allowed = 0
+        if servicepayment:
+            if servicepayment.can_generate_report() or servicepayment.can_generate_advanced_report():
+                report_allowed = 1
+            kwargs["report_allowed"] = report_allowed
+
+            kwargs["contact_name"] = servicepayment.client.contact_name
+            kwargs["company"] = servicepayment.client.company
+            kwargs["email"] = servicepayment.client.email
+            kwargs["clientid"] = servicepayment.client.id
+            clienttype = 1
         reports = LogiflexReport.objects.filter(client__user=pu)
         total_reports = reports.count()
         if total_reports == 0:

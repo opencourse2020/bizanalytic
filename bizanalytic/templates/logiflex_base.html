@@ -181,8 +181,15 @@
                                         {% endif %}
 
                                     {% else %}
-                                            <a href="#tryfree" class="primary-btn secondary-bg"><span class="text">{% trans "Try Free" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                                            <li class="user-logo" style="width: 250px; float: right;">
+                                                <div class="nav-right-content" style="align-items: center;width: 100%;max-width: 100%;justify-content: center; text-align: center;">
+                                                    <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg" style="padding: 0px; width: 100%;">
 
+                                                        <img src="{{ user.picture.url }}" alt="Profile" height="60" style="box-sizing: border-box;border-radius: 30px;overflow-clip-margin: content-box;overflow: clip;max-width: 25%;max-height: 100%;vertical-align: middle;height: 40px;width: 100%;margin-bottom: 0px;">
+                                                        <span class="text user-name" style="top: -20px;">{{ user.first_name }}</span>
+                                                    </a>
+                                                </div>
+                                            </li>
                                     {% endif %}
 
                                 {% else %}

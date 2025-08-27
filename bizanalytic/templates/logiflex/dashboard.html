@@ -47,11 +47,11 @@
     <section class="service-area-2 biography-area py-120" data-background={% static "vendor/transport/assets/images/service-bg-2.jpg"%}>
         <div class="container">
             <div class="row justify-content-around">
-
+                <div class="col-12 d-flex mb-20"><a href="{% url 'logiflex:reports:fullreport' %}" class="btn btn-success">{% trans "Create New Report" %}</a> </div>
 
                 <div class="col-lg-5 wow fadeInLeft" data-wow-delay=".2s">
                     <div class="row">
-                        <div class="col-12 d-flex mb-20"><a href="{% url 'logiflex:reports:fullreport' %}" class="btn btn-success">{% trans "Create New Report" %}</a> </div>
+
                         <div class="col-12">
                             <div class="member-skill">
                             <span class="sub-title" style="color: #0cb7d6; font-size: 24px">{% trans "REPORTS STATUS" %}</span>

@@ -1110,7 +1110,7 @@ img { width: 100%; height: auto; display: block; }
 
 .single-pricing-2 { border: 1px solid #CCCCCC; border-radius: 20px; -webkit-transition: all 0.2s ease-in; -o-transition: all 0.2s ease-in; transition: all 0.2s ease-in; margin-bottom: 30px; }
 
-.single-pricing-2.popular { border: 1px solid transparent; -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.05); box-shadow: 0 0 30px rgba(0, 0, 0, 0.05); }
+.single-pricing-2.popular { border: 3px solid #f8bc1e; -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.05); box-shadow: 0 0 30px rgba(0, 0, 0, 0.05); }
 
 .single-pricing-2 .price-icon { width: 50px; }
 

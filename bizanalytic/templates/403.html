@@ -1,16 +1,74 @@
 {% extends "logiflex_base.html" %}
 {% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
 
-{% block page_title %}
-  <h2 class="h3">{% trans "Forbidden" %}</h2>
-{% endblock page_title %}
 
-{% block main %}
-  <ul class="list-group">
-    <li class="list-group-item">
+{% block head_title %}
+    {{ block.super }}
+{% endblock head_title %}
 
-      {% trans " Either the Page you requested doesn't exist anymore or You have no rights to access this page." %} <br>
-      {% trans "You can return to the home page." %}
-    </li>
-  </ul>
-{% endblock main %}
+{% block css %}
+    {{ block.super }}
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+{% block breadcrumb %}
+     <section class="breadcrumb-area mb-1" style="padding: 80px 0 20px" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <h1 class="title">{% trans "Forbidden" %} </h1>
+                            <span class="title" style="color: #0cb7d6; font-size: 40px">&nbsp;{% trans "Error 403" %}</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+{% block contact_area %}
+    <section class="service-area-2 biography-area py-20" data-background={% static "vendor/transport/assets/images/service-bg-2.jpg"%}>
+        <div class="container py-4">
+
+
+
+      <h3>{% trans " Either the Page you requested doesn't exist anymore or You have no rights to access this page." %}</h3> <br>
+            <h3>{% trans "You can return to the home page." %}</h3>
+    </div>
+    </section>
+{% endblock contact_area %}
+
+{% block feature_area %}
+
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+
+{% block js_area %}
+    {{ block.super }}
+{% endblock js_area %}

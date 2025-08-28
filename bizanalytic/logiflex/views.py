@@ -133,6 +133,7 @@ class ReportView(TemplateView):
         pu = self.kwargs.get("pk")
         user = self.request.user
         print("user1: ", user)
+        print("user1 name: ", user.username)
         if not user or user.username == "AnonymousUser":
             print("user2: ", user)
             reverse_lazy("profiles:403")

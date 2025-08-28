@@ -229,7 +229,7 @@ var ScatterChartDriverSpeedMPGOptions = {
 				  color: '#fff',
 				  background: '#00E396'
 				},
-				text: 'On-Time'
+				text: 'MPG'
 			  }
 			}
 		  ],
@@ -243,25 +243,25 @@ var ScatterChartDriverSpeedMPGOptions = {
 					  color: '#fff',
 					  background: '#086bda'
 					},
-					text: 'MPG'
+					text: 'MPH'
 				  }
 				}
 			  ],
 		},
 		// colors: [app.color.theme, app.color.warning, 'rgba('+ app.color.bodyColorRgb + ', .5)'],
-		series: driverseriesdata,
+		series: driverspeedmpg,
 		xaxis: {
 			tickAmount: 10,
 			labels: {
 				formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},
 			title: {
-				text: 'Fuel Efficiency (MPG)'
+				text: 'Median Speed (MPH)'
 			}
 		},
 		yaxis: { tickAmount: 7,
 		title: {
-            text: 'On-Time Delivery Rate (%)'
+            text: 'Fuel Efficiency (MPG)'
           }
 		},
 

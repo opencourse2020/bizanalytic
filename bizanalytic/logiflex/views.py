@@ -134,6 +134,7 @@ class ReportView(TemplateView):
         user = self.request.user
 
         report = LogiflexReport.objects.filter(client__user_id=user.id, pk=pu).first()
+        print("report ID:", report)
         if report:
             dff = pd.read_csv(report.routefile)
             df = clean_data(dff)

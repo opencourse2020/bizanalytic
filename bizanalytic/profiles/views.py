@@ -208,7 +208,7 @@ class UserDetailView(DetailView, SingleObjectMixin):
 
 
 class ForbiddenView(TemplateView):
-    template_name = "../templates/403.html"
+    template_name = "403.html"
 
 
 class ConditionsView(TemplateView):

@@ -133,7 +133,7 @@ class ReportView(TemplateView):
         pu = self.kwargs.get("pk")
         user = self.request.user
 
-        report = LogiflexReport.objects.filter(client__user=user, pk=pu).first()
+        report = LogiflexReport.objects.filter(client__user_id=user.id, pk=pu).first()
         if report:
             dff = pd.read_csv(report.routefile)
             df = clean_data(dff)

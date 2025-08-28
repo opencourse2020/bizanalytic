@@ -151,14 +151,14 @@ class ReportView(TemplateView):
     def get_context_data(self, **kwargs):
         pu = self.kwargs.get("pk")
         user = self.request.user
-
+        query = self.request.GET.get("cat")
         # print("user1: ", user)
         # print("user1 name: ", user.username)
         # if not user.is_authenticated:
         #     print("user2: ", user)
 
         # else:
-        report = LogiflexReport.objects.filter(client__user_id=user.id, pk=pu).first()
+        report = LogiflexReport.objects.filter(download_code=query, pk=pu).first()
         print("report ID:", report)
         if report:
             dff = pd.read_csv(report.routefile)

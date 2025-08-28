@@ -261,7 +261,7 @@ var ScatterChartDriverSpeedMPGOptions = {
 		},
 		yaxis: { tickAmount: 7,
 			labels: {
-				formatter: function(val) { return parseFloat(val).toFixed(0) }
+				formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},
 		title: {
             text: 'Fuel Efficiency (MPG)'

@@ -129,9 +129,29 @@ class RouteFileView(TemplateView):
 class ReportView(TemplateView):
     template_name = "logiflex/report_view.html"
 
+    def dispatch(self, request, *args, **kwargs):
+
+        pu = self.kwargs.get("pk")
+        user = self.request.user
+        query = self.request.GET.get("cat")
+        if user.is_authenticated:
+        #     client = LogiFlexClient.objects.filter(user=user).first()
+        # else:
+        #     client = LogiFlexClient.objects.filter(user=user).first()
+
+            report = LogiflexReport.objects.filter(client__user=user, pk=pu, download_code=query).first()
+        else:
+            report = LogiflexReport.objects.filter(pk=pu, download_code=query).first()
+
+        # Example: Redirect at the dispatch level
+        if not report:
+            return redirect('profiles:403')  # Redirect to login page by URL name
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         pu = self.kwargs.get("pk")
         user = self.request.user
+
         # print("user1: ", user)
         # print("user1 name: ", user.username)
         # if not user.is_authenticated:
@@ -233,7 +253,7 @@ class ReportView(TemplateView):
                 kwargs["costreliability_action"] = costreliability_action
         else:
             print("report none")
-            return redirect('profiles:403')
+            # return redirect('profiles:403')
             # return reverse_lazy("profiles:403")
 
         return super(ReportView, self).get_context_data(**kwargs)

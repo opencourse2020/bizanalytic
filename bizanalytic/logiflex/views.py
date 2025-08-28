@@ -231,8 +231,8 @@ class ReportView(TemplateView):
                 kwargs["highcostvariance"] = highcostvariance
                 kwargs["lowcostvariance"] = lowcostvariance
                 kwargs["costreliability_action"] = costreliability_action
-            else:
-                reverse_lazy("profiles:403")
+        else:
+            reverse_lazy("profiles:403")
 
 
         return super(ReportView, self).get_context_data(**kwargs)

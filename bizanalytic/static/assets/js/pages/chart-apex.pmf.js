@@ -221,7 +221,7 @@ var ScatterChartDriverSpeedMPGOptions = {
 		annotations: {
 		  yaxis: [
 			{
-			  y: drivermedianspeed,
+			  y: drivermpgmedian,
 			  borderColor: '#00E396',
 			  label: {
 				borderColor: '#00E396',
@@ -235,7 +235,7 @@ var ScatterChartDriverSpeedMPGOptions = {
 		  ],
 			xaxis: [
 				{
-				  x: drivermpgmedian,
+				  x: drivermedianspeed,
 				  borderColor: '#086bda',
 				  label: {
 					borderColor: '#086bda',

@@ -129,7 +129,7 @@ class RouteFileView(TemplateView):
 class ReportView(TemplateView):
     template_name = "logiflex/report_view.html"
 
-    def dispatch(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
 
         pu = self.kwargs.get("pk")
         user = self.request.user
@@ -146,7 +146,7 @@ class ReportView(TemplateView):
         # Example: Redirect at the dispatch level
         if not report:
             return redirect('profiles:403')  # Redirect to login page by URL name
-        return super().dispatch(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         pu = self.kwargs.get("pk")

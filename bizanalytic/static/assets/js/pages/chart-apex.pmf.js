@@ -50,16 +50,23 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		// console.log(costdata);
 	}
 	console.log("seriesdata", seriesdata);
-
+	const driverspeedmpg = []
 	const driverseriesdata =[];
 	for (let i = 0; i < dfdriver.shape[0]; i++) {
 		driverseriesdata.push({
 			name: dfdriver.iloc({rows: [i]})["DriverName"].values[0],
 			data: [[dfdriver.iloc({rows: [i]})["MedianMPG"].values[0], dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]*100]]
 		});
+		if (costpermile !== "0") {
+			driverspeedmpg.push({
+			name: dfdriver.iloc({rows: [i]})["DriverName"].values[0],
+			data: [[dfdriver.iloc({rows: [i]})["MedianSpeed"].values[0], dfdriver.iloc({rows: [i]})["MedianMPG"].values[0]*100]]
+		});
+		}
 	}
 	const drivermpgmedian = dfdriver["MedianMPG"].median();
 	const driverontimemedian = dfdriver["OnTimeRate"].median()*100;
+	const drivermedianspeed = dfdriver["MedianSpeed"].median();
 	const carrierfreightcostmedian = d3.quantile(df["AvgFreightCost"].values, 0.75);
 	const carrierontimemedian = d3.quantile(df["OnTimeRate"].values, 0.75);
 
@@ -148,9 +155,9 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
             text: 'On-Time Delivery Rate (%)'
           }
 		}
-	}
+	};
 
-var apexScatterDriverChartOptions = {
+var ScatterChartDriverOntimeMPGOptions = {
 		chart: {
 			height: 350,
 			type: 'scatter',
@@ -203,25 +210,85 @@ var apexScatterDriverChartOptions = {
           }
 		},
 
-	}
+	};
+
+var ScatterChartDriverSpeedMPGOptions = {
+		chart: {
+			height: 350,
+			type: 'scatter',
+			zoom: { enabled: true, type: 'xy' }
+		},
+		annotations: {
+		  yaxis: [
+			{
+			  y: drivermedianspeed,
+			  borderColor: '#00E396',
+			  label: {
+				borderColor: '#00E396',
+				style: {
+				  color: '#fff',
+				  background: '#00E396'
+				},
+				text: 'On-Time'
+			  }
+			}
+		  ],
+			xaxis: [
+				{
+				  x: drivermpgmedian,
+				  borderColor: '#086bda',
+				  label: {
+					borderColor: '#086bda',
+					style: {
+					  color: '#fff',
+					  background: '#086bda'
+					},
+					text: 'MPG'
+				  }
+				}
+			  ],
+		},
+		// colors: [app.color.theme, app.color.warning, 'rgba('+ app.color.bodyColorRgb + ', .5)'],
+		series: driverseriesdata,
+		xaxis: {
+			tickAmount: 10,
+			labels: {
+				formatter: function(val) { return parseFloat(val).toFixed(2) }
+			},
+			title: {
+				text: 'Fuel Efficiency (MPG)'
+			}
+		},
+		yaxis: { tickAmount: 7,
+		title: {
+            text: 'On-Time Delivery Rate (%)'
+          }
+		},
+
+	};
 
 
-	var apexScatterChart = new ApexCharts(
+var apexScatterCarrierCostChart = new ApexCharts(
 		document.querySelector('#CarrierCostReliabilityChart'),
 		apexScatterChartOptions
 	);
-	apexScatterChart.render();
+	apexScatterCarrierCostChart.render();
 	if (costpermile !== "0") {
 		var apexCostMilechart = new ApexCharts(document.querySelector("#CarrierCostPerMile"),
 			apexCostMileChartOptions);
 		apexCostMilechart.render();
+
+		var apexScatterDriverSpeedMPGChart = new ApexCharts(
+		document.querySelector('#DriverSpeedMPG'),
+			ScatterChartDriverSpeedMPGOptions);
+		apexScatterDriverSpeedMPGChart.render();
 	}
 	// apexMixedChart
-	var apexScatterChart = new ApexCharts(
+	var apexScatterDriverMpgOnTimeChart = new ApexCharts(
 		document.querySelector('#DriverMpgOnTime'),
-		apexScatterDriverChartOptions
+		ScatterChartDriverOntimeMPGOptions
 	);
-	apexScatterChart.render();
+	apexScatterDriverMpgOnTimeChart.render();
 
 
 	// apexPieChart

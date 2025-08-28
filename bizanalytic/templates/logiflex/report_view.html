@@ -311,7 +311,7 @@
                         {% if reporttype == "lite" %}
                             {% trans "Driver Key Insights and Recommended Actions" %}
                         {% elif reporttype == "advanced" %}
-                            {% trans "Fuel Cost per Mile Distribution by Driver" %}
+                            {% trans "Driver Productivity Matrix: Speed vs. Fuel Efficiency" %}
                         {% endif %}
                     </div>
                     {% if reporttype == "lite" %}
@@ -343,14 +343,38 @@
                             </ol>
                              </div>
                              </div>
-                        {% elif reporttype == "advanced" %}
+                    {% elif reporttype == "advanced" %}
                              <div class="card-body text-center">
-                            <div id="DriverCostPerMile"></div>
+                            <div id="DriverSpeedMPG"></div>
                              </div>
-                        {% endif %}
+                    {% endif %}
 
                 {% if reporttype == "advanced" %}
                     <div class="card-footer">
+                        <strong>Key Insights</strong><br>
+                             <ul style="list-style-type:disc;">
+                                {% if top_right %}
+                                    <li>{{ top_right|safe }}</li>
+                                {% endif %}
+                                 {% if top_left %}
+                                    <li>{{ top_left|safe }}</li>
+                                 {% endif %}
+                                {% if bottom_right %}
+                                    <li>{{ bottom_right|safe }}</li>
+                                {% endif %}
+                                 {% if bottom_left %}
+                                    <li>{{ bottom_left|safe }}</li>
+                                 {% endif %}
+
+                             </ul>
+                            <br><strong>Actions:</strong><br>
+                            <ol type="1">
+                                {% for daction in driver_actions %}
+                            <li>
+                                {{ daction|safe }}
+                            </li>
+                            {% endfor %}
+                            </ol>
                     </div>
                 {% endif %}
                 </div>

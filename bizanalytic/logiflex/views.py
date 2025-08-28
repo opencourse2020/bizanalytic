@@ -13,7 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.csrf import csrf_exempt
@@ -134,9 +134,9 @@ class ReportView(TemplateView):
         user = self.request.user
         # print("user1: ", user)
         # print("user1 name: ", user.username)
-        # if not user or user == AnonymousUser:
+        # if not user.is_authenticated:
         #     print("user2: ", user)
-        #     reverse_lazy("profiles:403")
+
         # else:
         report = LogiflexReport.objects.filter(client__user_id=user.id, pk=pu).first()
         print("report ID:", report)
@@ -233,8 +233,8 @@ class ReportView(TemplateView):
                 kwargs["costreliability_action"] = costreliability_action
         else:
             print("report none")
-            return reverse_lazy("profiles:403")
-
+            return redirect('profiles:403')
+            # return reverse_lazy("profiles:403")
 
         return super(ReportView, self).get_context_data(**kwargs)
 

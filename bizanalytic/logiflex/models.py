@@ -69,7 +69,7 @@ class LogiFlexClient(models.Model):
     contact_name = models.CharField(max_length=100, null=True, blank=True)
     date_added = models.DateField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
-    activated = models.BooleanField(default=False)
+    activated = models.BooleanField(default=False)  # Client activated means he is an existing client
 
     class Meta:
         verbose_name = "LogiFlexClient"

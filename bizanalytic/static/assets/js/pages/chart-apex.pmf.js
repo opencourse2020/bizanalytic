@@ -13,6 +13,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		dfcost.print();
 		dfcost.sortValues("CostPerMile", { inplace: true })
 		let group_df = dfcost.groupby(["CarrierName"]);
+		console.log(group_df);
 	}
 
 
@@ -34,6 +35,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	for (let i = 0; i < df.shape[0]; i++) {
 		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgFreightCost"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
         if (costpermile !== "0") {
+			console.log(group_df);
 			let a = group_df.getGroup([df.iloc({rows: [i]})["CarrierName"].values[0]]);
 			// console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
 			// console.log(a.values[1]);

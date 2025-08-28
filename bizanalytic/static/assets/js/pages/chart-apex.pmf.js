@@ -253,13 +253,16 @@ var ScatterChartDriverSpeedMPGOptions = {
 		xaxis: {
 			tickAmount: 10,
 			labels: {
-				formatter: function(val) { return parseFloat(val).toFixed(2) }
+				formatter: function(val) { return parseFloat(val).toFixed(0) }
 			},
 			title: {
 				text: 'Median Speed (MPH)'
 			}
 		},
 		yaxis: { tickAmount: 7,
+			labels: {
+				formatter: function(val) { return parseFloat(val).toFixed(0) }
+			},
 		title: {
             text: 'Fuel Efficiency (MPG)'
           }

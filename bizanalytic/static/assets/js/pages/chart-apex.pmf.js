@@ -64,7 +64,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		});
 		}
 	}
-	const drivermpgmedian = dfdriver["MedianMPG"].median();
+	const drivermpgmedian = dfdriver["MedianMPG"].mean();
 	const driverontimemedian = dfdriver["OnTimeRate"].median()*100;
 	const drivermedianspeed = dfdriver["MedianSpeed"].mean();
 	const carrierfreightcostmedian = d3.quantile(df["AvgFreightCost"].values, 0.75);

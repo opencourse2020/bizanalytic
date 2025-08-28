@@ -134,7 +134,7 @@ class ReportView(TemplateView):
         user = self.request.user
         print("user1: ", user)
         print("user1 name: ", user.username)
-        if not user or user.username == "AnonymousUser":
+        if not user or user == "AnonymousUser":
             print("user2: ", user)
             reverse_lazy("profiles:403")
         else:

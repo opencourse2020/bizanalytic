@@ -132,7 +132,7 @@ class ReportView(TemplateView):
     def get_context_data(self, **kwargs):
         pu = self.kwargs.get("pk")
         user = self.request.user
-
+        print("user: ", user)
         report = LogiflexReport.objects.filter(client__user_id=user.id, pk=pu).first()
         print("report ID:", report)
         if report:

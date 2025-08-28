@@ -60,13 +60,13 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		if (costpermile !== "0") {
 			driverspeedmpg.push({
 			name: dfdriver.iloc({rows: [i]})["DriverName"].values[0],
-			data: [[dfdriver.iloc({rows: [i]})["MedianSpeed"].values[0], dfdriver.iloc({rows: [i]})["MedianMPG"].values[0]*100]]
+			data: [[dfdriver.iloc({rows: [i]})["MedianSpeed"].values[0], dfdriver.iloc({rows: [i]})["MedianMPG"].values[0]]]
 		});
 		}
 	}
 	const drivermpgmedian = dfdriver["MedianMPG"].median();
 	const driverontimemedian = dfdriver["OnTimeRate"].median()*100;
-	const drivermedianspeed = dfdriver["MedianSpeed"].median();
+	const drivermedianspeed = dfdriver["MedianSpeed"].mean();
 	const carrierfreightcostmedian = d3.quantile(df["AvgFreightCost"].values, 0.75);
 	const carrierontimemedian = d3.quantile(df["OnTimeRate"].values, 0.75);
 

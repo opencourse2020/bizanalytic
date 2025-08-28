@@ -8,11 +8,12 @@ Website: http://www.seantheme.com/hud/
 var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	df = new dfd.DataFrame(full_df);
 	dfdriver = new dfd.DataFrame(df_driver);
+	let group_df = "";
 	if (costpermile !== "0"){
 		dfcost = new dfd.DataFrame(costpermile);
 		dfcost.print();
 		dfcost.sortValues("CostPerMile", { inplace: true })
-		let group_df = dfcost.groupby(["CarrierName"]);
+		group_df = dfcost.groupby(["CarrierName"]);
 		console.log(group_df);
 	}
 

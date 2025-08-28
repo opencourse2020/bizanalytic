@@ -132,8 +132,9 @@ class ReportView(TemplateView):
     def get_context_data(self, **kwargs):
         pu = self.kwargs.get("pk")
         user = self.request.user
+        print("user1: ", user)
         if not user or user.username == "AnonymousUser":
-            print("user: ", user)
+            print("user2: ", user)
             reverse_lazy("profiles:403")
         else:
             report = LogiflexReport.objects.filter(client__user_id=user.id, pk=pu).first()

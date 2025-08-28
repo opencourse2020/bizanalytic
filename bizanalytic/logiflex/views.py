@@ -132,105 +132,107 @@ class ReportView(TemplateView):
     def get_context_data(self, **kwargs):
         pu = self.kwargs.get("pk")
         user = self.request.user
-        print("user1: ", user)
-        print("user1 name: ", user.username)
-        if not user or user == "AnonymousUser":
-            print("user2: ", user)
-            reverse_lazy("profiles:403")
-        else:
-            report = LogiflexReport.objects.filter(client__user_id=user.id, pk=pu).first()
-            print("report ID:", report)
-            if report:
-                dff = pd.read_csv(report.routefile)
-                df = clean_data(dff)
-                df = calculate_kpis(df)
-                print("report ID2:", report.id)
-                # Carrier Analysis
-                carrier_stats = prepare_carrier_stats(df)
-                carrier_stats["AvgCostPerMile"] = carrier_stats["AvgCostPerMile"].round(3)
-                carrier_stats["AvgFreightCost"] = carrier_stats["AvgFreightCost"].round(2)
-                carrier_stats["AvgCostPerPound"] = carrier_stats["AvgCostPerPound"].round(3)
-                carrier_ontime = carrier_stats["OnTimeRate"].max()
-                carrier_costpermile = carrier_stats["AvgCostPerMile"].min()
-                carrier_freightcost = carrier_stats["AvgFreightCost"].min()
-                carrier_costpound = carrier_stats["AvgCostPerPound"].min()
-                carrier_stats = carrier_stats.reset_index()
-                carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
-                # Carrier Contingency and Reliability Vs Cost Analysis
-                if not report.contingency_result:
-                    highcostvariance, lowcostvariance, costreliability_action, contingency_result, contingency_action = prepare_data_report(
-                        df)
-                    report.contingency_result = contingency_result
-                    report.highvariance = highcostvariance
-                    report.lowvariance = lowcostvariance
-                    report.costreliability_action = costreliability_action
-                    report.contingency_action = contingency_action
-                    report.save()
-                else:
-                    contingency_result = report.contingency_result
-                    highcostvariance = report.highvariance
-                    lowcostvariance = report.lowvariance
-                    costreliability_action = report.costreliability_action
-                    contingency_action = report.contingency_action
+        # print("user1: ", user)
+        # print("user1 name: ", user.username)
+        # if not user or user == AnonymousUser:
+        #     print("user2: ", user)
+        #     reverse_lazy("profiles:403")
+        # else:
+        report = LogiflexReport.objects.filter(client__user_id=user.id, pk=pu).first()
+        print("report ID:", report)
+        if report:
+            dff = pd.read_csv(report.routefile)
+            df = clean_data(dff)
+            df = calculate_kpis(df)
+            print("report ID2:", report.id)
+            # Carrier Analysis
+            carrier_stats = prepare_carrier_stats(df)
+            carrier_stats["AvgCostPerMile"] = carrier_stats["AvgCostPerMile"].round(3)
+            carrier_stats["AvgFreightCost"] = carrier_stats["AvgFreightCost"].round(2)
+            carrier_stats["AvgCostPerPound"] = carrier_stats["AvgCostPerPound"].round(3)
+            carrier_ontime = carrier_stats["OnTimeRate"].max()
+            carrier_costpermile = carrier_stats["AvgCostPerMile"].min()
+            carrier_freightcost = carrier_stats["AvgFreightCost"].min()
+            carrier_costpound = carrier_stats["AvgCostPerPound"].min()
+            carrier_stats = carrier_stats.reset_index()
+            carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
+            # Carrier Contingency and Reliability Vs Cost Analysis
+            if not report.contingency_result:
+                highcostvariance, lowcostvariance, costreliability_action, contingency_result, contingency_action = prepare_data_report(
+                    df)
+                report.contingency_result = contingency_result
+                report.highvariance = highcostvariance
+                report.lowvariance = lowcostvariance
+                report.costreliability_action = costreliability_action
+                report.contingency_action = contingency_action
+                report.save()
+            else:
+                contingency_result = report.contingency_result
+                highcostvariance = report.highvariance
+                lowcostvariance = report.lowvariance
+                costreliability_action = report.costreliability_action
+                contingency_action = report.contingency_action
 
-                # Drivers Analysis
-                driver_stats = prepare_driver_stats(df)
-                top_right, top_left, bottom_right, bottom_left, driver_actions = prepare_driver_analysis(driver_stats)
-                driver_stats = driver_stats.reset_index()
-                driver_stats = json.loads(driver_stats.to_json(orient='records'))
+            # Drivers Analysis
+            driver_stats = prepare_driver_stats(df)
+            top_right, top_left, bottom_right, bottom_left, driver_actions = prepare_driver_analysis(driver_stats)
+            driver_stats = driver_stats.reset_index()
+            driver_stats = json.loads(driver_stats.to_json(orient='records'))
 
-                # Routes Analysis
-                route_stats = prepare_route_stats(df)
-                route_stats = route_stats.reset_index()
-                route_stats = json.loads(route_stats.to_json(orient='records'))
+            # Routes Analysis
+            route_stats = prepare_route_stats(df)
+            route_stats = route_stats.reset_index()
+            route_stats = json.loads(route_stats.to_json(orient='records'))
 
-                kwargs["reporttype"] = report.report_type
-                kwargs["carrier_ontime"] = carrier_ontime
-                kwargs["carrier_costpermile"] = carrier_costpermile
-                kwargs["carrier_freightcost"] = carrier_freightcost
-                kwargs["carrier_costpound"] = carrier_costpound
-                if report.report_type == "lite":
+            kwargs["reporttype"] = report.report_type
+            kwargs["carrier_ontime"] = carrier_ontime
+            kwargs["carrier_costpermile"] = carrier_costpermile
+            kwargs["carrier_freightcost"] = carrier_freightcost
+            kwargs["carrier_costpound"] = carrier_costpound
+            if report.report_type == "lite":
 
-                    # Carrier Cost Reliability Analysis
-                    kwargs["carrierstats"] = carrier_stats
-                    kwargs["contigency"] = contingency_result
-                    kwargs["contingency_action"] = contingency_action
-                    kwargs["highcostvariance"] = highcostvariance
-                    kwargs["lowcostvariance"] = lowcostvariance
-                    kwargs["costreliability_action"] = costreliability_action
+                # Carrier Cost Reliability Analysis
+                kwargs["carrierstats"] = carrier_stats
+                kwargs["contigency"] = contingency_result
+                kwargs["contingency_action"] = contingency_action
+                kwargs["highcostvariance"] = highcostvariance
+                kwargs["lowcostvariance"] = lowcostvariance
+                kwargs["costreliability_action"] = costreliability_action
 
-                    # Driver On-time Rate Vs. MPG Analysis
-                    kwargs["driverstats"] = driver_stats
-                    kwargs["top_right"] = top_right
-                    kwargs["top_left"] = top_left
-                    kwargs["bottom_right"] = bottom_right
-                    kwargs["bottom_left"] = bottom_left
-                    kwargs["driver_actions"] = driver_actions
-                    cost_mile = '{"0":"0"}'
-                    kwargs["costmile"] = json.loads(cost_mile)
-                elif report.report_type == "advanced":
+                # Driver On-time Rate Vs. MPG Analysis
+                kwargs["driverstats"] = driver_stats
+                kwargs["top_right"] = top_right
+                kwargs["top_left"] = top_left
+                kwargs["bottom_right"] = bottom_right
+                kwargs["bottom_left"] = bottom_left
+                kwargs["driver_actions"] = driver_actions
+                cost_mile = '{"0":"0"}'
+                kwargs["costmile"] = json.loads(cost_mile)
+            elif report.report_type == "advanced":
 
-                    # Carrier Cost Reliability Analysis
-                    print("carrier_stats:", carrier_stats)
-                    kwargs["carrierstats"] = carrier_stats
-                    kwargs["contigency"] = contingency_result
-                    kwargs["contingency_action"] = contingency_action
+                # Carrier Cost Reliability Analysis
+                print("carrier_stats:", carrier_stats)
+                kwargs["carrierstats"] = carrier_stats
+                kwargs["contigency"] = contingency_result
+                kwargs["contingency_action"] = contingency_action
 
-                    # Driver On-time Rate Vs. MPG Analysis
-                    kwargs["driverstats"] = driver_stats
-                    kwargs["top_right"] = top_right
-                    kwargs["top_left"] = top_left
-                    kwargs["bottom_right"] = bottom_right
-                    kwargs["bottom_left"] = bottom_left
-                    kwargs["driver_actions"] = driver_actions
-                    # Carrier Cost Per Mile Analysis
-                    cost_mile = df[['CarrierName', 'CostPerMile']]
-                    cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)
-                    cost_mile = json.loads(cost_mile.to_json(orient='records'))
-                    kwargs["costmile"] = cost_mile
-                    kwargs["highcostvariance"] = highcostvariance
-                    kwargs["lowcostvariance"] = lowcostvariance
-                    kwargs["costreliability_action"] = costreliability_action
+                # Driver On-time Rate Vs. MPG Analysis
+                kwargs["driverstats"] = driver_stats
+                kwargs["top_right"] = top_right
+                kwargs["top_left"] = top_left
+                kwargs["bottom_right"] = bottom_right
+                kwargs["bottom_left"] = bottom_left
+                kwargs["driver_actions"] = driver_actions
+                # Carrier Cost Per Mile Analysis
+                cost_mile = df[['CarrierName', 'CostPerMile']]
+                cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)
+                cost_mile = json.loads(cost_mile.to_json(orient='records'))
+                kwargs["costmile"] = cost_mile
+                kwargs["highcostvariance"] = highcostvariance
+                kwargs["lowcostvariance"] = lowcostvariance
+                kwargs["costreliability_action"] = costreliability_action
+            else:
+                reverse_lazy("profiles:403")
 
 
         return super(ReportView, self).get_context_data(**kwargs)

@@ -139,7 +139,7 @@ class ReportView(TemplateView):
             dff = pd.read_csv(report.routefile)
             df = clean_data(dff)
             df = calculate_kpis(df)
-
+            print("report ID2:", report.id)
             # Carrier Analysis
             carrier_stats = prepare_carrier_stats(df)
             carrier_stats["AvgCostPerMile"] = carrier_stats["AvgCostPerMile"].round(3)
@@ -206,6 +206,7 @@ class ReportView(TemplateView):
             elif report.report_type == "advanced":
 
                 # Carrier Cost Reliability Analysis
+                print("carrier_stats:", carrier_stats)
                 kwargs["carrierstats"] = carrier_stats
                 kwargs["contigency"] = contingency_result
                 kwargs["contingency_action"] = contingency_action

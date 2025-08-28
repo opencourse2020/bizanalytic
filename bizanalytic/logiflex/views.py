@@ -232,6 +232,7 @@ class ReportView(TemplateView):
                 kwargs["lowcostvariance"] = lowcostvariance
                 kwargs["costreliability_action"] = costreliability_action
         else:
+            print("report none")
             reverse_lazy("profiles:403")
 
 

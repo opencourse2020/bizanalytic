@@ -10,7 +10,8 @@ model_objects = (models.Blog_logiflex,
                  models.PricingPlan,
                  models.ServicePayment,
                  models.RequestedCall,
-                 models.LogEntry
+                 models.LogEntry,
+                 models.PaymentsHistory
 )
 
 for m in model_objects:

@@ -253,7 +253,7 @@ var ScatterChartDriverSpeedMPGOptions = {
 		xaxis: {
 			tickAmount: 10,
 			labels: {
-				formatter: function(val) { return parseFloat(val).toFixed(0) }
+				formatter: function(val) { return parseFloat(val).toFixed(1) }
 			},
 			title: {
 				text: 'Median Speed (MPH)'

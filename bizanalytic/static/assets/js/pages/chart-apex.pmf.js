@@ -215,7 +215,7 @@ var ScatterChartDriverOntimeMPGOptions = {
 var ScatterChartDriverSpeedMPGOptions = {
 		chart: {
 			height: 350,
-			type: 'scatter',
+			type: 'bubble',
 			zoom: { enabled: true, type: 'xy' }
 		},
 		annotations: {

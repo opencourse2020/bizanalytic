@@ -60,15 +60,17 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		});
 		if (costpermile !== "0") {
 			driverspeedmpg.push({
-				x: dfdriver.iloc({rows: [i]})["MedianSpeed"].values[0], y: dfdriver.iloc({rows: [i]})["MedianMPG"].values[0]
+			name: dfdriver.iloc({rows: [i]})["DriverName"].values[0],
+			data: [[dfdriver.iloc({rows: [i]})["MedianSpeed"].values[0], dfdriver.iloc({rows: [i]})["MedianMPG"].values[0]]]
 		});
 			driverontimempg.push({
-			x: dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]*100, y: dfdriver.iloc({rows: [i]})["MedianMPG"].values[0]
+			name: dfdriver.iloc({rows: [i]})["DriverName"].values[0],
+			data: [[dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]*100, dfdriver.iloc({rows: [i]})["MedianMPG"].values[0]]]
 		});
 		}
 	}
 	console.log("driverspeedmpg", driverspeedmpg);
-	console.log("driverontimempg", driverontimempg);
+	console.log("driverontimempg", driverspeedmpg);
 	const drivermpgmedian = dfdriver["MedianMPG"].mean();
 	const driverontimemedian = dfdriver["OnTimeRate"].median()*100;
 	const drivermedianspeed = dfdriver["MedianSpeed"].mean();
@@ -217,119 +219,26 @@ var ScatterChartDriverOntimeMPGOptions = {
 
 	};
 
-var ScatterChartDriverSpeedMPGOptions = {
-		series: [{
-		name: "Median Speed (MPH)",
-		type: 'scatter',
-		data: driverspeedmpg,
-		},
-			{
-		name: "On-Time Delivery Rate (%)",
-		type: 'line',
-          data: driverontimempg
-			}],
-
-		chart: {
-			height: 350,
-			type: 'line',
-			zoom: { enabled: true, type: 'xy' }
-		},
-		fill: {
-            opacity: 0.8
-        },
-		// annotations: {
-		//   yaxis: [
-		// 	{
-		// 	  y: drivermpgmedian,
-		// 	  borderColor: '#00E396',
-		// 	  label: {
-		// 		borderColor: '#00E396',
-		// 		style: {
-		// 		  color: '#fff',
-		// 		  background: '#00E396'
-		// 		},
-		// 		text: 'MPG'
-		// 	  }
-		// 	}
-		//   ],
-		// 	xaxis: [
-		// 		{
-		// 		  x: drivermedianspeed,
-		// 		  borderColor: '#086bda',
-		// 		  label: {
-		// 			borderColor: '#086bda',
-		// 			style: {
-		// 			  color: '#fff',
-		// 			  background: '#086bda'
-		// 			},
-		// 			text: 'MPH'
-		// 		  }
-		// 		}
-		// 	  ],
-		// },
-		// colors: [app.color.theme, app.color.warning, 'rgba('+ app.color.bodyColorRgb + ', .5)'],
-
-		xaxis: {
-			tickAmount: 10,
-			labels: {
-				formatter: function(val) { return parseFloat(val).toFixed(1) }
-			},
-			// title: {
-			// 	text: 'Median Speed (MPH)'
-			// }
-		},
-		yaxis: { tickAmount: 7,
-			labels: {
-				formatter: function(val) { return parseFloat(val).toFixed(2) }
-			},
-		title: {
-            text: 'Fuel Efficiency (MPG)'
-          }
-		},
-
-	};
-
 // var ScatterChartDriverSpeedMPGOptions = {
-// 		series: driverspeedmpg,
+// 		series: [{
+// 		name: "Median Speed (MPH)",
+// 		type: 'scatter',
+// 		data: driverspeedmpg,
+// 		},
+// 			{
+// 		name: "On-Time Delivery Rate (%)",
+// 		type: 'line',
+//           data: driverontimempg
+// 			}],
+//
 // 		chart: {
 // 			height: 350,
-// 			type: 'scatter',
+// 			type: 'line',
 // 			zoom: { enabled: true, type: 'xy' }
 // 		},
 // 		fill: {
 //             opacity: 0.8
 //         },
-// 		annotations: {
-// 		  yaxis: [
-// 			{
-// 			  y: drivermpgmedian,
-// 			  borderColor: '#00E396',
-// 			  label: {
-// 				borderColor: '#00E396',
-// 				style: {
-// 				  color: '#fff',
-// 				  background: '#00E396'
-// 				},
-// 				text: 'MPG'
-// 			  }
-// 			}
-// 		  ],
-// 			xaxis: [
-// 				{
-// 				  x: drivermedianspeed,
-// 				  borderColor: '#086bda',
-// 				  label: {
-// 					borderColor: '#086bda',
-// 					style: {
-// 					  color: '#fff',
-// 					  background: '#086bda'
-// 					},
-// 					text: 'MPH'
-// 				  }
-// 				}
-// 			  ],
-// 		},
-// 		// colors: [app.color.theme, app.color.warning, 'rgba('+ app.color.bodyColorRgb + ', .5)'],
 //
 // 		xaxis: {
 // 			tickAmount: 10,
@@ -350,6 +259,68 @@ var ScatterChartDriverSpeedMPGOptions = {
 // 		},
 //
 // 	};
+
+var ScatterChartDriverSpeedMPGOptions = {
+		series: driverspeedmpg,
+		chart: {
+			height: 350,
+			type: 'scatter',
+			zoom: { enabled: true, type: 'xy' }
+		},
+		fill: {
+            opacity: 0.8
+        },
+		annotations: {
+		  yaxis: [
+			{
+			  y: drivermpgmedian,
+			  borderColor: '#00E396',
+			  label: {
+				borderColor: '#00E396',
+				style: {
+				  color: '#fff',
+				  background: '#00E396'
+				},
+				text: 'MPG'
+			  }
+			}
+		  ],
+			xaxis: [
+				{
+				  x: drivermedianspeed,
+				  borderColor: '#086bda',
+				  label: {
+					borderColor: '#086bda',
+					style: {
+					  color: '#fff',
+					  background: '#086bda'
+					},
+					text: 'MPH'
+				  }
+				}
+			  ],
+		},
+		// colors: [app.color.theme, app.color.warning, 'rgba('+ app.color.bodyColorRgb + ', .5)'],
+
+		xaxis: {
+			tickAmount: 10,
+			labels: {
+				formatter: function(val) { return parseFloat(val).toFixed(1) }
+			},
+			title: {
+				text: 'Median Speed (MPH)'
+			}
+		},
+		yaxis: { tickAmount: 7,
+			labels: {
+				formatter: function(val) { return parseFloat(val).toFixed(2) }
+			},
+		title: {
+            text: 'Fuel Efficiency (MPG)'
+          }
+		},
+
+	};
 
 var apexScatterCarrierCostChart = new ApexCharts(
 		document.querySelector('#CarrierCostReliabilityChart'),

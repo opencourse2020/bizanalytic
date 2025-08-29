@@ -217,7 +217,7 @@ var ScatterChartDriverSpeedMPGOptions = {
 		series: driverspeedmpg,
 		chart: {
 			height: 350,
-			type: 'bubble',
+			type: 'scatter',
 			zoom: { enabled: true, type: 'xy' }
 		},
 		fill: {

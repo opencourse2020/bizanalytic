@@ -213,11 +213,15 @@ var ScatterChartDriverOntimeMPGOptions = {
 	};
 
 var ScatterChartDriverSpeedMPGOptions = {
+		series: driverspeedmpg,
 		chart: {
 			height: 350,
 			type: 'bubble',
 			zoom: { enabled: true, type: 'xy' }
 		},
+		fill: {
+            opacity: 0.8
+        },
 		annotations: {
 		  yaxis: [
 			{
@@ -249,7 +253,7 @@ var ScatterChartDriverSpeedMPGOptions = {
 			  ],
 		},
 		// colors: [app.color.theme, app.color.warning, 'rgba('+ app.color.bodyColorRgb + ', .5)'],
-		series: driverspeedmpg,
+
 		xaxis: {
 			tickAmount: 10,
 			labels: {

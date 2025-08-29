@@ -72,7 +72,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	console.log("driverspeedmpg", driverspeedmpg);
 	console.log("driverontimempg", driverspeedmpg);
 	const drivermpgmedian = dfdriver["MedianMPG"].mean();
-	const driverontimemedian = dfdriver["OnTimeRate"].median()*100;
+	const driverontimemedian = dfdriver["OnTimeRate"].mean()*100;
 	const drivermedianspeed = dfdriver["MedianSpeed"].mean();
 	const carrierfreightcostmedian = d3.quantile(df["AvgFreightCost"].values, 0.75);
 	const carrierontimemedian = d3.quantile(df["OnTimeRate"].values, 0.75);

@@ -61,11 +61,11 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		if (costpermile !== "0") {
 			driverspeedmpg.push({
 			name: dfdriver.iloc({rows: [i]})["DriverName"].values[0],
-			data: [[dfdriver.iloc({rows: [i]})["MedianSpeed"].values[0], dfdriver.iloc({rows: [i]})["MedianMPG"].values[0], dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]*100]]
+			data: [[dfdriver.iloc({rows: [i]})["MedianSpeed"].values[0], dfdriver.iloc({rows: [i]})["MedianMPG"].values[0]]]
 		});
 			driverontimempg.push({
 			name: dfdriver.iloc({rows: [i]})["DriverName"].values[0],
-			data: [[dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]*100, dfdriver.iloc({rows: [i]})["MedianMPG"].values[0], dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]*100]]
+			data: [[dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]*100, dfdriver.iloc({rows: [i]})["MedianMPG"].values[0]]]
 		});
 		}
 	}

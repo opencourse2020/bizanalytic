@@ -51,7 +51,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	}
 	console.log("seriesdata", seriesdata);
 	const driverspeedmpg = [];
-	const driverontimempg = []
+	const driverontimempg = [];
 	const driverseriesdata =[];
 	for (let i = 0; i < dfdriver.shape[0]; i++) {
 		driverseriesdata.push({
@@ -70,6 +70,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		}
 	}
 	console.log("driverspeedmpg", driverspeedmpg);
+	console.log("driverontimempg", driverontimempg);
 	const drivermpgmedian = dfdriver["MedianMPG"].mean();
 	const driverontimemedian = dfdriver["OnTimeRate"].median()*100;
 	const drivermedianspeed = dfdriver["MedianSpeed"].mean();

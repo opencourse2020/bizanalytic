@@ -352,11 +352,11 @@ var MixedDriverOnTimeMPGMPHoptions = {
         stroke: {
           width: [1, 1, 4]
         },
-        title: {
-          text: 'Driver Productivity Analysis',
-          align: 'left',
-          offsetX: 110
-        },
+        // title: {
+        //   text: 'Driver Productivity Analysis',
+        //   align: 'left',
+        //   offsetX: 110
+        // },
         xaxis: {
 		  labels: {
             	rotate: -45

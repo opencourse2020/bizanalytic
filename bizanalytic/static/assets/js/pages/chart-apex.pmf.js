@@ -346,7 +346,8 @@ var MixedDriverOnTimeMPGMPHoptions = {
           stacked: false
         },
         dataLabels: {
-          enabled: true
+          enabled: true,
+		  enabledOnSeries: [2]
         },
         stroke: {
           width: [1, 1, 4]
@@ -361,7 +362,7 @@ var MixedDriverOnTimeMPGMPHoptions = {
             	rotate: -45
           	},
           categories: driversname,
-
+		  tickPlacement: 'on'
         },
         yaxis: [
           {

@@ -81,7 +81,7 @@
                             <div class="d-flex align-items-center gap-3">
                                 <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                 <div class="counter-number d-flex">
-                                    <h3 class="counter">{{ carrier_ontime }}</h3>
+                                    <h3 class="counter">{{ carrier_ontime }}%</h3>
 {#                                    <h3>+</h3>#}
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                             <div class="d-flex align-items-center gap-3">
                                 <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                 <div class="counter-number d-flex">
-                                    <h3 class="counter">{{ carrier_freightcost }}</h3>
+                                    <h3 class="counter">${{ carrier_freightcost }}</h3>
 {#                                    <h3>+</h3>#}
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                             <div class="d-flex align-items-center gap-3">
                                 <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                 <div class="counter-number d-flex">
-                                    <h3 class="counter">{{ carrier_costpermile }}</h3>
+                                    <h3 class="counter">${{ carrier_costpermile }} /Mile</h3>
 {#                                    <h3>+</h3>#}
                                 </div>
                             </div>
@@ -122,7 +122,7 @@
                             <div class="d-flex align-items-center gap-3">
                                 <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                 <div class="counter-number d-flex">
-                                    <h3 class="counter">{{ carrier_costpound }}</h3>
+                                    <h3 class="counter">${{ carrier_costpound }} /Pound</h3>
 {#                                    <h3>+</h3>#}
                                 </div>
                             </div>

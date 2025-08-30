@@ -979,7 +979,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         lite_report = 0
         advanced_report = 0
         print("Report Type:", reportype)
-        report_type = None
+        report_type = ""
         # Check report type
         if reportype == "1":
             report_type = "lite"

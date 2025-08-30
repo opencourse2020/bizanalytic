@@ -1061,7 +1061,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             report_type = report_type.capitalize()
             # Send a confirmation Email to client
             email_info = {
-                'subject': _(f"Your Fleet {rtp} Efficiency Report is in Progress 🚚📊"),
+                'subject': f"Your Fleet {rtp} Efficiency Report is in Progress 🚚📊",
                 'to_email': [email_name, ],
                 'client': client_name,
                 'report_list_link': f"https://bizanalytic.com/logiflex/reports/detail/{logireport.id}/",

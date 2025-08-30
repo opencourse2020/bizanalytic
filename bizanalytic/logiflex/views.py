@@ -974,7 +974,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         servicepayment = ServicePayment.objects.filter(client=client).first()
         lite_report = 0
         advanced_report = 0
-
+        print("Report Type:", reportype)
         report_type = None
         # Check report type
         if reportype == "1":

@@ -469,6 +469,7 @@ var MixedDriverOnTimeMPGMPHoptions = {
                 colors: '#eb5849',
               },
             },
+			  colors: ['#eb5849'],
             title: {
               text: "Median Speed (MPH)",
               style: {

@@ -61,7 +61,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		if (costpermile !== "0") {
 			driverspeedmpg.push({
 			name: dfdriver.iloc({rows: [i]})["DriverName"].values[0],
-			data: [[dfdriver.iloc({rows: [i]})["MedianSpeed"].values[0], dfdriver.iloc({rows: [i]})["MedianMPG"].values[0]]]
+			data: [[dfdriver.iloc({rows: [i]})["MedianMPG"].values[0], dfdriver.iloc({rows: [i]})["MedianSpeed"].values[0]]]
 		});
 			driverontimempg.push({
 			name: dfdriver.iloc({rows: [i]})["DriverName"].values[0],
@@ -273,7 +273,7 @@ var ScatterChartDriverSpeedMPGOptions = {
 		annotations: {
 		  yaxis: [
 			{
-			  y: drivermpgmedian,
+			  y: drivermedianspeed,
 			  borderColor: '#00E396',
 			  label: {
 				borderColor: '#00E396',
@@ -281,13 +281,13 @@ var ScatterChartDriverSpeedMPGOptions = {
 				  color: '#fff',
 				  background: '#00E396'
 				},
-				text: 'MPG'
+				text: 'MPH'
 			  }
 			}
 		  ],
 			xaxis: [
 				{
-				  x: drivermedianspeed,
+				  x: drivermpgmedian,
 				  borderColor: '#086bda',
 				  label: {
 					borderColor: '#086bda',
@@ -295,7 +295,7 @@ var ScatterChartDriverSpeedMPGOptions = {
 					  color: '#fff',
 					  background: '#086bda'
 					},
-					text: 'MPH'
+					text: 'MPG'
 				  }
 				}
 			  ],
@@ -308,7 +308,7 @@ var ScatterChartDriverSpeedMPGOptions = {
 				formatter: function(val) { return parseFloat(val).toFixed(1) }
 			},
 			title: {
-				text: 'Median Speed (MPH)'
+				text: 'Fuel Efficiency (MPG)'
 			}
 		},
 		yaxis: { tickAmount: 7,
@@ -316,7 +316,7 @@ var ScatterChartDriverSpeedMPGOptions = {
 				formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},
 		title: {
-            text: 'Fuel Efficiency (MPG)'
+            text: 'Median Speed (MPH)'
           }
 		},
 

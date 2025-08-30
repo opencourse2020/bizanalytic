@@ -170,7 +170,7 @@ class ReportView(TemplateView):
             carrier_stats["AvgCostPerMile"] = carrier_stats["AvgCostPerMile"].round(3)
             carrier_stats["AvgFreightCost"] = carrier_stats["AvgFreightCost"].round(2)
             carrier_stats["AvgCostPerPound"] = carrier_stats["AvgCostPerPound"].round(3)
-            carrier_ontime = carrier_stats["OnTimeRate"].max()*100
+            carrier_ontime = carrier_stats["OnTimeRate"].max()
             carrier_ontime_name = carrier_stats["OnTimeRate"].idxmax()
             carrier_costpermile = carrier_stats["AvgCostPerMile"].min()
             carrier_costpermile_name = carrier_stats["AvgCostPerMile"].idxmin()

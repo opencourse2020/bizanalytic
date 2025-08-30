@@ -968,13 +968,11 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         email_name = email_name.lower()
         reportype = request.POST.get("reptyp")
         route_file = request.FILES["route_file"]
-        _, ext = os.path.splitext(route_file)
-        ext = ext.lower()  # Convert to lowercase for case-insensitive comparison
-
-        # if ext == '.csv':
-
 
         route_filename = route_file.name
+        _, ext = os.path.splitext(route_filename)
+        ext = ext.lower()  # Convert to lowercase for case-insensitive comparison
+
         reportid = None
         client = LogiFlexClient.objects.filter(user=self.request.user).first()
         servicepayment = ServicePayment.objects.filter(client=client).first()

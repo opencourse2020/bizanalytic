@@ -588,7 +588,12 @@ def read_csv_into_text_and_df(file_obj) -> tuple[str, pd.DataFrame]:
 # @shared_task(name='run_llm_analysis')
 def run_LLM_analysis(flags, pu):
     report = LogiflexReport.objects.filter(pk=pu).first()
-    df = pd.read_csv(report.routefile)
+    # Check file extension
+    if report.routefile_ext == ".csv":
+        df = pd.read_csv(report.routefile)
+    elif report.routefile_ext == ".xlsx" or report.routefile_ext == ".xls":
+        df = pd.read_excel(report.routefile)
+
     summary_for_prompt = summarize_df_for_prompt(df, max_rows=10)
 
     client_name = report.client.company

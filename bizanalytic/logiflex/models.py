@@ -236,6 +236,7 @@ class LogiflexReport(models.Model):
                                                content_types=['application/vnd.ms-excel', 'text/csv',
                                                               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', ],
                                                max_upload_size=5242880, blank=True, null=True)
+    routefile_ext = models.CharField(max_length=10, null=True, blank=True)
     report = ContentTypeRestrictedFileField(upload_to=reportfiles_directory_path,
                                                    content_types=['application/pdf'],
                                                    max_upload_size=5242880, null=True, blank=True)

@@ -968,6 +968,12 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         email_name = email_name.lower()
         reportype = request.POST.get("reptyp")
         route_file = request.FILES["route_file"]
+        _, ext = os.path.splitext(route_file)
+        ext = ext.lower()  # Convert to lowercase for case-insensitive comparison
+
+        # if ext == '.csv':
+
+
         route_filename = route_file.name
         reportid = None
         client = LogiFlexClient.objects.filter(user=self.request.user).first()
@@ -1012,6 +1018,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
                                                               report_number=latest_number)
             # add route file
             logireport.routefile = route_file
+            logireport.routefile_ext = ext
             # add report ID
             currentyear = datetime.now().year
             idl = "{:06d}".format(logireport.pk)

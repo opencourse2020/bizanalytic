@@ -746,7 +746,7 @@ class CityStateNormalizer:
 @shared_task(name='preprocess_task')
 def test_validator(reportid, routefilename):
 
-# load us cities file
+    # load us cities file
     uscities = City.objects.all().values()
     us_cities = pd.DataFrame(uscities)
     usstates = State.objects.all().values()
@@ -756,8 +756,12 @@ def test_validator(reportid, routefilename):
 
     report = LogiflexReport.objects.filter(pk=reportid).first()
     # print(us_cities.head(5))
-# Load sample data
-    data = pd.read_csv(report.routefile)
+    # Check file extension and Load sample data
+    if report.routefile_ext == ".csv":
+        data = pd.read_csv(report.routefile)
+    elif report.routefile_ext == ".xlsx" or report.routefile_ext == ".xls":
+        data = pd.read_excel(report.routefile)
+
 
     """Test the validator with sample data"""
     validator = ColumnNameValidator()

@@ -201,6 +201,14 @@ class ReportView(TemplateView):
             # Drivers Analysis
             driver_stats = prepare_driver_stats(df)
             top_right, top_left, bottom_right, bottom_left, driver_actions = prepare_driver_analysis(driver_stats)
+            driver_totalmiles = driver_stats["TotalMiles"].max()
+            driver_totalmiles_name = driver_stats["TotalMiles"].idmax()
+            driver_speed = driver_stats["MedianSpeed"].max()
+            driver_speed_name = driver_stats["MedianSpeed"].idmax()
+            driver_medianmpg = driver_stats["MedianMPG"].max()
+            driver_medianmpg_name = driver_stats["MedianMPG"].idmax()
+            driver_ontime = driver_stats["OnTimeRate"].max()
+            driver_ontime_name = driver_stats["OnTimeRate"].idmax()
             driver_stats = driver_stats.reset_index()
             driver_stats = json.loads(driver_stats.to_json(orient='records'))
 
@@ -218,6 +226,14 @@ class ReportView(TemplateView):
             kwargs["carrier_costpermile_name"] = carrier_costpermile_name
             kwargs["carrier_freightcost_name"] = carrier_freightcost_name
             kwargs["carrier_costpound_name"] = carrier_costpound_name
+            kwargs["driver_ontime"] = driver_ontime
+            kwargs["driver_totalmiles"] = driver_totalmiles
+            kwargs["driver_speed"] = driver_speed
+            kwargs["driver_medianmpg"] = driver_medianmpg
+            kwargs["driver_ontime_name"] = driver_ontime_name
+            kwargs["driver_totalmiles_name"] = driver_totalmiles_name
+            kwargs["driver_speed_name"] = driver_speed_name
+            kwargs["driver_medianmpg_name"] = driver_medianmpg_name
             if report.report_type == "lite":
 
                 # Carrier Cost Reliability Analysis

@@ -75,8 +75,9 @@
                     <div class="col-12 text-center" style="background-color: #e1e0e0; margin-bottom: 15px;">
                         <h2>Carriers Performance</h2>
                     </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="single-counter" style="background-color: #2ba3c4;">
+                    <div class="col-md-3 col-sm-6" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Best On-Time Rate</span>
                             <div class="d-flex align-items-center gap-3">
                                 <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                 <div class="counter-number d-flex">
@@ -84,12 +85,13 @@
 {#                                    <h3>+</h3>#}
                                 </div>
                             </div>
-                            <span class="title mt-10">Best On-Time Rate</span>
+                            <span class="title">{{ carrier_ontime_name }}</span>
                         </div>
                     </div>
 
-                    <div class="col-md-3 col-sm-6">
-                        <div class="single-counter"  style="background-color: #EB5849;">
+                    <div class="col-md-3 col-sm-6" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title mt-10">Lowest Freight Cost </span>
                             <div class="d-flex align-items-center gap-3">
                                 <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                 <div class="counter-number d-flex">
@@ -97,12 +99,13 @@
 {#                                    <h3>+</h3>#}
                                 </div>
                             </div>
-                            <span class="title mt-10">Lowest Freight Cost </span>
+                            <span class="title">{{ carrier_freightcost_name }}</span>
                         </div>
                     </div>
 
-                    <div class="col-md-3 col-sm-6">
-                        <div class="single-counter"  style="background-color: #2ba3c4;">
+                    <div class="col-md-3 col-sm-6" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title mt-10">Lowest Cost Per Mile</span>
                             <div class="d-flex align-items-center gap-3">
                                 <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                 <div class="counter-number d-flex">
@@ -110,11 +113,12 @@
 {#                                    <h3>+</h3>#}
                                 </div>
                             </div>
-                            <span class="title mt-10">Lowest Cost Per Mile</span>
+                            <span class="title">{{ carrier_costpermile_name }}</span>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="single-counter"  style="background-color: #EB5849;">
+                    <div class="col-md-3 col-sm-6" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title mt-10">Lowest Cost Per Pound</span>
                             <div class="d-flex align-items-center gap-3">
                                 <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                 <div class="counter-number d-flex">
@@ -122,7 +126,7 @@
 {#                                    <h3>+</h3>#}
                                 </div>
                             </div>
-                            <span class="title mt-10">Lowest Cost Per Pound</span>
+                            <span class="title">{{ carrier_costpound_name }}</span>
                         </div>
                     </div>
                 </div>

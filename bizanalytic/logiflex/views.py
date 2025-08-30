@@ -171,9 +171,14 @@ class ReportView(TemplateView):
             carrier_stats["AvgFreightCost"] = carrier_stats["AvgFreightCost"].round(2)
             carrier_stats["AvgCostPerPound"] = carrier_stats["AvgCostPerPound"].round(3)
             carrier_ontime = carrier_stats["OnTimeRate"].max()
+            carrier_ontime_name = carrier_stats.iloc[carrier_stats["OnTimeRate"].idxmax()]['CarrierName']
             carrier_costpermile = carrier_stats["AvgCostPerMile"].min()
+            carrier_costpermile_name = carrier_stats.iloc[carrier_stats["AvgCostPerMile"].idxmin()]['CarrierName']
             carrier_freightcost = carrier_stats["AvgFreightCost"].min()
+            carrier_freightcost_name = carrier_stats.iloc[carrier_stats["AvgFreightCost"].idxmin()]['CarrierName']
             carrier_costpound = carrier_stats["AvgCostPerPound"].min()
+            carrier_costpound_name = carrier_stats.iloc[carrier_stats["AvgCostPerPound"].idxmin()]['CarrierName']
+
             carrier_stats = carrier_stats.reset_index()
             carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
             # Carrier Contingency and Reliability Vs Cost Analysis
@@ -209,6 +214,10 @@ class ReportView(TemplateView):
             kwargs["carrier_costpermile"] = carrier_costpermile
             kwargs["carrier_freightcost"] = carrier_freightcost
             kwargs["carrier_costpound"] = carrier_costpound
+            kwargs["carrier_ontime_name"] = carrier_ontime_name
+            kwargs["carrier_costpermile_name"] = carrier_costpermile_name
+            kwargs["carrier_freightcost_name"] = carrier_freightcost_name
+            kwargs["carrier_costpound_name"] = carrier_costpound_name
             if report.report_type == "lite":
 
                 # Carrier Cost Reliability Analysis

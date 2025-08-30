@@ -69,6 +69,10 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 		});
 		}
 	}
+	var ontimedata = dfdriver["OnTimeRate"].values;
+	var mpgdata = dfdriver["MedianMPG"].values;
+	var mphdata = dfdriver["MedianSpeed"].values;
+	var driversname = dfdriver["DriverName"].values;
 	console.log("driverspeedmpg", driverspeedmpg);
 	console.log("driverontimempg", driverspeedmpg);
 	const drivermpgmedian = dfdriver["MedianMPG"].mean();
@@ -322,6 +326,126 @@ var ScatterChartDriverSpeedMPGOptions = {
 
 	};
 
+var MixedDriverOnTimeMPGMPHoptions = {
+          series: [{
+          name: 'On-Time',
+          type: 'column',
+          data: ontimedata
+        }, {
+          name: 'MPG',
+          type: 'column',
+          data: mpgdata
+        }, {
+          name: 'MPH',
+          type: 'line',
+          data: mphdata
+        }],
+          chart: {
+          height: 350,
+          type: 'line',
+          stacked: false
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          width: [1, 1, 4]
+        },
+        title: {
+          text: 'Driver Productivity Analysis',
+          align: 'left',
+          offsetX: 110
+        },
+        xaxis: {
+          categories: driversname,
+        },
+        yaxis: [
+          {
+            seriesName: 'On-Time',
+            axisTicks: {
+              show: true,
+            },
+            axisBorder: {
+              show: true,
+              color: '#008FFB'
+            },
+            labels: {
+              style: {
+                colors: '#008FFB',
+              }
+            },
+            title: {
+              text: "On-Time Delivery Rate (%)",
+              style: {
+                color: '#008FFB',
+              }
+            },
+            tooltip: {
+              enabled: true
+            }
+          },
+          {
+            seriesName: 'MPG',
+            opposite: true,
+            axisTicks: {
+              show: true,
+            },
+            axisBorder: {
+              show: true,
+              color: '#00E396'
+            },
+            labels: {
+              style: {
+                colors: '#00E396',
+              }
+            },
+            title: {
+              text: "Fuel Efficiency (MPG)",
+              style: {
+                color: '#00E396',
+              }
+            },
+          },
+          {
+            seriesName: 'MPH',
+            opposite: true,
+            axisTicks: {
+              show: true,
+            },
+            axisBorder: {
+              show: true,
+              color: '#FEB019'
+            },
+            labels: {
+              style: {
+                colors: '#FEB019',
+              },
+            },
+            title: {
+              text: "Median Speed (MPH)",
+              style: {
+                color: '#FEB019',
+              }
+            }
+          },
+        ],
+        tooltip: {
+          fixed: {
+            enabled: true,
+            position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
+            offsetY: 30,
+            offsetX: 60
+          },
+        },
+        legend: {
+          horizontalAlign: 'left',
+          offsetX: 40
+        }
+        };
+
+
+
+
 var apexScatterCarrierCostChart = new ApexCharts(
 		document.querySelector('#CarrierCostReliabilityChart'),
 		apexScatterChartOptions
@@ -334,7 +458,8 @@ var apexScatterCarrierCostChart = new ApexCharts(
 
 		var apexScatterDriverSpeedMPGChart = new ApexCharts(
 		document.querySelector('#DriverSpeedMPG'),
-			ScatterChartDriverSpeedMPGOptions);
+			MixedDriverOnTimeMPGMPHoptions
+			);
 		apexScatterDriverSpeedMPGChart.render();
 	}
 	// apexMixedChart
@@ -345,7 +470,7 @@ var apexScatterCarrierCostChart = new ApexCharts(
 	apexScatterDriverMpgOnTimeChart.render();
 
 
-	// apexPieChart
+	// apexPieChart ScatterChartDriverSpeedMPGOptions
 
 
 

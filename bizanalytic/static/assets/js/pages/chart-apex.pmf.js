@@ -357,7 +357,11 @@ var MixedDriverOnTimeMPGMPHoptions = {
           offsetX: 110
         },
         xaxis: {
+		  labels: {
+            	rotate: -45
+          	},
           categories: driversname,
+
         },
         yaxis: [
           {

@@ -980,13 +980,16 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         advanced_report = 0
         print("Report Type:", reportype)
         report_type = ""
+        rtp = ""
         # Check report type
         if reportype == "1":
             report_type = "lite"
+            rtp = "Lite"
             if servicepayment.can_generate_report():
                 lite_report = 1
         elif reportype == "2":
             report_type = "advanced"
+            rtp = "Advanced"
             if servicepayment.can_generate_advanced_report():
                 advanced_report = 1
 
@@ -1058,7 +1061,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             report_type = report_type.capitalize()
             # Send a confirmation Email to client
             email_info = {
-                'subject': _(f"Your Fleet {report_type} Efficiency Report is in Progress 🚚📊"),
+                'subject': _(f"Your Fleet {rtp} Efficiency Report is in Progress 🚚📊"),
                 'to_email': [email_name, ],
                 'client': client_name,
                 'report_list_link': f"https://bizanalytic.com/logiflex/reports/detail/{logireport.id}/",

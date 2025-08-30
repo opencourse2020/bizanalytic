@@ -988,6 +988,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
         print("client: ", client.pk)
         print("Service Payment:", servicepayment.pk)
+        print("lite_report:", lite_report, "advanced_report:", advanced_report)
         if lite_report or advanced_report:
             print("you can generate reports")
             # Save client and result data

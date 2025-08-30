@@ -179,9 +179,9 @@
                                         {% else %}
                                             <li style="width: 250px; float: right;">
                                             <div class="nav-right-content" style="align-items: center;width: 100%;max-width: 100%;justify-content: center; text-align: center;">
-                                                <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg" style="box-sizing: border-box;
+                                                <a href="{% url 'profiles:profile' %}" class="primary-btn secondary-bg" style="padding: 0px; width: 100%;"><span class="icon" style="box-sizing: border-box;
                                                 border-radius: 30px;overflow-clip-margin: content-box;overflow: clip;max-width: 25%;max-height: 100%;
-                                                vertical-align: middle;height: 40px;width: 100%;margin-bottom: 0px;"><span class="text" style="top: -20px;">{{ user.first_name }}</span><span class="icon"><i class="ri-account-circle-line"></i></span></a>
+                                                vertical-align: middle;height: 40px;width: 100%;margin-bottom: 0px;"><i class="ri-account-circle-line"></i></span><span class="text" style="top: -20px;">{{ user.first_name }}</span></a>
                                             </div>
                                             </li>
                                         {% endif %}

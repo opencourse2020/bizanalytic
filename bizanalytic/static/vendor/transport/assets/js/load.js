@@ -128,7 +128,7 @@ $("#generate_full_rp").click(function (){
         let cixphoto = $('#ci-x-photo').val();
         let cixview = $('#ci-x-view').val();
         var reptyp = $("input[name='reporttype']:checked").val();
-
+        console.log(reptyp);
         let urlref = "";
         let agree_create = "2";
         if ($("#agree_create").prop("checked")){

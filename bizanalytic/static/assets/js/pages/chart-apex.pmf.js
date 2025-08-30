@@ -346,7 +346,7 @@ var MixedDriverOnTimeMPGMPHoptions = {
           stacked: false
         },
         dataLabels: {
-          enabled: false
+          enabled: true
         },
         stroke: {
           width: [1, 1, 4]

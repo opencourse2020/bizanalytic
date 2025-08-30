@@ -1054,10 +1054,11 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             # Save log data
             # logiflex_log = LogEntry.objects.create(report=logireport, column_report=column_report,
             #                                               date_report=date_report, citi_report=cities_report, flags=flags)
-            print("report_type:", report_type)
+            print("report_type:", report_type.capitalize())
+            report_type = report_type.capitalize()
             # Send a confirmation Email to client
             email_info = {
-                'subject': _(f"Your Fleet {report_type.capitalize()} Efficiency Report is in Progress 🚚📊"),
+                'subject': _(f"Your Fleet {report_type} Efficiency Report is in Progress 🚚📊"),
                 'to_email': [email_name, ],
                 'client': client_name,
                 'report_list_link': f"https://bizanalytic.com/logiflex/reports/detail/{logireport.id}/",

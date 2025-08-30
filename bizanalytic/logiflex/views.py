@@ -201,13 +201,14 @@ class ReportView(TemplateView):
             # Drivers Analysis
             driver_stats = prepare_driver_stats(df)
             top_right, top_left, bottom_right, bottom_left, driver_actions = prepare_driver_analysis(driver_stats)
+            driver_stats["OnTimeRate"] = driver_stats["OnTimeRate"]*100
             driver_totalmiles = driver_stats["TotalMiles"].max()
             driver_totalmiles_name = driver_stats["TotalMiles"].idxmax()
             driver_speed = driver_stats["MedianSpeed"].max()
             driver_speed_name = driver_stats["MedianSpeed"].idxmax()
             driver_medianmpg = driver_stats["MedianMPG"].max()
             driver_medianmpg_name = driver_stats["MedianMPG"].idxmax()
-            driver_ontime = driver_stats["OnTimeRate"].max()*100
+            driver_ontime = driver_stats["OnTimeRate"].max()
             driver_ontime_name = driver_stats["OnTimeRate"].idxmax()
             driver_stats = driver_stats.reset_index()
             driver_stats = json.loads(driver_stats.to_json(orient='records'))

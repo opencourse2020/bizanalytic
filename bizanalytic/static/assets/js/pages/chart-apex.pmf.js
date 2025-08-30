@@ -82,7 +82,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledr
 			driverdata.push({x: dfdriver.iloc({rows: [i]})["DriverName"].values[0], y: [min, q1, median, q3, max]})
 		}
 	}
-	var ontimedata = dfdriver["OnTimeRate"].values*100;
+	var ontimedata = dfdriver["OnTimeRate"].values;
 	var mpgdata = dfdriver["MedianMPG"].values;
 	var mphdata = dfdriver["MedianSpeed"].values;
 	var driversname = dfdriver["DriverName"].values;

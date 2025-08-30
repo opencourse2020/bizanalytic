@@ -149,7 +149,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledr
         plotOptions: {
           boxPlot: {
             colors: {
-              upper: '#08e791',
+              upper: '#eb5849',
               lower: '#4a89dc'
             }
           }

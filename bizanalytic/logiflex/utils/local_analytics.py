@@ -919,8 +919,8 @@ def prepare_data_report(df):
 
 def prepare_driver_analysis(driver_stats):
     # driver_stats = prepare_driver_stats(df).reset_index()
-    mpgmedian = driver_stats['MedianMPG'].median()
-    ontimemedian = driver_stats['OnTimeRate'].median()
+    mpgmedian = driver_stats['MedianMPG'].mean()
+    ontimemedian = driver_stats['OnTimeRate'].mean()
 
     topright = []
     topleft = []

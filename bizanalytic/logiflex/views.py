@@ -993,6 +993,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         print("client: ", client.pk)
         print("Service Payment:", servicepayment.pk)
         print("lite_report:", lite_report, "advanced_report:", advanced_report)
+        print("report_type:", report_type)
         if lite_report or advanced_report:
             print("you can generate reports")
             # Save client and result data
@@ -1053,7 +1054,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             # Save log data
             # logiflex_log = LogEntry.objects.create(report=logireport, column_report=column_report,
             #                                               date_report=date_report, citi_report=cities_report, flags=flags)
-
+            print("report_type:", report_type)
             # Send a confirmation Email to client
             email_info = {
                 'subject': _(f"Your Fleet {report_type.capitalize()} Efficiency Report is in Progress 🚚📊"),

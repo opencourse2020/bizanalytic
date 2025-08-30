@@ -290,7 +290,7 @@
         <div class="col-md-6">
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
-                        {% trans "Driver Productivity Matrix: On-Time Rate Vs. Median MPG" %}
+                        {% trans "Driver Productivity Matrix: On-Time Rate Vs. Median MPG Vs. Median Speed" %}
                     </div>
                     <div class="card-body text-center">
                             <div id="DriverMpgOnTime"></div>
@@ -330,7 +330,7 @@
                         {% if reporttype == "lite" %}
                             {% trans "Driver Key Insights and Recommended Actions" %}
                         {% elif reporttype == "advanced" %}
-                            {% trans "Driver Productivity Matrix: Speed vs. Fuel Efficiency" %}
+                            {% trans "Fuel Cost per Mile Distribution by Driver" %}
                         {% endif %}
                     </div>
                     {% if reporttype == "lite" %}

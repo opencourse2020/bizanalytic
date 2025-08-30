@@ -203,7 +203,7 @@ class ReportView(TemplateView):
             route_stats = prepare_route_stats(df)
             route_stats = route_stats.reset_index()
             route_stats = json.loads(route_stats.to_json(orient='records'))
-
+            kwargs["reportid"] = report.report_id
             kwargs["reporttype"] = report.report_type
             kwargs["carrier_ontime"] = carrier_ontime
             kwargs["carrier_costpermile"] = carrier_costpermile

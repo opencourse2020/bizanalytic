@@ -171,7 +171,7 @@ class ReportView(TemplateView):
             carrier_stats["AvgFreightCost"] = carrier_stats["AvgFreightCost"].round(2)
             carrier_stats["AvgCostPerPound"] = carrier_stats["AvgCostPerPound"].round(3)
             carrier_ontime = carrier_stats["OnTimeRate"].max()
-            carrier_ontime_name = carrier_stats["OnTimeRate"].idxmax()
+            carrier_ontime_name = carrier_stats["OnTimeRate"].idxmax()*100
             carrier_costpermile = carrier_stats["AvgCostPerMile"].min()
             carrier_costpermile_name = carrier_stats["AvgCostPerMile"].idxmin()
             carrier_freightcost = carrier_stats["AvgFreightCost"].min()
@@ -207,7 +207,7 @@ class ReportView(TemplateView):
             driver_speed_name = driver_stats["MedianSpeed"].idxmax()
             driver_medianmpg = driver_stats["MedianMPG"].max()
             driver_medianmpg_name = driver_stats["MedianMPG"].idxmax()
-            driver_ontime = driver_stats["OnTimeRate"].max()
+            driver_ontime = driver_stats["OnTimeRate"].max()*100
             driver_ontime_name = driver_stats["OnTimeRate"].idxmax()
             driver_stats = driver_stats.reset_index()
             driver_stats = json.loads(driver_stats.to_json(orient='records'))

@@ -79,7 +79,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledr
 			const min = d3.min(b["CostPerMile"].values);
 			const max = d3.max(b["CostPerMile"].values);
 			const q3 = d3.quantile(b["CostPerMile"].values, 0.75);
-			driverdata.push({x: df.iloc({rows: [i]})["DriverName"].values[0], y: [min, q1, median, q3, max]})
+			driverdata.push({x: dfdriver.iloc({rows: [i]})["DriverName"].values[0], y: [min, q1, median, q3, max]})
 		}
 	}
 	var ontimedata = dfdriver["OnTimeRate"].values;

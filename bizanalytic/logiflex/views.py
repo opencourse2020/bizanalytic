@@ -475,14 +475,14 @@ class BlogDetailView(TemplateView):
         # Latest Blogs
         blogslatest = blogs.order_by('-date_created')[:3]
         categorytype = (
-            ('logi_freight', _("Logistics & Freight")),
+            ('logi_freight', "Logistics & Freight"),
             # ('optimize', _("Optimization")),
-            ('warehouse', _("Warehousing")),
-            ('distribute', _("Delivery & Distribution")),
-            ('driver', _("Drivers & Trucking")),
-            ('cost', _("Cost Optimization")),
+            ('warehouse', "Warehousing"),
+            ('distribute', "Delivery & Distribution"),
+            ('driver', "Drivers & Trucking"),
+            ('cost', "Cost Optimization"),
             # ('ai_insight', _("AI-Powered Insights")),
-            ('predict', _("Forecasting & Predictions")),
+            ('predict', "Forecasting & Predictions"),
         )
         # get the category title
         category_dict = dict(categorytype)
@@ -554,9 +554,9 @@ class NewsletterSubscriptionCreateView(CreateView, JsonFormMixin):
             company = subs.company.lower()
             if company == "none":
                 if cp_name == "none":
-                    message = _("Thank you for your request. This email is already registered with us")
+                    message = "Thank you for your request. This email is already registered with us"
                 else:
-                    message = _("Thank you for your request. You have been registered Successfully")
+                    message = "Thank you for your request. You have been registered Successfully"
                     area = ""
                     if tp_area == 1:
                         area = "lo"
@@ -567,11 +567,11 @@ class NewsletterSubscriptionCreateView(CreateView, JsonFormMixin):
                     subs.save()
             else:
                 if cp_name == "none" or not cp_name == company:
-                    message = _("Thank you for your request. This email is already registered under different company name")
+                    message = "Thank you for your request. This email is already registered under different company name"
                 elif cp_name == company:
-                    message = _("Thank you for your request. This email is already registered with us")
+                    message = "Thank you for your request. This email is already registered with us"
         else:
-            message = _("Thank you for your request. You have been registered Successfully")
+            message = "Thank you for your request. You have been registered Successfully"
             area = ""
             if tp_area == 1:
                 area = "lo"
@@ -980,25 +980,22 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
         advanced_report = 0
         print("Report Type:", reportype)
         report_type = ""
-        rtp = ""
         # Check report type
         if reportype == "1":
             report_type = "lite"
-            rtp = "Lite"
             if servicepayment.can_generate_report():
                 lite_report = 1
         elif reportype == "2":
             report_type = "advanced"
-            rtp = "Advanced"
             if servicepayment.can_generate_advanced_report():
                 advanced_report = 1
 
-        print("client: ", client.pk)
-        print("Service Payment:", servicepayment.pk)
-        print("lite_report:", lite_report, "advanced_report:", advanced_report)
-        print("report_type:", report_type)
+        # print("client: ", client.pk)
+        # print("Service Payment:", servicepayment.pk)
+        # print("lite_report:", lite_report, "advanced_report:", advanced_report)
+        # print("report_type:", report_type)
         if lite_report or advanced_report:
-            print("you can generate reports")
+            # print("you can generate reports")
             # Save client and result data
             user = self.request.user
             if not client.contact_name:
@@ -1035,9 +1032,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
                 servicepayment.mark_advanced_report_used()
 
             # Clean and validate route file and generate logs
-            print("Step 1")
             asynch_preprocess = test_validator.delay(logireport.pk, route_filename)
-            print("Step 2")
             flags = asynch_preprocess.get()
             # print("df columns after cleaning")
             # print(df.columns)
@@ -1057,11 +1052,10 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             # Save log data
             # logiflex_log = LogEntry.objects.create(report=logireport, column_report=column_report,
             #                                               date_report=date_report, citi_report=cities_report, flags=flags)
-            print("report_type:", report_type.capitalize())
-            report_type = report_type.capitalize()
+
             # Send a confirmation Email to client
             email_info = {
-                'subject': f"Your Fleet {rtp} Efficiency Report is in Progress 🚚📊",
+                'subject': f"Your Fleet {report_type.capitalize()} Efficiency Report is in Progress 🚚📊",
                 'to_email': [email_name, ],
                 'client': client_name,
                 'report_list_link': f"https://bizanalytic.com/logiflex/reports/detail/{logireport.id}/",
@@ -1070,11 +1064,11 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             senduploadmail.delay(email_info)
 
 
-            message = _("Report Uploaded Succssefully. Wait for a confirmation email from us.")
+            message = "Report Uploaded Succssefully. Wait for a confirmation email from us."
             repstatus = "success"
             reportid = logireport.id
         else:
-            message = _("Report Already Uploaded Succssefully.Check the list of your reports for more details")
+            message = "Report Already Uploaded Succssefully.Check the list of your reports for more details"
             repstatus = "fail"
 
         data = {"submessage": message, "repstatus": repstatus, "repid": reportid}
@@ -1143,7 +1137,7 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                 report.report_date = timezone.now()
                 report.report_status = "download"
                 report.save()
-                message = _("Report Approved Successfully")
+                message = "Report Approved Successfully"
                 status = "success"
 
                 # Prepare data for customer email
@@ -1161,7 +1155,7 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
 
                 # Send a confirmation Email to client
                 email_info = {
-                    'subject': _("Your Fleet Efficiency Report is Ready for your View 🚚📊"),
+                    'subject': "Your Fleet Efficiency Report is Ready for your View 🚚📊",
                     'to_email': [email_name, ],
                     'client': client_name,
                     'company': company,
@@ -1172,10 +1166,10 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                 sendapprovedreportmail.delay(email_info)
 
             else:
-                message = _("Report Already Approved")
+                message = "Report Already Approved"
                 status = "success"
         else:
-            message = _("Report doesn't exist")
+            message = "Report doesn't exist"
             status = "fail"
 
         data = {"submessage": message, "rpstatus": status}
@@ -1353,7 +1347,7 @@ class FullNewClientReportCreateView(CreateView, JsonFormMixin):
 
                 # Send a confirmation Email to client
                 email_info = {
-                    'subject': _(f"Your Fleet {report_type.capitalize()} Efficiency Report is in Progress 🚚📊"),
+                    'subject': f"Your Fleet {report_type.capitalize()} Efficiency Report is in Progress 🚚📊",
                     'to_email': [email_name, ],
                     'client': client_name,
                     'report_list_link': f"https://bizanalytic.com/logiflex/reports/detail/{logireport.id}/",
@@ -1361,14 +1355,14 @@ class FullNewClientReportCreateView(CreateView, JsonFormMixin):
                 }
                 senduploadmail.delay(email_info)
 
-                message = _("Report Uploaded Succssefully. Wait for a confirmation email from us.")
+                message = "Report Uploaded Succssefully. Wait for a confirmation email from us."
                 repstatus = "success"
                 reportid = logireport.id
             else:
-                message = _("Report Already Uploaded Succssefully.Check the list of your reports for more details")
+                message = "Report Already Uploaded Succssefully.Check the list of your reports for more details"
                 repstatus = "fail"
         else:
-            message = _("Report cannot be created. Check with the Admin")
+            message = "Report cannot be created. Check with the Admin"
             repstatus = "fail"
 
         data = {"submessage": message, "status": repstatus, "repid": reportid}

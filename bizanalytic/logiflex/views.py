@@ -253,6 +253,7 @@ class ReportView(TemplateView):
                 kwargs["driver_actions"] = driver_actions
                 cost_mile = '{"0":"0"}'
                 kwargs["costmile"] = json.loads(cost_mile)
+                kwargs["costmiledriver"] = json.loads(cost_mile)
             elif report.report_type == "advanced":
 
                 # Carrier Cost Reliability Analysis
@@ -268,11 +269,18 @@ class ReportView(TemplateView):
                 kwargs["bottom_right"] = bottom_right
                 kwargs["bottom_left"] = bottom_left
                 kwargs["driver_actions"] = driver_actions
+
                 # Carrier Cost Per Mile Analysis
                 cost_mile = df[['CarrierName', 'CostPerMile']]
                 cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)
                 cost_mile = json.loads(cost_mile.to_json(orient='records'))
                 kwargs["costmile"] = cost_mile
+                # Driver Cost Per Mile Analysis
+                cost_mile_driver = df[['DriverName', 'CostPerMile']]
+                cost_mile_driver["CostPerMile"] = cost_mile_driver["CostPerMile"].round(4)
+                cost_mile_driver = json.loads(cost_mile_driver.to_json(orient='records'))
+                kwargs["costmiledriver"] = cost_mile_driver
+
                 kwargs["highcostvariance"] = highcostvariance
                 kwargs["lowcostvariance"] = lowcostvariance
                 kwargs["costreliability_action"] = costreliability_action

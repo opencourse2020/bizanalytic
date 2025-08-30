@@ -5,15 +5,18 @@ Author: Sean Ngu
 Website: http://www.seantheme.com/hud/
 */
 
-var handleRenderApexChart = function(full_df, costpermile, df_driver) {
+var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver) {
 	df = new dfd.DataFrame(full_df);
 	dfdriver = new dfd.DataFrame(df_driver);
 	let group_df = "";
+	let driver_df = "";
 	if (costpermile !== "0"){
 		dfcost = new dfd.DataFrame(costpermile);
+		dfcostdirver = new dfd.DataFrame(costmiledriver);
 		dfcost.print();
 		dfcost.sortValues("CostPerMile", { inplace: true })
 		group_df = dfcost.groupby(["CarrierName"]);
+		driver_df = dfcostdirver.groupby(["DriverName"]);
 		console.log(group_df);
 	}
 
@@ -53,6 +56,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 	const driverspeedmpg = [];
 	const driverontimempg = [];
 	const driverseriesdata =[];
+	const driverdata = [];
 	for (let i = 0; i < dfdriver.shape[0]; i++) {
 		driverseriesdata.push({
 			name: dfdriver.iloc({rows: [i]})["DriverName"].values[0],
@@ -67,6 +71,15 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
 			name: dfdriver.iloc({rows: [i]})["DriverName"].values[0],
 			data: [[dfdriver.iloc({rows: [i]})["OnTimeRate"].values[0]*100, dfdriver.iloc({rows: [i]})["MedianMPG"].values[0]]]
 		});
+			let b = driver_df.getGroup([dfdriver.iloc({rows: [i]})["DriverName"].values[0]]);
+			// console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
+			// console.log(a.values[1]);
+			const median = d3.quantile(b["CostPerMile"].values, 0.5);
+			const q1 = d3.quantile(b["CostPerMile"].values, 0.25);
+			const min = d3.min(b["CostPerMile"].values);
+			const max = d3.max(b["CostPerMile"].values);
+			const q3 = d3.quantile(b["CostPerMile"].values, 0.75);
+			driverdata.push({x: df.iloc({rows: [i]})["DriverName"].values[0], y: [min, q1, median, q3, max]})
 		}
 	}
 	var ontimedata = dfdriver["OnTimeRate"].values;
@@ -112,6 +125,36 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver) {
         }
         };
 
+// Fuel Cost per Mile Distribution by Driver
+	var driverCostMileChartOptions = {
+          series: [
+          {
+            type: 'boxPlot',
+            data: driverdata
+          }
+        ],
+          chart: {
+          type: 'boxPlot',
+          height: 350
+        },
+        title: {
+          // text: 'Basic BoxPlot Chart',
+          align: 'left'
+        },
+		yaxis: {
+			  labels: {
+				formatter: function(val) { return parseFloat(val).toFixed(4) }
+			},
+		},
+        plotOptions: {
+          boxPlot: {
+            colors: {
+              upper: '#08e791',
+              lower: '#4a89dc'
+            }
+          }
+        }
+        };
 
 // Carrier Cost vs. Reliability Analysis
 	var apexScatterChartOptions = {
@@ -419,17 +462,17 @@ var MixedDriverOnTimeMPGMPHoptions = {
             },
             axisBorder: {
               show: true,
-              color: '#FEB019'
+              color: '#eb5849'
             },
             labels: {
               style: {
-                colors: '#FEB019',
+                colors: '#eb5849',
               },
             },
             title: {
               text: "Median Speed (MPH)",
               style: {
-                color: '#FEB019',
+                color: '#eb5849',
               }
             }
           },
@@ -463,19 +506,19 @@ var apexScatterCarrierCostChart = new ApexCharts(
 
 		var apexScatterDriverSpeedMPGChart = new ApexCharts(
 		document.querySelector('#DriverSpeedMPG'),
-			MixedDriverOnTimeMPGMPHoptions
+			driverCostMileChartOptions
 			);
 		apexScatterDriverSpeedMPGChart.render();
 	}
 	// apexMixedChart
 	var apexScatterDriverMpgOnTimeChart = new ApexCharts(
 		document.querySelector('#DriverMpgOnTime'),
-		ScatterChartDriverOntimeMPGOptions
+		MixedDriverOnTimeMPGMPHoptions
 	);
 	apexScatterDriverMpgOnTimeChart.render();
 
 
-	// apexPieChart ScatterChartDriverSpeedMPGOptions
+	// apexPieChart ScatterChartDriverSpeedMPGOptions ScatterChartDriverOntimeMPGOptions
 
 
 

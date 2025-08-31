@@ -448,8 +448,10 @@
         </div>
                 </div>
                 <div class="" id="col-2">
-                    <button type='button' class='btn btn-outline-primary btn-sm' id='removeButton' hidden="hidden">x</button>
-                    <div class="" id="framebutton"></div>
+
+                    <div class="d-flex justify-content-end w-100 hidden" id="framebutton" hidden style="display: none">
+                        <button type='button' class='btn btn-outline-primary btn-sm' id='removeButton' hidden="hidden" style="display: none">x</button>
+                    </div>
                     <div id="frameContainer" style="width: 100%; height: 100%"></div>
                 </div>
             </div>
@@ -616,10 +618,12 @@ $('body').on('click', '[data-act]', function() {
                              // Optional: Add a border for visibility
                             $("#col-1").attr('class', 'col-9');
                             $("#col-2").attr('class', 'col-3');
-                            var but = "<button type='button' class='btn btn-outline-primary btn-sm' id='removeButton'>x</button>"
+                            {#var but = "<button type='button' class='btn btn-outline-primary btn-sm' id='removeButton'>x</button>"#}
                             {#$("#frameContainer").attr('class', 'col-3');#}
-                            $("#framebutton").attr('class', 'd-flex justify-content-end w-100');
-                            $("#framebutton").append(but);
+                            {#$("#framebutton").attr('class', 'd-flex justify-content-end w-100');#}
+                            {#$("#framebutton").append(but);#}
+                            $("#framebutton").show();
+                            $("#removeButton").show();
 
                             $("#frameContainer").append(iframe)
                         }
@@ -631,25 +635,27 @@ $('body').on('click', '[data-act]', function() {
     });
 </script>
 <script>
-const myButton = document.querySelector('#removeButton');
-
-
-    myButton.addEventListener('click', () => {
+{#const myButton = document.querySelector('#removeButton');#}
+{##}
+{##}
+{#    myButton.addEventListener('click', () => {#}
+        $("#generate_full_rp").click(function (){
         const myFrame = document.getElementById('myFrame');
+
         console.log("Checked", myFrame);
         if (myFrame) {
                 myFrame.remove(); // Removes the iframe element from the DOM
         }
-        col1 = document.getElementById('col-1');
-        col1.className = 'col-12';
-        col1 = document.getElementById('col-2');
-        col1.className = '';
-        frameButton = document.getElementById('framebutton');
-        frameButton.className= "";
-        {#$("#col-1").attr('class', 'col-12');#}
-        {#$("#col-2").attr('class', '');#}
-        {#$("#removeButton").remove();#}
-        {#$("#framebutton").attr('class', '');#}
+        {#col1 = document.getElementById('col-1');#}
+        {#col1.className = 'col-12';#}
+        {#col1 = document.getElementById('col-2');#}
+        {#col1.className = '';#}
+        {#frameButton = document.getElementById('framebutton');#}
+        {#frameButton.className= "";#}
+        $("#col-1").attr('class', 'col-12');
+        $("#col-2").attr('class', '');
+        $("#removeButton").hide();
+        $("#framebutton").hide();
 
 
     });

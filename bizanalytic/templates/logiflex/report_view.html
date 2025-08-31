@@ -223,7 +223,7 @@
                     <div class="card-footer">
 
                         <ul style="list-style-type:disc;">
-                            <li>{{ highcostvariance|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-helper="hcv">i</a></li>
+                            <li>{{ highcostvariance|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-act="hcv">i</a></li>
                             <li>{{ lowcostvariance|safe }}</li>
 
                         </ul>
@@ -580,8 +580,8 @@ $(document).ready(function() {
 </script>
 
 <script>
-$('body').on('click', '[data-helper]', function() {
-        let cixphoto =  $(this).data('helper');
+$('body').on('click', '[data-act]', function() {
+        let cixphoto =  $(this).data('act');
         console.log("Started1");
         console.log(cixphoto);
         let myframe = $("#myFrame");

@@ -35,7 +35,12 @@
             max-width: 650px;
             margin: 35px auto;
         }
-
+        iframe {
+            border: 2px solid #333;
+            margin-top: 10px;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 {#    <link href={% static "assets/css/app.min.css" %} rel="stylesheet">#}
 {% endblock css %}
@@ -83,7 +88,9 @@
         <div class="container py-4">
 
        <!-- Report Info Section -->
-        <div class="row g-4">
+        <div class="row">
+                <div class="" id="col-1">
+                    <div class="row g-4">
             <div class="col-12">
                 <div class="row justify-content-center">
                     <div class="col-12 text-center" style="background-color: #e1e0e0; margin-bottom: 15px;">
@@ -141,7 +148,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col" id="col-1">
+            <div class="col-md-6">
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
                         {% trans "Carrier Cost vs. Reliability Analysis" %}
@@ -171,7 +178,7 @@
                 </div>
             </div>
 
-            <div class="col" id="col-2">
+            <div class="col-md-6" >
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
                         {% if reporttype == "lite" %}
@@ -231,7 +238,7 @@
                 </div>
             </div>
 {#        <div class="" id="col-helper">#}
-      	<div id="frameContainer"></div>
+
 {#      </div>#}
         <div class="col-12">
                 <div class="row justify-content-center">
@@ -437,6 +444,12 @@
                 </div>
             </div>
         </div>
+                </div>
+                <div class="" id="col-2">
+                    <div id="frameContainer"></div>
+                </div>
+            </div>
+
 
     </div>
     </section>
@@ -589,12 +602,12 @@ $('body').on('click', '[data-active]', function() {
                             var iframe = document.createElement('iframe');
                             iframe.srcdoc = frame; // Replace with the URL of the content to display
                             iframe.id = 'myFrame';
-                            iframe.width = '600';
-                            iframe.height = '400';
+                            {#iframe.width = '600';#}
+                            {#iframe.height = '400';#}
                             iframe.style.border = '1px solid #ccc'; // Optional: Add a border for visibility
-                            $("#col-1").attr('class', 'col-5');
-                            $("#col-2").attr('class', 'col-4');
-                            $("#frameContainer").attr('class', 'col-3');
+                            $("#col-1").attr('class', 'col-9');
+                            $("#col-2").attr('class', 'col-3');
+                            {#$("#frameContainer").attr('class', 'col-3');#}
                             $("#frameContainer").append(iframe)
                         }
                     }

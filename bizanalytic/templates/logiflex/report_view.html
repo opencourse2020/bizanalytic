@@ -588,7 +588,7 @@ $('body').on('click', '[data-active]', function() {
         }else{
         let url = "https://bizanalytic.com/logiflex/reports/helper/";
         const formData = new FormData();
-
+            console.log("Started");
             formData.append('cixphoto', cixphoto);
             $.ajax({
                 type: 'POST',

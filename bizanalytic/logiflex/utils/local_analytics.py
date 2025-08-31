@@ -903,7 +903,7 @@ def prepare_data_report(df):
     giqr = abs(q3m - mq1)
     hcar = q3.iloc[giqr.idxmax()]['CarrierName']
     lcar = q3.iloc[giqr.idxmin()]['CarrierName']
-    hcarvar = f"<strong class='comp'>{hcar}</strong> has the widest cost variance (high risk due to volatility)<br>"
+    hcarvar = f"<strong class='comp'>{hcar}</strong> has the widest cost variance (high risk due to volatility)"
     lcarvar = f"<strong class='comp'>{lcar}</strong> has more consistent cost variance"
 
     iqr = q3['CostPerMile'] - q1['CostPerMile']

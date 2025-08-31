@@ -583,7 +583,7 @@ $(document).ready(function() {
 $('body').on('click', '[data-helper]', function() {
         let cixphoto =  $(this).data('helper');
         console.log("Started1");
-        console.log("cixphoto:", cixphoto);
+        console.log(cixphoto);
         let myframe = $("#myFrame");
         if (myframe) {
                 myframe.remove(); // Removes the iframe element from the DOM

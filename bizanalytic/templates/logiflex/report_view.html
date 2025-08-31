@@ -230,9 +230,9 @@
                 {% endif %}
                 </div>
             </div>
-        <div class="col-3">
+{#        <div class="" id="col-helper">#}
       	<div id="frameContainer"></div>
-      </div>
+{#      </div>#}
         <div class="col-12">
                 <div class="row justify-content-center">
                     <div class="col-12 text-center" style="background-color: #e1e0e0; margin-bottom: 15px; margin-top: 15px;">
@@ -592,6 +592,7 @@ $('body').on('click', '[data-active]', function() {
                             iframe.width = '600';
                             iframe.height = '400';
                             iframe.style.border = '1px solid #ccc'; // Optional: Add a border for visibility
+                            $("#frameContainer").attr('class', 'col-3');
                             $("#frameContainer").append(iframe)
                         }
                     }

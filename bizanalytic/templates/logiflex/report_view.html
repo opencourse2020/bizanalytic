@@ -141,7 +141,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col" id="col-1">
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
                         {% trans "Carrier Cost vs. Reliability Analysis" %}
@@ -171,7 +171,7 @@
                 </div>
             </div>
 
-            <div class="col">
+            <div class="col" id="col-2">
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
                         {% if reporttype == "lite" %}
@@ -592,6 +592,8 @@ $('body').on('click', '[data-active]', function() {
                             iframe.width = '600';
                             iframe.height = '400';
                             iframe.style.border = '1px solid #ccc'; // Optional: Add a border for visibility
+                            $("#col-1").attr('class', 'col-5');
+                            $("#col-2").attr('class', 'col-4');
                             $("#frameContainer").attr('class', 'col-3');
                             $("#frameContainer").append(iframe)
                         }

@@ -626,16 +626,25 @@ $('body').on('click', '[data-active]', function() {
     });
 </script>
 <script>
-    $("#removeButton").click(function (){
-        const myFrame = $('#myFrame');
+const myButton = document.querySelector('#removeButton');
+
+
+    myButton.addEventListener('click', () => {
+        const myFrame = document.getElementById('myFrame');
         console.log("Checked", myFrame);
         if (myFrame) {
                 myFrame.remove(); // Removes the iframe element from the DOM
         }
-        $("#col-1").attr('class', 'col-12');
-        $("#col-2").attr('class', '');
-        $("#removeButton").remove();
-        $("#framebutton").attr('class', '');
+        col1 = document.getElementById('col-1');
+        col1.className = 'col-12';
+        col1 = document.getElementById('col-2');
+        col1.className = '';
+        frameButton = document.getElementById('framebutton');
+        frameButton.className= "";
+        {#$("#col-1").attr('class', 'col-12');#}
+        {#$("#col-2").attr('class', '');#}
+        {#$("#removeButton").remove();#}
+        {#$("#framebutton").attr('class', '');#}
 
 
     });

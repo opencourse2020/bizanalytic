@@ -397,6 +397,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 class ReportHelpersView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
         helper = request.POST.get("cixphoto")
+
         message = ""
         if helper == "hcv":
             message = reckless_rocket

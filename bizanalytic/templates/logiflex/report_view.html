@@ -223,7 +223,7 @@
                     <div class="card-footer">
 
                         <ul style="list-style-type:disc;">
-                            <li>{{ highcostvariance|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-act="hcv">i</a></li>
+                            <li>{{ highcostvariance|safe }}</li>
                             <li>{{ lowcostvariance|safe }}</li>
 
                         </ul>
@@ -311,16 +311,16 @@
                     <div class="card-footer">
                         <ul>
                             {% if top_right %}
-                                <li>{{ top_right|safe }}</li>
+                                <li>{{ top_right|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-act="st">i</a></li>
                             {% endif %}
                             {% if top_left %}
-                                <li>{{ top_left|safe }}</li>
+                                <li>{{ top_left|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-act="hcv">i</a></li>
                             {% endif %}
                             {% if bottom_right %}
-                                <li>{{ bottom_right|safe }}</li>
+                                <li>{{ bottom_right|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-act="hcv">i</a></li>
                             {% endif %}
                             {% if bottom_left %}
-                                <li>{{ bottom_left|safe }}</li>
+                                <li>{{ bottom_left|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-act="ud">i</a></li>
                             {% endif %}
                         </ul>
                         <strong>Actions:</strong><br>

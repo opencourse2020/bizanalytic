@@ -923,68 +923,137 @@ def prepare_driver_analysis(driver_stats):
     ontimemean = driver_stats['OnTimeRate'].mean()
     mphmean = driver_stats['MedianSpeed'].mean()
 
-    topright = []
+    hhh = []
+    hhl = []
+    hll = []
+    hlh = []
+    lll = []
+    llh = []
+    lhl = []
+    lhh = []
     topleft = []
     bottomright = []
     bottomleft = []
     for index, row in driver_stats.iterrows():
-        if row['OnTimeRate'] > ontimemean and row['MedianMPG'] > mpgmean and row['MedianSpeed'] < mphmean:
-            topright.append(index)
+        if row['OnTimeRate'] > ontimemean and row['MedianMPG'] > mpgmean and row['MedianSpeed'] > mphmean:
+            hhh.append(index)
+        elif row['OnTimeRate'] > ontimemean and row['MedianMPG'] > mpgmean and row['MedianSpeed'] < mphmean:
+            hhl.append(index)
+        elif row['OnTimeRate'] > ontimemean and row['MedianMPG'] < mpgmean and row['MedianSpeed'] > mphmean:
+            hlh.append(index)
+        elif row['OnTimeRate'] > ontimemean and row['MedianMPG'] < mpgmean and row['MedianSpeed'] < mphmean:
+            hll.append(index)
+        elif row['OnTimeRate'] < ontimemean and row['MedianMPG'] < mpgmean and row['MedianSpeed'] > mphmean:
+            llh.append(index)
         elif row['OnTimeRate'] < ontimemean and row['MedianMPG'] > mpgmean and row['MedianSpeed'] > mphmean:
-            bottomright.append(index)
-        elif row['MedianMPG'] < mpgmean and row['OnTimeRate'] > ontimemean:
-            topleft.append(index)
-        else:
-            bottomleft.append(index)
+            lhh.append(index)
+        elif row['OnTimeRate'] < ontimemean and row['MedianMPG'] < mpgmean and row['MedianSpeed'] < mphmean:
+            lll.append(index)
+        elif row['OnTimeRate'] < ontimemean and row['MedianMPG'] > mpgmean and row['MedianSpeed'] < mphmean:
+            lhl.append(index)
+
     driver_actions = []
     drivers_training = ""
-    bottom_right = ""
-    bottom_left = ""
-    top_right = ""
-    top_left = ""
-    if topright:
-        drivers = ""
-        i = 0
-        for driver in topright:
-            drivers += driver
-            i = i + 1
-            if i < len(topright):
-                drivers += ", "
-        top_right = f"<strong class='comp'>{drivers}</strong>: High Efficiency + High Reliability"
 
-    if topleft:
+    hhhs = ""
+    hhls = ""
+    hlls = ""
+    hlhs = ""
+    llls = ""
+    llhs = ""
+    lhls = ""
+    lhhs = ""
+
+    if hhh:
         drivers = ""
         i = 0
-        for driver in topleft:
+        for driver in hhh:
             drivers += driver
             i = i + 1
-            if i < len(topleft):
+            if i < len(hhh):
                 drivers += ", "
-        top_left = f"<strong class='bottom'>{drivers}</strong>: High Reliability but High Fuel Consumption"
+        hhhs = f"<strong class='comp'>{drivers}</strong>: Reliable, Efficient, AND Fast"
+
+    if hhl:
+        drivers = ""
+        i = 0
+        for driver in hhl:
+            drivers += driver
+            i = i + 1
+            if i < len(hhl):
+                drivers += ", "
+        hhls = f"<strong class='comp'>{drivers}</strong>:  Methodical, Cautious, and Process-Oriented."
+
+    if hlh:
+        drivers = ""
+        i = 0
+        for driver in hlh:
+            drivers += driver
+            i = i + 1
+            if i < len(hlh):
+                drivers += ", "
+        hlhs = f"<strong class='bottom'>{drivers}</strong>: Effective but Brutally Inefficient"
+        driver_actions.append(f"<strong class='bottom'>{drivers}</strong>: Coaching, Not Punishment and Eco-Driving Training.")
+
+
+    if hll:
+        drivers = ""
+        i = 0
+        for driver in hll:
+            drivers += driver
+            i = i + 1
+            if i < len(hll):
+                drivers += ", "
+        hlls = f"<strong class='bottom'>{drivers}</strong>: High Reliability but Slow & Low Efficiency"
         drivers_training = drivers + ", "
 
-    if bottomright:
+    if lhh:
         drivers = ""
         i = 0
-        for driver in bottomright:
+        for driver in lhh:
             drivers += driver
             i = i + 1
-            if i < len(bottomright):
+            if i < len(lhh):
                 drivers += ", "
-        bottom_right = f"<strong class='bottom'>{drivers}</strong>: Strong Technical driving skills at the Cost of Low Reliability"
+        lhhs = f"<strong class='bottom'>{drivers}</strong>: Strong Technical driving skills at the Cost of Low Reliability"
         driver_actions.append(f"<strong class='bottom'>{drivers}</strong>: must get targeted coaching focused on route compliance and smooth driving techniques.")
-    if bottomleft:
+
+    if lhl:
         drivers = ""
         i = 0
-        for driver in bottomleft:
+        for driver in lhl:
             drivers += driver
-            drivers_training += driver
             i = i + 1
-            if i < len(bottomleft):
+            if i < len(lhl):
                 drivers += ", "
-                drivers_training += ", "
-        bottom_left = f"<strong class='worst'>{drivers}</strong>: Inefficient and Unreliable drivers"
-        driver_actions.append(f"Recommend Eco-Driving training for these drivers: <strong class='worst'>{drivers_training}</strong>")
+        lhls = f"<strong class='bottom'>{drivers}</strong>: Efficient but Slow & Unreliable"
+        drivers_training = drivers + ", "
+
+    if llh:
+        drivers = ""
+        i = 0
+        for driver in llh:
+            drivers += driver
+            i = i + 1
+            if i < len(llh):
+                drivers += ", "
+        llhs = f"<strong class='bottom'>{drivers}</strong>: Aggressive and Impatient, Disregarding Safety, Procedures, and Fuel Economy."
+        drivers_training = drivers + ", "
+        driver_actions.append(f"<strong class='bottom'>{drivers}</strong>: Immediate Intervention, Retraining Mandatory.")
+
+    if lll:
+        drivers = ""
+        i = 0
+        for driver in lll:
+            drivers += driver
+            i = i + 1
+            if i < len(lll):
+                drivers += ", "
+        llls = f"<strong class='bottom'>{drivers}</strong>: Disengaged, Poorly Trained, or Facing Significant External Challenges"
+        drivers_training = drivers + ", "
+        driver_actions.append(f"<strong class='bottom'>{drivers}</strong>: Immediate and Severe Intervention.")
+
+        # driver_actions.append(f"Recommend Eco-Driving training for these drivers: <strong class='worst'>{drivers_training}</strong>")
         driver_actions.append(f"Check Trucks' Mechanical state, Fuel Quality and Scheduled Maintenance.")
 
-    return top_right, top_left, bottom_right, bottom_left, driver_actions
+    return hhhs, hhls, hlhs, hlls, lhhs, lhls, llhs, llls, driver_actions

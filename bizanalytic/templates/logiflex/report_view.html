@@ -84,8 +84,9 @@
 {% endblock breadcrumb %}
 
 {% block contact_area %}
-    <section class="service-area-2 biography-area py-20" data-background={% static "vendor/transport/assets/images/service-bg-2.jpg"%}>
-        <div class="container py-4">
+{#    data-background={% static "vendor/transport/assets/images/service-bg-2.jpg"%}#}
+    <section class="service-area-2 biography-area py-20" >
+        <div class="container py-4" style="max-width: 100%;">
 
        <!-- Report Info Section -->
         <div class="row">
@@ -226,6 +227,7 @@
                             <li>{{ lowcostvariance|safe }}</li>
 
                         </ul>
+
                         <strong>Actions:</strong><br>
                         <ol type="1">
                             {% for action in costreliability_action %}
@@ -446,7 +448,7 @@
         </div>
                 </div>
                 <div class="" id="col-2">
-                    <div id="frameContainer"></div>
+                    <div id="frameContainer" style="max-width: 100%; max-height: 100%"></div>
                 </div>
             </div>
 
@@ -617,17 +619,20 @@ $('body').on('click', '[data-active]', function() {
 
     });
 </script>
-{#    <script>#}
-{#        full_df = {{ carrierstats|safe }};#}
-{##}
-{#        df = new dfd.DataFrame(full_df);#}
-{##}
-{#        df.plot("plot_div").scatter({#}
-{#                  config: {x: "AvgFreightCost", y: "OnTimeRate", labels: "CarrierName"}#}
-{#              });#}
-{##}
-{##}
-{#    </script>#}
+<script>
+    document.getElementById('removeButton').addEventListener('click', function() {
+        const myFrame = document.getElementById('myFrame');
+
+        if (myFrame) {
+                myFrame.remove(); // Removes the iframe element from the DOM
+        }
+        const col1 = document.getElementById("col-1");
+        col1.className = "col-12";
+        const col2 = document.getElementById("col-2");
+        col1.className = "";
+
+    });
+</script>
 {% endblock js_area %}
 
 

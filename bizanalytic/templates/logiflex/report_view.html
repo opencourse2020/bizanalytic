@@ -621,16 +621,14 @@ $('body').on('click', '[data-active]', function() {
     });
 </script>
 <script>
-    document.getElementById('removeButton').addEventListener('click', function() {
-        const myFrame = document.getElementById('myFrame');
+    $("#removeButton").click(function (){
+        const myFrame = $('#myFrame');
         console.log("Checked", myFrame);
         if (myFrame) {
                 myFrame.remove(); // Removes the iframe element from the DOM
         }
-        const col1 = document.getElementById("col-1");
-        col1.className = "col-12";
-        const col2 = document.getElementById("col-2");
-        col1.className = "";
+        $("#col-1").attr('class', 'col-12');
+        $("#col-2").attr('class', '');
 
     });
 </script>

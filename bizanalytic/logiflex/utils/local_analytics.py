@@ -919,19 +919,20 @@ def prepare_data_report(df):
 
 def prepare_driver_analysis(driver_stats):
     # driver_stats = prepare_driver_stats(df).reset_index()
-    mpgmedian = driver_stats['MedianMPG'].mean()
-    ontimemedian = driver_stats['OnTimeRate'].mean()
+    mpgmean = driver_stats['MedianMPG'].mean()
+    ontimemean = driver_stats['OnTimeRate'].mean()
+    mphmean = driver_stats['MedianSpeed'].mean()
 
     topright = []
     topleft = []
     bottomright = []
     bottomleft = []
     for index, row in driver_stats.iterrows():
-        if row['MedianMPG'] > mpgmedian and row['OnTimeRate'] > ontimemedian:
+        if row['OnTimeRate'] > ontimemean and row['MedianMPG'] > mpgmean and row['MedianSpeed'] < mphmean:
             topright.append(index)
-        elif row['MedianMPG'] > mpgmedian and row['OnTimeRate'] < ontimemedian:
+        elif row['OnTimeRate'] < ontimemean and row['MedianMPG'] > mpgmean and row['MedianSpeed'] > mphmean:
             bottomright.append(index)
-        elif row['MedianMPG'] < mpgmedian and row['OnTimeRate'] > ontimemedian:
+        elif row['MedianMPG'] < mpgmean and row['OnTimeRate'] > ontimemean:
             topleft.append(index)
         else:
             bottomleft.append(index)
@@ -970,8 +971,8 @@ def prepare_driver_analysis(driver_stats):
             i = i + 1
             if i < len(bottomright):
                 drivers += ", "
-        bottom_right = f"<strong class='bottom'>{drivers}</strong>: Low Fuel Consumption but not as Reliable as other drivers"
-        driver_actions.append(f"Incentivize <strong class='bottom'>{drivers}</strong> to improve overall Reliability.")
+        bottom_right = f"<strong class='bottom'>{drivers}</strong>: Strong Technical driving skills at the Cost of Low Reliability"
+        driver_actions.append(f"<strong class='bottom'>{drivers}</strong>: must get targeted coaching focused on route compliance and smooth driving techniques.")
     if bottomleft:
         drivers = ""
         i = 0

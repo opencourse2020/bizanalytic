@@ -141,7 +141,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col">
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
                         {% trans "Carrier Cost vs. Reliability Analysis" %}
@@ -171,7 +171,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col">
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
                         {% if reporttype == "lite" %}
@@ -215,7 +215,7 @@
                     <div class="card-footer">
 
                         <ul style="list-style-type:disc;">
-                            <li>{{ highcostvariance|safe }}</li>
+                            <li>{{ highcostvariance|safe }}<button type="button" class="btn btn-primary btn-sm" data-active ="hcv" id="add1FrameButton">!</button></li>
                             <li>{{ lowcostvariance|safe }}</li>
 
                         </ul>
@@ -230,6 +230,9 @@
                 {% endif %}
                 </div>
             </div>
+        <div class="col-3">
+      	<div id="frameContainer"></div>
+      </div>
         <div class="col-12">
                 <div class="row justify-content-center">
                     <div class="col-12 text-center" style="background-color: #e1e0e0; margin-bottom: 15px; margin-top: 15px;">
@@ -395,6 +398,9 @@
                             {% endfor %}
                             </ol>
                     </div>
+                    <form action="#" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                    </form>
                 {% endif %}
                 </div>
             </div>
@@ -521,6 +527,80 @@ $(document).ready(function() {
 	});
 });
     </script>
+
+    <script>
+   document.getElementById('addFrameButton').addEventListener('click', function() {
+
+    const myFrame = document.getElementById('myFrame');
+
+        fetch('/api/your-data-endpoint/')
+        .then(response => response.json()) // Or .text() for HTML fragments
+        .then(data => {
+            // Process the data or inject the HTML into a specific element
+            document.getElementById('content-area').innerHTML = data;
+        })
+        .catch(error => console.error('Error fetching data:', error));
+
+
+    // Create a new iframe element
+    var iframe = document.createElement('iframe');
+    if (myFrame){
+        console.log("Frame exist");
+
+    }else {
+    // Set attributes for the iframe
+        iframe.src = ''; // Replace with the URL of the content to display
+        iframe.id = 'myFrame';
+        iframe.width = '600';
+        iframe.height = '400';
+        iframe.style.border = '1px solid #ccc'; // Optional: Add a border for visibility
+
+        // Append the iframe to a container element in the HTML
+        document.getElementById('frameContainer').appendChild(iframe);
+    }
+});
+
+
+</script>
+
+<script>
+$('body').on('click', '[data-active]', function() {
+        let cixphoto =  $(this).data('active');
+        let myframe = $("#myFrame");
+        if (myframe) {
+                myframe.remove(); // Removes the iframe element from the DOM
+        }
+        let url = "https://bizanalytic.com/logiflex/reports/helper/";
+        const formData = new FormData();
+
+            formData.append('cixphoto', cixphoto);
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()},
+                success: function (data) {
+                    if (data) {
+                        var result = data;
+                        var frame = result.submessage;
+                        if(frame){
+                            var iframe = document.createElement('iframe');
+                            iframe.srcdoc = frame; // Replace with the URL of the content to display
+                            iframe.id = 'myFrame';
+                            iframe.width = '600';
+                            iframe.height = '400';
+                            iframe.style.border = '1px solid #ccc'; // Optional: Add a border for visibility
+                            $("#frameContainer").append(iframe)
+                        }
+                    }
+                }
+            })
+
+
+    });
+</script>
 {#    <script>#}
 {#        full_df = {{ carrierstats|safe }};#}
 {##}

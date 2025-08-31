@@ -37,6 +37,7 @@ from .utils.tools import generatecode
 from .utils.call_llm import generate_analysis
 from .utils.pre_process_datafile import *
 from .utils.local_analytics import *
+from .utils.report_helpers import *
 from .utils.prompts import SYSTEM_PROMPT, JSON_SCHEMA
 # Create your views here.
 
@@ -391,6 +392,16 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         kwargs["newreports"] = new_reports
 
         return super(DashboardView, self).get_context_data(**kwargs)
+
+
+class ReportHelpersView(CreateView, JsonFormMixin):
+    def post(self, request, *args, **kwargs):
+        cp_name = request.POST.get("cp_name")
+        if cp_name == "hcv":
+            message = reckless_rocket
+        data = {"submessage": message}
+
+        return JsonResponse(data)
 
 
 class SampleAdvancedReportView(TemplateView):

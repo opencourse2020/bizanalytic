@@ -36,6 +36,7 @@ report_patterns = [
     path('detail/<int:pk>/', views.RouteFileView.as_view(), name='detail'),
     path('reportview/<int:pk>/', views.ReportView.as_view(), name="reportview"),
     path('summary/<int:pk>/', views.ReportSummaryView.as_view(), name="summary"),
+    path('helper/', views.ReportHelpersView.as_view(), name='helper')
 ]
 
 stripe_patterns = [

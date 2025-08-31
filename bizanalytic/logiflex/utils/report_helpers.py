@@ -5,6 +5,9 @@ reckless_rocket = """
     <meta charset="UTF-8">
 </head>
 <body>
+<h3 style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(64, 64, 64);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Oxygen, &quot;Open Sans&quot;, sans-serif;font-size:18.288px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:500;letter-spacing:normal;line-height:1.5;margin:18.288px 0px 13.716px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <strong>The "Reckless Rocket"</strong>
+</h3>
 <p class="ds-markdown-paragraph" style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(64, 64, 64);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Oxygen, &quot;Open Sans&quot;, sans-serif;font-size:16.002px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:28.575px;margin:13.716px 0px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
     <strong>Profile: Fast but NOT Reliable NOR Efficient</strong><br>
     <i>(e.g., High MPH, Low On-Time %, Low MPG)</i>

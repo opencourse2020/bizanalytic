@@ -602,11 +602,12 @@ $('body').on('click', '[data-active]', function() {
                         var frame = result.submessage;
                         if(frame){
                             var iframe = document.createElement('iframe');
-                            iframe.srcdoc = frame; // Replace with the URL of the content to display
                             iframe.id = 'myFrame';
                             {#iframe.width = '600';#}
                             {#iframe.height = '400';#}
-                            iframe.style.border = '1px solid #ccc'; // Optional: Add a border for visibility
+                            iframe.style.border = '1px solid #ccc';
+                            iframe.srcdoc = frame; // Replace with the URL of the content to display
+                             // Optional: Add a border for visibility
                             $("#col-1").attr('class', 'col-9');
                             $("#col-2").attr('class', 'col-3');
                             {#$("#frameContainer").attr('class', 'col-3');#}
@@ -622,7 +623,7 @@ $('body').on('click', '[data-active]', function() {
 <script>
     document.getElementById('removeButton').addEventListener('click', function() {
         const myFrame = document.getElementById('myFrame');
-
+        console.log("Checked", myFrame);
         if (myFrame) {
                 myFrame.remove(); // Removes the iframe element from the DOM
         }

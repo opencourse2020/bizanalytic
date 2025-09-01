@@ -288,7 +288,7 @@ class ReportView(TemplateView):
                 cost_mile_driver["CostPerMile"] = cost_mile_driver["CostPerMile"].round(4)
                 cost_mile_driver = json.loads(cost_mile_driver.to_json(orient='records'))
                 kwargs["costmiledriver"] = cost_mile_driver
-                kwargs["driver_costreliability_action_ext"] = driver_extended_message
+                kwargs["driver_costreliability_action_ext"] = driver_cost_variance
 
                 # Carrier Messages and Actions
                 kwargs["highcostvariance"] = highcostvariance

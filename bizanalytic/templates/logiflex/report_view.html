@@ -425,7 +425,7 @@
             </div>
         </div>
                 </div>
-                <div class="" id="col-2" style="border: 2px solid rgb(204, 204, 204); background: #e1e0e0;">
+                <div class="" id="col-2" style="border: 2px solid rgb(204, 204, 204); background: #e1e0e0; display: none">
 
                     <div class="d-flex justify-content-between w-100" id="framebutton" style="display: none; background: #e1e0e0; height: 30px;">
                         <h6 style="margin-bottom: 0px; margin-top: 5px;">More Info</h6>
@@ -565,43 +565,25 @@ $(document).ready(function() {
 $('body').on('click', '[data-act]', function() {
     let cixphoto =  $(this).data('act');
     let frame = $("#" + cixphoto).val();
-    console.log("Started1");
-    console.log(cixphoto);
+
     const myframe = document.getElementById("myFrame");
-    console.log(myframe);
     if (myframe) {
 
         myframe.remove(); // Removes the iframe element from the DOM
     }
-        {#let url = "https://bizanalytic.com/logiflex/reports/helper/";#}
-        {#const formData = new FormData();#}
-        {#    console.log("Started");#}
-        {#    formData.append('cixphoto', cixphoto);#}
-        {#    $.ajax({#}
-        {#        type: 'POST',#}
-        {#        url: url,#}
-        {#        data: formData,#}
-        {#        processData: false,#}
-        {#        contentType: false,#}
-        {#        headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()},#}
-        {#        success: function (data) {#}
-        {#            if (data) {#}
-        {#                var result = data;#}
-        {#                var frame = result.submessage;#}
-        {#                if(frame){#}
+
     var iframe = document.createElement('iframe');
     iframe.id = 'myFrame';
-    {#iframe.width = '600';#}
-    {#iframe.height = '400';#}
+
     iframe.style.border = '1px solid #ccc';
     iframe.srcdoc = frame; // Replace with the URL of the content to display
     // Optional: Add a border for visibility
     $("#col-1").attr('class', 'col-9');
-    $("#col-2").attr('class', 'col-3');
-    {#var but = "<button type='button' class='btn btn-outline-primary btn-sm' id='removeButton'>x</button>"#}
-    {#$("#frameContainer").attr('class', 'col-3');#}
-    {#$("#framebutton").attr('class', 'd-flex justify-content-end w-100');#}
-    {#$("#framebutton").append(but);#}
+
+    var col2 = $("#col-2");
+    col2.attr('class', 'col-3');
+    col2.show();
+
     $("#framebutton").show();
     $("#removeButton").show();
 
@@ -631,7 +613,10 @@ $("#removeButton").click(function (){
         {#frameButton = document.getElementById('framebutton');#}
         {#frameButton.className= "";#}
         $("#col-1").attr('class', 'col-12');
-        $("#col-2").attr('class', '');
+        var col2 = $("#col-2");
+        col2.hide();
+        col2.attr('class', '');
+
         $("#removeButton").hide();
         $("#framebutton").hide();
 

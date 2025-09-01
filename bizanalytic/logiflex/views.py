@@ -395,7 +395,6 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
         return super(DashboardView, self).get_context_data(**kwargs)
 
-@cache_page(60 * 15) # Cache for 15 minutes
 class ReportHelpersView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
         helper = request.POST.get("cixphoto")

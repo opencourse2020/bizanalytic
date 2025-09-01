@@ -10,6 +10,7 @@ from bizanalytic.logiflex.models import *
 from openai import OpenAI
 from django.conf import settings
 from datetime import datetime
+from .report_helpers import *
 
 OPENAI_KEY = settings.OPENAI_KEY
 client = OpenAI(api_key=OPENAI_KEY)
@@ -963,7 +964,8 @@ def prepare_driver_analysis(driver_stats):
     llhs = ""
     lhls = ""
     lhhs = ""
-
+    driver_messages = []
+    driver_extended_message = []
     if hhh:
         drivers = ""
         i = 0
@@ -973,6 +975,8 @@ def prepare_driver_analysis(driver_stats):
             if i < len(hhh):
                 drivers += ", "
         hhhs = f"<strong class='comp'>{drivers}</strong>: Reliable, Efficient, AND Fast"
+        driver_messages.append(hhhs)
+        driver_extended_message.append({'ref': 'hhhs', 'msg': hhhs, 'extmsg': elite})
 
     if hhl:
         drivers = ""
@@ -983,6 +987,8 @@ def prepare_driver_analysis(driver_stats):
             if i < len(hhl):
                 drivers += ", "
         hhls = f"<strong class='comp'>{drivers}</strong>:  Methodical, Cautious, and Process-Oriented."
+        driver_messages.append(hhls)
+        driver_extended_message.append({'ref': 'hhls', 'msg': hhls, 'extmsg': steady_turtle})
 
     if hlh:
         drivers = ""
@@ -994,7 +1000,8 @@ def prepare_driver_analysis(driver_stats):
                 drivers += ", "
         hlhs = f"<strong class='bottom'>{drivers}</strong>: Effective but Brutally Inefficient"
         driver_actions.append(f"<strong class='bottom'>{drivers}</strong>: Coaching, Not Punishment and Eco-Driving Training.")
-
+        driver_messages.append(hlhs)
+        driver_extended_message.append({'ref': 'hlhs', 'msg': hlhs, 'extmsg': stremroller})
 
     if hll:
         drivers = ""
@@ -1006,6 +1013,8 @@ def prepare_driver_analysis(driver_stats):
                 drivers += ", "
         hlls = f"<strong class='bottom'>{drivers}</strong>: High Reliability but Slow & Low Efficiency"
         drivers_training = drivers + ", "
+        driver_messages.append(hlls)
+        driver_extended_message.append({'ref': 'hlls', 'msg': hlls, 'extmsg': crawler})
 
     if lhh:
         drivers = ""
@@ -1017,6 +1026,8 @@ def prepare_driver_analysis(driver_stats):
                 drivers += ", "
         lhhs = f"<strong class='bottom'>{drivers}</strong>: Strong Technical driving skills at the Cost of Low Reliability"
         driver_actions.append(f"<strong class='bottom'>{drivers}</strong>: must get targeted coaching focused on route compliance and smooth driving techniques.")
+        driver_messages.append(lhhs)
+        driver_extended_message.append({'ref': 'lhhs', 'msg': lhhs, 'extmsg': cowboy})
 
     if lhl:
         drivers = ""
@@ -1028,6 +1039,8 @@ def prepare_driver_analysis(driver_stats):
                 drivers += ", "
         lhls = f"<strong class='bottom'>{drivers}</strong>: Efficient but Slow & Unreliable"
         drivers_training = drivers + ", "
+        driver_messages.append(lhls)
+        driver_extended_message.append({'ref': 'lhls', 'msg': lhls, 'extmsg': inconsistent_miler})
 
     if llh:
         drivers = ""
@@ -1040,6 +1053,8 @@ def prepare_driver_analysis(driver_stats):
         llhs = f"<strong class='bottom'>{drivers}</strong>: Aggressive and Impatient, Disregarding Safety, Procedures, and Fuel Economy."
         drivers_training = drivers + ", "
         driver_actions.append(f"<strong class='bottom'>{drivers}</strong>: Immediate Intervention, Retraining Mandatory.")
+        driver_messages.append(llhs)
+        driver_extended_message.append({'ref': 'llhs', 'msg': llhs, 'extmsg': reckless_rocket})
 
     if lll:
         drivers = ""
@@ -1052,8 +1067,11 @@ def prepare_driver_analysis(driver_stats):
         llls = f"<strong class='bottom'>{drivers}</strong>: Disengaged, Poorly Trained, or Facing Significant External Challenges"
         drivers_training = drivers + ", "
         driver_actions.append(f"<strong class='bottom'>{drivers}</strong>: Immediate and Severe Intervention.")
+        driver_messages.append(llls)
+        driver_extended_message.append({'ref': 'llls', 'msg': llls, 'extmsg': underperformer})
 
         # driver_actions.append(f"Recommend Eco-Driving training for these drivers: <strong class='worst'>{drivers_training}</strong>")
         driver_actions.append(f"Check Trucks' Mechanical state, Fuel Quality and Scheduled Maintenance.")
 
-    return hhhs, hhls, hlhs, hlls, lhhs, lhls, llhs, llls, driver_actions
+    return driver_messages, driver_actions, driver_extended_message
+

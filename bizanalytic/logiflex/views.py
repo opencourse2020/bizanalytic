@@ -9,6 +9,7 @@ from django.views.generic import (
     ListView,
     DeleteView,
 )
+from django.views.decorators.cache import cache_page
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -201,7 +202,7 @@ class ReportView(TemplateView):
 
             # Drivers Analysis
             driver_stats = prepare_driver_stats(df)
-            top_right, top_left, bottom_right, bottom_left, driver_actions = prepare_driver_analysis(driver_stats)
+            driver_messages, driver_actions, driver_extended_message = prepare_driver_analysis(driver_stats)
             driver_stats["OnTimeRate"] = driver_stats["OnTimeRate"]*100
             driver_totalmiles = driver_stats["TotalMiles"].max()
             driver_totalmiles_name = driver_stats["TotalMiles"].idxmax()
@@ -248,11 +249,11 @@ class ReportView(TemplateView):
 
                 # Driver On-time Rate Vs. MPG Analysis
                 kwargs["driverstats"] = driver_stats
-                kwargs["top_right"] = top_right
-                kwargs["top_left"] = top_left
-                kwargs["bottom_right"] = bottom_right
-                kwargs["bottom_left"] = bottom_left
+
+                # Driver Messages and Actions
+                kwargs["driver_messages"] = driver_messages
                 kwargs["driver_actions"] = driver_actions
+
                 cost_mile = '{"0":"0"}'
                 kwargs["costmile"] = json.loads(cost_mile)
                 kwargs["costmiledriver"] = json.loads(cost_mile)
@@ -266,10 +267,9 @@ class ReportView(TemplateView):
 
                 # Driver On-time Rate Vs. MPG Analysis
                 kwargs["driverstats"] = driver_stats
-                kwargs["top_right"] = top_right
-                kwargs["top_left"] = top_left
-                kwargs["bottom_right"] = bottom_right
-                kwargs["bottom_left"] = bottom_left
+
+                # Driver Messages and Actions
+                kwargs["driver_messages"] = driver_extended_message
                 kwargs["driver_actions"] = driver_actions
 
                 # Carrier Cost Per Mile Analysis
@@ -277,12 +277,14 @@ class ReportView(TemplateView):
                 cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)
                 cost_mile = json.loads(cost_mile.to_json(orient='records'))
                 kwargs["costmile"] = cost_mile
+
                 # Driver Cost Per Mile Analysis
                 cost_mile_driver = df[['DriverName', 'CostPerMile']]
                 cost_mile_driver["CostPerMile"] = cost_mile_driver["CostPerMile"].round(4)
                 cost_mile_driver = json.loads(cost_mile_driver.to_json(orient='records'))
                 kwargs["costmiledriver"] = cost_mile_driver
 
+                # Carrier Messages and Actions
                 kwargs["highcostvariance"] = highcostvariance
                 kwargs["lowcostvariance"] = lowcostvariance
                 kwargs["costreliability_action"] = costreliability_action
@@ -393,7 +395,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
         return super(DashboardView, self).get_context_data(**kwargs)
 
-
+@cache_page(60 * 15) # Cache for 15 minutes
 class ReportHelpersView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
         helper = request.POST.get("cixphoto")

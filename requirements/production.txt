@@ -16,3 +16,4 @@ celery==5.5.3
 flower==2.0.1
 django-celery-results==2.6.0
 django-celery-beat==2.8.1
+django-redis==6.0.0

@@ -310,18 +310,12 @@
                 {% if reporttype == "advanced" %}
                     <div class="card-footer">
                         <ul>
-                            {% if top_right %}
-                                <li>{{ top_right|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-act="st">i</a></li>
-                            {% endif %}
-                            {% if top_left %}
-                                <li>{{ top_left|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-act="hcv">i</a></li>
-                            {% endif %}
-                            {% if bottom_right %}
-                                <li>{{ bottom_right|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-act="hcv">i</a></li>
-                            {% endif %}
-                            {% if bottom_left %}
-                                <li>{{ bottom_left|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-act="ud">i</a></li>
-                            {% endif %}
+                            {% for drivermessage in driver_messages %}
+                                <li>{{ drivermessage.msg|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-act="{{ drivermessage.ref }}">i</a>
+                                    <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">
+                                </li>
+                            {% endfor %}
+
                         </ul>
                         <strong>Actions:</strong><br>
                         <ol type="1">
@@ -350,18 +344,9 @@
                              <div id="DriverCostPerMile" style="min-height: 365px;">
                              <strong>Key Insights</strong><br>
                              <ul style="list-style-type:disc;">
-                                {% if top_right %}
-                                    <li>{{ top_right|safe }}</li>
-                                {% endif %}
-                                 {% if top_left %}
-                                    <li>{{ top_left|safe }}</li>
-                                 {% endif %}
-                                {% if bottom_right %}
-                                    <li>{{ bottom_right|safe }}</li>
-                                {% endif %}
-                                 {% if bottom_left %}
-                                    <li>{{ bottom_left|safe }}</li>
-                                 {% endif %}
+                                {% for drivermessage in driver_messages %}
+                                <li>{{ drivermessage.msg|safe }}</li>
+                            {% endfor %}
 
                              </ul>
                             <br><strong>Actions:</strong><br>
@@ -384,18 +369,11 @@
                     <div class="card-footer">
                         <strong>Key Insights</strong><br>
                              <ul style="list-style-type:disc;">
-                                {% if top_right %}
-                                    <li>{{ top_right|safe }}</li>
-                                {% endif %}
-                                 {% if top_left %}
-                                    <li>{{ top_left|safe }}</li>
-                                 {% endif %}
-                                {% if bottom_right %}
-                                    <li>{{ bottom_right|safe }}</li>
-                                {% endif %}
-                                 {% if bottom_left %}
-                                    <li>{{ bottom_left|safe }}</li>
-                                 {% endif %}
+                                {% for drivermessage in driver_messages %}
+                                <li>{{ drivermessage.msg|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-act="{{ drivermessage.ref }}">i</a>
+                                    <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">
+                                </li>
+                            {% endfor %}
 
                              </ul>
                             <br><strong>Actions:</strong><br>
@@ -585,53 +563,52 @@ $(document).ready(function() {
 
 <script>
 $('body').on('click', '[data-act]', function() {
-        let cixphoto =  $(this).data('act');
-        console.log("Started1");
-        console.log(cixphoto);
-        const myframe = document.getElementById("myFrame");
-        console.log(myframe);
-        if (myframe) {
+    let cixphoto =  $(this).data('act');
+    let frame = $("#" + cixphoto).val();
+    console.log("Started1");
+    console.log(cixphoto);
+    const myframe = document.getElementById("myFrame");
+    console.log(myframe);
+    if (myframe) {
 
-                myframe.remove(); // Removes the iframe element from the DOM
-        }else{
-        let url = "https://bizanalytic.com/logiflex/reports/helper/";
-        const formData = new FormData();
-            console.log("Started");
-            formData.append('cixphoto', cixphoto);
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: formData,
-                processData: false,
-                contentType: false,
-                headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()},
-                success: function (data) {
-                    if (data) {
-                        var result = data;
-                        var frame = result.submessage;
-                        if(frame){
-                            var iframe = document.createElement('iframe');
-                            iframe.id = 'myFrame';
-                            {#iframe.width = '600';#}
-                            {#iframe.height = '400';#}
-                            iframe.style.border = '1px solid #ccc';
-                            iframe.srcdoc = frame; // Replace with the URL of the content to display
-                             // Optional: Add a border for visibility
-                            $("#col-1").attr('class', 'col-9');
-                            $("#col-2").attr('class', 'col-3');
-                            {#var but = "<button type='button' class='btn btn-outline-primary btn-sm' id='removeButton'>x</button>"#}
-                            {#$("#frameContainer").attr('class', 'col-3');#}
-                            {#$("#framebutton").attr('class', 'd-flex justify-content-end w-100');#}
-                            {#$("#framebutton").append(but);#}
-                            $("#framebutton").show();
-                            $("#removeButton").show();
+        myframe.remove(); // Removes the iframe element from the DOM
+    }
+        {#let url = "https://bizanalytic.com/logiflex/reports/helper/";#}
+        {#const formData = new FormData();#}
+        {#    console.log("Started");#}
+        {#    formData.append('cixphoto', cixphoto);#}
+        {#    $.ajax({#}
+        {#        type: 'POST',#}
+        {#        url: url,#}
+        {#        data: formData,#}
+        {#        processData: false,#}
+        {#        contentType: false,#}
+        {#        headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()},#}
+        {#        success: function (data) {#}
+        {#            if (data) {#}
+        {#                var result = data;#}
+        {#                var frame = result.submessage;#}
+        {#                if(frame){#}
+    var iframe = document.createElement('iframe');
+    iframe.id = 'myFrame';
+    {#iframe.width = '600';#}
+    {#iframe.height = '400';#}
+    iframe.style.border = '1px solid #ccc';
+    iframe.srcdoc = frame; // Replace with the URL of the content to display
+    // Optional: Add a border for visibility
+    $("#col-1").attr('class', 'col-9');
+    $("#col-2").attr('class', 'col-3');
+    {#var but = "<button type='button' class='btn btn-outline-primary btn-sm' id='removeButton'>x</button>"#}
+    {#$("#frameContainer").attr('class', 'col-3');#}
+    {#$("#framebutton").attr('class', 'd-flex justify-content-end w-100');#}
+    {#$("#framebutton").append(but);#}
+    $("#framebutton").show();
+    $("#removeButton").show();
 
-                            $("#frameContainer").append(iframe)
-                        }
-                    }
-                }
-            })
-}
+    $("#frameContainer").append(iframe)
+
+
+
 
     });
 </script>

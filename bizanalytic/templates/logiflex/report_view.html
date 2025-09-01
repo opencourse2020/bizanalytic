@@ -10,6 +10,7 @@
 
 {% block css %}
     {{ block.super }}
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <style>
         .chart-card { min-height: 420px; }
         .card-header { color: black;}
@@ -41,6 +42,38 @@
             width: 100%;
             height: 100%;
         }
+    </style>
+    <style>
+    * {
+  transition: all .2s ease;
+}
+
+.extra-info {
+  display: none;
+  line-height: 30px;
+  font-size: 12px;
+	position: absolute;
+  top: 0;
+  left: 50px;
+}
+
+.info:hover .extra-info {
+  display: block;
+}
+
+.info {
+  font-size: 20px;
+  padding-left: 5px;
+  width: 20px;
+  border-radius: 15px;
+}
+
+.info:hover {
+  background-color: white;
+  padding: 0 0 0 5px;
+  width: 150px;
+  text-align: left !important;
+}
     </style>
 {#    <link href={% static "assets/css/app.min.css" %} rel="stylesheet">#}
 {% endblock css %}
@@ -373,7 +406,15 @@
 
                         </ul>
 
-                        <strong>Actions:</strong>&nbsp;<a href="#" class="btn btn-outline-primary btn-sm" role="button" style="font-size: 0.7rem; border-radius: 0.7rem;"  data-act="dcva">i</a><br>
+                        <strong>Actions:</strong>&nbsp;
+                        <div class="info">
+                          <i class="icon-info-sign"></i>
+
+                          <span class="extra-info">
+                            Click for More Info
+                          </span>
+                        </div>
+                        <a href="#" class="btn btn-outline-primary btn-sm" role="button" style="font-size: 0.7rem; border-radius: 0.7rem;"  data-act="dcva"><i class="icon-info-sign"></a><br>
                         <input type="hidden" id="dcva" value="{{ driver_costreliability_action_ext }}">
                         <ol type="1" style=" font-size: 14px;">
                             {% for driveraction in driver_costreliability_action %}

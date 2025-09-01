@@ -108,7 +108,7 @@ cowboy = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
 </head>
-<body>
+<body style = "background-color:rgb(255, 255, 255);">
 <p style="line-height:115%;margin:0in 0in 0in 0.5in;">
     <span style="color:#00acc1;font-size:20px;"><strong>The “Cowboy”</strong></span>
 </p>
@@ -210,7 +210,7 @@ stremroller = """
 <head>
     <meta charset="UTF-8">
 </head>
-<body>
+<body style = "background-color:rgb(255, 255, 255);">
 <h3 style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(64, 64, 64);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Oxygen, &quot;Open Sans&quot;, sans-serif;font-size:18.288px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:500;letter-spacing:normal;line-height:1.5;margin:18.288px 0px 13.716px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
     <span style="color:#00bcd4;"><strong>The "Steamroller"</strong></span>
 </h3>
@@ -309,7 +309,7 @@ crawler = """
 <head>
     <meta charset="UTF-8">
 </head>
-<body>
+<body style = "background-color:rgb(255, 255, 255);">
 <h3 style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(64, 64, 64);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Oxygen, &quot;Open Sans&quot;, sans-serif;font-size:18.288px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:500;letter-spacing:normal;line-height:1.5;margin:18.288px 0px 13.716px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
     <span style="color:#00bcd4;"><strong>The "Steamroller"</strong></span>
 </h3>
@@ -414,7 +414,7 @@ underperformer = """
 <head>
     <meta charset="UTF-8">
 </head>
-<body>
+<body style = "background-color:rgb(255, 255, 255);">
 <h3 style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(64, 64, 64);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Oxygen, &quot;Open Sans&quot;, sans-serif;font-size:18.288px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:500;letter-spacing:normal;line-height:1.5;margin:18.288px 0px 13.716px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
     <span style="color:#00bcd4;"><strong>The "Underperformer"</strong></span>
 </h3>
@@ -526,7 +526,7 @@ steady_turtle = """
 <head>
     <meta charset="UTF-8">
 </head>
-<body>
+<body style = "background-color:rgb(255, 255, 255);">
 <h3 style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(64, 64, 64);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Oxygen, &quot;Open Sans&quot;, sans-serif;font-size:18.288px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:500;letter-spacing:normal;line-height:1.5;margin:18.288px 0px 13.716px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
     <span style="color:#00bcd4;"><strong>"The Steady Turtle"</strong></span>
 </h3>
@@ -765,7 +765,7 @@ elite = """
 <head>
     <meta charset="UTF-8">
 </head>
-<body>
+<body style = "background-color:rgb(255, 255, 255);">
 <h3 style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(64, 64, 64);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Oxygen, &quot;Open Sans&quot;, sans-serif;font-size:18.288px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:500;letter-spacing:normal;line-height:1.5;margin:18.288px 0px 13.716px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
     <span style="color:#00bcd4;"><strong>The "Elite Performer"</strong></span>
 </h3>
@@ -874,7 +874,7 @@ inconsistent_miler = """
 <head>
     <meta charset="UTF-8">
 </head>
-<body>
+<body style = "background-color:rgb(255, 255, 255);">
 <h3 style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(64, 64, 64);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Oxygen, &quot;Open Sans&quot;, sans-serif;font-size:18.288px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:500;letter-spacing:normal;line-height:1.5;margin:18.288px 0px 13.716px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
     <span style="color:#00bcd4;"><strong>The "Inconsistent Miler"</strong></span>
 </h3>

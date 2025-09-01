@@ -345,7 +345,7 @@
                     <div class="card-footer">
                         <ul style=" font-size: 14px;">
                             {% for drivermessage in driver_messages %}
-                                <li>{{ drivermessage.msg|safe }}&nbsp;<button class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info"  data-act="{{ drivermessage.ref }}" style="background-color: rgba(174, 219, 238, 0.5); border: 0px; border-radius: 30px;"> <span class="icon" style="color: #0d6efd"><i class="ri-information-2-fill"></i></span> </button>
+                                <li>{{ drivermessage.msg|safe }}&nbsp;<button class="btn btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info"  data-act="{{ drivermessage.ref }}" style="background-color: rgba(211, 237, 248, 0.5); border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" style="color: #0d6efd"><i class="ri-information-2-fill"></i></span> </button>
                                     <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">
                                 </li>
                             {% endfor %}
@@ -407,7 +407,7 @@
 
                         </ul>
 
-                        <strong>Actions:</strong>&nbsp;<button class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="dcva" style="background-color: rgba(174, 219, 238, 0.5); border: 0px; border-radius: 30px;"> <span class="icon" style="color: #0d6efd"><i class="ri-information-2-fill"></i></span> </button><br>
+                        <strong>Actions:</strong>&nbsp;<button class="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="dcva" style="background-color: rgba(211, 237, 248, 0.5); border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" style="color: #0d6efd"><i class="ri-information-2-fill"></i></span> </button><br>
                         <input type="hidden" id="dcva" value="{{ driver_costreliability_action_ext }}">
                         <ol type="1" style=" font-size: 14px;">
                             {% for driveraction in driver_costreliability_action %}

@@ -345,7 +345,7 @@
                     <div class="card-footer">
                         <ul style=" font-size: 14px;">
                             {% for drivermessage in driver_messages %}
-                                <li>{{ drivermessage.msg|safe }}&nbsp;<a href="#" class="btn btn-outline-primary btn-sm" role="button" style="font-size: 0.7rem; border-radius: 0.7rem;"  data-act="{{ drivermessage.ref }}">i</a>
+                                <li>{{ drivermessage.msg|safe }}&nbsp;<button data-act="{{ drivermessage.ref }}" style="border: 0px"> <span class="icon" style="color: #0d6efd"><i class="ri-information-2-fill"></i></span> </button>
                                     <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">
                                 </li>
                             {% endfor %}
@@ -407,7 +407,7 @@
 
                         </ul>
 
-                        <strong>Actions:</strong>&nbsp;<button data-act="dcva"> <span class="icon"><i class="ri-information-2-fill"></i></span> </button><br>
+                        <strong>Actions:</strong>&nbsp;<button data-act="dcva" style="border: 0px"> <span class="icon" style="color: #0d6efd"><i class="ri-information-2-fill"></i></span> </button><br>
                         <input type="hidden" id="dcva" value="{{ driver_costreliability_action_ext }}">
                         <ol type="1" style=" font-size: 14px;">
                             {% for driveraction in driver_costreliability_action %}

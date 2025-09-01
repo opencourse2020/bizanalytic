@@ -161,14 +161,14 @@
                 {% if reporttype == "advanced" %}
                     <div class="card-footer">
 
-                            <ul style="list-style-type:disc;">
+                            <ul style="list-style-type:disc;  font-size: 14px;">
                                 {% for item in contigency %}
                                     <li> {{ item|safe }}</li>
                                 {% endfor %}
 
                             </ul>
                             <strong>Actions:</strong><br>
-                            <ol type="1">
+                            <ol type="1" style=" font-size: 14px;">
                                 {% for cont_action in contingency_action %}
                                 <li> {{ cont_action|safe }}</li>
                                 {% endfor %}
@@ -194,7 +194,7 @@
                              <div class="card-body " style="padding-left: 40px;">
                              <div id="CarrierCostPerMile" style="min-height: 365px;">
                              <strong>Key Insights</strong><br>
-                             <ul style="list-style-type:disc;">
+                             <ul style="list-style-type:disc;  font-size: 14px;">
                                 {% for item in contigency %}
                                     <li> {{ item|safe }}</li>
                                 {% endfor %}
@@ -203,7 +203,7 @@
 
                              </ul>
                             <br><strong>Actions:</strong><br>
-                            <ol type="1">
+                            <ol type="1" style=" font-size: 14px;">
                                 {% for cont_action in contingency_action %}
                                     <li> {{ cont_action|safe }}</li>
                                 {% endfor %}
@@ -222,14 +222,14 @@
                 {% if reporttype == "advanced" %}
                     <div class="card-footer">
 
-                        <ul style="list-style-type:disc;">
+                        <ul style="list-style-type:disc;"  font-size: 14px;>
                             <li>{{ highcostvariance|safe }}</li>
                             <li>{{ lowcostvariance|safe }}</li>
 
                         </ul>
 
                         <strong>Actions:</strong><br>
-                        <ol type="1">
+                        <ol type="1" style=" font-size: 14px;">
                             {% for action in costreliability_action %}
                             <li>{{ action|safe }}</li>
                             {% endfor %}
@@ -309,16 +309,16 @@
                     </div>
                 {% if reporttype == "advanced" %}
                     <div class="card-footer">
-                        <ul>
+                        <ul style=" font-size: 14px;">
                             {% for drivermessage in driver_messages %}
-                                <li>{{ drivermessage.msg|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-act="{{ drivermessage.ref }}">i</a>
+                                <li>{{ drivermessage.msg|safe }}&nbsp;<a href="#" class="btn btn-outline-primary btn-sm" role="button" style="font-size: 0.7rem; border-radius: 0.7rem;"  data-act="{{ drivermessage.ref }}">i</a>
                                     <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">
                                 </li>
                             {% endfor %}
 
                         </ul>
                         <strong>Actions:</strong><br>
-                        <ol type="1">
+                        <ol type="1" style=" font-size: 14px;">
                             {% for daction in driver_actions %}
                             <li>
                                 {{ daction|safe }}
@@ -343,14 +343,14 @@
                              <div class="card-body " style="padding-left: 40px;">
                              <div id="DriverCostPerMile" style="min-height: 365px;">
                              <strong>Key Insights</strong><br>
-                             <ul style="list-style-type:disc;">
+                             <ul style="list-style-type:disc; font-size: 14px;">
                                 {% for drivermessage in driver_messages %}
                                 <li>{{ drivermessage.msg|safe }}</li>
                             {% endfor %}
 
                              </ul>
                             <br><strong>Actions:</strong><br>
-                            <ol type="1">
+                            <ol type="1" style=" font-size: 14px;">
                                 {% for daction in driver_actions %}
                             <li>
                                 {{ daction|safe }}
@@ -368,16 +368,16 @@
                 {% if reporttype == "advanced" %}
                     <div class="card-footer">
                         <strong>Key Insights</strong><br>
-                             <ul style="list-style-type:disc;">
+                             <ul style="list-style-type:disc; font-size: 14px;">
                                 {% for drivermessage in driver_messages %}
-                                <li>{{ drivermessage.msg|safe }}<a href="#" class="btn btn-outline-primary btn-sm" role="button" data-act="{{ drivermessage.ref }}">i</a>
+                                <li>{{ drivermessage.msg|safe }}&nbsp;<a href="#" class="btn btn-outline-primary btn-sm" role="button" style="font-size: 0.7rem; border-radius: 0.7rem;" data-act="{{ drivermessage.ref }}">i</a>
                                     <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">
                                 </li>
                             {% endfor %}
 
                              </ul>
                             <br><strong>Actions:</strong><br>
-                            <ol type="1">
+                            <ol type="1" style=" font-size: 14px;">
                                 {% for daction in driver_actions %}
                             <li>
                                 {{ daction|safe }}

@@ -976,3 +976,98 @@ inconsistent_miler = """
 </ul>
 </body>
 </html>"""
+
+driver_cost_variance = """
+<h3 style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(64, 64, 64);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Oxygen, &quot;Open Sans&quot;, sans-serif;font-size:18.288px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:500;letter-spacing:normal;line-height:1.5;margin:18.288px 0px 13.716px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <span style="color:#00bcd4;"><strong>The "Inconsistent Miler"</strong></span>
+</h3>
+<p class="ds-markdown-paragraph" style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(64, 64, 64);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Oxygen, &quot;Open Sans&quot;, sans-serif;font-size:13.002px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:28.575px;margin:13.716px 0px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <strong>Profile: Efficient but NOT Reliable and NOT Fast</strong>
+</p>
+<h3 style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(64, 64, 64);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Oxygen, &quot;Open Sans&quot;, sans-serif;font-size:18.288px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:500;letter-spacing:normal;line-height:1.5;margin:18.288px 0px 13.716px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <span style="color:#00bcd4;font-size:18px;"><strong>Key Implications and Action Items</strong></span>
+</h3>
+<ul style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(64, 64, 64);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Oxygen, &quot;Open Sans&quot;, sans-serif;font-size:13.002px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin-bottom:13.716px;margin-right:0px;margin-top:13.716px;orphans:2;padding-left:27.432px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <li>
+        <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 0px !important;">
+            <span style="color:#f44336;font-size:14px;"><strong>Substantial Cost-Saving Opportunity:</strong></span><span style="font-size:14px;"> The wide variance indicates that driving behavior, vehicle maintenance, or route selection are not standardized. Bringing underperforming drivers up to the standard of the top performers would result in major fuel savings for the company.</span>
+        </p>
+    </li>
+    <li style="margin-top:4px;">
+        <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 4px;">
+            <span style="color:#f44336;font-size:14px;"><strong>Focus on Training:</strong></span><span style="font-size:14px;"> Drivers like <strong>Sara Kim</strong> and <strong>Emma Stone</strong> should be the primary focus for targeted training. This training could cover:</span>
+        </p>
+        <ul style="margin-bottom:0px;margin-right:0px;margin-top:4px;padding-left:27.432px;">
+            <li>
+                <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 0px !important;">
+                    <span style="font-size:14px;"><strong>Eco-driving techniques</strong> (smooth acceleration/braking, avoiding excessive idling, proper gear shifting).</span>
+                </p>
+            </li>
+            <li style="margin-top:4px;">
+                <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 0px !important;">
+                    <span style="font-size:14px;"><strong>Route optimization</strong> to avoid heavy traffic and unnecessary mileage.</span>
+                </p>
+            </li>
+            <li style="margin-top:4px;">
+                <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 0px !important;">
+                    <span style="font-size:14px;"><strong>Vehicle maintenance awareness</strong> (e.g., importance of proper tire pressure, which greatly impacts fuel economy).</span>
+                </p>
+            </li>
+        </ul>
+    </li>
+    <li style="margin-top:4px;">
+        <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 4px;">
+            <span style="color:#f44336;font-size:14px;"><strong>Investigate Underlying Causes:</strong></span><span style="font-size:14px;"> Before assuming it's solely driver behavior, it's worth checking if external factors are at play:</span>
+        </p>
+        <ul style="margin-bottom:0px;margin-right:0px;margin-top:4px;padding-left:27.432px;">
+            <li>
+                <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 0px !important;">
+                    <span style="font-size:14px;"><strong>Vehicle Assignment:</strong> Do Sara and Emma have older or less fuel-efficient vehicles?</span>
+                </p>
+            </li>
+            <li style="margin-top:4px;">
+                <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 0px !important;">
+                    <span style="font-size:14px;"><strong>Route Difficulty:</strong> Are they consistently assigned routes with more stop-and-go traffic or steep gradients?</span>
+                </p>
+            </li>
+            <li style="margin-top:4px;">
+                <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 0px !important;">
+                    <span style="font-size:14px;"><strong>Cargo Load:</strong> Do their routes typically involve heavier loads?</span>
+                </p>
+            </li>
+        </ul>
+    </li>
+    <li style="margin-top:4px;">
+        <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 0px !important;">
+            <span style="color:#f44336;font-size:14px;"><strong>Recognize and Replicate Good Performance:</strong></span><span style="font-size:14px;"> The company should understand what <strong>John Doe</strong> and <strong>Chris Park</strong> are doing correctly. Their best practices should be identified and shared with the rest of the team as a standard operating procedure.</span>
+        </p>
+    </li>
+    <li style="margin-top:4px;">
+        <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 0px !important;">
+            <span style="color:#f44336;font-size:14px;"><strong>Set Performance Benchmarks:</strong></span><span style="font-size:14px;"> Management could set a reasonable fuel cost per mile target (e.g., $0.38/mile) and implement a program to help all drivers achieve it.</span>
+        </p>
+        <p class="ds-markdown-paragraph" style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(64, 64, 64);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Oxygen, &quot;Open Sans&quot;, sans-serif;font-size:13.002px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:28.575px;margin:13.716px 0px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+            <span style="font-size:14px;">For fair and comprehensive analysis, more context is needed:</span>
+        </p>
+    </li>
+    <li>
+        <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 0px !important;">
+            <span style="font-size:14px;"><strong>Vehicle Type:</strong> A driver in a large truck will inherently have a higher cost per mile than one in a small van. This chart does not normalize for this.</span>
+        </p>
+    </li>
+    <li style="margin-top:4px;">
+        <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 0px !important;">
+            <span style="font-size:14px;"><strong>Route Characteristics:</strong> Urban vs. highway miles dramatically affect fuel efficiency.</span>
+        </p>
+    </li>
+    <li style="margin-top:4px;">
+        <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 0px !important;">
+            <span style="font-size:14px;"><strong>Time Period:</strong> Is this data from a single week, a month, or a year? A larger sample size is more reliable.</span>
+        </p>
+    </li>
+    <li style="margin-top:4px;">
+        <p class="ds-markdown-paragraph" style="font-size:13.002px;line-height:28.575px;margin:0px 0px 0px !important;">
+            <span style="font-size:14px;"><strong>Units:</strong> While clearly cost, the currency (USD, EUR, etc.) is assumed but not explicitly stated.</span>
+        </p>
+    </li>
+</ul>"""

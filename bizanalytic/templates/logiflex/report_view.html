@@ -222,7 +222,7 @@
                 {% if reporttype == "advanced" %}
                     <div class="card-footer">
 
-                        <ul style="list-style-type:disc;"  font-size: 14px;>
+                        <ul style="list-style-type:disc;"  style="font-size: 14px;">
                             <li>{{ highcostvariance|safe }}</li>
                             <li>{{ lowcostvariance|safe }}</li>
 
@@ -367,23 +367,19 @@
 
                 {% if reporttype == "advanced" %}
                     <div class="card-footer">
-                        <strong>Key Insights</strong><br>
-                             <ul style="list-style-type:disc; font-size: 14px;">
-                                {% for drivermessage in driver_messages %}
-                                <li>{{ drivermessage.msg|safe }}&nbsp;<a href="#" class="btn btn-outline-primary btn-sm" role="button" style="font-size: 0.7rem; border-radius: 0.7rem;" data-act="{{ drivermessage.ref }}">i</a>
-                                    <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">
-                                </li>
-                            {% endfor %}
+                      <ul style="list-style-type:disc;"  style="font-size: 14px;">
+                            <li>{{ driverhighcostvariance|safe }}</li>
+                            <li>{{ driverlowcostvariance|safe }}</li>
 
-                             </ul>
-                            <br><strong>Actions:</strong><br>
-                            <ol type="1" style=" font-size: 14px;">
-                                {% for daction in driver_actions %}
-                            <li>
-                                {{ daction|safe }}
-                            </li>
+                        </ul>
+
+                        <strong>Actions:</strong>&nbsp;<a href="#" class="btn btn-outline-primary btn-sm" role="button" style="font-size: 0.7rem; border-radius: 0.7rem;"  data-act="dcva">i</a><br>
+                        <input type="hidden" id="dcva" value="{{ driver_costreliability_action|safe }}">
+                        <ol type="1" style=" font-size: 14px;">
+                            {% for driveraction in driver_costreliability_action %}
+                            <li>{{ driveraction|safe }}</li>
                             {% endfor %}
-                            </ol>
+                        </ol>
                     </div>
                     <form action="#" enctype="multipart/form-data">
                                     {% csrf_token %}

@@ -1075,3 +1075,27 @@ def prepare_driver_analysis(driver_stats):
 
     return driver_messages, driver_actions, driver_extended_message
 
+
+def prepare_driver_costvariance(df):
+    costreliability_action = []
+
+    q3 = df.groupby('DriverName')['CostPerMile'].quantile(0.75).reset_index()
+    q1 = df.groupby('DriverName')['CostPerMile'].quantile(0.25).reset_index()
+    median = df.groupby('DriverName')['CostPerMile'].median().reset_index()
+    q3m = q3['CostPerMile'] - median['CostPerMile']
+    mq1 = median['CostPerMile'] - q1['CostPerMile']
+    giqr = abs(q3m - mq1)
+    hcar = q3.iloc[giqr.idxmax()]['DriverName']
+    lcar = q3.iloc[giqr.idxmin()]['DriverName']
+    hcarvar = f"<strong class='comp'>{hcar}</strong> has the widest cost variance (high risk due to volatility)"
+    lcarvar = f"<strong class='comp'>{lcar}</strong> has more consistent cost variance"
+
+    iqr = q3['CostPerMile'] - q1['CostPerMile']
+    min_iqr_index = iqr.idxmin()
+    lowiqr = q3.iloc[min_iqr_index]['DriverName']
+
+    costreliability_action.append(f"Focus on Training(Eco-driving techniques, Route optimization, Vehicle maintenance awareness), Investigate Underlying Causes (Vehicle Assignment,Route Difficulty, Cargo Load) for  <strong class='comp'>{hcar}</strong>")
+    costreliability_action.append(
+        f"<strong class='comp'>{lowiqr}</strong> performance is the benchmark for the group. Recognize and Replicate Good Performance")
+
+    return hcarvar, lcarvar, costreliability_action

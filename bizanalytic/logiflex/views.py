@@ -237,6 +237,11 @@ class ReportView(TemplateView):
             kwargs["driver_totalmiles_name"] = driver_totalmiles_name
             kwargs["driver_speed_name"] = driver_speed_name
             kwargs["driver_medianmpg_name"] = driver_medianmpg_name
+            driver_hcarvar, driver_lcarvar, driver_costreliability_action = prepare_driver_costvariance(df)
+            kwargs["driverhighcostvariance"] = driver_hcarvar
+            kwargs["driverlowcostvariance"] = driver_lcarvar
+            kwargs["driver_costreliability_action"] = driver_costreliability_action
+
             if report.report_type == "lite":
 
                 # Carrier Cost Reliability Analysis
@@ -283,11 +288,13 @@ class ReportView(TemplateView):
                 cost_mile_driver["CostPerMile"] = cost_mile_driver["CostPerMile"].round(4)
                 cost_mile_driver = json.loads(cost_mile_driver.to_json(orient='records'))
                 kwargs["costmiledriver"] = cost_mile_driver
+                kwargs["driver_costreliability_action_ext"] = driver_extended_message
 
                 # Carrier Messages and Actions
                 kwargs["highcostvariance"] = highcostvariance
                 kwargs["lowcostvariance"] = lowcostvariance
                 kwargs["costreliability_action"] = costreliability_action
+
         else:
             print("report none")
             # return redirect('profiles:403')

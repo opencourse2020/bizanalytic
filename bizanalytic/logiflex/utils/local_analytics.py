@@ -1095,7 +1095,6 @@ def prepare_driver_costvariance(df):
     lowiqr = q3.iloc[min_iqr_index]['DriverName']
 
     costreliability_action.append(f"Focus on Training(Eco-driving techniques, Route optimization, Vehicle maintenance awareness), Investigate Underlying Causes (Vehicle Assignment,Route Difficulty, Cargo Load) for  <strong class='comp'>{hcar}</strong>")
-    costreliability_action.append(
-        f"<strong class='comp'>{lowiqr}</strong> performance is the benchmark for the group. Recognize and Replicate Good Performance")
+    costreliability_action.append(f"<strong class='comp'>{lowiqr}</strong> performance is the benchmark for the group. Recognize and Replicate Good Performance")
 
     return hcarvar, lcarvar, costreliability_action

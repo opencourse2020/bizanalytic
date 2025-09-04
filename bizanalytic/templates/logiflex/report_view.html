@@ -75,6 +75,13 @@
   width: 150px;
   text-align: left !important;
 }
+#download-btn
+{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+}
     </style>
 {#    <link href={% static "assets/css/app.min.css" %} rel="stylesheet">#}
 {% endblock css %}
@@ -86,6 +93,10 @@
 {% block header_right %}
     {{ block.super }}
 {% endblock header_right %}
+
+{% block pdf_button %}
+    {{ block.super }}
+{% endblock pdf_button %}
 
 {% block main_menu%}
     {{ block.super }}
@@ -119,7 +130,7 @@
 
 {% block contact_area %}
 {#    data-background={% static "vendor/transport/assets/images/service-bg-2.jpg"%}#}
-    <section class="service-area-2 biography-area py-20" >
+    <section class="service-area-2 biography-area py-20" id="report-content" >
         <div class="container py-4" style="max-width: 100%;">
 
        <!-- Report Info Section -->
@@ -652,6 +663,29 @@ $("#removeButton").click(function (){
 
 
     });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// PDF Download
+            const downloadBtn = document.getElementById('download-btn');
+            downloadBtn.addEventListener('click', function() {
+                const reportContent = document.getElementById('report-content');
+                const opt = {
+                    margin:       0.5,
+                    filename:     'Freight_Operations_Analysis_Report.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true },
+                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+                // Hide button before printing
+                downloadBtn.style.display = 'none';
+                html2pdf().from(reportContent).set(opt).save().then(() => {
+                    // Show button again after saving
+                    downloadBtn.style.display = 'block';
+                });
+            });
+        });
 </script>
 {% endblock js_area %}
 

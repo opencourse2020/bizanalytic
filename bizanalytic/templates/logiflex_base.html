@@ -81,7 +81,11 @@
     <div id="preloader">
         <div id="loader"></div>
     </div>
-
+    {% block pdf_button %}
+     <button id="download-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded-full shadow-lg transition">
+        {% trans "Download as PDF" %}
+    </button>
+    {% endblock pdf_button %}
     <!-- back to top -->
     <div class="back-to-top">
         <span><i class="ri-arrow-up-s-line"></i></span>

@@ -194,7 +194,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" id="carrier_1">
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
                         {% trans "Carrier Cost vs. Reliability Analysis" %}
@@ -224,7 +224,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6" >
+            <div class="col-md-6" id="carrier_2">
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
                         {% if reporttype == "lite" %}
@@ -344,7 +344,7 @@
                     </div>
                 </div>
             </div>
-        <div class="col-md-6">
+        <div class="col-md-6" id="driver_1">
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
                         {% trans "Driver Productivity Matrix: On-Time Rate Vs. Median MPG Vs. Median Speed" %}
@@ -375,7 +375,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6"  id="driver_2">
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
                         {% if reporttype == "lite" %}
@@ -672,7 +672,15 @@ $("#removeButton").click(function (){
 document.addEventListener('DOMContentLoaded', function() {
 // PDF Download
             const downloadBtn = document.getElementById('download-btn');
+            const carrier1= document.getElementById("carrier_1");
+            const carrier2= document.getElementById("carrier_2");
+            const driver1= document.getElementById("driver_1");
+            const driver2= document.getElementById("driver_2");
             downloadBtn.addEventListener('click', function() {
+                carrier1.className = 'col-12';
+                carrier2.className = 'col-12';
+                driver1.className = 'col-12';
+                driver2.className = 'col-12';
                 const reportContent = document.getElementById('report-content');
                 const opt = {
                     margin:       0.5,
@@ -687,6 +695,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Show button again after saving
                     downloadBtn.style.display = 'block';
                 });
+                carrier1.className = 'col-md-6';
+                carrier2.className = 'col-md-6';
+                driver1.className = 'col-md-6';
+                driver2.className = 'col-md-6';
             });
         });
 </script>

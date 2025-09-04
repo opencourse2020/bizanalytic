@@ -379,7 +379,7 @@
                              <strong>Key Insights</strong><br>
                              <ul style="list-style-type:disc; font-size: 14px;">
                                 {% for drivermessage in driver_messages %}
-                                <li>{{ drivermessage.msg|safe }}</li>
+                                <li>{{ drivermessage|safe }}</li>
                             {% endfor %}
 
                              </ul>

@@ -82,7 +82,7 @@
         <div id="loader"></div>
     </div>
     {% block pdf_button %}
-     <button id="download-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded-full shadow-lg transition">
+     <button id="download-btn" style="display: block; position: fixed; bottom: 20px; right: 20px; z-index: 100; border-radius: 30px;" class="btn-primary py-3 px-5 transition">
         {% trans "Download as PDF" %}
     </button>
     {% endblock pdf_button %}

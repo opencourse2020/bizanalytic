@@ -200,7 +200,7 @@
                 </div>
             </div>
             <div class="col-md-6" id="carrier_1">
-                <div class="card shadow-sm chart-card">
+                <div class="card shadow-sm chart-card" id="card1">
                     <div class="card-header">
                         {% trans "Carrier Cost vs. Reliability Analysis" %}
                     </div>
@@ -230,7 +230,7 @@
             </div>
             {% if reporttype == "advanced" %}
                  <div class="col-md-6" id="carrier_2">
-                     <div class="card shadow-sm chart-card">
+                     <div class="card shadow-sm chart-card"  id="card2">
                          <div class="card-header">
                             {% trans "Fuel Cost per Mile Distribution by Carrier" %}
                          </div>
@@ -248,7 +248,7 @@
                  <div class="col-md-6" id="carrier_2">
             {% endif %}
 
-                        <div class="card shadow-sm chart-card">
+                        <div class="card shadow-sm chart-card" >
                             <div class="card-header">
                                 {% trans "Carriers Key Insights and Recommended Actions" %}
                             </div>
@@ -339,7 +339,7 @@
                 </div>
             </div>
         <div class="col-md-6" id="driver_1">
-                <div class="card shadow-sm chart-card">
+                <div class="card shadow-sm chart-card"  id="card3">
                     <div class="card-header">
                         {% trans "Driver Productivity Matrix: On-Time Rate Vs. Median MPG Vs. Median Speed" %}
                     </div>
@@ -371,7 +371,7 @@
 
            {% if reporttype == "advanced" %}
             <div class="col-md-6" id="driver_2">
-                <div class="card shadow-sm chart-card">
+                <div class="card shadow-sm chart-card"  id="card4">
                     <div class="card-header">
                         {% trans "Fuel Cost per Mile Distribution by Driver" %}
                     </div>
@@ -691,6 +691,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const reportid = document.getElementById("report_id");
             const reportid_html = reportid.innerHTML;
             const today = new Date();
+            const allH3s = document.getElementsByTagName('h3');
+            const card1 = document.getElementById("card1");
+            const card2 = document.getElementById("card2");
+            const card3 = document.getElementById("card3");
+            const card4 = document.getElementById("card4");
             downloadBtn.addEventListener('click', async function() {
                 carrier1.className = 'col-12';
                 carrier2.className = 'col-12';
@@ -700,11 +705,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 pdfhead.className = "d-flex justify-content-start align-items-center";
                 reportid.style.color = "black";
                 reportid.style.fontSize = "20px";
-
                 reportid.innerHTML = reportid_html + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + today.toLocaleDateString();
                 reporttitle.style.fontSize = "20px";
+                card1.className = "card chart-card";
+                card1.style.border = "none";
+                card2.className = "card chart-card";
+                card2.style.border = "none";
+                card3.className = "card chart-card";
+                card3.style.border = "none";
+                card4.className = "card chart-card";
+                card4.style.border = "none";
+                for (var j = 1; j<=allH3s.length; j++) {
+                    allH3s[j].style.fontSize ="36px";
+                }
                 pdfhead.innerHTML =  reporthead.innerHTML;
-
                 const reportContent = document.getElementById('report-content');
                 const opt = {
                     margin:      [10, 10, 10, 10],
@@ -721,7 +735,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 downloadBtn.style.display = 'none';
                 html2pdf().from(reportContent).set(opt).toPdf().get('pdf').then(function (pdf) {
                     var totalPages = pdf.internal.getNumberOfPages();
-                    console.log(totalPages);
                     downloadBtn.style.display = 'block';
                     for (var i = 1; i <= totalPages; i++) {
                         pdf.setPage(i);
@@ -746,6 +759,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 reportid.style.fontSize = "40px";
                 reportid.innerHTML = reportid_html;
                 reporttitle.style.fontSize = "40px";
+                card1.className = "card shadow-sm chart-card";
+                card1.style.border= "1px solid rgba(0,0,0,.125)";
+                card2.className = "card shadow-sm chart-card";
+                card2.style.border= "1px solid rgba(0,0,0,.125)";
+                card3.className = "card shadow-sm chart-card";
+                card3.style.border= "1px solid rgba(0,0,0,.125)";
+                card4.className = "card shadow-sm chart-card";
+                card4.style.border= "1px solid rgba(0,0,0,.125)";
+                for (j = 1; j<=allH3s.length; j++) {
+                    allH3s[j].style.fontSize ="42px";
+                }
                 {#pdfhead.style = "display: none;";#}
             });
         });

@@ -404,7 +404,7 @@
                                        <li>{{ drivermessage.msg|safe }}&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info"  data-act="{{ drivermessage.ref }}" style=" border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button>
                                         <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">
                                         </li>
-                                    {% elif rereporttype == "lite" %}
+                                    {% elif reporttype == "lite" %}
                                         <li>{{ drivermessage|safe }}</li>
                                     {% endif %}
                             {% endfor %}

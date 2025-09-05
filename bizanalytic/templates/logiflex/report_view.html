@@ -721,6 +721,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 downloadBtn.style.display = 'none';
                 html2pdf().from(reportContent).set(opt).toPdf().get('pdf').then(function (pdf) {
                     var totalPages = pdf.internal.getNumberOfPages();
+                    console.log(totalPages);
                     downloadBtn.style.display = 'block';
                     for (var i = 1; i <= totalPages; i++) {
                         pdf.setPage(i);

@@ -123,7 +123,7 @@
                     <div class="col-9 ">
                         <div class="d-flex justify-content-center align-items-center" id="report_head">
 
-                            <span class="title" style="color: #0cb7d6; font-size: 40px">{% trans "FreightOps Report" %} -</span>
+                            <span class="title" id="report_title" style="color: #0cb7d6; font-size: 40px">{% trans "FreightOps Report" %} -</span>
                             <span class="title" id="report_id" style="color: white; font-size: 40px;">&nbsp;{{ reportid }}</span>
                         </div>
 
@@ -686,7 +686,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const driver1= document.getElementById("driver_1");
             const driver2= document.getElementById("driver_2");
             const reporthead = document.getElementById("report_head");
-            const reporthead_html = reporthead.innerHTML;
+            const reporttitle = document.getElementById("report_title");
             const pdfhead = document.getElementById("pdf_head");
             const reportid = document.getElementById("report_id");
             downloadBtn.addEventListener('click', async function() {
@@ -697,7 +697,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 pdfhead.style.display= "block";
                 pdfhead.className = "d-flex justify-content-start align-items-center";
                 reportid.style.color = "black";
-                reportid.style.fontSize = "40px";
+                reportid.style.fontSize = "20px";
+                reporttitle.style.fontSize = "20px";
                 pdfhead.innerHTML =  reporthead.innerHTML;
 
                 const reportContent = document.getElementById('report-content');
@@ -727,6 +728,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 pdfhead.innerHTML = "";
                 pdfhead.style.display= "none";
                 reportid.style.color = "white";
+                reportid.style.fontSize = "40px";
+                reporttitle.style.fontSize = "40px";
                 {#pdfhead.style = "display: none;";#}
             });
         });

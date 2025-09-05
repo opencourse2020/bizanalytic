@@ -233,15 +233,14 @@ class ReportView(TemplateView):
             division_points = [float(x) for x in division_points]
             range_values = []
             for i in range(int(len(division_points) - 1)):
-                msg = f"from: {division_points[i]}, to: {division_points[i + 1]}, name: {costintensity[i]}, color:{colors[i]}"
-                range_values.append({msg})
+                range_values.append({"from": division_points[i], "to": division_points[i + 1], "name": costintensity[i], "color": colors[i]})
 
             heatmap_data = heatmap_data.fillna(0)
             route_stats = json.loads(route_stats.to_json(orient='records'))
             hm_dest = []
 
             for index, row in heatmap_data.iterrows():
-                hm_dest.append({f"name: {index}, data: {row.to_list()}"})
+                hm_dest.append({"name": index, "data": row.to_list()})
             kwargs["rangevalues"] = range_values
             kwargs["heatmapvalues"] = hm_dest
             kwargs["reportid"] = report.report_id

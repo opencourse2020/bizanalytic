@@ -440,7 +440,7 @@
                 </div>
             <div class="page-break-after"></div>
             <div class="col-md-8" >
-                <div class="card shadow-sm chart-card"  id="card4">
+                <div class="card shadow-sm chart-card"  id="card5">
                     <div class="card-header">
                         {% trans "Route Cost Efficiency Heatmap" %}
                     </div>
@@ -683,6 +683,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const card2 = document.getElementById("card2");
             const card3 = document.getElementById("card3");
             const card4 = document.getElementById("card4");
+            const card5 = document.getElementById("card5");
             downloadBtn.addEventListener('click', async function() {
                 carrier1.className = 'col-12';
                 carrier2.className = 'col-12';
@@ -703,6 +704,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 card3.style.border = "none";
                 card4.className = "card chart-card";
                 card4.style.border = "none";
+                card5.className = "card chart-card";
+                card5.style.border = "none";
                 allH3s.forEach(h3 => {
                     h3.style.fontSize = "36px";
                 });
@@ -762,6 +765,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 card3.style.border= "1px solid rgba(0,0,0,.125)";
                 card4.className = "card shadow-sm chart-card";
                 card4.style.border= "1px solid rgba(0,0,0,.125)";
+                card5.className = "card shadow-sm chart-card";
+                card5.style.border= "1px solid rgba(0,0,0,.125)";
                 allH3s.forEach(h3 => {
                     h3.style.fontSize = "42px";
                 });

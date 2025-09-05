@@ -530,7 +530,7 @@ $(document).ready(function() {
     df_driver = {{ driverstats|safe }};
     heatmapvalues = {{ heatmapvalues|safe }};
     rangevalues = {{ rangevalues|safe }};
-    heatmapcolumns = {{ heatmap_columns }};
+    heatmapcolumns = {{ heatmap_columns|safe }};
     var costpermile = "0";
     var costmiledriver = "0";
     if (rt === "advanced"){

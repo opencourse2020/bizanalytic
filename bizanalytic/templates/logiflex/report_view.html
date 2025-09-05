@@ -685,11 +685,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const carrier2= document.getElementById("carrier_2");
             const driver1= document.getElementById("driver_1");
             const driver2= document.getElementById("driver_2");
+
+            let rphead = '<div class="d-flex justify-content-center align-items-center" id="report_head">';
+            rphead = rphead + '<div class="logo-area"> <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a> </div>'
+            rphead = rphead +'<span class="title" id="report_title" style="color: #0cb7d6; font-size: 40px">{% trans "FreightOps Report" %} -</span>';
+            rphead = rphead + '<span class="title" id="report_id" style="color: white; font-size: 40px;">&nbsp;{{ reportid }}</span>';
+            rphead = rphead + '</div>'
             const reporthead = document.getElementById("report_head");
             const reporttitle = document.getElementById("report_title");
             const pdfhead = document.getElementById("pdf_head");
-            const reportid = document.getElementById("report_id");
-            const reportid_html = reportid.innerHTML;
+            const report_id = document.getElementById("report_id");
+            const reportid_html = report_id.innerHTML;
             const today = new Date();
             const allH3s = document.querySelectorAll('h3');
             const card1 = document.getElementById("card1");
@@ -703,9 +709,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 driver2.className = 'col-12';
                 pdfhead.style.display= "block";
                 pdfhead.className = "d-flex justify-content-start align-items-center";
-                reportid.style.color = "black";
-                reportid.style.fontSize = "20px";
-                reportid.innerHTML = reportid_html + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + today.toLocaleDateString();
+                report_id.style.color = "black";
+                report_id.style.fontSize = "20px";
+                report_id.innerHTML = report_id + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + today.toLocaleDateString();
                 reporttitle.style.fontSize = "20px";
                 card1.className = "card chart-card";
                 card1.style.border = "none";
@@ -755,9 +761,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 pdfhead.className = "";
                 pdfhead.innerHTML = "";
                 pdfhead.style.display= "none";
-                reportid.style.color = "white";
-                reportid.style.fontSize = "40px";
-                reportid.innerHTML = reportid_html;
+                report_id.style.color = "white";
+                report_id.style.fontSize = "40px";
+                report_id.innerHTML = reportid_html;
                 reporttitle.style.fontSize = "40px";
                 card1.className = "card shadow-sm chart-card";
                 card1.style.border= "1px solid rgba(0,0,0,.125)";

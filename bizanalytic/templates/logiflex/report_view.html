@@ -82,6 +82,11 @@
     right: 20px;
     z-index: 100;
 }
+
+.page-break-after {
+        page-break-after: always;
+    }
+
     </style>
 {#    <link href={% static "assets/css/app.min.css" %} rel="stylesheet">#}
 {% endblock css %}
@@ -223,7 +228,7 @@
                 {% endif %}
                 </div>
             </div>
-
+        <div class="page-break-after"></div>
             <div class="col-md-6" id="carrier_2">
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
@@ -285,7 +290,7 @@
                 </div>
             </div>
 {#        <div class="" id="col-helper">#}
-
+        <div class="page-break-after"></div>
 {#      </div>#}
         <div class="col-12">
                 <div class="row justify-content-center text">
@@ -374,8 +379,8 @@
                 {% endif %}
                 </div>
             </div>
-
-            <div class="col-md-6"  id="driver_2">
+            <div class="page-break-after"></div>
+            <div class="col-md-6" id="driver_2">
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
                         {% if reporttype == "lite" %}
@@ -432,7 +437,7 @@
                 {% endif %}
                 </div>
             </div>
-
+            <div class="page-break-after"></div>
             <div class="col-md-4"></div>
             <div class="col-md-4">
                 <div class="card shadow-sm">
@@ -689,6 +694,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const opt = {
                     margin:       0.5,
                     filename:     'Freight_Operations_Analysis_Report.pdf',
+                    pagebreak: {
+                        mode: 'css', // Use CSS-based page breaks
+                        after: '.page-break-after' // Apply page break after elements with this class
+                    },
                     image:        { type: 'jpeg', quality: 0.98 },
                     html2canvas:  { scale: 2, useCORS: true },
                     jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }

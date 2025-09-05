@@ -121,7 +121,7 @@
                         </div>
                     </div>
                     <div class="col-9 ">
-                        <div class="d-flex justify-content-center align-items-center">
+                        <div class="d-flex justify-content-center align-items-center" id="report_head">
 
                             <span class="title" style="color: #0cb7d6; font-size: 40px">{% trans "FreightOps Report" %} -</span>
                             <span class="title" style="color: white; font-size: 40px;">&nbsp;{{ reportid }}</span>
@@ -137,7 +137,7 @@
 {#    data-background={% static "vendor/transport/assets/images/service-bg-2.jpg"%}#}
     <section class="service-area-2 biography-area py-20" id="report-content" >
         <div class="container py-4" style="max-width: 100%;">
-
+        <div id="pdf_head"></div>
        <!-- Report Info Section -->
         <div class="row">
                 <div class="" id="col-1">
@@ -685,6 +685,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const carrier2= document.getElementById("carrier_2");
             const driver1= document.getElementById("driver_1");
             const driver2= document.getElementById("driver_2");
+            const reporthead = document.getElementById("report_head");
+            const reporthead_class = reporthead.className;
+            const reporthead_html = reporthead.innerHTML;
+            const pdfhead = document.getElementById("pdf_head");
+            pdfhead.className = reporthead_class;
+            pdfhead.innerHTML = reporthead_html;
             downloadBtn.addEventListener('click', async function() {
                 carrier1.className = 'col-12';
                 carrier2.className = 'col-12';
@@ -714,6 +720,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 carrier2.className = 'col-md-6';
                 driver1.className = 'col-md-6';
                 driver2.className = 'col-md-6';
+                pdfhead.className = "";
+                pdfhead.innerHTML = "";
+                {#pdfhead.style = "display: none;";#}
             });
         });
 </script>

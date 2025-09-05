@@ -680,6 +680,7 @@ document.addEventListener('DOMContentLoaded', function() {
           return new Promise(resolve => setTimeout(resolve, ms));
         }
 // PDF Download
+            const today = new Date();
             const downloadBtn = document.getElementById('download-btn');
             const carrier1= document.getElementById("carrier_1");
             const carrier2= document.getElementById("carrier_2");
@@ -688,15 +689,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
             let rphead = '<div class="d-flex justify-content-center align-items-center" id="report_head">';
             rphead = rphead + '<div class="logo-area"> <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a> </div>'
-            rphead = rphead +'<span class="title" id="report_title" style="color: #0cb7d6; font-size: 40px">{% trans "FreightOps Report" %} -</span>';
-            rphead = rphead + '<span class="title" id="report_id" style="color: white; font-size: 40px;">&nbsp;{{ reportid }}</span>';
+            rphead = rphead +'<span class="title" id="report_title" style="color: #0cb7d6; font-size: 20px">{% trans "FreightOps Report" %} -</span>';
+            rphead = rphead + '<span class="title" id="report_idx" style="color: black; font-size: 20px;">&nbsp;{{ reportid }} </span>';
             rphead = rphead + '</div>'
             const reporthead = document.getElementById("report_head");
             const reporttitle = document.getElementById("report_title");
             const pdfhead = document.getElementById("pdf_head");
             const report_id = document.getElementById("report_id");
             const reportid_html = report_id.innerHTML;
-            const today = new Date();
+
             const allH3s = document.querySelectorAll('h3');
             const card1 = document.getElementById("card1");
             const card2 = document.getElementById("card2");
@@ -709,10 +710,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 driver2.className = 'col-12';
                 pdfhead.style.display= "block";
                 pdfhead.className = "d-flex justify-content-start align-items-center";
-                report_id.style.color = "black";
-                report_id.style.fontSize = "20px";
-                report_id.innerHTML = report_id + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + today.toLocaleDateString();
-                reporttitle.style.fontSize = "20px";
+                {#report_id.style.color = "black";#}
+                {#report_id.style.fontSize = "20px";#}
+                {#report_id.innerHTML = reportid_html + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + today.toLocaleDateString();#}
+                {#reporttitle.style.fontSize = "20px";#}
                 card1.className = "card chart-card";
                 card1.style.border = "none";
                 card2.className = "card chart-card";
@@ -724,7 +725,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 allH3s.forEach(h3 => {
                     h3.style.fontSize = "36px";
                 });
-                pdfhead.innerHTML =  reporthead.innerHTML;
+                pdfhead.innerHTML = rphead;
+                const report_id = document.getElementById("report_idx");
+                const reportid_html = report_id.innerHTML;
+                report_id.innerHTML = reportid_html + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + today.toLocaleDateString();
+
                 const reportContent = document.getElementById('report-content');
                 const opt = {
                     margin:      [10, 10, 10, 10],

@@ -670,18 +670,21 @@ $("#removeButton").click(function (){
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    function sleep(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+        }
 // PDF Download
             const downloadBtn = document.getElementById('download-btn');
             const carrier1= document.getElementById("carrier_1");
             const carrier2= document.getElementById("carrier_2");
             const driver1= document.getElementById("driver_1");
             const driver2= document.getElementById("driver_2");
-            downloadBtn.addEventListener('click', function() {
+            downloadBtn.addEventListener('click', async function() {
                 carrier1.className = 'col-12';
                 carrier2.className = 'col-12';
                 driver1.className = 'col-12';
                 driver2.className = 'col-12';
-                alert("continue?");
+                await sleep(2000); // Pause execution for 3 seconds
                 const reportContent = document.getElementById('report-content');
                 const opt = {
                     margin:       0.5,

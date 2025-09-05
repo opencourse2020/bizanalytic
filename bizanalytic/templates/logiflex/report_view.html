@@ -439,7 +439,64 @@
                     </div>
                 </div>
             <div class="page-break-after"></div>
-            <div class="col-md-8" >
+                    <div class="col-12">
+                <div class="row justify-content-center text">
+                    <div class="col-12 text-center" style="background-color: #e1e0e0; margin-bottom: 15px; margin-top: 15px;">
+                        <h2>Routes Performance</h2>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Best On-Time Rate</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                    <h3 class="counter">{{ driver_ontime }}</h3><h3> %</h3>
+                                </div>
+                            </div>
+                            <span class="title">{{ driver_ontime_name }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Higher Miles Traveled </span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                    <h3 class="counter">{{ driver_totalmiles }}</h3>
+                                </div>
+                            </div>
+                            <span class="title">{{ driver_totalmiles_name }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Fastest Driver</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                    <h3 class="counter">{{ driver_speed }}</h3><h4 style="color: white">&nbsp;MPH</h4>
+                                </div>
+                            </div>
+                            <span class="title">{{ driver_speed_name }}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Most Efficient</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                   <h3 class="counter">{{ driver_medianmpg }}</h3> <h4 style="color: white">&nbsp;MPG</h4>
+                                </div>
+                            </div>
+                            <span class="title">{{ driver_medianmpg_name }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9" >
                 <div class="card shadow-sm chart-card"  id="card5">
                     <div class="card-header">
                         {% trans "Route Cost Efficiency Heatmap" %}

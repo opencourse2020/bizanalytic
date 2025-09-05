@@ -684,7 +684,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 carrier2.className = 'col-12';
                 driver1.className = 'col-12';
                 driver2.className = 'col-12';
-                await sleep(2000); // Pause execution for 3 seconds
+
                 const reportContent = document.getElementById('report-content');
                 const opt = {
                     margin:       0.5,
@@ -699,6 +699,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Show button again after saving
                     downloadBtn.style.display = 'block';
                 });
+                await sleep(2000); // Pause execution for 3 seconds
                 carrier1.className = 'col-md-6';
                 carrier2.className = 'col-md-6';
                 driver1.className = 'col-md-6';

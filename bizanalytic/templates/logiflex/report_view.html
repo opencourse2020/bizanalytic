@@ -707,7 +707,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const reportContent = document.getElementById('report-content');
                 const opt = {
-                    margin:      1,
+                    margin:      [10, 10, 10, 10],
                     filename:     'Freight_Operations_Analysis_Report.pdf',
                     pagebreak: {
                         mode: 'css', // Use CSS-based page breaks
@@ -715,7 +715,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     image:        { type: 'jpeg', quality: 0.98 },
                     html2canvas:  { scale: 2, useCORS: true },
-                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
                 };
                 // Hide button before printing
                 downloadBtn.style.display = 'none';
@@ -727,7 +727,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         pdf.setPage(i);
                         pdf.setFontSize(10);
                         pdf.setTextColor(100); // Grey color for text
-                        pdf.text('Page ' + i + ' of ' + totalPages, (pdf.internal.pageSize.getWidth() / 2), (pdf.internal.pageSize.getHeight() - 10), { align: 'center' });
+                        var xPos = pdf.internal.pageSize.getWidth() / 2; // Center horizontally
+                        var yPos = pdf.internal.pageSize.getHeight() - 10; // 10mm from the bottom
+
+                        pdf.text('Page ' + i + ' of ' + totalPages, xPos, yPos, { align: 'center' });
                     }
                 }).save();
 

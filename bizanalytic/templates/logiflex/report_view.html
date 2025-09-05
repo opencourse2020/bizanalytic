@@ -587,40 +587,7 @@ $(document).ready(function() {
 });
     </script>
 
-    <script>
-   document.getElementById('addFrameButton').addEventListener('click', function() {
 
-    const myFrame = document.getElementById('myFrame');
-
-        fetch('/api/your-data-endpoint/')
-        .then(response => response.json()) // Or .text() for HTML fragments
-        .then(data => {
-            // Process the data or inject the HTML into a specific element
-            document.getElementById('content-area').innerHTML = data;
-        })
-        .catch(error => console.error('Error fetching data:', error));
-
-
-    // Create a new iframe element
-    var iframe = document.createElement('iframe');
-    if (myFrame){
-        console.log("Frame exist");
-
-    }else {
-    // Set attributes for the iframe
-        iframe.src = ''; // Replace with the URL of the content to display
-        iframe.id = 'myFrame';
-        iframe.width = '600';
-        iframe.height = '400';
-        iframe.style.border = '1px solid #ccc'; // Optional: Add a border for visibility
-
-        // Append the iframe to a container element in the HTML
-        document.getElementById('frameContainer').appendChild(iframe);
-    }
-});
-
-
-</script>
 
 <script>
 $('body').on('click', '[data-act]', function() {

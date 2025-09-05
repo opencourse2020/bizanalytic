@@ -346,86 +346,88 @@
                     <div class="card-body text-center">
                             <div id="DriverMpgOnTime"></div>
                     </div>
-                {% if reporttype == "advanced" %}
-                    <div class="card-footer">
-                        <ul style=" font-size: 14px;">
-                            {% for drivermessage in driver_messages %}
-                                <li>{{ drivermessage.msg|safe }}&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info"  data-act="{{ drivermessage.ref }}" style=" border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button>
-                                    <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">
-                                </li>
-                            {% endfor %}
-
-                        </ul>
-                        <strong>Actions:</strong><br>
-                        <ol type="1" style=" font-size: 14px;">
-                            {% for daction in driver_actions %}
-                            <li>
-                                {{ daction|safe }}
-                            </li>
-                            {% endfor %}
-                        </ol>
-                    </div>
-                {% endif %}
+{#                {% if reporttype == "advanced" %}#}
+{#                    <div class="card-footer">#}
+{#                        <ul style=" font-size: 14px;">#}
+{#                            {% for drivermessage in driver_messages %}#}
+{#                                <li>{{ drivermessage.msg|safe }}&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info"  data-act="{{ drivermessage.ref }}" style=" border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button>#}
+{#                                    <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">#}
+{#                                </li>#}
+{#                            {% endfor %}#}
+{##}
+{#                        </ul>#}
+{#                        <strong>Actions:</strong><br>#}
+{#                        <ol type="1" style=" font-size: 14px;">#}
+{#                            {% for daction in driver_actions %}#}
+{#                            <li>#}
+{#                                {{ daction|safe }}#}
+{#                            </li>#}
+{#                            {% endfor %}#}
+{#                        </ol>#}
+{#                    </div>#}
+{#                {% endif %}#}
                 </div>
             </div>
 
+           {% if reporttype == "advanced" %}
             <div class="col-md-6" id="driver_2">
                 <div class="card shadow-sm chart-card">
                     <div class="card-header">
-                        {% if reporttype == "lite" %}
-                            {% trans "Driver Key Insights and Recommended Actions" %}
-                        {% elif reporttype == "advanced" %}
-                            {% trans "Fuel Cost per Mile Distribution by Driver" %}
-                        {% endif %}
+                        {% trans "Fuel Cost per Mile Distribution by Driver" %}
                     </div>
-                    {% if reporttype == "lite" %}
-                             <div class="card-body " style="padding-left: 40px;">
-                             <div id="DriverCostPerMile" style="min-height: 365px;">
+                    <div class="card-body text-center">
+                        <div id="DriverSpeedMPG"></div>
+                    </div>
+                </div>
+            </div>
+
+           {% endif %}
+
+            {% if reporttype == "advanced" %}
+                 <div class="page-break-after"></div>
+                <div class="col-12">
+            {% elif reporttype == "lite" %}
+                 <div class="col-md-6" id="driver_2">
+            {% endif %}
+
+                <div class="card shadow-sm chart-card">
+                    <div class="card-header">
+                        {% trans "Driver Key Insights and Recommended Actions" %}
+                    </div>
+
+                    <div class="card-body " style="padding-left: 40px;">
+                        <div id="DriverInsights" style="min-height: 365px;">
                              <strong>Key Insights</strong><br>
                              <ul style="list-style-type:disc; font-size: 14px;">
                                 {% for drivermessage in driver_messages %}
                                 <li>{{ drivermessage|safe }}</li>
                             {% endfor %}
-
+                                {% if reporttype == "advanced" %}
+                                    <li>{{ driverhighcostvariance|safe }}</li>
+                                    <li>{{ driverlowcostvariance|safe }}</li>
+                                {% endif %}
                              </ul>
-                            <br><strong>Actions:</strong><br>
+                            <br>
+                             {% if reporttype == "advanced" %}
+                                <strong>Actions:</strong>&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="dcva" style="border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button><br>
+                                <input type="hidden" id="dcva" value="{{ driver_costreliability_action_ext }}">
+                                 {% elif rereporttype == "lite" %}
+                                 <strong>Actions:</strong><br>
                             <ol type="1" style=" font-size: 14px;">
                                 {% for daction in driver_actions %}
                             <li>
                                 {{ daction|safe }}
                             </li>
                             {% endfor %}
-                            </ol>
-                             </div>
-                             </div>
-                    {% elif reporttype == "advanced" %}
-                             <div class="card-body text-center">
-                            <div id="DriverSpeedMPG"></div>
-                             </div>
-                    {% endif %}
-
-                {% if reporttype == "advanced" %}
-                    <div class="card-footer">
-                      <ul style="list-style-type:disc; font-size: 14px;">
-                            <li>{{ driverhighcostvariance|safe }}</li>
-                            <li>{{ driverlowcostvariance|safe }}</li>
-
-                        </ul>
-
-                        <strong>Actions:</strong>&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="dcva" style="border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button><br>
-                        <input type="hidden" id="dcva" value="{{ driver_costreliability_action_ext }}">
-                        <ol type="1" style=" font-size: 14px;">
                             {% for driveraction in driver_costreliability_action %}
                             <li>{{ driveraction|safe }}</li>
                             {% endfor %}
-                        </ol>
+                            </ol>
+                             {% endif %}
+                             </div>
+                             </div>
                     </div>
-                    <form action="#" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                    </form>
-                {% endif %}
                 </div>
-            </div>
             <div class="page-break-after"></div>
             <div class="col-md-4"></div>
             <div class="col-md-4">

@@ -686,7 +686,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const driver1= document.getElementById("driver_1");
             const driver2= document.getElementById("driver_2");
             const reporthead = document.getElementById("report_head");
-            const reporthead_class = reporthead.className;
             const reporthead_html = reporthead.innerHTML;
             const pdfhead = document.getElementById("pdf_head");
             const reportid = document.getElementById("report_id");
@@ -696,9 +695,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 driver1.className = 'col-12';
                 driver2.className = 'col-12';
                 pdfhead.style.display= "block";
-                pdfhead.className = reporthead_class;
+                pdfhead.className = "d-flex justify-content-start align-items-center";
                 pdfhead.innerHTML = reporthead_html;
-                reportid.style = "color: black; font-size: 40px;";
+                reportid.style.color = "black";
+                reportid.style.fontSize = "40px";
                 const reportContent = document.getElementById('report-content');
                 const opt = {
                     margin:       0.5,
@@ -725,7 +725,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pdfhead.className = "";
                 pdfhead.innerHTML = "";
                 pdfhead.style.display= "none";
-                reportid.style = "color: white; font-size: 40px;";
+                reportid.style.color = "white";
                 {#pdfhead.style = "display: none;";#}
             });
         });

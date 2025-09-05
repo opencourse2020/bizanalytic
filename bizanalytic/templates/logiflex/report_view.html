@@ -691,7 +691,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const reportid = document.getElementById("report_id");
             const reportid_html = reportid.innerHTML;
             const today = new Date();
-            const allH3s = document.getElementsByTagName('h3');
+            const allH3s = document.querySelectorAll('h3');
             const card1 = document.getElementById("card1");
             const card2 = document.getElementById("card2");
             const card3 = document.getElementById("card3");
@@ -715,9 +715,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 card3.style.border = "none";
                 card4.className = "card chart-card";
                 card4.style.border = "none";
-                for (var j = 1; j<=allH3s.length; j++) {
-                    allH3s[j].style.fontSize ="36px";
-                }
+                allH3s.forEach(h3 => {
+                    h3.style.fontSize = "36px";
+                });
                 pdfhead.innerHTML =  reporthead.innerHTML;
                 const reportContent = document.getElementById('report-content');
                 const opt = {
@@ -767,9 +767,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 card3.style.border= "1px solid rgba(0,0,0,.125)";
                 card4.className = "card shadow-sm chart-card";
                 card4.style.border= "1px solid rgba(0,0,0,.125)";
-                for (j = 1; j<=allH3s.length; j++) {
-                    allH3s[j].style.fontSize ="42px";
-                }
+                allH3s.forEach(h3 => {
+                    h3.style.fontSize = "42px";
+                });
                 {#pdfhead.style = "display: none;";#}
             });
         });

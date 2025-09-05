@@ -689,6 +689,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const reporttitle = document.getElementById("report_title");
             const pdfhead = document.getElementById("pdf_head");
             const reportid = document.getElementById("report_id");
+            const reportid_html = reportid.innerHTML;
+            const today = new Date();
             downloadBtn.addEventListener('click', async function() {
                 carrier1.className = 'col-12';
                 carrier2.className = 'col-12';
@@ -698,6 +700,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 pdfhead.className = "d-flex justify-content-start align-items-center";
                 reportid.style.color = "black";
                 reportid.style.fontSize = "20px";
+
+                reportid.innerHTML = reportid_html + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + today.toDateString();
                 reporttitle.style.fontSize = "20px";
                 pdfhead.innerHTML =  reporthead.innerHTML;
 

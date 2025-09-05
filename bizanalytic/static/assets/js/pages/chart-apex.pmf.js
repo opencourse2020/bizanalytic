@@ -5,7 +5,7 @@ Author: Sean Ngu
 Website: http://www.seantheme.com/hud/
 */
 
-var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmapvalues, rangevalues) {
+var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmapvalues, rangevalues, heatmapcolumns) {
 	df = new dfd.DataFrame(full_df);
 	dfdriver = new dfd.DataFrame(df_driver);
 
@@ -494,7 +494,7 @@ var MixedDriverOnTimeMPGMPHoptions = {
         };
 
 
-var routesheatedoptions = {
+var routesheatdmadoptions = {
           series: heatmapvalues,
           chart: {
           height: 350,
@@ -519,9 +519,13 @@ var routesheatedoptions = {
         title: {
           text: 'HeatMap Chart with Color Range'
         },
+	xaxis: {
+          type: 'category',
+          categories: heatmapcolumns
+        },
         };
 
-var apexHeatMapChart = new ApexCharts(document.querySelector("#RouteHeatMap"), routesheatedoptions);
+var apexHeatMapChart = new ApexCharts(document.querySelector("#RouteHeatMap"), routesheatdmadoptions);
         apexHeatMapChart.render();
 
 var apexScatterCarrierCostChart = new ApexCharts(

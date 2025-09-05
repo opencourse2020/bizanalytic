@@ -516,13 +516,16 @@ var routesheatdmadoptions = {
         stroke: {
           width: 1
         },
-        title: {
-          text: 'HeatMap Chart with Color Range'
-        },
-	xaxis: {
-          type: 'category',
-          categories: heatmapcolumns
-        },
+
+		xaxis: {
+			  type: 'category',
+			  categories: heatmapcolumns
+			},
+		grid: {
+			  padding: {
+				right: 20
+			  }
+			}
         };
 
 var apexHeatMapChart = new ApexCharts(document.querySelector("#RouteHeatMap"), routesheatdmadoptions);

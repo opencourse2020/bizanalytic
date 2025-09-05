@@ -137,7 +137,7 @@
 {#    data-background={% static "vendor/transport/assets/images/service-bg-2.jpg"%}#}
     <section class="service-area-2 biography-area py-20" id="report-content" >
         <div class="container py-4" style="max-width: 100%;">
-        <div id="pdf_head"></div>
+        <div id="pdf_head" style="display: none;"></div>
        <!-- Report Info Section -->
         <div class="row">
                 <div class="" id="col-1">
@@ -695,6 +695,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 carrier2.className = 'col-12';
                 driver1.className = 'col-12';
                 driver2.className = 'col-12';
+                pdfhead.style.display= "block";
                 pdfhead.className = reporthead_class;
                 pdfhead.innerHTML = reporthead_html;
                 reportid.style = "color: black; font-size: 40px;";
@@ -723,6 +724,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 driver2.className = 'col-md-6';
                 pdfhead.className = "";
                 pdfhead.innerHTML = "";
+                pdfhead.style.display= "none";
                 reportid.style = "color: white; font-size: 40px;";
                 {#pdfhead.style = "display: none;";#}
             });

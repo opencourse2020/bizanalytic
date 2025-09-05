@@ -719,7 +719,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 };
                 // Hide button before printing
                 downloadBtn.style.display = 'none';
-                html2pdf().from(element).set(opt).toPdf().get('pdf').then(function (pdf) {
+                html2pdf().from(reportContent).set(opt).toPdf().get('pdf').then(function (pdf) {
                     var totalPages = pdf.internal.getNumberOfPages();
                     downloadBtn.style.display = 'block';
                     for (var i = 1; i <= totalPages; i++) {

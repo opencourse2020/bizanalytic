@@ -719,10 +719,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 };
                 // Hide button before printing
                 downloadBtn.style.display = 'none';
-                html2pdf().from(reportContent).set(opt).save().then(() => {
-                    // Show button again after saving
+                html2pdf().from(element).set(opt).toPdf().get('pdf').then(function (pdf) {
+                    var totalPages = pdf.internal.getNumberOfPages();
                     downloadBtn.style.display = 'block';
-                });
+                    for (var i = 1; i <= totalPages; i++) {
+                        pdf.setPage(i);
+                        pdf.setFontSize(10);
+                        pdf.setTextColor(100); // Grey color for text
+                        pdf.text('Page ' + i + ' of ' + totalPages, (pdf.internal.pageSize.getWidth() / 2), (pdf.internal.pageSize.getHeight() - 10), { align: 'center' });
+                    }
+                }).save();
+
                 await sleep(2000); // Pause execution for 3 seconds
                 carrier1.className = 'col-md-6';
                 carrier2.className = 'col-md-6';

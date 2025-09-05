@@ -5,9 +5,10 @@ Author: Sean Ngu
 Website: http://www.seantheme.com/hud/
 */
 
-var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver) {
+var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmapvalues, rangevalues) {
 	df = new dfd.DataFrame(full_df);
 	dfdriver = new dfd.DataFrame(df_driver);
+
 	let group_df = "";
 	let driver_df = "";
 	if (costpermile !== "0"){
@@ -493,7 +494,35 @@ var MixedDriverOnTimeMPGMPHoptions = {
         };
 
 
+var routesheatedoptions = {
+          series: heatmapvalues,
+          chart: {
+          height: 350,
+          type: 'heatmap',
+        },
+        plotOptions: {
+          heatmap: {
+            shadeIntensity: 0.5,
+            radius: 0,
+            useFillColorAsStroke: true,
+            colorScale: {
+              ranges: rangevalues
+            }
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          width: 1
+        },
+        title: {
+          text: 'HeatMap Chart with Color Range'
+        },
+        };
 
+var apexHeatMapChart = new ApexCharts(document.querySelector("#RouteHeatMap"), routesheatedoptions);
+        apexHeatMapChart.render();
 
 var apexScatterCarrierCostChart = new ApexCharts(
 		document.querySelector('#CarrierCostReliabilityChart'),

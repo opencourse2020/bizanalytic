@@ -218,7 +218,32 @@ class ReportView(TemplateView):
             # Routes Analysis
             route_stats = prepare_route_stats(df)
             route_stats = route_stats.reset_index()
+            # Pivot for heatmap
+            heatmap_data = route_stats.pivot(
+                index='OriginCity',
+                columns='DestinationCity',
+                values='AvgCostPerMile'
+            )
+            start = heatmap_data.min().min()
+            end = heatmap_data.max().max()
+            colors = ['#b0efb0', '#00A100', '#128FD9', '#FFB200', '#FF0000', ]
+            costintensity = ['Very Low', 'Low', 'Medium', 'High', 'Extreme']
+            num_parts = 5
+            division_points = np.linspace(start, end, num_parts + 1)
+            division_points = [float(x) for x in division_points]
+            range_values = []
+            for i in range(int(len(division_points) - 1)):
+                msg = f"from: {division_points[i]}, to: {division_points[i + 1]}, name: {costintensity[i]}, color:{colors[i]}"
+                range_values.append({msg})
+
+            heatmap_data = heatmap_data.fillna(0)
             route_stats = json.loads(route_stats.to_json(orient='records'))
+            hm_dest = []
+
+            for index, row in heatmap_data.iterrows():
+                hm_dest.append({f"name: {index}, data: {row.to_list()}"})
+            kwargs["rangevalues"] = range_values
+            kwargs["heatmapvalues"] = hm_dest
             kwargs["reportid"] = report.report_id
             kwargs["reporttype"] = report.report_type
             kwargs["carrier_ontime"] = carrier_ontime

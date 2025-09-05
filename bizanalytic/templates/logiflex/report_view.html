@@ -439,7 +439,16 @@
                     </div>
                 </div>
             <div class="page-break-after"></div>
-            <div class="col-md-4"></div>
+            <div class="col-12" id="driver_2">
+                <div class="card shadow-sm chart-card"  id="card4">
+                    <div class="card-header">
+                        {% trans "Route Cost Efficiency Heatmap" %}
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="RouteHeatMap"></div>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-4">
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
@@ -519,6 +528,8 @@ $(document).ready(function() {
     var rt = "{{ reporttype }}";
     full_df = {{ carrierstats|safe }};
     df_driver = {{ driverstats|safe }};
+    heatmapvalues = {{ heatmapvalues|safe }};
+    rangevalues = {{ rangevalues|safe }};
     var costpermile = "0";
     var costmiledriver = "0";
     if (rt === "advanced"){
@@ -560,7 +571,7 @@ $(document).ready(function() {
 
 
 
-    handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver);
+    handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmapvalues, rangevalues);
 	{#handleRenderApexChart(full_df);#}
 
 	$(document).on('theme-reload', function() {

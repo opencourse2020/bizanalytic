@@ -418,7 +418,7 @@
                              {% if reporttype == "advanced" %}
                                 <strong>Actions:</strong>&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="dcva" style="border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button><br>
                                 <input type="hidden" id="dcva" value="{{ driver_costreliability_action_ext }}" style="display: none;">
-                             {% elif rereporttype == "lite" %}
+                             {% elif reporttype == "lite" %}
                                  <strong>Actions:</strong><br>
                              {% endif %}
                                 <ol type="1" style=" font-size: 14px;">
@@ -427,9 +427,11 @@
                                         {{ daction|safe }}
                                     </li>
                                     {% endfor %}
-                            {% for driveraction in driver_costreliability_action %}
-                            <li>{{ driveraction|safe }}</li>
-                            {% endfor %}
+                                {% if reporttype == "advanced" %}
+                                    {% for driveraction in driver_costreliability_action %}
+                                    <li>{{ driveraction|safe }}</li>
+                                    {% endfor %}
+                                {% endif %}
                             </ol>
 
                         </div>

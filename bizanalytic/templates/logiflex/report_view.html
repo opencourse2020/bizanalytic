@@ -696,9 +696,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 driver2.className = 'col-12';
                 pdfhead.style.display= "block";
                 pdfhead.className = "d-flex justify-content-start align-items-center";
-                pdfhead.innerHTML = reporthead_html;
                 reportid.style.color = "black";
                 reportid.style.fontSize = "40px";
+                pdfhead.innerHTML = reporthead_html;
+
                 const reportContent = document.getElementById('report-content');
                 const opt = {
                     margin:       0.5,

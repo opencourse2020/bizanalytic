@@ -124,7 +124,7 @@
                         <div class="d-flex justify-content-center align-items-center" id="report_head">
 
                             <span class="title" style="color: #0cb7d6; font-size: 40px">{% trans "FreightOps Report" %} -</span>
-                            <span class="title" style="color: white; font-size: 40px;">&nbsp;{{ reportid }}</span>
+                            <span class="title" id="report_id" style="color: white; font-size: 40px;">&nbsp;{{ reportid }}</span>
                         </div>
 
                     </div>
@@ -689,14 +689,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const reporthead_class = reporthead.className;
             const reporthead_html = reporthead.innerHTML;
             const pdfhead = document.getElementById("pdf_head");
-            pdfhead.className = reporthead_class;
-            pdfhead.innerHTML = reporthead_html;
+            const reportid = document.getElementById("report_id");
             downloadBtn.addEventListener('click', async function() {
                 carrier1.className = 'col-12';
                 carrier2.className = 'col-12';
                 driver1.className = 'col-12';
                 driver2.className = 'col-12';
-
+                pdfhead.className = reporthead_class;
+                pdfhead.innerHTML = reporthead_html;
+                reportid.style = "color: black; font-size: 40px;";
                 const reportContent = document.getElementById('report-content');
                 const opt = {
                     margin:       0.5,
@@ -722,6 +723,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 driver2.className = 'col-md-6';
                 pdfhead.className = "";
                 pdfhead.innerHTML = "";
+                reportid.style = "color: white; font-size: 40px;";
                 {#pdfhead.style = "display: none;";#}
             });
         });

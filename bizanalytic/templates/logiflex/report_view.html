@@ -400,32 +400,40 @@
                              <strong>Key Insights</strong><br>
                              <ul style="list-style-type:disc; font-size: 14px;">
                                 {% for drivermessage in driver_messages %}
-                                <li>{{ drivermessage|safe }}</li>
+                                    {% if reporttype == "advanced" %}
+                                       <li>{{ drivermessage.msg|safe }}&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info"  data-act="{{ drivermessage.ref }}" style=" border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button>
+                                        <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">
+                                        </li>
+                                    {% elif rereporttype == "lite" %}
+                                        <li>{{ drivermessage|safe }}</li>
+                                    {% endif %}
                             {% endfor %}
                                 {% if reporttype == "advanced" %}
                                     <li>{{ driverhighcostvariance|safe }}</li>
                                     <li>{{ driverlowcostvariance|safe }}</li>
                                 {% endif %}
+
                              </ul>
                             <br>
                              {% if reporttype == "advanced" %}
                                 <strong>Actions:</strong>&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="dcva" style="border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button><br>
-                                <input type="hidden" id="dcva" value="{{ driver_costreliability_action_ext }}">
-                                 {% elif rereporttype == "lite" %}
+                                <input type="hidden" id="dcva" value="{{ driver_costreliability_action_ext }}" style="display: none;">
+                             {% elif rereporttype == "lite" %}
                                  <strong>Actions:</strong><br>
-                            <ol type="1" style=" font-size: 14px;">
-                                {% for daction in driver_actions %}
-                            <li>
-                                {{ daction|safe }}
-                            </li>
-                            {% endfor %}
+                             {% endif %}
+                                <ol type="1" style=" font-size: 14px;">
+                                    {% for daction in driver_actions %}
+                                    <li>
+                                        {{ daction|safe }}
+                                    </li>
+                                    {% endfor %}
                             {% for driveraction in driver_costreliability_action %}
                             <li>{{ driveraction|safe }}</li>
                             {% endfor %}
                             </ol>
-                             {% endif %}
-                             </div>
-                             </div>
+
+                        </div>
+                    </div>
                     </div>
                 </div>
             <div class="page-break-after"></div>

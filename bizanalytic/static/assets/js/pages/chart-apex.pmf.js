@@ -505,11 +505,12 @@ var routesheatdmadoptions = {
             shadeIntensity: 0.5,
             radius: 0,
             useFillColorAsStroke: true,
-            colorScale: {
-              ranges: rangevalues
-            }
+            // colorScale: {
+            //   ranges: rangevalues
+            // }
           }
         },
+	colors: ["#893404"],
         dataLabels: {
           enabled: false
         },

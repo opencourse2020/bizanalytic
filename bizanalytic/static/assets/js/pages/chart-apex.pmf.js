@@ -510,7 +510,7 @@ var routesheatdmadoptions = {
             // }
           }
         },
-	colors: ["#893404"],
+	colors: ["#f69b08"],
         dataLabels: {
           enabled: false
         },

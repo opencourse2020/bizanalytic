@@ -226,7 +226,7 @@ class ReportView(TemplateView):
             )
             start = heatmap_data.min().min()
             end = heatmap_data.max().max()
-            colors = ['#b0efb0', '#00A100', '#128FD9', '#FFB200', '#FF0000', ]
+            colors = ['#FCB79D', '#FB8464', '#F44F39', '#B81419', '#67000D', ]
             costintensity = ['Very Low', 'Low', 'Medium', 'High', 'Extreme']
             num_parts = 5
             division_points = np.linspace(start, end, num_parts + 1)

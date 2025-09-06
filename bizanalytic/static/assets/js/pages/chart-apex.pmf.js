@@ -502,9 +502,9 @@ var routesheatdmadoptions = {
         },
         plotOptions: {
           heatmap: {
-            shadeIntensity: 1,
+            // shadeIntensity: 1,
             radius: 0,
-            useFillColorAsStroke: true,
+            // useFillColorAsStroke: true,
             colorScale: {
               ranges: rangevalues
             }

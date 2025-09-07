@@ -554,7 +554,8 @@ var routesBubbleoptions = {
 
         },
         yaxis: {
-
+			min: 0.3,
+			max: 0.5,
 			labels: {
 				formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},

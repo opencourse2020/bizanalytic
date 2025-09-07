@@ -549,13 +549,15 @@ var routesBubbleoptions = {
         xaxis: {
             tickAmount: 12,
             type: 'category',
+			min: minspeed,
+			max: maxspeed,
+
+        },
+        yaxis: {
+
 			labels: {
 				formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},
-        },
-        yaxis: {
-            min: minspeed,
-			max: maxspeed,
         }
         };
 

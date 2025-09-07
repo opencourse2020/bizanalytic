@@ -252,7 +252,7 @@ class ReportView(TemplateView):
             data_series = []
             for index, row in route_stats.iterrows():
                 data_series.append(
-                    [float(row['AvgCostPerMile']), float(row['MedianSpeed']), float(row['ShipmentCount'])])
+                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['ShipmentCount'])])
 
             minspeed = math.floor(route_stats['MedianSpeed'].min())
             maxspeed = math.ceil(route_stats['MedianSpeed'].max())

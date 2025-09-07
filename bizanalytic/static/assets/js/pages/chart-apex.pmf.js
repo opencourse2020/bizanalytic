@@ -5,7 +5,7 @@ Author: Sean Ngu
 Website: http://www.seantheme.com/hud/
 */
 
-var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency_data) {
+var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency_data, worstrouteefficiency_data) {
 	df = new dfd.DataFrame(full_df);
 	dfdriver = new dfd.DataFrame(df_driver);
 
@@ -564,6 +564,63 @@ var routesBubbleoptions = {
 
 var routeEfficiencyBubblechart = new ApexCharts(document.querySelector("#RouteEfficiencyBubble"), routesBubbleoptions);
         routeEfficiencyBubblechart.render();
+
+var worstroutesBubbleoptions = {
+          series: [{
+          name: worstrouteefficiency_data.serie1_name,
+          data: worstrouteefficiency_data.serie1
+        },
+		{
+          name: worstrouteefficiency_data.serie2_name,
+          data: worstrouteefficiency_data.serie2
+        },
+			  {
+          name: worstrouteefficiency_data.serie3_name,
+          data: worstrouteefficiency_data.serie3
+        },
+			  {
+          name: worstrouteefficiency_data.serie4_name,
+          data: worstrouteefficiency_data.serie4
+        },
+			  {
+          name: worstrouteefficiency_data.serie5_name,
+          data: worstrouteefficiency_data.serie5
+        },
+        ],
+          chart: {
+            height: 350,
+            type: 'bubble',
+        },
+		theme: {
+			palette: 'palette1' // Apply the first built-in palette
+		},
+        dataLabels: {
+            enabled: false
+        },
+        fill: {
+            opacity: 0.8
+        },
+        // title: {
+        //     text: 'Simple Bubble Chart'
+        // },
+        xaxis: {
+            tickAmount: routeefficiency_data.maxspeed - routeefficiency_data.minspeed,
+            type: 'category',
+			min: routeefficiency_data.minspeed,
+			max: routeefficiency_data.maxspeed,
+
+        },
+        yaxis: {
+			min: routeefficiency_data.mincost,
+			max: routeefficiency_data.maxcost,
+			labels: {
+				formatter: function(val) { return parseFloat(val).toFixed(2) }
+			},
+        }
+        };
+
+var worstrouteEfficiencyBubblechart = new ApexCharts(document.querySelector("#WorstRouteEfficiencyBubble"), worstroutesBubbleoptions);
+        worstrouteEfficiencyBubblechart.render();
 
 var apexHeatMapChart = new ApexCharts(document.querySelector("#RouteHeatMap"), routesheatdmadoptions);
         apexHeatMapChart.render();

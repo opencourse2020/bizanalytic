@@ -271,14 +271,60 @@ class ReportView(TemplateView):
                 maxcost = maxcost_tmp
             else:
                 maxcost = maxcost_tmp + 0.05
-            route_stats = json.loads(route_stats.to_json(orient='records'))
+            rs1 = route_stats.head(5)
+            serrie1 = df[(df['OriginCity'] == rs1.index[0][0]) & (df['DestinationCity'] == rs1.index[0][1])]
+            serie1 = []
+            for index, row in serrie1.iterrows():
+                serie1.append(
+                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
+            serrie2 = df[(df['OriginCity'] == rs1.index[1][0]) & (df['DestinationCity'] == rs1.index[1][1])]
+            serie2 = []
+            for index, row in serrie2.iterrows():
+                serie2.append(
+                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
+            serrie3 = df[(df['OriginCity'] == rs1.index[2][0]) & (df['DestinationCity'] == rs1.index[2][1])]
+            serie3 = []
+            for index, row in serrie3.iterrows():
+                serie3.append(
+                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
+            serrie4 = df[(df['OriginCity'] == rs1.index[3][0]) & (df['DestinationCity'] == rs1.index[3][1])]
+            serie4 = []
+            for index, row in serrie4.iterrows():
+                serie4.append(
+                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
+            serrie5 = df[(df['OriginCity'] == rs1.index[4][0]) & (df['DestinationCity'] == rs1.index[4][1])]
+            serie5 = []
+            for index, row in serrie5.iterrows():
+                serie5.append(
+                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
+
+            # serie1 = json.loads(serie1.to_json(orient='records'))
+            # serie2 = json.loads(serie2.to_json(orient='records'))
+            # serie3 = json.loads(serie3.to_json(orient='records'))
+            # serie4 = json.loads(serie4.to_json(orient='records'))
+            # serie5 = json.loads(serie5.to_json(orient='records'))
+            serie1_name = rs1.index[0][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[0][1].split(",")[
+                                                                                          0].replace(" ", "")[:5]
+            serie2_name = rs1.index[1][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[1][1].split(",")[
+                                                                                          0].replace(" ", "")[:5]
+            serie3_name = rs1.index[2][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[2][1].split(",")[
+                                                                                          0].replace(" ", "")[:5]
+            serie4_name = rs1.index[3][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[3][1].split(",")[
+                                                                                          0].replace(" ", "")[:5]
+            serie5_name = rs1.index[4][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[4][1].split(",")[
+                                                                                          0].replace(" ", "")[:5]
+            # route_stats = json.loads(route_stats.to_json(orient='records'))
             # x_medianspeed = json.loads(route_stats["MedianSpeed"].to_json(orient='records'))
             # y_costpermile = json.loads(route_stats["AvgCostPerMile"].to_json(orient='records'))
             # size_shipmentcount = json.loads(route_stats["ShipmentCount"].to_json(orient='records'))
             # kwargs["x_medianspeed"] = x_medianspeed
             # kwargs["y_costpermile"] = y_costpermile
+            worstrouteefficiency_data = {"serie1": serie1, "serie2": serie2, "serie3": serie3, "serie4": serie4,
+                                         "serie5": serie5, "serie1_name": serie1_name, "serie2_name": serie2_name,
+                                         "serie3_name": serie3_name, "serie4_name": serie4_name, "serie5_name": serie5_name}
             routeefficiency_data = {"routeefficiency": data_series, "maxspeed": maxspeed, "minspeed": minspeed, "maxcost": maxcost, "mincost": mincost}
             kwargs["routeefficiency_data"] = routeefficiency_data
+            kwargs["worstrouteefficiency_data"] = worstrouteefficiency_data
             # kwargs["maxspeed"] = maxspeed
             # kwargs["minspeed"] = minspeed
 

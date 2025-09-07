@@ -514,12 +514,23 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card shadow-sm chart-card"  id="card5">
+                <div class="card shadow-sm chart-card"  id="card6">
                     <div class="card-header">
                         {% trans "Route Efficiency Speed Vs. Cost (Size = Number of Shipments)" %}
                     </div>
                     <div class="card-body text-center">
                         <div id="RouteEfficiencyBubble"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm chart-card"  id="card7">
+                    <div class="card-header">
+                        {% trans "Worst Routes Efficiency Speed Vs. Cost (Size = Number of Shipments)" %}
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="WorstRouteEfficiencyBubble"></div>
                     </div>
                 </div>
 
@@ -598,6 +609,7 @@ $(document).ready(function() {
     heatmap_values = {{ heatmapvalues|safe }};
 
     routeefficiency_data = {{ routeefficiency_data|safe }};
+    worstrouteefficiency_data = {{ worstrouteefficiency_data|safe }};
     {#minspeed = {{ minspeed|safe }};#}
     {#maxspeed = {{ maxspeed|safe }};#}
     var costpermile = "0";
@@ -641,7 +653,7 @@ $(document).ready(function() {
 
 
 
-    handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency_data);
+    handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency_data, worstrouteefficiency_data);
 	{#handleRenderApexChart(full_df);#}
 
 	$(document).on('theme-reload', function() {

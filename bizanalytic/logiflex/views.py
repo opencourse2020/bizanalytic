@@ -242,6 +242,7 @@ class ReportView(TemplateView):
             for index, row in heatmap_data.iterrows():
                 hm_dest.append({"name": index, "data": row.to_list()})
             heatmap_columns = heatmap_data.columns.to_list()
+            print("range_values:", range_values)
             heatmap_values = {"rangevalues": range_values, "heatmapvalues": hm_dest, "heatmap_columns": heatmap_columns}
             # kwargs["rangevalues"] = range_values
             kwargs["heatmapvalues"] = heatmap_values

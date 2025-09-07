@@ -8,7 +8,9 @@ Website: http://www.seantheme.com/hud/
 var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency, maxspeed, minspeed) {
 	df = new dfd.DataFrame(full_df);
 	dfdriver = new dfd.DataFrame(df_driver);
-
+	console.log(heatmap_values.heatmapcolumns);
+	console.log(heatmap_values.rangevalues);
+	console.log(heatmap_values.heatmapvalues);
 	let group_df = "";
 	let driver_df = "";
 	if (costpermile !== "0"){
@@ -539,6 +541,9 @@ var routesBubbleoptions = {
             height: 350,
             type: 'bubble',
         },
+		theme: {
+			palette: 'palette1' // Apply the first built-in palette
+		},
         dataLabels: {
             enabled: false
         },

@@ -245,6 +245,19 @@ class ReportView(TemplateView):
             kwargs["rangevalues"] = range_values
             kwargs["heatmapvalues"] = hm_dest
             kwargs["heatmap_columns"] = heatmap_columns
+
+            # Route Efficiency Speed Vs Cost
+            data_series = []
+            for index, row in route_stats.iterrows():
+                data_series.append(
+                    [float(row['AvgCostPerMile']), float(row['MedianSpeed']), float(row['ShipmentCount'])])
+            # x_medianspeed = json.loads(route_stats["MedianSpeed"].to_json(orient='records'))
+            # y_costpermile = json.loads(route_stats["AvgCostPerMile"].to_json(orient='records'))
+            # size_shipmentcount = json.loads(route_stats["ShipmentCount"].to_json(orient='records'))
+            # kwargs["x_medianspeed"] = x_medianspeed
+            # kwargs["y_costpermile"] = y_costpermile
+            kwargs["routeefficiency"] = data_series
+
             kwargs["reportid"] = report.report_id
             kwargs["reporttype"] = report.report_type
             kwargs["carrier_ontime"] = carrier_ontime

@@ -5,7 +5,7 @@ Author: Sean Ngu
 Website: http://www.seantheme.com/hud/
 */
 
-var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmapvalues, rangevalues, heatmapcolumns) {
+var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmapvalues, rangevalues, heatmapcolumns, routeefficiency) {
 	df = new dfd.DataFrame(full_df);
 	dfdriver = new dfd.DataFrame(df_driver);
 
@@ -527,6 +527,38 @@ var routesheatdmadoptions = {
 			  }
 			}
         };
+
+var routesBubbleoptions = {
+          series: [{
+          name: 'Route Efficiency',
+          data: routeefficiency
+        },
+
+        ],
+          chart: {
+            height: 350,
+            type: 'bubble',
+        },
+        dataLabels: {
+            enabled: false
+        },
+        fill: {
+            opacity: 0.8
+        },
+        // title: {
+        //     text: 'Simple Bubble Chart'
+        // },
+        xaxis: {
+            tickAmount: 12,
+            type: 'category',
+        },
+        yaxis: {
+            max: 70
+        }
+        };
+
+var routeEfficiencyBubblechart = new ApexCharts(document.querySelector("#RouteEfficiencyBubble"), routesBubbleoptions);
+        routeEfficiencyBubblechart.render();
 
 var apexHeatMapChart = new ApexCharts(document.querySelector("#RouteHeatMap"), routesheatdmadoptions);
         apexHeatMapChart.render();

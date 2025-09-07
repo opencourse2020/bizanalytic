@@ -554,7 +554,7 @@ var routesBubbleoptions = {
 
         },
         yaxis: {
-			min: routeefficiency_data.micost,
+			min: routeefficiency_data.mincost,
 			max: routeefficiency_data.maxcost,
 			labels: {
 				formatter: function(val) { return parseFloat(val).toFixed(2) }

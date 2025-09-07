@@ -596,12 +596,7 @@ $(document).ready(function() {
     full_df = {{ carrierstats|safe }};
     df_driver = {{ driverstats|safe }};
     heatmap_values = {{ heatmapvalues|safe }};
-    console.log(heatmap_values);
-    console.log(heatmap_values.heatmap_columns);
-	console.log(heatmap_values.range_values);
-	console.log(heatmap_values.heatmapvalues);
-    {#rangevalues = {{ rangevalues|safe }};#}
-    {#heatmapcolumns = {{ heatmap_columns|safe }};#}
+
     routeefficiency_data = {{ routeefficiency_data|safe }};
     {#minspeed = {{ minspeed|safe }};#}
     {#maxspeed = {{ maxspeed|safe }};#}

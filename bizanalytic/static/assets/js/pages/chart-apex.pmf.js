@@ -630,7 +630,13 @@ var worstroutesBubbleoptions = {
 			//   return val + '$'
 			// },
 			title: 'LoadWeight_Tons'
-		  }
+		  },
+		y: {
+          formatter: undefined,
+          title: {
+              formatter: (seriesName) => seriesName,
+          },
+      },
 		}
         };
 

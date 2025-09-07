@@ -568,8 +568,8 @@ var routeEfficiencyBubblechart = new ApexCharts(document.querySelector("#RouteEf
 var worstroutesBubbleoptions = {
 		plotOptions: {
 			bubble: {
-				minBubbleRadius: 7,  // Set minimum bubble radius
-				maxBubbleRadius: 13, // Set maximum bubble radius
+				minBubbleRadius: 2,  // Set minimum bubble radius
+				maxBubbleRadius: 15, // Set maximum bubble radius
 				zScaling: true       // Enable dynamic scaling based on z-value
 			}
 		},
@@ -623,7 +623,15 @@ var worstroutesBubbleoptions = {
 			labels: {
 				formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},
-        }
+        },
+	tooltip: {
+		  z: {
+			// formatter: function(val) {
+			//   return val + '$'
+			// },
+			title: 'LoadWeight_Tons'
+		  }
+		}
         };
 
 var worstrouteEfficiencyBubblechart = new ApexCharts(document.querySelector("#WorstRouteEfficiencyBubble"), worstroutesBubbleoptions);

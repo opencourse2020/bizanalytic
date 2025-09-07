@@ -595,10 +595,12 @@ $(document).ready(function() {
     var rt = "{{ reporttype }}";
     full_df = {{ carrierstats|safe }};
     df_driver = {{ driverstats|safe }};
-    heatmapvalues = {{ heatmapvalues|safe }};
-    rangevalues = {{ rangevalues|safe }};
-    heatmapcolumns = {{ heatmap_columns|safe }};
+    heatmap_values = {{ heatmapvalues|safe }};
+    {#rangevalues = {{ rangevalues|safe }};#}
+    {#heatmapcolumns = {{ heatmap_columns|safe }};#}
     routeefficiency = {{ routeefficiency|safe }};
+    minspeed = {{ minspeed|safe }};
+    maxspeed = {{ maxspeed|safe }};
     var costpermile = "0";
     var costmiledriver = "0";
     if (rt === "advanced"){
@@ -640,7 +642,7 @@ $(document).ready(function() {
 
 
 
-    handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmapvalues, rangevalues, heatmapcolumns, routeefficiency);
+    handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency, maxspeed, minspeed);
 	{#handleRenderApexChart(full_df);#}
 
 	$(document).on('theme-reload', function() {
@@ -651,7 +653,7 @@ $(document).ready(function() {
             $('#CarrierCostReliabilityChart, #DriverMpgOnTime').empty();
         }
 
-		handleRenderApexChart(full_df, costpermile, df_driver);
+		handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency);
 	});
 });
     </script>

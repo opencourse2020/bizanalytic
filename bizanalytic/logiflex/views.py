@@ -242,15 +242,21 @@ class ReportView(TemplateView):
             for index, row in heatmap_data.iterrows():
                 hm_dest.append({"name": index, "data": row.to_list()})
             heatmap_columns = heatmap_data.columns.to_list()
-            kwargs["rangevalues"] = range_values
-            kwargs["heatmapvalues"] = hm_dest
-            kwargs["heatmap_columns"] = heatmap_columns
+            heatmap_values = {"rangevalues": range_values, "heatmapvalues": hm_dest, "heatmap_columns": heatmap_columns}
+            # kwargs["rangevalues"] = range_values
+            kwargs["heatmapvalues"] = heatmap_values
+            # kwargs["heatmap_columns"] = heatmap_columns
 
             # Route Efficiency Speed Vs Cost
             data_series = []
             for index, row in route_stats.iterrows():
                 data_series.append(
                     [float(row['AvgCostPerMile']), float(row['MedianSpeed']), float(row['ShipmentCount'])])
+
+            minspeed = math.floor(route_stats['MedianSpeed'].min())
+            maxspeed = math.ceil(route_stats['MedianSpeed'].max())
+            if maxspeed < 55:
+                maxspeed = 55
 
             route_stats = json.loads(route_stats.to_json(orient='records'))
             # x_medianspeed = json.loads(route_stats["MedianSpeed"].to_json(orient='records'))
@@ -259,6 +265,8 @@ class ReportView(TemplateView):
             # kwargs["x_medianspeed"] = x_medianspeed
             # kwargs["y_costpermile"] = y_costpermile
             kwargs["routeefficiency"] = data_series
+            kwargs["maxspeed"] = maxspeed
+            kwargs["minspeed"] = minspeed
 
             kwargs["reportid"] = report.report_id
             kwargs["reporttype"] = report.report_type

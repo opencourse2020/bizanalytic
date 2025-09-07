@@ -5,7 +5,7 @@ Author: Sean Ngu
 Website: http://www.seantheme.com/hud/
 */
 
-var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmapvalues, rangevalues, heatmapcolumns, routeefficiency) {
+var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency, maxspeed, minspeed) {
 	df = new dfd.DataFrame(full_df);
 	dfdriver = new dfd.DataFrame(df_driver);
 
@@ -495,7 +495,7 @@ var MixedDriverOnTimeMPGMPHoptions = {
 
 
 var routesheatdmadoptions = {
-          series: heatmapvalues,
+          series: heatmap_values.heatmapvalues,
           chart: {
           height: 350,
           type: 'heatmap',
@@ -506,7 +506,7 @@ var routesheatdmadoptions = {
             radius: 0,
             // useFillColorAsStroke: true,
             colorScale: {
-              ranges: rangevalues
+              ranges: heatmap_values.rangevalues
             }
           }
         },
@@ -519,7 +519,7 @@ var routesheatdmadoptions = {
 
 		xaxis: {
 			  type: 'category',
-			  categories: heatmapcolumns
+			  categories: heatmap_values.heatmapcolumns
 			},
 		grid: {
 			  padding: {
@@ -553,7 +553,8 @@ var routesBubbleoptions = {
             type: 'category',
         },
         yaxis: {
-            max: 70
+            min: minspeed,
+			max: maxspeed,
         }
         };
 

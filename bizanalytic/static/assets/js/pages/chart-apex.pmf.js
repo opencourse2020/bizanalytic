@@ -570,7 +570,7 @@ var worstroutesBubbleoptions = {
 			bubble: {
 				minBubbleRadius: 2,  // Set minimum bubble radius
 				maxBubbleRadius: 15, // Set maximum bubble radius
-				zScaling: true       // Enable dynamic scaling based on z-value
+				zScaling: false       // Enable dynamic scaling based on z-value
 			}
 		},
           series: [{

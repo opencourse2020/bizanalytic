@@ -8,9 +8,7 @@ Website: http://www.seantheme.com/hud/
 var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency, maxspeed, minspeed) {
 	df = new dfd.DataFrame(full_df);
 	dfdriver = new dfd.DataFrame(df_driver);
-	console.log(heatmap_values.heatmapcolumns);
-	console.log(heatmap_values.rangevalues);
-	console.log(heatmap_values.heatmapvalues);
+
 	let group_df = "";
 	let driver_df = "";
 	if (costpermile !== "0"){
@@ -20,7 +18,6 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledr
 		dfcost.sortValues("CostPerMile", { inplace: true })
 		group_df = dfcost.groupby(["CarrierName"]);
 		driver_df = dfcostdirver.groupby(["DriverName"]);
-		console.log(group_df);
 	}
 
 
@@ -42,7 +39,6 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledr
 	for (let i = 0; i < df.shape[0]; i++) {
 		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgFreightCost"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
         if (costpermile !== "0") {
-			console.log(group_df);
 			let a = group_df.getGroup([df.iloc({rows: [i]})["CarrierName"].values[0]]);
 			// console.log(df.iloc({rows: [i]})["CarrierName"].values[0]);
 			// console.log(a.values[1]);
@@ -55,7 +51,6 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledr
 		}
 		// console.log(costdata);
 	}
-	console.log("seriesdata", seriesdata);
 	const driverspeedmpg = [];
 	const driverontimempg = [];
 	const driverseriesdata =[];
@@ -89,8 +84,6 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledr
 	var mpgdata = dfdriver["MedianMPG"].values;
 	var mphdata = dfdriver["MedianSpeed"].values;
 	var driversname = dfdriver["DriverName"].values;
-	console.log("driverspeedmpg", driverspeedmpg);
-	console.log("driverontimempg", driverspeedmpg);
 	const drivermpgmedian = dfdriver["MedianMPG"].mean();
 	const driverontimemedian = dfdriver["OnTimeRate"].mean()*100;
 	const drivermedianspeed = dfdriver["MedianSpeed"].mean();

@@ -236,7 +236,7 @@ class ReportView(TemplateView):
                 range_values.append({"from": division_points[i], "to": division_points[i + 1], "name": costintensity[i], "color": colors[i]})
 
             heatmap_data = heatmap_data.fillna(0)
-            route_stats = json.loads(route_stats.to_json(orient='records'))
+
             hm_dest = []
 
             for index, row in heatmap_data.iterrows():
@@ -251,6 +251,8 @@ class ReportView(TemplateView):
             for index, row in route_stats.iterrows():
                 data_series.append(
                     [float(row['AvgCostPerMile']), float(row['MedianSpeed']), float(row['ShipmentCount'])])
+
+            route_stats = json.loads(route_stats.to_json(orient='records'))
             # x_medianspeed = json.loads(route_stats["MedianSpeed"].to_json(orient='records'))
             # y_costpermile = json.loads(route_stats["AvgCostPerMile"].to_json(orient='records'))
             # size_shipmentcount = json.loads(route_stats["ShipmentCount"].to_json(orient='records'))

@@ -248,13 +248,13 @@
                  <div class="col-md-6" id="carrier_2">
             {% endif %}
 
-                        <div class="card shadow-sm chart-card" >
+                        <div class="card shadow-sm" >
                             <div class="card-header">
                                 {% trans "Carriers Key Insights and Recommended Actions" %}
                             </div>
 
                             <div class="card-body " style="padding-left: 40px;">
-                                <div id="CarrierInsights" style="min-height: 365px;">
+                                <div id="CarrierInsights" style="min-height: 250px;">
                                     <strong>Key Insights</strong><br>
                                     <ul style="list-style-type:disc;  font-size: 14px;">
                                         {% for item in contigency %}
@@ -390,13 +390,13 @@
                  <div class="col-md-6" id="driver_2">
             {% endif %}
 
-                <div class="card shadow-sm chart-card">
+                <div class="card shadow-sm">
                     <div class="card-header">
                         {% trans "Driver Key Insights and Recommended Actions" %}
                     </div>
 
                     <div class="card-body " style="padding-left: 40px;">
-                        <div id="DriverInsights" style="min-height: 365px;">
+                        <div id="DriverInsights" style="min-height: 250px;">
                              <strong>Key Insights</strong><br>
                              <ul style="list-style-type:disc; font-size: 14px;">
                                 {% for drivermessage in driver_messages %}
@@ -822,13 +822,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 driver2.className = 'col-md-6';
                 route1.className = 'col-md-9';
                 pdfhead.style.marginBottom = "0px";
-                {#pdfhead.className = "";#}
-                {#pdfhead.innerHTML = "";#}
-                {#pdfhead.style.display= "none";#}
-                {#report_id.style.color = "white";#}
-                {#report_id.style.fontSize = "40px";#}
-                {#report_id.innerHTML = reportid_html;#}
-                {#reporttitle.style.fontSize = "40px";#}
+                pdfhead.className = "";
+                pdfhead.innerHTML = "";
+                pdfhead.style.display= "none";
+                report_id.style.color = "white";
+                report_id.style.fontSize = "40px";
+                report_id.innerHTML = reportid_html;
+                reporttitle.style.fontSize = "40px";
                 card1.className = "card shadow-sm chart-card";
                 card1.style.border= "1px solid rgba(0,0,0,.125)";
                 card2.className = "card shadow-sm chart-card";

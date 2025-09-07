@@ -514,7 +514,7 @@ var routesheatdmadoptions = {
 
 		xaxis: {
 			  type: 'category',
-			  categories: heatmap_values.heatmapcolumns
+			  categories: heatmap_values.heatmap_columns
 			},
 		grid: {
 			  padding: {
@@ -549,6 +549,9 @@ var routesBubbleoptions = {
         xaxis: {
             tickAmount: 12,
             type: 'category',
+			labels: {
+				formatter: function(val) { return parseFloat(val).toFixed(2) }
+			},
         },
         yaxis: {
             min: minspeed,

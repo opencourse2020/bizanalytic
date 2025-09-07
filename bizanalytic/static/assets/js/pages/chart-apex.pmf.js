@@ -547,7 +547,7 @@ var routesBubbleoptions = {
         //     text: 'Simple Bubble Chart'
         // },
         xaxis: {
-            tickAmount: 12,
+            tickAmount: routeefficiency_data.maxspeed - routeefficiency_data.minspeed - 1,
             type: 'category',
 			min: routeefficiency_data.minspeed,
 			max: routeefficiency_data.maxspeed,

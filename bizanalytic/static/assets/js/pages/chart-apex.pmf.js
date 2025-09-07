@@ -559,7 +559,21 @@ var routesBubbleoptions = {
 			labels: {
 				formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},
-        }
+        },
+	tooltip: {
+		  z: {
+			// formatter: function(val) {
+			//   return val + '$'
+			// },
+			title: '# of Shipments'
+		  },
+		y: {
+          formatter: undefined,
+          title: {
+              formatter: (seriesName) => seriesName,
+          },
+      },
+		}
         };
 
 var routeEfficiencyBubblechart = new ApexCharts(document.querySelector("#RouteEfficiencyBubble"), routesBubbleoptions);

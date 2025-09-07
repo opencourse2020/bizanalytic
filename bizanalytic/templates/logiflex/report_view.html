@@ -743,8 +743,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const card5 = document.getElementById("card5");
             const keywidgets = document.getElementsByClassName('keywidget');
             const apexcharts_c = document.querySelectorAll('.apexcharts-canvas');
-            const apexchart1width = apexcharts_c[0].style.width;
-            const apexchart4width = apexcharts_c[4].style.width;
+            //const apexchart1width = apexcharts_c[0].style.width;
+            //const apexchart4width = apexcharts_c[4].style.width;
             downloadBtn.addEventListener('click', async function() {
                 carrier1.className = 'col-12';
                 carrier2.className = 'col-12';
@@ -848,9 +848,9 @@ document.addEventListener('DOMContentLoaded', function() {
                   element.className = "col-lg-3 col-md-6 col-sm-6 keywidget";
                 }
                 // Iterate through the apexcharts_c
-                apexcharts_c.forEach(element => {
-                    element.style.width = apexchart1width;
-                });
+                //apexcharts_c.forEach(element => {
+                //    element.style.width = apexchart1width;
+                //});
                 {#pdfhead.style = "display: none;";#}
             });
         });

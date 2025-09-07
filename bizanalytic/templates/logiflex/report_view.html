@@ -736,11 +736,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const reportid_html = report_id.innerHTML;
             const allH2s = document.querySelectorAll('h2');
             const allH3s = document.querySelectorAll('h3');
-            const card1 = document.getElementById("card1");
-            const card2 = document.getElementById("card2");
-            const card3 = document.getElementById("card3");
-            const card4 = document.getElementById("card4");
-            const card5 = document.getElementById("card5");
+            const card_charts = document.querySelectorAll('.chart-card');
+            {#const card1 = document.getElementById("card1");#}
+            {#const card2 = document.getElementById("card2");#}
+            {#const card3 = document.getElementById("card3");#}
+            {#const card4 = document.getElementById("card4");#}
+            {#const card5 = document.getElementById("card5");#}
             const keywidgets = document.getElementsByClassName('keywidget');
             const apexcharts_c = document.querySelectorAll('.apexcharts-canvas');
             //const apexchart1width = apexcharts_c[0].style.width;
@@ -758,16 +759,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 {#report_id.style.fontSize = "20px";#}
                 {#report_id.innerHTML = reportid_html + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + today.toLocaleDateString();#}
                 {#reporttitle.style.fontSize = "20px";#}
-                card1.className = "card chart-card";
-                card1.style.border = "none";
-                card2.className = "card chart-card";
-                card2.style.border = "none";
-                card3.className = "card chart-card";
-                card3.style.border = "none";
-                card4.className = "card chart-card";
-                card4.style.border = "none";
-                card5.className = "card chart-card";
-                card5.style.border = "none";
+                card_charts.classList.remove('shadow-sm');
+                card_charts.forEach(element => {
+                    element.style.border = "none";
+                });
+                {#card1.className = "card chart-card";#}
+                {#card1.style.border = "none";#}
+                {#card2.className = "card chart-card";#}
+                {#card2.style.border = "none";#}
+                {#card3.className = "card chart-card";#}
+                {#card3.style.border = "none";#}
+                {#card4.className = "card chart-card";#}
+                {#card4.style.border = "none";#}
+                {#card5.className = "card chart-card";#}
+                {#card5.style.border = "none";#}
                 allH3s.forEach(h3 => {
                     h3.style.fontSize = "36px";
                 });
@@ -829,16 +834,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 report_id.style.fontSize = "40px";
                 report_id.innerHTML = reportid_html;
                 reporttitle.style.fontSize = "40px";
-                card1.className = "card shadow-sm chart-card";
-                card1.style.border= "1px solid rgba(0,0,0,.125)";
-                card2.className = "card shadow-sm chart-card";
-                card2.style.border= "1px solid rgba(0,0,0,.125)";
-                card3.className = "card shadow-sm chart-card";
-                card3.style.border= "1px solid rgba(0,0,0,.125)";
-                card4.className = "card shadow-sm chart-card";
-                card4.style.border= "1px solid rgba(0,0,0,.125)";
-                card5.className = "card shadow-sm chart-card";
-                card5.style.border= "1px solid rgba(0,0,0,.125)";
+                card_charts.classList.add('shadow-sm');
+                card_charts.forEach(element => {
+                    element.style.border = "1px solid rgba(0,0,0,.125)";
+                });
+                {#card1.className = "card shadow-sm chart-card";#}
+                {#card1.style.border= "1px solid rgba(0,0,0,.125)";#}
+                {#card2.className = "card shadow-sm chart-card";#}
+                {#card2.style.border= "1px solid rgba(0,0,0,.125)";#}
+                {#card3.className = "card shadow-sm chart-card";#}
+                {#card3.style.border= "1px solid rgba(0,0,0,.125)";#}
+                {#card4.className = "card shadow-sm chart-card";#}
+                {#card4.style.border= "1px solid rgba(0,0,0,.125)";#}
+                {#card5.className = "card shadow-sm chart-card";#}
+                {#card5.style.border= "1px solid rgba(0,0,0,.125)";#}
                 allH3s.forEach(h3 => {
                     h3.style.fontSize = "42px";
                 });

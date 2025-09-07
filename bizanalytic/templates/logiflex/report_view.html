@@ -120,11 +120,11 @@
                             <span class="title" style="color: white; font-size: 25px">LogiFlex</span>
                         </div>
                     </div>
-                    <div class="col-9 ">
-                        <div class="d-flex justify-content-center align-items-center" id="report_head">
+                    <div class="col-sm-9 ">
+                        <div class="d-block justify-content-center align-items-center" id="report_head">
 
-                            <span class="title" id="report_title" style="color: #0cb7d6; font-size: 40px">{% trans "FreightOps Report" %} -</span>
-                            <span class="title" id="report_id" style="color: white; font-size: 40px;">&nbsp;{{ reportid }}</span>
+                            <span class="title" id="report_title" style="color: #0cb7d6; font-size: 2rem">{% trans "FreightOps Report" %}</span>
+                            <span class="title" id="report_id" style="color: white; font-size: 2rem;">{{ reportid }}</span>
                         </div>
 
                     </div>
@@ -147,7 +147,7 @@
                     <div class="col-12 text-center" style="background-color: #e1e0e0; margin-bottom: 15px;">
                         <h2>Carriers Performance</h2>
                     </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                         <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
                             <span class="title">Best On-Time Rate</span>
                             <div class="d-flex align-items-center gap-3">
@@ -160,7 +160,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                         <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
                             <span class="title">Lowest Freight Cost </span>
                             <div class="d-flex align-items-center gap-3">
@@ -173,7 +173,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                         <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
                             <span class="title">Lowest Cost Per Mile</span>
                             <div class="d-flex align-items-center gap-3">
@@ -185,7 +185,7 @@
                             <span class="title">{{ carrier_costpermile_name }}</span>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                         <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
                             <span class="title">Lowest Cost Per Pound</span>
                             <div class="d-flex align-items-center gap-3">
@@ -286,7 +286,7 @@
                     <div class="col-12 text-center" style="background-color: #e1e0e0; margin-bottom: 15px; margin-top: 15px;">
                         <h2>Drivers Performance</h2>
                     </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                         <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
                             <span class="title">Best On-Time Rate</span>
                             <div class="d-flex align-items-center gap-3">
@@ -299,7 +299,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                         <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
                             <span class="title">Higher Miles Traveled </span>
                             <div class="d-flex align-items-center gap-3">
@@ -312,7 +312,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                         <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
                             <span class="title">Fastest Driver</span>
                             <div class="d-flex align-items-center gap-3">
@@ -324,7 +324,7 @@
                             <span class="title">{{ driver_speed_name }}</span>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                         <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
                             <span class="title">Most Efficient</span>
                             <div class="d-flex align-items-center gap-3">
@@ -444,7 +444,7 @@
                     <div class="col-12 text-center" style="background-color: #e1e0e0; margin-bottom: 15px; margin-top: 15px;">
                         <h2>Routes Performance</h2>
                     </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                         <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
                             <span class="title">Best On-Time Rate</span>
                             <div class="d-flex align-items-center gap-3">
@@ -457,7 +457,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                         <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
                             <span class="title">Higher Miles Traveled </span>
                             <div class="d-flex align-items-center gap-3">
@@ -470,7 +470,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                         <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
                             <span class="title">Fastest Driver</span>
                             <div class="d-flex align-items-center gap-3">
@@ -482,7 +482,7 @@
                             <span class="title">{{ driver_speed_name }}</span>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6" style="height: 8rem; ">
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                         <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
                             <span class="title">Most Efficient</span>
                             <div class="d-flex align-items-center gap-3">
@@ -741,6 +741,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const card3 = document.getElementById("card3");
             const card4 = document.getElementById("card4");
             const card5 = document.getElementById("card5");
+            const keywidgets = document.getElementsByClassName('keywidget');
             downloadBtn.addEventListener('click', async function() {
                 carrier1.className = 'col-12';
                 carrier2.className = 'col-12';
@@ -769,6 +770,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 allH2s.forEach(h2 => {
                     h2.style.fontSize = "36px";
                 });
+                // Iterate through the keywidgets
+                for (let i = 0; i < keywidgets.length; i++) {
+                  const element = keywidgets[i];
+                  element.className = "col-3 keywidget";
+                }
                 pdfhead.innerHTML = rphead;
                 const reportdate = document.getElementById("report_date");
                 reportdate.innerHTML = today.toLocaleDateString();
@@ -830,6 +836,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 allH2s.forEach(h2 => {
                     h2.style.fontSize = "48px";
                 });
+                for (let i = 0; i < keywidgets.length; i++) {
+                  const element = keywidgets[i];
+                  element.className = "col-lg-3 col-md-6 col-sm-6 keywidget";
+                }
                 {#pdfhead.style = "display: none;";#}
             });
         });

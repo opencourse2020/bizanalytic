@@ -496,7 +496,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-9" >
+            <div class="col-md-9" id="route_1">
                 <div class="card shadow-sm chart-card"  id="card5">
                     <div class="card-header">
                         {% trans "Route Cost Efficiency Heatmap" %}
@@ -722,7 +722,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const carrier2= document.getElementById("carrier_2");
             const driver1= document.getElementById("driver_1");
             const driver2= document.getElementById("driver_2");
-
+            const route1 = document.getElementById("route_1");
             let rphead = '<div class="logo-area" style="max-width:160px;"> <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a> </div>';
             rphead = rphead + '<div class="d-flex justify-content-center align-items-center" id="report_head">';
             rphead = rphead +'<span class="title" id="report_title" style="color: #0cb7d6; font-size: 20px">{% trans "FreightOps Report" %} -</span>';
@@ -750,6 +750,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 carrier2.className = 'col-12';
                 driver1.className = 'col-12';
                 driver2.className = 'col-12';
+                route1.className = 'col-12';
                 pdfhead.style.display= "block";
                 pdfhead.className = "d-flex justify-content-between align-items-center";
                 pdfhead.style.marginBottom = "10px";
@@ -819,6 +820,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 carrier2.className = 'col-md-6';
                 driver1.className = 'col-md-6';
                 driver2.className = 'col-md-6';
+                route1.className = 'col-md-9';
                 pdfhead.style.marginBottom = "0px";
                 {#pdfhead.className = "";#}
                 {#pdfhead.innerHTML = "";#}

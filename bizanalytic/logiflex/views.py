@@ -258,16 +258,29 @@ class ReportView(TemplateView):
             maxspeed = math.ceil(route_stats['MedianSpeed'].max())
             if maxspeed < 55:
                 maxspeed = 55
-
+            multiplier = 10
+            mincost = route_stats['AvgCostPerMile'].min()
+            maxcost = route_stats['AvgCostPerMile'].max()
+            mincost_tmp = math.floor(mincost * multiplier) / multiplier
+            maxcost_tmp = math.floor(maxcost * multiplier) / multiplier
+            if mincost < mincost_tmp + 0.05:
+                mincost = mincost_tmp
+            else:
+                mincost = mincost_tmp + 0.05
+            if maxcost < maxcost_tmp:
+                maxcost = maxcost_tmp
+            else:
+                maxcost = maxcost_tmp + 0.05
             route_stats = json.loads(route_stats.to_json(orient='records'))
             # x_medianspeed = json.loads(route_stats["MedianSpeed"].to_json(orient='records'))
             # y_costpermile = json.loads(route_stats["AvgCostPerMile"].to_json(orient='records'))
             # size_shipmentcount = json.loads(route_stats["ShipmentCount"].to_json(orient='records'))
             # kwargs["x_medianspeed"] = x_medianspeed
             # kwargs["y_costpermile"] = y_costpermile
-            kwargs["routeefficiency"] = data_series
-            kwargs["maxspeed"] = maxspeed
-            kwargs["minspeed"] = minspeed
+            routeefficiency_data = {"routeefficiency": data_series, "maxspeed": maxspeed, "minspeed": minspeed, "maxcost": maxcost, "mincost": mincost}
+            kwargs["routeefficiency_data"] = routeefficiency_data
+            # kwargs["maxspeed"] = maxspeed
+            # kwargs["minspeed"] = minspeed
 
             kwargs["reportid"] = report.report_id
             kwargs["reporttype"] = report.report_type

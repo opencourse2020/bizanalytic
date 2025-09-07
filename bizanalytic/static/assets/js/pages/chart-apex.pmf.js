@@ -5,7 +5,7 @@ Author: Sean Ngu
 Website: http://www.seantheme.com/hud/
 */
 
-var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency, maxspeed, minspeed) {
+var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency_data) {
 	df = new dfd.DataFrame(full_df);
 	dfdriver = new dfd.DataFrame(df_driver);
 
@@ -526,7 +526,7 @@ var routesheatdmadoptions = {
 var routesBubbleoptions = {
           series: [{
           name: 'Route Efficiency',
-          data: routeefficiency
+          data: routeefficiency_data.routeefficiency
         },
 
         ],
@@ -549,13 +549,13 @@ var routesBubbleoptions = {
         xaxis: {
             tickAmount: 12,
             type: 'category',
-			min: minspeed,
-			max: maxspeed,
+			min: routeefficiency_data.minspeed,
+			max: routeefficiency_data.maxspeed,
 
         },
         yaxis: {
-			min: 0.35,
-			max: 0.45,
+			min: routeefficiency_data.micost,
+			max: routeefficiency_data.maxcost,
 			labels: {
 				formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},

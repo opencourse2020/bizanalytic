@@ -602,9 +602,9 @@ $(document).ready(function() {
 	console.log(heatmap_values.heatmapvalues);
     {#rangevalues = {{ rangevalues|safe }};#}
     {#heatmapcolumns = {{ heatmap_columns|safe }};#}
-    routeefficiency = {{ routeefficiency|safe }};
-    minspeed = {{ minspeed|safe }};
-    maxspeed = {{ maxspeed|safe }};
+    routeefficiency_data = {{ routeefficiency_data|safe }};
+    {#minspeed = {{ minspeed|safe }};#}
+    {#maxspeed = {{ maxspeed|safe }};#}
     var costpermile = "0";
     var costmiledriver = "0";
     if (rt === "advanced"){
@@ -646,7 +646,7 @@ $(document).ready(function() {
 
 
 
-    handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency, maxspeed, minspeed);
+    handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency_data);
 	{#handleRenderApexChart(full_df);#}
 
 	$(document).on('theme-reload', function() {

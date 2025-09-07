@@ -222,27 +222,27 @@ class ReportView(TemplateView):
             serie1 = []
             for index, row in serrie1.iterrows():
                 serie1.append(
-                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs'])])
+                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
             serrie2 = df[(df['OriginCity'] == rs1.index[1][0]) & (df['DestinationCity'] == rs1.index[1][1])]
             serie2 = []
             for index, row in serrie2.iterrows():
                 serie2.append(
-                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs'])])
+                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
             serrie3 = df[(df['OriginCity'] == rs1.index[2][0]) & (df['DestinationCity'] == rs1.index[2][1])]
             serie3 = []
             for index, row in serrie3.iterrows():
                 serie3.append(
-                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs'])])
+                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
             serrie4 = df[(df['OriginCity'] == rs1.index[3][0]) & (df['DestinationCity'] == rs1.index[3][1])]
             serie4 = []
             for index, row in serrie4.iterrows():
                 serie4.append(
-                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs'])])
+                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
             serrie5 = df[(df['OriginCity'] == rs1.index[4][0]) & (df['DestinationCity'] == rs1.index[4][1])]
             serie5 = []
             for index, row in serrie5.iterrows():
                 serie5.append(
-                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs'])])
+                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
             route_stats = route_stats.reset_index()
 
             # Pivot for heatmap

@@ -568,8 +568,8 @@ var routeEfficiencyBubblechart = new ApexCharts(document.querySelector("#RouteEf
 var worstroutesBubbleoptions = {
 		plotOptions: {
 			bubble: {
-				minBubbleRadius: 5,  // Set minimum bubble radius
-				maxBubbleRadius: 30, // Set maximum bubble radius
+				minBubbleRadius: 7,  // Set minimum bubble radius
+				maxBubbleRadius: 13, // Set maximum bubble radius
 				zScaling: true       // Enable dynamic scaling based on z-value
 			}
 		},

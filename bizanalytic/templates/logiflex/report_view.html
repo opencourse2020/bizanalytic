@@ -759,9 +759,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 {#report_id.style.fontSize = "20px";#}
                 {#report_id.innerHTML = reportid_html + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + today.toLocaleDateString();#}
                 {#reporttitle.style.fontSize = "20px";#}
-                card_charts.classList.remove('shadow-sm');
+                {#card_charts.classList.remove('shadow-sm');#}
                 card_charts.forEach(element => {
                     element.style.border = "none";
+                    element.className = "card chart-card";
                 });
                 {#card1.className = "card chart-card";#}
                 {#card1.style.border = "none";#}
@@ -834,9 +835,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 report_id.style.fontSize = "40px";
                 report_id.innerHTML = reportid_html;
                 reporttitle.style.fontSize = "40px";
-                card_charts.classList.add('shadow-sm');
+                {#card_charts.classList.add('shadow-sm');#}
                 card_charts.forEach(element => {
                     element.style.border = "1px solid rgba(0,0,0,.125)";
+                    element.className = "card shadow-sm chart-card";
                 });
                 {#card1.className = "card shadow-sm chart-card";#}
                 {#card1.style.border= "1px solid rgba(0,0,0,.125)";#}

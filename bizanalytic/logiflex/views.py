@@ -217,7 +217,34 @@ class ReportView(TemplateView):
 
             # Routes Analysis
             route_stats = prepare_route_stats(df)
+            rs1 = route_stats.head(5)
+            serrie1 = df[(df['OriginCity'] == rs1.index[0][0]) & (df['DestinationCity'] == rs1.index[0][1])]
+            serie1 = []
+            for index, row in serrie1.iterrows():
+                serie1.append(
+                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
+            serrie2 = df[(df['OriginCity'] == rs1.index[1][0]) & (df['DestinationCity'] == rs1.index[1][1])]
+            serie2 = []
+            for index, row in serrie2.iterrows():
+                serie2.append(
+                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
+            serrie3 = df[(df['OriginCity'] == rs1.index[2][0]) & (df['DestinationCity'] == rs1.index[2][1])]
+            serie3 = []
+            for index, row in serrie3.iterrows():
+                serie3.append(
+                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
+            serrie4 = df[(df['OriginCity'] == rs1.index[3][0]) & (df['DestinationCity'] == rs1.index[3][1])]
+            serie4 = []
+            for index, row in serrie4.iterrows():
+                serie4.append(
+                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
+            serrie5 = df[(df['OriginCity'] == rs1.index[4][0]) & (df['DestinationCity'] == rs1.index[4][1])]
+            serie5 = []
+            for index, row in serrie5.iterrows():
+                serie5.append(
+                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
             route_stats = route_stats.reset_index()
+
             # Pivot for heatmap
             heatmap_data = route_stats.pivot(
                 index='OriginCity',
@@ -271,32 +298,6 @@ class ReportView(TemplateView):
                 maxcost = maxcost_tmp
             else:
                 maxcost = maxcost_tmp + 0.05
-            rs1 = route_stats.head(5)
-            serrie1 = df[(df['OriginCity'] == rs1.index[0][0]) & (df['DestinationCity'] == rs1.index[0][1])]
-            serie1 = []
-            for index, row in serrie1.iterrows():
-                serie1.append(
-                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
-            serrie2 = df[(df['OriginCity'] == rs1.index[1][0]) & (df['DestinationCity'] == rs1.index[1][1])]
-            serie2 = []
-            for index, row in serrie2.iterrows():
-                serie2.append(
-                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
-            serrie3 = df[(df['OriginCity'] == rs1.index[2][0]) & (df['DestinationCity'] == rs1.index[2][1])]
-            serie3 = []
-            for index, row in serrie3.iterrows():
-                serie3.append(
-                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
-            serrie4 = df[(df['OriginCity'] == rs1.index[3][0]) & (df['DestinationCity'] == rs1.index[3][1])]
-            serie4 = []
-            for index, row in serrie4.iterrows():
-                serie4.append(
-                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
-            serrie5 = df[(df['OriginCity'] == rs1.index[4][0]) & (df['DestinationCity'] == rs1.index[4][1])]
-            serie5 = []
-            for index, row in serrie5.iterrows():
-                serie5.append(
-                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['LoadWeight_lbs'])])
 
             # serie1 = json.loads(serie1.to_json(orient='records'))
             # serie2 = json.loads(serie2.to_json(orient='records'))

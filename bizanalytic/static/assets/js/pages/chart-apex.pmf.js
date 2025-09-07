@@ -501,7 +501,7 @@ var routesheatdmadoptions = {
             radius: 0,
             // useFillColorAsStroke: true,
             colorScale: {
-              ranges: heatmap_values.rangevalues
+              ranges: heatmap_values.range_values
             }
           }
         },

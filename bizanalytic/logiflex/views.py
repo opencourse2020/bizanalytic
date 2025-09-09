@@ -285,15 +285,15 @@ class ReportView(TemplateView):
                     [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['ShipmentCount'])])
 
             meanspeed = route_stats['MedianSpeed'].mean()
-            print("meanspeed:", meanspeed)
             minspeed = math.floor(route_stats['MedianSpeed'].min())
             maxspeed = math.ceil(route_stats['MedianSpeed'].max())
 
             if maxspeed < 55:
                 maxspeed = 55
             multiplier = 10
+            meandistance = route_stats['AvgDistance'].mean()
+            meanshipment = route_stats['ShipmentCount'].mean()
             meancost = route_stats['AvgCostPerMile'].mean()
-            print("meancost:", meancost)
             mincost = route_stats['AvgCostPerMile'].min()
             maxcost = route_stats['AvgCostPerMile'].max()
             mincost_tmp = math.floor(mincost * multiplier) / multiplier
@@ -335,6 +335,10 @@ class ReportView(TemplateView):
             kwargs["routeefficiency_data"] = routeefficiency_data
             kwargs["worstrouteefficiency_data"] = worstrouteefficiency_data
             kwargs["routemessage"] = routes_message
+            kwargs["meanspeed"] = meanspeed
+            kwargs["meandistance"] = meandistance
+            kwargs["meanshipment"] = meanshipment
+            kwargs["meancost"] = meancost
 
             kwargs["reportid"] = report.report_id
             kwargs["reporttype"] = report.report_type

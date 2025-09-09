@@ -508,8 +508,12 @@
             </div>
             <div class="col-md-4">
                 <div class="card shadow-sm">
+                    <div class="card-header">
+                        {% trans "Route Heatmap Key Insightss and Recommended Actions" %}
+                    </div>
                     <div class="card-body">
-                    {{ route_heatmap_short|safe }}&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="htmp" style="border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button>
+                    {{ route_heatmap_short|safe }}
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="htmp" style="border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill">More Info</i></span> </button>
                         <input type="hidden" id="htmp" value="{{ route_heatmap }}" style="display: none;">
                     </div>
                 </div>
@@ -539,6 +543,9 @@
             </div>
             <div class="col-12">
                  <div class="card shadow-sm">
+                     <div class="card-header">
+                        {% trans "Route Efficiency Key Insightss and Recommended Actions" %}
+                    </div>
                     <div class="card-body text-center">
                     {{ routemessage|safe }}
                     </div>

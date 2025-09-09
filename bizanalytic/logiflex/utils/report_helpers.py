@@ -1169,7 +1169,7 @@ route_heatmap = """
 <head>
     <meta charset="UTF-8">
 </head>
-<body>
+<body style = "background-color:rgb(255, 255, 255);">
 <h3 style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font:700 20px / 30px quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;letter-spacing:normal;margin:32px 0px 16px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
     <span style="color:#f44336;"><span>Main Key Insights</span></span>
 </h3>

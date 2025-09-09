@@ -293,7 +293,7 @@ class ReportView(TemplateView):
             multiplier = 10
             meandistance = math.ceil(route_stats['AvgDistance'].mean())
             meanshipment = math.ceil(route_stats['ShipmentCount'].mean())
-            meancost = math.ceil(route_stats['AvgCostPerMile'].mean())
+            meancost = route_stats['AvgCostPerMile'].mean()
             mincost = route_stats['AvgCostPerMile'].min()
             maxcost = route_stats['AvgCostPerMile'].max()
             mincost_tmp = math.floor(mincost * multiplier) / multiplier

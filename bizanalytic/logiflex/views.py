@@ -273,6 +273,9 @@ class ReportView(TemplateView):
             heatmap_values = {"range_values": range_values, "heatmapvalues": hm_dest, "heatmap_columns": heatmap_columns}
             # kwargs["rangevalues"] = range_values
             kwargs["heatmapvalues"] = heatmap_values
+            kwargs["route_heatmap"] = route_heatmap
+            kwargs["route_heatmap_short"] = route_heatmap_short
+
             # kwargs["heatmap_columns"] = heatmap_columns
 
             # Route Efficiency Speed Vs Cost

@@ -532,6 +532,7 @@
                 </div>
 
             </div>
+                <div id="break_routes" class=""></div>
             <div class="col-md-6" id="route_3">
                 <div class="card shadow-sm chart-card"  id="card7">
                     <div class="card-header">
@@ -769,6 +770,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const htmpmsg = document.getElementById("heatmapmessage");
             const htmpmsg_html = htmpmsg.innerHTML;
             htmpmsg.innerHTML = {{ route_heatmap|safe }};
+            const breakroutes = document.getElementById("break_routes");
+            breakroutes.className = "page-break-after";
             let rphead = '<div class="logo-area" style="max-width:160px;"> <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a> </div>';
             rphead = rphead + '<div class="d-flex justify-content-center align-items-center" id="report_head">';
             rphead = rphead +'<span class="title" id="report_title" style="color: #0cb7d6; font-size: 20px">{% trans "FreightOps Report" %} -</span>';
@@ -912,6 +915,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   const element = keywidgets[i];
                   element.className = "col-lg-3 col-md-6 col-sm-6 keywidget";
                 }
+                breakroutes.className = "";
                 // Iterate through the apexcharts_c
                 //apexcharts_c.forEach(element => {
                 //    element.style.width = apexchart1width;

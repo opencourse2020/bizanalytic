@@ -573,7 +573,7 @@ var routesBubbleoptions = {
 				  color: '#fff',
 				  background: '#00E396'
 				},
-				text: 'On-Time'
+				text: 'Speed'
 			  }
 			}
 		  ],
@@ -670,13 +670,6 @@ var worstroutesBubbleoptions = {
 				formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},
         },
-	tooltip: {
-		  z: {
-			// formatter: function(val) {
-			//   return val + '$'
-			// },
-			title: 'LoadWeight_Tons'
-		  },
 		annotations: {
 		  yaxis: [
 			{
@@ -688,7 +681,7 @@ var worstroutesBubbleoptions = {
 				  color: '#fff',
 				  background: '#00E396'
 				},
-				text: 'On-Time'
+				text: 'Speed'
 			  }
 			}
 		  ],
@@ -707,6 +700,14 @@ var worstroutesBubbleoptions = {
 				}
 			  ],
 		},
+		tooltip: {
+		  z: {
+			// formatter: function(val) {
+			//   return val + '$'
+			// },
+			title: 'LoadWeight_Tons'
+		  },
+
 		y: {
           formatter: undefined,
           title: {

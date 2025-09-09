@@ -768,8 +768,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const route2 = document.getElementById("route_2");
             const route3 = document.getElementById("route_3");
             const htmpmsg = document.getElementById("heatmapmessage");
+            const htmp = document.getElementById("htmp").val();
             const htmpmsg_html = htmpmsg.innerHTML;
-            htmpmsg.innerHTML = {{ route_heatmap|safe }};
+
             const breakroutes = document.getElementById("break_routes");
             breakroutes.className = "page-break-after";
             let rphead = '<div class="logo-area" style="max-width:160px;"> <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a> </div>';
@@ -807,6 +808,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pdfhead.style.display= "block";
                 pdfhead.className = "d-flex justify-content-between align-items-center";
                 pdfhead.style.marginBottom = "10px";
+                htmpmsg.innerHTML = htmp;
                 {#report_id.style.color = "black";#}
                 {#report_id.style.fontSize = "20px";#}
                 {#report_id.innerHTML = reportid_html + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + today.toLocaleDateString();#}

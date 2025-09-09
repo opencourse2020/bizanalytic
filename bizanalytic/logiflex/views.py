@@ -274,6 +274,7 @@ class ReportView(TemplateView):
             # kwargs["rangevalues"] = range_values
             kwargs["heatmapvalues"] = heatmap_values
             kwargs["route_heatmap"] = route_heatmap
+            kwargs["route_heatmap_plain"] = route_heatmap_plain
             kwargs["route_heatmap_short"] = route_heatmap_short
 
             # kwargs["heatmap_columns"] = heatmap_columns

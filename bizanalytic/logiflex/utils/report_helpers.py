@@ -1078,7 +1078,7 @@ routes_message = """
 <p>
     <span style="color:#f44336;font-size:18px;"><strong>Overall Analysis Summary</strong></span>
 </p>
-<ul>
+<ul style="list-style-type:disc; font-size: 14px;">
     <li>
         <span style="font-size:14px;">The Routes Efficiency Chart is a strategic overview of all routes, helping identify overall patterns and efficient operations.</span>
     </li>
@@ -1095,9 +1095,7 @@ routes_message = """
         <span style="font-size:14px;">The Problem Quadrant (Top-Left): The least efficient routes are here—low speed and high cost per mile. This combination of high cost, low speed, and high frequency makes these routes a primary target for optimization, as improving them would have a significant financial impact.</span>
     </li>
 </ul>
-<p>
-    &nbsp;
-</p>
+
 <p>
     <span style="color:#f44336;font-size:18px;"><strong>Recommendations</strong></span><br>
     <span style="font-size:14px;">The five worst routes are a major drain on profitability due to their high cost and frequent use. The reason for their high cost differs, allowing for targeted solutions:</span>
@@ -1105,7 +1103,7 @@ routes_message = """
 <p>
     <span style="font-size:14px;"><strong>For Heavy-Load Routes:</strong></span>
 </p>
-<ul>
+<ul style="list-style-type:disc; font-size: 14px;">
     <li>
         <span style="font-size:14px;">Investigate Equipment: Are the right trucks (e.g., with better fuel efficiency for heavy loads) being used?</span>
     </li>
@@ -1116,13 +1114,11 @@ routes_message = """
         <span style="font-size:14px;">Optimize Loading: Check if weight is distributed optimally to maximize fuel efficiency.</span>
     </li>
 </ul>
-<p>
-    &nbsp;
-</p>
+
 <p>
     <span style="font-size:14px;"><strong>For Light-Load Routes:</strong></span>
 </p>
-<ul>
+<ul style="list-style-type:disc; font-size: 14px;">
     <li>
         <span style="font-size:14px;">Improve Logistics: Focus on finding backhaul loads to eliminate empty return trips and spread the fixed cost over more miles.</span>
     </li>
@@ -1133,13 +1129,11 @@ routes_message = """
         <span style="font-size:14px;">Reroute Analysis: Use mapping software to see if there are faster, more efficient paths available, even if slightly longer.</span>
     </li>
 </ul>
-<p>
-    &nbsp;
-</p>
+
 <p>
     <span style="font-size:14px;"><strong>For All Five Routes:</strong></span>
 </p>
-<ul>
+<ul style="list-style-type:disc; font-size: 14px;">
     <li>
         <span style="font-size:14px;">Prioritize These Lanes: These routes should be the #1 priority for the logistics and operations team to analyze and improve.</span>
     </li>
@@ -1360,3 +1354,170 @@ route_heatmap_short = """
     </li>
 </ol>
 """
+
+route_heatmap_plain = """
+<h3 style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font:700 20px / 30px quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;letter-spacing:normal;margin:32px 0px 16px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <span style="color:#f44336;"><span>Main Key Insights</span></span>
+</h3>
+<ol style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:16px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin-bottom:16px;margin-right:0px;margin-top:16px;orphans:2;padding-left:18px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <li>
+        <p class="ds-markdown-paragraph" style="margin:0px !important 0px 8px;">
+            <span><strong>Identification of Consistently High-Cost Destinations:</strong></span>
+        </p>
+        <ul style="margin-bottom:0px;margin-right:0px;margin-top:4px;padding-left:18px;">
+            <li>
+                <p class="ds-markdown-paragraph" style="margin:0px !important 0px 0px;">
+                    <span><strong>Insight:</strong> You can instantly see which <strong>destination cities</strong> are the most expensive to serve, </span><i><span>regardless of where the truck is coming from</span></i><span>. Look for <strong>columns</strong> that are predominantly red. This indicates that arriving at this city is inherently costly (e.g., due to congestion taxes, poor unloading facilities, remote location).</span>
+                </p>
+            </li>
+            <li style="margin-top:6px;">
+                <p class="ds-markdown-paragraph" style="margin:0px !important 0px 0px;">
+                    <span><strong>Example:</strong> If the "San Antonio" column is mostly dark red, it's an expensive destination for everyone.</span>
+                </p>
+            </li>
+        </ul>
+    </li>
+    <li style="margin-top:6px;">
+        <p class="ds-markdown-paragraph" style="margin:0px !important 0px 8px;">
+            <span><strong>Identification of Consistently High-Cost Origins:</strong></span>
+        </p>
+        <ul style="margin-bottom:0px;margin-right:0px;margin-top:4px;padding-left:18px;">
+            <li>
+                <p class="ds-markdown-paragraph" style="margin:0px !important 0px 0px;">
+                    <span><strong>Insight:</strong> Similarly, you can identify <strong>origin cities</strong> that are expensive to start from. Look for <strong>rows</strong> that are predominantly red. This could indicate challenges like getting empty trucks to that location (repositioning cost), or the city being far from major highways.</span>
+                </p>
+            </li>
+            <li style="margin-top:6px;">
+                <p class="ds-markdown-paragraph" style="margin:0px !important 0px 0px;">
+                    <span><strong>Example:</strong> If the "Houston" row is mostly dark red, it's expensive to ship goods </span><i><span>out of</span></i><span> Houston.</span>
+                </p>
+            </li>
+        </ul>
+    </li>
+    <li style="margin-top:6px;">
+        <p class="ds-markdown-paragraph" style="margin:0px !important 0px 8px;">
+            <span><strong>The Asymmetry of Lane Cost:</strong></span>
+        </p>
+        <ul style="margin-bottom:0px;margin-right:0px;margin-top:4px;padding-left:18px;">
+            <li>
+                <p class="ds-markdown-paragraph" style="margin:0px !important 0px 0px;">
+                    <span><strong>Insight:</strong> This is the most critical insight. The cost from A-&gt;B is often <strong>not the same</strong> as from B-&gt;A. The heatmap makes this crystal clear.</span>
+                </p>
+            </li>
+            <li style="margin-top:6px;">
+                <p class="ds-markdown-paragraph" style="margin:0px !important 0px 8px;">
+                    <span><strong>Example:</strong> </span><code style="align-items:center;background-color:rgb(235, 238, 242);border-radius:6px;box-sizing:border-box;display:inline-flex;font:400 14px / 22px Menlo, Monaco, &quot;Cascadia Mono&quot;, Consolas, &quot;Ubuntu Mono&quot;, &quot;DejaVu Sans Mono&quot;, &quot;Liberation Mono&quot;, &quot;JetBrains Mono&quot;, &quot;Fira Code&quot;, Cousine, &quot;Roboto Mono&quot;, &quot;Courier New&quot;, Courier, sans-serif, system-ui;padding:0px 5px;">Sacramento -&gt; Los Langeles</code><span> might be high cost, while </span><code style="align-items:center;background-color:rgb(235, 238, 242);border-radius:6px;box-sizing:border-box;display:inline-flex;font:400 14px / 22px Menlo, Monaco, &quot;Cascadia Mono&quot;, Consolas, &quot;Ubuntu Mono&quot;, &quot;DejaVu Sans Mono&quot;, &quot;Liberation Mono&quot;, &quot;JetBrains Mono&quot;, &quot;Fira Code&quot;, Cousine, &quot;Roboto Mono&quot;, &quot;Courier New&quot;, Courier, sans-serif, system-ui;padding:0px 5px;">Los Langeles-&gt; Sacramento</code><span> might be yellow (low cost). This almost always points to <strong>imbalance</strong>.</span>
+                </p>
+                <ul style="margin-bottom:0px;margin-right:0px;margin-top:4px;padding-left:18px;">
+                    <li>
+                        <p class="ds-markdown-paragraph" style="margin:0px !important 0px 0px;">
+                            <span><strong>Red (High Cost) Direction:</strong> Likely the direction where trucks are <strong>full</strong>. The high cost could be due to traffic, tolls, or terrain.</span>
+                        </p>
+                    </li>
+                    <li style="margin-top:6px;">
+                        <p class="ds-markdown-paragraph" style="margin:0px !important 0px 0px;">
+                            <span><strong>Green (Low Cost) Direction:</strong> Likely the direction where trucks are <strong>empty or less full</strong> (a "deadhead" or weak backhaul lane). The cost is lower only because you're just counting fuel to return, but the </span><i><span>revenue per mile</span></i><span> is also likely terrible.</span>
+                        </p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li style="margin-top:6px;">
+        <p class="ds-markdown-paragraph" style="margin:0px !important 0px 8px;">
+            <span><strong>Finding Efficient and Problematic Specific Lanes:</strong></span>
+        </p>
+        <ul style="margin-bottom:0px;margin-right:0px;margin-top:4px;padding-left:18px;">
+            <li>
+                <p class="ds-markdown-paragraph" style="margin:0px !important 0px 0px;">
+                    <span><strong>Insight:</strong> You can pinpoint the exact efficiency of every single origin-destination pair (each cell). This allows you to find hidden gems (efficient lanes) and the worst offenders (very specific problematic lanes).</span>
+                </p>
+            </li>
+        </ul>
+    </li>
+    <li style="margin-top:6px;">
+        <p class="ds-markdown-paragraph" style="margin:0px !important 0px 8px;">
+            <span><strong>Network Imbalance Visualization:</strong></span>
+        </p>
+        <ul style="margin-bottom:0px;margin-right:0px;margin-top:4px;padding-left:18px;">
+            <li>
+                <p class="ds-markdown-paragraph" style="margin:0px !important 0px 0px;">
+                    <span><strong>Insight:</strong> The overall pattern of reds and greens across the entire map shows you the flow of your network. It visually answers: </span><i><span>"Where are we full? Where are we empty? Where is it cheap to run trucks and where is it expensive?"</span></i>
+                </p>
+            </li>
+        </ul>
+    </li>
+</ol>
+<h3 style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font:700 20px / 30px quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;letter-spacing:normal;margin:32px 0px 16px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <span style="color:#f44336;"><span>Recommended Actions (From Insight to Action)</span></span><br>
+    <span style="color:#00bcd4;"><span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">1. Expensive Destination:</strong></span></span>
+</h3>
+<div class="ds-scroll-area _1210dd7" style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:16px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;overflow-x:auto;position:relative;scrollbar-width:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;z-index:0;">
+    <ul>
+        <li>
+            <span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">Destination Surcharge:</strong></span><span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"> Implement a fee for deliveries to this city to cover the higher costs.</span></span>
+        </li>
+        <li>
+            <span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">Appointment Optimization:</strong></span><span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"> Work with receivers to secure off-peak delivery times to avoid congestion.</span></span>
+        </li>
+        <li>
+            <span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">Consolidation:</strong></span><span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"> Try to consolidate multiple smaller shipments into one full truckload for this destination to improve cost efficiency.</span></span>
+        </li>
+    </ul>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        <span style="color:#00bcd4;"><span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">2. Expensive Origin</strong></span></span>
+    </p>
+    <ul>
+        <li>
+            <span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">Repositioning Strategy:</strong></span><span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"> Analyze the cost of positioning empty trucks there. Could you use a cheaper spotter truck or rail?</span></span>
+        </li>
+        <li>
+            <span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">Local Driver Pool:</strong></span><span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"> If the origin is remote, consider using local drivers to avoid long repositioning hauls.</span></span>
+        </li>
+    </ul>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        <span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">3. Asymmetrical Lane (A-&gt;B is High-Cost, B-&gt;A is Low-Cost)</strong></span>
+    </p>
+    <ul>
+        <li>
+            <span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">Backhaul Prioritization #1</span></span><span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">:</strong></span><span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"> This is the prime opportunity. The green direction (B-&gt;A) is your empty backhaul. </span></span><span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">AGGRESSIVELY</strong></span><span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"> search for freight to fill that lane. Even offering a discounted rate will be more profitable than running empty.</span></span>
+        </li>
+        <li>
+            <span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">Pricing Strategy:</strong></span><span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"> The price for the red direction (A-&gt;B) must be high enough to cover the total cost of the round trip, as the backhaul may be weak.</span></span>
+        </li>
+    </ul>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        <span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">4. Specific Very High-Cost Lane (A Single High-Cost Cell)</strong></span>
+    </p>
+    <ul>
+        <li>
+            <span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">Root Cause Analysis:</strong></span><span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"> Investigate this specific route. Is it a mountain pass? Are there seasonal issues? Are there long detours?</span></span>
+        </li>
+        <li>
+            <span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">Renegotiate or Exit:</strong></span><span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"> If the root cause can't be fixed (e.g., a terrible road), you must either renegotiate the price with the customer or consider stopping service on that lane.</span></span>
+        </li>
+    </ul>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        <span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">5. Specific Very Efficient Lane (A Single Low-Cost Cell)</strong></span>
+    </p>
+    <ul>
+        <li>
+            <span style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"></span><span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">Best Practice:</strong></span><span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"> Study this lane. Why is it so efficient? Good highway access? No tolls? Perfect load matching?</span></span>
+        </li>
+        <li>
+            <span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">Business Development:</strong></span><span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:13px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"> Use this efficient, profitable lane as a model. Can you find more customers for this origin or destination?</span></span>
+        </li>
+    </ul>
+</div>"""

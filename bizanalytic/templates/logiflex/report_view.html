@@ -609,8 +609,10 @@ $(document).ready(function() {
     heatmap_values = {{ heatmapvalues|safe }};
 
     routeefficiency_data = {{ routeefficiency_data|safe }};
+
     worstrouteefficiency_data = {{ worstrouteefficiency_data|safe }};
-    console.log(worstrouteefficiency_data.serie1);
+    console.log(routeefficiency_data.meanspeed);
+    console.log(routeefficiency_data.meancost);
     {#minspeed = {{ minspeed|safe }};#}
     {#maxspeed = {{ maxspeed|safe }};#}
     var costpermile = "0";

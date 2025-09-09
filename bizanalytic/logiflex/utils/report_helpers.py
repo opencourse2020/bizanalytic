@@ -1078,7 +1078,7 @@ routes_message = """
 <h3 style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font:700 20px / 30px quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;letter-spacing:normal;margin:32px 0px 16px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
     <span style="color:#f44336;"><span>Overall Analysis Summary</span></span>
 </h3>
-<ul>
+<ul style="list-style-type:disc; font-size: 14px;">
     <li>
         The Routes Efficiency Chart <span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:16px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">is a </span></span><span><strong style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:16px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">strategic overview</strong></span><span style="background-color:rgb(255,255,255);color:rgb(15,17,21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:16px;"><span style="-webkit-text-stroke-width:0px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;"> of all routes, helping identify overall patterns and efficient operations.</span></span>
     </li>
@@ -1104,7 +1104,7 @@ routes_message = """
 <p class="ds-markdown-paragraph" style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:16px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
     <span><strong>For Heavy-Load Routes:</strong></span>
 </p>
-<ul>
+<ul style="list-style-type:disc; font-size: 14px;">
     <li>
         <p class="ds-markdown-paragraph" style="margin:0px !important 0px 0px 120px;">
             <span><strong>Investigate Equipment:</strong> Are the right trucks (e.g., with better fuel efficiency for heavy loads) being used?</span>
@@ -1124,7 +1124,7 @@ routes_message = """
 <p class="ds-markdown-paragraph" style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:16px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
     <span><strong>For Light-Load Routes:</strong></span>
 </p>
-<ul>
+<ul style="list-style-type:disc; font-size: 14px;">
     <li>
         <p class="ds-markdown-paragraph" style="margin:0px !important 0px 0px;">
             <span><strong>Improve Logistics:</strong> Focus on finding backhaul loads to eliminate empty return trips and spread the fixed cost over more miles.</span>
@@ -1144,7 +1144,7 @@ routes_message = """
 <p class="ds-markdown-paragraph" style="-webkit-text-stroke-width:0px;background-color:rgb(255, 255, 255);color:rgb(15, 17, 21);font-family:quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif;font-size:16px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
     <span><strong>For All Five Routes:</strong></span>
 </p>
-<ul>
+<ul style="list-style-type:disc; font-size: 14px;">
     <li>
         <p class="ds-markdown-paragraph" style="margin:0px !important 0px 0px;">
             <span><strong>Prioritize These Lanes:</strong> These routes should be the #1 priority for the logistics and operations team to analyze and improve.</span>

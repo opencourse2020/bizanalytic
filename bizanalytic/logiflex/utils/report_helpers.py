@@ -1388,6 +1388,15 @@ route_heatmap_plain = """
     &nbsp;
 </p>
 <p>
+    &nbsp;
+</p>
+<p>
+    &nbsp;
+</p>
+<p>
+    &nbsp;
+</p>
+<p>
     <span style="color:#f44336;"><strong>Recommended Actions (From Insight to Action)</strong></span>
 </p>
 <p>

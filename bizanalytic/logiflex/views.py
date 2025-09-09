@@ -331,8 +331,7 @@ class ReportView(TemplateView):
             routeefficiency_data = {"routeefficiency": data_series, "maxspeed": maxspeed, "minspeed": minspeed, "maxcost": maxcost, "mincost": mincost, "meanspeed": meanspeed, "meancost": meancost}
             kwargs["routeefficiency_data"] = routeefficiency_data
             kwargs["worstrouteefficiency_data"] = worstrouteefficiency_data
-            # kwargs["maxspeed"] = maxspeed
-            # kwargs["minspeed"] = minspeed
+            kwargs["routemessage"] = routes_message
 
             kwargs["reportid"] = report.report_id
             kwargs["reporttype"] = report.report_type

@@ -513,10 +513,11 @@
                     </div>
                 </div>
             </div>
+            {% if reporttype == "advanced" %}
             <div class="col-md-6">
                 <div class="card shadow-sm chart-card"  id="card6">
                     <div class="card-header">
-                        {% trans "Route Efficiency Speed Vs. Cost per Mile Vs. Number of Shipments" %}
+                        {% trans "Route Efficiency: Speed Vs. Cost per Mile Vs. Number of Shipments" %}
                     </div>
                     <div class="card-body text-center">
                         <div id="RouteEfficiencyBubble"></div>
@@ -535,13 +536,14 @@
                 </div>
 
             </div>
-            <div class="col-md-4">
+            <div class="col-12">
                  <div class="card shadow-sm">
                     <div class="card-body text-center">
-
+                    {{ routemessage|safe }}
                     </div>
                 </div>
             </div>
+           {% endif %}
             <div class="col-md-4">
                  <div class="card shadow-sm">
                     <div class="card-body text-center">

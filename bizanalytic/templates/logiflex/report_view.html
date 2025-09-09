@@ -506,12 +506,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card shadow-sm">
+            <div class="col-md-3" id="route_1_msg">
+                <div class="card shadow-sm" id="card5_msg">
                     <div class="card-header">
                         {% trans "Route Heatmap Key Insightss and Recommended Actions" %}
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" id="heatmapmessage">
                     {{ route_heatmap_short|safe }}
                         <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="htmp" style="border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill">More Info</i></span> </button>
                         <input type="hidden" id="htmp" value="{{ route_heatmap }}" style="display: none;">
@@ -543,7 +543,7 @@
                 </div>
 
             </div>
-
+            <div class="page-break-after"></div>
             <div class="col-12">
                  <div class="card shadow-sm">
                      <div class="card-header">
@@ -762,10 +762,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const carrier2= document.getElementById("carrier_2");
             const driver1= document.getElementById("driver_1");
             const driver2= document.getElementById("driver_2");
-            {#const route1 = document.getElementById("route_1");#}
+            const route1 = document.getElementById("route_1");
+            const route1_msg = document.getElementById("route_1_msg");
             const route2 = document.getElementById("route_2");
             const route3 = document.getElementById("route_3");
-
+            const htmpmsg = document.getElementById("heatmapmessage");
+            const htmpmsg_html = htmpmsg.innerHTML;
+            htmpmsg.innerHTML = {{ route_heatmap|safe }};
             let rphead = '<div class="logo-area" style="max-width:160px;"> <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a> </div>';
             rphead = rphead + '<div class="d-flex justify-content-center align-items-center" id="report_head">';
             rphead = rphead +'<span class="title" id="report_title" style="color: #0cb7d6; font-size: 20px">{% trans "FreightOps Report" %} -</span>';
@@ -794,7 +797,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 carrier2.className = 'col-12';
                 driver1.className = 'col-12';
                 driver2.className = 'col-12';
-                {#route1.className = 'col-12';#}
+                route1.className = 'col-12';
+                route1_msg.className = 'col-12';
                 route2.className = 'col-12';
                 route3.className = 'col-12';
                 pdfhead.style.display= "block";
@@ -871,9 +875,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 carrier2.className = 'col-md-6';
                 driver1.className = 'col-md-6';
                 driver2.className = 'col-md-6';
-                {#route1.className = 'col-md-9';#}
+                route1.className = 'col-md-9';
                 route2.className = 'col-md-6';
                 route3.className = 'col-md-6';
+                htmpmsg.innerHTML = htmpmsg_html;
                 pdfhead.style.marginBottom = "0px";
                 pdfhead.className = "";
                 pdfhead.innerHTML = "";

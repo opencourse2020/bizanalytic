@@ -89,6 +89,8 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledr
 	const drivermedianspeed = dfdriver["MedianSpeed"].mean();
 	const carrierfreightcostmedian = d3.quantile(df["AvgFreightCost"].values, 0.75);
 	const carrierontimemedian = d3.quantile(df["OnTimeRate"].values, 0.75);
+	const routemeancost = routeefficiency_data.meancost;
+	const routemeanspeed = routeefficiency_data.meanspeed;
 
 // Fuel Cost per Mile Distribution by Carrier
 	var apexCostMileChartOptions = {
@@ -560,6 +562,36 @@ var routesBubbleoptions = {
 				formatter: function(val) { return parseFloat(val).toFixed(2) }
 			},
         },
+	annotations: {
+		  yaxis: [
+			{
+			  y: routemeancost,
+			  borderColor: '#00E396',
+			  label: {
+				borderColor: '#00E396',
+				style: {
+				  color: '#fff',
+				  background: '#00E396'
+				},
+				text: 'On-Time'
+			  }
+			}
+		  ],
+			xaxis: [
+				{
+				  x: routemeanspeed,
+				  borderColor: '#ff1d05',
+				  label: {
+					borderColor: '#ff1d05',
+					style: {
+					  color: '#fff',
+					  background: '#ff1d05'
+					},
+					text: 'Cost/Mile'
+				  }
+				}
+			  ],
+		},
 	tooltip: {
 		  z: {
 			// formatter: function(val) {
@@ -645,6 +677,36 @@ var worstroutesBubbleoptions = {
 			// },
 			title: 'LoadWeight_Tons'
 		  },
+		annotations: {
+		  yaxis: [
+			{
+			  y: routemeancost,
+			  borderColor: '#00E396',
+			  label: {
+				borderColor: '#00E396',
+				style: {
+				  color: '#fff',
+				  background: '#00E396'
+				},
+				text: 'On-Time'
+			  }
+			}
+		  ],
+			xaxis: [
+				{
+				  x: routemeanspeed,
+				  borderColor: '#ff1d05',
+				  label: {
+					borderColor: '#ff1d05',
+					style: {
+					  color: '#fff',
+					  background: '#ff1d05'
+					},
+					text: 'Cost/Mile'
+				  }
+				}
+			  ],
+		},
 		y: {
           formatter: undefined,
           title: {

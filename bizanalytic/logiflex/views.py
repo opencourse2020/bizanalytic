@@ -281,11 +281,14 @@ class ReportView(TemplateView):
                 data_series.append(
                     [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['ShipmentCount'])])
 
+            meanspeed = route_stats['MedianSpeed'].mean()
             minspeed = math.floor(route_stats['MedianSpeed'].min())
             maxspeed = math.ceil(route_stats['MedianSpeed'].max())
+
             if maxspeed < 55:
                 maxspeed = 55
             multiplier = 10
+            meancost = route_stats['AvgCostPerMile'].mean()
             mincost = route_stats['AvgCostPerMile'].min()
             maxcost = route_stats['AvgCostPerMile'].max()
             mincost_tmp = math.floor(mincost * multiplier) / multiplier
@@ -323,7 +326,7 @@ class ReportView(TemplateView):
             worstrouteefficiency_data = {"serie1": serie1, "serie2": serie2, "serie3": serie3, "serie4": serie4,
                                          "serie5": serie5, "serie1_name": serie1_name, "serie2_name": serie2_name,
                                          "serie3_name": serie3_name, "serie4_name": serie4_name, "serie5_name": serie5_name}
-            routeefficiency_data = {"routeefficiency": data_series, "maxspeed": maxspeed, "minspeed": minspeed, "maxcost": maxcost, "mincost": mincost}
+            routeefficiency_data = {"routeefficiency": data_series, "maxspeed": maxspeed, "minspeed": minspeed, "maxcost": maxcost, "mincost": mincost, "meanspeed": meanspeed, "meancost": meancost }
             kwargs["routeefficiency_data"] = routeefficiency_data
             kwargs["worstrouteefficiency_data"] = worstrouteefficiency_data
             # kwargs["maxspeed"] = maxspeed

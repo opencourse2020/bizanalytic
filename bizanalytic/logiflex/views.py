@@ -284,16 +284,16 @@ class ReportView(TemplateView):
                 data_series.append(
                     [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['ShipmentCount'])])
 
-            meanspeed = math.ceil(route_stats['MedianSpeed'].mean())
+            meanspeed = route_stats['MedianSpeed'].mean()
             minspeed = math.floor(route_stats['MedianSpeed'].min())
             maxspeed = math.ceil(route_stats['MedianSpeed'].max())
 
             if maxspeed < 55:
                 maxspeed = 55
             multiplier = 10
-            meandistance = math.ceil(route_stats['AvgDistance'].mean())
-            meanshipment = math.ceil(route_stats['ShipmentCount'].mean())
-            meancost = route_stats['AvgCostPerMile'].mean()
+            meandistance = route_stats['AvgDistance'].mean()
+            meanshipment = route_stats['ShipmentCount'].mean()
+            meancost = round(route_stats['AvgCostPerMile'].mean(), 3)
             mincost = route_stats['AvgCostPerMile'].min()
             maxcost = route_stats['AvgCostPerMile'].max()
             mincost_tmp = math.floor(mincost * multiplier) / multiplier

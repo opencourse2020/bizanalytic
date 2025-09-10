@@ -287,7 +287,7 @@
                             {% trans "Carriers AI-Driven Analysis" %}
                         </div>
                         <div class="card-body" >
-                        {{ report_carrier|safe }}
+                            <div id="markdown_container" class="prose">{{ report_carrier|safe|json_script:"md_json" }}</div>
                         </div>
                     </div>
               </div>
@@ -459,7 +459,7 @@
                             {% trans "Drivers AI-Driven Analysis" %}
                         </div>
                         <div class="card-body" >
-                        {{ report_driver|safe }}
+                        <div id="markdown_container" class="prose">{{ report_driver|safe|json_script:"md_json" }}</div>
                         </div>
                     </div>
                  </div>
@@ -589,7 +589,7 @@
                             {% trans "Routess AI-Driven Analysis" %}
                         </div>
                         <div class="card-body" >
-                        {{ report_route|safe }}
+                        <div id="markdown_container" class="prose">{{ report_route|safe|json_script:"md_json" }}</div>
                         </div>
                     </div>
                 </div>
@@ -632,6 +632,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src={% static "assets/js/pages/chart-apex.pmf.js" %}></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+    // Safely inject server-provided data
+    const markdownReport = {{ markdown_report|safe|json_script:"md_json" }};
+    const summaryData = {{ summary_json|safe|json_script:"summary_json" }};
+  </script>
+
+  <script>
+    // Render Markdown to HTML
+    const md = JSON.parse(document.getElementById("md_json").textContent);
+    document.getElementById("markdown_container").innerHTML = marked.parse(md);
+
+    // Build Chart.js charts from model-provided configs
+    const sdata = JSON.parse(document.getElementById("summary_json").textContent);
+    if (sdata && sdata.charts) {
+      sdata.charts.forEach((c, idx) => {
+        const canvasId = "chart_" + (idx + 1);
+        const ctx = document.getElementById(canvasId);
+        if (!ctx || !c.config) return;
+        // Expecting full Chart.js config object: { type, data, options }
+        new Chart(ctx, c.config);
+      });
+    }
+  </script>
+
 
 {#    <script src="https://cdn.tailwindcss.com"></script>#}
      <script>

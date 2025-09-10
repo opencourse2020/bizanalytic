@@ -1014,7 +1014,7 @@ def run_All_LLM_Analysis():
                     summary_for_prompt = summarize_df_for_prompt(df, max_rows=10)
                     raw = run_LLM_analysis(flags, summary_for_prompt, report.client.company)
                     report.report_text = raw
-                    report.report_status = "download"
+                    report.report_status = "processing"
                     report.report_date = datetime.now()
                     report.save()
             elif report.report_type == "advanced":
@@ -1037,7 +1037,7 @@ def run_All_LLM_Analysis():
                     report.report_carrier = run_carrier_analysis(flags, carrier_stats, report.client.company)
                     report.report_driver = run_driver_analysis(flags, driver_stats, report.client.company)
                     report.report_route = run_route_analysis(flags, route_stats, report.client.company)
-                    report.report_status = "download"
+                    report.report_status = "processing"
                     report.report_date = datetime.now()
                     report.save()
             # raw = asynch_preprocess.get()

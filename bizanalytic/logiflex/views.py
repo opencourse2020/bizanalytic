@@ -136,14 +136,14 @@ class ReportView(TemplateView):
         pu = self.kwargs.get("pk")
         user = self.request.user
         query = self.request.GET.get("cat")
-        if user.is_authenticated:
-        #     client = LogiFlexClient.objects.filter(user=user).first()
-        # else:
-        #     client = LogiFlexClient.objects.filter(user=user).first()
 
-            report = LogiflexReport.objects.filter(client__user=user, pk=pu, download_code=query).first()
+        if user.is_authenticated:
+            if user.is_staff:
+                report = LogiflexReport.objects.filter(pk=pu, download_code=query).first()
+            else:
+                report = LogiflexReport.objects.filter(client__user=user, pk=pu, download_code=query, report_approved=True).first()
         else:
-            report = LogiflexReport.objects.filter(pk=pu, download_code=query).first()
+            report = LogiflexReport.objects.filter(pk=pu, download_code=query, report_approved=True).first()
 
         # Example: Redirect at the dispatch level
         if not report:
@@ -160,7 +160,7 @@ class ReportView(TemplateView):
         #     print("user2: ", user)
 
         # else:
-        report = LogiflexReport.objects.filter(download_code=query, pk=pu).first()
+        report = LogiflexReport.objects.filter(download_code=query, pk=pu, report_approved=True).first()
         print("report ID:", report)
         if report:
             dff = pd.read_csv(report.routefile)

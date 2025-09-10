@@ -11,6 +11,10 @@
 {% block css %}
     {{ block.super }}
     <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-bs5/css/dataTables.bootstrap5.min.css" %} >
+
+    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" %} >
+    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/bootstrap-table/distro/bootstrap-table.min.css" %} >
     <style>
         .chart-card { min-height: 420px; }
         .card-header { color: black;}
@@ -293,8 +297,8 @@ table, th, td {
 {#                            <div id="markdown_container1" class="prose">{{ report_carrier|safe|json_script:"cmd_json" }}</div>#}
                             {% if report_carrier.kpis %}
                             <h4>KPI Analysis</h4>
-                            <table>
-                            <thead>
+                            <table class="table table-hover">
+                            <thead class="table-dark">
                             <tr>
                                 <th>{% trans "Metric" %}</th>
                                 <th>{% trans "Value" %}</th>
@@ -304,7 +308,7 @@ table, th, td {
                             <tbody>
                             {% for ky in report_carrier.kpis %}
                             <tr>
-                                <td>{{ ky.metric }}</td>
+                                <td><strong>{{ ky.metric }}</strong></td>
                                 <td>{{ ky.value }}</td>
                                 <td>{{ ky.note }}</td>
                             </tr>
@@ -507,8 +511,8 @@ table, th, td {
 {#                        <div id="markdown_container2" class="prose">{{ report_driver|safe|json_script:"dmd_json" }}</div>#}
                             {% if report_driver.kpis %}
                             <h4>KPI Analysis</h4>
-                            <table>
-                            <thead>
+                            <table class="table table-hover">
+                            <thead class="table-dark">
                             <tr>
                                 <th>{% trans "Metric" %}</th>
                                 <th>{% trans "Value" %}</th>
@@ -679,8 +683,8 @@ table, th, td {
 {#                        <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>#}
                             {% if report_route.kpis %}
                             <h4>KPI Analysis</h4>
-                            <table>
-                            <thead>
+                            <table class="table table-hover">
+                            <thead class="table-dark">
                             <tr>
                                 <th>{% trans "Metric" %}</th>
                                 <th>{% trans "Value" %}</th>
@@ -733,8 +737,8 @@ table, th, td {
 
                         {% if report_route.kpis %}
                             <h4>KPI Analysis</h4>
-                            <table>
-                            <thead>
+                            <table class="table table-hover">
+                            <thead class="table-dark">
                             <tr>
                                 <th>{% trans "Metric" %}</th>
                                 <th>{% trans "Value" %}</th>
@@ -817,7 +821,8 @@ table, th, td {
     <script src={% static "assets/js/pages/chart-apex.pmf.js" %}></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
+     <script src={% static "assets/plugins/datatables.net/js/dataTables.min.js" %}></script>
+    <script src={% static "assets/plugins/datatables.net-bs5/js/dataTables.bootstrap5.min.js" %}></script>
     <script>
     // Safely inject server-provided data
 

@@ -111,7 +111,7 @@
 
                                             </td>
                                             <td>
-                                                <a href="{% url 'logiflex:reports:reportview' report.pk %}?cat={{ logireport.download_code }}" class="btn btn-info btn-sm">
+                                                <a href="{% url 'logiflex:reports:reportview' logireport.pk %}?cat={{ logireport.download_code }}" class="btn btn-info btn-sm">
                                                     <span style="text-transform: uppercase;font-size: 12px;">{% trans "View Report" %}</span></a>
                                             </td>
 

@@ -63,68 +63,75 @@ class RouteFileView(TemplateView):
         pu = self.kwargs.get("pk")
         report = LogiflexReport.objects.filter(pk=pu).first()
 
-        # load route file
-        df = pd.read_csv(report.routefile)
 
-        # Get route file information
-
-        carriers = df['CarrierName'].unique()
-        null_carriers = df['CarrierName'].isnull().sum()
-        if null_carriers > 0:
-            carriers_cleaned = df.dropna(subset=['CarrierName'])
-            carriers = carriers_cleaned['CarrierName'].unique()
-
-        drivers = df['DriverName'].unique()
-        null_drivers = df['DriverName'].isnull().sum()
-        if null_drivers > 0:
-            drivers_cleaned = df.dropna(subset=['DriverName'])
-            drivers = drivers_cleaned['DriverName'].unique()
-
-        deliverystatus = df['DeliveryStatus'].unique()
-        null_deliverystatus = df['DeliveryStatus'].isnull().sum()
-        if null_deliverystatus > 0:
-            deliverystatus_cleaned = df.dropna(subset=['DeliveryStatus'])
-            deliverystatus = deliverystatus_cleaned['DeliveryStatus'].unique()
-
-        distance_str, fuelcost_str, loadweight_str, deliveryhrs_str = process_route_info(df.describe())
-
-        log_message = LogEntry.objects.filter(report=report).first()
-        if log_message.column_report:
-            logcol = log_message.column_report.split("@@#@@")
-        if log_message.date_report:
-            logdate = log_message.date_report.split("@@#@@")
-        if log_message.citi_report:
-            logcity = log_message.citi_report.split("@@#@@")
-
-        # Report status percentage
-        reportstatus = 50
-        if report.report_text:
-            reportstatus = 100
-        elif report.report_status:
-            reportstatus = 80
-
-        if report:
-            kwargs["report"] = report
-            kwargs["reportstatus"] = reportstatus
-            kwargs["logcolumn"] = logcol
-            kwargs["logdate"] = logdate
-            kwargs["logcity"] = logcity
-            kwargs["carriers"] = carriers
-            kwargs["null_carriers"] = null_carriers
-            kwargs["drivers"] = drivers
-            kwargs["null_drivers"] = null_drivers
-            kwargs["deliverystatus"] = deliverystatus
-            kwargs["null_deliverystatus"] = null_deliverystatus
-            kwargs["distance_str"] = distance_str
-            kwargs["fuelcost_str"] = fuelcost_str
-            kwargs["loadweight_str"] = loadweight_str
-            kwargs["deliveryhrs_str"] = deliveryhrs_str
-
+        # Check file extension
+        extension_ok = True
+        if report.routefile_ext == ".csv":
+            df = pd.read_csv(report.routefile)
+        elif report.routefile_ext == ".xlsx" or report.routefile_ext == ".xls":
+            df = pd.read_excel(report.routefile)
         else:
-            kwargs["report"] = ""
-            kwargs["logcolumn"] = ""
-            kwargs["logdate"] = ""
-            kwargs["logcity"] = ""
+            extension_ok = False
+
+        if extension_ok:
+            # Get route file information
+            carriers = df['CarrierName'].unique()
+            null_carriers = df['CarrierName'].isnull().sum()
+            if null_carriers > 0:
+                carriers_cleaned = df.dropna(subset=['CarrierName'])
+                carriers = carriers_cleaned['CarrierName'].unique()
+
+            drivers = df['DriverName'].unique()
+            null_drivers = df['DriverName'].isnull().sum()
+            if null_drivers > 0:
+                drivers_cleaned = df.dropna(subset=['DriverName'])
+                drivers = drivers_cleaned['DriverName'].unique()
+
+            deliverystatus = df['DeliveryStatus'].unique()
+            null_deliverystatus = df['DeliveryStatus'].isnull().sum()
+            if null_deliverystatus > 0:
+                deliverystatus_cleaned = df.dropna(subset=['DeliveryStatus'])
+                deliverystatus = deliverystatus_cleaned['DeliveryStatus'].unique()
+
+            distance_str, fuelcost_str, loadweight_str, deliveryhrs_str = process_route_info(df.describe())
+
+            log_message = LogEntry.objects.filter(report=report).first()
+            if log_message.column_report:
+                logcol = log_message.column_report.split("@@#@@")
+            if log_message.date_report:
+                logdate = log_message.date_report.split("@@#@@")
+            if log_message.citi_report:
+                logcity = log_message.citi_report.split("@@#@@")
+
+            # Report status percentage
+            reportstatus = 50
+            if report.report_text:
+                reportstatus = 100
+            elif report.report_status:
+                reportstatus = 80
+
+            if report:
+                kwargs["report"] = report
+                kwargs["reportstatus"] = reportstatus
+                kwargs["logcolumn"] = logcol
+                kwargs["logdate"] = logdate
+                kwargs["logcity"] = logcity
+                kwargs["carriers"] = carriers
+                kwargs["null_carriers"] = null_carriers
+                kwargs["drivers"] = drivers
+                kwargs["null_drivers"] = null_drivers
+                kwargs["deliverystatus"] = deliverystatus
+                kwargs["null_deliverystatus"] = null_deliverystatus
+                kwargs["distance_str"] = distance_str
+                kwargs["fuelcost_str"] = fuelcost_str
+                kwargs["loadweight_str"] = loadweight_str
+                kwargs["deliveryhrs_str"] = deliveryhrs_str
+
+            else:
+                kwargs["report"] = ""
+                kwargs["logcolumn"] = ""
+                kwargs["logdate"] = ""
+                kwargs["logcity"] = ""
         return super(RouteFileView, self).get_context_data(**kwargs)
 
 
@@ -160,286 +167,301 @@ class ReportView(TemplateView):
         #     print("user2: ", user)
 
         # else:
-        report = LogiflexReport.objects.filter(download_code=query, pk=pu, report_approved=True).first()
+        if user.is_authenticated:
+            if user.is_staff:
+                report = LogiflexReport.objects.filter(pk=pu, download_code=query).first()
+            else:
+                report = LogiflexReport.objects.filter(client__user=user, pk=pu, download_code=query,
+                                                       report_approved=True).first()
+        else:
+            report = LogiflexReport.objects.filter(pk=pu, download_code=query, report_approved=True).first()
+
         print("report ID:", report)
         if report:
-            dff = pd.read_csv(report.routefile)
-            df = clean_data(dff)
-            df = calculate_kpis(df)
-            print("report ID2:", report.id)
-            # Carrier Analysis
-            carrier_stats = prepare_carrier_stats(df)
-            carrier_stats["AvgCostPerMile"] = carrier_stats["AvgCostPerMile"].round(3)
-            carrier_stats["AvgFreightCost"] = carrier_stats["AvgFreightCost"].round(2)
-            carrier_stats["AvgCostPerPound"] = carrier_stats["AvgCostPerPound"].round(3)
-            carrier_ontime = carrier_stats["OnTimeRate"].max()
-            carrier_ontime_name = carrier_stats["OnTimeRate"].idxmax()
-            carrier_costpermile = carrier_stats["AvgCostPerMile"].min()
-            carrier_costpermile_name = carrier_stats["AvgCostPerMile"].idxmin()
-            carrier_freightcost = carrier_stats["AvgFreightCost"].min()
-            carrier_freightcost_name = carrier_stats["AvgFreightCost"].idxmin()
-            carrier_costpound = carrier_stats["AvgCostPerPound"].min()
-            carrier_costpound_name = carrier_stats["AvgCostPerPound"].idxmin()
-
-            carrier_stats = carrier_stats.reset_index()
-            carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
-            # Carrier Contingency and Reliability Vs Cost Analysis
-            if not report.contingency_result:
-                highcostvariance, lowcostvariance, costreliability_action, contingency_result, contingency_action = prepare_data_report(
-                    df)
-                report.contingency_result = contingency_result
-                report.highvariance = highcostvariance
-                report.lowvariance = lowcostvariance
-                report.costreliability_action = costreliability_action
-                report.contingency_action = contingency_action
-                report.save()
+            # Check file extension
+            extension_ok = True
+            if report.routefile_ext == ".csv":
+                dff = pd.read_csv(report.routefile)
+            elif report.routefile_ext == ".xlsx" or report.routefile_ext == ".xls":
+                dff = pd.read_excel(report.routefile)
             else:
-                contingency_result = report.contingency_result
-                highcostvariance = report.highvariance
-                lowcostvariance = report.lowvariance
-                costreliability_action = report.costreliability_action
-                contingency_action = report.contingency_action
+                extension_ok = False
 
-            # Drivers Analysis
-            driver_stats = prepare_driver_stats(df)
-            driver_messages, driver_actions, driver_extended_message = prepare_driver_analysis(driver_stats)
-            driver_stats["OnTimeRate"] = driver_stats["OnTimeRate"]*100
-            driver_totalmiles = driver_stats["TotalMiles"].max()
-            driver_totalmiles_name = driver_stats["TotalMiles"].idxmax()
-            driver_speed = driver_stats["MedianSpeed"].max()
-            driver_speed_name = driver_stats["MedianSpeed"].idxmax()
-            driver_medianmpg = driver_stats["MedianMPG"].max()
-            driver_medianmpg_name = driver_stats["MedianMPG"].idxmax()
-            driver_ontime = driver_stats["OnTimeRate"].max()
-            driver_ontime_name = driver_stats["OnTimeRate"].idxmax()
-            driver_stats = driver_stats.reset_index()
-            driver_stats = json.loads(driver_stats.to_json(orient='records'))
+            if extension_ok:
+                df = clean_data(dff)
+                df = calculate_kpis(df)
+                print("report ID2:", report.id)
+                # Carrier Analysis
+                carrier_stats = prepare_carrier_stats(df)
+                carrier_stats["AvgCostPerMile"] = carrier_stats["AvgCostPerMile"].round(3)
+                carrier_stats["AvgFreightCost"] = carrier_stats["AvgFreightCost"].round(2)
+                carrier_stats["AvgCostPerPound"] = carrier_stats["AvgCostPerPound"].round(3)
+                carrier_ontime = carrier_stats["OnTimeRate"].max()
+                carrier_ontime_name = carrier_stats["OnTimeRate"].idxmax()
+                carrier_costpermile = carrier_stats["AvgCostPerMile"].min()
+                carrier_costpermile_name = carrier_stats["AvgCostPerMile"].idxmin()
+                carrier_freightcost = carrier_stats["AvgFreightCost"].min()
+                carrier_freightcost_name = carrier_stats["AvgFreightCost"].idxmin()
+                carrier_costpound = carrier_stats["AvgCostPerPound"].min()
+                carrier_costpound_name = carrier_stats["AvgCostPerPound"].idxmin()
 
-            # Routes Analysis
-            route_stats = prepare_route_stats(df)
-            rs1 = route_stats.head(5)
-            serrie1 = df[(df['OriginCity'] == rs1.index[0][0]) & (df['DestinationCity'] == rs1.index[0][1])]
-            serie1 = []
-            for index, row in serrie1.iterrows():
-                serie1.append(
-                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
-            serrie2 = df[(df['OriginCity'] == rs1.index[1][0]) & (df['DestinationCity'] == rs1.index[1][1])]
-            serie2 = []
-            for index, row in serrie2.iterrows():
-                serie2.append(
-                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
-            serrie3 = df[(df['OriginCity'] == rs1.index[2][0]) & (df['DestinationCity'] == rs1.index[2][1])]
-            serie3 = []
-            for index, row in serrie3.iterrows():
-                serie3.append(
-                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
-            serrie4 = df[(df['OriginCity'] == rs1.index[3][0]) & (df['DestinationCity'] == rs1.index[3][1])]
-            serie4 = []
-            for index, row in serrie4.iterrows():
-                serie4.append(
-                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
-            serrie5 = df[(df['OriginCity'] == rs1.index[4][0]) & (df['DestinationCity'] == rs1.index[4][1])]
-            serie5 = []
-            for index, row in serrie5.iterrows():
-                serie5.append(
-                    [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
-            route_stats = route_stats.reset_index()
+                carrier_stats = carrier_stats.reset_index()
+                carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
+                # Carrier Contingency and Reliability Vs Cost Analysis
+                if not report.contingency_result:
+                    highcostvariance, lowcostvariance, costreliability_action, contingency_result, contingency_action = prepare_data_report(
+                        df)
+                    report.contingency_result = contingency_result
+                    report.highvariance = highcostvariance
+                    report.lowvariance = lowcostvariance
+                    report.costreliability_action = costreliability_action
+                    report.contingency_action = contingency_action
+                    report.save()
+                else:
+                    contingency_result = report.contingency_result
+                    highcostvariance = report.highvariance
+                    lowcostvariance = report.lowvariance
+                    costreliability_action = report.costreliability_action
+                    contingency_action = report.contingency_action
 
-            # Pivot for heatmap
-            heatmap_data = route_stats.pivot(
-                index='OriginCity',
-                columns='DestinationCity',
-                values='AvgCostPerMile'
-            )
-            start = heatmap_data.min().min()
-            end = heatmap_data.max().max()
-            colors = ['#FCB79D', '#FB8464', '#F44F39', '#B81419', '#67000D', ]
-            costintensity = ['Very Low', 'Low', 'Medium', 'High', 'Extreme']
-            num_parts = 5
-            division_points = np.linspace(start, end, num_parts + 1)
-            division_points = [float(x) for x in division_points]
-            range_values = []
-            for i in range(int(len(division_points) - 1)):
-                range_values.append({"from": division_points[i], "to": division_points[i + 1], "name": costintensity[i], "color": colors[i]})
+                # Drivers Analysis
+                driver_stats = prepare_driver_stats(df)
+                driver_messages, driver_actions, driver_extended_message = prepare_driver_analysis(driver_stats)
+                driver_stats["OnTimeRate"] = driver_stats["OnTimeRate"]*100
+                driver_totalmiles = driver_stats["TotalMiles"].max()
+                driver_totalmiles_name = driver_stats["TotalMiles"].idxmax()
+                driver_speed = driver_stats["MedianSpeed"].max()
+                driver_speed_name = driver_stats["MedianSpeed"].idxmax()
+                driver_medianmpg = driver_stats["MedianMPG"].max()
+                driver_medianmpg_name = driver_stats["MedianMPG"].idxmax()
+                driver_ontime = driver_stats["OnTimeRate"].max()
+                driver_ontime_name = driver_stats["OnTimeRate"].idxmax()
+                driver_stats = driver_stats.reset_index()
+                driver_stats = json.loads(driver_stats.to_json(orient='records'))
 
-            heatmap_data = heatmap_data.fillna(0)
+                # Routes Analysis
+                route_stats = prepare_route_stats(df)
+                rs1 = route_stats.head(5)
+                serrie1 = df[(df['OriginCity'] == rs1.index[0][0]) & (df['DestinationCity'] == rs1.index[0][1])]
+                serie1 = []
+                for index, row in serrie1.iterrows():
+                    serie1.append(
+                        [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
+                serrie2 = df[(df['OriginCity'] == rs1.index[1][0]) & (df['DestinationCity'] == rs1.index[1][1])]
+                serie2 = []
+                for index, row in serrie2.iterrows():
+                    serie2.append(
+                        [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
+                serrie3 = df[(df['OriginCity'] == rs1.index[2][0]) & (df['DestinationCity'] == rs1.index[2][1])]
+                serie3 = []
+                for index, row in serrie3.iterrows():
+                    serie3.append(
+                        [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
+                serrie4 = df[(df['OriginCity'] == rs1.index[3][0]) & (df['DestinationCity'] == rs1.index[3][1])]
+                serie4 = []
+                for index, row in serrie4.iterrows():
+                    serie4.append(
+                        [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
+                serrie5 = df[(df['OriginCity'] == rs1.index[4][0]) & (df['DestinationCity'] == rs1.index[4][1])]
+                serie5 = []
+                for index, row in serrie5.iterrows():
+                    serie5.append(
+                        [float(row['Speed']), float(row['CostPerMile']), float(row['LoadWeight_lbs']/2000)])
+                route_stats = route_stats.reset_index()
 
-            hm_dest = []
+                # Pivot for heatmap
+                heatmap_data = route_stats.pivot(
+                    index='OriginCity',
+                    columns='DestinationCity',
+                    values='AvgCostPerMile'
+                )
+                start = heatmap_data.min().min()
+                end = heatmap_data.max().max()
+                colors = ['#FCB79D', '#FB8464', '#F44F39', '#B81419', '#67000D', ]
+                costintensity = ['Very Low', 'Low', 'Medium', 'High', 'Extreme']
+                num_parts = 5
+                division_points = np.linspace(start, end, num_parts + 1)
+                division_points = [float(x) for x in division_points]
+                range_values = []
+                for i in range(int(len(division_points) - 1)):
+                    range_values.append({"from": division_points[i], "to": division_points[i + 1], "name": costintensity[i], "color": colors[i]})
 
-            for index, row in heatmap_data.iterrows():
-                hm_dest.append({"name": index, "data": row.to_list()})
-            heatmap_columns = heatmap_data.columns.to_list()
-            print("range_values:", range_values)
-            heatmap_values = {"range_values": range_values, "heatmapvalues": hm_dest, "heatmap_columns": heatmap_columns}
-            # kwargs["rangevalues"] = range_values
-            kwargs["heatmapvalues"] = heatmap_values
-            kwargs["route_heatmap"] = route_heatmap
-            kwargs["route_heatmap_plain"] = route_heatmap_plain
-            kwargs["route_heatmap_short"] = route_heatmap_short
+                heatmap_data = heatmap_data.fillna(0)
 
-            # kwargs["heatmap_columns"] = heatmap_columns
+                hm_dest = []
 
-            # Route Efficiency Speed Vs Cost
-            data_series = []
-            for index, row in route_stats.iterrows():
-                data_series.append(
-                    [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['ShipmentCount'])])
+                for index, row in heatmap_data.iterrows():
+                    hm_dest.append({"name": index, "data": row.to_list()})
+                heatmap_columns = heatmap_data.columns.to_list()
+                print("range_values:", range_values)
+                heatmap_values = {"range_values": range_values, "heatmapvalues": hm_dest, "heatmap_columns": heatmap_columns}
+                # kwargs["rangevalues"] = range_values
+                kwargs["heatmapvalues"] = heatmap_values
+                kwargs["route_heatmap"] = route_heatmap
+                kwargs["route_heatmap_plain"] = route_heatmap_plain
+                kwargs["route_heatmap_short"] = route_heatmap_short
 
-            meanspeed = round(route_stats['MedianSpeed'].mean(), 2)
-            minspeed = math.floor(route_stats['MedianSpeed'].min())
-            maxspeed = math.ceil(route_stats['MedianSpeed'].max())
+                # kwargs["heatmap_columns"] = heatmap_columns
 
-            if maxspeed < 55:
-                maxspeed = 55
-            multiplier = 10
-            meandistance = round(route_stats['AvgDistance'].mean(), 2)
-            meanshipment = round(route_stats['ShipmentCount'].mean(), 2)
-            meancost = round(route_stats['AvgCostPerMile'].mean(), 3)
-            mincost = route_stats['AvgCostPerMile'].min()
-            maxcost = route_stats['AvgCostPerMile'].max()
-            mincost_tmp = math.floor(mincost * multiplier) / multiplier
-            maxcost_tmp = math.floor(maxcost * multiplier) / multiplier
-            if mincost < mincost_tmp + 0.05:
-                mincost = mincost_tmp
-            else:
-                mincost = mincost_tmp + 0.05
-            if maxcost < maxcost_tmp:
-                maxcost = maxcost_tmp
-            else:
-                maxcost = maxcost_tmp + 0.05
+                # Route Efficiency Speed Vs Cost
+                data_series = []
+                for index, row in route_stats.iterrows():
+                    data_series.append(
+                        [float(row['MedianSpeed']), float(row['AvgCostPerMile']), float(row['ShipmentCount'])])
 
-            # serie1 = json.loads(serie1.to_json(orient='records'))
-            # serie2 = json.loads(serie2.to_json(orient='records'))
-            # serie3 = json.loads(serie3.to_json(orient='records'))
-            # serie4 = json.loads(serie4.to_json(orient='records'))
-            # serie5 = json.loads(serie5.to_json(orient='records'))
-            serie1_name = rs1.index[0][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[0][1].split(",")[
-                                                                                          0].replace(" ", "")[:5]
-            serie2_name = rs1.index[1][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[1][1].split(",")[
-                                                                                          0].replace(" ", "")[:5]
-            serie3_name = rs1.index[2][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[2][1].split(",")[
-                                                                                          0].replace(" ", "")[:5]
-            serie4_name = rs1.index[3][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[3][1].split(",")[
-                                                                                          0].replace(" ", "")[:5]
-            serie5_name = rs1.index[4][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[4][1].split(",")[
-                                                                                          0].replace(" ", "")[:5]
-            # route_stats = json.loads(route_stats.to_json(orient='records'))
-            # x_medianspeed = json.loads(route_stats["MedianSpeed"].to_json(orient='records'))
-            # y_costpermile = json.loads(route_stats["AvgCostPerMile"].to_json(orient='records'))
-            # size_shipmentcount = json.loads(route_stats["ShipmentCount"].to_json(orient='records'))
-            # kwargs["x_medianspeed"] = x_medianspeed
-            # kwargs["y_costpermile"] = y_costpermile
-            worstrouteefficiency_data = {"serie1": serie1, "serie2": serie2, "serie3": serie3, "serie4": serie4,
-                                         "serie5": serie5, "serie1_name": serie1_name, "serie2_name": serie2_name,
-                                         "serie3_name": serie3_name, "serie4_name": serie4_name, "serie5_name": serie5_name}
-            routeefficiency_data = {"routeefficiency": data_series, "maxspeed": maxspeed, "minspeed": minspeed, "maxcost": maxcost, "mincost": mincost, "meanspeed": meanspeed, "meancost": meancost}
-            kwargs["routeefficiency_data"] = routeefficiency_data
-            kwargs["worstrouteefficiency_data"] = worstrouteefficiency_data
-            kwargs["routemessage"] = routes_message
-            kwargs["meanspeed"] = meanspeed
-            kwargs["meandistance"] = meandistance
-            kwargs["meanshipment"] = meanshipment
-            kwargs["meancost"] = meancost
+                meanspeed = round(route_stats['MedianSpeed'].mean(), 2)
+                minspeed = math.floor(route_stats['MedianSpeed'].min())
+                maxspeed = math.ceil(route_stats['MedianSpeed'].max())
 
-            kwargs["reportid"] = report.report_id
-            kwargs["reporttype"] = report.report_type
-            kwargs["carrier_ontime"] = carrier_ontime
-            kwargs["carrier_costpermile"] = carrier_costpermile
-            kwargs["carrier_freightcost"] = carrier_freightcost
-            kwargs["carrier_costpound"] = carrier_costpound
-            kwargs["carrier_ontime_name"] = carrier_ontime_name
-            kwargs["carrier_costpermile_name"] = carrier_costpermile_name
-            kwargs["carrier_freightcost_name"] = carrier_freightcost_name
-            kwargs["carrier_costpound_name"] = carrier_costpound_name
-            kwargs["driver_ontime"] = driver_ontime
-            kwargs["driver_totalmiles"] = driver_totalmiles
-            kwargs["driver_speed"] = driver_speed
-            kwargs["driver_medianmpg"] = driver_medianmpg
-            kwargs["driver_ontime_name"] = driver_ontime_name
-            kwargs["driver_totalmiles_name"] = driver_totalmiles_name
-            kwargs["driver_speed_name"] = driver_speed_name
-            kwargs["driver_medianmpg_name"] = driver_medianmpg_name
-            driver_hcarvar, driver_lcarvar, driver_costreliability_action = prepare_driver_costvariance(df)
-            kwargs["driverhighcostvariance"] = driver_hcarvar
-            kwargs["driverlowcostvariance"] = driver_lcarvar
-            kwargs["driver_costreliability_action"] = driver_costreliability_action
+                if maxspeed < 55:
+                    maxspeed = 55
+                multiplier = 10
+                meandistance = round(route_stats['AvgDistance'].mean(), 2)
+                meanshipment = round(route_stats['ShipmentCount'].mean(), 2)
+                meancost = round(route_stats['AvgCostPerMile'].mean(), 3)
+                mincost = route_stats['AvgCostPerMile'].min()
+                maxcost = route_stats['AvgCostPerMile'].max()
+                mincost_tmp = math.floor(mincost * multiplier) / multiplier
+                maxcost_tmp = math.floor(maxcost * multiplier) / multiplier
+                if mincost < mincost_tmp + 0.05:
+                    mincost = mincost_tmp
+                else:
+                    mincost = mincost_tmp + 0.05
+                if maxcost < maxcost_tmp:
+                    maxcost = maxcost_tmp
+                else:
+                    maxcost = maxcost_tmp + 0.05
 
-            if report.report_type == "lite":
+                # serie1 = json.loads(serie1.to_json(orient='records'))
+                # serie2 = json.loads(serie2.to_json(orient='records'))
+                # serie3 = json.loads(serie3.to_json(orient='records'))
+                # serie4 = json.loads(serie4.to_json(orient='records'))
+                # serie5 = json.loads(serie5.to_json(orient='records'))
+                serie1_name = rs1.index[0][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[0][1].split(",")[
+                                                                                              0].replace(" ", "")[:5]
+                serie2_name = rs1.index[1][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[1][1].split(",")[
+                                                                                              0].replace(" ", "")[:5]
+                serie3_name = rs1.index[2][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[2][1].split(",")[
+                                                                                              0].replace(" ", "")[:5]
+                serie4_name = rs1.index[3][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[3][1].split(",")[
+                                                                                              0].replace(" ", "")[:5]
+                serie5_name = rs1.index[4][0].split(",")[0].replace(" ", "")[:5] + "-" + rs1.index[4][1].split(",")[
+                                                                                              0].replace(" ", "")[:5]
+                # route_stats = json.loads(route_stats.to_json(orient='records'))
+                # x_medianspeed = json.loads(route_stats["MedianSpeed"].to_json(orient='records'))
+                # y_costpermile = json.loads(route_stats["AvgCostPerMile"].to_json(orient='records'))
+                # size_shipmentcount = json.loads(route_stats["ShipmentCount"].to_json(orient='records'))
+                # kwargs["x_medianspeed"] = x_medianspeed
+                # kwargs["y_costpermile"] = y_costpermile
+                worstrouteefficiency_data = {"serie1": serie1, "serie2": serie2, "serie3": serie3, "serie4": serie4,
+                                             "serie5": serie5, "serie1_name": serie1_name, "serie2_name": serie2_name,
+                                             "serie3_name": serie3_name, "serie4_name": serie4_name, "serie5_name": serie5_name}
+                routeefficiency_data = {"routeefficiency": data_series, "maxspeed": maxspeed, "minspeed": minspeed, "maxcost": maxcost, "mincost": mincost, "meanspeed": meanspeed, "meancost": meancost}
+                kwargs["routeefficiency_data"] = routeefficiency_data
+                kwargs["worstrouteefficiency_data"] = worstrouteefficiency_data
+                kwargs["routemessage"] = routes_message
+                kwargs["meanspeed"] = meanspeed
+                kwargs["meandistance"] = meandistance
+                kwargs["meanshipment"] = meanshipment
+                kwargs["meancost"] = meancost
 
-                # Carrier Cost Reliability Analysis
-                kwargs["carrierstats"] = carrier_stats
-                kwargs["contigency"] = contingency_result
-                kwargs["contingency_action"] = contingency_action
-                kwargs["highcostvariance"] = highcostvariance
-                kwargs["lowcostvariance"] = lowcostvariance
-                kwargs["costreliability_action"] = costreliability_action
+                kwargs["reportid"] = report.report_id
+                kwargs["reporttype"] = report.report_type
+                kwargs["carrier_ontime"] = carrier_ontime
+                kwargs["carrier_costpermile"] = carrier_costpermile
+                kwargs["carrier_freightcost"] = carrier_freightcost
+                kwargs["carrier_costpound"] = carrier_costpound
+                kwargs["carrier_ontime_name"] = carrier_ontime_name
+                kwargs["carrier_costpermile_name"] = carrier_costpermile_name
+                kwargs["carrier_freightcost_name"] = carrier_freightcost_name
+                kwargs["carrier_costpound_name"] = carrier_costpound_name
+                kwargs["driver_ontime"] = driver_ontime
+                kwargs["driver_totalmiles"] = driver_totalmiles
+                kwargs["driver_speed"] = driver_speed
+                kwargs["driver_medianmpg"] = driver_medianmpg
+                kwargs["driver_ontime_name"] = driver_ontime_name
+                kwargs["driver_totalmiles_name"] = driver_totalmiles_name
+                kwargs["driver_speed_name"] = driver_speed_name
+                kwargs["driver_medianmpg_name"] = driver_medianmpg_name
+                driver_hcarvar, driver_lcarvar, driver_costreliability_action = prepare_driver_costvariance(df)
+                kwargs["driverhighcostvariance"] = driver_hcarvar
+                kwargs["driverlowcostvariance"] = driver_lcarvar
+                kwargs["driver_costreliability_action"] = driver_costreliability_action
 
-                # Driver On-time Rate Vs. MPG Analysis
-                kwargs["driverstats"] = driver_stats
+                if report.report_type == "lite":
 
-                # Driver Messages and Actions
-                kwargs["driver_messages"] = driver_messages
-                kwargs["driver_actions"] = driver_actions
+                    # Carrier Cost Reliability Analysis
+                    kwargs["carrierstats"] = carrier_stats
+                    kwargs["contigency"] = contingency_result
+                    kwargs["contingency_action"] = contingency_action
+                    kwargs["highcostvariance"] = highcostvariance
+                    kwargs["lowcostvariance"] = lowcostvariance
+                    kwargs["costreliability_action"] = costreliability_action
 
-                cost_mile = '{"0":"0"}'
-                kwargs["costmile"] = json.loads(cost_mile)
-                kwargs["costmiledriver"] = json.loads(cost_mile)
+                    # Driver On-time Rate Vs. MPG Analysis
+                    kwargs["driverstats"] = driver_stats
 
-                if report.report_text:
-                    raw = report.report_text
-                    data = json.loads(raw)
-                    # data = raw
+                    # Driver Messages and Actions
+                    kwargs["driver_messages"] = driver_messages
+                    kwargs["driver_actions"] = driver_actions
 
-                    markdown_report = data.get("markdown_report", "")
+                    cost_mile = '{"0":"0"}'
+                    kwargs["costmile"] = json.loads(cost_mile)
+                    kwargs["costmiledriver"] = json.loads(cost_mile)
 
-                    kwargs["report_route"] = markdown_report
-                    kwargs["report_carrier"] = ""
-                    kwargs["report_driver"] = ""
+                    if report.report_text:
+                        raw = report.report_text
+                        data = json.loads(raw)
+                        # data = raw
 
-            elif report.report_type == "advanced":
+                        markdown_report = data.get("markdown_report", "")
 
-                # Carrier Cost Reliability Analysis
-                print("carrier_stats:", carrier_stats)
-                kwargs["carrierstats"] = carrier_stats
-                kwargs["contigency"] = contingency_result
-                kwargs["contingency_action"] = contingency_action
+                        kwargs["report_route"] = markdown_report
+                        kwargs["report_carrier"] = ""
+                        kwargs["report_driver"] = ""
 
-                # Driver On-time Rate Vs. MPG Analysis
-                kwargs["driverstats"] = driver_stats
+                elif report.report_type == "advanced":
 
-                # Driver Messages and Actions
-                kwargs["driver_messages"] = driver_extended_message
-                kwargs["driver_actions"] = driver_actions
+                    # Carrier Cost Reliability Analysis
+                    print("carrier_stats:", carrier_stats)
+                    kwargs["carrierstats"] = carrier_stats
+                    kwargs["contigency"] = contingency_result
+                    kwargs["contingency_action"] = contingency_action
 
-                # Carrier Cost Per Mile Analysis
-                cost_mile = df[['CarrierName', 'CostPerMile']]
-                cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)
-                cost_mile = json.loads(cost_mile.to_json(orient='records'))
-                kwargs["costmile"] = cost_mile
+                    # Driver On-time Rate Vs. MPG Analysis
+                    kwargs["driverstats"] = driver_stats
 
-                # Driver Cost Per Mile Analysis
-                cost_mile_driver = df[['DriverName', 'CostPerMile']]
-                cost_mile_driver["CostPerMile"] = cost_mile_driver["CostPerMile"].round(4)
-                cost_mile_driver = json.loads(cost_mile_driver.to_json(orient='records'))
-                kwargs["costmiledriver"] = cost_mile_driver
-                kwargs["driver_costreliability_action_ext"] = driver_cost_variance
+                    # Driver Messages and Actions
+                    kwargs["driver_messages"] = driver_extended_message
+                    kwargs["driver_actions"] = driver_actions
 
-                # Carrier Messages and Actions
-                kwargs["highcostvariance"] = highcostvariance
-                kwargs["lowcostvariance"] = lowcostvariance
-                kwargs["costreliability_action"] = costreliability_action
+                    # Carrier Cost Per Mile Analysis
+                    cost_mile = df[['CarrierName', 'CostPerMile']]
+                    cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)
+                    cost_mile = json.loads(cost_mile.to_json(orient='records'))
+                    kwargs["costmile"] = cost_mile
 
-                if report.report_carrier:
-                    kwargs["report_carrier"] = report.report_carrier
-                if report.report_driver:
-                    kwargs["report_driver"] = report.report_driver
-                if report.report_route:
-                    kwargs["report_route"] = report.report_route
+                    # Driver Cost Per Mile Analysis
+                    cost_mile_driver = df[['DriverName', 'CostPerMile']]
+                    cost_mile_driver["CostPerMile"] = cost_mile_driver["CostPerMile"].round(4)
+                    cost_mile_driver = json.loads(cost_mile_driver.to_json(orient='records'))
+                    kwargs["costmiledriver"] = cost_mile_driver
+                    kwargs["driver_costreliability_action_ext"] = driver_cost_variance
+
+                    # Carrier Messages and Actions
+                    kwargs["highcostvariance"] = highcostvariance
+                    kwargs["lowcostvariance"] = lowcostvariance
+                    kwargs["costreliability_action"] = costreliability_action
+
+                    if report.report_carrier:
+                        kwargs["report_carrier"] = report.report_carrier
+                    if report.report_driver:
+                        kwargs["report_driver"] = report.report_driver
+                    if report.report_route:
+                        kwargs["report_route"] = report.report_route
 
         else:
             print("report none")
-            # return redirect('profiles:403')
-            # return reverse_lazy("profiles:403")
 
         return super(ReportView, self).get_context_data(**kwargs)
 

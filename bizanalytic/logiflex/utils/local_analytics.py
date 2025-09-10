@@ -586,18 +586,10 @@ def read_csv_into_text_and_df(file_obj) -> tuple[str, pd.DataFrame]:
     csv_text = data.decode("utf-8", errors="ignore")
     return csv_text
 
+
 # @shared_task(name='run_llm_analysis')
-def run_LLM_analysis(flags, pu):
-    report = LogiflexReport.objects.filter(pk=pu).first()
-    # Check file extension
-    if report.routefile_ext == ".csv":
-        df = pd.read_csv(report.routefile)
-    elif report.routefile_ext == ".xlsx" or report.routefile_ext == ".xls":
-        df = pd.read_excel(report.routefile)
+def run_LLM_analysis(flags, summary_for_prompt, client_name):
 
-    summary_for_prompt = summarize_df_for_prompt(df, max_rows=10)
-
-    client_name = report.client.company
     user_prompt = f"""
                                 Analyze freight route data for client: {client_name}.
 
@@ -620,8 +612,8 @@ def run_LLM_analysis(flags, pu):
                                 - STRICTLY return a single JSON object matching the provided schema.
                                 - Include Chart.js-ready configs in summary_json.charts[].config (full chart config).
                                 """
-    if not report.report_prompt:
-        report.report_prompt = user_prompt
+    # if not report.report_prompt:
+    #     report.report_prompt = user_prompt
 
     print("user_prompt: ", user_prompt)
 
@@ -718,10 +710,6 @@ def run_LLM_analysis(flags, pu):
                         if getattr(c, "type", "") == "output_text":
                             raw += c.text
 
-    report.report_text = raw
-    report.report_status = "download"
-    report.report_date = datetime.now()
-    report.save()
     return raw
 
 
@@ -858,19 +846,58 @@ def run_route_analysis(flags, route_stats, client_name):
 @shared_task(name='run_all_llm_analysis')
 def run_All_LLM_Analysis():
     reports = LogiflexReport.objects.filter(report_type="Paid", report_text={},
-                                            report_status__in=['processing', 'late'], report_approved=False)
+                                            report_status__in=['processing', 'late'],
+                                            report_approved=False).select_related("client")
     print("Reports to be analyzed")
-    # print(reports)
+    print(reports)
+    numreports = reports.count()
     if reports:
         for report in reports:
             log = LogEntry.objects.filter(report=report).first()
             flags = ""
             if log:
                 flags = json.dumps(log.flags, indent=2)
+            if report.report_type == "lite":
+                # Check file extension
+                extension_ok = True
+                if report.routefile_ext == ".csv":
+                    df = pd.read_csv(report.routefile)
+                elif report.routefile_ext == ".xlsx" or report.routefile_ext == ".xls":
+                    df = pd.read_excel(report.routefile)
+                else:
+                    extension_ok = False
+                if extension_ok:
+                    summary_for_prompt = summarize_df_for_prompt(df, max_rows=10)
+                    raw = run_LLM_analysis(flags, summary_for_prompt, report.client.company)
+                    report.report_text = raw
+                    report.report_status = "download"
+                    report.report_date = datetime.now()
+                    report.save()
+            elif report.report_type == "advanced":
 
-            raw = run_LLM_analysis(flags, report.pk)
+                # Check file extension
+                extension_ok = True
+                if report.routefile_ext == ".csv":
+                    dff = pd.read_csv(report.routefile)
+                elif report.routefile_ext == ".xlsx" or report.routefile_ext == ".xls":
+                    dff = pd.read_excel(report.routefile)
+                else:
+                    extension_ok = False
+                if extension_ok:
+                    df = clean_data(dff)
+                    df = calculate_kpis(df)
+                    # Carrier Analysis
+                    carrier_stats = prepare_carrier_stats(df)
+                    driver_stats = prepare_driver_stats(df)
+                    route_stats = prepare_route_stats(df)
+                    report.report_carrier = run_carrier_analysis(flags, carrier_stats, report.client.company)
+                    report.report_driver = run_driver_analysis(flags, driver_stats, report.client.company)
+                    report.report_route = run_route_analysis(flags, route_stats, report.client.company)
+                    report.report_status = "download"
+                    report.report_date = datetime.now()
+                    report.save()
             # raw = asynch_preprocess.get()
-            numreports= reports.count()
+            numreports = reports.count()
     else:
         numreports = 0
     return f"{numreports} are processed"

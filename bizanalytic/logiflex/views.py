@@ -393,7 +393,8 @@ class ReportView(TemplateView):
                     markdown_report = data.get("markdown_report", "")
 
                     kwargs["report_route"] = markdown_report
-
+                    kwargs["report_carrier"] = ""
+                    kwargs["report_driver"] = ""
 
             elif report.report_type == "advanced":
 

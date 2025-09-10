@@ -848,8 +848,8 @@ def run_All_LLM_Analysis():
     reports = LogiflexReport.objects.filter(report_text={},
                                             report_status__in=['processing', 'late'],
                                             report_approved=False).select_related("client")
-    print("Reports to be analyzed")
-    print(reports)
+    print("Reports to be analyzed", reports.count())
+    # print(reports.count())
     numreports = reports.count()
     if reports:
         for report in reports:

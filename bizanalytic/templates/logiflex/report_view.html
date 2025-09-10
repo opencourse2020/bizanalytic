@@ -287,7 +287,7 @@
                             {% trans "Carriers AI-Driven Analysis" %}
                         </div>
                         <div class="card-body" >
-                            <div id="markdown_container" class="prose">{{ report_carrier|safe|json_script:"md_json" }}</div>
+                            <div id="markdown_container1" class="prose">{{ report_carrier|safe|json_script:"cmd_json" }}</div>
                         </div>
                     </div>
               </div>
@@ -459,7 +459,7 @@
                             {% trans "Drivers AI-Driven Analysis" %}
                         </div>
                         <div class="card-body" >
-                        <div id="markdown_container" class="prose">{{ report_driver|safe|json_script:"md_json" }}</div>
+                        <div id="markdown_container2" class="prose">{{ report_driver|safe|json_script:"dmd_json" }}</div>
                         </div>
                     </div>
                  </div>
@@ -589,7 +589,7 @@
                             {% trans "Routess AI-Driven Analysis" %}
                         </div>
                         <div class="card-body" >
-                        <div id="markdown_container" class="prose">{{ report_route|safe|json_script:"md_json" }}</div>
+                        <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>
                         </div>
                     </div>
                 </div>
@@ -636,14 +636,20 @@
 
     <script>
     // Safely inject server-provided data
-    const markdownReport = {{ markdown_report|safe|json_script:"md_json" }};
+    const markdownCarrierReport = {{ report_carrier|safe|json_script:"md_json" }};
+    const markdownDriverReport = {{ report_driver|safe|json_script:"md_json" }};
+    const markdownRouteReport = {{ report_route|safe|json_script:"md_json" }};
     const summaryData = {{ summary_json|safe|json_script:"summary_json" }};
   </script>
 
   <script>
     // Render Markdown to HTML
-    const md = JSON.parse(document.getElementById("md_json").textContent);
-    document.getElementById("markdown_container").innerHTML = marked.parse(md);
+    const mdc = JSON.parse(document.getElementById("cmd_json").textContent);
+    const mdd = JSON.parse(document.getElementById("dmd_json").textContent);
+    const mdr = JSON.parse(document.getElementById("rmd_json").textContent);
+    document.getElementById("markdown_container1").innerHTML = marked.parse(mdc);
+    document.getElementById("markdown_container2").innerHTML = marked.parse(mdd);
+    document.getElementById("markdown_container3").innerHTML = marked.parse(mdr);
 
     // Build Chart.js charts from model-provided configs
     const sdata = JSON.parse(document.getElementById("summary_json").textContent);

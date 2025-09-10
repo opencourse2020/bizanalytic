@@ -720,7 +720,7 @@ def run_carrier_analysis(flags, carrier_stats, client_name):
                                     Analyze freight route data for client: {client_name}.
     
                                     Objective:
-                                    - Executive-ready Fleet Efficiency Report with KPIs, Key Insights, and actionable recommendations.
+                                    - Executive-ready Fleet Efficiency Report with Executive Summary, KPIs, Key Insights, actionable recommendations, Next Steps Actions, and Executive Dashboard KPIs for Ongoing Monitoring.
                                     
                                     Data notes:
                                     - The dataset represent a summary of carriers performance Comparative Table with some kpis
@@ -744,6 +744,7 @@ def run_carrier_analysis(flags, carrier_stats, client_name):
                                                                 "type": "object",
                                                                 "properties": {
                                                                     "client": {"type": "string"},
+                                                                    "executive_summary": {"type": "string"},
                                                                     "kpis": {
                                                                         "type": "array",
                                                                         "items": {
@@ -757,14 +758,38 @@ def run_carrier_analysis(flags, carrier_stats, client_name):
                                                                             "additionalProperties": False,
                                                                         }
                                                                     },
-                                                                    "data_quality": {
+                                                                    "next_step": {
                                                                         "type": "object",
                                                                         "properties": {
-                                                                            "flags": {"type": "array",
-                                                                                      "items": {"type": "string"}}
+                                                                            "immediate": {
+                                                                                        "type": "array",
+                                                                                        "items": {"type": "string"}
+                                                                                    },
+                                                                            "short-term": {
+                                                                                    "type": "array",
+                                                                                    "items": {"type": "string"}
+                                                                                },
+                                                                            "Long-Term": {
+                                                                                "type": "array",
+                                                                                "items": {"type": "string"}
+                                                                            },
                                                                         },
-                                                                        "required": ["flags"],
+                                                                        "required": ["immediate", "short-term", "Long-Term"],
                                                                         "additionalProperties": False,
+                                                                    },
+                                                                    "executive_dashboard_kpis": {
+                                                                        "type": "array",
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "kpi": {"type": "string"},
+                                                                                "target": {"type": "string"},
+                                                                                "current_best": {"type": "string"},
+                                                                                "current_worst": {"type": "string"}
+                                                                            },
+                                                                            "required": ["kpi", "target", "current_best", "current_worst"],
+                                                                            "additionalProperties": False,
+                                                                        }
                                                                     },
                                                                     "recommendations": {
                                                                         "type": "array",
@@ -775,7 +800,8 @@ def run_carrier_analysis(flags, carrier_stats, client_name):
                                                                         "items": {"type": "string"}
                                                                     }
                                                                 },
-                                                                "required": ["client", "kpis", "data_quality",
+                                                                "required": ["client", "executive_summary", "kpis",
+                                                                             "next_step", "executive_dashboard_kpis",
                                                                              "recommendations", "key_insights"],
                                                                 "additionalProperties": False,
                                                             }
@@ -810,7 +836,7 @@ def run_driver_analysis(flags, driver_stats, client_name):
                         Analyze freight route data for client: {client_name}.
 
                         Objective:
-                        - Executive-ready Fleet Efficiency Report with KPIs, Key Insights, and actionable recommendations.
+                        - Executive-ready Fleet Efficiency Report with Executive Summary, KPIs, Key Insights, actionable recommendations, Next Steps Actions, and Executive Dashboard KPIs for Ongoing Monitoring.
 
                         Data notes:
                         - The dataset represent a summary of drivers performance Comparative Table with some kpis
@@ -834,6 +860,7 @@ def run_driver_analysis(flags, driver_stats, client_name):
                                                                 "type": "object",
                                                                 "properties": {
                                                                     "client": {"type": "string"},
+                                                                    "executive_summary": {"type": "string"},
                                                                     "kpis": {
                                                                         "type": "array",
                                                                         "items": {
@@ -847,14 +874,41 @@ def run_driver_analysis(flags, driver_stats, client_name):
                                                                             "additionalProperties": False,
                                                                         }
                                                                     },
-                                                                    "data_quality": {
+                                                                    "next_step": {
                                                                         "type": "object",
                                                                         "properties": {
-                                                                            "flags": {"type": "array",
-                                                                                      "items": {"type": "string"}}
+                                                                            "immediate": {
+                                                                                "type": "array",
+                                                                                "items": {"type": "string"}
+                                                                            },
+                                                                            "short-term": {
+                                                                                "type": "array",
+                                                                                "items": {"type": "string"}
+                                                                            },
+                                                                            "Long-Term": {
+                                                                                "type": "array",
+                                                                                "items": {"type": "string"}
+                                                                            },
                                                                         },
-                                                                        "required": ["flags"],
+                                                                        "required": ["immediate", "short-term",
+                                                                                     "Long-Term"],
                                                                         "additionalProperties": False,
+                                                                    },
+                                                                    "executive_dashboard_kpis": {
+                                                                        "type": "array",
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "kpi": {"type": "string"},
+                                                                                "target": {"type": "string"},
+                                                                                "current_best": {"type": "string"},
+                                                                                "current_worst": {"type": "string"}
+                                                                            },
+                                                                            "required": ["kpi", "target",
+                                                                                         "current_best",
+                                                                                         "current_worst"],
+                                                                            "additionalProperties": False,
+                                                                        }
                                                                     },
                                                                     "recommendations": {
                                                                         "type": "array",
@@ -865,7 +919,8 @@ def run_driver_analysis(flags, driver_stats, client_name):
                                                                         "items": {"type": "string"}
                                                                     }
                                                                 },
-                                                                "required": ["client", "kpis", "data_quality",
+                                                                "required": ["client", "executive_summary", "kpis",
+                                                                             "next_step", "executive_dashboard_kpis",
                                                                              "recommendations", "key_insights"],
                                                                 "additionalProperties": False,
                                                             }
@@ -903,7 +958,7 @@ def run_route_analysis(flags, route_stats, client_name):
                                     Analyze freight route data for client: {client_name}.
 
                                     Objective:
-                                    - Executive-ready Fleet Efficiency Report with KPIs, Key Insights, and actionable recommendations.
+                                    - Executive-ready Fleet Efficiency Report with Executive Summary, KPIs, Key Insights, actionable recommendations, Next Steps Actions, and Executive Dashboard KPIs for Ongoing Monitoring.
 
                                     Data notes:
                                     - The dataset represent a summary of routes performance Comparative Table with some kpis
@@ -927,6 +982,7 @@ def run_route_analysis(flags, route_stats, client_name):
                                                                 "type": "object",
                                                                 "properties": {
                                                                     "client": {"type": "string"},
+                                                                    "executive_summary": {"type": "string"},
                                                                     "kpis": {
                                                                         "type": "array",
                                                                         "items": {
@@ -940,14 +996,41 @@ def run_route_analysis(flags, route_stats, client_name):
                                                                             "additionalProperties": False,
                                                                         }
                                                                     },
-                                                                    "data_quality": {
+                                                                    "next_step": {
                                                                         "type": "object",
                                                                         "properties": {
-                                                                            "flags": {"type": "array",
-                                                                                      "items": {"type": "string"}}
+                                                                            "immediate": {
+                                                                                "type": "array",
+                                                                                "items": {"type": "string"}
+                                                                            },
+                                                                            "short-term": {
+                                                                                "type": "array",
+                                                                                "items": {"type": "string"}
+                                                                            },
+                                                                            "Long-Term": {
+                                                                                "type": "array",
+                                                                                "items": {"type": "string"}
+                                                                            },
                                                                         },
-                                                                        "required": ["flags"],
+                                                                        "required": ["immediate", "short-term",
+                                                                                     "Long-Term"],
                                                                         "additionalProperties": False,
+                                                                    },
+                                                                    "executive_dashboard_kpis": {
+                                                                        "type": "array",
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "kpi": {"type": "string"},
+                                                                                "target": {"type": "string"},
+                                                                                "current_best": {"type": "string"},
+                                                                                "current_worst": {"type": "string"}
+                                                                            },
+                                                                            "required": ["kpi", "target",
+                                                                                         "current_best",
+                                                                                         "current_worst"],
+                                                                            "additionalProperties": False,
+                                                                        }
                                                                     },
                                                                     "recommendations": {
                                                                         "type": "array",
@@ -958,7 +1041,8 @@ def run_route_analysis(flags, route_stats, client_name):
                                                                         "items": {"type": "string"}
                                                                     }
                                                                 },
-                                                                "required": ["client", "kpis", "data_quality",
+                                                                "required": ["client", "executive_summary", "kpis",
+                                                                             "next_step", "executive_dashboard_kpis",
                                                                              "recommendations", "key_insights"],
                                                                 "additionalProperties": False,
                                                             }

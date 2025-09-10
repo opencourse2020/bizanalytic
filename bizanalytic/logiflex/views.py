@@ -417,6 +417,13 @@ class ReportView(TemplateView):
                 kwargs["lowcostvariance"] = lowcostvariance
                 kwargs["costreliability_action"] = costreliability_action
 
+                if report.report_carrier:
+                    kwargs["report_carrier"] = report.report_carrier
+                if report.report_driver:
+                    kwargs["report_driver"] = report.report_driver
+                if report.report_route:
+                    kwargs["report_route"] = report.report_route
+
         else:
             print("report none")
             # return redirect('profiles:403')

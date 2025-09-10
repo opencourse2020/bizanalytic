@@ -280,6 +280,19 @@
             </div>
 {#        <div class="" id="col-helper">#}
         <div class="page-break-after"></div>
+          {% if reporttype == "advanced" %}
+                <div class="col-12">
+                    <div class="card shadow-sm" id="carrier_summary">
+                        <div class="card-header">
+                            {% trans "Carriers AI-Driven Analysis" %}
+                        </div>
+                        <div class="card-body" >
+                        {{ report_carrier|safe }}
+                        </div>
+                    </div>
+              </div>
+          {% endif %}
+       <div class="page-break-after"></div>
 {#      </div>#}
         <div class="col-12">
                 <div class="row justify-content-center text">
@@ -438,6 +451,19 @@
                     </div>
                     </div>
                 </div>
+                <div class="page-break-after"></div>
+             {% if reporttype == "advanced" %}
+                <div class="col-12">
+                    <div class="card shadow-sm" id="driver_summary">
+                        <div class="card-header">
+                            {% trans "Drivers AI-Driven Analysis" %}
+                        </div>
+                        <div class="card-body" >
+                        {{ report_driver|safe }}
+                        </div>
+                    </div>
+                 </div>
+            {% endif %}
             <div class="page-break-after"></div>
                     <div class="col-12">
                 <div class="row justify-content-center text">
@@ -556,24 +582,19 @@
                     </div>
                 </div>
             </div>
+                 <div class="page-break-after"></div>
+                <div class="col-12">
+                    <div class="card shadow-sm" id="driver_summary">
+                        <div class="card-header">
+                            {% trans "Routess AI-Driven Analysis" %}
+                        </div>
+                        <div class="card-body" >
+                        {{ report_route|safe }}
+                        </div>
+                    </div>
+                </div>
            {% endif %}
-            <div class="col-md-4">
-                 <div class="card shadow-sm">
-                    <div class="card-body text-center">
 
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                 <div class="card shadow-sm">
-                    <div class="card-body text-center">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-                </div>
                 <div class="" id="col-2" style="border: 2px solid rgb(204, 204, 204); background: #e1e0e0; display: none">
 
                     <div class="d-flex justify-content-between w-100" id="framebutton" style="display: none; background: #e1e0e0; height: 30px;">

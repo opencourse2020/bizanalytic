@@ -124,7 +124,7 @@
                                             <td>
                                                 {% if logireport.report_status == "download"%}
 {#                                                    <a href="{% url 'logiflex:reports:view' logireport.pk %}" class="btn btn-info btn-sm">#}
-                                                <a href="{% url 'logiflex:reports:summary' logireport.pk %}" class="btn btn-info btn-sm">
+                                                <a href="{% url 'logiflex:reports:reportview' logireport.pk %}?cat={{ logireport.download_code }}" class="btn btn-info btn-sm">
                                                     <span style="text-transform: uppercase;font-size: 12px;">{% trans "View Report" %}</span></a>
                                                 {% else %}
                                                     <span style="text-transform: uppercase; color: #9d0006;font-size: 12px;">{{ logireport.report_status }}...</span>

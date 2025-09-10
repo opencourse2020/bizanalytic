@@ -287,7 +287,14 @@
                             {% trans "Carriers AI-Driven Analysis" %}
                         </div>
                         <div class="card-body" >
-                            <div id="markdown_container1" class="prose">{{ report_carrier|safe|json_script:"cmd_json" }}</div>
+{#                            <div id="markdown_container1" class="prose">{{ report_carrier|safe|json_script:"cmd_json" }}</div>#}
+                            {% if report_carrier.recommendations %}
+                            <ol class="mb-0">
+                                  {% for r in report_carrier.recommendations %}
+                                  <li>{{ r }}</li>
+                                  {% endfor %}
+                                </ol>
+                            {% endif %}
                         </div>
                     </div>
               </div>
@@ -459,7 +466,14 @@
                             {% trans "Drivers AI-Driven Analysis" %}
                         </div>
                         <div class="card-body" >
-                        <div id="markdown_container2" class="prose">{{ report_driver|safe|json_script:"dmd_json" }}</div>
+{#                        <div id="markdown_container2" class="prose">{{ report_driver|safe|json_script:"dmd_json" }}</div>#}
+                            {% if report_driver.recommendations %}
+                            <ol class="mb-0">
+                                  {% for r in report_driver.recommendations %}
+                                  <li>{{ r }}</li>
+                                  {% endfor %}
+                                </ol>
+                            {% endif %}
                         </div>
                     </div>
                  </div>
@@ -589,7 +603,14 @@
                             {% trans "Routes AI-Driven Analysis" %}
                         </div>
                         <div class="card-body" >
-                        <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>
+{#                        <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>#}
+                            {% if report_route.recommendations %}
+                            <ol class="mb-0">
+                                  {% for r in report_route.recommendations %}
+                                  <li>{{ r }}</li>
+                                  {% endfor %}
+                                </ol>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -600,7 +621,15 @@
                             {% trans "AI-Driven Analysis" %}
                         </div>
                         <div class="card-body" >
-                        <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>
+{#                        <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>#}
+                          {% if report_route.recommendations %}
+                            <ol class="mb-0">
+                                  {% for r in report_route.recommendations %}
+                                  <li>{{ r }}</li>
+                                  {% endfor %}
+                                </ol>
+                            {% endif %}
+
                         </div>
                     </div>
                 </div>
@@ -650,43 +679,45 @@
 
     {#const markdownCarrierReport = {{ report_carrier|safe|json_script:"cmd_json" }};#}
     {#const markdownDriverReport = {{ report_driver|safe|json_script:"dmd_json" }};#}
-    const markdownRouteReport = {{ report_route|safe|json_script:"rmd_json" }};
-    const summaryData = {{ summary_json|safe|json_script:"summary_json" }};
+    {#const markdownRouteReport = {{ report_route|safe|json_script:"rmd_json" }};#}
+    const summaryCData = {{ report_carrier|safe|json_script:"report_carrier" }};
+    const summaryDData = {{ report_driver|safe|json_script:"report_driver" }};
+    const summaryRData = {{ report_route|safe|json_script:"report_route" }};
   </script>
 
   <script>
     // Render Markdown to HTML
-    const mdce = document.getElementById("cmd_json");
-    if (mdce) {
-        const mdc = JSON.parse(mdce.textContent);
-        document.getElementById("markdown_container1").innerHTML = marked.parse(mdc);
-    }
-    const mdde = document.getElementById("dmd_json");
-    if (mdde) {
-    const mdd = JSON.parse(mdde.textContent);
-    document.getElementById("markdown_container2").innerHTML = marked.parse(mdd);
-    }
-    const mdre = document.getElementById("rmd_json");
-    if (mdre) {
-    const mdr = JSON.parse(mdre.textContent);
-    document.getElementById("markdown_container3").innerHTML = marked.parse(mdr);
-    }
+    //const mdce = document.getElementById("cmd_json");
+    //if (mdce) {
+    //    const mdc = JSON.parse(mdce.textContent);
+    //    document.getElementById("markdown_container1").innerHTML = marked.parse(mdc);
+    //}
+    //const mdde = document.getElementById("dmd_json");
+    //if (mdde) {
+    //const mdd = JSON.parse(mdde.textContent);
+    //document.getElementById("markdown_container2").innerHTML = marked.parse(mdd);
+    //}
+    //const mdre = document.getElementById("rmd_json");
+    //if (mdre) {
+    //const mdr = JSON.parse(mdre.textContent);
+    //document.getElementById("markdown_container3").innerHTML = marked.parse(mdr);
+    //}
 
 
 
 
 
     // Build Chart.js charts from model-provided configs
-    const sdata = JSON.parse(document.getElementById("summary_json").textContent);
-    if (sdata && sdata.charts) {
-      sdata.charts.forEach((c, idx) => {
-        const canvasId = "chart_" + (idx + 1);
-        const ctx = document.getElementById(canvasId);
-        if (!ctx || !c.config) return;
+    //const sdata = JSON.parse(document.getElementById("summary_json").textContent);
+    //if (sdata && sdata.charts) {
+     // sdata.charts.forEach((c, idx) => {
+     //   const canvasId = "chart_" + (idx + 1);
+     //   const ctx = document.getElementById(canvasId);
+     //   if (!ctx || !c.config) return;
         // Expecting full Chart.js config object: { type, data, options }
-        new Chart(ctx, c.config);
-      });
-    }
+     //   new Chart(ctx, c.config);
+      //});
+    //}
   </script>
 
 

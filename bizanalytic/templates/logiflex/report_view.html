@@ -647,8 +647,9 @@
 
     <script>
     // Safely inject server-provided data
-    const markdownCarrierReport = {{ report_carrier|safe|json_script:"cmd_json" }};
-    const markdownDriverReport = {{ report_driver|safe|json_script:"dmd_json" }};
+
+    {#const markdownCarrierReport = {{ report_carrier|safe|json_script:"cmd_json" }};#}
+    {#const markdownDriverReport = {{ report_driver|safe|json_script:"dmd_json" }};#}
     const markdownRouteReport = {{ report_route|safe|json_script:"rmd_json" }};
     const summaryData = {{ summary_json|safe|json_script:"summary_json" }};
   </script>

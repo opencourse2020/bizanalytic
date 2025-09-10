@@ -586,7 +586,18 @@
                 <div class="col-12">
                     <div class="card shadow-sm" id="driver_summary">
                         <div class="card-header">
-                            {% trans "Routess AI-Driven Analysis" %}
+                            {% trans "Routes AI-Driven Analysis" %}
+                        </div>
+                        <div class="card-body" >
+                        <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>
+                        </div>
+                    </div>
+                </div>
+           {% elif reporttype == "lite" %}
+                <div class="col-12">
+                    <div class="card shadow-sm" id="driver_summary">
+                        <div class="card-header">
+                            {% trans "AI-Driven Analysis" %}
                         </div>
                         <div class="card-body" >
                         <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>

@@ -384,6 +384,9 @@ class ReportView(TemplateView):
                 cost_mile = '{"0":"0"}'
                 kwargs["costmile"] = json.loads(cost_mile)
                 kwargs["costmiledriver"] = json.loads(cost_mile)
+
+                if report.report_text:
+                    kwargs["report_route"] = report.report_text
             elif report.report_type == "advanced":
 
                 # Carrier Cost Reliability Analysis

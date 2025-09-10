@@ -720,7 +720,7 @@ def run_carrier_analysis(flags, carrier_stats, client_name):
                                     Analyze freight route data for client: {client_name}.
     
                                     Objective:
-                                    - Executive-ready Fleet Efficiency Report KPIs, and actionable recommendations.
+                                    - Executive-ready Fleet Efficiency Report with KPIs, Key Insights, and actionable recommendations.
                                     
                                     Data notes:
                                     - The dataset represent a summary of carriers performance Comparative Table with some kpis
@@ -736,7 +736,55 @@ def run_carrier_analysis(flags, carrier_stats, client_name):
     resp = client.responses.create(model="gpt-4.1",
                                    temperature=0.2,
                                    max_output_tokens=3500,
-
+                                   text={"format": {"type": "json_schema", "name": "freight_bi_carriers",
+                                                    "schema": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "summary_json": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "client": {"type": "string"},
+                                                                    "kpis": {
+                                                                        "type": "array",
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "metric": {"type": "string"},
+                                                                                "value": {"type": ["string", "number"]},
+                                                                                "note": {"type": "string"}
+                                                                            },
+                                                                            "required": ["metric", "value", "note"],
+                                                                            "additionalProperties": False,
+                                                                        }
+                                                                    },
+                                                                    "data_quality": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "flags": {"type": "array",
+                                                                                      "items": {"type": "string"}}
+                                                                        },
+                                                                        "required": ["flags"],
+                                                                        "additionalProperties": False,
+                                                                    },
+                                                                    "recommendations": {
+                                                                        "type": "array",
+                                                                        "items": {"type": "string"}
+                                                                    },
+                                                                    "key_insights": {
+                                                                        "type": "array",
+                                                                        "items": {"type": "string"}
+                                                                    }
+                                                                },
+                                                                "required": ["client", "kpis", "data_quality",
+                                                                             "recommendations", "key_insights"],
+                                                                "additionalProperties": False,
+                                                            }
+                                                        },
+                                                        "required": ["summary_json"],
+                                                        "additionalProperties": False,
+                                                    },
+                                                    # "strict": True,
+                                                    }},
                                    input=[
                                        {"role": "system", "content": carrier_system_prompt},
                                        {"role": "user", "content": user_prompt}], )
@@ -762,7 +810,7 @@ def run_driver_analysis(flags, driver_stats, client_name):
                         Analyze freight route data for client: {client_name}.
 
                         Objective:
-                        - Executive-ready Fleet Efficiency Report KPIs, and actionable recommendations.
+                        - Executive-ready Fleet Efficiency Report with KPIs, Key Insights, and actionable recommendations.
 
                         Data notes:
                         - The dataset represent a summary of drivers performance Comparative Table with some kpis
@@ -778,7 +826,55 @@ def run_driver_analysis(flags, driver_stats, client_name):
     resp = client.responses.create(model="gpt-4.1",
                                    temperature=0.2,
                                    max_output_tokens=3500,
-
+                                   text={"format": {"type": "json_schema", "name": "freight_bi_drivers",
+                                                    "schema": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "summary_json": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "client": {"type": "string"},
+                                                                    "kpis": {
+                                                                        "type": "array",
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "metric": {"type": "string"},
+                                                                                "value": {"type": ["string", "number"]},
+                                                                                "note": {"type": "string"}
+                                                                            },
+                                                                            "required": ["metric", "value", "note"],
+                                                                            "additionalProperties": False,
+                                                                        }
+                                                                    },
+                                                                    "data_quality": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "flags": {"type": "array",
+                                                                                      "items": {"type": "string"}}
+                                                                        },
+                                                                        "required": ["flags"],
+                                                                        "additionalProperties": False,
+                                                                    },
+                                                                    "recommendations": {
+                                                                        "type": "array",
+                                                                        "items": {"type": "string"}
+                                                                    },
+                                                                    "key_insights": {
+                                                                        "type": "array",
+                                                                        "items": {"type": "string"}
+                                                                    }
+                                                                },
+                                                                "required": ["client", "kpis", "data_quality",
+                                                                             "recommendations", "key_insights"],
+                                                                "additionalProperties": False,
+                                                            }
+                                                        },
+                                                        "required": ["summary_json"],
+                                                        "additionalProperties": False,
+                                                    },
+                                                    # "strict": True,
+                                                    }},
                                    input=[
                                        {"role": "system", "content": driver_system_prompt},
                                        {"role": "user", "content": user_prompt}], )
@@ -807,7 +903,7 @@ def run_route_analysis(flags, route_stats, client_name):
                                     Analyze freight route data for client: {client_name}.
 
                                     Objective:
-                                    - Executive-ready Fleet Efficiency Report KPIs, and actionable recommendations.
+                                    - Executive-ready Fleet Efficiency Report with KPIs, Key Insights, and actionable recommendations.
 
                                     Data notes:
                                     - The dataset represent a summary of routes performance Comparative Table with some kpis
@@ -823,7 +919,55 @@ def run_route_analysis(flags, route_stats, client_name):
     resp = client.responses.create(model="gpt-4.1",
                                    temperature=0.2,
                                    max_output_tokens=3500,
-
+                                   text={"format": {"type": "json_schema", "name": "freight_bi_routes",
+                                                    "schema": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "summary_json": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "client": {"type": "string"},
+                                                                    "kpis": {
+                                                                        "type": "array",
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "metric": {"type": "string"},
+                                                                                "value": {"type": ["string", "number"]},
+                                                                                "note": {"type": "string"}
+                                                                            },
+                                                                            "required": ["metric", "value", "note"],
+                                                                            "additionalProperties": False,
+                                                                        }
+                                                                    },
+                                                                    "data_quality": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "flags": {"type": "array",
+                                                                                      "items": {"type": "string"}}
+                                                                        },
+                                                                        "required": ["flags"],
+                                                                        "additionalProperties": False,
+                                                                    },
+                                                                    "recommendations": {
+                                                                        "type": "array",
+                                                                        "items": {"type": "string"}
+                                                                    },
+                                                                    "key_insights": {
+                                                                        "type": "array",
+                                                                        "items": {"type": "string"}
+                                                                    }
+                                                                },
+                                                                "required": ["client", "kpis", "data_quality",
+                                                                             "recommendations", "key_insights"],
+                                                                "additionalProperties": False,
+                                                            }
+                                                        },
+                                                        "required": ["summary_json"],
+                                                        "additionalProperties": False,
+                                                    },
+                                                    # "strict": True,
+                                                    }},
                                    input=[
                                        {"role": "system", "content": route_system_prompt},
                                        {"role": "user", "content": user_prompt}], )

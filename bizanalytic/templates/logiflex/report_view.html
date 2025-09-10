@@ -294,7 +294,10 @@ table, th, td {
                             {% trans "Carriers AI-Driven Analysis" %}
                         </div>
                         <div class="card-body" >
-{#                            <div id="markdown_container1" class="prose">{{ report_carrier|safe|json_script:"cmd_json" }}</div>#}
+                            {% if report_carrier.executive_summary %}
+                                <h4>Executive Summary</h4>
+                                <p style="color: black">{{ report_carrier.executive_summary }}</p>
+                            {% endif %}
                             {% if report_carrier.kpis %}
                             <h4>KPI Analysis</h4>
                             <table class="table table-hover">
@@ -336,7 +339,54 @@ table, th, td {
                                   <li>{{ r }}</li>
                                   {% endfor %}
                                 </ol>
-                            {% endif %}
+                          {% endif %}
+                        <br>
+                        {% if report_carrier.next_step %}
+                              <h4>Next Step Actions</h4>
+                            <p><span style="font-weight: bold; color: black">Immediate:</span></p>
+                            <ol type="1">
+                            {%  for im in report_carrier.next_step.immediate %}
+                                <li>{{ im }}</li>
+                            {% endfor %}
+                            </ol>
+                            <p><span style="font-weight: bold; color: black">Short-Term:</span></p>
+                            <ol type="1">
+                            {%  for st in report_carrier.next_step.short_term %}
+                                <li>{{ st }}</li>
+                            {% endfor %}
+                            </ol>
+                            <p><span style="font-weight: bold; color: black">Long-Term:</span></p>
+                            <ol type="1">
+                            {%  for lt in report_carrier.next_step.long_term %}
+                                <li>{{ lt }}</li>
+                            {% endfor %}
+                            </ol>
+                         {% endif %}
+                        <br>
+                        {% if report_carrier.executive_dashboard_kpis %}
+                              <h4>Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
+                            <table class="table table-hover">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>{% trans "KPI" %}</th>
+                                <th>{% trans "Target" %}</th>
+                                <th>{% trans "Current Best" %}</th>
+                                <th>{% trans "Current Worst" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for eky in report_carrier.executive_dashboard_kpis %}
+                            <tr>
+                                <td>{{ eky.kpi }}</td>
+                                <td>{{ eky.target }}</td>
+                                <td>{{ eky.current_best }}</td>
+                                <td>{{ eky.current_worst }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            </table>
+                        {% endif %}
                         </div>
                     </div>
               </div>
@@ -508,7 +558,11 @@ table, th, td {
                             {% trans "Drivers AI-Driven Analysis" %}
                         </div>
                         <div class="card-body" >
-{#                        <div id="markdown_container2" class="prose">{{ report_driver|safe|json_script:"dmd_json" }}</div>#}
+                            {% if report_driver.executive_summary %}
+                                <h4>Executive Summary</h4>
+                                <p style="color: black">{{ report_driver.executive_summary }}</p>
+                            {% endif %}
+                            <br>
                             {% if report_driver.kpis %}
                             <h4>KPI Analysis</h4>
                             <table class="table table-hover">
@@ -550,7 +604,54 @@ table, th, td {
                                   <li>{{ r }}</li>
                                   {% endfor %}
                                 </ol>
-                            {% endif %}
+                          {% endif %}
+                        <br>
+                        {% if report_driver.next_step %}
+                              <h4>Next Step Actions</h4>
+                            <p><span style="font-weight: bold; color: black">Immediate:</span></p>
+                            <ol type="1">
+                            {%  for im in report_driver.next_step.immediate %}
+                                <li>{{ im }}</li>
+                            {% endfor %}
+                            </ol>
+                            <p><span style="font-weight: bold; color: black">Short-Term:</span></p>
+                            <ol type="1">
+                            {%  for st in report_driver.next_step.short_term %}
+                                <li>{{ st }}</li>
+                            {% endfor %}
+                            </ol>
+                            <p><span style="font-weight: bold; color: black">Long-Term:</span></p>
+                            <ol type="1">
+                            {%  for lt in report_driver.next_step.long_term %}
+                                <li>{{ lt }}</li>
+                            {% endfor %}
+                            </ol>
+                         {% endif %}
+                        <br>
+                        {% if report_driver.executive_dashboard_kpis %}
+                              <h4>Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
+                            <table class="table table-hover">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>{% trans "KPI" %}</th>
+                                <th>{% trans "Target" %}</th>
+                                <th>{% trans "Current Best" %}</th>
+                                <th>{% trans "Current Worst" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for eky in report_driver.executive_dashboard_kpis %}
+                            <tr>
+                                <td>{{ eky.kpi }}</td>
+                                <td>{{ eky.target }}</td>
+                                <td>{{ eky.current_best }}</td>
+                                <td>{{ eky.current_worst }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            </table>
+                        {% endif %}
                         </div>
                     </div>
                  </div>

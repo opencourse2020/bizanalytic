@@ -765,16 +765,16 @@ def run_carrier_analysis(flags, carrier_stats, client_name):
                                                                                         "type": "array",
                                                                                         "items": {"type": "string"}
                                                                                     },
-                                                                            "short-term": {
+                                                                            "short_term": {
                                                                                     "type": "array",
                                                                                     "items": {"type": "string"}
                                                                                 },
-                                                                            "Long-Term": {
+                                                                            "long_term": {
                                                                                 "type": "array",
                                                                                 "items": {"type": "string"}
                                                                             },
                                                                         },
-                                                                        "required": ["immediate", "short-term", "Long-Term"],
+                                                                        "required": ["immediate", "short_term", "long_term"],
                                                                         "additionalProperties": False,
                                                                     },
                                                                     "executive_dashboard_kpis": {
@@ -881,17 +881,17 @@ def run_driver_analysis(flags, driver_stats, client_name):
                                                                                 "type": "array",
                                                                                 "items": {"type": "string"}
                                                                             },
-                                                                            "short-term": {
+                                                                            "short_term": {
                                                                                 "type": "array",
                                                                                 "items": {"type": "string"}
                                                                             },
-                                                                            "Long-Term": {
+                                                                            "long_term": {
                                                                                 "type": "array",
                                                                                 "items": {"type": "string"}
                                                                             },
                                                                         },
-                                                                        "required": ["immediate", "short-term",
-                                                                                     "Long-Term"],
+                                                                        "required": ["immediate", "short_term",
+                                                                                     "long_term"],
                                                                         "additionalProperties": False,
                                                                     },
                                                                     "executive_dashboard_kpis": {
@@ -1003,17 +1003,17 @@ def run_route_analysis(flags, route_stats, client_name):
                                                                                 "type": "array",
                                                                                 "items": {"type": "string"}
                                                                             },
-                                                                            "short-term": {
+                                                                            "short_term": {
                                                                                 "type": "array",
                                                                                 "items": {"type": "string"}
                                                                             },
-                                                                            "Long-Term": {
+                                                                            "long_term": {
                                                                                 "type": "array",
                                                                                 "items": {"type": "string"}
                                                                             },
                                                                         },
-                                                                        "required": ["immediate", "short-term",
-                                                                                     "Long-Term"],
+                                                                        "required": ["immediate", "short_term",
+                                                                                     "long_term"],
                                                                         "additionalProperties": False,
                                                                     },
                                                                     "executive_dashboard_kpis": {

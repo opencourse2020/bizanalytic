@@ -453,12 +453,20 @@ class ReportView(TemplateView):
                     kwargs["lowcostvariance"] = lowcostvariance
                     kwargs["costreliability_action"] = costreliability_action
 
+                    # data = raw
+
                     if report.report_carrier:
-                        kwargs["report_carrier"] = report.report_carrier
+                        rawc = report.report_carrier
+                        datac = json.loads(rawc)
+                        kwargs["report_carrier"] = datac.get("summary_json", {})
                     if report.report_driver:
-                        kwargs["report_driver"] = report.report_driver
+                        rawd = report.report_driver
+                        datad = json.loads(rawd)
+                        kwargs["report_driver"] = datad.get("summary_json", {})
                     if report.report_route:
-                        kwargs["report_route"] = report.report_route
+                        rawr = report.report_route
+                        datar = json.loads(rawr)
+                        kwargs["report_route"] = datar.get("summary_json", {})
 
         else:
             print("report none")

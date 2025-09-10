@@ -655,9 +655,19 @@
 
   <script>
     // Render Markdown to HTML
-    const mdc = JSON.parse(document.getElementById("cmd_json").textContent);
-    const mdd = JSON.parse(document.getElementById("dmd_json").textContent);
-    const mdr = JSON.parse(document.getElementById("rmd_json").textContent);
+    const mdce = document.getElementById("cmd_json");
+    if (mdce) {
+        const mdc = JSON.parse(mdce.textContent);
+    }
+    const mdde = document.getElementById("dmd_json");
+    if (mdde) {
+    const mdd = JSON.parse(mdde.textContent);
+    }
+    const mdre = document.getElementById("dmd_json");
+    if (mdre) {
+    const mdr = JSON.parse(mdre.textContent);
+    }
+
     document.getElementById("markdown_container1").innerHTML = marked.parse(mdc);
     document.getElementById("markdown_container2").innerHTML = marked.parse(mdd);
     document.getElementById("markdown_container3").innerHTML = marked.parse(mdr);
@@ -837,7 +847,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const htmpmsg_html = htmpmsg.innerHTML;
 
             const breakroutes = document.getElementById("break_routes");
+            if (breakroutes){
             breakroutes.className = "page-break-after";
+            }
             let rphead = '<div class="logo-area" style="max-width:160px;"> <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a> </div>';
             rphead = rphead + '<div class="d-flex justify-content-center align-items-center" id="report_head">';
             rphead = rphead +'<span class="title" id="report_title" style="color: #0cb7d6; font-size: 20px">{% trans "FreightOps Report" %} -</span>';

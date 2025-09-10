@@ -613,6 +613,37 @@ table, th, td {
                     </div>
                 </div>
             </div>
+
+
+            {% if reporttype == "advanced" %}
+                <div class="page-break-after"></div>
+            <div class="col-md-6" id="route_2">
+                <div class="card shadow-sm chart-card"  id="card6">
+                    <div class="card-header">
+                        {% trans "Route Efficiency: Speed Vs. Cost per Mile Vs. Number of Shipments" %}
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="RouteEfficiencyBubble"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6" id="route_3">
+                <div class="card shadow-sm chart-card"  id="card7">
+                    <div class="card-header">
+                        {% trans "5 Worst Routes Based on Cost (Cost per Mile Vs. Speed Vs. Load Weight in Tons (1Ton =2000Lb)" %}
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="WorstRouteEfficiencyBubble"></div>
+                    </div>
+                </div>
+
+            </div>
+                <div class="page-break-after"></div>
+            {% endif %}
+
+
             <div class="col-md-9" id="route_1">
                 <div class="card shadow-sm chart-card"  id="card5">
                     <div class="card-header">
@@ -637,42 +668,8 @@ table, th, td {
                 </div>
             </div>
 
-            {% if reporttype == "advanced" %}
-                <div class="page-break-after"></div>
-            <div class="col-md-6" id="route_2">
-                <div class="card shadow-sm chart-card"  id="card6">
-                    <div class="card-header">
-                        {% trans "Route Efficiency: Speed Vs. Cost per Mile Vs. Number of Shipments" %}
-                    </div>
-                    <div class="card-body text-center">
-                        <div id="RouteEfficiencyBubble"></div>
-                    </div>
-                </div>
 
-            </div>
-                <div id="break_routes" class=""></div>
-            <div class="col-md-6" id="route_3">
-                <div class="card shadow-sm chart-card"  id="card7">
-                    <div class="card-header">
-                        {% trans "5 Worst Routes Based on Cost (Cost per Mile Vs. Speed Vs. Load Weight in Tons (1Ton =2000Lb)" %}
-                    </div>
-                    <div class="card-body text-center">
-                        <div id="WorstRouteEfficiencyBubble"></div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="page-break-after"></div>
-            <div class="col-12">
-                 <div class="card shadow-sm">
-                     <div class="card-header">
-                        {% trans "Route Efficiency Key Insightss and Recommended Actions" %}
-                    </div>
-                    <div class="card-body">
-                    {{ routemessage|safe }}
-                    </div>
-                </div>
-            </div>
+                {% if reporttype == "advanced" %}
                  <div class="page-break-after"></div>
                 <div class="col-12">
                     <div class="card shadow-sm" id="driver_summary">
@@ -727,6 +724,7 @@ table, th, td {
                     </div>
                 </div>
            {% elif reporttype == "lite" %}
+                    <div class="page-break-after"></div>
                 <div class="col-12">
                     <div class="card shadow-sm" id="driver_summary">
                         <div class="card-header">
@@ -782,6 +780,18 @@ table, th, td {
                     </div>
                 </div>
            {% endif %}
+
+            <div class="page-break-after"></div>
+            <div class="col-12">
+                 <div class="card shadow-sm">
+                     <div class="card-header">
+                        {% trans "Route Efficiency Key Insightss and Recommended Actions" %}
+                    </div>
+                    <div class="card-body">
+                    {{ routemessage|safe }}
+                    </div>
+                </div>
+            </div>
 
                 <div class="" id="col-2" style="border: 2px solid rgb(204, 204, 204); background: #e1e0e0; display: none">
 
@@ -1030,10 +1040,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const htmp = document.getElementById("htmpx").value;
             const htmpmsg_html = htmpmsg.innerHTML;
 
-            const breakroutes = document.getElementById("break_routes");
-            if (breakroutes){
-            breakroutes.className = "page-break-after";
-            }
+
             let rphead = '<div class="logo-area" style="max-width:160px;"> <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a> </div>';
             rphead = rphead + '<div class="d-flex justify-content-center align-items-center" id="report_head">';
             rphead = rphead +'<span class="title" id="report_title" style="color: #0cb7d6; font-size: 20px">{% trans "FreightOps Report" %} -</span>';
@@ -1178,7 +1185,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   const element = keywidgets[i];
                   element.className = "col-lg-3 col-md-6 col-sm-6 keywidget";
                 }
-                breakroutes.className = "";
+
                 // Iterate through the apexcharts_c
                 //apexcharts_c.forEach(element => {
                 //    element.style.width = apexchart1width;

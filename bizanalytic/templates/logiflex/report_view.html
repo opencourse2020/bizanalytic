@@ -829,9 +829,9 @@ table, th, td {
     {#const markdownCarrierReport = {{ report_carrier|safe|json_script:"cmd_json" }};#}
     {#const markdownDriverReport = {{ report_driver|safe|json_script:"dmd_json" }};#}
     {#const markdownRouteReport = {{ report_route|safe|json_script:"rmd_json" }};#}
-    const summaryCData = {{ report_carrier|safe|json_script:"report_carrier" }};
-    const summaryDData = {{ report_driver|safe|json_script:"report_driver" }};
-    const summaryRData = {{ report_route|safe|json_script:"report_route" }};
+    {#const summaryCData = {{ report_carrier|safe|json_script:"report_carrier" }};#}
+    {#const summaryDData = {{ report_driver|safe|json_script:"report_driver" }};#}
+    {#const summaryRData = {{ report_route|safe|json_script:"report_route" }};#}
   </script>
 
   <script>

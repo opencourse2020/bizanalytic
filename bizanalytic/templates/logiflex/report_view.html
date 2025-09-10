@@ -288,7 +288,42 @@
                         </div>
                         <div class="card-body" >
 {#                            <div id="markdown_container1" class="prose">{{ report_carrier|safe|json_script:"cmd_json" }}</div>#}
-                            {% if report_carrier.recommendations %}
+                            {% if report_carrier.kpis %}
+                            <h4>KPI Analysis</h4>
+                            <table>
+                            <thead>
+                            <tr>
+                                <th>{% trans "Metric" %}</th>
+                                <th>{% trans "Value" %}</th>
+                                <th>{% trans "Note" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ky in report_carrier.kpis %}
+                            <tr>
+                                <td>{{ ky.metric }}</td>
+                                <td>{{ ky.value }}</td>
+                                <td>{{ ky.note }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            </table>
+
+                            {% endif %}
+                        <br>
+
+                        {% if report_carrier.key_insights %}
+                            <h4>Key Insights</h4>
+                            <ol class="mb-0">
+                                  {% for k in report_carrier.key_insights %}
+                                  <li>{{ k }}</li>
+                                  {% endfor %}
+                                </ol>
+                            {% endif %}
+                        <br>
+                          {% if report_carrier.recommendations %}
+                              <h4>Actionable Recommendations</h4>
                             <ol class="mb-0">
                                   {% for r in report_carrier.recommendations %}
                                   <li>{{ r }}</li>
@@ -467,7 +502,42 @@
                         </div>
                         <div class="card-body" >
 {#                        <div id="markdown_container2" class="prose">{{ report_driver|safe|json_script:"dmd_json" }}</div>#}
-                            {% if report_driver.recommendations %}
+                            {% if report_driver.kpis %}
+                            <h4>KPI Analysis</h4>
+                            <table>
+                            <thead>
+                            <tr>
+                                <th>{% trans "Metric" %}</th>
+                                <th>{% trans "Value" %}</th>
+                                <th>{% trans "Note" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ky in report_driver.kpis %}
+                            <tr>
+                                <td>{{ ky.metric }}</td>
+                                <td>{{ ky.value }}</td>
+                                <td>{{ ky.note }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            </table>
+
+                            {% endif %}
+                        <br>
+
+                        {% if report_driver.key_insights %}
+                            <h4>Key Insights</h4>
+                            <ol class="mb-0">
+                                  {% for k in report_driver.key_insights %}
+                                  <li>{{ k }}</li>
+                                  {% endfor %}
+                                </ol>
+                            {% endif %}
+                        <br>
+                          {% if report_driver.recommendations %}
+                              <h4>Actionable Recommendations</h4>
                             <ol class="mb-0">
                                   {% for r in report_driver.recommendations %}
                                   <li>{{ r }}</li>
@@ -604,7 +674,42 @@
                         </div>
                         <div class="card-body" >
 {#                        <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>#}
-                            {% if report_route.recommendations %}
+                            {% if report_route.kpis %}
+                            <h4>KPI Analysis</h4>
+                            <table>
+                            <thead>
+                            <tr>
+                                <th>{% trans "Metric" %}</th>
+                                <th>{% trans "Value" %}</th>
+                                <th>{% trans "Note" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ky in report_route.kpis %}
+                            <tr>
+                                <td>{{ ky.metric }}</td>
+                                <td>{{ ky.value }}</td>
+                                <td>{{ ky.note }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            </table>
+
+                            {% endif %}
+                        <br>
+
+                        {% if report_route.key_insights %}
+                            <h4>Key Insights</h4>
+                            <ol class="mb-0">
+                                  {% for k in report_route.key_insights %}
+                                  <li>{{ k }}</li>
+                                  {% endfor %}
+                                </ol>
+                            {% endif %}
+                        <br>
+                          {% if report_route.recommendations %}
+                              <h4>Actionable Recommendations</h4>
                             <ol class="mb-0">
                                   {% for r in report_route.recommendations %}
                                   <li>{{ r }}</li>
@@ -622,7 +727,43 @@
                         </div>
                         <div class="card-body" >
 {#                        <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>#}
+
+                        {% if report_route.kpis %}
+                            <h4>KPI Analysis</h4>
+                            <table>
+                            <thead>
+                            <tr>
+                                <th>{% trans "Metric" %}</th>
+                                <th>{% trans "Value" %}</th>
+                                <th>{% trans "Note" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ky in report_route.kpis %}
+                            <tr>
+                                <td>{{ ky.metric }}</td>
+                                <td>{{ ky.value }}</td>
+                                <td>{{ ky.note }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            </table>
+
+                            {% endif %}
+                        <br>
+
+                        {% if report_route.key_insights %}
+                            <h4>Key Insights</h4>
+                            <ol class="mb-0">
+                                  {% for k in report_route.key_insights %}
+                                  <li>{{ k }}</li>
+                                  {% endfor %}
+                                </ol>
+                            {% endif %}
+                        <br>
                           {% if report_route.recommendations %}
+                              <h4>Actionable Recommendations</h4>
                             <ol class="mb-0">
                                   {% for r in report_route.recommendations %}
                                   <li>{{ r }}</li>

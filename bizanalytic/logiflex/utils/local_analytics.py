@@ -845,7 +845,7 @@ def run_route_analysis(flags, route_stats, client_name):
 
 @shared_task(name='run_all_llm_analysis')
 def run_All_LLM_Analysis():
-    reports = LogiflexReport.objects.filter(report_type="Paid", report_text={},
+    reports = LogiflexReport.objects.filter(report_text={},
                                             report_status__in=['processing', 'late'],
                                             report_approved=False).select_related("client")
     print("Reports to be analyzed")

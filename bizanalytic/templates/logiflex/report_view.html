@@ -658,19 +658,22 @@
     const mdce = document.getElementById("cmd_json");
     if (mdce) {
         const mdc = JSON.parse(mdce.textContent);
+        document.getElementById("markdown_container1").innerHTML = marked.parse(mdc);
     }
     const mdde = document.getElementById("dmd_json");
     if (mdde) {
     const mdd = JSON.parse(mdde.textContent);
+    document.getElementById("markdown_container2").innerHTML = marked.parse(mdd);
     }
     const mdre = document.getElementById("dmd_json");
     if (mdre) {
     const mdr = JSON.parse(mdre.textContent);
+    document.getElementById("markdown_container3").innerHTML = marked.parse(mdr);
     }
 
-    document.getElementById("markdown_container1").innerHTML = marked.parse(mdc);
-    document.getElementById("markdown_container2").innerHTML = marked.parse(mdd);
-    document.getElementById("markdown_container3").innerHTML = marked.parse(mdr);
+
+
+
 
     // Build Chart.js charts from model-provided configs
     const sdata = JSON.parse(document.getElementById("summary_json").textContent);

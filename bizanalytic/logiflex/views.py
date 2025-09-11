@@ -1367,9 +1367,23 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                 status = "success"
 
                 # Prepare data for customer email
-                raw = report.report_text
-                data = json.loads(raw)
-                summary_json = data.get("summary_json", {})
+                if report.report_type == "advanced":
+                    rawc = report.report_carrier
+                    rawd = report.report_driver
+                    rawr = report.report_route
+                    if rawd:
+                        data = json.loads(rawd)
+                        summary_json = data.get("summary_json", {})
+                    elif rawc:
+                        data = json.loads(rawc)
+                        summary_json = data.get("summary_json", {})
+                    elif rawr:
+                        data = json.loads(rawr)
+                        summary_json = data.get("summary_json", {})
+                elif report.report_type == "lite":
+                    raw = report.report_text
+                    data = json.loads(raw)
+                    summary_json = data.get("summary_json", {})
                 # print(json.loads(summary_json))
                 kpiss = ""
                 for kpi in summary_json:

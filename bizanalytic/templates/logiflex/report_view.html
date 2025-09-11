@@ -610,20 +610,20 @@ table, th, td {
                               <h4>Next Step Actions</h4>
                             <p><span style="font-weight: bold; color: black">Immediate:</span></p>
                             <ol type="1">
-                            {%  for im in report_driver.next_step.immediate %}
-                                <li>{{ im }}</li>
+                            {%  for imd in report_driver.next_step.immediate %}
+                                <li>{{ imd }}</li>
                             {% endfor %}
                             </ol>
                             <p><span style="font-weight: bold; color: black">Short-Term:</span></p>
                             <ol type="1">
-                            {%  for st in report_driver.next_step.short_term %}
-                                <li>{{ st }}</li>
+                            {%  for std in report_driver.next_step.short_term %}
+                                <li>{{ std }}</li>
                             {% endfor %}
                             </ol>
                             <p><span style="font-weight: bold; color: black">Long-Term:</span></p>
                             <ol type="1">
-                            {%  for lt in report_driver.next_step.long_term %}
-                                <li>{{ lt }}</li>
+                            {%  for ltd in report_driver.next_step.long_term %}
+                                <li>{{ ltd }}</li>
                             {% endfor %}
                             </ol>
                          {% endif %}
@@ -830,20 +830,20 @@ table, th, td {
                               <h4>Next Step Actions</h4>
                             <p><span style="font-weight: bold; color: black">Immediate:</span></p>
                             <ol type="1">
-                            {%  for im in report_route.next_step.immediate %}
-                                <li>{{ im }}</li>
+                            {%  for imr in report_route.next_step.immediate %}
+                                <li>{{ imr }}</li>
                             {% endfor %}
                             </ol>
                             <p><span style="font-weight: bold; color: black">Short-Term:</span></p>
                             <ol type="1">
-                            {%  for st in report_route.next_step.short_term %}
-                                <li>{{ st }}</li>
+                            {%  for str in report_route.next_step.short_term %}
+                                <li>{{ str }}</li>
                             {% endfor %}
                             </ol>
                             <p><span style="font-weight: bold; color: black">Long-Term:</span></p>
                             <ol type="1">
-                            {%  for lt in report_route.next_step.long_term %}
-                                <li>{{ lt }}</li>
+                            {%  for ltr in report_route.next_step.long_term %}
+                                <li>{{ ltr }}</li>
                             {% endfor %}
                             </ol>
                          {% endif %}

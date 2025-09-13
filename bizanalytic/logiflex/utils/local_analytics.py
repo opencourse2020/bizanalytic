@@ -720,7 +720,7 @@ def run_carrier_analysis(flags, carrier_stats, client_name):
                                     Analyze freight route data for client: {client_name}.
     
                                     Objective:
-                                    - Executive-ready Fleet Efficiency Report with Executive Summary, KPIs, Key Insights, actionable recommendations, Next Steps Actions, and Executive Dashboard KPIs for Ongoing Monitoring.
+                                    - Executive-ready Fleet Efficiency Report with Executive Summary, KPIs, Key Insights, actionable recommendations, Next Steps Actions, Predictive Trends, Financial Impact, and Executive Dashboard KPIs for Ongoing Monitoring.
                                     
                                     Data notes:
                                     - The dataset represent a summary of carriers performance Comparative Table with some kpis
@@ -795,6 +795,14 @@ def run_carrier_analysis(flags, carrier_stats, client_name):
                                                                         "type": "array",
                                                                         "items": {"type": "string"}
                                                                     },
+                                                                    "predictive_trends": {
+                                                                        "type": "array",
+                                                                        "items": {"type": "string"}
+                                                                    },
+                                                                    "financial_impact": {
+                                                                        "type": "array",
+                                                                        "items": {"type": "string"}
+                                                                    },
                                                                     "key_insights": {
                                                                         "type": "array",
                                                                         "items": {"type": "string"}
@@ -836,7 +844,7 @@ def run_driver_analysis(flags, driver_stats, client_name):
                         Analyze freight route data for client: {client_name}.
 
                         Objective:
-                        - Executive-ready Fleet Efficiency Report with Executive Summary, KPIs, Key Insights, actionable recommendations, Next Steps Actions, and Executive Dashboard KPIs for Ongoing Monitoring.
+                        - Executive-ready Fleet Efficiency Report with Executive Summary, KPIs, Key Insights, actionable recommendations, Next Steps Actions, Predictive Trends, Financial Impact, and Executive Dashboard KPIs for Ongoing Monitoring.
 
                         Data notes:
                         - The dataset represent a summary of drivers performance Comparative Table with some kpis
@@ -914,6 +922,14 @@ def run_driver_analysis(flags, driver_stats, client_name):
                                                                         "type": "array",
                                                                         "items": {"type": "string"}
                                                                     },
+                                                                    "predictive_trends": {
+                                                                        "type": "array",
+                                                                        "items": {"type": "string"}
+                                                                    },
+                                                                    "financial_impact": {
+                                                                        "type": "array",
+                                                                        "items": {"type": "string"}
+                                                                    },
                                                                     "key_insights": {
                                                                         "type": "array",
                                                                         "items": {"type": "string"}
@@ -958,7 +974,7 @@ def run_route_analysis(flags, route_stats, client_name):
                                     Analyze freight route data for client: {client_name}.
 
                                     Objective:
-                                    - Executive-ready Fleet Efficiency Report with Executive Summary, KPIs, Key Insights, actionable recommendations, Next Steps Actions, and Executive Dashboard KPIs for Ongoing Monitoring.
+                                    - Executive-ready Fleet Efficiency Report with Executive Summary, KPIs, Key Insights, actionable recommendations, Next Steps Actions, Predictive Trends, Financial Impact, and Executive Dashboard KPIs for Ongoing Monitoring.
 
                                     Data notes:
                                     - The dataset represent a summary of routes performance Comparative Table with some kpis
@@ -1033,6 +1049,14 @@ def run_route_analysis(flags, route_stats, client_name):
                                                                         }
                                                                     },
                                                                     "recommendations": {
+                                                                        "type": "array",
+                                                                        "items": {"type": "string"}
+                                                                    },
+                                                                    "predictive_trends": {
+                                                                        "type": "array",
+                                                                        "items": {"type": "string"}
+                                                                    },
+                                                                    "financial_impact": {
                                                                         "type": "array",
                                                                         "items": {"type": "string"}
                                                                     },

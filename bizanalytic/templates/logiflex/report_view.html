@@ -341,6 +341,15 @@ table, th, td {
                                 </ol>
                           {% endif %}
                         <br>
+                        {% if report_carrier.financial_impact %}
+                              <h4 style="color: #033e79;">Financial Impact</h4>
+                            <ol class="mb-0">
+                                {% for pt in report_carrier.financial_impact %}
+                                  <li>{{ pt }}</li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
+                        <br>
                         {% if report_carrier.next_step %}
                               <h4>Next Step Actions</h4>
                             <p><span style="font-weight: bold; color: black">Immediate:</span></p>
@@ -386,6 +395,15 @@ table, th, td {
                             </tbody>
 
                             </table>
+                        {% endif %}
+                        <br>
+                        {% if report_carrier.predictive_trends %}
+                              <h4 style="color: #033e79;">Predictive Trends</h4>
+                            <ol class="mb-0">
+                                {% for pt in report_carrier.predictive_trends %}
+                                  <li>{{ pt }}</li>
+                                {% endfor %}
+                            </ol>
                         {% endif %}
                         </div>
                     </div>
@@ -606,6 +624,15 @@ table, th, td {
                                 </ol>
                           {% endif %}
                         <br>
+                        {% if report_driver.financial_impact %}
+                              <h4 style="color: #033e79;">Financial Impact</h4>
+                            <ol class="mb-0">
+                                {% for pt in report_driver.financial_impact %}
+                                  <li>{{ pt }}</li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
+                        <br>
                         {% if report_driver.next_step %}
                               <h4>Next Step Actions</h4>
                             <p><span style="font-weight: bold; color: black">Immediate:</span></p>
@@ -651,6 +678,15 @@ table, th, td {
                             </tbody>
 
                             </table>
+                        {% endif %}
+                        <br>
+                        {% if report_driver.predictive_trends %}
+                              <h4 style="color: #033e79;">Predictive Trends</h4>
+                            <ol class="mb-0">
+                                {% for pt in report_driver.predictive_trends %}
+                                  <li>{{ pt }}</li>
+                                {% endfor %}
+                            </ol>
                         {% endif %}
                         </div>
                     </div>
@@ -772,19 +808,19 @@ table, th, td {
 
                 {% if reporttype == "advanced" %}
                  <div class="page-break-after"></div>
-                <div class="col-12">
+                <div class="col-12 ">
                     <div class="card shadow-sm" id="driver_summary">
                         <div class="card-header">
-                            {% trans "Routes AI-Driven Analysis" %}
+                            {% trans "Routes AI + Expert Verified Analysis" %}
                         </div>
-                        <div class="card-body" >
+                        <div class="card-body ms-4" >
                             {% if report_route.executive_summary %}
-                                <h4>Executive Summary</h4>
+                                <h4 style="color: #033e79;">Executive Summary</h4>
                                 <p style="color: black">{{ report_route.executive_summary }}</p>
                             {% endif %}
                             <br>
                             {% if report_route.kpis %}
-                            <h4>KPI Analysis</h4>
+                            <h4 style="color: #033e79;">KPI Analysis</h4>
                             <table class="table table-hover">
                             <thead class="table-dark">
                             <tr>
@@ -809,25 +845,34 @@ table, th, td {
                         <br>
 
                         {% if report_route.key_insights %}
-                            <h4>Key Insights</h4>
+                            <h4 style="color: #033e79;">Key Insights</h4>
                             <ol class="mb-0">
                                   {% for k in report_route.key_insights %}
                                   <li>{{ k }}</li>
                                   {% endfor %}
                                 </ol>
-                            {% endif %}
+                        {% endif %}
                         <br>
-                          {% if report_route.recommendations %}
-                              <h4>Actionable Recommendations</h4>
+                        {% if report_route.recommendations %}
+                              <h4 style="color: #033e79;">Actionable Recommendations</h4>
                             <ol class="mb-0">
                                   {% for r in report_route.recommendations %}
                                   <li>{{ r }}</li>
                                   {% endfor %}
                                 </ol>
-                            {% endif %}
+                        {% endif %}
+                        <br>
+                        {% if report_route.financial_impact %}
+                              <h4 style="color: #033e79;">Financial Impact</h4>
+                            <ol class="mb-0">
+                                {% for pt in report_route.financial_impact %}
+                                  <li>{{ pt }}</li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
                         <br>
                         {% if report_route.next_step %}
-                              <h4>Next Step Actions</h4>
+                              <h4 style="color: #033e79;">Next Step Actions</h4>
                             <p><span style="font-weight: bold; color: black">Immediate:</span></p>
                             <ol type="1">
                             {%  for imr in report_route.next_step.immediate %}
@@ -846,10 +891,10 @@ table, th, td {
                                 <li>{{ ltr }}</li>
                             {% endfor %}
                             </ol>
-                         {% endif %}
+                        {% endif %}
                         <br>
                         {% if report_route.executive_dashboard_kpis %}
-                              <h4>Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
+                              <h4 style="color: #033e79;">Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
                             <table class="table table-hover">
                             <thead class="table-dark">
                             <tr>
@@ -871,6 +916,15 @@ table, th, td {
                             </tbody>
 
                             </table>
+                        {% endif %}
+                        <br>
+                        {% if report_route.predictive_trends %}
+                              <h4 style="color: #033e79;">Predictive Trends</h4>
+                            <ol class="mb-0">
+                                {% for pt in report_route.predictive_trends %}
+                                  <li>{{ pt }}</li>
+                                {% endfor %}
+                            </ol>
                         {% endif %}
 
                         </div>

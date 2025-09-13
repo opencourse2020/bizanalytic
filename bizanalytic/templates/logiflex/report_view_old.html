@@ -1,0 +1,1406 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+    {{ block.super }}
+{% endblock head_title %}
+
+{% block css %}
+    {{ block.super }}
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-bs5/css/dataTables.bootstrap5.min.css" %} >
+
+    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" %} >
+    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/bootstrap-table/distro/bootstrap-table.min.css" %} >
+    <style>
+        .chart-card { min-height: 420px; }
+        .card-header { color: black;}
+        .card-footer {min-height: 180px; padding-left: 30px; }
+        strong { font-weight: 500; color: black}
+        .comp {color: #03afa6;}
+        .odds {color: black;}
+        .worst {color: darkred;}
+        .bottom {color: #118aea;}
+        ol {
+            padding-left: 0rem;
+        }
+
+        .apexcharts-canvas {
+            margin: 0 auto;
+        }
+        #DriverSpeedMPG1, .chart-box {
+            padding-top: 20px;
+            padding-left: 10px;
+            background: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 22px 35px -16px rgba(0,0,0, 0.1);
+            max-width: 650px;
+            margin: 35px auto;
+        }
+        iframe {
+            {#border: 2px solid #333;#}
+            margin-top: 0px;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <style>
+
+        * {
+            transition: all .2s ease;
+        }
+
+.extra-info {
+  display: none;
+  line-height: 30px;
+  font-size: 12px;
+	position: absolute;
+  top: 0;
+  left: 50px;
+}
+
+.info:hover .extra-info {
+  display: block;
+}
+
+.info {
+  font-size: 20px;
+  padding-left: 5px;
+  width: 20px;
+  border-radius: 15px;
+}
+
+.info:hover {
+  background-color: white;
+  padding: 0 0 0 5px;
+  width: 150px;
+  text-align: left !important;
+}
+#download-btn
+{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.page-break-after {
+        page-break-after: always;
+    }
+table, th, td {
+      border: 1px solid black; /* 1px solid black border */
+    }
+
+    </style>
+{#    <link href={% static "assets/css/app.min.css" %} rel="stylesheet">#}
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block pdf_button %}
+    {{ block.super }}
+{% endblock pdf_button %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+{% block breadcrumb %}
+     <section class="breadcrumb-area mb-1" style="padding: 80px 0 20px" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="d-flex align-items-center">
+                            <span class="title" style="color: white; font-size: 25px">LogiFlex</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-9 ">
+                        <div class="d-block justify-content-center align-items-center" id="report_head">
+
+                            <div class="title" id="report_title" style="color: #0cb7d6; font-size: 2rem">{% trans "FreightOps Report" %}</div>
+                            <div class="title" id="report_id" style="color: white; font-size: 2rem;">{{ reportid }}</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+{#    data-background={% static "vendor/transport/assets/images/service-bg-2.jpg"%}#}
+    <section class="service-area-2 biography-area py-20" id="report-content" >
+        <div class="container py-4" style="max-width: 100%;">
+        <div id="pdf_head" style="display: none;"></div>
+       <!-- Report Info Section -->
+        <div class="row">
+                <div class="" id="col-1">
+                    <div class="row g-4">
+            <div class="col-12">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center" style="background-color: #e1e0e0; margin-bottom: 15px;">
+                        <h2>Carriers Performance</h2>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Best On-Time Rate</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                    <h3 class="counter">{{ carrier_ontime }}</h3><h3> %</h3>
+                                </div>
+                            </div>
+                            <span class="title">{{ carrier_ontime_name }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Lowest Freight Cost </span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                    <H3>$ </H3><h3 class="counter">{{ carrier_freightcost }}</h3>
+                                </div>
+                            </div>
+                            <span class="title">{{ carrier_freightcost_name }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Lowest Cost Per Mile</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                    <h3>$ </h3><h3 class="counter">{{ carrier_costpermile }}</h3>
+                                </div>
+                            </div>
+                            <span class="title">{{ carrier_costpermile_name }}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Lowest Cost Per Pound</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                   <h3>$ </h3><h3 class="counter">{{ carrier_costpound }}</h3>
+                                </div>
+                            </div>
+                            <span class="title">{{ carrier_costpound_name }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" id="carrier_1">
+                <div class="card shadow-sm chart-card" id="card1">
+                    <div class="card-header">
+                        {% trans "Carriers Cost vs. Reliability Analysis" %}
+                    </div>
+                    <div class="card-body text-center">
+
+                        <div id="CarrierCostReliabilityChart"></div>
+                    </div>
+{#                {% if reporttype == "advanced" %}#}
+{#                    <div class="card-footer">#}
+{##}
+{#                            <ul style="list-style-type:disc;  font-size: 14px;">#}
+{#                                {% for item in contigency %}#}
+{#                                    <li> {{ item|safe }}</li>#}
+{#                                {% endfor %}#}
+{##}
+{#                            </ul>#}
+{#                            <strong>Actions:</strong><br>#}
+{#                            <ol type="1" style=" font-size: 14px;">#}
+{#                                {% for cont_action in contingency_action %}#}
+{#                                <li> {{ cont_action|safe }}</li>#}
+{#                                {% endfor %}#}
+{#                            </ol>#}
+{##}
+{#                    </div>#}
+{#                {% endif %}#}
+                </div>
+            </div>
+            {% if reporttype == "advanced" %}
+                 <div class="col-md-6" id="carrier_2">
+                     <div class="card shadow-sm chart-card"  id="card2">
+                         <div class="card-header">
+                            {% trans "Fuel Cost per Mile Distribution by Carrier" %}
+                         </div>
+                         <div class="card-body text-center">
+                            <div id="CarrierCostPerMile"></div>
+                         </div>
+                     </div>
+                 </div>
+            {% endif %}
+
+             {% if reporttype == "advanced" %}
+                 <div class="page-break-after"></div>
+                <div class="col-12">
+            {% elif reporttype == "lite" %}
+                 <div class="col-md-6" id="carrier_2">
+            {% endif %}
+
+                        <div class="card shadow-sm" >
+                            <div class="card-header">
+                                {% trans "Carriers Key Insights and Recommended Actions" %}
+                            </div>
+
+                            <div class="card-body " style="padding-left: 40px;">
+                                <div id="CarrierInsights" style="min-height: 250px;">
+                                    <strong>Key Insights</strong><br>
+                                    <ul style="list-style-type:disc;  font-size: 14px;">
+                                        {% for item in contigency %}
+                                            <li> {{ item|safe }}</li>
+                                        {% endfor %}
+                                        <li>{{ highcostvariance|safe }}</li>
+                                        <li>{{ lowcostvariance|safe }}</li>
+
+                                    </ul>
+                                    <br><strong>Actions:</strong><br>
+                                    <ol type="1" style=" font-size: 14px;">
+                                        {% for cont_action in contingency_action %}
+                                            <li> {{ cont_action|safe }}</li>
+                                        {% endfor %}
+                                        {% for action in costreliability_action %}
+                                            <li>{{ action|safe }}</li>
+                                        {% endfor %}
+                                    </ol>
+                                </div>
+                            </div>
+
+                        </div>
+            </div>
+{#        <div class="" id="col-helper">#}
+        <div class="page-break-after"></div>
+          {% if reporttype == "advanced" %}
+                <div class="col-12">
+                    <div class="card shadow-sm" id="carrier_summary">
+                        <div class="card-header" style="font-size: 1.5rem; font-weight: 700">
+                            {% trans "Carriers Advanced Analysis (AI + Expert Verified)" %}
+                        </div>
+                        <div class="card-body ms-4" >
+                            {% if report_carrier.executive_summary %}
+                                <h4 style="color: #033e79;">Executive Summary</h4>
+                                <p style="color: black">{{ report_carrier.executive_summary }}</p>
+                            {% endif %}
+                            {% if report_carrier.kpis %}
+                            <h4 style="color: #033e79;">KPI Analysis</h4>
+                            <table class="table table-hover">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>{% trans "Metric" %}</th>
+                                <th>{% trans "Value" %}</th>
+                                <th>{% trans "Note" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ky in report_carrier.kpis %}
+                            <tr>
+                                <td><strong>{{ ky.metric }}</strong></td>
+                                <td>{{ ky.value }}</td>
+                                <td>{{ ky.note }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            </table>
+
+                            {% endif %}
+                        <br>
+
+                        {% if report_carrier.key_insights %}
+                            <h4 style="color: #033e79;">Key Insights</h4>
+                            <ol class="mb-0">
+                                  {% for k in report_carrier.key_insights %}
+                                  <li>{{ k }}</li>
+                                  {% endfor %}
+                                </ol>
+                            {% endif %}
+                        <br>
+                          {% if report_carrier.recommendations %}
+                              <h4 style="color: #033e79;">Actionable Recommendations</h4>
+                            <ol class="mb-0">
+                                  {% for r in report_carrier.recommendations %}
+                                  <li>{{ r }}</li>
+                                  {% endfor %}
+                                </ol>
+                          {% endif %}
+                        <br>
+                        {% if report_carrier.financial_impact %}
+                              <h4 style="color: #033e79;">Financial Impact</h4>
+                            <ol class="mb-0">
+                                {% for pt in report_carrier.financial_impact %}
+                                  <li>{{ pt }}</li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
+                        <br>
+                        {% if report_carrier.next_step %}
+                              <h4 style="color: #033e79;">Next Step Actions</h4>
+                            <p><span style="font-weight: bold; color: black">Immediate:</span></p>
+                            <ol type="1">
+                            {%  for im in report_carrier.next_step.immediate %}
+                                <li>{{ im }}</li>
+                            {% endfor %}
+                            </ol>
+                            <p><span style="font-weight: bold; color: black">Short-Term:</span></p>
+                            <ol type="1">
+                            {%  for st in report_carrier.next_step.short_term %}
+                                <li>{{ st }}</li>
+                            {% endfor %}
+                            </ol>
+                            <p><span style="font-weight: bold; color: black">Long-Term:</span></p>
+                            <ol type="1">
+                            {%  for lt in report_carrier.next_step.long_term %}
+                                <li>{{ lt }}</li>
+                            {% endfor %}
+                            </ol>
+                         {% endif %}
+                        <br>
+                        {% if report_carrier.executive_dashboard_kpis %}
+                              <h4 style="color: #033e79;">Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
+                            <table class="table table-hover">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>{% trans "KPI" %}</th>
+                                <th>{% trans "Target" %}</th>
+                                <th>{% trans "Current Best" %}</th>
+                                <th>{% trans "Current Worst" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for eky in report_carrier.executive_dashboard_kpis %}
+                            <tr>
+                                <td>{{ eky.kpi }}</td>
+                                <td>{{ eky.target }}</td>
+                                <td>{{ eky.current_best }}</td>
+                                <td>{{ eky.current_worst }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            </table>
+                        {% endif %}
+                        <br>
+                        {% if report_carrier.predictive_trends %}
+                              <h4 style="color: #033e79;">Predictive Trends</h4>
+                            <ol class="mb-0">
+                                {% for pt in report_carrier.predictive_trends %}
+                                  <li>{{ pt }}</li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
+                        </div>
+                    </div>
+              </div>
+          {% endif %}
+       <div class="page-break-after"></div>
+{#      </div>#}
+        <div class="col-12">
+                <div class="row justify-content-center text">
+                    <div class="col-12 text-center" style="background-color: #e1e0e0; margin-bottom: 15px; margin-top: 15px;">
+                        <h2>Drivers Performance</h2>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Best On-Time Rate</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                    <h3 class="counter">{{ driver_ontime }}</h3><h3> %</h3>
+                                </div>
+                            </div>
+                            <span class="title">{{ driver_ontime_name }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Higher Miles Traveled </span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                    <h3 class="counter">{{ driver_totalmiles }}</h3>
+                                </div>
+                            </div>
+                            <span class="title">{{ driver_totalmiles_name }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Fastest Driver</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                    <h3 class="counter">{{ driver_speed }}</h3><h4 style="color: white">&nbsp;MPH</h4>
+                                </div>
+                            </div>
+                            <span class="title">{{ driver_speed_name }}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Most Efficient</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                   <h3 class="counter">{{ driver_medianmpg }}</h3> <h4 style="color: white">&nbsp;MPG</h4>
+                                </div>
+                            </div>
+                            <span class="title">{{ driver_medianmpg_name }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="col-md-6" id="driver_1">
+                <div class="card shadow-sm chart-card"  id="card3">
+                    <div class="card-header">
+                        {% trans "Drivers Productivity Matrix: On-Time Rate Vs. Median MPG Vs. Median Speed" %}
+                    </div>
+                    <div class="card-body text-center">
+                            <div id="DriverMpgOnTime"></div>
+                    </div>
+{#                {% if reporttype == "advanced" %}#}
+{#                    <div class="card-footer">#}
+{#                        <ul style=" font-size: 14px;">#}
+{#                            {% for drivermessage in driver_messages %}#}
+{#                                <li>{{ drivermessage.msg|safe }}&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info"  data-act="{{ drivermessage.ref }}" style=" border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button>#}
+{#                                    <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">#}
+{#                                </li>#}
+{#                            {% endfor %}#}
+{##}
+{#                        </ul>#}
+{#                        <strong>Actions:</strong><br>#}
+{#                        <ol type="1" style=" font-size: 14px;">#}
+{#                            {% for daction in driver_actions %}#}
+{#                            <li>#}
+{#                                {{ daction|safe }}#}
+{#                            </li>#}
+{#                            {% endfor %}#}
+{#                        </ol>#}
+{#                    </div>#}
+{#                {% endif %}#}
+                </div>
+            </div>
+
+           {% if reporttype == "advanced" %}
+            <div class="col-md-6" id="driver_2">
+                <div class="card shadow-sm chart-card"  id="card4">
+                    <div class="card-header">
+                        {% trans "Fuel Cost per Mile Distribution by Driver" %}
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="DriverSpeedMPG"></div>
+                    </div>
+                </div>
+            </div>
+
+           {% endif %}
+
+            {% if reporttype == "advanced" %}
+                 <div class="page-break-after"></div>
+                <div class="col-12">
+            {% elif reporttype == "lite" %}
+                 <div class="col-md-6" id="driver_2">
+            {% endif %}
+
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        {% trans "Drivers Key Insights and Recommended Actions" %}
+                    </div>
+
+                    <div class="card-body " style="padding-left: 40px;">
+                        <div id="DriverInsights" style="min-height: 250px;">
+                             <strong>Key Insights</strong><br>
+                             <ul style="list-style-type:disc; font-size: 14px;">
+                                {% for drivermessage in driver_messages %}
+                                    {% if reporttype == "advanced" %}
+                                       <li>{{ drivermessage.msg|safe }}&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info"  data-act="{{ drivermessage.ref }}" style=" border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button>
+                                        <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">
+                                        </li>
+                                    {% elif reporttype == "lite" %}
+                                        <li>{{ drivermessage|safe }}</li>
+                                    {% endif %}
+                            {% endfor %}
+                                {% if reporttype == "advanced" %}
+                                    <li>{{ driverhighcostvariance|safe }}</li>
+                                    <li>{{ driverlowcostvariance|safe }}</li>
+                                {% endif %}
+
+                             </ul>
+                            <br>
+                             {% if reporttype == "advanced" %}
+                                <strong>Actions:</strong>&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="dcva" style="border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button><br>
+                                <input type="hidden" id="dcva" value="{{ driver_costreliability_action_ext }}" style="display: none;">
+                             {% elif reporttype == "lite" %}
+                                 <strong>Actions:</strong><br>
+                             {% endif %}
+                                <ol type="1" style=" font-size: 14px;">
+                                    {% for daction in driver_actions %}
+                                    <li>
+                                        {{ daction|safe }}
+                                    </li>
+                                    {% endfor %}
+                                {% if reporttype == "advanced" %}
+                                    {% for driveraction in driver_costreliability_action %}
+                                    <li>{{ driveraction|safe }}</li>
+                                    {% endfor %}
+                                {% endif %}
+                            </ol>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="page-break-after"></div>
+             {% if reporttype == "advanced" %}
+                <div class="col-12">
+                    <div class="card shadow-sm" id="driver_summary">
+                        <div class="card-header" style="font-weight: 700; font-size: 1.5rem;">
+                            {% trans "Drivers Advanced Analysis (AI + Expert Verified)" %}
+                        </div>
+                        <div class="card-body ms-4" >
+                            {% if report_driver.executive_summary %}
+                                <h4 style="color: #033e79;">Executive Summary</h4>
+                                <p style="color: black">{{ report_driver.executive_summary }}</p>
+                            {% endif %}
+                            <br>
+                            {% if report_driver.kpis %}
+                            <h4 style="color: #033e79;">KPI Analysis</h4>
+                            <table class="table table-hover">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>{% trans "Metric" %}</th>
+                                <th>{% trans "Value" %}</th>
+                                <th>{% trans "Note" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ky in report_driver.kpis %}
+                            <tr>
+                                <td>{{ ky.metric }}</td>
+                                <td>{{ ky.value }}</td>
+                                <td>{{ ky.note }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            </table>
+
+                            {% endif %}
+                        <br>
+
+                        {% if report_driver.key_insights %}
+                            <h4 style="color: #033e79;">Key Insights</h4>
+                            <ol class="mb-0">
+                                  {% for k in report_driver.key_insights %}
+                                  <li>{{ k }}</li>
+                                  {% endfor %}
+                                </ol>
+                            {% endif %}
+                        <br>
+                          {% if report_driver.recommendations %}
+                              <h4 style="color: #033e79;">Actionable Recommendations</h4>
+                            <ol class="mb-0">
+                                  {% for r in report_driver.recommendations %}
+                                  <li>{{ r }}</li>
+                                  {% endfor %}
+                                </ol>
+                          {% endif %}
+                        <br>
+                        {% if report_driver.financial_impact %}
+                              <h4 style="color: #033e79;">Financial Impact</h4>
+                            <ol class="mb-0">
+                                {% for pt in report_driver.financial_impact %}
+                                  <li>{{ pt }}</li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
+                        <br>
+                        {% if report_driver.next_step %}
+                              <h4 style="color: #033e79;">Next Step Actions</h4>
+                            <p><span style="font-weight: bold; color: black">Immediate:</span></p>
+                            <ol type="1">
+                            {%  for imd in report_driver.next_step.immediate %}
+                                <li>{{ imd }}</li>
+                            {% endfor %}
+                            </ol>
+                            <p><span style="font-weight: bold; color: black">Short-Term:</span></p>
+                            <ol type="1">
+                            {%  for std in report_driver.next_step.short_term %}
+                                <li>{{ std }}</li>
+                            {% endfor %}
+                            </ol>
+                            <p><span style="font-weight: bold; color: black">Long-Term:</span></p>
+                            <ol type="1">
+                            {%  for ltd in report_driver.next_step.long_term %}
+                                <li>{{ ltd }}</li>
+                            {% endfor %}
+                            </ol>
+                         {% endif %}
+                        <br>
+                        {% if report_driver.executive_dashboard_kpis %}
+                              <h4 style="color: #033e79;">Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
+                            <table class="table table-hover">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>{% trans "KPI" %}</th>
+                                <th>{% trans "Target" %}</th>
+                                <th>{% trans "Current Best" %}</th>
+                                <th>{% trans "Current Worst" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for eky in report_driver.executive_dashboard_kpis %}
+                            <tr>
+                                <td>{{ eky.kpi }}</td>
+                                <td>{{ eky.target }}</td>
+                                <td>{{ eky.current_best }}</td>
+                                <td>{{ eky.current_worst }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            </table>
+                        {% endif %}
+                        <br>
+                        {% if report_driver.predictive_trends %}
+                              <h4 style="color: #033e79;">Predictive Trends</h4>
+                            <ol class="mb-0">
+                                {% for pt in report_driver.predictive_trends %}
+                                  <li>{{ pt }}</li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
+                        </div>
+                    </div>
+                 </div>
+            {% endif %}
+            <div class="page-break-after"></div>
+                    <div class="col-12">
+                <div class="row justify-content-center text">
+                    <div class="col-12 text-center" style="background-color: #e1e0e0; margin-bottom: 15px; margin-top: 15px;">
+                        <h2>Routes Performance</h2>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Average Cost/Mile</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                    <H3>$ </H3><h3 class="counter">{{ meancost }}</h3>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Average Speed</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                    <h3 class="counter">{{ meanspeed }}</h3><h4 style="color: white">&nbsp;MPH</h4>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Average Distance</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                    <h3 class="counter">{{ meandistance }}</h3><h4 style="color: white">&nbsp;Miles</h4>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                        <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                            <span class="title">Average Shipments</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                <div class="counter-number d-flex">
+                                   <h3 class="counter">{{ meanshipment }}</h3>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {% if reporttype == "advanced" %}
+
+            <div class="col-md-6" id="route_2">
+                <div class="card shadow-sm chart-card"  id="card6">
+                    <div class="card-header">
+                        {% trans "Routes Efficiency: Speed Vs. Cost per Mile Vs. Number of Shipments" %}
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="RouteEfficiencyBubble"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6" id="route_3">
+                <div class="card shadow-sm chart-card"  id="card7">
+                    <div class="card-header">
+                        {% trans "5 Worst Routes Based on Cost (Cost per Mile Vs. Speed Vs. Load Weight in Tons (1Ton =2000Lb)" %}
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="WorstRouteEfficiencyBubble"></div>
+                    </div>
+                </div>
+
+            </div>
+                <div class="page-break-after"></div>
+            {% endif %}
+
+
+            <div class="col-md-9" id="route_1">
+                <div class="card shadow-sm chart-card"  id="card5">
+                    <div class="card-header">
+                        {% trans "Routes Cost Efficiency Heatmap" %}
+                    </div>
+                    <div class="card-body text-center">
+                        <div id="RouteHeatMap"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" id="route_1_msg">
+                <div class="card shadow-sm" id="card5_msg">
+                    <div class="card-header">
+                        {% trans "Routes Heatmap Key Insights and Recommended Actions" %}
+                    </div>
+                    <div class="card-body" id="heatmapmessage">
+                    {{ route_heatmap_short|safe }}
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="htmp" style="border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill">More Info</i></span> </button>
+                        <input type="hidden" id="htmp" value="{{ route_heatmap }}" style="display: none;">
+                        <input type="hidden" id="htmpx" value="{{ route_heatmap_plain }}" style="display: none;">
+                    </div>
+                </div>
+            </div>
+
+
+                {% if reporttype == "advanced" %}
+                 <div class="page-break-after"></div>
+                <div class="col-12 ">
+                    <div class="card shadow-sm" id="driver_summary">
+                        <div class="card-header" style="font-size: 1.5rem; font-weight: 700;">
+                            {% trans "Routes Advanced Analysis (AI + Expert Verified)" %}
+                        </div>
+                        <div class="card-body ms-4" >
+                            {% if report_route.executive_summary %}
+                                <h4 style="color: #033e79;">Executive Summary</h4>
+                                <p style="color: black">{{ report_route.executive_summary }}</p>
+                            {% endif %}
+                            <br>
+                            {% if report_route.kpis %}
+                            <h4 style="color: #033e79;">KPI Analysis</h4>
+                            <table class="table table-hover">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>{% trans "Metric" %}</th>
+                                <th>{% trans "Value" %}</th>
+                                <th>{% trans "Note" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ky in report_route.kpis %}
+                            <tr>
+                                <td>{{ ky.metric }}</td>
+                                <td>{{ ky.value }}</td>
+                                <td>{{ ky.note }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            </table>
+
+                            {% endif %}
+                        <br>
+
+                        {% if report_route.key_insights %}
+                            <h4 style="color: #033e79;">Key Insights</h4>
+                            <ol class="mb-0">
+                                  {% for k in report_route.key_insights %}
+                                  <li>{{ k }}</li>
+                                  {% endfor %}
+                                </ol>
+                        {% endif %}
+                        <br>
+                        {% if report_route.recommendations %}
+                              <h4 style="color: #033e79;">Actionable Recommendations</h4>
+                            <ol class="mb-0">
+                                  {% for r in report_route.recommendations %}
+                                  <li>{{ r }}</li>
+                                  {% endfor %}
+                                </ol>
+                        {% endif %}
+                        <br>
+                        {% if report_route.financial_impact %}
+                              <h4 style="color: #033e79;">Financial Impact</h4>
+                            <ol class="mb-0">
+                                {% for pt in report_route.financial_impact %}
+                                  <li>{{ pt }}</li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
+                        <br>
+                        {% if report_route.next_step %}
+                              <h4 style="color: #033e79;">Next Step Actions</h4>
+                            <p><span style="font-weight: bold; color: black">Immediate:</span></p>
+                            <ol type="1">
+                            {%  for imr in report_route.next_step.immediate %}
+                                <li>{{ imr }}</li>
+                            {% endfor %}
+                            </ol>
+                            <p><span style="font-weight: bold; color: black">Short-Term:</span></p>
+                            <ol type="1">
+                            {%  for str in report_route.next_step.short_term %}
+                                <li>{{ str }}</li>
+                            {% endfor %}
+                            </ol>
+                            <p><span style="font-weight: bold; color: black">Long-Term:</span></p>
+                            <ol type="1">
+                            {%  for ltr in report_route.next_step.long_term %}
+                                <li>{{ ltr }}</li>
+                            {% endfor %}
+                            </ol>
+                        {% endif %}
+                        <br>
+                        {% if report_route.executive_dashboard_kpis %}
+                              <h4 style="color: #033e79;">Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
+                            <table class="table table-hover">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>{% trans "KPI" %}</th>
+                                <th>{% trans "Target" %}</th>
+                                <th>{% trans "Current Best" %}</th>
+                                <th>{% trans "Current Worst" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for eky in report_route.executive_dashboard_kpis %}
+                            <tr>
+                                <td>{{ eky.kpi }}</td>
+                                <td>{{ eky.target }}</td>
+                                <td>{{ eky.current_best }}</td>
+                                <td>{{ eky.current_worst }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            </table>
+                        {% endif %}
+                        <br>
+                        {% if report_route.predictive_trends %}
+                              <h4 style="color: #033e79;">Predictive Trends</h4>
+                            <ol class="mb-0">
+                                {% for pt in report_route.predictive_trends %}
+                                  <li>{{ pt }}</li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+           {% elif reporttype == "lite" %}
+                    <div class="page-break-after"></div>
+                <div class="col-12">
+                    <div class="card shadow-sm" id="driver_summary">
+                        <div class="card-header">
+                            {% trans "AI-Driven Analysis" %}
+                        </div>
+                        <div class="card-body" >
+{#                        <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>#}
+
+                        {% if report_route.kpis %}
+                            <h4>KPI Analysis</h4>
+                            <table class="table table-hover">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>{% trans "Metric" %}</th>
+                                <th>{% trans "Value" %}</th>
+                                <th>{% trans "Note" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ky in report_route.kpis %}
+                            <tr>
+                                <td>{{ ky.metric }}</td>
+                                <td>{{ ky.value }}</td>
+                                <td>{{ ky.note }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            </table>
+
+                            {% endif %}
+                        <br>
+
+                        {% if report_route.key_insights %}
+                            <h4>Key Insights</h4>
+                            <ol class="mb-0">
+                                  {% for k in report_route.key_insights %}
+                                  <li>{{ k }}</li>
+                                  {% endfor %}
+                                </ol>
+                            {% endif %}
+                        <br>
+                          {% if report_route.recommendations %}
+                              <h4>Actionable Recommendations</h4>
+                            <ol class="mb-0">
+                                  {% for r in report_route.recommendations %}
+                                  <li>{{ r }}</li>
+                                  {% endfor %}
+                                </ol>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+           {% endif %}
+
+            <div class="page-break-after"></div>
+            <div class="col-12">
+                 <div class="card shadow-sm">
+                     <div class="card-header">
+                        {% trans "Route Efficiency Key Insightss and Recommended Actions" %}
+                    </div>
+                    <div class="card-body">
+                    {{ routemessage|safe }}
+                    </div>
+                </div>
+            </div>
+
+                <div class="" id="col-2" style="border: 2px solid rgb(204, 204, 204); background: #e1e0e0; display: none">
+
+                    <div class="d-flex justify-content-between w-100" id="framebutton" style="display: none; background: #e1e0e0; height: 30px;">
+                        <h6 style="margin-bottom: 0px; margin-top: 5px;">More Info</h6>
+                        <button class='btn btn-outline-primary btn-sm' id="removeButton" style="display: none; height: 100%; font-size: 0.75rem; border-radius: 30px;"><span class="icon"><i class="ri-close-fill"></i></span></button>
+                    </div>
+                    <div id="frameContainer" style="width: 100%; height: 98%"></div>
+                </div>
+            </div>
+
+
+    </div>
+    </section>
+{% endblock contact_area %}
+
+{% block feature_area %}
+
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+
+{% block js_area %}
+    {{ block.super }}
+    <script src={% static "assets/plugins/apexcharts/distro/apexcharts.min.js" %}></script>
+    <script src={% static "assets/plugins/Danfo/bundle.min.js" %}></script>
+{#    <script src={% static "assets/js/app.min.js" %}></script>#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+    <script src={% static "assets/js/pages/chart-apex.pmf.js" %}></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+     <script src={% static "assets/plugins/datatables.net/js/dataTables.min.js" %}></script>
+    <script src={% static "assets/plugins/datatables.net-bs5/js/dataTables.bootstrap5.min.js" %}></script>
+    <script>
+    // Safely inject server-provided data
+
+    {#const markdownCarrierReport = {{ report_carrier|safe|json_script:"cmd_json" }};#}
+    {#const markdownDriverReport = {{ report_driver|safe|json_script:"dmd_json" }};#}
+    {#const markdownRouteReport = {{ report_route|safe|json_script:"rmd_json" }};#}
+    {#const summaryCData = {{ report_carrier|safe|json_script:"report_carrier" }};#}
+    {#const summaryDData = {{ report_driver|safe|json_script:"report_driver" }};#}
+    {#const summaryRData = {{ report_route|safe|json_script:"report_route" }};#}
+  </script>
+
+  <script>
+    // Render Markdown to HTML
+    //const mdce = document.getElementById("cmd_json");
+    //if (mdce) {
+    //    const mdc = JSON.parse(mdce.textContent);
+    //    document.getElementById("markdown_container1").innerHTML = marked.parse(mdc);
+    //}
+    //const mdde = document.getElementById("dmd_json");
+    //if (mdde) {
+    //const mdd = JSON.parse(mdde.textContent);
+    //document.getElementById("markdown_container2").innerHTML = marked.parse(mdd);
+    //}
+    //const mdre = document.getElementById("rmd_json");
+    //if (mdre) {
+    //const mdr = JSON.parse(mdre.textContent);
+    //document.getElementById("markdown_container3").innerHTML = marked.parse(mdr);
+    //}
+
+
+
+
+
+    // Build Chart.js charts from model-provided configs
+    //const sdata = JSON.parse(document.getElementById("summary_json").textContent);
+    //if (sdata && sdata.charts) {
+     // sdata.charts.forEach((c, idx) => {
+     //   const canvasId = "chart_" + (idx + 1);
+     //   const ctx = document.getElementById(canvasId);
+     //   if (!ctx || !c.config) return;
+        // Expecting full Chart.js config object: { type, data, options }
+     //   new Chart(ctx, c.config);
+      //});
+    //}
+  </script>
+
+
+{#    <script src="https://cdn.tailwindcss.com"></script>#}
+     <script>
+    /* Controller
+------------------------------------------------ */
+$(document).ready(function() {
+
+    var rt = "{{ reporttype }}";
+    full_df = {{ carrierstats|safe }};
+    df_driver = {{ driverstats|safe }};
+    heatmap_values = {{ heatmapvalues|safe }};
+
+    routeefficiency_data = {{ routeefficiency_data|safe }};
+
+    worstrouteefficiency_data = {{ worstrouteefficiency_data|safe }};
+    console.log(routeefficiency_data.meanspeed);
+    console.log(routeefficiency_data.meancost);
+    {#minspeed = {{ minspeed|safe }};#}
+    {#maxspeed = {{ maxspeed|safe }};#}
+    var costpermile = "0";
+    var costmiledriver = "0";
+    if (rt === "advanced"){
+        costpermile = {{ costmile|safe }};
+        costmiledriver = {{ costmiledriver|safe }}
+    }else if (rt === "lite"){
+        costpermile = "0";
+        costmiledriver = "0";
+    }
+
+
+    {#console.log(costpermile);#}
+    {#console.log(df_driver);#}
+    {##}
+    {#dfcost = new dfd.DataFrame(costpermile);#}
+    {#console.log(dfcost);#}
+    {#dfcost.sortValues("CostPerMile", { inplace: true })#}
+    {#let group_df = dfcost.groupby(["CarrierName"]);#}
+    {##}
+    {#let a = group_df.getGroup(["ABC Carriers"]);#}
+    {#let b = group_df.getGroup(["XYZ Freight"]);#}
+    {#let c = group_df.getGroup(["DEF Logistics"]);#}
+    {#let d = group_df.getGroup(["GHI Transport"]);#}
+    {##}
+    {#const median = d3.quantile(b["CostPerMile"].values, 0.5);#}
+    {#const q1 = d3.quantile(b["CostPerMile"].values, 0.25);#}
+    {#const min = d3.min(b["CostPerMile"].values);#}
+    {#const max = d3.max(b["CostPerMile"].values);#}
+    {#const q3 = d3.quantile(b["CostPerMile"].values, 0.75);#}
+    {##}
+    {#console.log('min:', min);#}
+    {#console.log('q1:', q1);#}
+    {#console.log('median:', median);#}
+    {#console.log('q3:', q3);#}
+    {#console.log('max:', max);#}
+    {#a.print();#}
+    {#for (let i = 0; i < df.shape[0]; i++) {#}
+    {#    console.log()#}
+
+
+
+    handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency_data, worstrouteefficiency_data);
+	{#handleRenderApexChart(full_df);#}
+
+	$(document).on('theme-reload', function() {
+		{#$('#churncontractiondonut, #apexLineChart, #apexColumnChart, #apexAreaChart, #apexBarChart, #apexMixedChart, #apexCandlestickChart, #apexBubbleChart, #apexScatterChart, #apexHeatmapChart, #apexPieChart, #apexRadialBarChart, #apexRadarChart').empty();#}
+        if (costpermile !== "0") {
+            $('#CarrierCostReliabilityChart, #CarrierCostPerMile, #DriverMpgOnTime').empty();
+        }else {
+            $('#CarrierCostReliabilityChart, #DriverMpgOnTime').empty();
+        }
+
+		handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, routeefficiency);
+	});
+});
+    </script>
+
+
+
+<script>
+$('body').on('click', '[data-act]', function() {
+    let cixphoto =  $(this).data('act');
+    let frame = $("#" + cixphoto).val();
+
+    const myframe = document.getElementById("myFrame");
+    if (myframe) {
+
+        myframe.remove(); // Removes the iframe element from the DOM
+    }
+
+    var iframe = document.createElement('iframe');
+    iframe.id = 'myFrame';
+
+    iframe.style.border = '1px solid #ccc';
+    iframe.srcdoc = frame; // Replace with the URL of the content to display
+    // Optional: Add a border for visibility
+    $("#col-1").attr('class', 'col-9');
+
+    var col2 = $("#col-2");
+    col2.attr('class', 'col-3');
+    col2.show();
+
+    $("#framebutton").show();
+    $("#removeButton").show();
+
+    $("#frameContainer").append(iframe)
+
+
+
+
+    });
+</script>
+<script>
+{#const myButton = document.querySelector('#removeButton');#}
+{##}
+{##}
+{#    myButton.addEventListener('click', () => {#}
+$("#removeButton").click(function (){
+        const myFrame = document.getElementById('myFrame');
+
+        console.log("Checked", myFrame);
+        if (myFrame) {
+                myFrame.remove(); // Removes the iframe element from the DOM
+        }
+        {#col1 = document.getElementById('col-1');#}
+        {#col1.className = 'col-12';#}
+        {#col1 = document.getElementById('col-2');#}
+        {#col1.className = '';#}
+        {#frameButton = document.getElementById('framebutton');#}
+        {#frameButton.className= "";#}
+        $("#col-1").attr('class', 'col-12');
+        var col2 = $("#col-2");
+        col2.hide();
+        col2.attr('class', '');
+
+        $("#removeButton").hide();
+        $("#framebutton").hide();
+
+
+    });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function sleep(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+        }
+// PDF Download
+            const today = new Date();
+            const downloadBtn = document.getElementById('download-btn');
+            const carrier1= document.getElementById("carrier_1");
+            const carrier2= document.getElementById("carrier_2");
+            const driver1= document.getElementById("driver_1");
+            const driver2= document.getElementById("driver_2");
+            const route1 = document.getElementById("route_1");
+            const route1_msg = document.getElementById("route_1_msg");
+            const route2 = document.getElementById("route_2");
+            const route3 = document.getElementById("route_3");
+            const htmpmsg = document.getElementById("heatmapmessage");
+            const htmp = document.getElementById("htmpx").value;
+            const htmpmsg_html = htmpmsg.innerHTML;
+
+
+            let rphead = '<div class="logo-area" style="max-width:160px;"> <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a> </div>';
+            rphead = rphead + '<div class="d-flex justify-content-center align-items-center" id="report_head">';
+            rphead = rphead +'<span class="title" id="report_title" style="color: #0cb7d6; font-size: 20px">{% trans "FreightOps Report" %} -</span>';
+            rphead = rphead + '<span class="title" id="report_idx" style="color: black; font-size: 20px;">&nbsp;{{ reportid }} </span>';
+            rphead = rphead + '</div>'
+            rphead = rphead + '<span id="report_date"></span>'
+            const reporthead = document.getElementById("report_head");
+            const reporttitle = document.getElementById("report_title");
+            const pdfhead = document.getElementById("pdf_head");
+            const report_id = document.getElementById("report_id");
+            const reportid_html = report_id.innerHTML;
+            const allH2s = document.querySelectorAll('h2');
+            const allH3s = document.querySelectorAll('h3');
+            const card_charts = document.querySelectorAll('.chart-card');
+            {#const card1 = document.getElementById("card1");#}
+            {#const card2 = document.getElementById("card2");#}
+            {#const card3 = document.getElementById("card3");#}
+            {#const card4 = document.getElementById("card4");#}
+            {#const card5 = document.getElementById("card5");#}
+            const keywidgets = document.getElementsByClassName('keywidget');
+            const apexcharts_c = document.querySelectorAll('.apexcharts-canvas');
+            //const apexchart1width = apexcharts_c[0].style.width;
+            //const apexchart4width = apexcharts_c[4].style.width;
+            downloadBtn.addEventListener('click', async function() {
+                carrier1.className = 'col-12';
+                carrier2.className = 'col-12';
+                driver1.className = 'col-12';
+                driver2.className = 'col-12';
+                route1.className = 'col-12';
+                route1_msg.className = 'col-12';
+                route2.className = 'col-12';
+                route3.className = 'col-12';
+                pdfhead.style.display= "block";
+                pdfhead.className = "d-flex justify-content-between align-items-center";
+                pdfhead.style.marginBottom = "10px";
+                htmpmsg.innerHTML = htmp;
+                {#report_id.style.color = "black";#}
+                {#report_id.style.fontSize = "20px";#}
+                {#report_id.innerHTML = reportid_html + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + today.toLocaleDateString();#}
+                {#reporttitle.style.fontSize = "20px";#}
+                {#card_charts.classList.remove('shadow-sm');#}
+                card_charts.forEach(element => {
+                    element.style.border = "none";
+                    element.className = "card chart-card";
+                });
+                {#card1.className = "card chart-card";#}
+                {#card1.style.border = "none";#}
+                {#card2.className = "card chart-card";#}
+                {#card2.style.border = "none";#}
+                {#card3.className = "card chart-card";#}
+                {#card3.style.border = "none";#}
+                {#card4.className = "card chart-card";#}
+                {#card4.style.border = "none";#}
+                {#card5.className = "card chart-card";#}
+                {#card5.style.border = "none";#}
+                allH3s.forEach(h3 => {
+                    h3.style.fontSize = "36px";
+                });
+                allH2s.forEach(h2 => {
+                    h2.style.fontSize = "36px";
+                });
+                // Iterate through the keywidgets
+                for (let i = 0; i < keywidgets.length; i++) {
+                  const element = keywidgets[i];
+                  element.className = "col-3 keywidget";
+                }
+                // Iterate through the apexcharts_c
+                apexcharts_c.forEach(element => {
+                    element.style.width = "694px";
+                });
+                pdfhead.innerHTML = rphead;
+                const reportdate = document.getElementById("report_date");
+                reportdate.innerHTML = today.toLocaleDateString();
+
+                const reportContent = document.getElementById('report-content');
+                const opt = {
+                    margin:      [10, 10, 10, 10],
+                    filename:     'Freight_Operations_Analysis_Report.pdf',
+                    pagebreak: {
+                        mode: 'css', // Use CSS-based page breaks
+                        after: '.page-break-after' // Apply page break after elements with this class
+                    },
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true },
+                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+                };
+                // Hide button before printing
+                downloadBtn.style.display = 'none';
+                html2pdf().from(reportContent).set(opt).toPdf().get('pdf').then(function (pdf) {
+                    var totalPages = pdf.internal.getNumberOfPages();
+                    downloadBtn.style.display = 'block';
+                    for (var i = 1; i <= totalPages; i++) {
+                        pdf.setPage(i);
+                        pdf.setFontSize(10);
+                        pdf.setTextColor(100); // Grey color for text
+                        var xPos = pdf.internal.pageSize.getWidth() / 2; // Center horizontally
+                        var yPos = pdf.internal.pageSize.getHeight() - 10; // 10mm from the bottom
+
+                        pdf.text('Page ' + i + ' of ' + totalPages, xPos, yPos, { align: 'center' });
+                    }
+                }).save();
+
+                await sleep(2000); // Pause execution for 3 seconds
+                carrier1.className = 'col-md-6';
+                carrier2.className = 'col-md-6';
+                driver1.className = 'col-md-6';
+                driver2.className = 'col-md-6';
+                route1.className = 'col-md-9';
+                route2.className = 'col-md-6';
+                route3.className = 'col-md-6';
+                htmpmsg.innerHTML = htmpmsg_html;
+                pdfhead.style.marginBottom = "0px";
+                pdfhead.className = "";
+                pdfhead.innerHTML = "";
+                pdfhead.style.display= "none";
+                report_id.style.color = "white";
+                report_id.style.fontSize = "40px";
+                report_id.innerHTML = reportid_html;
+                reporttitle.style.fontSize = "40px";
+                {#card_charts.classList.add('shadow-sm');#}
+                card_charts.forEach(element => {
+                    element.style.border = "1px solid rgba(0,0,0,.125)";
+                    element.className = "card shadow-sm chart-card";
+                });
+                {#card1.className = "card shadow-sm chart-card";#}
+                {#card1.style.border= "1px solid rgba(0,0,0,.125)";#}
+                {#card2.className = "card shadow-sm chart-card";#}
+                {#card2.style.border= "1px solid rgba(0,0,0,.125)";#}
+                {#card3.className = "card shadow-sm chart-card";#}
+                {#card3.style.border= "1px solid rgba(0,0,0,.125)";#}
+                {#card4.className = "card shadow-sm chart-card";#}
+                {#card4.style.border= "1px solid rgba(0,0,0,.125)";#}
+                {#card5.className = "card shadow-sm chart-card";#}
+                {#card5.style.border= "1px solid rgba(0,0,0,.125)";#}
+                allH3s.forEach(h3 => {
+                    h3.style.fontSize = "42px";
+                });
+                allH2s.forEach(h2 => {
+                    h2.style.fontSize = "48px";
+                });
+                for (let i = 0; i < keywidgets.length; i++) {
+                  const element = keywidgets[i];
+                  element.className = "col-lg-3 col-md-6 col-sm-6 keywidget";
+                }
+
+                // Iterate through the apexcharts_c
+                //apexcharts_c.forEach(element => {
+                //    element.style.width = apexchart1width;
+                //});
+                {#pdfhead.style = "display: none;";#}
+            });
+        });
+</script>
+{% endblock js_area %}
+
+

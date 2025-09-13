@@ -147,132 +147,188 @@ table, th, td {
         <div id="pdf_head" style="display: none;"></div>
        <!-- Report Info Section -->
         <div class="row">
-                <div class="" id="col-1">
-                    <div class="row g-4">
-            <div class="col-12">
-                <div class="row justify-content-center">
-                    <div class="col-12 text-center" style="background-color: #e1e0e0; margin-bottom: 15px;">
-                        <h2>Carriers Performance</h2>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
-                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
-                            <span class="title">Best On-Time Rate</span>
-                            <div class="d-flex align-items-center gap-3">
-                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
-                                <div class="counter-number d-flex">
-                                    <h3 class="counter">{{ carrier_ontime }}</h3><h3> %</h3>
+            <div class="" id="col-1">
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="row justify-content-center">
+                            <div class="col-12 text-center align-content-center" style="background-color: #e1e0e0; margin-bottom: 15px; min-height: 50px;">
+                                <h4>Carriers Performance</h4>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                                    <span class="title">Best On-Time Rate</span>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <div class="counter-number d-flex">
+                                            <h3 class="counter">{{ carrier_ontime }}</h3><h3> %</h3>
+                                        </div>
+                                    </div>
+                                    <span class="title">{{ carrier_ontime_name }}</span>
                                 </div>
                             </div>
-                            <span class="title">{{ carrier_ontime_name }}</span>
-                        </div>
-                    </div>
 
-                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
-                        <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
-                            <span class="title">Lowest Freight Cost </span>
-                            <div class="d-flex align-items-center gap-3">
-                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
-                                <div class="counter-number d-flex">
-                                    <H3>$ </H3><h3 class="counter">{{ carrier_freightcost }}</h3>
+                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                                    <span class="title">Lowest Freight Cost </span>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <div class="counter-number d-flex">
+                                            <H3>$ </H3><h3 class="counter">{{ carrier_freightcost }}</h3>
+                                        </div>
+                                    </div>
+                                    <span class="title">{{ carrier_freightcost_name }}</span>
                                 </div>
                             </div>
-                            <span class="title">{{ carrier_freightcost_name }}</span>
-                        </div>
-                    </div>
 
-                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
-                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
-                            <span class="title">Lowest Cost Per Mile</span>
-                            <div class="d-flex align-items-center gap-3">
-                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
-                                <div class="counter-number d-flex">
-                                    <h3>$ </h3><h3 class="counter">{{ carrier_costpermile }}</h3>
+                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                                    <span class="title">Lowest Cost Per Mile</span>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <div class="counter-number d-flex">
+                                            <h3>$ </h3><h3 class="counter">{{ carrier_costpermile }}</h3>
+                                        </div>
+                                    </div>
+                                    <span class="title">{{ carrier_costpermile_name }}</span>
                                 </div>
                             </div>
-                            <span class="title">{{ carrier_costpermile_name }}</span>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
-                        <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
-                            <span class="title">Lowest Cost Per Pound</span>
-                            <div class="d-flex align-items-center gap-3">
-                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
-                                <div class="counter-number d-flex">
-                                   <h3>$ </h3><h3 class="counter">{{ carrier_costpound }}</h3>
+                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                                    <span class="title">Lowest Cost Per Pound</span>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <div class="counter-number d-flex">
+                                           <h3>$ </h3><h3 class="counter">{{ carrier_costpound }}</h3>
+                                        </div>
+                                    </div>
+                                    <span class="title">{{ carrier_costpound_name }}</span>
                                 </div>
                             </div>
-                            <span class="title">{{ carrier_costpound_name }}</span>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-6" id="carrier_1">
-                <div class="card shadow-sm chart-card" id="card1">
-                    <div class="card-header">
-                        {% trans "Carrier Cost vs. Reliability Analysis" %}
-                    </div>
-                    <div class="card-body text-center">
-
-                        <div id="CarrierCostReliabilityChart"></div>
-                    </div>
-{#                {% if reporttype == "advanced" %}#}
-{#                    <div class="card-footer">#}
-{##}
-{#                            <ul style="list-style-type:disc;  font-size: 14px;">#}
-{#                                {% for item in contigency %}#}
-{#                                    <li> {{ item|safe }}</li>#}
-{#                                {% endfor %}#}
-{##}
-{#                            </ul>#}
-{#                            <strong>Actions:</strong><br>#}
-{#                            <ol type="1" style=" font-size: 14px;">#}
-{#                                {% for cont_action in contingency_action %}#}
-{#                                <li> {{ cont_action|safe }}</li>#}
-{#                                {% endfor %}#}
-{#                            </ol>#}
-{##}
-{#                    </div>#}
-{#                {% endif %}#}
-                </div>
-            </div>
-            {% if reporttype == "advanced" %}
-                 <div class="col-md-6" id="carrier_2">
-                     <div class="card shadow-sm chart-card"  id="card2">
-                         <div class="card-header">
-                            {% trans "Fuel Cost per Mile Distribution by Carrier" %}
-                         </div>
-                         <div class="card-body text-center">
-                            <div id="CarrierCostPerMile"></div>
-                         </div>
-                     </div>
-                 </div>
-            {% endif %}
-
-             {% if reporttype == "advanced" %}
-                 <div class="page-break-after"></div>
-                <div class="col-12">
-            {% elif reporttype == "lite" %}
-                 <div class="col-md-6" id="carrier_2">
-            {% endif %}
-
-                        <div class="card shadow-sm" >
+                    <div class="col-md-6" id="carrier_1">
+                        <div class="card shadow-sm chart-card" id="card1">
                             <div class="card-header">
-                                {% trans "Carriers Key Insights and Recommended Actions" %}
+                                {% trans "Carriers Cost vs. Reliability Analysis" %}
+                            </div>
+                            <div class="card-body text-center">
+
+                                <div id="CarrierCostReliabilityChart"></div>
                             </div>
 
-                            <div class="card-body " style="padding-left: 40px;">
-                                <div id="CarrierInsights" style="min-height: 250px;">
-                                    <strong>Key Insights</strong><br>
-                                    <ul style="list-style-type:disc;  font-size: 14px;">
-                                        {% for item in contigency %}
-                                            <li> {{ item|safe }}</li>
+                        </div>
+                    </div>
+                    {% if reporttype == "advanced" %}
+                         <div class="col-md-6" id="carrier_2">
+                             <div class="card shadow-sm chart-card"  id="card2">
+                                 <div class="card-header">
+                                    {% trans "Fuel Cost per Mile Distribution by Carrier" %}
+                                 </div>
+                                 <div class="card-body text-center">
+                                    <div id="CarrierCostPerMile"></div>
+                                 </div>
+                             </div>
+                         </div>
+                    {% endif %}
+
+
+                    {% if reporttype == "lite" %}
+                         <div class="col-md-6" id="carrier_2">
+
+                                <div class="card shadow-sm" >
+                                    <div class="card-header">
+                                        {% trans "Carriers Key Insights and Recommended Actions" %}
+                                    </div>
+
+                                    <div class="card-body " style="padding-left: 40px;">
+                                        <div id="CarrierInsights" style="min-height: 250px;">
+                                            <strong>Key Insights</strong><br>
+                                            <ul style="list-style-type:disc;  font-size: 14px;">
+                                                {% for item in contigency %}
+                                                    <li> {{ item|safe }}</li>
+                                                {% endfor %}
+                                                <li>{{ highcostvariance|safe }}</li>
+                                                <li>{{ lowcostvariance|safe }}</li>
+
+                                            </ul>
+                                            <br><strong>Actions:</strong><br>
+                                            <ol type="1" style=" font-size: 14px;">
+                                                {% for cont_action in contingency_action %}
+                                                    <li> {{ cont_action|safe }}</li>
+                                                {% endfor %}
+                                                {% for action in costreliability_action %}
+                                                    <li>{{ action|safe }}</li>
+                                                {% endfor %}
+                                            </ol>
+                                        </div>
+                                    </div>
+
+                                </div>
+                        </div>
+                        {% endif %}
+        {#        <div class="" id="col-helper">#}
+                    <div class="page-break-after"></div>
+                  {% if reporttype == "advanced" %}
+                        <div class="col-12" id="carrier_ai">
+                            <div class="card shadow-sm" id="carrier_summary">
+                                <div class="card-header" style="font-size: 1.5rem; font-weight: 700">
+                                    {% trans "Carriers Advanced Analysis (AI + Expert Verified)" %}
+                                </div>
+                                <div class="card-body ms-4" >
+                                    {% if report_carrier.executive_summary %}
+                                        <h4 style="color: #033e79;">Executive Summary</h4>
+                                        <p style="color: black">{{ report_carrier.executive_summary }}</p>
+                                    {% endif %}
+                                    {% if report_carrier.kpis %}
+                                    <h4 style="color: #033e79;">KPI Analysis</h4>
+                                        <table class="table table-hover">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th>{% trans "Metric" %}</th>
+                                                <th>{% trans "Value" %}</th>
+                                                <th>{% trans "Note" %}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for ky in report_carrier.kpis %}
+                                                <tr>
+                                                    <td><strong>{{ ky.metric }}</strong></td>
+                                                    <td>{{ ky.value }}</td>
+                                                    <td>{{ ky.note }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+
+                                    {% endif %}
+                                <br>
+
+                                {% if report_carrier.key_insights %}
+                                    <h4 style="color: #033e79;">Key Insights</h4>
+                                    <ol class="mb-0">
+                                        {% for k in report_carrier.key_insights %}
+                                          <li>{{ k }}</li>
                                         {% endfor %}
                                         <li>{{ highcostvariance|safe }}</li>
                                         <li>{{ lowcostvariance|safe }}</li>
+                                    </ol>
+                                {% endif %}
+                                <br>
+                                <h4 style="color: #033e79;">Contingency Analysis</h4>
+                                <ol class="mb-0">
+                                    {% for item in contigency %}
+                                        <li> {{ item|safe }}</li>
+                                    {% endfor %}
+                                </ol>
 
-                                    </ul>
-                                    <br><strong>Actions:</strong><br>
-                                    <ol type="1" style=" font-size: 14px;">
+                                <br>
+                                {% if report_carrier.recommendations %}
+                                    <h4 style="color: #033e79;">Actionable Recommendations</h4>
+                                    <ol class="mb-0">
+                                        {% for r in report_carrier.recommendations %}
+                                          <li>{{ r }}</li>
+                                        {% endfor %}
                                         {% for cont_action in contingency_action %}
                                             <li> {{ cont_action|safe }}</li>
                                         {% endfor %}
@@ -280,735 +336,653 @@ table, th, td {
                                             <li>{{ action|safe }}</li>
                                         {% endfor %}
                                     </ol>
-                                </div>
-                            </div>
-
-                        </div>
-            </div>
-{#        <div class="" id="col-helper">#}
-        <div class="page-break-after"></div>
-          {% if reporttype == "advanced" %}
-                <div class="col-12">
-                    <div class="card shadow-sm" id="carrier_summary">
-                        <div class="card-header" style="font-size: 1.5rem; font-weight: 700">
-                            {% trans "Carriers Advanced Analysis (AI + Expert Verified)" %}
-                        </div>
-                        <div class="card-body ms-4" >
-                            {% if report_carrier.executive_summary %}
-                                <h4 style="color: #033e79;">Executive Summary</h4>
-                                <p style="color: black">{{ report_carrier.executive_summary }}</p>
-                            {% endif %}
-                            {% if report_carrier.kpis %}
-                            <h4 style="color: #033e79;">KPI Analysis</h4>
-                            <table class="table table-hover">
-                            <thead class="table-dark">
-                            <tr>
-                                <th>{% trans "Metric" %}</th>
-                                <th>{% trans "Value" %}</th>
-                                <th>{% trans "Note" %}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for ky in report_carrier.kpis %}
-                            <tr>
-                                <td><strong>{{ ky.metric }}</strong></td>
-                                <td>{{ ky.value }}</td>
-                                <td>{{ ky.note }}</td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-
-                            </table>
-
-                            {% endif %}
-                        <br>
-
-                        {% if report_carrier.key_insights %}
-                            <h4 style="color: #033e79;">Key Insights</h4>
-                            <ol class="mb-0">
-                                  {% for k in report_carrier.key_insights %}
-                                  <li>{{ k }}</li>
-                                  {% endfor %}
-                                </ol>
-                            {% endif %}
-                        <br>
-                          {% if report_carrier.recommendations %}
-                              <h4 style="color: #033e79;">Actionable Recommendations</h4>
-                            <ol class="mb-0">
-                                  {% for r in report_carrier.recommendations %}
-                                  <li>{{ r }}</li>
-                                  {% endfor %}
-                                </ol>
-                          {% endif %}
-                        <br>
-                        {% if report_carrier.financial_impact %}
-                              <h4 style="color: #033e79;">Financial Impact</h4>
-                            <ol class="mb-0">
-                                {% for pt in report_carrier.financial_impact %}
-                                  <li>{{ pt }}</li>
-                                {% endfor %}
-                            </ol>
-                        {% endif %}
-                        <br>
-                        {% if report_carrier.next_step %}
-                              <h4 style="color: #033e79;">Next Step Actions</h4>
-                            <p><span style="font-weight: bold; color: black">Immediate:</span></p>
-                            <ol type="1">
-                            {%  for im in report_carrier.next_step.immediate %}
-                                <li>{{ im }}</li>
-                            {% endfor %}
-                            </ol>
-                            <p><span style="font-weight: bold; color: black">Short-Term:</span></p>
-                            <ol type="1">
-                            {%  for st in report_carrier.next_step.short_term %}
-                                <li>{{ st }}</li>
-                            {% endfor %}
-                            </ol>
-                            <p><span style="font-weight: bold; color: black">Long-Term:</span></p>
-                            <ol type="1">
-                            {%  for lt in report_carrier.next_step.long_term %}
-                                <li>{{ lt }}</li>
-                            {% endfor %}
-                            </ol>
-                         {% endif %}
-                        <br>
-                        {% if report_carrier.executive_dashboard_kpis %}
-                              <h4 style="color: #033e79;">Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
-                            <table class="table table-hover">
-                            <thead class="table-dark">
-                            <tr>
-                                <th>{% trans "KPI" %}</th>
-                                <th>{% trans "Target" %}</th>
-                                <th>{% trans "Current Best" %}</th>
-                                <th>{% trans "Current Worst" %}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for eky in report_carrier.executive_dashboard_kpis %}
-                            <tr>
-                                <td>{{ eky.kpi }}</td>
-                                <td>{{ eky.target }}</td>
-                                <td>{{ eky.current_best }}</td>
-                                <td>{{ eky.current_worst }}</td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-
-                            </table>
-                        {% endif %}
-                        <br>
-                        {% if report_carrier.predictive_trends %}
-                              <h4 style="color: #033e79;">Predictive Trends</h4>
-                            <ol class="mb-0">
-                                {% for pt in report_carrier.predictive_trends %}
-                                  <li>{{ pt }}</li>
-                                {% endfor %}
-                            </ol>
-                        {% endif %}
-                        </div>
-                    </div>
-              </div>
-          {% endif %}
-       <div class="page-break-after"></div>
-{#      </div>#}
-        <div class="col-12">
-                <div class="row justify-content-center text">
-                    <div class="col-12 text-center" style="background-color: #e1e0e0; margin-bottom: 15px; margin-top: 15px;">
-                        <h2>Drivers Performance</h2>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
-                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
-                            <span class="title">Best On-Time Rate</span>
-                            <div class="d-flex align-items-center gap-3">
-                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
-                                <div class="counter-number d-flex">
-                                    <h3 class="counter">{{ driver_ontime }}</h3><h3> %</h3>
-                                </div>
-                            </div>
-                            <span class="title">{{ driver_ontime_name }}</span>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
-                        <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
-                            <span class="title">Higher Miles Traveled </span>
-                            <div class="d-flex align-items-center gap-3">
-                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
-                                <div class="counter-number d-flex">
-                                    <h3 class="counter">{{ driver_totalmiles }}</h3>
-                                </div>
-                            </div>
-                            <span class="title">{{ driver_totalmiles_name }}</span>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
-                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
-                            <span class="title">Fastest Driver</span>
-                            <div class="d-flex align-items-center gap-3">
-                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
-                                <div class="counter-number d-flex">
-                                    <h3 class="counter">{{ driver_speed }}</h3><h4 style="color: white">&nbsp;MPH</h4>
-                                </div>
-                            </div>
-                            <span class="title">{{ driver_speed_name }}</span>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
-                        <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
-                            <span class="title">Most Efficient</span>
-                            <div class="d-flex align-items-center gap-3">
-                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
-                                <div class="counter-number d-flex">
-                                   <h3 class="counter">{{ driver_medianmpg }}</h3> <h4 style="color: white">&nbsp;MPG</h4>
-                                </div>
-                            </div>
-                            <span class="title">{{ driver_medianmpg_name }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <div class="col-md-6" id="driver_1">
-                <div class="card shadow-sm chart-card"  id="card3">
-                    <div class="card-header">
-                        {% trans "Driver Productivity Matrix: On-Time Rate Vs. Median MPG Vs. Median Speed" %}
-                    </div>
-                    <div class="card-body text-center">
-                            <div id="DriverMpgOnTime"></div>
-                    </div>
-{#                {% if reporttype == "advanced" %}#}
-{#                    <div class="card-footer">#}
-{#                        <ul style=" font-size: 14px;">#}
-{#                            {% for drivermessage in driver_messages %}#}
-{#                                <li>{{ drivermessage.msg|safe }}&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info"  data-act="{{ drivermessage.ref }}" style=" border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button>#}
-{#                                    <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">#}
-{#                                </li>#}
-{#                            {% endfor %}#}
-{##}
-{#                        </ul>#}
-{#                        <strong>Actions:</strong><br>#}
-{#                        <ol type="1" style=" font-size: 14px;">#}
-{#                            {% for daction in driver_actions %}#}
-{#                            <li>#}
-{#                                {{ daction|safe }}#}
-{#                            </li>#}
-{#                            {% endfor %}#}
-{#                        </ol>#}
-{#                    </div>#}
-{#                {% endif %}#}
-                </div>
-            </div>
-
-           {% if reporttype == "advanced" %}
-            <div class="col-md-6" id="driver_2">
-                <div class="card shadow-sm chart-card"  id="card4">
-                    <div class="card-header">
-                        {% trans "Fuel Cost per Mile Distribution by Driver" %}
-                    </div>
-                    <div class="card-body text-center">
-                        <div id="DriverSpeedMPG"></div>
-                    </div>
-                </div>
-            </div>
-
-           {% endif %}
-
-            {% if reporttype == "advanced" %}
-                 <div class="page-break-after"></div>
-                <div class="col-12">
-            {% elif reporttype == "lite" %}
-                 <div class="col-md-6" id="driver_2">
-            {% endif %}
-
-                <div class="card shadow-sm">
-                    <div class="card-header">
-                        {% trans "Driver Key Insights and Recommended Actions" %}
-                    </div>
-
-                    <div class="card-body " style="padding-left: 40px;">
-                        <div id="DriverInsights" style="min-height: 250px;">
-                             <strong>Key Insights</strong><br>
-                             <ul style="list-style-type:disc; font-size: 14px;">
-                                {% for drivermessage in driver_messages %}
-                                    {% if reporttype == "advanced" %}
-                                       <li>{{ drivermessage.msg|safe }}&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info"  data-act="{{ drivermessage.ref }}" style=" border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button>
-                                        <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">
-                                        </li>
-                                    {% elif reporttype == "lite" %}
-                                        <li>{{ drivermessage|safe }}</li>
-                                    {% endif %}
-                            {% endfor %}
-                                {% if reporttype == "advanced" %}
-                                    <li>{{ driverhighcostvariance|safe }}</li>
-                                    <li>{{ driverlowcostvariance|safe }}</li>
                                 {% endif %}
-
-                             </ul>
-                            <br>
-                             {% if reporttype == "advanced" %}
-                                <strong>Actions:</strong>&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="dcva" style="border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button><br>
-                                <input type="hidden" id="dcva" value="{{ driver_costreliability_action_ext }}" style="display: none;">
-                             {% elif reporttype == "lite" %}
-                                 <strong>Actions:</strong><br>
-                             {% endif %}
-                                <ol type="1" style=" font-size: 14px;">
-                                    {% for daction in driver_actions %}
-                                    <li>
-                                        {{ daction|safe }}
-                                    </li>
-                                    {% endfor %}
-                                {% if reporttype == "advanced" %}
-                                    {% for driveraction in driver_costreliability_action %}
-                                    <li>{{ driveraction|safe }}</li>
-                                    {% endfor %}
+                                <br>
+                                {% if report_carrier.financial_impact %}
+                                    <h4 style="color: #033e79;">Financial Impact</h4>
+                                    <ol class="mb-0">
+                                        {% for pt in report_carrier.financial_impact %}
+                                          <li>{{ pt }}</li>
+                                        {% endfor %}
+                                    </ol>
                                 {% endif %}
-                            </ol>
+                                <br>
+                                {% if report_carrier.next_step %}
+                                    <h4 style="color: #033e79;">Next Step Actions</h4>
+                                    <p><span style="font-weight: bold; color: black">Immediate:</span></p>
+                                    <ol type="1">
+                                    {%  for im in report_carrier.next_step.immediate %}
+                                        <li>{{ im }}</li>
+                                    {% endfor %}
+                                    </ol>
+                                    <p><span style="font-weight: bold; color: black">Short-Term:</span></p>
+                                    <ol type="1">
+                                    {%  for st in report_carrier.next_step.short_term %}
+                                        <li>{{ st }}</li>
+                                    {% endfor %}
+                                    </ol>
+                                    <p><span style="font-weight: bold; color: black">Long-Term:</span></p>
+                                    <ol type="1">
+                                    {%  for lt in report_carrier.next_step.long_term %}
+                                        <li>{{ lt }}</li>
+                                    {% endfor %}
+                                    </ol>
+                                 {% endif %}
+                                <br>
+                                {% if report_carrier.executive_dashboard_kpis %}
+                                    <h4 style="color: #033e79;">Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
+                                    <table class="table table-hover">
+                                        <thead class="table-dark">
+                                        <tr>
+                                            <th>{% trans "KPI" %}</th>
+                                            <th>{% trans "Target" %}</th>
+                                            <th>{% trans "Current Best" %}</th>
+                                            <th>{% trans "Current Worst" %}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for eky in report_carrier.executive_dashboard_kpis %}
+                                            <tr>
+                                                <td>{{ eky.kpi }}</td>
+                                                <td>{{ eky.target }}</td>
+                                                <td>{{ eky.current_best }}</td>
+                                                <td>{{ eky.current_worst }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
 
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div class="page-break-after"></div>
-             {% if reporttype == "advanced" %}
-                <div class="col-12">
-                    <div class="card shadow-sm" id="driver_summary">
-                        <div class="card-header" style="font-weight: 700; font-size: 1.5rem;">
-                            {% trans "Drivers Advanced Analysis (AI + Expert Verified)" %}
-                        </div>
-                        <div class="card-body ms-4" >
-                            {% if report_driver.executive_summary %}
-                                <h4 style="color: #033e79;">Executive Summary</h4>
-                                <p style="color: black">{{ report_driver.executive_summary }}</p>
-                            {% endif %}
-                            <br>
-                            {% if report_driver.kpis %}
-                            <h4 style="color: #033e79;">KPI Analysis</h4>
-                            <table class="table table-hover">
-                            <thead class="table-dark">
-                            <tr>
-                                <th>{% trans "Metric" %}</th>
-                                <th>{% trans "Value" %}</th>
-                                <th>{% trans "Note" %}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for ky in report_driver.kpis %}
-                            <tr>
-                                <td>{{ ky.metric }}</td>
-                                <td>{{ ky.value }}</td>
-                                <td>{{ ky.note }}</td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-
-                            </table>
-
-                            {% endif %}
-                        <br>
-
-                        {% if report_driver.key_insights %}
-                            <h4 style="color: #033e79;">Key Insights</h4>
-                            <ol class="mb-0">
-                                  {% for k in report_driver.key_insights %}
-                                  <li>{{ k }}</li>
-                                  {% endfor %}
-                                </ol>
-                            {% endif %}
-                        <br>
-                          {% if report_driver.recommendations %}
-                              <h4 style="color: #033e79;">Actionable Recommendations</h4>
-                            <ol class="mb-0">
-                                  {% for r in report_driver.recommendations %}
-                                  <li>{{ r }}</li>
-                                  {% endfor %}
-                                </ol>
-                          {% endif %}
-                        <br>
-                        {% if report_driver.financial_impact %}
-                              <h4 style="color: #033e79;">Financial Impact</h4>
-                            <ol class="mb-0">
-                                {% for pt in report_driver.financial_impact %}
-                                  <li>{{ pt }}</li>
-                                {% endfor %}
-                            </ol>
-                        {% endif %}
-                        <br>
-                        {% if report_driver.next_step %}
-                              <h4 style="color: #033e79;">Next Step Actions</h4>
-                            <p><span style="font-weight: bold; color: black">Immediate:</span></p>
-                            <ol type="1">
-                            {%  for imd in report_driver.next_step.immediate %}
-                                <li>{{ imd }}</li>
-                            {% endfor %}
-                            </ol>
-                            <p><span style="font-weight: bold; color: black">Short-Term:</span></p>
-                            <ol type="1">
-                            {%  for std in report_driver.next_step.short_term %}
-                                <li>{{ std }}</li>
-                            {% endfor %}
-                            </ol>
-                            <p><span style="font-weight: bold; color: black">Long-Term:</span></p>
-                            <ol type="1">
-                            {%  for ltd in report_driver.next_step.long_term %}
-                                <li>{{ ltd }}</li>
-                            {% endfor %}
-                            </ol>
-                         {% endif %}
-                        <br>
-                        {% if report_driver.executive_dashboard_kpis %}
-                              <h4 style="color: #033e79;">Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
-                            <table class="table table-hover">
-                            <thead class="table-dark">
-                            <tr>
-                                <th>{% trans "KPI" %}</th>
-                                <th>{% trans "Target" %}</th>
-                                <th>{% trans "Current Best" %}</th>
-                                <th>{% trans "Current Worst" %}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for eky in report_driver.executive_dashboard_kpis %}
-                            <tr>
-                                <td>{{ eky.kpi }}</td>
-                                <td>{{ eky.target }}</td>
-                                <td>{{ eky.current_best }}</td>
-                                <td>{{ eky.current_worst }}</td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-
-                            </table>
-                        {% endif %}
-                        <br>
-                        {% if report_driver.predictive_trends %}
-                              <h4 style="color: #033e79;">Predictive Trends</h4>
-                            <ol class="mb-0">
-                                {% for pt in report_driver.predictive_trends %}
-                                  <li>{{ pt }}</li>
-                                {% endfor %}
-                            </ol>
-                        {% endif %}
-                        </div>
-                    </div>
-                 </div>
-            {% endif %}
-            <div class="page-break-after"></div>
-                    <div class="col-12">
-                <div class="row justify-content-center text">
-                    <div class="col-12 text-center" style="background-color: #e1e0e0; margin-bottom: 15px; margin-top: 15px;">
-                        <h2>Routes Performance</h2>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
-                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
-                            <span class="title">Average Cost/Mile</span>
-                            <div class="d-flex align-items-center gap-3">
-                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
-                                <div class="counter-number d-flex">
-                                    <H3>$ </H3><h3 class="counter">{{ meancost }}</h3>
+                                    </table>
+                                {% endif %}
+                                <br>
+                                {% if report_carrier.predictive_trends %}
+                                    <h4 style="color: #033e79;">Predictive Trends</h4>
+                                    <ol class="mb-0">
+                                        {% for pt in report_carrier.predictive_trends %}
+                                          <li>{{ pt }}</li>
+                                        {% endfor %}
+                                    </ol>
+                                {% endif %}
                                 </div>
                             </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
-                        <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
-                            <span class="title">Average Speed</span>
-                            <div class="d-flex align-items-center gap-3">
-                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
-                                <div class="counter-number d-flex">
-                                    <h3 class="counter">{{ meanspeed }}</h3><h4 style="color: white">&nbsp;MPH</h4>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
-                        <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
-                            <span class="title">Average Distance</span>
-                            <div class="d-flex align-items-center gap-3">
-                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
-                                <div class="counter-number d-flex">
-                                    <h3 class="counter">{{ meandistance }}</h3><h4 style="color: white">&nbsp;Miles</h4>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
-                        <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
-                            <span class="title">Average Shipments</span>
-                            <div class="d-flex align-items-center gap-3">
-                                <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
-                                <div class="counter-number d-flex">
-                                   <h3 class="counter">{{ meanshipment }}</h3>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            {% if reporttype == "advanced" %}
-
-            <div class="col-md-6" id="route_2">
-                <div class="card shadow-sm chart-card"  id="card6">
-                    <div class="card-header">
-                        {% trans "Route Efficiency: Speed Vs. Cost per Mile Vs. Number of Shipments" %}
-                    </div>
-                    <div class="card-body text-center">
-                        <div id="RouteEfficiencyBubble"></div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="col-md-6" id="route_3">
-                <div class="card shadow-sm chart-card"  id="card7">
-                    <div class="card-header">
-                        {% trans "5 Worst Routes Based on Cost (Cost per Mile Vs. Speed Vs. Load Weight in Tons (1Ton =2000Lb)" %}
-                    </div>
-                    <div class="card-body text-center">
-                        <div id="WorstRouteEfficiencyBubble"></div>
-                    </div>
-                </div>
-
-            </div>
-                <div class="page-break-after"></div>
-            {% endif %}
-
-
-            <div class="col-md-9" id="route_1">
-                <div class="card shadow-sm chart-card"  id="card5">
-                    <div class="card-header">
-                        {% trans "Route Cost Efficiency Heatmap" %}
-                    </div>
-                    <div class="card-body text-center">
-                        <div id="RouteHeatMap"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3" id="route_1_msg">
-                <div class="card shadow-sm" id="card5_msg">
-                    <div class="card-header">
-                        {% trans "Route Heatmap Key Insightss and Recommended Actions" %}
-                    </div>
-                    <div class="card-body" id="heatmapmessage">
-                    {{ route_heatmap_short|safe }}
-                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="htmp" style="border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill">More Info</i></span> </button>
-                        <input type="hidden" id="htmp" value="{{ route_heatmap }}" style="display: none;">
-                        <input type="hidden" id="htmpx" value="{{ route_heatmap_plain }}" style="display: none;">
-                    </div>
-                </div>
-            </div>
-
-
-                {% if reporttype == "advanced" %}
-                 <div class="page-break-after"></div>
-                <div class="col-12 ">
-                    <div class="card shadow-sm" id="driver_summary">
-                        <div class="card-header" style="font-size: 1.5rem; font-weight: 700;">
-                            {% trans "Routes Advanced Analysis (AI + Expert Verified)" %}
-                        </div>
-                        <div class="card-body ms-4" >
-                            {% if report_route.executive_summary %}
-                                <h4 style="color: #033e79;">Executive Summary</h4>
-                                <p style="color: black">{{ report_route.executive_summary }}</p>
-                            {% endif %}
-                            <br>
-                            {% if report_route.kpis %}
-                            <h4 style="color: #033e79;">KPI Analysis</h4>
-                            <table class="table table-hover">
-                            <thead class="table-dark">
-                            <tr>
-                                <th>{% trans "Metric" %}</th>
-                                <th>{% trans "Value" %}</th>
-                                <th>{% trans "Note" %}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for ky in report_route.kpis %}
-                            <tr>
-                                <td>{{ ky.metric }}</td>
-                                <td>{{ ky.value }}</td>
-                                <td>{{ ky.note }}</td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-
-                            </table>
-
-                            {% endif %}
-                        <br>
-
-                        {% if report_route.key_insights %}
-                            <h4 style="color: #033e79;">Key Insights</h4>
-                            <ol class="mb-0">
-                                  {% for k in report_route.key_insights %}
-                                  <li>{{ k }}</li>
-                                  {% endfor %}
-                                </ol>
-                        {% endif %}
-                        <br>
-                        {% if report_route.recommendations %}
-                              <h4 style="color: #033e79;">Actionable Recommendations</h4>
-                            <ol class="mb-0">
-                                  {% for r in report_route.recommendations %}
-                                  <li>{{ r }}</li>
-                                  {% endfor %}
-                                </ol>
-                        {% endif %}
-                        <br>
-                        {% if report_route.financial_impact %}
-                              <h4 style="color: #033e79;">Financial Impact</h4>
-                            <ol class="mb-0">
-                                {% for pt in report_route.financial_impact %}
-                                  <li>{{ pt }}</li>
-                                {% endfor %}
-                            </ol>
-                        {% endif %}
-                        <br>
-                        {% if report_route.next_step %}
-                              <h4 style="color: #033e79;">Next Step Actions</h4>
-                            <p><span style="font-weight: bold; color: black">Immediate:</span></p>
-                            <ol type="1">
-                            {%  for imr in report_route.next_step.immediate %}
-                                <li>{{ imr }}</li>
-                            {% endfor %}
-                            </ol>
-                            <p><span style="font-weight: bold; color: black">Short-Term:</span></p>
-                            <ol type="1">
-                            {%  for str in report_route.next_step.short_term %}
-                                <li>{{ str }}</li>
-                            {% endfor %}
-                            </ol>
-                            <p><span style="font-weight: bold; color: black">Long-Term:</span></p>
-                            <ol type="1">
-                            {%  for ltr in report_route.next_step.long_term %}
-                                <li>{{ ltr }}</li>
-                            {% endfor %}
-                            </ol>
-                        {% endif %}
-                        <br>
-                        {% if report_route.executive_dashboard_kpis %}
-                              <h4 style="color: #033e79;">Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
-                            <table class="table table-hover">
-                            <thead class="table-dark">
-                            <tr>
-                                <th>{% trans "KPI" %}</th>
-                                <th>{% trans "Target" %}</th>
-                                <th>{% trans "Current Best" %}</th>
-                                <th>{% trans "Current Worst" %}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for eky in report_route.executive_dashboard_kpis %}
-                            <tr>
-                                <td>{{ eky.kpi }}</td>
-                                <td>{{ eky.target }}</td>
-                                <td>{{ eky.current_best }}</td>
-                                <td>{{ eky.current_worst }}</td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-
-                            </table>
-                        {% endif %}
-                        <br>
-                        {% if report_route.predictive_trends %}
-                              <h4 style="color: #033e79;">Predictive Trends</h4>
-                            <ol class="mb-0">
-                                {% for pt in report_route.predictive_trends %}
-                                  <li>{{ pt }}</li>
-                                {% endfor %}
-                            </ol>
-                        {% endif %}
-
-                        </div>
-                    </div>
-                </div>
-           {% elif reporttype == "lite" %}
+                      </div>
+                  {% endif %}
                     <div class="page-break-after"></div>
-                <div class="col-12">
-                    <div class="card shadow-sm" id="driver_summary">
-                        <div class="card-header">
-                            {% trans "AI-Driven Analysis" %}
+        {#      </div>#}
+                    <div class="col-12">
+                        <div class="row justify-content-center text">
+                            <div class="col-12 text-center align-content-center" style="background-color: #e1e0e0; margin-bottom: 15px; margin-top: 15px; min-height: 50px;">
+                                <h4>Drivers Performance</h4>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                                    <span class="title">Best On-Time Rate</span>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <div class="counter-number d-flex">
+                                            <h3 class="counter">{{ driver_ontime }}</h3><h3> %</h3>
+                                        </div>
+                                    </div>
+                                    <span class="title">{{ driver_ontime_name }}</span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                                    <span class="title">Higher Miles Traveled </span>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <div class="counter-number d-flex">
+                                            <h3 class="counter">{{ driver_totalmiles }}</h3>
+                                        </div>
+                                    </div>
+                                    <span class="title">{{ driver_totalmiles_name }}</span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                                    <span class="title">Fastest Driver</span>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <div class="counter-number d-flex">
+                                            <h3 class="counter">{{ driver_speed }}</h3><h4 style="color: white">&nbsp;MPH</h4>
+                                        </div>
+                                    </div>
+                                    <span class="title">{{ driver_speed_name }}</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                                    <span class="title">Most Efficient</span>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <div class="counter-number d-flex">
+                                           <h3 class="counter">{{ driver_medianmpg }}</h3> <h4 style="color: white">&nbsp;MPG</h4>
+                                        </div>
+                                    </div>
+                                    <span class="title">{{ driver_medianmpg_name }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body" >
-{#                        <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>#}
+                    </div>
+                    <div class="col-md-6" id="driver_1">
+                            <div class="card shadow-sm chart-card"  id="card3">
+                                <div class="card-header">
+                                    {% trans "Drivers Productivity Matrix: On-Time Rate Vs. Median MPG Vs. Median Speed" %}
+                                </div>
+                                <div class="card-body text-center">
+                                        <div id="DriverMpgOnTime"></div>
+                                </div>
 
-                        {% if report_route.kpis %}
-                            <h4>KPI Analysis</h4>
-                            <table class="table table-hover">
-                            <thead class="table-dark">
-                            <tr>
-                                <th>{% trans "Metric" %}</th>
-                                <th>{% trans "Value" %}</th>
-                                <th>{% trans "Note" %}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for ky in report_route.kpis %}
-                            <tr>
-                                <td>{{ ky.metric }}</td>
-                                <td>{{ ky.value }}</td>
-                                <td>{{ ky.note }}</td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
+                            </div>
+                    </div>
 
-                            </table>
+                    {% if reporttype == "advanced" %}
+                        <div class="col-md-6" id="driver_2">
+                            <div class="card shadow-sm chart-card"  id="card4">
+                                <div class="card-header">
+                                    {% trans "Fuel Cost per Mile Distribution by Driver" %}
+                                </div>
+                                <div class="card-body text-center">
+                                    <div id="DriverSpeedMPG"></div>
+                                </div>
+                            </div>
+                        </div>
 
-                            {% endif %}
-                        <br>
+                    {% endif %}
 
-                        {% if report_route.key_insights %}
-                            <h4>Key Insights</h4>
-                            <ol class="mb-0">
-                                  {% for k in report_route.key_insights %}
-                                  <li>{{ k }}</li>
-                                  {% endfor %}
-                                </ol>
-                            {% endif %}
-                        <br>
-                          {% if report_route.recommendations %}
-                              <h4>Actionable Recommendations</h4>
-                            <ol class="mb-0">
-                                  {% for r in report_route.recommendations %}
-                                  <li>{{ r }}</li>
-                                  {% endfor %}
-                                </ol>
-                            {% endif %}
+                    {% if reporttype == "lite" %}
+                        <div class="col-md-6" id="driver_2">
+
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    {% trans "Drivers Key Insights and Recommended Actions" %}
+                                </div>
+
+                                <div class="card-body " style="padding-left: 40px;">
+                                    <div id="DriverInsights" style="min-height: 250px;">
+                                         <strong>Key Insights</strong><br>
+                                         <ul style="list-style-type:disc; font-size: 14px;">
+                                            {% for drivermessage in driver_messages %}
+                                                <li>{{ drivermessage|safe }}</li>
+                                            {% endfor %}
+                                                <li>{{ driverhighcostvariance|safe }}</li>
+                                                <li>{{ driverlowcostvariance|safe }}</li>
+                                         </ul>
+                                        <br>
+                                            <strong>Actions:</strong>&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="dcva" style="border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button><br>
+                                            <input type="hidden" id="dcva" value="{{ driver_costreliability_action_ext }}" style="display: none;">
+
+                                            <ol type="1" style=" font-size: 14px;">
+                                                {% for daction in driver_actions %}
+                                                <li>
+                                                    {{ daction|safe }}
+                                                </li>
+                                                {% endfor %}
+
+                                                {% for driveraction in driver_costreliability_action %}
+                                                <li>{{ driveraction|safe }}</li>
+                                                {% endfor %}
+
+                                            </ol>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                            <div class="page-break-after"></div>
+                         {% if reporttype == "advanced" %}
+                            <div class="col-12" id="driver_ai">
+                                <div class="card shadow-sm" id="driver_summary">
+                                    <div class="card-header" style="font-weight: 700; font-size: 1.5rem;">
+                                        {% trans "Drivers Advanced Analysis (AI + Expert Verified)" %}
+                                    </div>
+                                    <div class="card-body ms-4" >
+                                        {% if report_driver.executive_summary %}
+                                            <h4 style="color: #033e79;">Executive Summary</h4>
+                                            <p style="color: black">{{ report_driver.executive_summary }}</p>
+                                        {% endif %}
+                                        <br>
+                                        {% if report_driver.kpis %}
+                                        <h4 style="color: #033e79;">KPI Analysis</h4>
+                                        <table class="table table-hover">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th>{% trans "Metric" %}</th>
+                                                <th>{% trans "Value" %}</th>
+                                                <th>{% trans "Note" %}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for ky in report_driver.kpis %}
+                                                <tr>
+                                                    <td>{{ ky.metric }}</td>
+                                                    <td>{{ ky.value }}</td>
+                                                    <td>{{ ky.note }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+
+                                        </table>
+
+                                        {% endif %}
+                                        <br>
+
+                                        {% if report_driver.key_insights %}
+                                            <h4 style="color: #033e79;">Key Insights</h4>
+                                            <ol class="mb-0">
+                                                {% for k in report_driver.key_insights %}
+                                                  <li>{{ k }}</li>
+                                                {% endfor %}
+                                                {% for drivermessage in driver_messages %}
+                                                    <li>{{ drivermessage.msg|safe }}&nbsp;<button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info"  data-act="{{ drivermessage.ref }}" style=" border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill"></i></span> </button>
+                                                        <input type="hidden" id="{{ drivermessage.ref }}" value="{{ drivermessage.extmsg }}">
+                                                    </li>
+                                                {% endfor %}
+                                            </ol>
+                                            {% endif %}
+                                          <br>
+                                          {% if report_driver.recommendations %}
+                                              <h4 style="color: #033e79;">Actionable Recommendations</h4>
+                                              <ol class="mb-0">
+                                                {% for r in report_driver.recommendations %}
+                                                  <li>{{ r }}</li>
+                                                {% endfor %}
+                                                {% for daction in driver_actions %}
+                                                    <li>
+                                                        {{ daction|safe }}
+                                                    </li>
+                                                {% endfor %}
+                                              </ol>
+                                          {% endif %}
+                                        <br>
+                                        {% if report_driver.financial_impact %}
+                                            <h4 style="color: #033e79;">Financial Impact</h4>
+                                            <ol class="mb-0">
+                                                {% for pt in report_driver.financial_impact %}
+                                                  <li>{{ pt }}</li>
+                                                {% endfor %}
+                                            </ol>
+                                        {% endif %}
+                                        <br>
+                                        {% if report_driver.next_step %}
+                                            <h4 style="color: #033e79;">Next Step Actions</h4>
+                                            <p><span style="font-weight: bold; color: black">Immediate:</span></p>
+                                            <ol type="1">
+                                                {%  for imd in report_driver.next_step.immediate %}
+                                                    <li>{{ imd }}</li>
+                                                {% endfor %}
+                                            </ol>
+                                            <p><span style="font-weight: bold; color: black">Short-Term:</span></p>
+                                            <ol type="1">
+                                                {%  for std in report_driver.next_step.short_term %}
+                                                    <li>{{ std }}</li>
+                                                {% endfor %}
+                                            </ol>
+                                            <p><span style="font-weight: bold; color: black">Long-Term:</span></p>
+                                            <ol type="1">
+                                                {%  for ltd in report_driver.next_step.long_term %}
+                                                    <li>{{ ltd }}</li>
+                                                {% endfor %}
+                                            </ol>
+                                         {% endif %}
+                                        <br>
+                                        {% if report_driver.executive_dashboard_kpis %}
+                                            <h4 style="color: #033e79;">Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
+                                            <table class="table table-hover">
+                                                <thead class="table-dark">
+                                                <tr>
+                                                    <th>{% trans "KPI" %}</th>
+                                                    <th>{% trans "Target" %}</th>
+                                                    <th>{% trans "Current Best" %}</th>
+                                                    <th>{% trans "Current Worst" %}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for eky in report_driver.executive_dashboard_kpis %}
+                                                        <tr>
+                                                            <td>{{ eky.kpi }}</td>
+                                                            <td>{{ eky.target }}</td>
+                                                            <td>{{ eky.current_best }}</td>
+                                                            <td>{{ eky.current_worst }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        {% endif %}
+                                        <br>
+                                        {% if report_driver.predictive_trends %}
+                                            <h4 style="color: #033e79;">Predictive Trends</h4>
+                                            <ol class="mb-0">
+                                                {% for pt in report_driver.predictive_trends %}
+                                                  <li>{{ pt }}</li>
+                                                {% endfor %}
+                                            </ol>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                             </div>
+                        {% endif %}
+                        <div class="page-break-after"></div>
+                        <div class="col-12">
+                            <div class="row justify-content-center text">
+                                <div class="col-12 text-center align-content-center" style="background-color: #e1e0e0; margin-bottom: 15px; margin-top: 15px; min-height: 50px;">
+                                    <h4>Routes Performance</h4>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                    <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                                        <span class="title">Average Cost/Mile</span>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                            <div class="counter-number d-flex">
+                                                <H3>$ </H3><h3 class="counter">{{ meancost }}</h3>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                    <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                                        <span class="title">Average Speed</span>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                            <div class="counter-number d-flex">
+                                                <h3 class="counter">{{ meanspeed }}</h3><h4 style="color: white">&nbsp;MPH</h4>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                    <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                                        <span class="title">Average Distance</span>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                            <div class="counter-number d-flex">
+                                                <h3 class="counter">{{ meandistance }}</h3><h4 style="color: white">&nbsp;Miles</h4>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                    <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
+                                        <span class="title">Average Shipments</span>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                            <div class="counter-number d-flex">
+                                               <h3 class="counter">{{ meanshipment }}</h3>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        {% if reporttype == "advanced" %}
+
+                        <div class="col-md-6" id="route_2">
+                            <div class="card shadow-sm chart-card"  id="card6">
+                                <div class="card-header">
+                                    {% trans "Routes Efficiency: Speed Vs. Cost per Mile Vs. Number of Shipments" %}
+                                </div>
+                                <div class="card-body text-center">
+                                    <div id="RouteEfficiencyBubble"></div>
+                                </div>
+                            </div>
 
                         </div>
-                    </div>
-                </div>
-           {% endif %}
 
-            <div class="page-break-after"></div>
-            <div class="col-12">
-                 <div class="card shadow-sm">
-                     <div class="card-header">
-                        {% trans "Route Efficiency Key Insightss and Recommended Actions" %}
-                    </div>
-                    <div class="card-body">
-                    {{ routemessage|safe }}
-                    </div>
+                        <div class="col-md-6" id="route_3">
+                            <div class="card shadow-sm chart-card"  id="card7">
+                                <div class="card-header">
+                                    {% trans "5 Worst Routes Based on Cost (Cost per Mile Vs. Speed Vs. Load Weight in Tons (1Ton =2000Lb)" %}
+                                </div>
+                                <div class="card-body text-center">
+                                    <div id="WorstRouteEfficiencyBubble"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="page-break-after"></div>
+                        {% endif %}
+
+
+                        <div class="col-md-9" id="route_1">
+                            <div class="card shadow-sm chart-card"  id="card5">
+                                <div class="card-header">
+                                    {% trans "Routes Cost Efficiency Heatmap" %}
+                                </div>
+                                <div class="card-body text-center">
+                                    <div id="RouteHeatMap"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" id="route_1_msg">
+                            <div class="card shadow-sm" id="card5_msg">
+                                <div class="card-header">
+                                    {% trans "Routes Heatmap Key Insights and Recommended Actions" %}
+                                </div>
+                                <div class="card-body" id="heatmapmessage">
+                                {{ route_heatmap_short|safe }}
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Click For More Info" data-act="htmp" style="border-color: #aed2f1; border: 0px; border-radius: 30px;"> <span class="icon" ><i class="ri-information-2-fill">More Info</i></span> </button>
+                                    <input type="hidden" id="htmp" value="{{ route_heatmap }}" style="display: none;">
+                                    <input type="hidden" id="htmpx" value="{{ route_heatmap_plain }}" style="display: none;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="page-break-after"></div>
+                        <div class="col-12" id="route_4">
+                                 <div class="card shadow-sm" id="card8">
+                                     <div class="card-header">
+                                        {% trans "Routes Efficiency Key Insights and Recommended Actions" %}
+                                    </div>
+                                    <div class="card-body">
+                                    {{ routemessage|safe }}
+                                    </div>
+                                </div>
+                        </div>
+                        {% if reporttype == "advanced" %}
+                            <div class="page-break-after"></div>
+                             <div class="col-12 " id="route_ai">
+                                 <div class="card shadow-sm" id="route_summary">
+                                     <div class="card-header" style="font-size: 1.5rem; font-weight: 700;">
+                                         {% trans "Routes Advanced Analysis (AI + Expert Verified)" %}
+                                     </div>
+                                     <div class="card-body ms-4" >
+                                            {% if report_route.executive_summary %}
+                                                <h4 style="color: #033e79;">Executive Summary</h4>
+                                                <p style="color: black">{{ report_route.executive_summary }}</p>
+                                            {% endif %}
+                                            <br>
+                                            {% if report_route.kpis %}
+                                            <h4 style="color: #033e79;">KPI Analysis</h4>
+                                            <table class="table table-hover">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th>{% trans "Metric" %}</th>
+                                                <th>{% trans "Value" %}</th>
+                                                <th>{% trans "Note" %}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for ky in report_route.kpis %}
+                                            <tr>
+                                                <td>{{ ky.metric }}</td>
+                                                <td>{{ ky.value }}</td>
+                                                <td>{{ ky.note }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+
+                                            </table>
+
+                                            {% endif %}
+                                        <br>
+
+                                        {% if report_route.key_insights %}
+                                            <h4 style="color: #033e79;">Key Insights</h4>
+                                            <ol class="mb-0">
+                                                  {% for k in report_route.key_insights %}
+                                                  <li>{{ k }}</li>
+                                                  {% endfor %}
+                                                </ol>
+                                        {% endif %}
+                                        <br>
+                                        {% if report_route.recommendations %}
+                                              <h4 style="color: #033e79;">Actionable Recommendations</h4>
+                                            <ol class="mb-0">
+                                                  {% for r in report_route.recommendations %}
+                                                  <li>{{ r }}</li>
+                                                  {% endfor %}
+                                                </ol>
+                                        {% endif %}
+                                        <br>
+                                        {% if report_route.financial_impact %}
+                                              <h4 style="color: #033e79;">Financial Impact</h4>
+                                            <ol class="mb-0">
+                                                {% for pt in report_route.financial_impact %}
+                                                  <li>{{ pt }}</li>
+                                                {% endfor %}
+                                            </ol>
+                                        {% endif %}
+                                        <br>
+                                        {% if report_route.next_step %}
+                                              <h4 style="color: #033e79;">Next Step Actions</h4>
+                                            <p><span style="font-weight: bold; color: black">Immediate:</span></p>
+                                            <ol type="1">
+                                            {%  for imr in report_route.next_step.immediate %}
+                                                <li>{{ imr }}</li>
+                                            {% endfor %}
+                                            </ol>
+                                            <p><span style="font-weight: bold; color: black">Short-Term:</span></p>
+                                            <ol type="1">
+                                            {%  for str in report_route.next_step.short_term %}
+                                                <li>{{ str }}</li>
+                                            {% endfor %}
+                                            </ol>
+                                            <p><span style="font-weight: bold; color: black">Long-Term:</span></p>
+                                            <ol type="1">
+                                            {%  for ltr in report_route.next_step.long_term %}
+                                                <li>{{ ltr }}</li>
+                                            {% endfor %}
+                                            </ol>
+                                        {% endif %}
+                                        <br>
+                                        {% if report_route.executive_dashboard_kpis %}
+                                              <h4 style="color: #033e79;">Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
+                                            <table class="table table-hover">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th>{% trans "KPI" %}</th>
+                                                <th>{% trans "Target" %}</th>
+                                                <th>{% trans "Current Best" %}</th>
+                                                <th>{% trans "Current Worst" %}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for eky in report_route.executive_dashboard_kpis %}
+                                            <tr>
+                                                <td>{{ eky.kpi }}</td>
+                                                <td>{{ eky.target }}</td>
+                                                <td>{{ eky.current_best }}</td>
+                                                <td>{{ eky.current_worst }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+
+                                            </table>
+                                        {% endif %}
+                                        <br>
+                                        {% if report_route.predictive_trends %}
+                                              <h4 style="color: #033e79;">Predictive Trends</h4>
+                                            <ol class="mb-0">
+                                                {% for pt in report_route.predictive_trends %}
+                                                  <li>{{ pt }}</li>
+                                                {% endfor %}
+                                            </ol>
+                                        {% endif %}
+
+                                     </div>
+                                 </div>
+                             </div>
+                       {% elif reporttype == "lite" %}
+                          <div class="page-break-after"></div>
+                           <div class="col-12" id="route_ai">
+                                <div class="card shadow-sm" id="route_summary">
+                                    <div class="card-header">
+                                        {% trans "AI-Driven Analysis" %}
+                                    </div>
+                                    <div class="card-body" >
+            {#                        <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>#}
+
+                                    {% if report_route.kpis %}
+                                        <h4>KPI Analysis</h4>
+                                        <table class="table table-hover">
+                                        <thead class="table-dark">
+                                        <tr>
+                                            <th>{% trans "Metric" %}</th>
+                                            <th>{% trans "Value" %}</th>
+                                            <th>{% trans "Note" %}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for ky in report_route.kpis %}
+                                        <tr>
+                                            <td>{{ ky.metric }}</td>
+                                            <td>{{ ky.value }}</td>
+                                            <td>{{ ky.note }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+
+                                        </table>
+
+                                        {% endif %}
+                                    <br>
+
+                                    {% if report_route.key_insights %}
+                                        <h4>Key Insights</h4>
+                                        <ol class="mb-0">
+                                              {% for k in report_route.key_insights %}
+                                              <li>{{ k }}</li>
+                                              {% endfor %}
+                                            </ol>
+                                        {% endif %}
+                                    <br>
+                                      {% if report_route.recommendations %}
+                                          <h4>Actionable Recommendations</h4>
+                                        <ol class="mb-0">
+                                              {% for r in report_route.recommendations %}
+                                              <li>{{ r }}</li>
+                                              {% endfor %}
+                                            </ol>
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+                       {% endif %}
+
+
                 </div>
             </div>
+            <div class="" id="col-2" style="border: 2px solid rgb(204, 204, 204); background: #e1e0e0; display: none">
 
-                <div class="" id="col-2" style="border: 2px solid rgb(204, 204, 204); background: #e1e0e0; display: none">
-
-                    <div class="d-flex justify-content-between w-100" id="framebutton" style="display: none; background: #e1e0e0; height: 30px;">
+                <div class="d-flex justify-content-between w-100" id="framebutton" style="display: none; background: #e1e0e0; height: 30px;">
                         <h6 style="margin-bottom: 0px; margin-top: 5px;">More Info</h6>
                         <button class='btn btn-outline-primary btn-sm' id="removeButton" style="display: none; height: 100%; font-size: 0.75rem; border-radius: 30px;"><span class="icon"><i class="ri-close-fill"></i></span></button>
                     </div>
                     <div id="frameContainer" style="width: 100%; height: 98%"></div>
-                </div>
             </div>
+        </div>
 
 
     </div>
@@ -1237,12 +1211,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const downloadBtn = document.getElementById('download-btn');
             const carrier1= document.getElementById("carrier_1");
             const carrier2= document.getElementById("carrier_2");
+            const carrier_ai= document.getElementById("carrier_ai");
             const driver1= document.getElementById("driver_1");
             const driver2= document.getElementById("driver_2");
+            const driver_ai= document.getElementById("driver_ai");
             const route1 = document.getElementById("route_1");
             const route1_msg = document.getElementById("route_1_msg");
             const route2 = document.getElementById("route_2");
             const route3 = document.getElementById("route_3");
+            const route4 = document.getElementById("route_4");
+            const route_ai = document.getElementById("route_ai");
             const htmpmsg = document.getElementById("heatmapmessage");
             const htmp = document.getElementById("htmpx").value;
             const htmpmsg_html = htmpmsg.innerHTML;
@@ -1272,14 +1250,16 @@ document.addEventListener('DOMContentLoaded', function() {
             //const apexchart1width = apexcharts_c[0].style.width;
             //const apexchart4width = apexcharts_c[4].style.width;
             downloadBtn.addEventListener('click', async function() {
-                carrier1.className = 'col-12';
-                carrier2.className = 'col-12';
-                driver1.className = 'col-12';
-                driver2.className = 'col-12';
-                route1.className = 'col-12';
-                route1_msg.className = 'col-12';
-                route2.className = 'col-12';
-                route3.className = 'col-12';
+                carrier1.className = 'col-6';
+                carrier2.className = 'col-6';
+                driver1.className = 'col-6';
+                driver2.className = 'col-6';
+                route1.style.display = "none";
+                route1_msg.style.display = "none";
+                {#route1.className = 'col-12';#}
+                {#route1_msg.className = 'col-12';#}
+                route2.className = 'col-6';
+                route3.className = 'col-6';
                 pdfhead.style.display= "block";
                 pdfhead.className = "d-flex justify-content-between align-items-center";
                 pdfhead.style.marginBottom = "10px";
@@ -1355,7 +1335,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 carrier2.className = 'col-md-6';
                 driver1.className = 'col-md-6';
                 driver2.className = 'col-md-6';
-                route1.className = 'col-md-9';
+                {#route1.className = 'col-md-9';#}
+                route1.style.display = "";
+                route1_msg.style.display = "";
                 route2.className = 'col-md-6';
                 route3.className = 'col-md-6';
                 htmpmsg.innerHTML = htmpmsg_html;

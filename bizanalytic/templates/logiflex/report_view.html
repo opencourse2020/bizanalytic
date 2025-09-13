@@ -290,16 +290,16 @@ table, th, td {
           {% if reporttype == "advanced" %}
                 <div class="col-12">
                     <div class="card shadow-sm" id="carrier_summary">
-                        <div class="card-header">
-                            {% trans "Carriers (AI + Expert Verified) Analysis" %}
+                        <div class="card-header" style="font-size: 1.5rem; font-weight: 700">
+                            {% trans "Carriers Advanced Analysis (AI + Expert Verified)" %}
                         </div>
-                        <div class="card-body" >
+                        <div class="card-body ms-4" >
                             {% if report_carrier.executive_summary %}
-                                <h4>Executive Summary</h4>
+                                <h4 style="color: #033e79;">Executive Summary</h4>
                                 <p style="color: black">{{ report_carrier.executive_summary }}</p>
                             {% endif %}
                             {% if report_carrier.kpis %}
-                            <h4>KPI Analysis</h4>
+                            <h4 style="color: #033e79;">KPI Analysis</h4>
                             <table class="table table-hover">
                             <thead class="table-dark">
                             <tr>
@@ -324,7 +324,7 @@ table, th, td {
                         <br>
 
                         {% if report_carrier.key_insights %}
-                            <h4>Key Insights</h4>
+                            <h4 style="color: #033e79;">Key Insights</h4>
                             <ol class="mb-0">
                                   {% for k in report_carrier.key_insights %}
                                   <li>{{ k }}</li>
@@ -333,7 +333,7 @@ table, th, td {
                             {% endif %}
                         <br>
                           {% if report_carrier.recommendations %}
-                              <h4>Actionable Recommendations</h4>
+                              <h4 style="color: #033e79;">Actionable Recommendations</h4>
                             <ol class="mb-0">
                                   {% for r in report_carrier.recommendations %}
                                   <li>{{ r }}</li>
@@ -351,7 +351,7 @@ table, th, td {
                         {% endif %}
                         <br>
                         {% if report_carrier.next_step %}
-                              <h4>Next Step Actions</h4>
+                              <h4 style="color: #033e79;">Next Step Actions</h4>
                             <p><span style="font-weight: bold; color: black">Immediate:</span></p>
                             <ol type="1">
                             {%  for im in report_carrier.next_step.immediate %}
@@ -373,7 +373,7 @@ table, th, td {
                          {% endif %}
                         <br>
                         {% if report_carrier.executive_dashboard_kpis %}
-                              <h4>Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
+                              <h4 style="color: #033e79;">Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
                             <table class="table table-hover">
                             <thead class="table-dark">
                             <tr>
@@ -572,17 +572,17 @@ table, th, td {
              {% if reporttype == "advanced" %}
                 <div class="col-12">
                     <div class="card shadow-sm" id="driver_summary">
-                        <div class="card-header">
-                            {% trans "Drivers (AI + Expert Verified) Analysis" %}
+                        <div class="card-header" style="font-weight: 700; font-size: 1.5rem;">
+                            {% trans "Drivers Advanced Analysis (AI + Expert Verified)" %}
                         </div>
-                        <div class="card-body" >
+                        <div class="card-body ms-4" >
                             {% if report_driver.executive_summary %}
-                                <h4>Executive Summary</h4>
+                                <h4 style="color: #033e79;">Executive Summary</h4>
                                 <p style="color: black">{{ report_driver.executive_summary }}</p>
                             {% endif %}
                             <br>
                             {% if report_driver.kpis %}
-                            <h4>KPI Analysis</h4>
+                            <h4 style="color: #033e79;">KPI Analysis</h4>
                             <table class="table table-hover">
                             <thead class="table-dark">
                             <tr>
@@ -607,7 +607,7 @@ table, th, td {
                         <br>
 
                         {% if report_driver.key_insights %}
-                            <h4>Key Insights</h4>
+                            <h4 style="color: #033e79;">Key Insights</h4>
                             <ol class="mb-0">
                                   {% for k in report_driver.key_insights %}
                                   <li>{{ k }}</li>
@@ -616,7 +616,7 @@ table, th, td {
                             {% endif %}
                         <br>
                           {% if report_driver.recommendations %}
-                              <h4>Actionable Recommendations</h4>
+                              <h4 style="color: #033e79;">Actionable Recommendations</h4>
                             <ol class="mb-0">
                                   {% for r in report_driver.recommendations %}
                                   <li>{{ r }}</li>
@@ -634,7 +634,7 @@ table, th, td {
                         {% endif %}
                         <br>
                         {% if report_driver.next_step %}
-                              <h4>Next Step Actions</h4>
+                              <h4 style="color: #033e79;">Next Step Actions</h4>
                             <p><span style="font-weight: bold; color: black">Immediate:</span></p>
                             <ol type="1">
                             {%  for imd in report_driver.next_step.immediate %}
@@ -656,7 +656,7 @@ table, th, td {
                          {% endif %}
                         <br>
                         {% if report_driver.executive_dashboard_kpis %}
-                              <h4>Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
+                              <h4 style="color: #033e79;">Executive Dashboard KPIs (for Ongoing Monitoring)</h4>
                             <table class="table table-hover">
                             <thead class="table-dark">
                             <tr>
@@ -810,8 +810,8 @@ table, th, td {
                  <div class="page-break-after"></div>
                 <div class="col-12 ">
                     <div class="card shadow-sm" id="driver_summary">
-                        <div class="card-header">
-                            {% trans "Routes (AI + Expert Verified) Analysis" %}
+                        <div class="card-header" style="font-size: 1.5rem; font-weight: 700;">
+                            {% trans "Routes Advanced Analysis (AI + Expert Verified)" %}
                         </div>
                         <div class="card-body ms-4" >
                             {% if report_route.executive_summary %}

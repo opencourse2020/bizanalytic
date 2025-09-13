@@ -830,7 +830,7 @@ table, th, td {
                               <h4>Next Step Actions</h4>
                             <p><span style="font-weight: bold; color: black">Immediate:</span></p>
                             <ol type="1">
-                            {%  for imr in report_route.next_step %}
+                            {%  for imr in report_route.next_step.immediate %}
                                 <li>{{ imr }}</li>
                             {% endfor %}
                             </ol>

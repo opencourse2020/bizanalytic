@@ -11,6 +11,7 @@ from openai import OpenAI
 from django.conf import settings
 from datetime import datetime
 from .report_helpers import *
+from .mail import sendapprovalrequestmail
 
 OPENAI_KEY = settings.OPENAI_KEY
 client = OpenAI(api_key=OPENAI_KEY)
@@ -1128,6 +1129,15 @@ def run_All_LLM_Analysis():
                     report.report_status = "processing"
                     report.report_date = datetime.now()
                     report.save()
+                    email_info = {
+                        'subject': "Urgent: Approval Request",
+                        'to_email': ["bizanalytics.us@gmail.com", ],
+                        'client': report.client.contact_name,
+                        'company': report.client.company,
+                        'report_list_link': f"https://bizanalytic.com/logiflex/admin/reports/",
+                        'curentyear': datetime.now().year
+                    }
+                    sendapprovalrequestmail.delay(email_info)
             elif report.report_type == "advanced":
 
                 # Check file extension
@@ -1151,6 +1161,15 @@ def run_All_LLM_Analysis():
                     report.report_status = "processing"
                     report.report_date = datetime.now()
                     report.save()
+                    email_info = {
+                        'subject': "Urgent: Approval Request",
+                        'to_email': ["bizanalytics.us@gmail.com", ],
+                        'client': report.client.contact_name,
+                        'company': report.client.company,
+                        'report_list_link': f"https://bizanalytic.com/logiflex/admin/reports/",
+                        'curentyear': datetime.now().year
+                    }
+                    sendapprovalrequestmail.delay(email_info)
             # raw = asynch_preprocess.get()
             numreports = reports.count()
     else:

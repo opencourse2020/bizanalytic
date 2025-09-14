@@ -1,33 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Fleet Efficiency Report Update</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LogiFlex Performance Report</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f6f8fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9fb;
+      color: #333;
       margin: 0;
       padding: 0;
     }
     .container {
-      max-width: 600px;
-      margin: 40px auto;
+      max-width: 700px;
+      margin: 0 auto;
       background-color: #ffffff;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border: 1px solid #e0e0e0;
+      padding: 30px;
+      border-radius: 10px;
     }
     .header {
-      background-color: #1f4e79;
-      color: #ffffff;
-      padding: 20px;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
     }
-    .content {
+
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #4C5B9B;
+    }
+    .logo {
+      font-size: 16px;
+      font-weight: bold;
+      color: #076e83;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 25px;
+      color: #4C5B9B;
+    }
+    .metrics {
+      background-color: #f1f5ff;
       padding: 20px;
-      line-height: 1.5;
-      color: #333333;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .metric {
+      margin: 5px 0;
+    }
+    .button {
+      display: inline-block;
+      margin-top: 25px;
+      background-color: #4C5B9B;
+      color: white;
+      text-decoration: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      font-weight: bold;
     }
     .cta {
       text-align: center;
@@ -43,33 +75,33 @@
       font-weight: bold;
     }
     .footer {
+      margin-top: 40px;
       font-size: 12px;
-      color: #888888;
-      padding: 15px;
+      color: #888;
       text-align: center;
-      background-color: #f6f8fa;
     }
   </style>
 </head>
 <body>
   <div class="container">
+  <div class="logo"> BizAnalytic - LogiFlex</div>
     <div class="header">
-      <h2>FleetOps Analytics</h2>
+
+      <div class="title">Approval Request</div>
     </div>
-    <div class="content">
-      <p>Hi {{ client_name }} at ({{ company }})</p>
 
-      <p>We’ve crunched the numbers — and your <strong>LogiFlex performance report</strong> is ready. Here's a snapshot of how your operations performed this month:</p>
+    <p>Hi <strong>{{ client_name }} at ({{ company }})</strong>,</p>
 
-      <div class="cta">
+    <p>Analytics completed <strong>LogiFlex performance report</strong> is ready for approval</p>
+
+     <div class="cta">
         <a href="{{ dashboard_link }}">View Dashboard</a>
       </div>
-      <p>If you have any questions in the meantime, feel free to reply to this email or contact our support team.</p>
-      <p>Best regards,<br>
-         The FleetOps Analytics Team</p>
-    </div>
+
+
     <div class="footer">
-      © {{ current_year }} FleetOps Analytics. All rights reserved.
+      Want to upgrade to real-time alerts and premium analytics? <a href="https://bizanalytic.com/logiflex/pricing/">Click here</a><br>
+      © {{ current_year }} BizAnalytic. All rights reserved.
     </div>
   </div>
 </body>

@@ -1404,7 +1404,7 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                     'client': client_name,
                     'company': company,
                     'kpis': kpiss,
-                    'report_list_link': f"https://bizanalytic.com/logiflex/reports/list/",
+                    'report_list_link': f"https://bizanalytic.com/logiflex/reports/reportview/{report.id}/?cat={report.download_code}",
                     'curentyear': datetime.now().year
                 }
                 sendapprovedreportmail.delay(email_info)

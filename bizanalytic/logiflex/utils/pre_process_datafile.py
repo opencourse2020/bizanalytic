@@ -762,7 +762,7 @@ def test_validator(reportid, routefilename):
     elif report.routefile_ext == ".xlsx" or report.routefile_ext == ".xls":
         data = pd.read_excel(report.routefile)
 
-
+    print(data.head())
     """Test the validator with sample data"""
     validator = ColumnNameValidator()
     date_validator = DateValidator()

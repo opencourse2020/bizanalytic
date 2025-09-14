@@ -33,13 +33,25 @@
 {% block contact_area %}
 
 
-<section class="hero-area" data-background={% static "vendor/transport/assets/images/hero-bg.jpg" %} style="background-image: url(&quot;assets/images/hero-bg.png&quot;);">
-    <div class="row" style="margin-top: 120px;">
+<section class="hero-area" data-background={% static "vendor/transport/assets/images/hero-bg.jpg" %} style="padding: 0px; max-height: 600px; margin-top: 200px;">
+    <div class="row" >
+        <div class="col-4">
+            <div class="logo-area" style="max-width:100px;">
+                <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a>
+            </div>
+        </div>
+        <div class="col-4">
 
-        <div class="col-6">
-            <h3 class="ms-4" style="color: white">
-                Mascaw FreightOPS Report
+        </div>
+        <div class="col-4">
+            <span id="report_date"></span>
+        </div>
+        <div class="col-6 align-content-center">
+            <h2>Mascaw Tech.</h2>
+            <h3 class="ms-4" style="color: white; padding: 0px" >
+                Advanced FreightOPS Report
             </h3>
+            <h4>Report: RPT-2025-000192</h4>
         </div>
         <div class="col-6">
             <div class="hero-image">
@@ -68,4 +80,11 @@
 
 {% block js_area %}
     {{ block.super }}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const reportdate = document.getElementById("report_date");
+        reportdate.innerHTML = today.toLocaleDateString();
+    })
+    }
+    </script>
 {% endblock js_area %}

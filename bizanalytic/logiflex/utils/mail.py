@@ -93,7 +93,7 @@ def senduploadmail(context):
     elif not isinstance(to_email, list):
         to_email = [to_email]
 
-    message = EmailMultiAlternatives(subject, plain_message, from_email, to_email, bcc="bizanalytics.us@gmail.com")
+    message = EmailMultiAlternatives(subject, plain_message, from_email, to_email, bcc=["bizanalytics.us@gmail.com", ])
     message.attach_alternative(html_content, "text/html")
     try:
         result = message.send()
@@ -131,7 +131,7 @@ def sendapprovedreportmail(context):
     elif not isinstance(to_email, list):
         to_email = [to_email]
 
-    message = EmailMultiAlternatives(subject, plain_message, from_email, to_email, bcc="bizanalytics.us@gmail.com")
+    message = EmailMultiAlternatives(subject, plain_message, from_email, to_email, bcc=["bizanalytics.us@gmail.com", ])
     message.attach_alternative(html_content, "text/html")
     try:
         result = message.send()

@@ -122,7 +122,7 @@
                                         <h4 class="widget-title">{% trans "New Analytical Reports" %}</h4>
                                         <ul>
                                             {% for newreport in newreports %}
-                                                <li><a href="{% url 'logiflex:reports:summary' newreport.pk %}">{{ newreport.report_id }}&nbsp;-&nbsp;<span style="color: #a61b1b">{{ newreport.report_date }}</span> <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
+                                                <li><a href="{% url 'logiflex:reports:reportview' newreport.pk %}?cat={{ newreport.download_code }}">{{ newreport.report_id }}&nbsp;-&nbsp;<span style="color: #a61b1b">{{ newreport.report_date }}</span> <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>
                                             {% endfor %}
                                         </ul>
                                     </div>

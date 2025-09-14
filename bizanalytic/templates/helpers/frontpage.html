@@ -6,6 +6,26 @@
 
 {% block css %}
     {{ block.super }}
+    <style>
+    .swoosh-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 25%;
+            background-color: #0ea5e9;clip-path: ellipse(80% 50% at 50% 100%);
+            z-index: 1;
+        }
+        .swoosh-bottom-dark {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20%;
+            background-color: #1e3a8a;clip-path: ellipse(90% 60% at 50% 100%);
+            z-index: 0;
+        }
+    </style>
 {% endblock css %}
 
 {% block header_left %}
@@ -32,22 +52,8 @@
 {% endblock breadcrumb %}
 {% block contact_area %}
 
-<div class="row mb-40 mt-40" >
-        <div class="col-4">
-            <div class="logo-area" style="max-width:200px;">
-                <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a>
-            </div>
-        </div>
-        <div class="col-4">
-
-        </div>
-        <div class="col-4">
-            <span id="report_date">
-
-            </span>
-        </div>
-</div>
-<section class="hero-area" data-background={% static "vendor/transport/assets/images/hero-bg.jpg" %} style="padding: 0px; max-height: 600px; margin-top: 160px;">
+<div class="row mb-40 mt-40" ><div class="col-4"><div class="logo-area" style="max-width:200px;"><a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a></div></div><div class="col-8"></div></div>
+<section class="hero-area" data-background="{% static "vendor/transport/assets/images/hero-bg.jpg" %}" style="padding: 0px; max-height: 600px; margin-top: 160px;">
     <div class="row" >
 
         <div class="col-6 align-content-around">
@@ -56,6 +62,7 @@
                 Advanced FreightOPS Report
             </h3>
             <h4 class="ms-4 mt-20 mb-10" style="color: #5da4d8; font-weight: 600;">Report: RPT-2025-000192</h4>
+            <span id="report_date" style="font-size: 20px; color: white; font-weight: 500; margin-left: 1.5rem !important;"></span>
             <h6 class="ms-4" style="color: white; font-weight: 500;">09/15/2025</h6>
         </div>
         <div class="col-6">
@@ -68,11 +75,15 @@
 
     </div>
 </section>
-<section style="margin-bottom: 100px;">
+<section style="margin-bottom: 300px;">
 <div class="conf">
       © 2025 {{ "BizAnalytic" }}.
       All rights reserved. Do not distribute without permission.
     </div>
+
+<div class="swoosh-bottom-dark"></div>
+<div class="swoosh-bottom"></div>
+
 </section>
 
 {% endblock contact_area %}

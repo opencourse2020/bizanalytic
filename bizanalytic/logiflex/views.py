@@ -364,7 +364,7 @@ class ReportView(TemplateView):
                 kwargs["meandistance"] = meandistance
                 kwargs["meanshipment"] = meanshipment
                 kwargs["meancost"] = meancost
-
+                kwargs["client"] = report.client.company
                 kwargs["reportid"] = report.report_id
                 kwargs["reporttype"] = report.report_type
                 kwargs["carrier_ontime"] = carrier_ontime

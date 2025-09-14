@@ -154,51 +154,51 @@ table, th, td {
                             <div class="col-12 text-center align-content-center" style="background-color: #e1e0e0; margin-bottom: 15px; min-height: 50px;">
                                 <h4>Carriers Performance</h4>
                             </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                            <div class="col-lg-2 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                                 <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
                                     <span class="title">Best On-Time Rate</span>
                                     <div class="d-flex align-items-center gap-3">
-                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <img class="icon widgeticon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                         <div class="counter-number d-flex">
-                                            <h3 class="counter">{{ carrier_ontime }}</h3><h3> %</h3>
+                                            <h4 class="counter">{{ carrier_ontime }}</h4><h4> %</h4>
                                         </div>
                                     </div>
                                     <span class="title">{{ carrier_ontime_name }}</span>
                                 </div>
                             </div>
 
-                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                            <div class="col-lg-2 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                                 <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
                                     <span class="title">Lowest Freight Cost </span>
                                     <div class="d-flex align-items-center gap-3">
-                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <img class="icon widgeticon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                         <div class="counter-number d-flex">
-                                            <H3>$ </H3><h3 class="counter">{{ carrier_freightcost }}</h3>
+                                            <H4>$ </H4><h4 class="counter">{{ carrier_freightcost }}</h4>
                                         </div>
                                     </div>
                                     <span class="title">{{ carrier_freightcost_name }}</span>
                                 </div>
                             </div>
 
-                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                            <div class="col-lg-2 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                                 <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
                                     <span class="title">Lowest Cost Per Mile</span>
                                     <div class="d-flex align-items-center gap-3">
-                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <img class="icon widgeticon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                         <div class="counter-number d-flex">
-                                            <h3>$ </h3><h3 class="counter">{{ carrier_costpermile }}</h3>
+                                            <h4>$ </h4><h4 class="counter">{{ carrier_costpermile }}</h4>
                                         </div>
                                     </div>
                                     <span class="title">{{ carrier_costpermile_name }}</span>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                            <div class="col-lg-2 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                                 <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
                                     <span class="title">Lowest Cost Per Pound</span>
                                     <div class="d-flex align-items-center gap-3">
-                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <img class="icon widgeticon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                         <div class="counter-number d-flex">
-                                           <h3>$ </h3><h3 class="counter">{{ carrier_costpound }}</h3>
+                                           <h4>$ </h4><h4 class="counter">{{ carrier_costpound }}</h4>
                                         </div>
                                     </div>
                                     <span class="title">{{ carrier_costpound_name }}</span>
@@ -219,6 +219,7 @@ table, th, td {
                         </div>
                     </div>
                     {% if reporttype == "advanced" %}
+                        <div class="breakout" style="display: none"></div>
                          <div class="col-md-6" id="carrier_2">
                              <div class="card shadow-sm chart-card"  id="card2">
                                  <div class="card-header">
@@ -413,51 +414,51 @@ table, th, td {
                             <div class="col-12 text-center align-content-center" style="background-color: #e1e0e0; margin-bottom: 15px; margin-top: 15px; min-height: 50px;">
                                 <h4>Drivers Performance</h4>
                             </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                            <div class="col-lg-2 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                                 <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
                                     <span class="title">Best On-Time Rate</span>
                                     <div class="d-flex align-items-center gap-3">
-                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <img class="icon widgeticon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                         <div class="counter-number d-flex">
-                                            <h3 class="counter">{{ driver_ontime }}</h3><h3> %</h3>
+                                            <h4 class="counter">{{ driver_ontime }}</h4><h4> %</h4>
                                         </div>
                                     </div>
                                     <span class="title">{{ driver_ontime_name }}</span>
                                 </div>
                             </div>
 
-                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                            <div class="col-lg-2 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                                 <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
                                     <span class="title">Higher Miles Traveled </span>
                                     <div class="d-flex align-items-center gap-3">
-                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <img class="icon widgeticon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                         <div class="counter-number d-flex">
-                                            <h3 class="counter">{{ driver_totalmiles }}</h3>
+                                            <h4 class="counter">{{ driver_totalmiles }}</h4>
                                         </div>
                                     </div>
                                     <span class="title">{{ driver_totalmiles_name }}</span>
                                 </div>
                             </div>
 
-                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                            <div class="col-lg-2 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                                 <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
                                     <span class="title">Fastest Driver</span>
                                     <div class="d-flex align-items-center gap-3">
-                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <img class="icon widgeticon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                         <div class="counter-number d-flex">
-                                            <h3 class="counter">{{ driver_speed }}</h3><h4 style="color: white">&nbsp;MPH</h4>
+                                            <h4 class="counter">{{ driver_speed }}</h4><h4 style="color: white">&nbsp;MPH</h4>
                                         </div>
                                     </div>
                                     <span class="title">{{ driver_speed_name }}</span>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                            <div class="col-lg-2 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                                 <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
                                     <span class="title">Most Efficient</span>
                                     <div class="d-flex align-items-center gap-3">
-                                        <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                        <img class="icon widgeticon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                         <div class="counter-number d-flex">
-                                           <h3 class="counter">{{ driver_medianmpg }}</h3> <h4 style="color: white">&nbsp;MPG</h4>
+                                           <h4 class="counter">{{ driver_medianmpg }}</h4> <h4>&nbsp;MPG</h4>
                                         </div>
                                     </div>
                                     <span class="title">{{ driver_medianmpg_name }}</span>
@@ -478,6 +479,7 @@ table, th, td {
                     </div>
 
                     {% if reporttype == "advanced" %}
+                        <div class="breakout" style="display: none"></div>
                         <div class="col-md-6" id="driver_2">
                             <div class="card shadow-sm chart-card"  id="card4">
                                 <div class="card-header">
@@ -671,51 +673,51 @@ table, th, td {
                                 <div class="col-12 text-center align-content-center" style="background-color: #e1e0e0; margin-bottom: 15px; margin-top: 15px; min-height: 50px;">
                                     <h4>Routes Performance</h4>
                                 </div>
-                                <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                <div class="col-lg-2 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                                     <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
                                         <span class="title">Average Cost/Mile</span>
                                         <div class="d-flex align-items-center gap-3">
-                                            <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                            <img class="icon widgeticon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                             <div class="counter-number d-flex">
-                                                <H3>$ </H3><h3 class="counter">{{ meancost }}</h3>
+                                                <H4>$ </H4><h4 class="counter">{{ meancost }}</h4>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
 
-                                <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                <div class="col-lg-2 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                                     <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
                                         <span class="title">Average Speed</span>
                                         <div class="d-flex align-items-center gap-3">
-                                            <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                            <img class="icon widgeticon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                             <div class="counter-number d-flex">
-                                                <h3 class="counter">{{ meanspeed }}</h3><h4 style="color: white">&nbsp;MPH</h4>
+                                                <h4 class="counter">{{ meanspeed }}</h4><h4>&nbsp;MPH</h4>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
 
-                                <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                <div class="col-lg-2 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                                     <div class="single-counter" style="background-color: #2ba3c4; padding-bottom: 0.25rem; padding-top: 0.75rem">
                                         <span class="title">Average Distance</span>
                                         <div class="d-flex align-items-center gap-3">
-                                            <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                            <img class="icon widgeticon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                             <div class="counter-number d-flex">
-                                                <h3 class="counter">{{ meandistance }}</h3><h4 style="color: white">&nbsp;Miles</h4>
+                                                <h4 class="counter">{{ meandistance }}</h4><h4>&nbsp;Miles</h4>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
+                                <div class="col-lg-2 col-md-6 col-sm-6 keywidget" style="height: 8rem; ">
                                     <div class="single-counter" style="background-color: #EB5849; padding-bottom: 0.25rem; padding-top: 0.75rem">
                                         <span class="title">Average Shipments</span>
                                         <div class="d-flex align-items-center gap-3">
-                                            <img class="icon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
+                                            <img class="icon widgeticon" src={% static "vendor/transport/assets/images/icon-16.png"%} alt="icon">
                                             <div class="counter-number d-flex">
-                                               <h3 class="counter">{{ meanshipment }}</h3>
+                                               <h4 class="counter">{{ meanshipment }}</h4>
                                             </div>
                                         </div>
 
@@ -738,6 +740,8 @@ table, th, td {
                             </div>
 
                         </div>
+
+                            <div class="breakout" style="display: none"></div>
 
                         <div class="col-md-6" id="route_3">
                             <div class="card shadow-sm chart-card"  id="card7">
@@ -1226,10 +1230,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const htmpmsg_html = htmpmsg.innerHTML;
 
 
-            let rphead = '<div class="logo-area" style="max-width:160px;"> <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a> </div>';
+            let rphead = '<div class="logo-area" style="max-width:100px;"> <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a> </div>';
             rphead = rphead + '<div class="d-flex justify-content-center align-items-center" id="report_head">';
-            rphead = rphead +'<span class="title" id="report_title" style="color: #0cb7d6; font-size: 20px">{% trans "FreightOps Report" %} -</span>';
-            rphead = rphead + '<span class="title" id="report_idx" style="color: black; font-size: 20px;">&nbsp;{{ reportid }} </span>';
+            rphead = rphead +'<span class="title" id="report_title" style="color: #0cb7d6; font-size: 20px">{{ client }} -</span>';
+            rphead = rphead +'<span class="title" id="report_title" style="color: black; font-size: 16px">{% trans "FreightOps Report" %} -</span>';
+            rphead = rphead + '<span class="title" id="report_idx" style="color: black; font-size: 16px;">&nbsp;{{ reportid }} </span>';
             rphead = rphead + '</div>'
             rphead = rphead + '<span id="report_date"></span>'
             const reporthead = document.getElementById("report_head");
@@ -1240,6 +1245,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const allH2s = document.querySelectorAll('h2');
             const allH3s = document.querySelectorAll('h3');
             const card_charts = document.querySelectorAll('.chart-card');
+            const widgeticons = document.querySelectorAll('.widgeticon');
+            const breakouts = document.querySelectorAll('.breakout');
             {#const card1 = document.getElementById("card1");#}
             {#const card2 = document.getElementById("card2");#}
             {#const card3 = document.getElementById("card3");#}
@@ -1273,6 +1280,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     element.style.border = "none";
                     element.className = "card chart-card";
                 });
+                widgeticons.forEach(element => {
+                    element.style.display = "none";
+                });
+                breakouts.forEach(element => {
+                    element.style.display = "";
+                    element.className = "breakout page-break-after"
+                });
                 {#card1.className = "card chart-card";#}
                 {#card1.style.border = "none";#}
                 {#card2.className = "card chart-card";#}
@@ -1292,7 +1306,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Iterate through the keywidgets
                 for (let i = 0; i < keywidgets.length; i++) {
                   const element = keywidgets[i];
-                  element.className = "col-3 keywidget";
+                  element.className = "col-2 keywidget";
                 }
                 // Iterate through the apexcharts_c
                 apexcharts_c.forEach(element => {
@@ -1370,10 +1384,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 allH2s.forEach(h2 => {
                     h2.style.fontSize = "48px";
                 });
+                breakouts.forEach(element => {
+                    element.style.display = "none";
+                    element.className = "breakout"
+                });
+                widgeticons.forEach(element => {
+                    element.style.display = "";
+                });
                 for (let i = 0; i < keywidgets.length; i++) {
                   const element = keywidgets[i];
-                  element.className = "col-lg-3 col-md-6 col-sm-6 keywidget";
+                  element.className = "col-lg-2 col-md-6 col-sm-6 keywidget";
                 }
+
 
                 // Iterate through the apexcharts_c
                 //apexcharts_c.forEach(element => {

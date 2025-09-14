@@ -886,6 +886,8 @@ img { width: 100%; height: auto; display: block; }
 
 .single-counter h3 { color: #ffffff; }
 
+.single-counter h4 { color: #ffffff; }
+
 .single-counter .title { color: #ffffff; display: inline-block; text-transform: capitalize; font-size: 18px; }
 
 .single-counter-2 { padding: 20px; border: 1px dashed #ffffff; border-radius: 20px; margin-bottom: 30px; }

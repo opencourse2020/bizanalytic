@@ -31,25 +31,22 @@
 
 {% endblock breadcrumb %}
 {% block contact_area %}
-<section class="service-area py-120">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="section-top">
-                            <span class="sub-title">latest service</span>
-                            <h3 class="title mt-10">service we <span>provide</span></h3>
-                        </div>
-                    </div>
-                </div>
+<div class="row" style="margin-top: 120px;">
+    <div class="col-6">
+        <div class="hero-image">
+            <img src={% static "vendor/transport/assets/images/frontpage.jpg" %} alt="hero" class="hero-image-1">
+            <img src={% static "vendor/transport/assets/images/about-3.jpg" %} alt="hero" class="hero-image-2">
+        </div>
 
+    </div>
+    <div class="col-6">
+        <h3>
+            Mascaw FreightOPS Report
+        </h3>
+    </div>
 
-            </div>
+</div>
 
-            <div class="service-bg-card">
-                <span class="text-stroke">LOGIFLEX</span>
-                <img src={% static "vendor/transport/assets/images/frontpage.jpg"%} alt="service-bg">
-            </div>
-        </section>
 {% endblock contact_area %}
 {% block feature_area %}
 

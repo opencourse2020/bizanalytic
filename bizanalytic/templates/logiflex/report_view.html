@@ -165,7 +165,7 @@ table, th, td {
     <section class="service-area-2 biography-area py-20" id="report-content" >
         <div class="container py-4" style="max-width: 100%;">
         <div id="pdf_head" style="display: none;"></div>
-        <div class="breakout" style="display: none"></div>
+{#        <div class="breakout" style="display: none"></div>#}
        <!-- Report Info Section -->
         <div class="row">
             <div class="" id="col-1">
@@ -1251,7 +1251,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const htmpmsg_html = htmpmsg.innerHTML;
             let rphead = '<div class="row mb-40 mt-40" ><div class="col-4"><div class="logo-area" style="max-width:200px;"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></div></div><div class="col-8"></div></div>'
             rphead = rphead + '<section class="hero-area" data-background="{% static "vendor/transport/assets/images/hero-bg.jpg" %}" style="padding: 0px; max-height: 600px; margin-top: 160px;"><div class="row" ><div class="col-6 align-content-around"><h2 class="ms-4" style="color: #5da4d8; margin-bottom: 100px; font-weight: bold;">{{client}}</h2><h3 class="ms-4 mb-20" style="color: white; padding: 0px" >{{reporttype}} FreightOPS Report</h3><h4 class="ms-4 mt-20 mb-10" style="color: #5da4d8; font-weight: 600;">Report: {{reportid}}</h4><span id="report_date" style="font-size: 20px; color: white; font-weight: 500; margin-left: 1.5rem !important;"></span></div><div class="col-6"><div class="hero-image"><img src={% static "vendor/transport/assets/images/hero-1.png" %} alt="hero" class="hero-image-1"><img src={% static "vendor/transport/assets/images/hero-2.png" %} alt="hero" class="hero-image-2"></div></div></div></section>'
-            rphead = rphead + '<div class="swoosh-bottom-dark"></div><div class="swoosh-bottom"><p style="color: white;position: absolute;bottom: inherit; padding: 0; margin-bottom: 0; margin-left: 1.5rem; "> © {{currentyear}} BizAnalytic. All rights reserved. Do not distribute without permission.</p></div><div class="page-break-after"></div>'
+            rphead = rphead + '<div class="swoosh-bottom-dark"></div><div class="swoosh-bottom"><p style="color: black;position: absolute;bottom: inherit; padding: 0; margin-bottom: 0; margin-left: 1.5rem; "> © {{currentyear}} BizAnalytic. All rights reserved. Do not distribute without permission.</p></div><div class="page-break-after"></div>'
             {#let rphead = '<div class="logo-area" style="max-width:100px;"> <a href="{% url 'logiflex:index' %}"><img src={% static "assets/logo/logo1-1.png" %} alt="logo"></a> </div>';#}
             {#rphead = rphead + '<div class="d-flex justify-content-center align-items-center" id="report_head">';#}
             {#rphead = rphead +'<span class="title" id="report_title" style="color: #0cb7d6; font-size: 20px">{{ client }} -</span>';#}

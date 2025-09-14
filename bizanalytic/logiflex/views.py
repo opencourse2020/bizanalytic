@@ -1258,8 +1258,10 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
                 servicepayment.mark_advanced_report_used()
 
             # Clean and validate route file and generate logs
+            # flags = ""
             asynch_preprocess = test_validator.delay(logireport.pk, route_filename)
-            flags = asynch_preprocess.get()
+            # if asynch_preprocess:
+            #     flags = asynch_preprocess.get()
             # print("df columns after cleaning")
             # print(df.columns)
             # print(df.head(5))

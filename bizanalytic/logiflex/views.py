@@ -54,7 +54,7 @@ client = OpenAI(api_key=OPENAI_KEY)
 
 
 class IndexView(TemplateView):
-    template_name = "logiflex/home.html"
+    template_name = "helpers/frontpage.html"
 
 
 class RouteFileView(TemplateView):

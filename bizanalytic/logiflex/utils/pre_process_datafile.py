@@ -856,5 +856,5 @@ def test_validator(reportid, routefilename):
                                                           date_report=date_report, citi_report=cities_report, flags=flags)
     # f.close() # Explicitly close the file
 
-    return flags
+    # return flags
 

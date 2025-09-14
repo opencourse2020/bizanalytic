@@ -1259,7 +1259,9 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
             # Clean and validate route file and generate logs
             # flags = ""
-            asynch_preprocess = test_validator.delay(logireport.pk, route_filename)
+            print("step 1 before validating")
+            test_validator.delay(logireport.pk, route_filename)
+            # asynch_preprocess = test_validator.delay(logireport.pk, route_filename)
             # if asynch_preprocess:
             #     flags = asynch_preprocess.get()
             # print("df columns after cleaning")

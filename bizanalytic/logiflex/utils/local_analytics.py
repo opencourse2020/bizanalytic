@@ -810,7 +810,8 @@ def run_carrier_analysis(flags, carrier_stats, client_name):
                                                                 },
                                                                 "required": ["client", "executive_summary", "kpis",
                                                                              "next_step", "executive_dashboard_kpis",
-                                                                             "recommendations", "key_insights"],
+                                                                             "recommendations", "predictive_trends",
+                                                                             "financial_impact", "key_insights"],
                                                                 "additionalProperties": False,
                                                             }
                                                         },
@@ -937,7 +938,8 @@ def run_driver_analysis(flags, driver_stats, client_name):
                                                                 },
                                                                 "required": ["client", "executive_summary", "kpis",
                                                                              "next_step", "executive_dashboard_kpis",
-                                                                             "recommendations", "key_insights"],
+                                                                             "recommendations", "predictive_trends",
+                                                                             "financial_impact", "key_insights"],
                                                                 "additionalProperties": False,
                                                             }
                                                         },
@@ -1067,7 +1069,8 @@ def run_route_analysis(flags, route_stats, client_name):
                                                                 },
                                                                 "required": ["client", "executive_summary", "kpis",
                                                                              "next_step", "executive_dashboard_kpis",
-                                                                             "recommendations", "key_insights"],
+                                                                             "recommendations", "predictive_trends",
+                                                                             "financial_impact", "key_insights"],
                                                                 "additionalProperties": False,
                                                             }
                                                         },

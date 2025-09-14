@@ -54,7 +54,7 @@ client = OpenAI(api_key=OPENAI_KEY)
 
 
 class IndexView(TemplateView):
-    template_name = "helpers/frontpage.html"
+    template_name = "helpers/home.html"
 
 
 class RouteFileView(TemplateView):
@@ -178,6 +178,9 @@ class ReportView(TemplateView):
 
         print("report ID:", report)
         if report:
+            if not report.viewed:
+                report.viewed = True
+                report.save()
             # Check file extension
             extension_ok = True
             if report.routefile_ext == ".csv":

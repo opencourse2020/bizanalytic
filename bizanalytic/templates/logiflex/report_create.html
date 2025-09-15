@@ -163,10 +163,15 @@
                                                 <li style="margin-bottom: 10px;">
                                                     {% trans "Use the template for your data" %}
                                                 </li>
+                                                <li>
+                                                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                      Freight Data Upload Guide
+                                                    </button>
+                                                </li>
                                                 <li style="margin-bottom: 10px;">
                                                     <span>{% trans "Use the same columns to fill your data" %}</span>
                                                     <br>
-                                                    <span>[ShipmentID] - [Date] - [OriginCity] - [DestinationCity] - [Distance_Miles] - [FuelCost_USD] - [DriverName] - [CarrierName] -[LoadWeight_lbs] - [DeliveryStatus] - [DeliveryTime_hrs] - [FreightCost_USD] </span>
+                                                    <span>[ShipmentID] - [Date] - [OriginCity] - [OriginZIP] - [DestinationCity] - [DestinationZIP] - [Distance_Miles] - [ShipmentMode] - [FuelCost_USD] - [DriverName] - [CarrierName] -[LoadWeight_lbs] - [DeliveryStatus] - [DeliveryTime_hrs] - [FreightCost_USD] </span>
 
                                                 </li>
                                                 <li style="margin-bottom: 10px;">
@@ -228,6 +233,7 @@
 
 <!-- footer area starts -->
 {% block footer_area %}
+
     <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
       <div id="toast_successreport" class="toast hide text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
 
@@ -257,6 +263,538 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">📥 Freight Data Upload Guide</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+                  <p data-start="238" data-end="378">
+                    <span style="font-size:14px;">To generate your <strong data-start="255" data-end="302">Freight Spend Analytics Report &amp; Dashboards</strong>, please upload your shipment data in a CSV file using the template below.</span>
+                  </p>
+                <p data-start="238" data-end="378">
+                    &nbsp;
+                </p>
+                <hr data-start="380" data-end="383">
+                <h2 data-start="385" data-end="430">
+                    <span style="font-size:20px;">✅ Required Columns (Minimum for Reports)</span>
+                </h2>
+            <div class="_tableContainer_1rjym_1">
+                <div class="group w-fit _tableWrapper_1rjym_13 flex flex-col-reverse" tabindex="-1">
+                    <figure class="table">
+                        <table class="w-fit min-w-(--thread-content-width)" data-start="432" data-end="1763">
+                            <thead data-start="432" data-end="483">
+                                <tr data-start="432" data-end="483">
+                                    <th data-start="432" data-end="441" data-col-size="sm">
+                                        <span style="font-size:14px;">Column</span>
+                                    </th>
+                                    <th data-start="441" data-end="455" data-col-size="md">
+                                        <span style="font-size:14px;">Description</span>
+                                    </th>
+                                    <th data-start="455" data-end="465" data-col-size="sm">
+                                        <span style="font-size:14px;">Example</span>
+                                    </th>
+                                    <th data-start="465" data-end="483" data-col-size="sm">
+                                        <span style="font-size:14px;">Why It Matters</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody data-start="536" data-end="1763">
+                                <tr data-start="536" data-end="646">
+                                    <td data-start="536" data-end="553" data-col-size="sm">
+                                        <span style="font-size:14px;"><strong data-start="538" data-end="552">ShipmentID</strong></span>
+                                    </td>
+                                    <td data-start="553" data-end="591" data-col-size="md">
+                                        <span style="font-size:14px;">Unique identifier for each shipment</span>
+                                    </td>
+                                    <td data-start="591" data-end="604" data-col-size="sm">
+                                        <span style="font-size:14px;"><code data-start="593" data-end="603">SHP12345</code></span>
+                                    </td>
+                                    <td data-start="604" data-end="646" data-col-size="sm">
+                                        <span style="font-size:14px;">Keeps shipments distinct and traceable</span>
+                                    </td>
+                                </tr>
+                                <tr data-start="647" data-end="743">
+                                    <td data-start="647" data-end="663" data-col-size="sm">
+                                        <span style="font-size:14px;"><strong data-start="649" data-end="662">Date_ship</strong></span>
+                                    </td>
+                                    <td data-start="663" data-end="686" data-col-size="md">
+                                        <span style="font-size:14px;">Actual shipment date</span>
+                                    </td>
+                                    <td data-start="686" data-end="701" data-col-size="sm">
+                                        <span style="font-size:14px;"><code data-start="688" data-end="700">2025-09-12</code></span>
+                                    </td>
+                                    <td data-start="701" data-end="743" data-col-size="sm">
+                                        <span style="font-size:14px;">Used for trend and time-based analysis</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="font-size:14px;"><strong data-start="746" data-end="759">OriginCity</strong></span>
+                                    </td>
+                                    <td>
+                                        <span style="font-size:14px;">Origine City Name and State</span>
+                                    </td>
+                                    <td>
+                                        <span style="font-size:14px;"><code data-start="593" data-end="603">Dallas, TX</code></span>
+                                    </td>
+                                    <td>
+                                        <span style="font-size:14px;">&nbsp;Used to analyze lane performance&nbsp;</span>
+                                    </td>
+                                </tr>
+                                <tr data-start="744" data-end="839">
+                                    <td data-start="744" data-end="760" data-col-size="sm">
+                                        <span style="font-size:14px;"><strong data-start="746" data-end="759">OriginZIP</strong></span>
+                                    </td>
+                                    <td data-start="760" data-end="789" data-col-size="md">
+                                        <span style="font-size:14px;">5-digit ZIP code of origin</span>
+                                    </td>
+                                    <td data-start="789" data-end="799" data-col-size="sm">
+                                        <span style="font-size:14px;"><code data-start="791" data-end="798">75080</code></span>
+                                    </td>
+                                    <td data-start="799" data-end="839" data-col-size="sm">
+                                        <span style="font-size:14px;">Enables lane and regional benchmarks</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="font-size:14px;"><strong data-start="842" data-end="860">DestinationCity</strong></span>
+                                    </td>
+                                    <td>
+                                        <span style="font-size:14px;">&nbsp;Destination City Name and State</span>
+                                    </td>
+                                    <td>
+                                        <span style="font-size:14px;"><code data-start="593" data-end="603">Austin, TX</code></span>
+                                    </td>
+                                    <td>
+                                        <span style="font-size:14px;">Used to analyze lane performance</span>
+                                    </td>
+                                </tr>
+                                <tr data-start="840" data-end="945">
+                                    <td data-start="840" data-end="861" data-col-size="sm">
+                                        <span style="font-size:14px;"><strong data-start="842" data-end="860">DestinationZIP</strong></span>
+                                    </td>
+                                    <td data-start="861" data-end="895" data-col-size="md">
+                                        <span style="font-size:14px;">5-digit ZIP code of destination</span>
+                                    </td>
+                                    <td data-start="895" data-end="905" data-col-size="sm">
+                                        <span style="font-size:14px;"><code data-start="897" data-end="904">73344</code></span>
+                                    </td>
+                                    <td data-start="905" data-end="945" data-col-size="sm">
+                                        <span style="font-size:14px;">Enables lane and regional benchmarks</span>
+                                    </td>
+                                </tr>
+                                <tr data-start="946" data-end="1047">
+                                    <td data-start="946" data-end="967" data-col-size="sm">
+                                        <span style="font-size:14px;"><strong data-start="948" data-end="966">Distance_Miles</strong></span>
+                                    </td>
+                                    <td data-start="967" data-end="1005" data-col-size="md">
+                                        <span style="font-size:14px;">Estimated shipment distance (miles)</span>
+                                    </td>
+                                    <td data-start="1005" data-end="1013" data-col-size="sm">
+                                        <span style="font-size:14px;"><code data-start="1007" data-end="1012">250</code></span>
+                                    </td>
+                                    <td data-start="1013" data-end="1047" data-col-size="sm">
+                                        <span style="font-size:14px;">For cost per mile calculations</span>
+                                    </td>
+                                </tr>
+                                <tr data-start="1048" data-end="1169">
+                                    <td data-start="1048" data-end="1067" data-col-size="sm">
+                                        <span style="font-size:14px;"><strong data-start="1050" data-end="1066">ShipmentMode</strong></span>
+                                    </td>
+                                    <td data-start="1067" data-end="1124" data-col-size="md">
+                                        <span style="font-size:14px;">Transport mode: <code data-start="1085" data-end="1090">LTL</code>, <code data-start="1092" data-end="1097">FTL</code>, <code data-start="1099" data-end="1107">Parcel</code>, <code data-start="1109" data-end="1114">Air</code>, <code data-start="1116" data-end="1123">Ocean</code></span>
+                                    </td>
+                                    <td data-start="1124" data-end="1132" data-col-size="sm">
+                                        <span style="font-size:14px;"><code data-start="1126" data-end="1131">LTL</code></span>
+                                    </td>
+                                    <td data-start="1132" data-end="1169" data-col-size="sm">
+                                        <span style="font-size:14px;">Groups shipments for benchmarking</span>
+                                    </td>
+                                </tr>
+                                <tr data-start="1170" data-end="1280">
+                                    <td data-start="1170" data-end="1188" data-col-size="sm">
+                                        <span style="font-size:14px;"><strong data-start="1172" data-end="1187">CarrierName</strong></span>
+                                    </td>
+                                    <td data-start="1188" data-end="1224" data-col-size="md">
+                                        <span style="font-size:14px;">Freight carrier handling the load</span>
+                                    </td>
+                                    <td data-start="1224" data-end="1242" data-col-size="sm">
+                                        <span style="font-size:14px;"><code data-start="1226" data-end="1241">FedEx Freight</code></span>
+                                    </td>
+                                    <td data-start="1242" data-end="1280" data-col-size="sm">
+                                        <span style="font-size:14px;">Carrier scorecards and comparisons</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="font-size:14px;"><strong data-start="1172" data-end="1187">DriverName</strong></span>
+                                    </td>
+                                    <td>
+                                        <span style="font-size:14px;">Driver handling the load</span>
+                                    </td>
+                                    <td>
+                                        <span style="font-size:14px;"><code data-start="1226" data-end="1241">Chris Park</code></span>
+                                    </td>
+                                    <td>
+                                        <span style="font-size:14px;">Driver performance and comparisons</span>
+                                    </td>
+                                </tr>
+                                <tr data-start="1281" data-end="1391">
+                                    <td data-start="1281" data-end="1299" data-col-size="sm">
+                                        <span style="font-size:14px;"><strong data-start="1283" data-end="1298">FreightCost</strong></span>
+                                    </td>
+                                    <td data-start="1299" data-end="1351" data-col-size="md">
+                                        <span style="font-size:14px;">Total freight charge (before fuel &amp; accessorials)</span>
+                                    </td>
+                                    <td data-start="1351" data-end="1362" data-col-size="sm">
+                                        <span style="font-size:14px;"><code data-start="1353" data-end="1361">450.00</code></span>
+                                    </td>
+                                    <td data-start="1362" data-end="1391" data-col-size="sm">
+                                        <span style="font-size:14px;">Core cost analysis metric</span>
+                                    </td>
+                                </tr>
+                                <tr data-start="1392" data-end="1477">
+                                    <td data-start="1392" data-end="1407" data-col-size="sm">
+                                        <span style="font-size:14px;"><strong data-start="1394" data-end="1406">FuelCost</strong></span>
+                                    </td>
+                                    <td data-start="1407" data-end="1431" data-col-size="md">
+                                        <span style="font-size:14px;">Fuel surcharge amount</span>
+                                    </td>
+                                    <td data-start="1431" data-end="1441" data-col-size="sm">
+                                        <span style="font-size:14px;"><code data-start="1433" data-end="1440">75.00</code></span>
+                                    </td>
+                                    <td data-start="1441" data-end="1477" data-col-size="sm">
+                                        <span style="font-size:14px;">Breaks out variable fuel expense</span>
+                                    </td>
+                                </tr>
+                                <tr data-start="1478" data-end="1564">
+                                    <td data-start="1478" data-end="1499" data-col-size="sm">
+                                        <span style="font-size:14px;"><strong data-start="1480" data-end="1498">LoadWeight_lbs</strong></span>
+                                    </td>
+                                    <td data-start="1499" data-end="1525" data-col-size="md">
+                                        <span style="font-size:14px;">Total load weight (lbs)</span>
+                                    </td>
+                                    <td data-start="1525" data-end="1535" data-col-size="sm">
+                                        <span style="font-size:14px;"><code data-start="1527" data-end="1534">5,000</code></span>
+                                    </td>
+                                    <td data-start="1535" data-end="1564" data-col-size="sm">
+                                        <span style="font-size:14px;">Normalizes cost by weight</span>
+                                    </td>
+                                </tr>
+                                <tr data-start="1565" data-end="1667">
+                                    <td data-start="1565" data-end="1586" data-col-size="sm">
+                                        <span style="font-size:14px;"><strong data-start="1567" data-end="1585">DeliveryStatus</strong></span>
+                                    </td>
+                                    <td data-start="1586" data-end="1623" data-col-size="md">
+                                        <span style="font-size:14px;"><code data-start="1588" data-end="1597">On-Time</code>, <code data-start="1599" data-end="1605">Late</code>, or <code data-start="1610" data-end="1622">In-Transit</code></span>
+                                    </td>
+                                    <td data-start="1623" data-end="1635" data-col-size="sm">
+                                        <span style="font-size:14px;"><code data-start="1625" data-end="1634">On-Time</code></span>
+                                    </td>
+                                    <td data-start="1635" data-end="1667" data-col-size="sm">
+                                        <span style="font-size:14px;">Carrier performance tracking</span>
+                                    </td>
+                                </tr>
+                                <tr data-start="1668" data-end="1763">
+                                    <td data-start="1668" data-end="1687" data-col-size="sm">
+                                        <span style="font-size:14px;"><strong data-start="1670" data-end="1686">DeliveryTime_hrs</strong></span>
+                                    </td>
+                                    <td data-start="1687" data-end="1717" data-col-size="md">
+                                        <span style="font-size:14px;">Actual transit time (hours)</span>
+                                    </td>
+                                    <td data-start="1717" data-end="1724" data-col-size="sm">
+                                        <span style="font-size:14px;"><code data-start="1719" data-end="1723">30</code></span>
+                                    </td>
+                                    <td data-start="1724" data-end="1763" data-col-size="sm">
+                                        <span style="font-size:14px;">For service level and speed metrics</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </figure>
+                    <p>
+                        &nbsp;
+                    </p>
+                    <h2 data-start="1770" data-end="1832">
+                        <span style="font-size:20px;">🔹 Recommended Columns (Enhances Dashboards &amp; Scorecards)</span>
+                    </h2>
+                    <div class="_tableContainer_1rjym_1">
+                        <div class="group w-fit _tableWrapper_1rjym_13 flex flex-col-reverse" tabindex="-1">
+                            <figure class="table">
+                                <table class="w-fit min-w-(--thread-content-width)" data-start="1834" data-end="3227">
+                                    <thead data-start="1834" data-end="1885">
+                                        <tr data-start="1834" data-end="1885">
+                                            <th data-start="1834" data-end="1843" data-col-size="sm">
+                                                <span style="font-size:14px;">Column</span>
+                                            </th>
+                                            <th data-start="1843" data-end="1857" data-col-size="md">
+                                                <span style="font-size:14px;">Description</span>
+                                            </th>
+                                            <th data-start="1857" data-end="1867" data-col-size="sm">
+                                                <span style="font-size:14px;">Example</span>
+                                            </th>
+                                            <th data-start="1867" data-end="1885" data-col-size="sm">
+                                                <span style="font-size:14px;">Why It Matters</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-start="1938" data-end="3227">
+                                        <tr data-start="1938" data-end="2048">
+                                            <td data-start="1938" data-end="1953" data-col-size="sm">
+                                                <span style="font-size:14px;"><strong data-start="1940" data-end="1952">LoadType</strong></span>
+                                            </td>
+                                            <td data-start="1953" data-end="2008" data-col-size="md">
+                                                <span style="font-size:14px;">Equipment type: <code data-start="1971" data-end="1980">Dry Van</code>, <code data-start="1982" data-end="1990">Reefer</code>, <code data-start="1992" data-end="2001">Flatbed</code>, etc.</span>
+                                            </td>
+                                            <td data-start="2008" data-end="2020" data-col-size="sm">
+                                                <span style="font-size:14px;"><code data-start="2010" data-end="2019">Dry Van</code></span>
+                                            </td>
+                                            <td data-start="2020" data-end="2048" data-col-size="sm">
+                                                <span style="font-size:14px;">Cost varies by equipment</span>
+                                            </td>
+                                        </tr>
+                                        <tr data-start="2049" data-end="2133">
+                                            <td data-start="2049" data-end="2067" data-col-size="sm">
+                                                <span style="font-size:14px;"><strong data-start="2051" data-end="2066">PalletCount</strong></span>
+                                            </td>
+                                            <td data-start="2067" data-end="2095" data-col-size="md">
+                                                <span style="font-size:14px;">Number of pallets shipped</span>
+                                            </td>
+                                            <td data-start="2095" data-end="2102" data-col-size="sm">
+                                                <span style="font-size:14px;"><code data-start="2097" data-end="2101">12</code></span>
+                                            </td>
+                                            <td data-start="2102" data-end="2133" data-col-size="sm">
+                                                <span style="font-size:14px;">Useful for LTL benchmarking</span>
+                                            </td>
+                                        </tr>
+                                        <tr data-start="2134" data-end="2228">
+                                            <td data-start="2134" data-end="2152" data-col-size="sm">
+                                                <span style="font-size:14px;"><strong data-start="2136" data-end="2151">Volume_CuFt</strong></span>
+                                            </td>
+                                            <td data-start="2152" data-end="2183" data-col-size="md">
+                                                <span style="font-size:14px;">Volume of load in cubic feet</span>
+                                            </td>
+                                            <td data-start="2183" data-end="2193" data-col-size="sm">
+                                                <span style="font-size:14px;"><code data-start="2185" data-end="2192">1,200</code></span>
+                                            </td>
+                                            <td data-start="2193" data-end="2228" data-col-size="sm">
+                                                <span style="font-size:14px;">Captures density-driven pricing</span>
+                                            </td>
+                                        </tr>
+                                        <tr data-start="2229" data-end="2309">
+                                            <td data-start="2229" data-end="2244" data-col-size="sm">
+                                                <span style="font-size:14px;"><strong data-start="2231" data-end="2243">RateType</strong></span>
+                                            </td>
+                                            <td data-start="2244" data-end="2267" data-col-size="md">
+                                                <span style="font-size:14px;"><code data-start="2246" data-end="2256">Contract</code> or <code data-start="2260" data-end="2266">Spot</code></span>
+                                            </td>
+                                            <td data-start="2267" data-end="2280" data-col-size="sm">
+                                                <span style="font-size:14px;"><code data-start="2269" data-end="2279">Contract</code></span>
+                                            </td>
+                                            <td data-start="2280" data-end="2309" data-col-size="sm">
+                                                <span style="font-size:14px;">Splits costs by rate type</span>
+                                            </td>
+                                        </tr>
+                                        <tr data-start="2310" data-end="2405">
+                                            <td data-start="2310" data-end="2329" data-col-size="sm">
+                                                <span style="font-size:14px;"><strong data-start="2312" data-end="2328">ContractRate</strong></span>
+                                            </td>
+                                            <td data-start="2329" data-end="2358" data-col-size="md">
+                                                <span style="font-size:14px;">Agreed rate (if available)</span>
+                                            </td>
+                                            <td data-start="2358" data-end="2367" data-col-size="sm">
+                                                <span style="font-size:14px;"><code data-start="2360" data-end="2366">1.35</code></span>
+                                            </td>
+                                            <td data-start="2367" data-end="2405" data-col-size="sm">
+                                                <span style="font-size:14px;">Enables reconciliation vs. invoice</span>
+                                            </td>
+                                        </tr>
+                                        <tr data-start="2406" data-end="2496">
+                                            <td data-start="2406" data-end="2431" data-col-size="sm">
+                                                <span style="font-size:14px;"><strong data-start="2408" data-end="2430">AccessorialCharges</strong></span>
+                                            </td>
+                                            <td data-start="2431" data-end="2459" data-col-size="md">
+                                                <span style="font-size:14px;">Total accessorial charges</span>
+                                            </td>
+                                            <td data-start="2459" data-end="2469" data-col-size="sm">
+                                                <span style="font-size:14px;"><code data-start="2461" data-end="2468">50.00</code></span>
+                                            </td>
+                                            <td data-start="2469" data-end="2496" data-col-size="sm">
+                                                <span style="font-size:14px;">Identifies hidden costs</span>
+                                            </td>
+                                        </tr>
+                                        <tr data-start="2497" data-end="2627">
+                                            <td data-start="2497" data-end="2523" data-col-size="sm">
+                                                <span style="font-size:14px;"><strong data-start="2499" data-end="2522">Accessorials_Detail</strong></span>
+                                            </td>
+                                            <td data-start="2523" data-end="2564" data-col-size="md">
+                                                <span style="font-size:14px;">Accessorial types, separated by commas</span>
+                                            </td>
+                                            <td data-start="2564" data-end="2587" data-col-size="sm">
+                                                <span style="font-size:14px;"><code data-start="2566" data-end="2586">Detention,Liftgate</code></span>
+                                            </td>
+                                            <td data-start="2587" data-end="2627" data-col-size="sm">
+                                                <span style="font-size:14px;">Breaks out which charges drive costs</span>
+                                            </td>
+                                        </tr>
+                                        <tr data-start="2628" data-end="2732">
+                                            <td data-start="2628" data-end="2645" data-col-size="sm">
+                                                <span style="font-size:14px;"><strong data-start="2630" data-end="2644">Surcharges</strong></span>
+                                            </td>
+                                            <td data-start="2645" data-end="2681" data-col-size="md">
+                                                <span style="font-size:14px;">Extra charges not in accessorials</span>
+                                            </td>
+                                            <td data-start="2681" data-end="2702" data-col-size="sm">
+                                                <span style="font-size:14px;"><code data-start="2683" data-end="2701">Hazmat Fee 25.00</code></span>
+                                            </td>
+                                            <td data-start="2702" data-end="2732" data-col-size="sm">
+                                                <span style="font-size:14px;">Captures full cost picture</span>
+                                            </td>
+                                        </tr>
+                                        <tr data-start="2733" data-end="2817">
+                                            <td data-start="2733" data-end="2751" data-col-size="sm">
+                                                <span style="font-size:14px;"><strong data-start="2735" data-end="2750">InvoiceDate</strong></span>
+                                            </td>
+                                            <td data-start="2751" data-end="2777" data-col-size="md">
+                                                <span style="font-size:14px;">Date invoice was issued</span>
+                                            </td>
+                                            <td data-start="2777" data-end="2792" data-col-size="sm">
+                                                <span style="font-size:14px;"><code data-start="2779" data-end="2791">2025-09-14</code></span>
+                                            </td>
+                                            <td data-start="2792" data-end="2817" data-col-size="sm">
+                                                <span style="font-size:14px;">Tracks invoice timing</span>
+                                            </td>
+                                        </tr>
+                                        <tr data-start="2818" data-end="2909">
+                                            <td data-start="2818" data-end="2836" data-col-size="sm">
+                                                <span style="font-size:14px;"><strong data-start="2820" data-end="2835">PaymentDate</strong></span>
+                                            </td>
+                                            <td data-start="2836" data-end="2860" data-col-size="md">
+                                                <span style="font-size:14px;">Date invoice was paid</span>
+                                            </td>
+                                            <td data-start="2860" data-end="2875" data-col-size="sm">
+                                                <span style="font-size:14px;"><code data-start="2862" data-end="2874">2025-09-30</code></span>
+                                            </td>
+                                            <td data-start="2875" data-end="2909" data-col-size="sm">
+                                                <span style="font-size:14px;">Tracks cash flow &amp; days-to-pay</span>
+                                            </td>
+                                        </tr>
+                                        <tr data-start="2910" data-end="3010">
+                                            <td data-start="2910" data-end="2936" data-col-size="sm">
+                                                <span style="font-size:14px;"><strong data-start="2912" data-end="2935">PlannedDelivery_hrs</strong></span>
+                                            </td>
+                                            <td data-start="2936" data-end="2968" data-col-size="md">
+                                                <span style="font-size:14px;">Expected transit time (hours)</span>
+                                            </td>
+                                            <td data-start="2968" data-end="2975" data-col-size="sm">
+                                                <span style="font-size:14px;"><code data-start="2970" data-end="2974">24</code></span>
+                                            </td>
+                                            <td data-start="2975" data-end="3010" data-col-size="sm">
+                                                <span style="font-size:14px;">Allows on-time performance calc</span>
+                                            </td>
+                                        </tr>
+                                        <tr data-start="3011" data-end="3101">
+                                            <td data-start="3011" data-end="3033" data-col-size="sm">
+                                                <span style="font-size:14px;"><strong data-start="3013" data-end="3032">Currency</strong></span>
+                                            </td>
+                                            <td data-start="3033" data-end="3060" data-col-size="md">
+                                                <span style="font-size:14px;">Currency used in invoice</span>
+                                            </td>
+                                            <td data-start="3060" data-end="3068" data-col-size="sm">
+                                                <span style="font-size:14px;"><code data-start="3062" data-end="3067">USD</code></span>
+                                            </td>
+                                            <td data-start="3068" data-end="3101" data-col-size="sm">
+                                                <span style="font-size:14px;">For multi-region benchmarking</span>
+                                            </td>
+                                        </tr>
+                                        <tr data-start="3102" data-end="3227">
+                                            <td data-start="3102" data-end="3122" data-col-size="sm">
+                                                <span style="font-size:14px;"><strong data-start="3104" data-end="3121">CommodityType</strong></span>
+                                            </td>
+                                            <td data-start="3122" data-end="3176" data-col-size="md">
+                                                <span style="font-size:14px;">Type of goods: <code data-start="3139" data-end="3145">Food</code>, <code data-start="3147" data-end="3155">Retail</code>, <code data-start="3157" data-end="3169">Industrial</code>, etc.</span>
+                                            </td>
+                                            <td data-start="3176" data-end="3187" data-col-size="sm">
+                                                <span style="font-size:14px;"><code data-start="3178" data-end="3186">Retail</code></span>
+                                            </td>
+                                            <td data-start="3187" data-end="3227" data-col-size="sm">
+                                                <span style="font-size:14px;">Enables industry-specific benchmarks</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </figure>
+                        </div>
+                    </div>
+                    <h2 data-start="3457" data-end="3489">
+                        <span style="font-size:20px;">💡 Tips for a Smooth Upload</span>
+                    </h2>
+                    <ul data-start="3490" data-end="3836">
+                        <li data-start="3490" data-end="3550">
+                            <p data-start="3492" data-end="3550">
+                                <span style="font-size:14px;">Keep column names <strong data-start="3510" data-end="3531">exactly as listed</strong> in the template.</span>
+                            </p>
+                        </li>
+                        <li data-start="3551" data-end="3606">
+                            <p data-start="3553" data-end="3606">
+                                <span style="font-size:14px;">Use <strong data-start="3557" data-end="3589">ISO date format (YYYY-MM-DD)</strong> for all dates.</span>
+                            </p>
+                        </li>
+                        <li data-start="3607" data-end="3657">
+                            <p data-start="3609" data-end="3657">
+                                <span style="font-size:14px;">Use numbers only for cost fields (no $ signs).</span>
+                            </p>
+                        </li>
+                        <li data-start="3658" data-end="3707">
+                            <p data-start="3660" data-end="3707">
+                                <span style="font-size:14px;">Accessorials can be left blank if none apply.</span>
+                            </p>
+                        </li>
+                        <li data-start="3708" data-end="3836">
+                            <p data-start="3710" data-end="3836">
+                                <span style="font-size:14px;">If some fields are missing (e.g., ContractRate), you can leave them empty — but filling them helps generate richer insights.</span>
+                            </p>
+                        </li>
+                    </ul>
+                    <hr data-start="3838" data-end="3841">
+                    <p data-start="3843" data-end="3882">
+                        <span style="font-size:14px;">✅ <strong data-start="3845" data-end="3880">With this data, you’ll receive:</strong></span>
+                    </p>
+                    <ul data-start="3883" data-end="4095">
+                        <li data-start="3883" data-end="3929">
+                            <p data-start="3885" data-end="3929">
+                                <span style="font-size:14px;">Spend dashboards (by lane, carrier, mode).</span>
+                            </p>
+                        </li>
+                        <li data-start="3930" data-end="3999">
+                            <p data-start="3932" data-end="3999">
+                                <span style="font-size:14px;">Carrier scorecards (on-time %, accessorial frequency, cost/mile).</span>
+                            </p>
+                        </li>
+                        <li data-start="4000" data-end="4047">
+                            <p data-start="4002" data-end="4047">
+                                <span style="font-size:14px;">Hidden cost insights (fuel + accessorials).</span>
+                            </p>
+                        </li>
+                        <li data-start="4048" data-end="4095">
+                            <p data-start="4050" data-end="4095">
+                                <span style="font-size:14px;">Phase 2: Benchmarking vs. anonymized peers.</span>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+          </div>
+        </div>
+      </div>
+</div>
     {{ block.super }}
 {% endblock footer_area %}
 

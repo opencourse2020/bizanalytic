@@ -1,16 +1,11 @@
-ShipmentID,Date,OriginCity,DestinationCity,Distance_Miles,FuelCost_USD,DriverName,CarrierName,LoadWeight_lbs,DeliveryStatus,DeliveryTime_hrs,FreightCost_USD
-SHP001,2025-07-01,"Tulsa, OK","San Antonio, TX",598,268.35,Mike Lee,ABC Carriers,23171,Delivered,14.5,1267.81
-SHP002,2025-07-02,"Austin, TX","Dallas, TX",654,267.28,Emma Stone,ABC Carriers,17009,In-Transit,13.0,1309.41
-SHP003,2025-07-03,"Oklahoma City, OK","Houston, TX",200,74.28,Emma Stone,GHI Transport,22781,Delivered,3.8,391.31
-SHP004,2025-07-04,"Oklahoma City, OK","Dallas, TX",283,112.97,Emma Stone,ABC Carriers,22161,Delayed,5.2,620.14
-SHP005,2025-07-05,"Austin, TX","San Antonio, TX",708,278.84,Emma Stone,XYZ Freight,17983,Delivered,14.7,1396.83
-SHP006,2025-07-06,"Tulsa, OK","Austin, TX",224,88.66,Emma Stone,XYZ Freight,22073,In-Transit,4.7,460.84
-SHP007,2025-07-07,"Oklahoma City, OK","Dallas, TX",546,208.73,Chris Park,DEF Logistics,22086,In-Transit,11.8,1125.38
-SHP008,2025-07-08,"Tulsa, OK","Houston, TX",612,274.61,Chris Park,ABC Carriers,17075,Delayed,12.7,1286.6
-SHP009,2025-07-09,"Dallas, TX","Tulsa, OK",380,137.02,Chris Park,DEF Logistics,24727,Delivered,7.9,815.05
-SHP010,2025-07-10,"Dallas, TX","Austin, TX",334,118.8,Mike Lee,XYZ Freight,17271,Delivered,6.5,676.81
-SHP011,2025-07-11,"Austin, TX","Oklahoma City, OK",311,133.32,Chris Park,DEF Logistics,22076,Delivered,7.7,584.33
-SHP012,2025-07-12,"Tulsa, OK","Dallas, TX",551,241.63,John Doe,ABC Carriers,18423,Delivered,11.6,1095.25
-SHP013,2025-07-13,"Oklahoma City, OK","Tulsa, OK",455,166.13,Alex Ray,DEF Logistics,15715,Delivered,9.3,838.83
-SHP014,2025-07-14,"Austin, TX","Oklahoma City, OK",441,181.04,Chris Park,DEF Logistics,17673,Delivered,9.4,818.06
-SHP015,2025-07-15,"Austin, TX","Oklahoma City, OK",551,218.03,Sara Kim,ABC Carriers,19658,In-Transit,10.3,1042.3
+ShipmentID,Date_ship,OriginCity,OrigineZIP,DestinationCity,DestinationZIP,Distance_Miles,ShipmentMode,CarrierName,DriverName,FreightCost_USD,FuelCost_USD,LoadWeight_lbs,DeliveryStatus,DeliveryTime_hrs,LoadType,PalletCount,Volume_CuFt,RateType,ContractRate,AccessorialCharges,Accessorials_Detail,Surcharges,InvoiceDate,PaymentDate,PlannedDelivery_hrs,Currency,CommodityType
+SHP001,7/1/2025,"Tulsa, OK",74008,"San Antonio, TX",78112,598,LTL,ABC Carriers,Mike Lee,1267.81,268.35,23171,Delivered,14.5,Dry Van,19,4966.46,Contract,1.35,141.45,Residential,,9/4/2025,10/4/2025,10.3,USD,Pharma
+SHP002,7/2/2025,"Austin, TX",73344,"Dallas, TX",75080,654,LTL,ABC Carriers,Emma Stone,1309.41,267.28,17009,In-Transit,13,Container,21,4225.23,Spot,,0,,Hazmat Fee 25.00,9/6/2025,10/8/2025,18.1,USD,Pharma
+SHP003,7/3/2025,"Oklahoma City, OK",73026,"Houston, TX",77009,200,Air,GHI Transport,Emma Stone,391.31,74.28,22781,Delivered,3.8,Flatbed,22,4993.54,Contract,1.31,80.53,Detention,Hazmat Fee 25.00,9/8/2025,9/25/2025,5.2,EUR,Food
+SHP004,7/4/2025,"Oklahoma City, OK",73026,"Dallas, TX",75080,283,FTL,ABC Carriers,Emma Stone,620.14,112.97,22161,Delayed,5.2,Reefer,13,3782.77,Contract,1.4,63.98,Residential,Hazmat Fee 25.00,9/8/2025,9/24/2025,8.6,EUR,Automotive
+SHP005,7/5/2025,"Austin, TX",73344,"San Antonio, TX",78112,708,LTL,XYZ Freight,Emma Stone,1396.83,278.84,17983,Delivered,14.7,Dry Van,26,6180.92,Contract,1.28,71.19,Detention,Hazmat Fee 25.00,9/11/2025,10/2/2025,29.5,EUR,Automotive
+SHP006,7/6/2025,"Tulsa, OK",74008,"Austin, TX",73344,224,Air,XYZ Freight,Emma Stone,460.84,88.66,22073,In-Transit,4.7,Flatbed,2,590.15,Spot,,124.55,Reweigh,Hazmat Fee 25.00,9/14/2025,10/18/2025,37.6,USD,Retail
+SHP007,7/7/2025,"Oklahoma City, OK",73026,"Dallas, TX",75080,546,Air,DEF Logistics,Chris Park,1125.38,208.73,22086,In-Transit,11.8,Container,23,2936.46,Spot,,64.51,Reweigh,,9/14/2025,10/12/2025,4.6,USD,Retail
+SHP008,7/8/2025,"Tulsa, OK",74008,"Houston, TX",77009,612,FTL,ABC Carriers,Chris Park,1286.6,274.61,17075,Delayed,12.7,Container,16,4236.15,Contract,1.32,122.09,Residential,,9/18/2025,10/7/2025,17.6,USD,Automotive
+SHP009,7/9/2025,"Dallas, TX",75080,"Tulsa, OK",74008,380,FTL,DEF Logistics,Chris Park,815.05,137.02,24727,Delivered,7.9,Dry Van,26,5507.38,Contract,1.32,0,,,9/20/2025,10/15/2025,31.2,EUR,Food
+SHP010,7/10/2025,"Dallas, TX",75080,"Austin, TX",73344,334,LTL,XYZ Freight,Mike Lee,676.81,118.8,17271,Delivered,6.5,Container,5,6518.77,Contract,1.35,88.03,Residential,Hazmat Fee 25.00,9/21/2025,10/31/2025,13.6,USD,Industrial

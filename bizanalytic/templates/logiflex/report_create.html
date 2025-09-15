@@ -165,11 +165,11 @@
                                                 </li>
                                                 <li style="margin-bottom: 10px;">
                                                     <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                                      Freight Data Upload Guide
+                                                      Follow this Guide to Upload your Freight Data
                                                     </button>
                                                 </li>
                                                 <li style="margin-bottom: 10px;">
-                                                    <span>{% trans "Use the same columns to fill your data" %}</span>
+                                                    <span>{% trans "Use at least the Required Columns to upload your shipment data" %}</span>
                                                     <br>
                                                     <span>[ShipmentID] - [Date] - [OriginCity] - [OriginZIP] - [DestinationCity] - [DestinationZIP] - [Distance_Miles] - [ShipmentMode] - [FuelCost_USD] - [DriverName] - [CarrierName] -[LoadWeight_lbs] - [DeliveryStatus] - [DeliveryTime_hrs] - [FreightCost_USD] </span>
 
@@ -264,7 +264,7 @@
       </div>
     </div>
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-dialog modal-dialog-scrollable" style="max-width: 700px;">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel">📥 Freight Data Upload Guide</h5>

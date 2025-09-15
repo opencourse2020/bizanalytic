@@ -12,6 +12,7 @@
 
 {% block css %}
     {{ block.super }}
+    <script async src="https://js.stripe.com/v3/buy-button.js"> </script>
     <style>
     /* From Uiverse.io by Javierrocadev */
 .containers {
@@ -259,6 +260,15 @@
                             </div>
                         </div>
                     </div>
+                <div class="col-6">
+
+
+                    <stripe-buy-button
+                      buy-button-id="buy_btn_1S7ezuEHeFq5L0NMh6vqpvqa"
+                      publishable-key="pk_live_51RrI7uEHeFq5L0NMDyv4cxVJqCJSmhaPLxWTue1tarbWWOvgAGse6F1soRkvfdaPcqe3OeYcyfLrXd3BeCwJJcLv00zRNNxhKS"
+                    >
+                    </stripe-buy-button>
+                </div>
             </div>
 
      </div>

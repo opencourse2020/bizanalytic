@@ -12,99 +12,98 @@
 
 {% block css %}
     {{ block.super }}
-    <script async src="https://js.stripe.com/v3/buy-button.js"> </script>
     <style>
     /* From Uiverse.io by Javierrocadev */
-.containers {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 5em;
-  font-weight: 900;
-  color: #e10600;
-  position: relative;
-  transition: all 1s ease;
-  text-align: center;
-}
+        .containers {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          font-size: 5em;
+          font-weight: 900;
+          color: #e10600;
+          position: relative;
+          transition: all 1s ease;
+          text-align: center;
+        }
 
-.container__star {
-  transition: all .7s ease-in-out;
-}
+        .container__star {
+          transition: all .7s ease-in-out;
+        }
 
-.first {
-  position: absolute;
-  top: 20px;
-  left: 50px;
-  transition: all .7s ease-in-out;
-}
+        .first {
+          position: absolute;
+          top: 20px;
+          left: 50px;
+          transition: all .7s ease-in-out;
+        }
 
-.svg-icon {
-  position: absolute;
-  fill: #e94822;
-  z-index: 1;
-}
+        .svg-icon {
+          position: absolute;
+          fill: #e94822;
+          z-index: 1;
+        }
 
-.star-eight {
-  background: #efd510;
-  width: 50px;
-  height: 50px;
-  position: relative;
-  text-align: center;
-  animation: rot 3s  infinite;
-}
+        .star-eight {
+          background: #efd510;
+          width: 50px;
+          height: 50px;
+          position: relative;
+          text-align: center;
+          animation: rot 3s  infinite;
+        }
 
-.star-eight::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 50px;
-  width: 50px;
-  background: #efd510;
-  transform: rotate(135deg);
-}
+        .star-eight::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 50px;
+          width: 50px;
+          background: #efd510;
+          transform: rotate(135deg);
+        }
 
-.containers:hover .container__star {
-  transform: rotateX(70deg) translateY(250px);
-  box-shadow: 0px 0px 120px -100px #e4e727;
-}
+        .containers:hover .container__star {
+          transform: rotateX(70deg) translateY(250px);
+          box-shadow: 0px 0px 120px -100px #e4e727;
+        }
 
-.containers:hover .svg-icon {
-  animation: grow 1s linear infinite;
-}
+        .containers:hover .svg-icon {
+          animation: grow 1s linear infinite;
+        }
 
-@keyframes rot {
-  0% {
-    transform: rotate(0deg);
-  }
+        @keyframes rot {
+          0% {
+            transform: rotate(0deg);
+          }
 
-  50% {
-    transform: rotate(340deg);
-  }
+          50% {
+            transform: rotate(340deg);
+          }
 
-  100% {
-    transform: rotate(0deg);
-  }
-}
+          100% {
+            transform: rotate(0deg);
+          }
+        }
 
-@keyframes grow {
-  0% {
-    transform: rotate(0deg);
-  }
+        @keyframes grow {
+          0% {
+            transform: rotate(0deg);
+          }
 
-  25% {
-    transform: rotate(-5deg);
-  }
+          25% {
+            transform: rotate(-5deg);
+          }
 
-  75% {
-    transform: rotate(5deg);
-  }
+          75% {
+            transform: rotate(5deg);
+          }
 
-  100% {
-    transform: scale(1) rotate(0deg);
-  }
-}
+          100% {
+            transform: scale(1) rotate(0deg);
+          }
+        }
     </style>
 
 {% endblock css %}
@@ -181,7 +180,7 @@
                                     <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans "Upload CSV, get report in minutes" %}</li>
                                     <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans "Email support" %}</li>
                                 </ul>
-                                <a href="https://buy.stripe.com/test_bJe4gs0c7cNZaKLe2E2cg05" class="primary-btn primary-bg mt-30"><span class="text">{% trans "Subscribe Now" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                                <a href="https://buy.stripe.com/4gMeVd3vz7uI7pN4DAfjG01" class="primary-btn primary-bg mt-30"><span class="text">{% trans "Subscribe Now" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                             </div>
                         </div>
                     </div>
@@ -226,7 +225,7 @@
                                     <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans "Benchmarking against industry averages" %}</li>
                                     <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans "Priority Trunaround" %}</li>
                                 </ul>
-                                <a href="https://buy.stripe.com/test_bJe9AM6Av4htdWXaQs2cg04" class="primary-btn primary-bg mt-30"><span class="text">{% trans "Subscribe Now" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                                <a href="https://buy.stripe.com/5kQ28r3vz3es7pN3zwfjG02" class="primary-btn primary-bg mt-30"><span class="text">{% trans "Subscribe Now" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                             </div>
                         </div>
                     </div>
@@ -256,19 +255,10 @@
                                     <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans "Dedicated support channel" %}</li>
                                     <li><span class="icon"><i class="ri-checkbox-circle-fill"></i></span> {% trans " Save vs Monthly Plan" %}</li>
                                 </ul>
-                                <a href="https://buy.stripe.com/test_00w6oAgb501dbOP7Eg2cg03" class="primary-btn primary-bg mt-30"><span class="text">{% trans "Subscribe Now" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
+                                <a href="https://buy.stripe.com/9B6eVd5DHg1e7pN1rofjG03" class="primary-btn primary-bg mt-30"><span class="text">{% trans "Subscribe Now" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></a>
                             </div>
                         </div>
                     </div>
-                <div class="col-6">
-
-
-                    <stripe-buy-button
-                      buy-button-id="buy_btn_1S7ezuEHeFq5L0NMh6vqpvqa"
-                      publishable-key="pk_live_51RrI7uEHeFq5L0NMDyv4cxVJqCJSmhaPLxWTue1tarbWWOvgAGse6F1soRkvfdaPcqe3OeYcyfLrXd3BeCwJJcLv00zRNNxhKS"
-                    >
-                    </stripe-buy-button>
-                </div>
             </div>
 
      </div>
@@ -400,325 +390,13 @@
                             </div>
 
                             <div class="pricing-button">
-                                <a href="https://buy.stripe.com/test_bJe4gs0c7cNZaKLe2E2cg05" class="secondary-btn">{% trans "Subscribe Now" %}</a>
+                                <a href="https://buy.stripe.com/4gMeVd3vz7uI7pN4DAfjG01" class="secondary-btn">{% trans "Subscribe Now" %}</a>
                             </div>
                         </div>
                     </div>
                 </div>
     </div>
-{#                <h2 class="mb-4" style="text-align: center; color: #4C5B9B; font-size: 32px; margin-bottom: 20px;">{% trans "LogiFlex Pricing Plans" %}</h2>#}
-{#                <div class="row w-100">#}
-{#                    <div class="col-12">#}
-{#                        <form action="#">#}
-{#                            {% csrf_token %}#}
-{#                            <p>Get Advanced Report</p>#}
-{##}
-{#                        </form>#}
-{#                        <figure class="table" >#}
-{#                            <table style="width: 100%">#}
-{#                                <thead>#}
-{#                                    <tr>#}
-{#                                        <th>#}
-{#                                            {% trans "Feature" %}#}
-{#                                        </th>#}
-{#                                        <th>#}
-{#                                                <strong>{% trans "Free Short Report" %}</strong>#}
-{#                                        </th>#}
-{#                                        <th>#}
-{#                                            <strong>{% trans "One-Time Report" %}</strong>#}
-{#                                        </th>#}
-{#                                        <th style="background-color:#eef6ff; border-top:2px double hsl(0, 0%, 0%); border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); ">#}
-{#                                            <strong>{% trans "Monthly Subscription" %}</strong>#}
-{#                                        </th>#}
-{#                                        <th>#}
-{#                                            <strong>{% trans "Quarterly Plan" %}</strong>#}
-{#                                        </th>#}
-{#                                    </tr>#}
-{#                                </thead>#}
-{#                                <tbody>#}
-{#                                    <tr>#}
-{#                                        <td>#}
-{#                                            <strong>Price</strong>#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            $0#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            $49 / {% trans "report" %}#}
-{#                                        </td>#}
-{#                                        <td style="background-color:#eef6ff ;border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); ">#}
-{#                                            $99 / {% trans "month" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            $249 / {% trans "quarter" %}#}
-{#                                        </td>#}
-{#                                    </tr>#}
-{#                                    <tr>#}
-{#                                        <td>#}
-{#                                            <strong>{% trans "Data Upload" %}</strong>#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            ✅ {% trans "Yes" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            ✅ {% trans "Yes" %}#}
-{#                                        </td>#}
-{#                                        <td style="background-color:#eef6ff ;border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); ">#}
-{#                                            ✅ {% trans "Yes" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            ✅ {% trans "Yes" %}#}
-{#                                        </td>#}
-{#                                    </tr>#}
-{#                                    <tr>#}
-{#                                        <td>#}
-{#                                            <strong>{% trans "Report Type" %}</strong>#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {% trans "Basic Summary" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {% trans "Full Advanced Report" %}#}
-{#                                        </td>#}
-{#                                        <td style="background-color:#eef6ff ;border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); ">#}
-{#                                            {% trans "Full Advanced Report (Monthly)" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {% trans "Full Advanced Report (3 Months)" %}#}
-{#                                        </td>#}
-{#                                    </tr>#}
-{#                                    <tr>#}
-{#                                        <td>#}
-{#                                            <strong>{% trans "Number of Reports" %}</strong>#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                           {% trans "1 Sample" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {% trans "1 Report" %}#}
-{#                                        </td>#}
-{#                                        <td style="background-color:#eef6ff ;border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); ">#}
-{#                                            {% trans "40 Reports per month" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {% trans "135 (45 Reports each month)" %}#}
-{#                                        </td>#}
-{#                                    </tr>#}
-{#                                    <tr>#}
-{#                                        <td>#}
-{#                                            <strong>{% trans "Analysis Depth" %}</strong>#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {% trans "Basic Metrics" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {% trans "Advanced Insights" %}#}
-{#                                        </td>#}
-{#                                        <td style="background-color:#eef6ff ;border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); ">#}
-{#                                            {% trans "Advanced + Predictive Trends" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {% trans "Advanced + Predictive Trends" %}#}
-{#                                        </td>#}
-{#                                    </tr>#}
-{#                                    <tr>#}
-{#                                        <td>#}
-{#                                            <strong>{% trans "Visuals" %}</strong>#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            1 {% trans "Chart" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {%  trans "Full Visualization Pack" %}#}
-{#                                        </td>#}
-{#                                        <td style="background-color:#eef6ff ;border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); ">#}
-{#                                            {%  trans "Full Visualization Pack" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {%  trans "Full Visualization Pack" %}#}
-{#                                        </td>#}
-{#                                    </tr>#}
-{#                                    <tr>#}
-{#                                        <td>#}
-{#                                            <strong>{% trans "Recommendations" %}</strong>#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            ❌ {% trans "No" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            ✅ {% trans "Yes" %}#}
-{#                                        </td>#}
-{#                                        <td style="background-color:#eef6ff ;border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); ">#}
-{#                                            ✅ {% trans "Yes" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            ✅ {% trans "Yes" %}#}
-{#                                        </td>#}
-{#                                    </tr>#}
-{#                                    <tr>#}
-{#                                        <td>#}
-{#                                            <strong>{% trans "Priority Support" %}</strong>#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            ❌ {% trans "No" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            ❌ {% trans "No" %}#}
-{#                                        </td>#}
-{#                                        <td style="background-color:#eef6ff ;border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); ">#}
-{#                                            ✅ {% trans "Yes" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            ✅ {% trans "Yes" %}#}
-{#                                        </td>#}
-{#                                    </tr>#}
-{#                                    <tr>#}
-{#                                        <td>#}
-{#                                            <strong>{% trans "Delivery Time" %}</strong>#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            48 {% trans "hours" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            48 {% trans "hours" %}#}
-{#                                        </td>#}
-{#                                        <td style="background-color:#eef6ff ;border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); ">#}
-{#                                            {% trans "Priority Turnaround" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {% trans "Priority Turnaround" %}#}
-{#                                        </td>#}
-{#                                    </tr>#}
-{#                                    <tr>#}
-{#                                        <td>#}
-{#                                            <strong>{% trans "Ideal For" %}</strong>#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {% trans "Testing the Tool" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {% trans "Occasional Analysis" %}#}
-{#                                        </td>#}
-{#                                        <td style="background-color:#eef6ff ;border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); ">#}
-{#                                            {% trans "Continuous Monitoring" %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {% trans "Long-Term Savings" %}#}
-{#                                        </td>#}
-{#                                    </tr>#}
-{#                                    <tr>#}
-{#                                        <td>#}
-{#                                            <strong>{% trans "Get" %}</strong>#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            <a href="{% url 'logiflex:index' %}" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Start Free" %}</a>#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {% if logedin == 1 %}#}
-{#                                                <a href="https://buy.stripe.com/test_eVq5kw3ojaFRf11e2E2cg00" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>#}
-{#                                            {% else %}#}
-{#                                                <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>#}
-{#                                            {% endif %}#}
-{#                                        </td>#}
-{#                                        <td style="background-color:#eef6ff ;border-left: 2px double hsl(0, 0%, 0%); border-right: 2px double hsl(0, 0%, 0%); border-bottom: 2px double hsl(0, 0%, 0%);  text-align:center;">#}
-{#                                            {% if logedin == 1  %}#}
-{#                                                <a href="https://buy.stripe.com/test_bJe9AM6Av4htdWXaQs2cg04" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>#}
-{#                                            {% else %}#}
-{#                                                <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>#}
-{#                                            {% endif %}#}
-{#                                        </td>#}
-{#                                        <td>#}
-{#                                            {% if logedin == 1  %}#}
-{#                                                <a href="https://buy.stripe.com/test_00w6oAgb501dbOP7Eg2cg03" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>#}
-{#                                            {% else %}#}
-{#                                                <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>#}
-{#                                            {% endif %}#}
-{#                                        </td>#}
-{#                                    </tr>#}
-{#                                </tbody>#}
-{#                            </table>#}
-{#                        </figure>#}
-{#                    </div>#}
-{##}
-{#                    <div class="col-12">#}
-{#                        <section style="font-family: Arial, sans-serif; padding: 40px; background: #f9fafc;">#}
-{#                            <h2 style="text-align: center; color: #4C5B9B; font-size: 32px; margin-bottom: 20px;">{% trans "LogiFlex Pricing Plans" %}</h2>#}
-{#                            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">#}
-{##}
-{#                                <!-- Free Plan -->#}
-{#                                <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">#}
-{#                                    <h3 style="color: #4C5B9B;">{% trans "Free Short Report" %}</h3>#}
-{#                                    <p style="font-size: 24px; font-weight: bold;">$0</p>#}
-{#                                    <ul class="mb-3 p-0" style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">#}
-{#                                        <li>✅ {% trans "Basic Summary" %}</li>#}
-{#                                        <li>✅ {% trans "1 Sample Report" %}</li>#}
-{#                                        <li>✅ {% trans "Includes 1 Chart" %}</li>#}
-{#                                        <li>❌ {% trans "No Recommendations" %}</li>#}
-{#                                        <li>✅ {% trans "48-hour Delivery" %}</li>#}
-{#                                    </ul>#}
-{#                                    <a href="{% url 'logiflex:index' %}" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Start Free</a>#}
-{#                                </div>#}
-{##}
-{#                                <!-- One-Time Report -->#}
-{#                                <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">#}
-{#                                    <h3 style="color: #4C5B9B;">{% trans "One-Time Report" %}</h3>#}
-{#                                    <p style="font-size: 24px; font-weight: bold;">$49</p>#}
-{#                                    <ul class="mb-3 p-0" style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">#}
-{#                                        <li>✅ {% trans "Full Advanced Report" %}</li>#}
-{#                                        <li>✅ {% trans "1 Detailed Analysis" %}</li>#}
-{#                                        <li>✅ {% trans "Includes All Charts" %}</li>#}
-{#                                        <li>✅ {% trans "Actionable Recommendations" %}</li>#}
-{#                                        <li>✅ {% trans "48-hour Delivery" %}</li>#}
-{#                                    </ul>#}
-{#                                    {% if logedin == 1  %}#}
-{#                                        <a href="https://buy.stripe.com/test_eVq5kw3ojaFRf11e2E2cg00" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>#}
-{#                                    {% else %}#}
-{#                                        <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Buy Now" %}</a>#}
-{#                                    {% endif %}#}
-{#                                </div>#}
-{##}
-{#                                <!-- Monthly Subscription -->#}
-{#                                <div style="background: #eef6ff; border: 2px solid #4C5B9B; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">#}
-{#                                    <h3 style="color: #4C5B9B;">{% trans "Monthly Subscription" %}</h3>#}
-{#                                    <p style="font-size: 24px; font-weight: bold;">$99/{% trans "month" %}</p>#}
-{#                                    <ul class="mb-3 p-0" style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">#}
-{#                                        <li>✅ {% trans "40 Reports per month" %}</li>#}
-{#                                        <li>✅ {% trans "Advanced + Predictive Trends" %}</li>#}
-{#                                        <li>✅ {%  trans "Full Visualization Pack" %}</li>#}
-{#                                        <li>✅ {% trans "Priority Support" %}</li>#}
-{#                                        <li>✅ {% trans "Priority Turnaround" %}</li>#}
-{#                                    </ul>#}
-{#                                    {% if logedin == 1  %}#}
-{#                                        <a href="https://buy.stripe.com/test_bJe9AM6Av4htdWXaQs2cg04" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>#}
-{#                                    {% else %}#}
-{#                                        <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Subscribe Now" %}</a>#}
-{#                                    {% endif %}#}
-{#                                </div>#}
-{##}
-{#                                <!-- Quarterly Plan -->#}
-{#                                <div style="background: #fff; border: 1px solid #ddd; border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">#}
-{#                                    <h3 style="color: #4C5B9B;">{% trans "Quarterly Plan" %}</h3>#}
-{#                                    <p style="font-size: 24px; font-weight: bold;">$249/{% trans "quarter" %}</p>#}
-{#                                    <ul class="mb-3 p-0" style="text-align: left; font-size: 14px; line-height: 1.6; padding: 0 15px;">#}
-{#                                        <li>✅ {% trans "135 Advanced Reports" %}</li>#}
-{#                                        <li>✅ {% trans "Advanced + Predictive Trends" %}</li>#}
-{#                                        <li>✅ {%  trans "Full Visualization Pack" %}</li>#}
-{#                                        <li>✅ {% trans "Priority Support" %}</li>#}
-{#                                        <li>✅ {% trans "Save vs Monthly Plan" %}</li>#}
-{#                                    </ul>#}
-{#                                    {% if logedin == 1  %}#}
-{#                                        <a href="https://buy.stripe.com/test_00w6oAgb501dbOP7Eg2cg03" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>#}
-{#                                    {% else %}#}
-{#                                        <a href="#" style="display: inline-block; background: #4C5B9B; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">{% trans "Save with Quarterly" %}</a>#}
-{#                                    {% endif %}#}
-{#                                </div>#}
-{##}
-{#                            </div>#}
-{#                        </section>#}
-{##}
-{#                    </div>#}
-{##}
-{#                </div>#}
+
 
 {% endblock contact_area %}
 

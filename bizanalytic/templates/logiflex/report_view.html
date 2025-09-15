@@ -783,8 +783,9 @@ table, th, td {
                                 </div>
                             </div>
                         </div>
-
                         <div class="page-break-after"></div>
+
+                        {% if reporttype == "advanced" %}
                         <div class="col-12" id="route_4">
                                  <div class="card shadow-sm" id="card8">
                                      <div class="card-header">
@@ -795,7 +796,6 @@ table, th, td {
                                     </div>
                                 </div>
                         </div>
-                        {% if reporttype == "advanced" %}
                             <div class="page-break-after"></div>
                              <div class="col-12 " id="route_ai">
                                  <div class="card shadow-sm" id="route_summary">
@@ -920,57 +920,61 @@ table, th, td {
                                  </div>
                              </div>
                        {% elif reporttype == "lite" %}
-                          <div class="page-break-after"></div>
+
                            <div class="col-12" id="route_ai">
                                 <div class="card shadow-sm" id="route_summary">
-                                    <div class="card-header">
+                                    <div class="card-header" style="font-size: 1.5rem; font-weight: 700;">
                                         {% trans "AI-Driven Analysis" %}
                                     </div>
-                                    <div class="card-body" >
-                                    <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>
+                                    <div class="card-body ms-4" >
+            {#                        <div id="markdown_container3" class="prose">{{ report_route|safe|json_script:"rmd_json" }}</div>#}
+                                        {% if report_route.executive_summary %}
+                                            <h4 style="color: #033e79;">Executive Summary</h4>
+                                            <p style="color: black">{{ report_route.executive_summary }}</p>
+                                        {% endif %}
+                                            <br>
+                                        {% if report_route.kpis %}
+                                            <h4>KPI Analysis</h4>
+                                            <table class="table table-hover">
+                                            <thead class="table-dark">
+                                            <tr>
+                                                <th>{% trans "Metric" %}</th>
+                                                <th>{% trans "Value" %}</th>
+                                                <th>{% trans "Note" %}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for ky in report_route.kpis %}
+                                            <tr>
+                                                <td>{{ ky.metric }}</td>
+                                                <td>{{ ky.value }}</td>
+                                                <td>{{ ky.note }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
 
-{#                                    {% if report_route.kpis %}#}
-{#                                        <h4>KPI Analysis</h4>#}
-{#                                        <table class="table table-hover">#}
-{#                                        <thead class="table-dark">#}
-{#                                        <tr>#}
-{#                                            <th>{% trans "Metric" %}</th>#}
-{#                                            <th>{% trans "Value" %}</th>#}
-{#                                            <th>{% trans "Note" %}</th>#}
-{#                                        </tr>#}
-{#                                        </thead>#}
-{#                                        <tbody>#}
-{#                                        {% for ky in report_route.kpis %}#}
-{#                                        <tr>#}
-{#                                            <td>{{ ky.metric }}</td>#}
-{#                                            <td>{{ ky.value }}</td>#}
-{#                                            <td>{{ ky.note }}</td>#}
-{#                                        </tr>#}
-{#                                        {% endfor %}#}
-{#                                        </tbody>#}
-{##}
-{#                                        </table>#}
-{##}
-{#                                        {% endif %}#}
-{#                                    <br>#}
-{##}
-{#                                    {% if report_route.key_insights %}#}
-{#                                        <h4>Key Insights</h4>#}
-{#                                        <ol class="mb-0">#}
-{#                                              {% for k in report_route.key_insights %}#}
-{#                                              <li>{{ k }}</li>#}
-{#                                              {% endfor %}#}
-{#                                            </ol>#}
-{#                                        {% endif %}#}
-{#                                    <br>#}
-{#                                      {% if report_route.recommendations %}#}
-{#                                          <h4>Actionable Recommendations</h4>#}
-{#                                        <ol class="mb-0">#}
-{#                                              {% for r in report_route.recommendations %}#}
-{#                                              <li>{{ r }}</li>#}
-{#                                              {% endfor %}#}
-{#                                            </ol>#}
-{#                                        {% endif %}#}
+                                            </table>
+
+                                        {% endif %}
+                                    <br>
+
+                                    {% if report_route.key_insights %}
+                                        <h4>Key Insights</h4>
+                                        <ol class="mb-0">
+                                              {% for k in report_route.key_insights %}
+                                              <li>{{ k }}</li>
+                                              {% endfor %}
+                                            </ol>
+                                        {% endif %}
+                                    <br>
+                                      {% if report_route.recommendations %}
+                                          <h4>Actionable Recommendations</h4>
+                                        <ol class="mb-0">
+                                              {% for r in report_route.recommendations %}
+                                              <li>{{ r }}</li>
+                                              {% endfor %}
+                                            </ol>
+                                        {% endif %}
 
                                     </div>
                                 </div>
@@ -1025,7 +1029,7 @@ table, th, td {
 
     {#const markdownCarrierReport = {{ report_carrier|safe|json_script:"cmd_json" }};#}
     {#const markdownDriverReport = {{ report_driver|safe|json_script:"dmd_json" }};#}
-    const markdownRouteReport = {{ report_route|safe|json_script:"rmd_json" }};
+    {#const markdownRouteReport = {{ report_route|safe|json_script:"rmd_json" }};#}
     {#const summaryCData = {{ report_carrier|safe|json_script:"report_carrier" }};#}
     {#const summaryDData = {{ report_driver|safe|json_script:"report_driver" }};#}
     {#const summaryRData = {{ report_route|safe|json_script:"report_route" }};#}
@@ -1043,11 +1047,11 @@ table, th, td {
     //const mdd = JSON.parse(mdde.textContent);
     //document.getElementById("markdown_container2").innerHTML = marked.parse(mdd);
     //}
-    const mdre = document.getElementById("rmd_json");
-    if (mdre) {
-    const mdr = JSON.parse(mdre.textContent);
-    document.getElementById("markdown_container3").innerHTML = marked.parse(mdr);
-    }
+    //const mdre = document.getElementById("rmd_json");
+    //if (mdre) {
+    //const mdr = JSON.parse(mdre.textContent);
+    //document.getElementById("markdown_container3").innerHTML = marked.parse(mdr);
+    //}
 
 
 

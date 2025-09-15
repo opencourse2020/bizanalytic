@@ -595,7 +595,7 @@ def run_LLM_analysis(flags, summary_for_prompt, client_name):
                                 Analyze freight route data for client: {client_name}.
 
                                 Objective:
-                                - Executive-ready Fleet Efficiency Report with BI charts, KPIs, and actionable recommendations.
+                                - Executive-ready Fleet Efficiency Report with Executive Summary, KPIs, Key Insights, and actionable recommendations.
                                 - Include city/state already normalized in the data.
 
                                 Data notes:
@@ -611,7 +611,6 @@ def run_LLM_analysis(flags, summary_for_prompt, client_name):
 
                                 Output:
                                 - STRICTLY return a single JSON object matching the provided schema.
-                                - Include Chart.js-ready configs in summary_json.charts[].config (full chart config).
                                 """
     # if not report.report_prompt:
     #     report.report_prompt = user_prompt
@@ -627,11 +626,11 @@ def run_LLM_analysis(flags, summary_for_prompt, client_name):
                                                     "schema": {
                                                         "type": "object",
                                                         "properties": {
-                                                            "markdown_report": {"type": "string"},
                                                             "summary_json": {
                                                                 "type": "object",
                                                                 "properties": {
                                                                     "client": {"type": "string"},
+                                                                    "executive_summary": {"type": "string"},
                                                                     "kpis": {
                                                                         "type": "array",
                                                                         "items": {
@@ -642,32 +641,6 @@ def run_LLM_analysis(flags, summary_for_prompt, client_name):
                                                                                 "note": {"type": "string"}
                                                                             },
                                                                             "required": ["metric", "value", "note"],
-                                                                            "additionalProperties": False,
-                                                                        }
-                                                                    },
-                                                                    "charts": {
-                                                                        "type": "array",
-                                                                        "items": {
-                                                                            "type": "object",
-                                                                            "properties": {
-                                                                                "title": {"type": "string"},
-                                                                                "type": {"type": "string"},
-                                                                                # bar|line|pie|scatter
-                                                                                "config": {
-                                                                                    "type": "object",
-                                                                                    "properties": {
-                                                                                        "type": {"type": "string"},
-                                                                                        "data": {"type": "string"},
-                                                                                        "options": {"type": "string"},
-                                                                                    },
-                                                                                    "required": ["type", "data",
-                                                                                                 "options"],
-                                                                                    "additionalProperties": False,
-
-                                                                                }
-                                                                                # Full Chart.js config: {type,data,options}
-                                                                            },
-                                                                            "required": ["title", "type", "config"],
                                                                             "additionalProperties": False,
                                                                         }
                                                                     },
@@ -683,14 +656,19 @@ def run_LLM_analysis(flags, summary_for_prompt, client_name):
                                                                     "recommendations": {
                                                                         "type": "array",
                                                                         "items": {"type": "string"}
+                                                                    },
+                                                                    "key_insights": {
+                                                                        "type": "array",
+                                                                        "items": {"type": "string"}
                                                                     }
                                                                 },
-                                                                "required": ["client", "kpis", "charts", "data_quality",
-                                                                             "recommendations"],
+
+                                                                "required": ["client", "executive_summary", "kpis",
+                                                                             "data_quality", "recommendations", "key_insights"],
                                                                 "additionalProperties": False,
                                                             }
                                                         },
-                                                        "required": ["markdown_report", "summary_json"],
+                                                        "required": ["summary_json"],
                                                         "additionalProperties": False,
                                                     },
                                                     # "strict": True,

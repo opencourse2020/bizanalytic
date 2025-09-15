@@ -418,9 +418,9 @@ class ReportView(TemplateView):
                         data = json.loads(raw)
                         # data = raw
 
-                        markdown_report = data.get("markdown_report", "")
+                        # markdown_report = data.get("markdown_report", "")
 
-                        kwargs["report_route"] = markdown_report
+                        kwargs["report_route"] = data.get("summary_json", {})
                         kwargs["report_carrier"] = ""
                         kwargs["report_driver"] = ""
 

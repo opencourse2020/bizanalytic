@@ -464,7 +464,7 @@ class ColumnNameValidator:
 
         return matches[0] if matches else None
 
-    def suggest_correction(self, col_name: str) -> Tuple[str, str, float]:
+    def suggest_correction(self, col_name: str) -> Tuple[str, str, float, int]:
         """
         Suggest the best correction for a column name
         Returns: (original, suggested, confidence_score)
@@ -474,24 +474,24 @@ class ColumnNameValidator:
         # First try exact match (case insensitive)
         for expected in self.expected_columns:
             if cleaned.lower() == expected.lower():
-                return cleaned, expected, 1.0
+                return cleaned, expected, 1.0, 1
 
         # Try regex matching
         regex_match = self.regex_match(cleaned)
         if regex_match:
             # Calculate confidence based on regex match
             confidence = 0.9 if len(cleaned) > 3 else 0.8
-            return cleaned, regex_match, confidence
+            return cleaned, regex_match, confidence, 1
 
         # Try fuzzy matching
         fuzzy_match = self.fuzzy_match(cleaned)
         if fuzzy_match:
             # Calculate confidence using sequence matcher
             confidence = difflib.SequenceMatcher(None, cleaned.lower(), fuzzy_match.lower()).ratio()
-            return cleaned, fuzzy_match, confidence
+            return cleaned, fuzzy_match, confidence, 1
 
         # No good match found
-        return cleaned, cleaned, 0.0
+        return cleaned, cleaned, 0.0, 1
 
     def validate_and_correct_columns(self, df: pd.DataFrame = None,
                                      auto_correct: bool = True,
@@ -514,7 +514,7 @@ class ColumnNameValidator:
         corrected_columns = []
 
         for i, col in enumerate(column_names):
-            original, suggested, confidence = self.suggest_correction(col)
+            original, suggested, confidence, columntype = self.suggest_correction(col)
 
             # Create validation report entry
             report_entry = {

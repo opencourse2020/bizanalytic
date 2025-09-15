@@ -831,7 +831,7 @@ def test_validator(reportid, routefilename):
     # print("Testing date validation...")
 
 
-    sample_dates = data['Date']
+    sample_dates = data['Date_ship']
     date_results = date_validator.validate_date_column(sample_dates, 'TestDate')
     date_report = date_validator.print_date_validation_report(date_results)
 

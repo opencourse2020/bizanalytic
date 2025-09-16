@@ -20,6 +20,7 @@ from django.core.exceptions import PermissionDenied
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, get_object_or_404
+from django.utils.timezone import now
 import json
 import requests
 import math
@@ -367,7 +368,7 @@ class ReportView(TemplateView):
                 kwargs["meandistance"] = meandistance
                 kwargs["meanshipment"] = meanshipment
                 kwargs["meancost"] = meancost
-                kwargs["currentyear"] = datetime.now().year
+                kwargs["currentyear"] = now().year
                 kwargs["client"] = report.client.company
                 kwargs["reportid"] = report.report_id
                 kwargs["reporttype"] = report.report_type
@@ -558,10 +559,10 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         canceled_reports = reports.filter(report_status="canceled")
         num_canceled_reports = canceled_reports.count()
         canceled_reports = canceled_reports.order_by('report_number')[:3]
-        num_late_reports = reports.filter(expected_delivery__lt=datetime.now(), report_status="processing").count() + \
+        num_late_reports = reports.filter(expected_delivery__lt=now(), report_status="processing").count() + \
                        reports.filter(report_status="late").count()
         finished_reports = num_ontime_reports + num_late_reports
-        late_reports = reports.filter(expected_delivery__lt=datetime.now(), report_status="processing").order_by('report_number')[:3]
+        late_reports = reports.filter(expected_delivery__lt=now(), report_status="processing").order_by('report_number')[:3]
         new_reports = reports.filter(viewed=False, report_approved=True)
         if finished_reports == 0:
             finished_reports = 1
@@ -833,78 +834,6 @@ class NewsletterSubscriptionListView(UserPassesTestMixin, ListView):
         return self.request.user.is_staff
 
 
-class SampleReportCreateView(CreateView, JsonFormMixin):
-    def post(self, request, *args, **kwargs):
-
-        # load AJAX data from the template
-        client_nm = request.POST.get("client_nm")
-        cp_name = request.POST.get("cp_nm")
-        email_name = request.POST.get("email_nm")
-        email_name = email_name.lower()
-        route_file = request.FILES["route_file"]
-        route_filename = route_file.name
-
-        # Save client and result data
-        user = User.objects.filter(email=email_name).first()
-
-        if user:
-            client = LogiFlexClient.objects.filter(user=user).first()
-            if client:
-                latest_report = LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
-                report = LogiflexReport(client=client, routefile=route_file, report_type="Free",
-                                               report_number=latest_report.report_number+1)
-                report.save()
-            else:
-                obj, created = LogiFlexClient.objects.update_or_create(email=email_name,
-                                                                              defaults={'company': cp_name,
-                                                                                        'user': user,
-                                                                                        'contact_name': client_nm})
-
-                report = LogiflexReport(client=obj, routefile=route_file, report_type="Free",
-                                               report_number=1)
-                report.save()
-        else:
-            client = LogiFlexClient.objects.filter(email=email_name).first()
-            if client:
-                latest_report = LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
-                report = LogiflexReport(client=client, routefile=route_file, report_type="Free",
-                                               report_number=latest_report.report_number+1)
-                report.save()
-            else:
-                obj, created = LogiFlexClient.objects.update_or_create(email=email_name,
-                                                                              defaults={'company': cp_name,
-                                                                                        'contact_name': client_nm})
-                report = LogiflexReport(client=obj, routefile=route_file, report_type="Free", report_number=1)
-                report.save()
-
-        column_report, date_report, cities_report, routefilename = test_validator(report.pk,
-                                                                                  route_filename)
-
-        # update route file
-        # logireport.routefile = routefilename
-        # logireport.save()
-
-        # Save log data
-        logiflex_log = LogEntry.objects.create(report=report, column_report=column_report,
-                                                      date_report=date_report, citi_report=cities_report)
-
-        # Send a confirmation Email to client
-        email_info = {
-            'subject': "Your Fleet Efficiency Report is in Progress 🚚📊",
-            'to_email': [email_name, ],
-            'client': client_nm,
-            'report_list_link': "https://bizanalytic.com/logiflex/reports/list/",
-            'cuurentyear': datetime.now().year
-        }
-        senduploadmail(email_info)
-
-        message = "Report Uploaded Succssefully. Wait for a confirmation email from us."
-
-        data = {"submessage": message}
-
-        return JsonResponse(data)
-
-
 class RequestCallView(TemplateView):
     template_name = "logiflex/call.html"
 
@@ -1160,6 +1089,92 @@ class Payment_SuccessView(LoginRequiredMixin, TemplateView):
         return super(Payment_SuccessView, self).get_context_data(**kwargs)
 
 
+class SampleReportCreateView(CreateView, JsonFormMixin):
+    def post(self, request, *args, **kwargs):
+
+        # load AJAX data from the template
+        client_nm = request.POST.get("client_nm")
+        cp_name = request.POST.get("cp_nm")
+        email_name = request.POST.get("email_nm")
+        email_name = email_name.lower()
+        route_file = request.FILES["route_file"]
+        route_filename = route_file.name
+        _, ext = os.path.splitext(route_filename)
+        ext = ext.lower()  # Convert to lowercase for case-insensitive comparison
+        report_type = "free"
+        # Save client and result data
+        user = User.objects.filter(email=email_name).first()
+        downloadcode = generatecode(8)
+        if user:
+            client = LogiFlexClient.objects.filter(user=user).first()
+            if client:
+                latest_report = LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
+                report = LogiflexReport(client=client, routefile=route_file, report_type=report_type,
+                                               report_number=latest_report.report_number+1)
+
+            else:
+                obj, created = LogiFlexClient.objects.update_or_create(email=email_name,
+                                                                              defaults={'company': cp_name,
+                                                                                        'user': user,
+                                                                                        'contact_name': client_nm})
+
+                report = LogiflexReport(client=obj, routefile=route_file, report_type=report_type,
+                                               report_number=1)
+
+        else:
+            client = LogiFlexClient.objects.filter(email=email_name).first()
+            if client:
+                latest_report = LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
+                report = LogiflexReport(client=client, routefile=route_file, report_type=report_type,
+                                               report_number=latest_report.report_number+1)
+
+            else:
+                obj, created = LogiFlexClient.objects.update_or_create(email=email_name,
+                                                                              defaults={'company': cp_name,
+                                                                                        'contact_name': client_nm})
+                report = LogiflexReport(client=obj, routefile=route_file, report_type=report_type, report_number=1)
+
+
+        # add route file
+        report.routefile_ext = ext
+        # add report ID
+        currentyear = now().year
+        idl = "{:06d}".format(report.pk)
+        report.report_id = f"RPT-{currentyear}-{idl}"
+        # add expected_delivery
+        report.expected_delivery = now() + timedelta(days=1)
+        report.download_code = downloadcode
+        report.report_approved = True
+        report.report_status = "download"
+        report.save()
+        asynch_preprocess = test_validator.delay(report.pk, route_filename)
+        if asynch_preprocess:
+            flags = asynch_preprocess.get()
+
+        # update route file
+        # logireport.routefile = routefilename
+        # logireport.save()
+
+        # Send a confirmation Email to client
+        email_info = {
+            'subject': f"Your Fleet {report_type.capitalize()} Efficiency Report is in Progress 🚚📊",
+            'to_email': [email_name, ],
+            'client': client_nm,
+            'report_list_link': f"https://bizanalytic.com/logiflex/reports/reportview/{report.id}/?cat={downloadcode}",
+            'cuurentyear': now().year
+        }
+        senduploadmail.delay(email_info)
+
+        message = "Report Uploaded Succssefully. Wait for a confirmation email from us."
+        repstatus = "success"
+        reportid = report.id
+
+        data = {"submessage": message, "repstatus": repstatus, "repid": reportid}
+
+        return JsonResponse(data)
+
+
+
 class FullReportView(LoginRequiredMixin, TemplateView):
     template_name = "logiflex/report_create.html"
     def get_context_data(self, **kwargs):
@@ -1249,11 +1264,11 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             logireport.routefile = route_file
             logireport.routefile_ext = ext
             # add report ID
-            currentyear = datetime.now().year
+            currentyear = now().year
             idl = "{:06d}".format(logireport.pk)
             logireport.report_id = f"RPT-{currentyear}-{idl}"
             # add expected_delivery
-            logireport.expected_delivery = logireport.date_created + timedelta(days=1)
+            logireport.expected_delivery = now() + timedelta(days=1)
 
             logireport.save()
             if lite_report == 1:
@@ -1293,7 +1308,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
                 'to_email': [email_name, ],
                 'client': client_name,
                 'report_list_link': f"https://bizanalytic.com/logiflex/reports/detail/{logireport.id}/",
-                'cuurentyear': datetime.now().year
+                'cuurentyear': now().year
             }
             senduploadmail.delay(email_info)
 
@@ -1368,7 +1383,7 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
 
             if not report.report_approved:
                 report.report_approved = True
-                report.report_date = timezone.now()
+                report.report_date = now()
                 report.report_status = "download"
                 report.save()
                 message = "Report Approved Successfully"
@@ -1409,7 +1424,7 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
                     'company': company,
                     'kpis': kpiss,
                     'report_list_link': f"https://bizanalytic.com/logiflex/reports/reportview/{report.id}/?cat={report.download_code}",
-                    'curentyear': datetime.now().year
+                    'curentyear': now().year
                 }
                 sendapprovedreportmail.delay(email_info)
 
@@ -1578,7 +1593,7 @@ class FullNewClientReportCreateView(CreateView, JsonFormMixin):
                 # add route file
                 logireport.routefile = route_file
                 # add report ID
-                currentyear = datetime.now().year
+                currentyear = now().year
                 idl = "{:06d}".format(logireport.pk)
                 logireport.report_id = f"RPT-{currentyear}-{idl}"
                 # add expected_delivery
@@ -1599,7 +1614,7 @@ class FullNewClientReportCreateView(CreateView, JsonFormMixin):
                     'to_email': [email_name, ],
                     'client': client_name,
                     'report_list_link': f"https://bizanalytic.com/logiflex/reports/detail/{logireport.id}/",
-                    'cuurentyear': datetime.now().year
+                    'cuurentyear': now().year
                 }
                 senduploadmail.delay(email_info)
 

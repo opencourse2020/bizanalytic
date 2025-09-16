@@ -50,15 +50,31 @@ $("#generate_rp").click(function (){
                 contentType: false,
                 headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()},
                 success: function (data) {
-                    if (data) {
-                        var result = data;
-                        var message = result.submessage;
-                        if(message){
-                            $("#report-message").html('<div class="alert alert-success d-flex align-items-center" role="alert"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg><div>' +
-                                message + '</div>')
-                        }
+                        if (data) {
+                            let result = data;
+                            let message = result.submessage;
+                            let status = result.repstatus;
+                            let rid = result.repid;
+                            let code = result.code
+                            $("#loadingstate").hide();
+                            if (message) {
+                                if (status == "success"){
+                                    var f = $("#toast_successreport");
+                                    var a = new bootstrap.Toast(f);
+                                    $("#message_body").html(message);
+                                    a.show()
+                                    if (rid !== null){
+                                        window.location.href = "https://bizanalytic.com/logiflex/reports/reportview/" + rid + "/?cat=" + code;
+                                    }
+                                }else{
+                                    var f = $("#toast_failreport");
+                                    var a = new bootstrap.Toast(f);
+                                    $("#message_body").html(message);
+                                    a.show()
                     }
                 }
+                        }
+                    }
             })
         }else{
                 let message = 'You need to fill all the required information';

@@ -145,9 +145,11 @@
                                         <input type="file" id="route_fl" class="mb-0" placeholder="">
                                         <span class="mt-0">{% trans "Supports .csv, .xlsx files" %}</span>
                                     </div>
-                                    <div class="d-flex justify-content-center">
+                                    <div class="d-flex justify-content-around">
                                         <button type="button" id="generate_rp" class="primary-btn primary-bg"><span class="text">{% trans "Generate Performance Report" %}</span> <span class="icon"><i class="ri-arrow-right-double-line"></i></span></button>
-
+                                        <div class="spinner-border text-info" id="loadingstate" role="status" style="display: none">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
                                     </div>
                                     <div class="d-flex justify-content-center">
 
@@ -709,6 +711,22 @@
         </div>
       </div>
 </div>
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+      <div id="toast_successreport" class="toast hide text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+
+        <div class="toast-body" id="message_body">
+
+        </div>
+      </div>
+    </div>
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+      <div id="toast_failreport" class="toast hide text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+
+        <div class="toast-body" id="message_body">
+
+        </div>
+      </div>
+    </div>
 {% endblock footer_area %}
 
 {% block js_area %}

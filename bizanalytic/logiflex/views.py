@@ -1134,7 +1134,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                                                                                         'contact_name': client_nm})
                 report = LogiflexReport(client=obj, routefile=route_file, report_type=report_type, report_number=1)
 
-
+        report.save()
         # add route file
         report.routefile_ext = ext
         # add report ID
@@ -1169,7 +1169,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
         repstatus = "success"
         reportid = report.id
 
-        data = {"submessage": message, "repstatus": repstatus, "repid": reportid}
+        data = {"submessage": message, "repstatus": repstatus, "repid": reportid, "code": downloadcode}
 
         return JsonResponse(data)
 

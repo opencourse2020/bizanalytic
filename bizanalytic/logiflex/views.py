@@ -1176,7 +1176,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
         repstatus = "success"
         reportid = report.id
 
-        data = {"submessage": message, "repstatus": repstatus, "repid": reportid, "code": downloadcode}
+        data = {"submessage": message, "repstatus": repstatus, "repid": reportid, "repocode": downloadcode}
 
         return JsonResponse(data)
 

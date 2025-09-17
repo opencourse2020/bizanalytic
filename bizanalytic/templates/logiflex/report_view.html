@@ -222,41 +222,44 @@
                         </div>
                         {% if reporttype == "free" %}
                             <div class="col-6 text-center align-content-center" style="background-color: #e1e0e0; margin-bottom: 15px; min-height: 50px;">
-                                <div class="row ">
-                                    <div class="col-12">
-                                        <div class="section-top text-center">
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <div class="row ">
+                                            <div class="col-12">
+                                                <div class="section-top text-center">
 
-                                            <h3 class="title mt-10">Start with Starter</h3>
-                                            <span class="sub-title">See savings before you commit.</span>
+                                                    <h3 class="title mt-10">Start with The Starter Plan</h3>
+                                                    <span class="sub-title">See savings before you commit.</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <div class="row mt-50">
-                                    <div class="col-12 wow fadeInUp d-block" data-wow-delay=".2s">
-                                        <div class="d-inline-flex">
+                                        <div class="row mt-50">
+                                            <div class="col-12 wow fadeInUp d-block" data-wow-delay=".2s">
+                                                <h4 class="title" style="margin-right: 20px;">As Low as</h4>
 
-                                                <h4 class="title">Starter</h4>
-                                                <div class="price-box d-flex align-items-center gap-2">
-                                                    <h3 class="price">$29</h3>
-                                                    <span>/{% trans "Month" %}</span>
+                                                <div class="d-inline-flex">
+                                                    <div class="price-box d-flex align-items-center gap-2">
+                                                        <h3 class="price">$29</h3>
+                                                        <span>/{% trans "Month" %}</span>
+                                                    </div>
+
+                                                </div>
+                                                <div class="mb-20">
+                                                    <p>Best for small fleets & owner-operators</p>
+                                                    <ul class="check-list justify-content-start">
+                                                        <li><span class="icon"><i class="ri-checkbox-fill"></i></span> {% trans "Up to 3 reports / month" %}</li>
+                                                        <li><span class="icon"><i class="ri-checkbox-fill"></i></span> {% trans "Cost savings insights" %}</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="pricing-button">
+                                                    <a href="https://buy.stripe.com/4gMeVd3vz7uI7pN4DAfjG01" class="secondary-btn">{% trans "Subscribe Now" %}</a>
                                                 </div>
 
-                                        </div>
-                                        <div>
-                                        <p>Best for small fleets & owner-operators</p>
-                                                <ul class="check-list">
-                                                    <li><span class="icon"><i class="ri-checkbox-fill"></i></span> {% trans "Up to 3 reports / month" %}</li>
-                                                    <li><span class="icon"><i class="ri-checkbox-fill"></i></span> {% trans "Cost savings insights" %}</li>
-                                                </ul>
-                                        </div>
-                                            <div class="pricing-button">
-                                                <a href="https://buy.stripe.com/4gMeVd3vz7uI7pN4DAfjG01" class="secondary-btn">{% trans "Subscribe Now" %}</a>
                                             </div>
-
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
                         {% endif %}
                         {% if reporttype == "advanced" %}

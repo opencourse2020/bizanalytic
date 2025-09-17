@@ -1142,7 +1142,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                                                report_number=latest_number)
 
             else:
-                obj, created = LogiFlexClient.objects.update_or_create(email=email_name,
+                client, created = LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name,
                                                                                         'user': user,
                                                                                         'contact_name': client_nm})
@@ -1162,7 +1162,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                                         report_number=latest_number)
 
             else:
-                obj, created = LogiFlexClient.objects.update_or_create(email=email_name,
+                client, created = LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name,
                                                                                         'contact_name': client_nm})
                 report = LogiflexReport(client=obj, report_type=report_type, report_number=1)

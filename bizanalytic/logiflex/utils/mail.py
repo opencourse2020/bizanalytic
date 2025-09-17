@@ -3,6 +3,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
+from datetime import datetime
 import os
 from celery import shared_task
 
@@ -189,6 +190,7 @@ def sendnotificationemail(context):
     'message' : context.get('message'),
     'client_name' : context.get('client'),
     'current_year' : context.get('cuurentyear'),
+    'datecreated': datetime.now()
     }
     template_name = "emails/email_notification.html"
 

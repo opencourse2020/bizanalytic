@@ -1185,7 +1185,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
 
         if client_exist == 2:
             email_info = {
-                'subject': "Urgent: New User and Client",
+                'subject': "Urgent: New Client",
                 'to_email': ["bizanalytics.us@gmail.com", ],
                 'client': client.contact_name,
                 'company': client.company,

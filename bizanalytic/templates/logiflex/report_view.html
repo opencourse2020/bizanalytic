@@ -221,7 +221,7 @@
                             </div>
                         </div>
                         {% if reporttype == "free" %}
-                            <div class="col-6 text-center align-content-center" style="background-color: #e1e0e0; margin-bottom: 15px; min-height: 50px;">
+                            <div class="col-6 text-center align-content-center" style="margin-bottom: 15px; min-height: 50px;">
                                 <div class="card shadow-sm">
                                     <div class="card-body">
                                         <div class="row ">
@@ -537,26 +537,47 @@
 
                         {% endif %}
                         {% if reporttype == "free" %}
-                        <div class="col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".2s">
-                        <div class="single-pricing">
-                            <div class="content-part">
-                                <h4 class="title">Advanced</h4>
-                                <div class="price-box d-flex align-items-center gap-2">
-                                    <h3 class="price">$49</h3>
-                                    <span>/{% trans "Report" %}</span>
-                                </div>
-                                <p>Advanced AI-Driven + Expert-Verified Report</p>
-                                <ul class="check-list">
-                                    <li><span class="icon"><i class="ri-checkbox-fill"></i></span> {% trans "Full Visualization Pack" %}</li>
-                                    <li><span class="icon"><i class="ri-checkbox-fill"></i></span> {% trans "Predictive Trends + Benchmarking" %}</li>
-                                </ul>
-                            </div>
+                        <div class="col-6 text-center align-content-center" style="margin-bottom: 15px; min-height: 50px;">
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <div class="row ">
+                                            <div class="col-12">
+                                                <div class="section-top text-center">
 
-                            <div class="pricing-button">
-                                <a href="https://buy.stripe.com/3cI5kD3vz5mA4dB2vsfjG04" class="secondary-btn">{% trans "Buy Now" %}</a>
+                                                    <h3 class="title mt-10">Try The Pro Plan</h3>
+                                                    <span class="sub-title">Continuous analytics & benchmarking.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-50">
+                                            <div class="col-12 wow fadeInUp d-block" data-wow-delay=".2s">
+                                                <h4 class="title" style="margin-right: 20px;">As Low as</h4>
+
+                                                <div class="d-inline-flex">
+                                                    <div class="price-box d-flex align-items-center gap-2">
+                                                        <h3 class="price">$79</h3>
+                                                        <span>/{% trans "Month" %}</span>
+                                                    </div>
+
+                                                </div>
+                                                <div class="mb-20">
+                                                    <p>Best for growing fleets (5–15 trucks)</p>
+                                                    <ul class="check-list justify-content-start">
+                                                        <li><span class="icon"><i class="ri-checkbox-fill"></i></span> {% trans "Up to 10 Lite reports / month" %}</li>
+                                                        <li><span class="icon"><i class="ri-checkbox-fill"></i></span> {% trans "+ Up to 2 Advanced reports / month" %}</li>
+                                                        <li><span class="icon"><i class="ri-checkbox-fill"></i></span> {% trans "AI + Expert Verified Reports" %}</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="pricing-button">
+                                                    <a href="https://buy.stripe.com/5kQ28r3vz3es7pN3zwfjG02" class="secondary-btn">{% trans "Subscribe Now" %}</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
                         {% endif %}
                         {% if reporttype == "lite" %}
                             <div class="col-md-6" id="driver_2">

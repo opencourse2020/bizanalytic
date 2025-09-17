@@ -477,6 +477,7 @@ class ReportView(TemplateView):
                     kwargs["carrierstats"] = carrier_stats
                     kwargs["driverstats"] = driver_stats
                     kwargs["costmile"] = 0
+                    kwargs["costmiledriver"] = 0
 
         else:
             print("report none")

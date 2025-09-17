@@ -473,6 +473,9 @@ class ReportView(TemplateView):
                         datar = json.loads(rawr)
                         kwargs["report_route"] = datar.get("summary_json", {})
 
+                elif report.report_type == "free":
+                    kwargs["carrierstats"] = carrier_stats
+
         else:
             print("report none")
 

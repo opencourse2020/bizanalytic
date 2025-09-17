@@ -1112,7 +1112,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                 latest_number = 1
                 if latest_report:
                     latest_number = latest_report.report_number + 1
-                report = LogiflexReport(client=client, routefile=route_file, report_type=report_type,
+                report = LogiflexReport(client=client, report_type=report_type,
                                                report_number=latest_number)
 
             else:
@@ -1121,7 +1121,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                                                                                         'user': user,
                                                                                         'contact_name': client_nm})
 
-                report = LogiflexReport(client=obj, routefile=route_file, report_type=report_type,
+                report = LogiflexReport(client=obj, report_type=report_type,
                                                report_number=1)
 
         else:
@@ -1131,17 +1131,18 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                 latest_number = 1
                 if latest_report:
                     latest_number = latest_report.report_number + 1
-                report = LogiflexReport(client=client, routefile=route_file, report_type=report_type,
+                report = LogiflexReport(client=client, report_type=report_type,
                                         report_number=latest_number)
 
             else:
                 obj, created = LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name,
                                                                                         'contact_name': client_nm})
-                report = LogiflexReport(client=obj, routefile=route_file, report_type=report_type, report_number=1)
+                report = LogiflexReport(client=obj, report_type=report_type, report_number=1)
 
         report.save()
         # add route file
+        report.routefile = route_file
         report.routefile_ext = ext
         # add report ID
         currentyear = now().year

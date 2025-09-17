@@ -1130,6 +1130,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
         # Save client and result data
         user = User.objects.filter(email=email_name).first()
         downloadcode = generatecode(8)
+        client_exist = 1
         if user:
             client = LogiFlexClient.objects.filter(user=user).first()
             if client:
@@ -1148,6 +1149,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
 
                 report = LogiflexReport(client=obj, report_type=report_type,
                                                report_number=1)
+                client_exist = 2
 
         else:
             client = LogiFlexClient.objects.filter(email=email_name).first()
@@ -1164,6 +1166,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                                                                               defaults={'company': cp_name,
                                                                                         'contact_name': client_nm})
                 report = LogiflexReport(client=obj, report_type=report_type, report_number=1)
+                client_exist = 2
 
         report.save()
         # add route file
@@ -1179,6 +1182,18 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
         report.report_approved = True
         report.report_status = "download"
         report.save()
+
+        if client_exist == 2:
+            email_info = {
+                'subject': "Urgent: New User and Client",
+                'to_email': ["bizanalytics.us@gmail.com", ],
+                'client': client.contact_name,
+                'company': client.company,
+                'message': f"A new Client has been created with the following info: client company: {client.company}, email: {email_name}",
+                'curentyear': datetime.now().year
+            }
+            sendnotificationemail.delay(email_info)
+
         asynch_preprocess = test_validator.delay(report.pk, route_filename)
         if asynch_preprocess:
             flags = asynch_preprocess.get()
@@ -1204,7 +1219,6 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
         data = {"submessage": message, "repstatus": repstatus, "repid": reportid, "repocode": downloadcode}
 
         return JsonResponse(data)
-
 
 
 class FullReportView(LoginRequiredMixin, TemplateView):

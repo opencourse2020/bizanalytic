@@ -34,7 +34,7 @@ from .forms import *
 from .models import *
 from bizanalytic.profiles.mixins import JsonFormMixin
 from bizanalytic.profiles.models import User
-from .utils.mail import sendemail, senduploadmail, sendapprovedreportmail
+from .utils.mail import *
 from .utils.tools import generatecode
 from .utils.call_llm import generate_analysis
 from .utils.pre_process_datafile import *
@@ -995,6 +995,15 @@ class WebhookView(View):
             client = LogiFlexClient.objects.filter(email=email).first()
             if not client:
                 client = LogiFlexClient.objects.create(email=email, phone=phone_nb, contact_name=customer_name)
+                email_info = {
+                    'subject': "Urgent: New Client",
+                    'to_email': ["bizanalytics.us@gmail.com", ],
+                    'client': client.contact_name,
+                    'company': client.company,
+                    'message': f"A new Client has been created with the following info: client company: {client.company}, email: {email}",
+                    'curentyear': datetime.now().year
+                }
+                sendnotificationemail.delay(email_info)
             # print("Client_email:", client.email)
 
             if strippriceid:
@@ -1029,6 +1038,16 @@ class WebhookView(View):
                             service_type=payment_plan,
                             stripe_checkout_id=session['id'],
                             amount_paid=amount_paid, quantity=quantity)
+
+                        email_info = {
+                            'subject': "Urgent: New Payment",
+                            'to_email': ["bizanalytics.us@gmail.com", ],
+                            'client': client.contact_name,
+                            'company': client.company,
+                            'message': f"A new payment received from {client.company}, email: {email}",
+                            'curentyear': datetime.now().year
+                        }
+                        sendnotificationemail.delay(email_info)
 
                 # downloadcode = generatecode(8)
                 # report = LogiflexReport(client=client, payment=servicepayment, report_type='Paid',

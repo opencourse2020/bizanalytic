@@ -6,9 +6,11 @@ from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.models import Permission, Group
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
+from datetime import datetime
 from allauth.account.forms import SignupForm, LoginForm, ResetPasswordForm
 from . import models
 from bizanalytic.logiflex.models import LogiFlexClient
+from bizanalytic.logiflex.utils.mail import sendnotificationemail
 # from captcha.fields import ReCaptchaField
 
 User = get_user_model()
@@ -80,6 +82,16 @@ class ProfileCreateForm(SignupForm):
             if not client:
                 client = LogiFlexClient(user=user, email=user.email)
                 client.save()
+
+            email_info = {
+                'subject': "Urgent: New User and Client",
+                'to_email': ["bizanalytics.us@gmail.com", ],
+                'client': client.contact_name,
+                'company': client.company,
+                'message': f"A new User and Client has been created with the following info: client company: {client.company}, email: {user.email}",
+                'curentyear': datetime.now().year
+            }
+            sendnotificationemail.delay(email_info)
         return user
 
 

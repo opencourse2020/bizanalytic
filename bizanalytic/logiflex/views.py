@@ -476,6 +476,7 @@ class ReportView(TemplateView):
                 elif report.report_type == "free":
                     kwargs["carrierstats"] = carrier_stats
                     kwargs["driverstats"] = driver_stats
+                    kwargs["costmile"] = 0
 
         else:
             print("report none")

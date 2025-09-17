@@ -1147,7 +1147,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                                                                                         'user': user,
                                                                                         'contact_name': client_nm})
 
-                report = LogiflexReport(client=obj, report_type=report_type,
+                report = LogiflexReport(client=client, report_type=report_type,
                                                report_number=1)
                 client_exist = 2
 
@@ -1165,7 +1165,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                 client, created = LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name,
                                                                                         'contact_name': client_nm})
-                report = LogiflexReport(client=obj, report_type=report_type, report_number=1)
+                report = LogiflexReport(client=client, report_type=report_type, report_number=1)
                 client_exist = 2
 
         report.save()

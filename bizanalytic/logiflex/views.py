@@ -1109,8 +1109,11 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
             client = LogiFlexClient.objects.filter(user=user).first()
             if client:
                 latest_report = LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
+                latest_number = 1
+                if latest_report:
+                    latest_number = latest_report.report_number + 1
                 report = LogiflexReport(client=client, routefile=route_file, report_type=report_type,
-                                               report_number=latest_report.report_number+1)
+                                               report_number=latest_number)
 
             else:
                 obj, created = LogiFlexClient.objects.update_or_create(email=email_name,
@@ -1125,8 +1128,11 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
             client = LogiFlexClient.objects.filter(email=email_name).first()
             if client:
                 latest_report = LogiflexReport.objects.filter(client=client).order_by('-report_number').first()
+                latest_number = 1
+                if latest_report:
+                    latest_number = latest_report.report_number + 1
                 report = LogiflexReport(client=client, routefile=route_file, report_type=report_type,
-                                               report_number=latest_report.report_number+1)
+                                        report_number=latest_number)
 
             else:
                 obj, created = LogiFlexClient.objects.update_or_create(email=email_name,

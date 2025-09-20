@@ -1408,7 +1408,7 @@
                     route1_msg.className = "col-12";
                 }
                 pdfhead.style.display= "block";
-
+                route1.style.maxWidth = "700px";
 
                 card_charts.forEach(element => {
                     element.style.border = "none";
@@ -1494,6 +1494,7 @@
                 report_id.style.fontSize = "40px";
                 report_id.innerHTML = reportid_html;
                 reporttitle.style.fontSize = "40px";
+                route1.style.maxWidth = "";
                 card_charts.forEach(element => {
                     element.style.border = "1px solid rgba(0,0,0,.125)";
                     element.className = "card shadow-sm chart-card";

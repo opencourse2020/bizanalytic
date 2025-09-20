@@ -1408,14 +1408,16 @@
                     route1_msg.className = "col-12";
                 }
                 pdfhead.style.display= "block";
-                route1.style.maxWidth = "700px";
+                {#route1.style.maxWidth = "700px";#}
 
                 card_charts.forEach(element => {
                     element.style.border = "none";
                     element.className = "card chart-card";
+                    element.style.maxWidth = "700px";
                 });
                 widgeticons.forEach(element => {
                     element.style.display = "none";
+
                 });
                 breakouts.forEach(element => {
                     element.style.display = "";

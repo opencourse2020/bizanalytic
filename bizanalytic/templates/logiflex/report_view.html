@@ -314,7 +314,7 @@
                         {#        <div class="" id="col-helper">#}
                         <div class="page-break-after"></div>
                         {% if reporttype == "advanced" %}
-                            <div class="col-12" id="carrier_ai">
+                            <div class="col-12 advanced_class" id="carrier_ai">
                                 <div class="card shadow-sm" id="carrier_summary">
                                     <div class="card-header" style="font-size: 1.5rem; font-weight: 700">
                                         {% trans "Carriers Advanced Analysis (AI + Expert Verified)" %}
@@ -621,7 +621,7 @@
                         {% endif %}
                         <div class="page-break-after"></div>
                         {% if reporttype == "advanced" %}
-                            <div class="col-12" id="driver_ai">
+                            <div class="col-12 advanced_class" id="driver_ai">
                                 <div class="card shadow-sm" id="driver_summary">
                                     <div class="card-header" style="font-weight: 700; font-size: 1.5rem;">
                                         {% trans "Drivers Advanced Analysis (AI + Expert Verified)" %}
@@ -815,7 +815,7 @@
 
                         {% if reporttype == "advanced" %}
 
-                            <div class="col-md-6" id="route_2">
+                            <div class="col-md-6 advanced_class" id="route_2">
                                 <div class="card shadow-sm chart-card"  id="card6">
                                     <div class="card-header">
                                         {% trans "Routes Efficiency: Speed Vs. Cost per Mile Vs. Number of Shipments" %}
@@ -829,7 +829,7 @@
 
                             <div class="breakout" style="display: none"></div>
 
-                            <div class="col-md-6" id="route_3">
+                            <div class="col-md-6 advanced_class" id="route_3">
                                 <div class="card shadow-sm chart-card"  id="card7">
                                     <div class="card-header">
                                         {% trans "5 Worst Routes Based on Cost (Cost per Mile Vs. Speed Vs. Load Weight in Tons (1Ton =2000Lb)" %}
@@ -907,7 +907,7 @@
                         <div class="page-break-after"></div>
 
                         {% if reporttype == "advanced" %}
-                            <div class="col-12" id="route_4">
+                            <div class="col-12 advanced_class" id="route_4">
                                 <div class="card shadow-sm" id="card8">
                                     <div class="card-header">
                                         {% trans "Routes Efficiency Key Insights and Recommended Actions" %}
@@ -918,7 +918,7 @@
                                 </div>
                             </div>
                             <div class="page-break-after"></div>
-                            <div class="col-12 " id="route_ai">
+                            <div class="col-12 advanced_class" id="route_ai">
                                 <div class="card shadow-sm" id="route_summary">
                                     <div class="card-header" style="font-size: 1.5rem; font-weight: 700;">
                                         {% trans "Routes Advanced Analysis (AI + Expert Verified)" %}
@@ -1338,6 +1338,7 @@
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
 // PDF Download
+            var rt = "{{ reporttype }}";
             const today = new Date();
             const downloadBtn = document.getElementById('download-btn');
             const carrier1= document.getElementById("carrier_1");
@@ -1348,9 +1349,6 @@
             const driver_ai= document.getElementById("driver_ai");
             const route1 = document.getElementById("route_1");
             const route1_msg = document.getElementById("route_1_msg");
-            const route2 = document.getElementById("route_2");
-            const route3 = document.getElementById("route_3");
-            const route4 = document.getElementById("route_4");
             const route_ai = document.getElementById("route_ai");
             const htmpmsg = document.getElementById("heatmapmessage");
             const htmp = document.getElementById("htmpx").value;
@@ -1373,17 +1371,13 @@
             const allH2s = document.querySelectorAll('h2');
             const allH3s = document.querySelectorAll('h3');
             const card_charts = document.querySelectorAll('.chart-card');
+            const advanced_class = document.querySelectorAll('.advanced_class');
             const widgeticons = document.querySelectorAll('.widgeticon');
             const breakouts = document.querySelectorAll('.breakout');
-            {#const card1 = document.getElementById("card1");#}
-            {#const card2 = document.getElementById("card2");#}
-            {#const card3 = document.getElementById("card3");#}
-            {#const card4 = document.getElementById("card4");#}
-            {#const card5 = document.getElementById("card5");#}
+
             const keywidgets = document.getElementsByClassName('keywidget');
             const apexcharts_c = document.querySelectorAll('.apexcharts-canvas');
-            //const apexchart1width = apexcharts_c[0].style.width;
-            //const apexchart4width = apexcharts_c[4].style.width;
+
             downloadBtn.addEventListener('click', async function() {
                 carrier1.className = 'col-12';
                 carrier2.className = 'col-12';
@@ -1391,19 +1385,15 @@
                 driver2.className = 'col-12';
                 route1.style.display = "none";
                 route1_msg.style.display = "none";
-                {#route1.className = 'col-12';#}
-                {#route1_msg.className = 'col-12';#}
-                route2.className = 'col-12';
-                route3.className = 'col-12';
+
+                if (rt === "advanced") {
+                    advanced_class.forEach(element => {
+                    element.className = "col-12 advanced_class";
+                });
+                }
                 pdfhead.style.display= "block";
-                {#pdfhead.className = "d-flex justify-content-between align-items-center";#}
-                {#pdfhead.style.marginBottom = "10px";#}
                 htmpmsg.innerHTML = htmp;
-                {#report_id.style.color = "black";#}
-                {#report_id.style.fontSize = "20px";#}
-                {#report_id.innerHTML = reportid_html + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + today.toLocaleDateString();#}
-                {#reporttitle.style.fontSize = "20px";#}
-                {#card_charts.classList.remove('shadow-sm');#}
+
                 card_charts.forEach(element => {
                     element.style.border = "none";
                     element.className = "card chart-card";
@@ -1415,16 +1405,6 @@
                     element.style.display = "";
                     element.className = "breakout page-break-after"
                 });
-                {#card1.className = "card chart-card";#}
-                {#card1.style.border = "none";#}
-                {#card2.className = "card chart-card";#}
-                {#card2.style.border = "none";#}
-                {#card3.className = "card chart-card";#}
-                {#card3.style.border = "none";#}
-                {#card4.className = "card chart-card";#}
-                {#card4.style.border = "none";#}
-                {#card5.className = "card chart-card";#}
-                {#card5.style.border = "none";#}
                 allH3s.forEach(h3 => {
                     h3.style.fontSize = "36px";
                 });
@@ -1477,11 +1457,13 @@
                 carrier2.className = 'col-md-6';
                 driver1.className = 'col-md-6';
                 driver2.className = 'col-md-6';
-                {#route1.className = 'col-md-9';#}
                 route1.style.display = "";
                 route1_msg.style.display = "";
-                route2.className = 'col-md-6';
-                route3.className = 'col-md-6';
+                if (rt === "advanced") {
+                    advanced_class.forEach(element => {
+                    element.className = "col-md-6 advanced_class";
+                });
+                }
                 htmpmsg.innerHTML = htmpmsg_html;
                 pdfhead.style.marginBottom = "0px";
                 pdfhead.className = "";
@@ -1491,21 +1473,11 @@
                 report_id.style.fontSize = "40px";
                 report_id.innerHTML = reportid_html;
                 reporttitle.style.fontSize = "40px";
-                {#card_charts.classList.add('shadow-sm');#}
                 card_charts.forEach(element => {
                     element.style.border = "1px solid rgba(0,0,0,.125)";
                     element.className = "card shadow-sm chart-card";
                 });
-                {#card1.className = "card shadow-sm chart-card";#}
-                {#card1.style.border= "1px solid rgba(0,0,0,.125)";#}
-                {#card2.className = "card shadow-sm chart-card";#}
-                {#card2.style.border= "1px solid rgba(0,0,0,.125)";#}
-                {#card3.className = "card shadow-sm chart-card";#}
-                {#card3.style.border= "1px solid rgba(0,0,0,.125)";#}
-                {#card4.className = "card shadow-sm chart-card";#}
-                {#card4.style.border= "1px solid rgba(0,0,0,.125)";#}
-                {#card5.className = "card shadow-sm chart-card";#}
-                {#card5.style.border= "1px solid rgba(0,0,0,.125)";#}
+
                 allH3s.forEach(h3 => {
                     h3.style.fontSize = "42px";
                 });
@@ -1523,13 +1495,6 @@
                     const element = keywidgets[i];
                     element.className = "col-lg-2 col-md-6 col-sm-6 keywidget";
                 }
-
-
-                // Iterate through the apexcharts_c
-                //apexcharts_c.forEach(element => {
-                //    element.style.width = apexchart1width;
-                //});
-                {#pdfhead.style = "display: none;";#}
             });
         });
     </script>

@@ -221,7 +221,8 @@
                             </div>
                         </div>
                         {% if reporttype == "free" %}
-                            <div class="col-md-6 text-center align-content-center" style="margin-bottom: 15px; min-height: 50px;">
+                            <div class="breakout" style="display: none"></div>
+                            <div class="col-md-6 text-center align-content-center" id="carrier_2" style="margin-bottom: 15px; min-height: 50px;">
                                 <div class="card shadow-sm">
                                     <div class="card-body">
                                         <div class="row ">
@@ -314,7 +315,7 @@
                         {#        <div class="" id="col-helper">#}
 
                         {% if reporttype == "advanced" %}
-                            <div class="page-break-after"></div>
+                            <div class="breakout" style="display: none"></div>
                             <div class="col-12 advanced_class" id="carrier_ai">
                                 <div class="card shadow-sm" id="carrier_summary">
                                     <div class="card-header" style="font-size: 1.5rem; font-weight: 700">
@@ -538,7 +539,8 @@
 
                         {% endif %}
                         {% if reporttype == "free" %}
-                        <div class="col-md-6 text-center align-content-center" style="margin-bottom: 15px; min-height: 50px;">
+                            <div class="breakout" style="display: none"></div>
+                        <div class="col-md-6 text-center align-content-center" id="driver_2" style="margin-bottom: 15px; min-height: 50px;">
                                 <div class="card shadow-sm">
                                     <div class="card-body">
                                         <div class="row ">
@@ -872,6 +874,7 @@
                             </div>
                         </div>
                     {% if reporttype == "free" %}
+                        <div class="breakout" style="display: none"></div>
                             <div class="col-12 text-center align-content-center" style="background-color: #e1e0e0; margin-bottom: 15px; min-height: 50px;">
                                 <div class="row mt-100">
                                     <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2">
@@ -1384,11 +1387,13 @@
 
             downloadBtn.addEventListener('click', async function() {
                 carrier1.className = 'col-12';
-                carrier2.className = 'col-12';
                 driver1.className = 'col-12';
-                driver2.className = 'col-12';
-                {#route1.style.display = "none";#}
 
+                {#route1.style.display = "none";#}
+                if (rt === "advanced" || rt === "lite") {
+                    carrier2.className = 'col-12';
+                    driver2.className = 'col-12';
+                }
 
                 if (rt === "advanced") {
                     advanced_class.forEach(element => {
@@ -1462,9 +1467,12 @@
 
                 await sleep(2000); // Pause execution for 3 seconds
                 /*carrier1.className = 'col-md-6';
-                carrier2.className = 'col-md-6';
                 driver1.className = 'col-md-6';
-                driver2.className = 'col-md-6';
+                if (rt === "advanced" || rt === "lite") {
+                    carrier2.className = 'col-md-6';
+                    driver2.className = 'col-md-6';
+                }
+
                 if (rt === "advanced") {
                     advanced_class.forEach(element => {
                     element.className = "col-md-6 advanced_class";

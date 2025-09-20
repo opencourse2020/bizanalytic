@@ -847,7 +847,7 @@
                         {% endif %}
 
 
-                        <div class="col-md-9" id="route_1">
+                        <div class="col-md-9 advanced_class" id="route_1">
                             <div class="card shadow-sm chart-card"  id="card5">
                                 <div class="card-header">
                                     {% trans "Routes Cost Efficiency Heatmap" %}
@@ -857,6 +857,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="breakout" style="display: none"></div>
                         <div class="col-md-3" id="route_1_msg">
                             <div class="card shadow-sm" id="card5_msg">
                                 <div class="card-header">
@@ -1387,12 +1388,15 @@
                 driver1.className = 'col-12';
                 driver2.className = 'col-12';
                 {#route1.style.display = "none";#}
-                {#route1_msg.style.display = "none";#}
+
 
                 if (rt === "advanced") {
                     advanced_class.forEach(element => {
                     element.className = "col-12 advanced_class";
                 });
+                    route1_msg.style.display = "none";
+                }else{
+                    route1_msg.className = "col-12";
                 }
                 pdfhead.style.display= "block";
                 htmpmsg.innerHTML = htmp;
@@ -1460,12 +1464,15 @@
                 carrier2.className = 'col-md-6';
                 driver1.className = 'col-md-6';
                 driver2.className = 'col-md-6';
-                {#route1.style.display = "";#}
+
                 {#route1_msg.style.display = "";#}
                 if (rt === "advanced") {
                     advanced_class.forEach(element => {
                     element.className = "col-md-6 advanced_class";
-                });
+                    });
+                    route1_msg.style.display = "";
+                }else{
+                    route1_msg.className = "col-md-3";
                 }
                 htmpmsg.innerHTML = htmpmsg_html;
                 pdfhead.style.marginBottom = "0px";

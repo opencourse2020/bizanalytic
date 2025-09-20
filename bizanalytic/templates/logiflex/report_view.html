@@ -1393,6 +1393,9 @@
                 if (rt === "advanced" || rt === "lite") {
                     carrier2.className = 'col-12';
                     driver2.className = 'col-12';
+                    htmpmsg.innerHTML = htmp;
+                }else{
+                    route1_msg.className = "col-6";
                 }
 
                 if (rt === "advanced") {
@@ -1405,7 +1408,7 @@
                     route1_msg.className = "col-12";
                 }
                 pdfhead.style.display= "block";
-                htmpmsg.innerHTML = htmp;
+
 
                 card_charts.forEach(element => {
                     element.style.border = "none";

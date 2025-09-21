@@ -217,3 +217,7 @@ class ConditionsView(TemplateView):
 
 class PrivacyView(TemplateView):
     template_name = "../templates/privacy.html"
+
+
+class RefundPolicyView(TemplateView):
+    template_name = "legal/refundpolicy.html"

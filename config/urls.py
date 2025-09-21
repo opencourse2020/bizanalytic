@@ -20,6 +20,7 @@ from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.i18n import JavaScriptCatalog
+from bizanalytic.profiles.views import RefundPolicyView
 # from api.verify.views import FileUpdateView, DocumentScanView, PictureVerifyView, FileUpdatetestView, \
 #     DocumentVerifiedView, HeadshotVerifiedView
 
@@ -36,6 +37,7 @@ from django.views.i18n import JavaScriptCatalog
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     # path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('refund-policy/', RefundPolicyView.as_view(), name="refund-policy"),
     path("logiflex/", include("bizanalytic.logiflex.urls", namespace="logiflex")),
     path("", RedirectView.as_view(pattern_name="logiflex:index")),
     path("accounts/", include("allauth.urls")),

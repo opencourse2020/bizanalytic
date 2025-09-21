@@ -58,19 +58,20 @@ def get_ip(request):
     try:
         x_forward = request.META.get("HTTP_X_FORWARDED_FOR")
         if x_forward:
-            ip = x_forward.split(",")[0]
-        else:
-            ip = request.META.get("REMOTE_ADDR")
+            ip1 = x_forward.split(",")[0]
+            ip2 = request.META.get("REMOTE_ADDR")
     except:
         ip = ""
-    return ip, x_forward
+    return ip1, ip2, x_forward
 
 
 class IndexView(TemplateView):
     template_name = "logiflex/home.html"
     def get_context_data(self, **kwargs):
-        ip, x_forward = get_ip(self.request)
+        ip1, ip2, x_forward = get_ip(self.request)
         print("x_forward:", x_forward)
+        print("ip1:", ip1)
+        print("ip2:", ip2)
         return super(IndexView, self).get_context_data(**kwargs)
 
 class RouteFileView(TemplateView):

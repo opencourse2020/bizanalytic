@@ -58,6 +58,9 @@ def get_ip(request):
     try:
         x_forward = request.META.get("HTTP_X_FORWARDED_FOR")
         remot_adr = request.META.get("REMOTE_ADDR")
+        user_browser = request.META.get("HTTP_USER_AGENT")
+        user_language = request.META.get("HTTP_ACCEPT_LANGUAGE")
+        user_page_referer = request.META.get("HTTP_REFERER")
         if x_forward:
             ip1 = x_forward.split(",")[0]
         # if remot_adr:
@@ -65,17 +68,18 @@ def get_ip(request):
     except:
         ip1 = ""
         # ip2 = ""
-    return ip1, remot_adr
+    return ip1, remot_adr, user_browser, user_language, user_page_referer
 
 
 class IndexView(TemplateView):
     template_name = "logiflex/home.html"
     def get_context_data(self, **kwargs):
-        ip1, ip2 = get_ip(self.request)
+        ip1, ip2, user_browser, user_language, user_page_referer = get_ip(self.request)
 
         print("ip1:", ip1)
-        print("ip2:", ip2)
-        print("Meta:", self.request.META)
+        print("user_browser:", user_browser)
+        print("user_language:", user_language)
+        print("user_page_referer:", user_page_referer)
         return super(IndexView, self).get_context_data(**kwargs)
 
 class RouteFileView(TemplateView):

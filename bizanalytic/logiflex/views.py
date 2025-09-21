@@ -70,7 +70,7 @@ class IndexView(TemplateView):
     template_name = "logiflex/home.html"
     def get_context_data(self, **kwargs):
         ip, x_forward = get_ip(self.request)
-        print("ip, x_forward:", ip, x_forward)
+        print("x_forward:", x_forward)
         return super(IndexView, self).get_context_data(**kwargs)
 
 class RouteFileView(TemplateView):

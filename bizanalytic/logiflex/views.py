@@ -71,8 +71,8 @@ def get_ip(request):
 class IndexView(TemplateView):
     template_name = "logiflex/home.html"
     def get_context_data(self, **kwargs):
-        ip1, ip2, x_forward = get_ip(self.request)
-        print("x_forward:", x_forward)
+        ip1, ip2 = get_ip(self.request)
+
         print("ip1:", ip1)
         print("ip2:", ip2)
         print("Meta:", self.request.META)

@@ -28,6 +28,7 @@ import pandas as pd
 # Third party libraries
 import stripe
 from datetime import datetime, timedelta
+from user_agents import parse
 from openai import OpenAI
 # from . import models, forms
 from .forms import *
@@ -57,29 +58,31 @@ client = OpenAI(api_key=OPENAI_KEY)
 def get_ip(request):
     try:
         x_forward = request.META.get("HTTP_X_FORWARDED_FOR")
-        remot_adr = request.META.get("REMOTE_ADDR")
-        user_browser = request.META.get("HTTP_USER_AGENT")
-        user_language = request.META.get("HTTP_ACCEPT_LANGUAGE")
-        user_page_referer = request.META.get("HTTP_REFERER")
         if x_forward:
-            ip1 = x_forward.split(",")[0]
-        # if remot_adr:
-        #     ip2 = request.META.get("REMOTE_ADDR")
+            ip = x_forward.split(",")[0]
+        else:
+            ip = request.META.get("REMOTE_ADDR")
     except:
-        ip1 = ""
-        # ip2 = ""
-    return ip1, remot_adr, user_browser, user_language, user_page_referer
+        ip = ""
+    return ip
 
 
 class IndexView(TemplateView):
     template_name = "logiflex/home.html"
     def get_context_data(self, **kwargs):
-        ip1, ip2, user_browser, user_language, user_page_referer = get_ip(self.request)
+        ip = get_ip(self.request)
+        user_browser = self.request.META.get("HTTP_USER_AGENT", "")
+        user_language = self.request.META.get("HTTP_ACCEPT_LANGUAGE", "")
+        user_page_referer = self.request.META.get("HTTP_REFERER", "")
 
-        print("ip1:", ip1)
-        print("user_browser:", user_browser)
-        print("user_language:", user_language)
-        print("user_page_referer:", user_page_referer)
+        user_agent = parse(user_browser)
+        device_type = user_agent.device.type  # e.g., 'mobile', 'tablet', 'pc'
+        os_family = user_agent.os.family  # e.g., 'iOS', 'Android', 'Windows'
+        browser_family = user_agent.browser.family  # e.g., 'Chrome', 'Firefox', 'Safari'
+
+        print("device_type:", device_type)
+        print("os_family:", os_family)
+        print("browser_family:", browser_family)
         return super(IndexView, self).get_context_data(**kwargs)
 
 class RouteFileView(TemplateView):

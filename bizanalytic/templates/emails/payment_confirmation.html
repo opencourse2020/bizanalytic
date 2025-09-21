@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" style="margin:0;padding:0;">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Payment Receipt – {{company_name}}</title>
+  <style>
+    /* Mobile tweaks (supported in most modern clients) */
+    @media only screen and (max-width:600px){
+      .container{width:100% !important;}
+      .px-24{padding-left:16px !important; padding-right:16px !important;}
+      .py-24{padding-top:16px !important; padding-bottom:16px !important;}
+      .text-right, .totals td:last-child{ text-align:left !important;}
+      .stack td{display:block;width:100% !important;}
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background:#f6f7f9;color:#111111;">
+  <!-- Hidden preheader text -->
+  <div style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0;">
+    Receipt for your payment to {{company_name}} — Order {{receipt_number}} ({{grand_total}})
+  </div>
+
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f6f7f9;">
+    <tr>
+      <td align="center" style="padding:24px;">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" class="container" style="width:600px;max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;">
+          <!-- Header -->
+          <tr>
+            <td class="px-24 py-24" style="padding:24px;background:#0f172a;color:#ffffff;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                <tr class="stack">
+                  <td style="font:700 18px/1.2 'Segoe UI', Arial, sans-serif;">
+                    {{company_name}}
+                  </td>
+                  <td align="right" class="text-right" style="font:400 12px/1.4 'Segoe UI', Arial, sans-serif;color:#cbd5e1;">
+                    Receipt #: <strong style="color:#ffffff;">{{receipt_number}}</strong><br/>
+                    Date: {{receipt_date}} ({{timezone}})
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Payment status banner -->
+          <tr>
+            <td class="px-24 py-24" style="padding:20px 24px;border-bottom:1px solid #eef2f7;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                <tr class="stack">
+                  <td style="font:600 16px/1.4 'Segoe UI', Arial, sans-serif;">
+                    ✅ Payment Successful
+                  </td>
+                  <td align="right" class="text-right" style="font:400 12px/1.4 'Segoe UI', Arial, sans-serif;color:#64748b;">
+                    Paid via {{payment_brand}} • **** {{payment_last4}}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Biller / Billed to -->
+          <tr>
+            <td class="px-24 py-24" style="padding:16px 24px;border-bottom:1px solid #eef2f7;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                <tr class="stack">
+                  <td valign="top" style="width:50%;font:400 13px/1.6 'Segoe UI', Arial, sans-serif;color:#334155;">
+                    <div style="font-weight:600;color:#0f172a;margin-bottom:6px;">From</div>
+                    {{company_name}}<br/>
+                    Operated by {{operator_legal_name}} (Sole Proprietor)<br/>
+                    {{company_address_line1}}<br/>
+                    {{company_address_line2}}<br/>
+                    {{company_country}}<br/>
+                    Support: <a href="mailto:{{support_email}}" style="color:#0ea5e9;text-decoration:none;">{{support_email}}</a>
+                  </td>
+                  <td valign="top" style="width:50%;font:400 13px/1.6 'Segoe UI', Arial, sans-serif;color:#334155;" class="text-right">
+                    <div style="font-weight:600;color:#0f172a;margin-bottom:6px;">Billed To</div>
+                    {{customer_name}}<br/>
+                    {{customer_company}}<br/>
+                    {{customer_email}}<br/>
+                    {{customer_address_line1}}<br/>
+                    {{customer_address_line2}}<br/>
+                    {{customer_country}}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Line items -->
+          <tr>
+            <td class="px-24 py-24" style="padding:8px 24px 0 24px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse;">
+                <thead>
+                  <tr>
+                    <th align="left" style="padding:10px 0;font:700 12px 'Segoe UI', Arial, sans-serif;color:#475569;border-bottom:1px solid #e2e8f0;">Description</th>
+                    <th align="center" style="padding:10px 0;font:700 12px 'Segoe UI', Arial, sans-serif;color:#475569;border-bottom:1px solid #e2e8f0;">Qty</th>
+                    <th align="right" style="padding:10px 0;font:700 12px 'Segoe UI', Arial, sans-serif;color:#475569;border-bottom:1px solid #e2e8f0;">Unit</th>
+                    <th align="right" style="padding:10px 0;font:700 12px 'Segoe UI', Arial, sans-serif;color:#475569;border-bottom:1px solid #e2e8f0;">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Repeat this <tr> for each item -->
+                  {{#each line_items}}
+                  <tr>
+                    <td style="padding:10px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{name}}<div style="color:#64748b;font-size:12px;">{{desc}}</div></td>
+                    <td align="center" style="padding:10px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{quantity}}</td>
+                    <td align="right" style="padding:10px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{unit_price}}</td>
+                    <td align="right" style="padding:10px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{line_total}}</td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Totals -->
+          <tr>
+            <td class="px-24 py-24" style="padding:8px 24px 24px 24px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" class="totals">
+                <tr>
+                  <td align="right" style="padding:6px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#475569;">Subtotal</td>
+                  <td align="right" style="padding:6px 0;font:600 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{subtotal}}</td>
+                </tr>
+                <tr>
+                  <td align="right" style="padding:6px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#475569;">Tax {{tax_label}}</td>
+                  <td align="right" style="padding:6px 0;font:600 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{tax_amount}}</td>
+                </tr>
+                {{#if discount_amount}}
+                <tr>
+                  <td align="right" style="padding:6px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#475569;">Discount</td>
+                  <td align="right" style="padding:6px 0;font:600 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">−{{discount_amount}}</td>
+                </tr>
+                {{/if}}
+                <tr>
+                  <td align="right" style="padding:10px 0;border-top:1px solid #e2e8f0;font:700 14px 'Segoe UI', Arial, sans-serif;color:#0f172a;">Total Paid</td>
+                  <td align="right" style="padding:10px 0;border-top:1px solid #e2e8f0;font:700 14px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{grand_total}}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CTA -->
+          <tr>
+            <td align="center" class="px-24 py-24" style="padding:8px 24px 24px 24px;">
+              <a href="{{portal_link}}" style="display:inline-block;background:#0ea5e9;color:#ffffff;text-decoration:none;font:600 14px 'Segoe UI', Arial, sans-serif;padding:12px 18px;border-radius:8px;">
+                View Receipt &amp; Downloads
+              </a>
+              <div style="font:400 12px 'Segoe UI', Arial, sans-serif;color:#64748b;margin-top:8px;">
+                If the button doesn’t work, copy &amp; paste this link: <span style="color:#0ea5e9;word-break:break-all;">{{portal_link}}</span>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Notes -->
+          <tr>
+            <td class="px-24 py-24" style="padding:0 24px 24px 24px;">
+              <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                <div style="font:600 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;margin-bottom:4px;">Notes</div>
+                <div style="font:400 12px 'Segoe UI', Arial, sans-serif;color:#475569;">
+                  Thank you for your purchase. This email serves as your official receipt. For support, reply to this email or contact
+                  <a href="mailto:{{support_email}}" style="color:#0ea5e9;text-decoration:none;">{{support_email}}</a>.
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background:#0f172a;padding:20px 24px;color:#cbd5e1;">
+              <div style="font:400 12px 'Segoe UI', Arial, sans-serif;">
+                {{company_name}} · Operated by {{operator_legal_name}} (Sole Proprietor, trading as “{{company_name}}”)<br/>
+                {{company_address_line1}}, {{company_address_line2}}, {{company_country}} ·
+                <a href="mailto:{{support_email}}" style="color:#93c5fd;text-decoration:none;">{{support_email}}</a>
+              </div>
+              <div style="font:400 12px 'Segoe UI', Arial, sans-serif;margin-top:8px;">
+                Refunds &amp; cancellations are governed by our policy:
+                <a href="{{refund_policy_url}}" style="color:#93c5fd;text-decoration:underline;">Refund &amp; Cancellation Policy</a>.
+              </div>
+              <div style="font:400 11px 'Segoe UI', Arial, sans-serif;color:#94a3b8;margin-top:8px;">
+                Descriptor on your statement: {{statement_descriptor}}. If you didn’t authorize this payment, contact us immediately.
+              </div>
+            </td>
+          </tr>
+
+        </table>
+
+        <!-- Legal smallprint -->
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" class="container" style="width:600px;max-width:600px;margin-top:10px;">
+          <tr>
+            <td style="text-align:center;color:#94a3b8;font:400 11px 'Segoe UI', Arial, sans-serif;padding:10px;">
+              This transactional email was sent to {{customer_email}} about your purchase at {{company_name}}.
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

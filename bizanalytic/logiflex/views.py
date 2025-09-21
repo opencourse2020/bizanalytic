@@ -54,9 +54,24 @@ OPENAI_KEY = settings.OPENAI_KEY
 client = OpenAI(api_key=OPENAI_KEY)
 
 
+def get_ip(request):
+    try:
+        x_forward = request.META.get("HTTP_X_FORWARDED_FOR")
+        if x_forward:
+            ip = x_forward.split(",")[0]
+        else:
+            ip = request.META.get("REMOTE_ADDR")
+    except:
+        ip = ""
+    return ip, x_forward
+
+
 class IndexView(TemplateView):
     template_name = "logiflex/home.html"
-
+    def get_context_data(self, **kwargs):
+        ip, x_forward = get_ip(self.request)
+        print("ip, x_forward:", ip, x_forward)
+        return super(IndexView, self).get_context_data(**kwargs)
 
 class RouteFileView(TemplateView):
     template_name = "logiflex/report_detail.html"

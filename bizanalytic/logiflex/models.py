@@ -206,6 +206,8 @@ class PaymentsHistory(models.Model):
     amount_paid = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     quantity = models.SmallIntegerField(default=1)
     payment_date = models.DateTimeField(auto_now_add=True)
+    receipt_number = models.CharField(max_length=50, null=True, blank=True)
+    ipaddress = models.CharField(max_length=39, blank=True, null=True)
 
     class Meta:
         verbose_name = "PaymentsHistory"

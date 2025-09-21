@@ -57,12 +57,15 @@ client = OpenAI(api_key=OPENAI_KEY)
 def get_ip(request):
     try:
         x_forward = request.META.get("HTTP_X_FORWARDED_FOR")
+        remot_adr = request.META.get("REMOTE_ADDR")
         if x_forward:
             ip1 = x_forward.split(",")[0]
+        if remot_adr:
             ip2 = request.META.get("REMOTE_ADDR")
     except:
-        ip = ""
-    return ip1, ip2, x_forward
+        ip1 = ""
+        ip2 = ""
+    return ip1, ip2
 
 
 class IndexView(TemplateView):
@@ -72,6 +75,7 @@ class IndexView(TemplateView):
         print("x_forward:", x_forward)
         print("ip1:", ip1)
         print("ip2:", ip2)
+        print("Meta:", self.request.META)
         return super(IndexView, self).get_context_data(**kwargs)
 
 class RouteFileView(TemplateView):

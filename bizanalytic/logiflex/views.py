@@ -60,12 +60,12 @@ def get_ip(request):
         remot_adr = request.META.get("REMOTE_ADDR")
         if x_forward:
             ip1 = x_forward.split(",")[0]
-        if remot_adr:
-            ip2 = request.META.get("REMOTE_ADDR")
+        # if remot_adr:
+        #     ip2 = request.META.get("REMOTE_ADDR")
     except:
         ip1 = ""
-        ip2 = ""
-    return ip1, ip2
+        # ip2 = ""
+    return ip1, remot_adr
 
 
 class IndexView(TemplateView):

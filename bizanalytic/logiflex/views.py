@@ -76,7 +76,7 @@ class IndexView(TemplateView):
         user_page_referer = self.request.META.get("HTTP_REFERER", "")
 
         user_agent = parse(user_browser)
-        device_type = user_agent.device.type  # e.g., 'mobile', 'tablet', 'pc'
+        device_type = user_agent.device  # e.g., 'mobile', 'tablet', 'pc'
         os_family = user_agent.os.family  # e.g., 'iOS', 'Android', 'Windows'
         browser_family = user_agent.browser.family  # e.g., 'Chrome', 'Firefox', 'Safari'
 

@@ -1009,6 +1009,12 @@ class WebhookView(View):
             email = email.lower()
             customer_name = expanded_session.customer_details.name
             phone_nb = expanded_session.customer_details.phone
+            address_line1 = expanded_session.customer_details.line1
+            address_line2 = expanded_session.customer_details.line2
+            city = expanded_session.customer_details.city
+            postal_code = expanded_session.customer_details.postal_code
+            state = expanded_session.customer_details.state
+            country = expanded_session.customer_details.country
             print(f"Line items: {expanded_session.line_items}")
             print("customer_details:", expanded_session.customer_details)
             # stripe_price_id = expanded_session.line_items.data[].price.id
@@ -1022,7 +1028,9 @@ class WebhookView(View):
             # check if client exists. if not it will be added
             client = LogiFlexClient.objects.filter(email=email).first()
             if not client:
-                client = LogiFlexClient.objects.create(email=email, phone=phone_nb, contact_name=customer_name)
+                client = LogiFlexClient.objects.create(email=email, phone=phone_nb, contact_name=customer_name,
+                                                       address_line1=address_line1, address_line2=address_line2,
+                                                       city=city, state=state, country=country, postal_code=postal_code)
                 email_info = {
                     'subject': "Urgent: New Client",
                     'to_email': ["bizanalytics.us@gmail.com", ],
@@ -1084,8 +1092,11 @@ class WebhookView(View):
                             'to_email': client.email,
                             'client': client.contact_name,
                             'company': client.company,
-                            'address': client.address,
+                            'address_line1': client.address_line1,
+                            'address_line2': client.address_line2,
                             'city': client.city,
+                            'state': client.state,
+                            'postal_code': client.postal_code,
                             'comuntry': client.country,
                             'receipt': paymenthistory.receipt_number,
                             'payment_date': paymenthistory.payment_date,

@@ -36,7 +36,7 @@
                   </td>
                   <td align="right" class="text-right" style="font:400 12px/1.4 'Segoe UI', Arial, sans-serif;color:#cbd5e1;">
                     Receipt #: <strong style="color:#ffffff;">{{receipt_number}}</strong><br/>
-                    Date: {{receipt_date}} ({{timezone}})
+                    Date: {{receipt_date}}
                   </td>
                 </tr>
               </table>
@@ -101,14 +101,14 @@
                 </thead>
                 <tbody>
                   <!-- Repeat this <tr> for each item -->
-                  {{#each line_items}}
+
                   <tr>
                     <td style="padding:10px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{name}}<div style="color:#64748b;font-size:12px;">{{desc}}</div></td>
                     <td align="center" style="padding:10px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{quantity}}</td>
                     <td align="right" style="padding:10px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{unit_price}}</td>
                     <td align="right" style="padding:10px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{line_total}}</td>
                   </tr>
-                  {{/each}}
+
                 </tbody>
               </table>
             </td>
@@ -126,12 +126,12 @@
                   <td align="right" style="padding:6px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#475569;">Tax {{tax_label}}</td>
                   <td align="right" style="padding:6px 0;font:600 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{tax_amount}}</td>
                 </tr>
-                {{#if discount_amount}}
+                  {% if discount_amount %}
                 <tr>
                   <td align="right" style="padding:6px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#475569;">Discount</td>
                   <td align="right" style="padding:6px 0;font:600 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">−{{discount_amount}}</td>
                 </tr>
-                {{/if}}
+                {% endif %}
                 <tr>
                   <td align="right" style="padding:10px 0;border-top:1px solid #e2e8f0;font:700 14px 'Segoe UI', Arial, sans-serif;color:#0f172a;">Total Paid</td>
                   <td align="right" style="padding:10px 0;border-top:1px solid #e2e8f0;font:700 14px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{grand_total}}</td>

@@ -67,6 +67,9 @@ class LogiFlexClient(models.Model):
     email = models.CharField(max_length=150)
     phone = models.CharField(max_length=20)
     contact_name = models.CharField(max_length=100, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=70, null=True, blank=True)
+    country = models.CharField(max_length=70, null=True, blank=True)
     date_added = models.DateField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     activated = models.BooleanField(default=False)  # Client activated means he is an existing client
@@ -91,6 +94,7 @@ class PricingPlan(models.Model):
     name = models.CharField(max_length=50, choices=PLAN_CHOICES)
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     stripe_price_id = models.CharField(max_length=200, blank=True, null=True)  # Stripe price ID
+    description = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f"{self.get_name_display()} - ${self.price}"
@@ -208,6 +212,11 @@ class PaymentsHistory(models.Model):
     payment_date = models.DateTimeField(auto_now_add=True)
     receipt_number = models.CharField(max_length=50, null=True, blank=True)
     ipaddress = models.CharField(max_length=39, blank=True, null=True)
+    user_device = models.CharField(max_length=100, blank=True, null=True)
+    user_os = models.CharField(max_length=40, blank=True, null=True)
+    user_browser = models.CharField(max_length=40, blank=True, null=True)
+    user_language = models.CharField(max_length=40, blank=True, null=True)
+    user_referee = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         verbose_name = "PaymentsHistory"

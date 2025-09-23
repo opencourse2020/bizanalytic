@@ -1060,11 +1060,42 @@ class WebhookView(View):
                                                 is_active=True)
                             servicepayment.set_quota()
 
-                        paymenthistory = PaymentsHistory.objects.create(
-                            client=client,
-                            service_type=payment_plan,
-                            stripe_checkout_id=session['id'],
-                            amount_paid=amount_paid, quantity=quantity)
+                        # Get User Session Information
+                        ip = get_ip(self.request)
+                        user_browser = self.request.META.get("HTTP_USER_AGENT", "")
+                        user_language = self.request.META.get("HTTP_ACCEPT_LANGUAGE", "")
+                        user_page_referer = self.request.META.get("HTTP_REFERER", "")
+
+                        user_agent = parse(user_browser)
+                        device_type = user_agent.device  # e.g., 'mobile', 'tablet', 'pc'
+                        os_family = user_agent.os.family  # e.g., 'iOS', 'Android', 'Windows'
+                        browser_family = user_agent.browser.family  # e.g., 'Chrome', 'Firefox', 'Safari'
+
+                        currentyear = now().year
+                        receipt = f"RC{currentyear}-{servicepayment.pk}-{client.id}"
+                        paymenthistory = PaymentsHistory.objects.create(receipt_number=receipt,
+                            client=client, service_type=payment_plan, stripe_checkout_id=session['id'],
+                            amount_paid=amount_paid, quantity=quantity, ipaddress=ip, user_referee=user_page_referer,
+                            user_language=user_language, user_device=device_type, user_browser=browser_family, user_os=os_family)
+
+                        email_info = {
+                            'subject': "Urgent: New Payment",
+                            'to_email': client.email,
+                            'client': client.contact_name,
+                            'company': client.company,
+                            'address': client.address,
+                            'city': client.city,
+                            'comuntry': client.country,
+                            'receipt': paymenthistory.receipt_number,
+                            'payment_date': paymenthistory.payment_date,
+                            'amount_paid': paymenthistory.amount_paid,
+                            'quantity': paymenthistory.quantity,
+                            'unit_price': servicepayment.service_type.price,
+                            'description': servicepayment.service_type.description,
+                            'message': f"A new payment received from {client.company}, email: {email}",
+                            'curentyear': datetime.now().year
+                        }
+                        paymentconfirmationmail.delay(email_info)
 
                         email_info = {
                             'subject': "Urgent: New Payment",

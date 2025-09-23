@@ -1009,12 +1009,12 @@ class WebhookView(View):
             email = email.lower()
             customer_name = expanded_session.customer_details.name
             phone_nb = expanded_session.customer_details.phone
-            address_line1 = expanded_session.customer_details.line1
-            address_line2 = expanded_session.customer_details.line2
-            city = expanded_session.customer_details.city
-            postal_code = expanded_session.customer_details.postal_code
-            state = expanded_session.customer_details.state
-            country = expanded_session.customer_details.country
+            address_line1 = expanded_session.customer_details.address.line1
+            address_line2 = expanded_session.customer_details.address.line2
+            city = expanded_session.customer_details.address.city
+            postal_code = expanded_session.customer_details.address.postal_code
+            state = expanded_session.customer_details.address.state
+            country = expanded_session.customer_details.address.country
             print(f"Line items: {expanded_session.line_items}")
             print("customer_details:", expanded_session.customer_details)
             # stripe_price_id = expanded_session.line_items.data[].price.id

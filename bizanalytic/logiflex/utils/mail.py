@@ -245,7 +245,6 @@ def paymentconfirmationmail(context):
         'support_email': "support@bizanalytic.com",
         'payment_brand': "Stripe",
         'refund_policy_url': "https://bizanalytic.com/refund-policy/",
-
         'desc': context.get('description'),
         'quantity': context.get('quantity'),
         'unit_price': context.get('unit_price'),
@@ -254,24 +253,25 @@ def paymentconfirmationmail(context):
     }
     template_name = "emails/payment_confirmation.html"
 
-
     html_content = render_to_string(
         template_name=template_name,
         context=context_data
     )
     plain_message = strip_tags(html_content)
-
+    print(plain_message)
     if not to_email:
         raise ValueError("The 'to_email' address must be provided and cannot be empty.")
     elif not isinstance(to_email, list):
         to_email = [to_email]
 
-    message = EmailMultiAlternatives(subject, plain_message, from_email, to_email, bcc=["support@bizanalytic.com","bizanalytics.us@gmail.com" ])
+    message = EmailMultiAlternatives(subject, plain_message, from_email, to_email,
+                                     bcc=["support@bizanalytic.com", "bizanalytics.us@gmail.com"])
     message.attach_alternative(html_content, "text/html")
     try:
         result = message.send()
         print("result:", result)
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status {result}")
     except Exception as e:
+        print("Status 0")
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status 0")
         logger.exception(e)

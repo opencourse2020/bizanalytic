@@ -117,4 +117,4 @@ def paymentconfirmation(context):
     )
     plain_message = strip_tags(html_content)
 
-    return plain_message
+    return html_content

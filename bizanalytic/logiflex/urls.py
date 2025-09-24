@@ -51,6 +51,7 @@ stripe_patterns = [
 
 payment_patterns = [
     path("px-vr/", views.PaymentView.as_view(), name="px-vr"),
+    path("list/", views.Payments_ListView.as_view(), name="list")
 ]
 
 urlpatterns = [

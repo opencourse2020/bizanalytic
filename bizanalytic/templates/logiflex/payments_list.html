@@ -100,15 +100,15 @@
                                             <td>{{ payment.client.company }}</td>
                                             <td>
                                                 {% if payment.service_type.name == "onetime_lite" %}
-                                                    One-Time Lite Report
+                                                    Lite Report
                                                 {% elif payment.service_type.name == "onetime_advanced" %}
-                                                    One-Time Advanced Report
+                                                    Advanced Report
                                                 {% elif payment.service_type.name == "starter" %}
-                                                    Starter Monthly Subscription
+                                                    Starter Subscription
                                                 {% elif payment.service_type.name == "pro" %}
-                                                    Pro Monthly Subscription
+                                                    Pro Subscription
                                                 {% elif payment.service_type.name == "quarterly" %}
-                                                    Pro Quarterly Plan
+                                                    Quarterly Subscription
                                                 {% endif %}
 
                                                 {{ payment.service_type.name }}

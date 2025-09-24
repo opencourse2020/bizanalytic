@@ -66,7 +66,7 @@
             <div class="container" style="max-width: none;">
             <div class="row">
                 <div class="col-md-8">
-                <h5 class="title">{% trans "List of Processed Reports" %}</h5>
+                <h5 class="title">{% trans "List of Payments" %}</h5>
                    <div id="datatable" class="mb-5">
                     <div class="card">
                     <div class="card-header">
@@ -79,7 +79,7 @@
                                     <th>#</th>
                                     <th>{% trans "Receipt Number" %}</th>
                                     <th>{% trans "Cl Company" %}</th>
-                                    <th>{% trans "Cl Contact" %}</th>
+                                    <th>{% trans "Payment Type" %}</th>
                                     <th>{% trans "Date" %}</th>
                                     <th>{% trans "Quantity" %}</th>
                                     <th>{% trans "Total" %}</th>
@@ -98,7 +98,7 @@
                                                     <span style="text-transform: uppercase;font-size: 12px;">{{ payment.receipt_number }}</span></div>
                                                 </td>
                                             <td>{{ payment.client.company }}</td>
-                                            <td>{{ payment.client.contact_name }}</td>
+                                            <td>{{ payment.service_type.name }}</td>
                                             <td>{{ payment.payment_date|date:'Y-m-d H:i' }}</td>
                                             <td>{{ payment.quantity }}</td>
                                             <td>{{ payment.amount_paid }}</td>

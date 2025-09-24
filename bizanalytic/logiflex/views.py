@@ -1046,78 +1046,82 @@ class WebhookView(View):
                 payment_plan = PricingPlan.objects.filter(stripe_price_id=strippriceid).first()
                 if payment_plan:
                     # Save payment and Create report instance with empty data
-                        servicepayment = ServicePayment.objects.filter(client=client).first()
-                        if servicepayment:
-                            if payment_plan.name == "onetime_lite":
-                                servicepayment.lite_credits += quantity
-                            elif payment_plan.name == "onetime_advanced":
-                                servicepayment.advanced_credits += quantity
-                            servicepayment.stripe_checkout_id = session['id']
-                            servicepayment.service_type = payment_plan
-                            servicepayment.is_active = True
-                            servicepayment.save()
-                            servicepayment.reset_quota_if_needed()
+                    servicepayment = ServicePayment.objects.filter(client=client).first()
+                    if servicepayment:
+                        if payment_plan.name == "onetime_lite":
+                            servicepayment.lite_credits += quantity
+                        elif payment_plan.name == "onetime_advanced":
+                            servicepayment.advanced_credits += quantity
+                        servicepayment.stripe_checkout_id = session['id']
+                        servicepayment.service_type = payment_plan
+                        servicepayment.is_active = True
+                        servicepayment.save()
+                        servicepayment.reset_quota_if_needed()
 
-                        else:
-                            # advancedcredits = 0
-                            # if payment_plan.name == "starter":
-                            #     advancedcredits = 1
-                            servicepayment = ServicePayment.objects.create(
-                                                client=client,
-                                                service_type=payment_plan,
-                                                stripe_checkout_id=session['id'],
-                                                is_active=True)
-                            servicepayment.set_quota()
+                    else:
+                        # advancedcredits = 0
+                        # if payment_plan.name == "starter":
+                        #     advancedcredits = 1
+                        servicepayment = ServicePayment.objects.create(
+                            client=client,
+                            service_type=payment_plan,
+                            stripe_checkout_id=session['id'],
+                            is_active=True)
+                        servicepayment.set_quota()
 
-                        # Get User Session Information
-                        ip = get_ip(self.request)
-                        user_browser = self.request.META.get("HTTP_USER_AGENT", "")
-                        user_language = self.request.META.get("HTTP_ACCEPT_LANGUAGE", "")
-                        user_page_referer = self.request.META.get("HTTP_REFERER", "")
+                    # Get User Session Information
+                    ip = get_ip(self.request)
+                    user_browser = self.request.META.get("HTTP_USER_AGENT")
+                    user_language = self.request.META.get("HTTP_ACCEPT_LANGUAGE")
+                    user_page_referer = self.request.META.get("HTTP_REFERER")
 
-                        user_agent = parse(user_browser)
-                        device_type = user_agent.device  # e.g., 'mobile', 'tablet', 'pc'
-                        os_family = user_agent.os.family  # e.g., 'iOS', 'Android', 'Windows'
-                        browser_family = user_agent.browser.family  # e.g., 'Chrome', 'Firefox', 'Safari'
+                    user_agent = parse(user_browser)
+                    device_type = user_agent.device  # e.g., 'mobile', 'tablet', 'pc'
+                    os_family = user_agent.os.family  # e.g., 'iOS', 'Android', 'Windows'
+                    browser_family = user_agent.browser.family  # e.g., 'Chrome', 'Firefox', 'Safari'
 
-                        currentyear = now().year
-                        receipt = f"RC{currentyear}-{servicepayment.pk}-{client.id}"
-                        paymenthistory = PaymentsHistory.objects.create(receipt_number=receipt,
-                            client=client, service_type=payment_plan, stripe_checkout_id=session['id'],
-                            amount_paid=amount_paid, quantity=quantity, ipaddress=ip, user_referee=user_page_referer,
-                            user_language=user_language, user_device=device_type, user_browser=browser_family, user_os=os_family)
 
-                        email_info = {
-                            'subject': "Urgent: New Payment",
-                            'to_email': client.email,
-                            'client': client.contact_name,
-                            'company': client.company,
-                            'address_line1': client.address_line1,
-                            'address_line2': client.address_line2,
-                            'city': client.city,
-                            'state': client.state,
-                            'postal_code': client.postal_code,
-                            'comuntry': client.country,
-                            'receipt': paymenthistory.receipt_number,
-                            'payment_date': paymenthistory.payment_date,
-                            'amount_paid': paymenthistory.amount_paid,
-                            'quantity': paymenthistory.quantity,
-                            'unit_price': servicepayment.service_type.price,
-                            'description': servicepayment.service_type.description,
-                            'message': f"A new payment received from {client.company}, email: {email}",
-                            'curentyear': datetime.now().year
-                        }
-                        paymentconfirmationmail.delay(email_info)
+                    paymenthistory = PaymentsHistory.objects.create(
+                        client=client, service_type=payment_plan, stripe_checkout_id=session['id'],
+                        amount_paid=amount_paid, quantity=quantity, ipaddress=ip, user_referee=user_page_referer,
+                        user_language=user_language, user_device=device_type, user_browser=browser_family, user_os=os_family)
 
-                        email_info = {
-                            'subject': "Urgent: New Payment",
-                            'to_email': ["bizanalytics.us@gmail.com", ],
-                            'client': client.contact_name,
-                            'company': client.company,
-                            'message': f"A new payment received from {client.company}, email: {email}",
-                            'curentyear': datetime.now().year
-                        }
-                        sendnotificationemail.delay(email_info)
+                    currentyear = now().year
+                    receipt = f"RC{currentyear}-{servicepayment.pk}{client.id}-{paymenthistory.pk}"
+                    paymenthistory.receipt_number = receipt
+                    paymenthistory.save()
+
+                    email_info = {
+                        'subject': "Urgent: New Payment",
+                        'to_email': client.email,
+                        'client': client.contact_name,
+                        'company': client.company,
+                        'address_line1': client.address_line1,
+                        'address_line2': client.address_line2,
+                        'city': client.city,
+                        'state': client.state,
+                        'postal_code': client.postal_code,
+                        'comuntry': client.country,
+                        'receipt': paymenthistory.receipt_number,
+                        'payment_date': paymenthistory.payment_date,
+                        'amount_paid': paymenthistory.amount_paid,
+                        'quantity': paymenthistory.quantity,
+                        'unit_price': servicepayment.service_type.price,
+                        'description': servicepayment.service_type.description,
+                        'message': f"A new payment received from {client.company}, email: {email}",
+                        'curentyear': datetime.now().year
+                    }
+                    paymentconfirmationmail.delay(email_info)
+
+                    email_info = {
+                        'subject': "Urgent: New Payment",
+                        'to_email': ["bizanalytics.us@gmail.com", ],
+                        'client': client.contact_name,
+                        'company': client.company,
+                        'message': f"A new payment received from {client.company}, email: {email}",
+                        'curentyear': datetime.now().year
+                    }
+                    sendnotificationemail.delay(email_info)
 
                 # downloadcode = generatecode(8)
                 # report = LogiflexReport(client=client, payment=servicepayment, report_type='Paid',

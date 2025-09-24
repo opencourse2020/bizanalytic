@@ -80,9 +80,6 @@ class IndexView(TemplateView):
         os_family = user_agent.os.family  # e.g., 'iOS', 'Android', 'Windows'
         browser_family = user_agent.browser.family  # e.g., 'Chrome', 'Firefox', 'Safari'
 
-        print("device_type:", device_type)
-        print("os_family:", os_family)
-        print("browser_family:", browser_family)
         return super(IndexView, self).get_context_data(**kwargs)
 
 class RouteFileView(TemplateView):
@@ -1071,7 +1068,7 @@ class WebhookView(View):
 
                     # Get User Session Information
                     ip = get_ip(self.request)
-                    user_browser = self.request.META.get("HTTP_USER_AGENT")
+                    user_browser = self.request.META.get("HTTP_USER_AGENT", "")
                     user_language = self.request.META.get("HTTP_ACCEPT_LANGUAGE")
                     user_page_referer = self.request.META.get("HTTP_REFERER")
 
@@ -1079,7 +1076,9 @@ class WebhookView(View):
                     device_type = user_agent.device  # e.g., 'mobile', 'tablet', 'pc'
                     os_family = user_agent.os.family  # e.g., 'iOS', 'Android', 'Windows'
                     browser_family = user_agent.browser.family  # e.g., 'Chrome', 'Firefox', 'Safari'
-
+                    print("device_type:", device_type)
+                    print("os_family:", os_family)
+                    print("browser_family:", browser_family)
 
                     paymenthistory = PaymentsHistory.objects.create(
                         client=client, service_type=payment_plan, stripe_checkout_id=session['id'],

@@ -1110,7 +1110,7 @@ class WebhookView(View):
                         'message': f"A new payment received from {client.company}, email: {email}",
                         'curentyear': datetime.now().year
                     }
-                    paymentconfirmationmail(email_info)
+                    paymentconfirmationmail.delay(email_info)
 
                     email_info = {
                         'subject': "Urgent: New Payment",

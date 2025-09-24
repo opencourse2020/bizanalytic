@@ -174,36 +174,23 @@
         const myButton = document.getElementById('download-btn');
 
 // Add a click event listener
-        myButton.addEventListener('click', async function() {
+        myButton.addEventListener('click', function() {
             console.log()
              const reportContent = document.getElementById("myFrame");
                 const opt = {
                     margin:      [10, 10, 10, 10],
                     filename:     'bizanalytic-receipt.pdf',
-                    pagebreak: {
-                        mode: 'css', // Use CSS-based page breaks
-                        after: '.page-break-after' // Apply page break after elements with this class
-                    },
                     image:        { type: 'jpeg', quality: 0.98 },
                     html2canvas:  { scale: 2, useCORS: true },
                     jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
                 // Hide button before printing
 
-                html2pdf().from(reportContent).set(opt).toPdf().get('pdf').then(function (pdf) {
+                 html2pdf().from(reportContent).set(opt).save().then(() => {
+                    // Show button again after saving
+                    //downloadBtn.style.display = 'block';
+                });
 
-                    for (var i = 1; i <= totalPages; i++) {
-                        pdf.setPage(i);
-                        pdf.setFontSize(10);
-                        pdf.setTextColor(100); // Grey color for text
-                        var xPos = pdf.internal.pageSize.getWidth() / 2; // Center horizontally
-                        var yPos = pdf.internal.pageSize.getHeight() - 10; // 10mm from the bottom
-
-
-                    }
-                }).save();
-
-                await sleep(2000); // Pause execution for 3 seconds
          });
     </script>
     <script>

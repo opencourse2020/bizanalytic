@@ -157,12 +157,14 @@
     	<script src={% static "assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js" %}></script>
         <script src={% static "assets/plugins/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js" %}></script>
     	<script src={% static "assets/plugins/bootstrap-table/distro/bootstrap-table.min.js"%}></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <script src={% static "assets/js/demo/table-plugins.demo.js" %}></script>
 
     <script>
 
         $("#download-btn").click(function (){
+            var downloadBtn = this.id;
+            console.log()
              const reportContent = document.getElementById('frameContainer');
                 const opt = {
                     margin:      [10, 10, 10, 10],

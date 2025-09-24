@@ -221,7 +221,7 @@ def paymentconfirmationmail(context):
     from_email = settings.EMAIL_HOST_USER  # Your email address
     subject = context.get('subject')
     to_email = [context.get('to_email'),]
-
+    print("to_email:", to_email)
     context_data = {
         'dashboard_link': context.get('report_list_link'),
         'customer_name': context.get('client'),

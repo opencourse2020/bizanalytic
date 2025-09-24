@@ -52,7 +52,7 @@ stripe_webhook = settings.STRIPE_WEBHOOK_SECRET
 OPENAI_KEY = settings.OPENAI_KEY
 
 
-client = OpenAI(api_key=OPENAI_KEY)
+# client = OpenAI(api_key=OPENAI_KEY)
 
 
 def get_ip(request):
@@ -1174,42 +1174,46 @@ class Payments_ListView(LoginRequiredMixin, TemplateView):
         return super(Payments_ListView, self).get_context_data(**kwargs)
 
 
-class PaymentView(CreateView, JsonFormMixin):
-    def test_func(self):
-        return self.request.user.is_staff
+class PaymentView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
     def post(self, request, *args, **kwargs):
         paymentid = int(request.POST.get("rx_cfr_ci"))
         print("Report ID: ", paymentid)
-        if paymentid:
-            payment = PaymentsHistory.objects.filter(pk=paymentid).first()
 
-            payment_info = {
-                'subject': "Urgent: New Payment",
-                'to_email': client.email,
-                'client': client.contact_name,
-                'company': client.company,
-                'address_line1': payment.address_line1,
-                'address_line2': payment.address_line2,
-                'city': payment.city,
-                'state': payment.state,
-                'postal_code': payment.postal_code,
-                'comuntry': payment.country,
-                'receipt': payment.receipt_number,
-                'payment_date': payment.payment_date,
-                'amount_paid': payment.amount_paid,
-                'quantity': payment.quantity,
-                'unit_price': payment.service_type.price,
-                'description': payment.service_type.description,
-                'message': f"A new payment received from {client.company}, email: {client.email}",
-                'curentyear': datetime.now().year
-            }
-            message = paymentconfirmation(payment_info)
+        message = "Payment doesn't exist"
+        status = "fail"
 
-            status = "success"
-        else:
-            message = "Payment doesn't exist"
-            status = "fail"
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            if user:
+                client = LogiFlexClient.objects.filter(user=user).first()
+
+                if paymentid:
+                    payment = PaymentsHistory.objects.filter(pk=paymentid).first()
+
+                    payment_info = {
+                        'subject': "Urgent: New Payment",
+                        'to_email': client.email,
+                        'client': client.contact_name,
+                        'company': client.company,
+                        'address_line1': payment.address_line1,
+                        'address_line2': payment.address_line2,
+                        'city': payment.city,
+                        'state': payment.state,
+                        'postal_code': payment.postal_code,
+                        'comuntry': payment.country,
+                        'receipt': payment.receipt_number,
+                        'payment_date': payment.payment_date,
+                        'amount_paid': payment.amount_paid,
+                        'quantity': payment.quantity,
+                        'unit_price': payment.service_type.price,
+                        'description': payment.service_type.description,
+                        'message': f"A new payment received from {client.company}, email: {client.email}",
+                        'curentyear': datetime.now().year
+                    }
+                    message = paymentconfirmation(payment_info)
+
+                    status = "success"
 
         data = {"submessage": message, "rpstatus": status}
 

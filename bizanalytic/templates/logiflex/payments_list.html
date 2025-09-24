@@ -161,9 +161,8 @@
     <script src={% static "assets/js/demo/table-plugins.demo.js" %}></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const downloadBtn = document.getElementById('download-btn');
-         downloadBtn.addEventListener('click', async function() {
+
+        $("#download-btn").click(function (){
              const reportContent = document.getElementById('frameContainer');
                 const opt = {
                     margin:      [10, 10, 10, 10],
@@ -192,9 +191,9 @@
                     }
                 }).save();
 
-                await sleep(2000); // Pause execution for 3 seconds
+
          });
-    });
+
 
 
     </script>

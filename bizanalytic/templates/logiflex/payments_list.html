@@ -92,6 +92,7 @@
                                 {% else %}
                                     {% for payment in payments %}
                                         <tr>
+                                        <td>{{ payment.pk }}</td>
                                             <td>
                                                 <div class="btn btn-outline-primary btn-sm " data-view="{{ payment.pk }}">
                                                     <span style="text-transform: uppercase;font-size: 12px;">{{ payment.receipt_number }}</span></div>

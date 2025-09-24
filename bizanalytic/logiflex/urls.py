@@ -49,12 +49,15 @@ stripe_patterns = [
 
 ]
 
+payment_patterns = [
+    path("px-vr/", views.PaymentView.as_view(), name="px-vr"),
+]
+
 urlpatterns = [
 
     path("", views.IndexView.as_view(), name="index"),
     path("updateprices/", views.UpdateGasPricesView.as_view(), name="updateprices"),
     path("rx-apr/", views.AdminApproveReportView.as_view(), name="rx-apr"),
-    path("px-vr/", views.PaymentView.as_view(), name="px-vr"),
     path("dashboard/", views.DashboardView.as_view(), name="dashboard"),
     path('clean-csv/', views.clean_csv, name='clean_csv'),
     path("pricing/", views.Payment_PageView.as_view(), name='pricing'),
@@ -80,6 +83,10 @@ urlpatterns = [
     path(
         "admin/",
         include((admin_patterns, "bizanalytic.logiflex"), namespace="admin"),
+    ),
+    path(
+        "payments/",
+        include((payment_patterns, "bizanalytic.logiflex"), namespace="payments"),
     ),
 
 ]

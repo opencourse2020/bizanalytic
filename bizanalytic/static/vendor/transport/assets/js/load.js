@@ -261,7 +261,7 @@ $('body').on('click', '[data-active]', function() {
 $('body').on('click', '[data-view]', function() {
     let cixphoto =  $(this).data('view');
     console.log(cixphoto);
-    let url = "https://bizanalytic.com/logiflex/rx-apr/";
+    let url = "https://bizanalytic.com/logiflex/payments/px-vr/";
     const formData = new FormData();
 
     formData.append('rx_cfr_ci', cixphoto);

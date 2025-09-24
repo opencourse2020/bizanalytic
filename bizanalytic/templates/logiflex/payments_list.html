@@ -168,7 +168,6 @@
     <script>
 
         $("#download-btn").click(function (){
-            var downloadBtn = this.id;
             console.log()
              const reportContent = document.getElementById('frameContainer');
                 const opt = {
@@ -183,10 +182,9 @@
                     jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
                 // Hide button before printing
-                downloadBtn.style.display = 'none';
+
                 html2pdf().from(reportContent).set(opt).toPdf().get('pdf').then(function (pdf) {
 
-                    downloadBtn.style.display = '';
                     for (var i = 1; i <= totalPages; i++) {
                         pdf.setPage(i);
                         pdf.setFontSize(10);

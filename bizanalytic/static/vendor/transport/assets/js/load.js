@@ -282,6 +282,11 @@ $('body').on('click', '[data-view]', function() {
                     if (status == "success"){
                         // var f = $("#toast_successreport");
                         // var a = new bootstrap.Toast(f);
+                        $("#col-1").attr('class', 'col-md-8');
+
+                        var col2 = $("#col-2");
+                        col2.attr('class', 'col-md-4');
+                        col2.show();
                         $("#framebutton").show();
                         $("#removeButton").show();
                         $("#download-btn").show();

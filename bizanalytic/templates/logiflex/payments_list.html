@@ -65,7 +65,7 @@
 <section class="contact-area pt-40 mb-40" >
             <div class="container" style="max-width: none;">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-12" id="col-1">
                 <h5 class="title">{% trans "List of Payments" %}</h5>
                    <div id="datatable" class="mb-5">
                     <div class="card">
@@ -132,7 +132,7 @@
                     </div>
                 </div>
                 </div>
-                <div class="col-md-4">
+                <div class="" id="col-1" style="border: 2px solid rgb(204, 204, 204); background: #e1e0e0; display: none">
                     <div class="d-flex justify-content-between w-100" id="framebutton" style="display: none; background: #e1e0e0; height: 30px;">
 
                         <button class='btn btn-primary btn-sm' id="download-btn" style="display: none; height: 100%; font-size: 0.75rem; border-radius: 30px;"><span class="icon"><i class="ri-printer-fill"></i> Download</span></button>
@@ -223,10 +223,10 @@ $("#removeButton").click(function (){
             {#col1.className = '';#}
             {#frameButton = document.getElementById('framebutton');#}
             {#frameButton.className= "";#}
-            {#$("#col-1").attr('class', 'col-12');#}
-            {#var col2 = $("#col-2");#}
-            {#col2.hide();#}
-            {#col2.attr('class', '');#}
+            $("#col-1").attr('class', 'col-12');
+            var col2 = $("#col-2");
+            col2.hide();
+            col2.attr('class', '');
 
             $("#removeButton").hide();
             $("#framebutton").hide();

@@ -176,20 +176,21 @@
 // Add a click event listener
         myButton.addEventListener('click', function() {
             console.log()
-             const reportContent = document.getElementById("frameContainer");
-                const opt = {
+            const reportContent = document.getElementById("frameContainer");
+            console.log(reportContent);
+            const opt = {
                     margin:      [10, 10, 10, 10],
                     filename:     'bizanalytic-receipt.pdf',
                     image:        { type: 'jpeg', quality: 0.98 },
                     html2canvas:  { scale: 2, useCORS: true },
                     jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
+            };
                 // Hide button before printing
 
-                 html2pdf().from(reportContent).set(opt).save().then(() => {
+            html2pdf().from(reportContent).set(opt).save().then(() => {
                     // Show button again after saving
                     //downloadBtn.style.display = 'block';
-                });
+            });
 
          });
     </script>

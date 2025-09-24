@@ -272,6 +272,6 @@ def paymentconfirmationmail(context):
         print("result:", result)
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status {result}")
     except Exception as e:
-        print("Status 0")
+        print("Status 0", e)
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status 0")
         logger.exception(e)

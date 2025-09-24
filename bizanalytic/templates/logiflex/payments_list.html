@@ -166,10 +166,16 @@
     <script src={% static "assets/js/demo/table-plugins.demo.js" %}></script>
 
     <script>
+        function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
 
-        $("#download-btn").click(function (){
+        const myButton = document.getElementById('download-btn');
+
+// Add a click event listener
+        myButton.addEventListener('click', async function() {
             console.log()
-             const reportContent = document.getElementById('frameContainer');
+             const reportContent = $("#myFrame");
                 const opt = {
                     margin:      [10, 10, 10, 10],
                     filename:     'bizanalytic-receipt.pdf',
@@ -196,9 +202,10 @@
                     }
                 }).save();
 
-
+                await sleep(2000); // Pause execution for 3 seconds
          });
-
+    </script>
+    <script>
 $("#removeButton").click(function (){
             const myFrame = document.getElementById('myFrame');
 

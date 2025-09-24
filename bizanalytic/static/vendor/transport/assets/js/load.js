@@ -285,7 +285,7 @@ $('body').on('click', '[data-view]', function() {
                         $("#framebutton").show();
                         $("#removeButton").show();
                         $("#download-btn").show();
-                        const myframe = document.getElementById("myFrame");
+                        const myframe = $("#myFrame");
                         if (myframe) {
                             myframe.remove(); // Removes the iframe element from the DOM
                         }

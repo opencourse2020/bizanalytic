@@ -194,7 +194,6 @@ def sendnotificationemail(context):
     }
     template_name = "emails/email_notification.html"
 
-
     html_content = render_to_string(
         template_name=template_name,
         context=context_data
@@ -267,10 +266,11 @@ def paymentconfirmationmail(context):
     elif not isinstance(to_email, list):
         to_email = [to_email]
 
-    message = EmailMultiAlternatives(subject, plain_message, from_email, to_email, bcc=["support@bizanalytic.com", ])
+    message = EmailMultiAlternatives(subject, plain_message, from_email, to_email, bcc=["support@bizanalytic.com","bizanalytics.us@gmail.com" ])
     message.attach_alternative(html_content, "text/html")
     try:
         result = message.send()
+        print("result:", result)
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status {result}")
     except Exception as e:
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status 0")

@@ -81,7 +81,7 @@ def paymentconfirmation(context):
     subject = context.get('subject')
     to_email = [context.get('to_email'),]
     context_data = {
-        'portal_link': context.get('report_list_link'),
+        'portal_link': "https://bizanalytic.com/logiflex/payments/list/",
         'customer_name': context.get('client'),
         'customer_company': context.get('company'),
         'customer_email': context.get('to_email'),
@@ -109,12 +109,11 @@ def paymentconfirmation(context):
         'line_total': context.get('amount_paid'),
         'subtotal': context.get('amount_paid'),
     }
-    template_name = "emails/payment_confirmation.html"
+    template_name = "helpers/payment_confirmation.html"
 
     html_content = render_to_string(
         template_name=template_name,
         context=context_data
     )
-    plain_message = strip_tags(html_content)
 
     return html_content

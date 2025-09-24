@@ -289,6 +289,8 @@ $('body').on('click', '[data-view]', function() {
                         var iframe = document.createElement('iframe');
                         iframe.id = 'myFrame';
                         iframe.style.border = '1px solid #ccc';
+                        iframe.style.width = "-webkit-fill-available";
+                        iframe.style.height = "-webkit-fill-available";
                         iframe.srcdoc = message; // Replace with the URL of the content to display
                         $("#frameContainer").append(iframe);
                     }else{

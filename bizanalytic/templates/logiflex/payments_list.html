@@ -98,7 +98,22 @@
                                                     <span style="text-transform: uppercase;font-size: 12px;">{{ payment.receipt_number }}</span></div>
                                                 </td>
                                             <td>{{ payment.client.company }}</td>
-                                            <td>{{ payment.service_type.name }}</td>
+                                            <td>
+                                                {% if payment.service_type.name == "onetime_lite" %}
+                                                    One-Time Lite Report
+                                                {% elif payment.service_type.name == "onetime_advanced" %}
+                                                    One-Time Advanced Report
+                                                {% elif payment.service_type.name == "starter" %}
+                                                    Starter Monthly Subscription
+                                                {% elif payment.service_type.name == "pro" %}
+                                                    Pro Monthly Subscription
+                                                {% elif payment.service_type.name == "quarterly" %}
+                                                    Pro Quarterly Plan
+                                                {% endif %}
+
+                                                {{ payment.service_type.name }}
+
+                                            </td>
                                             <td>{{ payment.payment_date|date:'Y-m-d H:i' }}</td>
                                             <td>{{ payment.quantity }}</td>
                                             <td>{{ payment.amount_paid }}</td>

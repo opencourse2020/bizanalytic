@@ -257,3 +257,50 @@ $('body').on('click', '[data-active]', function() {
 
 
     });
+
+$('body').on('click', '[data-view]', function() {
+    let cixphoto =  $(this).data('view');
+    console.log(cixphoto);
+    let url = "https://bizanalytic.com/logiflex/rx-apr/";
+    const formData = new FormData();
+
+    formData.append('rx_cfr_ci', cixphoto);
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: formData,
+        processData: false,
+        contentType: false,
+        headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success: function (data) {
+            if (data) {
+                var result = data;
+                var message = result.submessage;
+                var status = result.rpstatus;
+                if (message) {
+                    if (status == "success"){
+                        // var f = $("#toast_successreport");
+                        // var a = new bootstrap.Toast(f);
+                        const myframe = document.getElementById("myFrame");
+                        if (myframe) {
+                            myframe.remove(); // Removes the iframe element from the DOM
+                        }
+                        var iframe = document.createElement('iframe');
+                        iframe.id = 'myFrame';
+                        iframe.style.border = '1px solid #ccc';
+                        iframe.srcdoc = message; // Replace with the URL of the content to display
+                        $("#frameContainer").append(iframe);
+                    }else{
+                        var f = $("#toast_failreport");
+                        var a = new bootstrap.Toast(f);
+                        $("#message_body").html(message);
+                        a.show()
+                    }
+                }
+            }
+        }
+                })
+
+
+    });

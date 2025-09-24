@@ -2,6 +2,8 @@ import random
 from django.conf import settings
 import requests
 from bizanalytic.logiflex.models import LogEntry
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 def generatecode(length):
     result = ''
@@ -71,3 +73,48 @@ def makenumericid(length):
 #                 'attachments': logireport.routefile
 #             }
 #             sendemail(email_info)
+
+
+def paymentconfirmation(context):
+
+    from_email = settings.EMAIL_HOST_USER  # Your email address
+    subject = context.get('subject')
+    to_email = [context.get('to_email'),]
+    context_data = {
+        'portal_link': context.get('report_list_link'),
+        'customer_name': context.get('client'),
+        'customer_company': context.get('company'),
+        'customer_email': context.get('to_email'),
+        'customer_address_line1': context.get('address_line1'),
+        'customer_address_line2': context.get('address_line2'),
+        'customer_city': context.get('city'),
+        'customer_state': context.get('state'),
+        'customer_zip': context.get('postal_code'),
+        'customer_country': context.get('country'),
+        'current_year': context.get('cuurentyear'),
+        'receipt_number': context.get('receipt'),
+        'receipt_date': context.get('payment_date'),
+        'grand_total': context.get('amount_paid'),
+        'company_name': "BizAnalytic",
+        'operator_legal_name': "Adil Akaaboune",
+        'company_address_line1': "The Woodlands",
+        'company_address_line2': "Texas",
+        'company_country': "United States of America",
+        'support_email': "support@bizanalytic.com",
+        'payment_brand': "Stripe",
+        'refund_policy_url': "https://bizanalytic.com/refund-policy/",
+        'desc': context.get('description'),
+        'quantity': context.get('quantity'),
+        'unit_price': context.get('unit_price'),
+        'line_total': context.get('amount_paid'),
+        'subtotal': context.get('amount_paid'),
+    }
+    template_name = "emails/payment_confirmation.html"
+
+    html_content = render_to_string(
+        template_name=template_name,
+        context=context_data
+    )
+    plain_message = strip_tags(html_content)
+
+    return plain_message

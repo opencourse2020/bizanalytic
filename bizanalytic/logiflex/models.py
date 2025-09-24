@@ -220,6 +220,12 @@ class PaymentsHistory(models.Model):
     user_browser = models.CharField(max_length=40, blank=True, null=True)
     user_language = models.CharField(max_length=40, blank=True, null=True)
     user_referee = models.CharField(max_length=100, blank=True, null=True)
+    address_line1 = models.CharField(max_length=100, null=True, blank=True)
+    address_line2 = models.CharField(max_length=100, null=True, blank=True)
+    city = models.CharField(max_length=70, null=True, blank=True)
+    state = models.CharField(max_length=50, null=True, blank=True)
+    postal_code = models.CharField(max_length=15, null=True, blank=True)
+    country = models.CharField(max_length=70, null=True, blank=True)
 
     class Meta:
         verbose_name = "PaymentsHistory"

@@ -36,7 +36,7 @@ from .models import *
 from bizanalytic.profiles.mixins import JsonFormMixin
 from bizanalytic.profiles.models import User
 from .utils.mail import *
-from .utils.tools import generatecode
+from .utils.tools import *
 from .utils.call_llm import generate_analysis
 from .utils.pre_process_datafile import *
 from .utils.local_analytics import *
@@ -1076,14 +1076,16 @@ class WebhookView(View):
                     device_type = user_agent.device  # e.g., 'mobile', 'tablet', 'pc'
                     os_family = user_agent.os.family  # e.g., 'iOS', 'Android', 'Windows'
                     browser_family = user_agent.browser.family  # e.g., 'Chrome', 'Firefox', 'Safari'
-                    print("device_type:", device_type)
-                    print("os_family:", os_family)
-                    print("browser_family:", browser_family)
+                    # print("device_type:", device_type)
+                    # print("os_family:", os_family)
+                    # print("browser_family:", browser_family)
 
                     paymenthistory = PaymentsHistory.objects.create(
                         client=client, service_type=payment_plan, stripe_checkout_id=session['id'],
                         amount_paid=amount_paid, quantity=quantity, ipaddress=ip, user_referee=user_page_referer,
-                        user_language=user_language, user_device=device_type, user_browser=browser_family, user_os=os_family)
+                        user_language=user_language, user_device=device_type, user_browser=browser_family,
+                        user_os=os_family, address_line1=address_line1, address_line2=address_line2,
+                        city=city, state=state, country=country, postal_code=postal_code)
 
                     currentyear = now().year
                     receipt = f"RC{currentyear}-{servicepayment.pk}{client.id}-{paymenthistory.pk}"
@@ -1097,10 +1099,10 @@ class WebhookView(View):
                         'company': client.company,
                         'address_line1': client.address_line1,
                         'address_line2': client.address_line2,
-                        'city': client.city,
-                        'state': client.state,
-                        'postal_code': client.postal_code,
-                        'comuntry': client.country,
+                        'city': city,
+                        'state': state,
+                        'postal_code': postal_code,
+                        'comuntry': country,
                         'receipt': paymenthistory.receipt_number,
                         'payment_date': paymenthistory.payment_date,
                         'amount_paid': paymenthistory.amount_paid,
@@ -1112,15 +1114,15 @@ class WebhookView(View):
                     }
                     paymentconfirmationmail.delay(email_info)
 
-                    email_info = {
-                        'subject': "Urgent: New Payment",
-                        'to_email': ["bizanalytics.us@gmail.com", ],
-                        'client': client.contact_name,
-                        'company': client.company,
-                        'message': f"A new payment received from {client.company}, email: {email}",
-                        'curentyear': datetime.now().year
-                    }
-                    sendnotificationemail.delay(email_info)
+                    # email_info = {
+                    #     'subject': "Urgent: New Payment",
+                    #     'to_email': ["bizanalytics.us@gmail.com", ],
+                    #     'client': client.contact_name,
+                    #     'company': client.company,
+                    #     'message': f"A new payment received from {client.company}, email: {email}",
+                    #     'curentyear': datetime.now().year
+                    # }
+                    # sendnotificationemail.delay(email_info)
 
                 # downloadcode = generatecode(8)
                 # report = LogiflexReport(client=client, payment=servicepayment, report_type='Paid',
@@ -1156,6 +1158,62 @@ class Payment_PageView(TemplateView):
         kwargs["logedin"] = logedin
         # kwargs["stripe_publishable_key"] = stripe_publishable
         return super(Payment_PageView, self).get_context_data(**kwargs)
+
+
+class Payments_ListView(LoginRequiredMixin, TemplateView):
+    template_name = "logiflex/payments_list.html"
+
+    def get_context_data(self, **kwargs):
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            if user:
+                client = LogiFlexClient.objects.filter(user=user).first()
+                payments = PaymentsHistory.objects.filter(client=client)
+                kwargs["payments"] = payments
+        # kwargs["stripe_publishable_key"] = stripe_publishable
+        return super(Payments_ListView, self).get_context_data(**kwargs)
+
+
+class PaymentView(CreateView, JsonFormMixin):
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def post(self, request, *args, **kwargs):
+        paymentid = int(request.POST.get("rx_cfr_ci"))
+        print("Report ID: ", paymentid)
+        if paymentid:
+            payment = PaymentsHistory.objects.filter(pk=paymentid).first()
+
+            payment_info = {
+                'subject': "Urgent: New Payment",
+                'to_email': client.email,
+                'client': client.contact_name,
+                'company': client.company,
+                'address_line1': payment.address_line1,
+                'address_line2': payment.address_line2,
+                'city': payment.city,
+                'state': payment.state,
+                'postal_code': payment.postal_code,
+                'comuntry': payment.country,
+                'receipt': payment.receipt_number,
+                'payment_date': payment.payment_date,
+                'amount_paid': payment.amount_paid,
+                'quantity': payment.quantity,
+                'unit_price': payment.service_type.price,
+                'description': payment.service_type.description,
+                'message': f"A new payment received from {client.company}, email: {client.email}",
+                'curentyear': datetime.now().year
+            }
+            message = paymentconfirmation(payment_info)
+
+            status = "success"
+        else:
+            message = "Payment doesn't exist"
+            status = "fail"
+
+        data = {"submessage": message, "rpstatus": status}
+
+        return JsonResponse(data)
 
 
 class Payment_SuccessView(LoginRequiredMixin, TemplateView):

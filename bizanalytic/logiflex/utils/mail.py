@@ -221,9 +221,8 @@ def paymentconfirmationmail(context):
     from_email = settings.EMAIL_HOST_USER  # Your email address
     subject = context.get('subject')
     to_email = [context.get('to_email'),]
-    print("to_email:", to_email)
     context_data = {
-        'dashboard_link': context.get('report_list_link'),
+        'portal_link': context.get('report_list_link'),
         'customer_name': context.get('client'),
         'customer_company': context.get('company'),
         'customer_email': context.get('to_email'),
@@ -258,7 +257,6 @@ def paymentconfirmationmail(context):
         context=context_data
     )
     plain_message = strip_tags(html_content)
-    print(plain_message)
     if not to_email:
         raise ValueError("The 'to_email' address must be provided and cannot be empty.")
     elif not isinstance(to_email, list):
@@ -269,9 +267,7 @@ def paymentconfirmationmail(context):
     message.attach_alternative(html_content, "text/html")
     try:
         result = message.send()
-        print("result:", result)
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status {result}")
     except Exception as e:
-        print("Status 0", e)
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status 0")
         logger.exception(e)

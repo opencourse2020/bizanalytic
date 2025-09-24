@@ -1,0 +1,162 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+    <meta name="description" content="Choose the right plan for your logistics business – free trial, one-time advanced reports, or monthly/quarterly freight analytics subscriptions.">
+    <meta name="author" content='"freight report subscription pricing", "freight cost optimization tool for SMEs", "advanced logistics analysis at low cost", "AI freight analytics monthly plans"'>
+    <!-- page title -->
+    <title>Affordable Freight Analytics Plans | One-Time or Subscription</title>
+{% endblock head_title %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-bs5/css/dataTables.bootstrap5.min.css" %} >
+    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" %} >
+    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" %} >
+    <link rel="stylesheet" type="text/css" href={% static "assets/plugins/bootstrap-table/dist/bootstrap-table.min.css" %} >
+    {{ block.super }}
+    <style>
+    @media (max-width: 575.98px) {
+        .breadcrumb-area .title2{
+            font-size: 30px;
+        }
+        .breadcrumb-area .title1{
+            font-size: 40px;
+        }
+    }
+    </style>
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block pdf_button %}
+{% endblock pdf_button %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+{% block breadcrumb %}
+    <section class="breadcrumb-area mb-1" style="padding: 80px 0 20px" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center align-items-center">
+                        <h1 class="title title1" style="font-size: 40px;">Payments List</h1>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+        <!-- contact area starts -->
+<section class="contact-area pt-40 mb-40" >
+            <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                <h5 class="title">{% trans "List of Processed Reports" %}</h5>
+                   <div id="datatable" class="mb-5">
+                    <div class="card">
+                    <div class="card-header">
+
+                    </div>
+                        <div class="card-body">
+                            <table id="datatableDefault" class="table text-nowrap w-100">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{% trans "Receipt Number" %}</th>
+                                    <th>{% trans "Cl Company" %}</th>
+                                    <th>{% trans "Cl Contact" %}</th>
+                                    <th>{% trans "Date" %}</th>
+                                    <th>{% trans "Quantity" %}</th>
+                                    <th>{% trans "Total" %}</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if payments == "none" %}
+
+                                {% else %}
+                                    {% for payment in payments %}
+                                        <tr>
+                                            <td>
+                                                <div class="btn btn-outline-primary btn-sm " data-view="{{ payment.pk }}">
+                                                    <span style="text-transform: uppercase;font-size: 12px;">{{ payment.receipt_number }}</span></div>
+                                                </td>
+                                            <td>{{ payment.client.company }}</td>
+                                            <td>{{ payment.client.contact_name }}</td>
+                                            <td>{{ payment.client.payment_date|date:'Y-m-d H:i' }}</td>
+                                            <td>{{ payment.quantity }}</td>
+                                            <td>{{ payment.amount_paid }}</td>
+
+                                        </tr>
+                                    {% endfor %}
+
+                                {% endif %}
+                               </tbody>
+                            </table>
+                        </div>
+
+                        <div class="hljs-container">
+                            <pre><code class="xml" data-url="assets/data/table-plugins/code-1.json"></code></pre>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-4">
+                    <div id="frameContainer" style="width: 100%; height: 98%"></div>
+                </div>
+            </div>
+
+
+            </div>
+        </section>
+
+{% endblock contact_area %}
+
+{% block feature_area %}
+    {{ block.super }}
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+ <!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+    <form action="#" enctype="multipart/form-data">
+        {% csrf_token %}
+    </form>
+{% endblock footer_area %}
+{% block js_area %}
+    {{ block.super }}
+    <script src={% static "assets/plugins/datatables.net/js/dataTables.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-bs5/js/dataTables.bootstrap5.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons/js/dataTables.buttons.min.js" %}></script>
+        <script src={% static "assets/plugins/datatables.net-buttons/js/buttons.colVis.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons/js/buttons.flash.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons/js/buttons.html5.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons/js/buttons.print.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js" %}></script>
+    	<script src={% static "assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js" %}></script>
+        <script src={% static "assets/plugins/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js" %}></script>
+    	<script src={% static "assets/plugins/bootstrap-table/dist/bootstrap-table.min.js"%}></script>
+
+    <script src={% static "assets/js/demo/table-plugins.demo.js" %}></script>
+
+{% endblock js_area %}

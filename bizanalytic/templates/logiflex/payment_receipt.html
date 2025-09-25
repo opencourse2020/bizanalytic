@@ -293,11 +293,11 @@
             const reportContent = document.getElementById("receiptcontent");
             console.log(reportContent);
             const opt = {
-                    margin:      0.5,
+                    margin:      0.2,
                     filename:     'bizanalytic-receipt.pdf',
                     image:        { type: 'jpeg', quality: 0.98 },
                     html2canvas:  { scale: 2, useCORS: true },
-                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
                 // Hide button before printing
 

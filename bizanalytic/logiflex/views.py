@@ -1216,8 +1216,9 @@ class PaymentView(LoginRequiredMixin, CreateView, JsonFormMixin):
                     message = paymentconfirmation(payment_info)
 
                     status = "success"
+                    downloadcode = payment.download_code
 
-        data = {"submessage": message, "rpstatus": status}
+        data = {"submessage": message, "rpstatus": status, 'downloadcode':downloadcode}
 
         return JsonResponse(data)
 

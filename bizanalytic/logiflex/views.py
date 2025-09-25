@@ -1095,6 +1095,7 @@ class WebhookView(View):
                     paymenthistory.save()
 
                     email_info = {
+                        'payment_link': "https://bizanalytic.com/logiflex/payments/receipt/?cat="+downloadcode,
                         'subject': "Urgent: New Payment",
                         'to_email': client.email,
                         'client': client.contact_name,
@@ -1231,7 +1232,6 @@ class PaymentDetailView(TemplateView):
         if query:
             payment = PaymentsHistory.objects.filter(download_code=query).select_related("client").first()
             if payment:
-                kwargs['portal_link'] = "https://bizanalytic.com/logiflex/payments/list/"
                 kwargs['customer_name'] = payment.client.email
                 kwargs['customer_company'] = payment.client.company
                 kwargs['customer_email'] = payment.client.email

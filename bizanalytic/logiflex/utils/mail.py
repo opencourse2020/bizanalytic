@@ -222,7 +222,7 @@ def paymentconfirmationmail(context):
     subject = context.get('subject')
     to_email = [context.get('to_email'),]
     context_data = {
-        'portal_link': context.get('report_list_link'),
+        'portal_link': context.get('payment_link'),
         'customer_name': context.get('client'),
         'customer_company': context.get('company'),
         'customer_email': context.get('to_email'),

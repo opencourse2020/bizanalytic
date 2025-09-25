@@ -77,9 +77,6 @@ def makenumericid(length):
 
 def paymentconfirmation(context):
 
-    from_email = settings.EMAIL_HOST_USER  # Your email address
-    subject = context.get('subject')
-    to_email = [context.get('to_email'),]
     context_data = {
         'portal_link': "https://bizanalytic.com/logiflex/payments/list/",
         'customer_name': context.get('client'),

@@ -278,6 +278,7 @@ $('body').on('click', '[data-view]', function() {
                 var result = data;
                 var message = result.submessage;
                 var status = result.rpstatus;
+                var downcode = result.downloadcode;
                 if (message) {
                     if (status == "success"){
                         // var f = $("#toast_successreport");
@@ -289,7 +290,9 @@ $('body').on('click', '[data-view]', function() {
                         col2.show();
                         $("#framebutton").show();
                         $("#removeButton").show();
-                        $("#download-btn").show();
+                        downloadbut = $("#download-btn");
+                        downloadbut.show();
+                        downloadbut.href="https://bizanalytic.com/logiflex/payments/receipt/?cat="+downcode;
                         const myframe = $("#myFrame");
                         if (myframe) {
                             myframe.remove(); // Removes the iframe element from the DOM

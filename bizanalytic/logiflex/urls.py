@@ -40,7 +40,7 @@ report_patterns = [
 ]
 
 stripe_patterns = [
-    path('', views.Payment_PageView.as_view(), name='payment_page'),
+    path('', views.Pricing_PageView.as_view(), name='payment_page'),
     path('create-checkout-session/', views.create_checkout_session, name='create_checkout_session'),
     path('stripe_webhook/', views.WebhookView.as_view(), name='stripe_webhook'),
     path('success/', views.Payment_SuccessView.as_view(), name='success'),
@@ -51,7 +51,8 @@ stripe_patterns = [
 
 payment_patterns = [
     path("px-vr/", views.PaymentView.as_view(), name="px-vr"),
-    path("list/", views.Payments_ListView.as_view(), name="list")
+    path("list/", views.Payments_ListView.as_view(), name="list"),
+    path("receipt/", views.PaymentDetailView.as_view(), name="receipt"),
 ]
 
 urlpatterns = [
@@ -61,7 +62,7 @@ urlpatterns = [
     path("rx-apr/", views.AdminApproveReportView.as_view(), name="rx-apr"),
     path("dashboard/", views.DashboardView.as_view(), name="dashboard"),
     path('clean-csv/', views.clean_csv, name='clean_csv'),
-    path("pricing/", views.Payment_PageView.as_view(), name='pricing'),
+    path("pricing/", views.Pricing_PageView.as_view(), name='pricing'),
     path("book-call/", views.RequestCallView.as_view(), name="book-call"),
     path("bookcall/", views.BookACallView.as_view(), name="bookcall"),
     path("aboutus/", views.AboutUsView.as_view(), name="aboutus"),

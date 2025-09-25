@@ -1090,6 +1090,8 @@ class WebhookView(View):
                     currentyear = now().year
                     receipt = f"RC{currentyear}-{servicepayment.pk}{client.id}-{paymenthistory.pk}"
                     paymenthistory.receipt_number = receipt
+                    downloadcode = generatecode(8)
+                    paymenthistory.download_code = downloadcode
                     paymenthistory.save()
 
                     email_info = {
@@ -1147,7 +1149,7 @@ class WebhookView(View):
         pass
 
 
-class Payment_PageView(TemplateView):
+class Pricing_PageView(TemplateView):
     template_name = "logiflex/stripe_pay.html"
 
     def get_context_data(self, **kwargs):
@@ -1157,7 +1159,7 @@ class Payment_PageView(TemplateView):
             logedin = 2
         kwargs["logedin"] = logedin
         # kwargs["stripe_publishable_key"] = stripe_publishable
-        return super(Payment_PageView, self).get_context_data(**kwargs)
+        return super(Pricing_PageView, self).get_context_data(**kwargs)
 
 
 class Payments_ListView(LoginRequiredMixin, TemplateView):
@@ -1186,16 +1188,16 @@ class PaymentView(LoginRequiredMixin, CreateView, JsonFormMixin):
         if self.request.user.is_authenticated:
             user = self.request.user
             if user:
-                client = LogiFlexClient.objects.filter(user=user).first()
+                # client = LogiFlexClient.objects.filter(user=user).first()
 
                 if paymentid:
-                    payment = PaymentsHistory.objects.filter(pk=paymentid).first()
+                    payment = PaymentsHistory.objects.filter(pk=paymentid).select_related("client").first()
 
                     payment_info = {
                         'subject': "Urgent: New Payment",
-                        'to_email': client.email,
-                        'client': client.contact_name,
-                        'company': client.company,
+                        'to_email': payment.client.email,
+                        'client': payment.client.contact_name,
+                        'company': payment.client.company,
                         'address_line1': payment.address_line1,
                         'address_line2': payment.address_line2,
                         'city': payment.city,
@@ -1218,6 +1220,45 @@ class PaymentView(LoginRequiredMixin, CreateView, JsonFormMixin):
         data = {"submessage": message, "rpstatus": status}
 
         return JsonResponse(data)
+
+
+class PaymentDetailView(TemplateView):
+    template_name = "logiflex/payment_receipt.html"
+
+    def get_context_data(self, **kwargs):
+        query = self.request.GET.get("cat")
+        if query:
+            payment = PaymentsHistory.objects.filter(download_code=query).select_related("client").first()
+            if payment:
+                kwargs['portal_link'] = "https://bizanalytic.com/logiflex/payments/list/"
+                kwargs['customer_name'] = payment.client.email
+                kwargs['customer_company'] = payment.client.company
+                kwargs['customer_email'] = payment.client.email
+                kwargs['customer_address_line1'] = payment.address_line1
+                kwargs['customer_address_line2'] = payment.address_line2
+                kwargs['customer_city'] = payment.city
+                kwargs['customer_state'] = payment.state
+                kwargs['customer_zip'] = payment.postal_code
+                kwargs['customer_country'] = payment.country
+                kwargs['current_year'] = datetime.now().year
+                kwargs['receipt_number'] = payment.receipt_number
+                kwargs['receipt_date'] = payment.payment_date
+                kwargs['grand_total'] = payment.amount_paid
+                kwargs['company_name'] = "BizAnalytic"
+                kwargs['operator_legal_name'] = "Adil Akaaboune"
+                kwargs['company_address_line1'] = "The Woodlands"
+                kwargs['company_address_line2'] = "Texas"
+                kwargs['company_country'] = "United States of America"
+                kwargs['support_email'] = "support@bizanalytic.com"
+                kwargs['payment_brand'] = "Stripe"
+                kwargs['refund_policy_url'] = "https://bizanalytic.com/refund-policy/"
+                kwargs['desc'] = payment.service_type.name
+                kwargs['quantity'] = payment.quantity
+                kwargs['unit_price'] = payment.service_type.price
+                kwargs['line_total'] = payment.amount_paid
+                kwargs['subtotal'] = payment.amount_paid
+
+        return super(PaymentDetailView, self).get_context_data(**kwargs)
 
 
 class Payment_SuccessView(LoginRequiredMixin, TemplateView):

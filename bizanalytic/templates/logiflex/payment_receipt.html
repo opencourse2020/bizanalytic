@@ -1,0 +1,312 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+    <meta name="description" content="Choose the right plan for your logistics business – free trial, one-time advanced reports, or monthly/quarterly freight analytics subscriptions.">
+    <meta name="author" content='"freight report subscription pricing", "freight cost optimization tool for SMEs", "advanced logistics analysis at low cost", "AI freight analytics monthly plans"'>
+    <!-- page title -->
+    <title>Affordable Freight Analytics Plans | One-Time or Subscription</title>
+{% endblock head_title %}
+
+{% block css %}
+    {{ block.super }}
+    <style>
+    @media (max-width: 575.98px) {
+        .breadcrumb-area .title2{
+            font-size: 30px;
+        }
+        .breadcrumb-area .title1{
+            font-size: 40px;
+        }
+    }
+    </style>
+    <style>
+    /* Mobile tweaks (supported in most modern clients) */
+    @media only screen and (max-width:600px){
+      .container{width:100% !important;}
+      .px-24{padding-left:16px !important; padding-right:16px !important;}
+      .py-24{padding-top:16px !important; padding-bottom:16px !important;}
+      .text-right, .totals td:last-child{ text-align:left !important;}
+      .stack td{display:block;width:100% !important;}
+    }
+  </style>
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block pdf_button %}
+{% endblock pdf_button %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+{% block breadcrumb %}
+    <section class="breadcrumb-area mb-1" style="padding: 80px 0 20px" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center align-items-center">
+                        <h1 class="title title1" style="font-size: 40px;">Receipt</h1>
+                        <span class="title title2" style="color: #0cb7d6; font-size: 30px">&nbsp;{{ receipt_number }}</span>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+    <div class="row">
+        <div class="col-6">
+            <div class="d-flex justify-content-between w-100" id="framebutton" style="display: none; background: #e1e0e0; height: 30px;">
+                <button class='btn btn-primary btn-sm' id="download-btn" style="display: none; height: 100%; font-size: 0.75rem; border-radius: 30px;"><span class="icon"><i class="ri-printer-fill"></i> Download</span></button>
+            </div>
+        </div>
+    </div>
+<section class="contact-area pt-40 mb-40" id="receiptcontent">
+    <div class="container" >
+          <div class="row justify-content-center">
+              <div class="col-md-9">
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f6f7f9;">
+                        <tr>
+                          <td align="center" style="padding:24px;">
+                            <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" class="container" style="width:600px;max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;">
+                              <!-- Header -->
+                              <tr>
+                                <td class="px-24 py-24" style="padding:24px;background:#0f172a;color:#ffffff;">
+                                  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                    <tr class="stack">
+                                      <td style="font:700 18px/1.2 'Segoe UI', Arial, sans-serif;">
+                                        {{company_name}}
+                                      </td>
+                                      <td align="right" class="text-right" style="font:400 12px/1.4 'Segoe UI', Arial, sans-serif;color:#cbd5e1;">
+                                        Receipt #: <strong style="color:#ffffff;">{{receipt_number}}</strong><br/>
+                                        Date: {{receipt_date}}
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+
+                              <!-- Payment status banner -->
+                              <tr>
+                                <td class="px-24 py-24" style="padding:20px 24px;border-bottom:1px solid #eef2f7;">
+                                  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                    <tr class="stack">
+                                      <td style="font:600 16px/1.4 'Segoe UI', Arial, sans-serif;">
+                                        ✅ Payment Successful
+                                      </td>
+                                      <td align="right" class="text-right" style="font:400 12px/1.4 'Segoe UI', Arial, sans-serif;color:#64748b;">
+                                        Paid via {{payment_brand}} • **** {{payment_last4}}
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+
+                              <!-- Biller / Billed to -->
+                              <tr>
+                                <td class="px-24 py-24" style="padding:16px 24px;border-bottom:1px solid #eef2f7;">
+                                  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                    <tr class="stack">
+                                      <td valign="top" style="width:50%;font:400 13px/1.6 'Segoe UI', Arial, sans-serif;color:#334155;">
+                                        <div style="font-weight:600;color:#0f172a;margin-bottom:6px;">From</div>
+                                        {{company_name}}<br/>
+                                        Operated by {{operator_legal_name}} (Sole Proprietor)<br/>
+                                        {{company_address_line1}}<br/>
+                                        {{company_address_line2}}<br/>
+                                        {{company_country}}<br/>
+                                        Support: <a href="mailto:{{support_email}}" style="color:#0ea5e9;text-decoration:none;">{{support_email}}</a>
+                                      </td>
+                                      <td valign="top" style="width:50%;font:400 13px/1.6 'Segoe UI', Arial, sans-serif;color:#334155;" class="text-right">
+                                        <div style="font-weight:600;color:#0f172a;margin-bottom:6px;">Billed To</div>
+                                        {{customer_name}}<br/>
+                                        {{customer_company}}<br/>
+                                        {{customer_email}}<br/>
+                                        {{customer_address_line1}}<br/>
+                                        {{customer_address_line2}}<br/>
+                                        {{ customer_city }}/{{ customer_state }} - {{ customer_zip }}<br/>
+                                        {{customer_country}}
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+
+                              <!-- Line items -->
+                              <tr>
+                                <td class="px-24 py-24" style="padding:8px 24px 0 24px;">
+                                  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse;">
+                                    <thead>
+                                      <tr>
+                                        <th align="left" style="padding:10px 0;font:700 12px 'Segoe UI', Arial, sans-serif;color:#475569;border-bottom:1px solid #e2e8f0;">Description</th>
+                                        <th align="center" style="padding:10px 0;font:700 12px 'Segoe UI', Arial, sans-serif;color:#475569;border-bottom:1px solid #e2e8f0;">Qty</th>
+                                        <th align="right" style="padding:10px 0;font:700 12px 'Segoe UI', Arial, sans-serif;color:#475569;border-bottom:1px solid #e2e8f0;">Unit</th>
+                                        <th align="right" style="padding:10px 0;font:700 12px 'Segoe UI', Arial, sans-serif;color:#475569;border-bottom:1px solid #e2e8f0;">Amount</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <!-- Repeat this <tr> for each item -->
+
+                                      <tr>
+                                        <td style="padding:10px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{name}}<div style="color:#64748b;font-size:12px;">{{desc}}</div></td>
+                                        <td align="center" style="padding:10px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{quantity}}</td>
+                                        <td align="right" style="padding:10px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{unit_price}}</td>
+                                        <td align="right" style="padding:10px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{line_total}}</td>
+                                      </tr>
+
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+
+                              <!-- Totals -->
+                              <tr>
+                                <td class="px-24 py-24" style="padding:8px 24px 24px 24px;">
+                                  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" class="totals">
+                                    <tr>
+                                      <td align="right" style="padding:6px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#475569;">Subtotal</td>
+                                      <td align="right" style="padding:6px 0;font:600 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{subtotal}}</td>
+                                    </tr>
+                                    <tr>
+                                      <td align="right" style="padding:6px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#475569;">Tax {{tax_label}}</td>
+                                      <td align="right" style="padding:6px 0;font:600 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{tax_amount}}</td>
+                                    </tr>
+                                      {% if discount_amount %}
+                                    <tr>
+                                      <td align="right" style="padding:6px 0;font:400 13px 'Segoe UI', Arial, sans-serif;color:#475569;">Discount</td>
+                                      <td align="right" style="padding:6px 0;font:600 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;">−{{discount_amount}}</td>
+                                    </tr>
+                                    {% endif %}
+                                    <tr>
+                                      <td align="right" style="padding:10px 0;border-top:1px solid #e2e8f0;font:700 14px 'Segoe UI', Arial, sans-serif;color:#0f172a;">Total Paid</td>
+                                      <td align="right" style="padding:10px 0;border-top:1px solid #e2e8f0;font:700 14px 'Segoe UI', Arial, sans-serif;color:#0f172a;">{{grand_total}}</td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+
+                              <!-- CTA -->
+                    {#          <tr>#}
+                    {#            <td align="center" class="px-24 py-24" style="padding:8px 24px 24px 24px;">#}
+                    {#              <button type="button" id="download-btn" style="display:inline-block;background:#0ea5e9;color:#ffffff;text-decoration:none;font:600 14px 'Segoe UI', Arial, sans-serif;padding:12px 18px;border-radius:8px;">#}
+                    {#                  Download#}
+                    {#              </button>#}
+                    {##}
+                    {#            </td>#}
+                    {#          </tr>#}
+
+                              <!-- Notes -->
+                              <tr>
+                                <td class="px-24 py-24" style="padding:0 24px 24px 24px;">
+                                  <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                                    <div style="font:600 13px 'Segoe UI', Arial, sans-serif;color:#0f172a;margin-bottom:4px;">Notes</div>
+                                    <div style="font:400 12px 'Segoe UI', Arial, sans-serif;color:#475569;">
+                                      Thank you for your purchase. This email serves as your official receipt. For support, reply to this email or contact
+                                      <a href="mailto:{{support_email}}" style="color:#0ea5e9;text-decoration:none;">{{support_email}}</a>.
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+
+                              <!-- Footer -->
+                              <tr>
+                                <td style="background:#0f172a;padding:20px 24px;color:#cbd5e1;">
+                                  <div style="font:400 12px 'Segoe UI', Arial, sans-serif;">
+                                    {{company_name}} · Operated by {{operator_legal_name}} (Sole Proprietor, trading as “{{company_name}}”)<br/>
+                                    {{company_address_line1}}, {{company_address_line2}}, {{company_country}} ·
+                                    <a href="mailto:{{support_email}}" style="color:#93c5fd;text-decoration:none;">{{support_email}}</a>
+                                  </div>
+                                  <div style="font:400 12px 'Segoe UI', Arial, sans-serif;margin-top:8px;">
+                                    Refunds &amp; cancellations are governed by our policy:
+                                    <a href="{{refund_policy_url}}" style="color:#93c5fd;text-decoration:underline;">Refund &amp; Cancellation Policy</a>.
+                                  </div>
+                                  <div style="font:400 11px 'Segoe UI', Arial, sans-serif;color:#94a3b8;margin-top:8px;">
+                                    Descriptor on your statement: {{statement_descriptor}}. If you didn’t authorize this payment, contact us immediately.
+                                  </div>
+                                </td>
+                              </tr>
+
+                            </table>
+
+                            <!-- Legal smallprint -->
+                            <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" class="container" style="width:600px;max-width:600px;margin-top:10px;">
+                              <tr>
+                                <td style="text-align:center;color:#94a3b8;font:400 11px 'Segoe UI', Arial, sans-serif;padding:10px;">
+                                  This transactional email was sent to {{customer_email}} about your purchase at {{company_name}}.
+                                </td>
+                              </tr>
+                            </table>
+
+                          </td>
+                        </tr>
+                      </table>
+              </div>
+
+          </div>
+
+    </div>
+</section>
+
+{% endblock contact_area %}
+
+{% block feature_area %}
+    {{ block.super }}
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+ <!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+{% block js_area %}
+    {{ block.super }}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+        const myButton = document.getElementById('download-btn');
+
+// Add a click event listener
+        myButton.addEventListener('click', function() {
+            console.log()
+            const reportContent = document.getElementById("receiptcontent");
+            console.log(reportContent);
+            const opt = {
+                    margin:      [10, 10, 10, 10],
+                    filename:     'bizanalytic-receipt.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true },
+                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+                // Hide button before printing
+
+            html2pdf().from(reportContent).set(opt).save().then(() => {
+                    // Show button again after saving
+                    //downloadBtn.style.display = 'block';
+            });
+
+         });
+    </script>
+
+{% endblock js_area %}

@@ -226,6 +226,7 @@ class PaymentsHistory(models.Model):
     state = models.CharField(max_length=50, null=True, blank=True)
     postal_code = models.CharField(max_length=15, null=True, blank=True)
     country = models.CharField(max_length=70, null=True, blank=True)
+    download_code = models.CharField(max_length=8, null=True, blank=True)
 
     class Meta:
         verbose_name = "PaymentsHistory"

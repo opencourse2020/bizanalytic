@@ -292,7 +292,7 @@ $('body').on('click', '[data-view]', function() {
                         $("#removeButton").show();
                         downloadbut = $("#download-btn");
                         downloadbut.show();
-                        downloadbut.href="https://bizanalytic.com/logiflex/payments/receipt/?cat="+downcode;
+                        downloadbut.attr('href', "https://bizanalytic.com/logiflex/payments/receipt/?cat="+downcode);
                         const myframe = $("#myFrame");
                         if (myframe) {
                             myframe.remove(); // Removes the iframe element from the DOM

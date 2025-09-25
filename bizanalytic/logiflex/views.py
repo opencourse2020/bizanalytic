@@ -1210,7 +1210,7 @@ class PaymentView(LoginRequiredMixin, CreateView, JsonFormMixin):
                         'quantity': payment.quantity,
                         'unit_price': payment.service_type.price,
                         'description': payment.service_type.description,
-                        'message': f"A new payment received from {client.company}, email: {client.email}",
+                        'message': f"A new payment received from {payment.client.company}, email: {payment.client.email}",
                         'curentyear': datetime.now().year
                     }
                     message = paymentconfirmation(payment_info)

@@ -76,7 +76,7 @@
                           <div class="card-body">
                               <h4 class="text-center" style="color: white;">Available Reports and Credits</h4>
                             <div class="row">
-                                <div class="col-md-3 col-6 d-block text-center px-0 pt-2" style="background-color: #D02D49;">
+                                <div class="col-md-3 col-6 d-block text-center px-0 pt-2" style="background-color: #2570CB;">
                                     <h6 style="color: white; font-weight: 600; font-size: 18px;">Advanced Reports</h6>
                                     <h5 style="color: white">{{ areports }}</h5>
                                 </div>
@@ -88,7 +88,7 @@
                                     <h6 style="color: white; font-weight: 600; font-size: 18px;">Advanced Credits</h6>
                                     <h5 style="color: white">{{ acredits }}</h5>
                                 </div>
-                                <div class="col-md-3 col-6 d-block text-center pt-2" style="background-color: #2570CB;">
+                                <div class="col-md-3 col-6 d-block text-center pt-2" style="background-color: #D02D49;">
                                     <h6 style="color: white; font-weight: 600; font-size: 18px;">Lite Credits</h6>
                                     <h5 style="color: white">{{ lcredits }}</h5>
                                 </div>
@@ -171,10 +171,10 @@
                 </div>
                 <div class="" id="col-2" style="border: 2px solid rgb(204, 204, 204); background: #e1e0e0; display: none">
                     <div class="d-flex justify-content-between w-100 mb-2" id="framebutton" style="display: none; background: #e1e0e0; height: 40px;">
-                        <button class="btn btn-success" type="button" id="spinnerbutton" style="display: none" disabled>
-                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <div class="d-flex" id="spinnerbutton" style="display: none" disabled>
+                          <span class="spinner-border text-success" role="status"></span>
                           Loading...
-                        </button>
+                        </div>
                         <a href="" class="btn btn-success" id="download-btn" style="display: none;"><span class="icon"><i class="ri-book-open-fill"></i> View</span></a>
 {#                        <button class='btn btn-primary btn-sm' id="download-btn" style="display: none; height: 100%; font-size: 0.75rem; border-radius: 30px;"><span class="icon"><i class="ri-printer-fill"></i> Download</span></button>#}
                         <button class='btn btn-outline-primary btn-sm' id="removeButton" style="display: none; height: 80%; font-size: 0.75rem; border-radius: 30px;"><span class="icon"><i class="ri-close-fill"></i></span></button>

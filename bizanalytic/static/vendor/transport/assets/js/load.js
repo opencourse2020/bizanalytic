@@ -265,7 +265,12 @@ $('body').on('click', '[data-view]', function() {
     const formData = new FormData();
 
     formData.append('rx_cfr_ci', cixphoto);
-    $('#loadingModal').modal('show');
+    var col2 = $("#col-2");
+    col2.attr('class', 'col-md-4');
+    col2.show();
+    var spinbtn = $("#spinnerbutton");
+    spinbtn.show();
+    // $('#loadingModal').modal('show');
     $.ajax({
         type: 'POST',
         url: url,
@@ -276,7 +281,7 @@ $('body').on('click', '[data-view]', function() {
         },
         success: function (data) {
             if (data) {
-                $('#loadingModal').modal('hide');
+                // $('#loadingModal').modal('hide');
                 var result = data;
                 var message = result.submessage;
                 var status = result.rpstatus;
@@ -286,12 +291,10 @@ $('body').on('click', '[data-view]', function() {
                     if (status == "success"){
                         // var f = $("#toast_successreport");
                         // var a = new bootstrap.Toast(f);
-
+                        spinbtn.style.display = "none";
                         $("#col-1").attr('class', 'col-md-8');
 
-                        var col2 = $("#col-2");
-                        col2.attr('class', 'col-md-4');
-                        col2.show();
+
                         $("#framebutton").show();
                         $("#removeButton").show();
                         downloadbut = $("#download-btn");

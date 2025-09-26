@@ -1163,7 +1163,7 @@ class WebhookView(View):
 
     def handle_invoice_paid(self, session):
         """Process Invoice Paid Successfully"""
-        print(session)
+        print("Session_Invoice Paid", session)
         pass
 
     def handle_invoice_payment_failed(self, session):

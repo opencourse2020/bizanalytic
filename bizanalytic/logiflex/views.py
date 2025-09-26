@@ -1016,7 +1016,7 @@ class WebhookView(View):
             country = expanded_session.customer_details.address.country
             # company = expanded_session.customer_details.
             # print(f"Line items: {expanded_session.line_items}")
-            print("customer_details:", expanded_session.customer_details)
+            print("customer_details:", expanded_session)
             # stripe_price_id = expanded_session.line_items.data[].price.id
             # print(f"Payment was successful for session: {session['id']}")
             # print(f"Name: {customer_name}")

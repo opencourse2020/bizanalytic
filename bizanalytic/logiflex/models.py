@@ -63,6 +63,7 @@ class NewsLetter_logiflex_subscription(models.Model):
 
 class LogiFlexClient(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    client_number = models.CharField(max_length=50, null=True, blank=True)
     company = models.CharField(max_length=150)
     email = models.CharField(max_length=150)
     phone = models.CharField(max_length=20)
@@ -220,12 +221,15 @@ class PaymentsHistory(models.Model):
     user_browser = models.CharField(max_length=40, blank=True, null=True)
     user_language = models.CharField(max_length=40, blank=True, null=True)
     user_referee = models.CharField(max_length=100, blank=True, null=True)
+    name_on_card = models.CharField(max_length=100, blank=True, null=True)
     address_line1 = models.CharField(max_length=100, null=True, blank=True)
     address_line2 = models.CharField(max_length=100, null=True, blank=True)
     city = models.CharField(max_length=70, null=True, blank=True)
     state = models.CharField(max_length=50, null=True, blank=True)
     postal_code = models.CharField(max_length=15, null=True, blank=True)
     country = models.CharField(max_length=70, null=True, blank=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
+    company = models.CharField(max_length=150, null=True, blank=True)
     download_code = models.CharField(max_length=8, null=True, blank=True)
 
     class Meta:

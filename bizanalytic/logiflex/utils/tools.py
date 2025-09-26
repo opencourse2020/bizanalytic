@@ -4,6 +4,7 @@ import requests
 from bizanalytic.logiflex.models import LogEntry
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.utils.timezone import now
 
 def generatecode(length):
     result = ''
@@ -26,6 +27,21 @@ def makenumericid(length):
         counter += 1
     return result
 
+
+def makeclientnumber(clientid):
+    currentyear = now().strftime("%y")
+    currentmonth = now().strftime("%m")
+    idl = "{:08d}".format(clientid)
+    clnum = f"CL-{idl}-{currentmonth}{currentyear}"
+    return clnum
+
+
+def makereportnumber(reportid, reporttype):
+    currentyear = now().strftime("%y")
+    currentmonth = now().strftime("%m")
+    idl = "{:08d}".format(reportid)
+    rpnum = f"RPT-{idl}-{currentmonth}{currentyear}-{reporttype}"
+    return rpnum
 
 # class DBHandler(logging.Handler):
 #     def emit(self, record):

@@ -981,7 +981,12 @@ class WebhookView(View):
         if event['type'] == 'checkout.session.completed':
             session = event['data']['object']
             self.handle_successful_payment(session)
-
+        elif event['type'] == 'invoice.paid':
+            session = event['data']['object']
+            self.handle_invoice_paid(session)
+        elif event['type'] == 'invoice.payment_failed':
+            session = event['data']['object']
+            self.handle_invoice_payment_failed(session)
         elif event['type'] == 'charge.refunded':
             self.handle_refund(event['data']['object'])
         # Add other event handlers as needed
@@ -997,9 +1002,6 @@ class WebhookView(View):
                 expand=['line_items', 'customer']
             )
 
-            # Important: Reconcile with your database
-            # user = self.request.user
-            # print("User Email:", user.email)
             amount_paid = expanded_session.amount_total / 100  # Convert to currency
 
             email = expanded_session.customer_details.email
@@ -1012,8 +1014,9 @@ class WebhookView(View):
             postal_code = expanded_session.customer_details.address.postal_code
             state = expanded_session.customer_details.address.state
             country = expanded_session.customer_details.address.country
+            # company = expanded_session.customer_details.
             # print(f"Line items: {expanded_session.line_items}")
-            # print("customer_details:", expanded_session.customer_details)
+            print("customer_details:", expanded_session.customer_details)
             # stripe_price_id = expanded_session.line_items.data[].price.id
             # print(f"Payment was successful for session: {session['id']}")
             # print(f"Name: {customer_name}")
@@ -1028,6 +1031,8 @@ class WebhookView(View):
                 client = LogiFlexClient.objects.create(email=email, phone=phone_nb, contact_name=customer_name,
                                                        address_line1=address_line1, address_line2=address_line2,
                                                        city=city, state=state, country=country, postal_code=postal_code)
+                client.client_number = makeclientnumber(client.id)
+                client.save()
                 email_info = {
                     'subject': "Urgent: New Client",
                     'to_email': ["bizanalytics.us@gmail.com", ],
@@ -1049,9 +1054,11 @@ class WebhookView(View):
                             servicepayment.lite_credits += quantity
                         elif payment_plan.name == "onetime_advanced":
                             servicepayment.advanced_credits += quantity
+                        else:
+                            servicepayment.is_active = True
                         servicepayment.stripe_checkout_id = session['id']
                         servicepayment.service_type = payment_plan
-                        servicepayment.is_active = True
+
                         servicepayment.save()
                         servicepayment.reset_quota_if_needed()
 
@@ -1087,8 +1094,9 @@ class WebhookView(View):
                         user_os=os_family, address_line1=address_line1, address_line2=address_line2,
                         city=city, state=state, country=country, postal_code=postal_code)
 
-                    currentyear = now().year
-                    receipt = f"RC{currentyear}-{servicepayment.pk}{client.id}-{paymenthistory.pk}"
+                    currentyear = now().strftime("%y")
+                    currentmonth = now().strftime("%m")
+                    receipt = f"RC{currentmonth}{currentyear}-{servicepayment.pk}{client.id}-{paymenthistory.pk}"
                     paymenthistory.receipt_number = receipt
                     downloadcode = generatecode(8)
                     paymenthistory.download_code = downloadcode
@@ -1149,6 +1157,16 @@ class WebhookView(View):
         # Implement your refund logic
         pass
 
+    def handle_invoice_paid(self, session):
+        """Process Invoice Paid Successfully"""
+        print(session)
+        pass
+
+    def handle_invoice_payment_failed(self, session):
+        """Process refunds"""
+        # Implement your refund logic
+        pass
+
 
 class Pricing_PageView(TemplateView):
     template_name = "logiflex/stripe_pay.html"
@@ -1178,6 +1196,8 @@ class Payments_ListView(LoginRequiredMixin, TemplateView):
                 kwargs["areports"] = service.advanced_reports_allowed - service.advanced_reports_used
                 kwargs["acredits"] = service.advanced_credits
                 kwargs["lcredits"] = service.lite_credits
+                kwargs["subscrib_status"] = service.is_active
+                kwargs["enddate"] = service.end_date
         # kwargs["stripe_publishable_key"] = stripe_publishable
         return super(Payments_ListView, self).get_context_data(**kwargs)
 
@@ -1237,6 +1257,7 @@ class PaymentDetailView(TemplateView):
         if query:
             payment = PaymentsHistory.objects.filter(download_code=query).select_related("client").first()
             if payment:
+                kwargs["customer_number"] = payment.client.client_number
                 kwargs['customer_name'] = payment.client.email
                 kwargs['customer_company'] = payment.client.company
                 kwargs['customer_email'] = payment.client.email
@@ -1309,6 +1330,7 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
         _, ext = os.path.splitext(route_filename)
         ext = ext.lower()  # Convert to lowercase for case-insensitive comparison
         report_type = "free"
+        reportype = "0"
         # Save client and result data
         user = User.objects.filter(email=email_name).first()
         downloadcode = generatecode(8)
@@ -1328,7 +1350,8 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                                                                               defaults={'company': cp_name,
                                                                                         'user': user,
                                                                                         'contact_name': client_nm})
-
+                client.client_number =makeclientnumber(client.id)
+                client.save()
                 report = LogiflexReport(client=client, report_type=report_type,
                                                report_number=1)
                 client_exist = 2
@@ -1347,17 +1370,20 @@ class SampleReportCreateView(CreateView, JsonFormMixin):
                 client, created = LogiFlexClient.objects.update_or_create(email=email_name,
                                                                               defaults={'company': cp_name,
                                                                                         'contact_name': client_nm})
+                client.client_number = makeclientnumber(client.id)
+                client.save()
                 report = LogiflexReport(client=client, report_type=report_type, report_number=1)
                 client_exist = 2
 
         report.save()
+
         # add route file
         report.routefile = route_file
         report.routefile_ext = ext
+
         # add report ID
-        currentyear = now().year
-        idl = "{:06d}".format(report.pk)
-        report.report_id = f"RPT-{currentyear}-{idl}"
+        report.report_id = makereportnumber(report.pk, reportype)
+
         # add expected_delivery
         report.expected_delivery = now() + timedelta(days=1)
         report.download_code = downloadcode
@@ -1491,10 +1517,10 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             # add route file
             logireport.routefile = route_file
             logireport.routefile_ext = ext
+
             # add report ID
-            currentyear = now().year
-            idl = "{:06d}".format(logireport.pk)
-            logireport.report_id = f"RPT-{currentyear}-{idl}"
+            logireport.report_id = makereportnumber(logireport.pk, reportype)
+
             # add expected_delivery
             logireport.expected_delivery = now() + timedelta(days=1)
 

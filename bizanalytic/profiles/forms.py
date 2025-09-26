@@ -11,6 +11,7 @@ from allauth.account.forms import SignupForm, LoginForm, ResetPasswordForm
 from . import models
 from bizanalytic.logiflex.models import LogiFlexClient
 from bizanalytic.logiflex.utils.mail import sendnotificationemail
+from bizanalytic.logiflex.utils.tools import makeclientnumber
 # from captcha.fields import ReCaptchaField
 
 User = get_user_model()
@@ -81,6 +82,8 @@ class ProfileCreateForm(SignupForm):
             client = LogiFlexClient.objects.filter(email=user.email).first()
             if not client:
                 client = LogiFlexClient(user=user, email=user.email)
+                client.save()
+                client.client_number = makeclientnumber(client.id)
                 client.save()
 
             email_info = {

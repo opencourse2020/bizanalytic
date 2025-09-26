@@ -96,7 +96,17 @@
                             </div>
 
                           </div>
-                            <p class="text-end me-4" style="color:white;">Your Subscription is valid until: <span style="color: #fa4242">10/30/2025</span></p>
+                            <div class="d-flex">
+                                <p class="text-end me-4" style="color:white;">Subscription Status:
+                                    {% if subscrib_status %}
+                                        <span style="color: #0ae536">Active</span>
+                                    {% else %}
+                                        <span style="color: #fa4242">InActive</span>
+                                    {% endif %}
+                                </p>
+                                <p class="text-end me-4" style="color:white;">Your Subscription is valid until: <span style="color: #fa4242">{{ enddate }}</span></p>
+
+                            </div>
                         </div>
                       </div>
                     </div>
@@ -166,7 +176,7 @@
                 </div>
                 <div class="" id="col-2" style="border: 2px solid rgb(204, 204, 204); background: #e1e0e0; display: none">
                     <div class="d-flex justify-content-between w-100 mb-2 mt-1" id="framebutton" style="display: none; background: #e1e0e0; height: 40px;">
-                          <span class="spinner-border text-success" id="spinnerbutton" role="status">^</span>
+                          <span class="spinner-border text-primary" id="spinnerbutton" role="status">^</span>
                         <a href="" class="btn btn-primary" id="download-btn" style="display: none;"><span class="icon"><i class="ri-book-open-fill"></i> View</span></a>
                         <button class='btn btn-outline-primary btn-sm' id="removeButton" style="display: none; height: 80%; font-size: 0.75rem; border-radius: 30px;"><span class="icon"><i class="ri-close-fill"></i></span></button>
                     </div>

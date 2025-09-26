@@ -269,8 +269,8 @@ $('body').on('click', '[data-view]', function() {
     col2.attr('class', 'col-md-4');
     col2.show();
     var spinbtn = $("#spinnerbutton");
-    spinbtn.style.display = "";
-    // $('#loadingModal').modal('show');
+    // spinbtn.style.display = "";
+    $('#loadingModal').modal('show');
     $.ajax({
         type: 'POST',
         url: url,
@@ -291,8 +291,8 @@ $('body').on('click', '[data-view]', function() {
                     if (status == "success"){
                         // var f = $("#toast_successreport");
                         // var a = new bootstrap.Toast(f);
-                        // spinbtn.hide();
-                        spinbtn.style.display = "none";
+                        spinbtn.hide();
+                        // spinbtn.style.display = "none";
                         $("#col-1").attr('class', 'col-md-8');
 
 

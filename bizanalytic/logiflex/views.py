@@ -1163,6 +1163,7 @@ class WebhookView(View):
 
     def handle_invoice_paid(self, session):
         """Process Invoice Paid Successfully"""
+        logpay = LogPayments.objects.create(session=session)
         print("Session_Invoice Paid", session)
         pass
 

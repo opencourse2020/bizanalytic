@@ -1092,7 +1092,8 @@ class WebhookView(View):
                         amount_paid=amount_paid, quantity=quantity, ipaddress=ip, user_referee=user_page_referer,
                         user_language=user_language, user_device=device_type, user_browser=browser_family,
                         user_os=os_family, address_line1=address_line1, address_line2=address_line2,
-                        city=city, state=state, country=country, postal_code=postal_code)
+                        city=city, state=state, country=country, postal_code=postal_code, name_on_card=customer_name,
+                        phone_number=phone_nb)
 
                     currentyear = now().strftime("%y")
                     currentmonth = now().strftime("%m")

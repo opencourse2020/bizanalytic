@@ -275,16 +275,18 @@ $('body').on('click', '[data-view]', function() {
         headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
         },
         success: function (data) {
+            $('#loadingModal').modal('hide');
             if (data) {
                 var result = data;
                 var message = result.submessage;
                 var status = result.rpstatus;
                 var downcode = result.downloadcode;
+
                 if (message) {
                     if (status == "success"){
                         // var f = $("#toast_successreport");
                         // var a = new bootstrap.Toast(f);
-                        $('#loadingModal').modal('hide');
+
                         $("#col-1").attr('class', 'col-md-8');
 
                         var col2 = $("#col-2");

@@ -1171,8 +1171,13 @@ class Payments_ListView(LoginRequiredMixin, TemplateView):
             user = self.request.user
             if user:
                 client = LogiFlexClient.objects.filter(user=user).first()
+                service = ServicePayment.objects.filter(client=client).first()
                 payments = PaymentsHistory.objects.filter(client=client)
                 kwargs["payments"] = payments
+                kwargs["lreports"] = service.reports_allowed - service.reports_used
+                kwargs["areports"] = service.advanced_reports_allowed - service.advanced_reports_used
+                kwargs["acredits"] = service.advanced_credits
+                kwargs["lcredits"] = service.lite_credits
         # kwargs["stripe_publishable_key"] = stripe_publishable
         return super(Payments_ListView, self).get_context_data(**kwargs)
 

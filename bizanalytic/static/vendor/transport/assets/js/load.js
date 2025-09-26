@@ -265,6 +265,7 @@ $('body').on('click', '[data-view]', function() {
     const formData = new FormData();
 
     formData.append('rx_cfr_ci', cixphoto);
+    $('#loadingModal').modal('show');
     $.ajax({
         type: 'POST',
         url: url,
@@ -283,6 +284,7 @@ $('body').on('click', '[data-view]', function() {
                     if (status == "success"){
                         // var f = $("#toast_successreport");
                         // var a = new bootstrap.Toast(f);
+                        $('#loadingModal').modal('hide');
                         $("#col-1").attr('class', 'col-md-8');
 
                         var col2 = $("#col-2");

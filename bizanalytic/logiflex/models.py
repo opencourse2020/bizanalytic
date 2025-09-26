@@ -94,6 +94,7 @@ class PricingPlan(models.Model):
         ('starter', _("Starter Monthly Subscription")),
         ('pro', _("Pro Monthly Subscription")),
         ('quarterly', _("Pro Quarterly Plan")),
+        ('daily', _("Daily Plan")),
     ]
     name = models.CharField(max_length=50, choices=PLAN_CHOICES)
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
@@ -127,6 +128,7 @@ class ServicePayment(models.Model):
     def set_quota(self):
         if self.service_type.name == 'starter':
             self.reports_allowed = 3
+            self.advanced_reports_allowed = 0
             self.advanced_credits = 1
             self.reset_date = now() + timedelta(days=30)
         elif self.service_type.name == 'pro':
@@ -137,6 +139,12 @@ class ServicePayment(models.Model):
             self.reports_allowed = 25
             self.advanced_reports_allowed = 4
             self.reset_date = now() + timedelta(days=90)
+        elif self.service_type.name == 'daily':
+            self.reports_allowed = 1
+            self.advanced_reports_allowed = 0
+            self.advanced_credits = 1
+            self.lite_credits = 1
+            self.reset_date = now() + timedelta(days=7)
         # elif self.service_type.name == 'onetime_lite':
         #     self.reports_allowed = 1
         #     self.reset_date = now() + timedelta(days=30)

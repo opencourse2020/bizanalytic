@@ -1015,7 +1015,9 @@ class WebhookView(View):
             postal_code = expanded_session.customer_details.address.postal_code
             state = expanded_session.customer_details.address.state
             country = expanded_session.customer_details.address.country
-            # company = expanded_session.customer_details.
+            if company_names[0].key == "companyname":
+                company = company_names[0].text.value
+
             # print(f"Line items: {expanded_session.line_items}")
             print("company_details:", company_names[0].key, company_names[0].text.value)
             # stripe_price_id = expanded_session.line_items.data[].price.id
@@ -1094,7 +1096,7 @@ class WebhookView(View):
                         user_language=user_language, user_device=device_type, user_browser=browser_family,
                         user_os=os_family, address_line1=address_line1, address_line2=address_line2,
                         city=city, state=state, country=country, postal_code=postal_code, name_on_card=customer_name,
-                        phone_number=phone_nb)
+                        phone_number=phone_nb, company=company)
 
                     currentyear = now().strftime("%y")
                     currentmonth = now().strftime("%m")

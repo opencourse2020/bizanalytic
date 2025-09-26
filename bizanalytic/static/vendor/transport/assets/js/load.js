@@ -291,7 +291,7 @@ $('body').on('click', '[data-view]', function() {
                     if (status == "success"){
                         // var f = $("#toast_successreport");
                         // var a = new bootstrap.Toast(f);
-                        spinbtn.style.display = "none";
+                        spinbtn.hide();
                         $("#col-1").attr('class', 'col-md-8');
 
 

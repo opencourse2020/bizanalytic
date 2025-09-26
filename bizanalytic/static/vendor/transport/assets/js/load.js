@@ -269,8 +269,9 @@ $('body').on('click', '[data-view]', function() {
     col2.attr('class', 'col-md-4');
     col2.show();
     var spinbtn = $("#spinnerbutton");
+    spinbtn.show()
     // spinbtn.style.display = "";
-    $('#loadingModal').modal('show');
+    // $('#loadingModal').modal('show');
     $.ajax({
         type: 'POST',
         url: url,

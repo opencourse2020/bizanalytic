@@ -268,7 +268,9 @@ $('body').on('click', '[data-view]', function() {
     var col2 = $("#col-2");
     col2.attr('class', 'col-md-4');
     col2.show();
+    var downloadbut = $("#download-btn");
     var spinbtn = $("#spinnerbutton");
+    downloadbut.hide();
     spinbtn.show()
     // spinbtn.style.display = "";
     // $('#loadingModal').modal('show');
@@ -299,7 +301,7 @@ $('body').on('click', '[data-view]', function() {
 
                         $("#framebutton").show();
                         $("#removeButton").show();
-                        downloadbut = $("#download-btn");
+
                         downloadbut.show();
                         downloadbut.attr('href', "https://bizanalytic.com/logiflex/payments/receipt/?cat="+downcode);
                         const myframe = $("#myFrame");

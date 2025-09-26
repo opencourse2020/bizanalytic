@@ -1001,6 +1001,7 @@ class WebhookView(View):
                 id=session.id,
                 expand=['line_items', 'customer']
             )
+            company_names = expanded_session.custom_fields
 
             amount_paid = expanded_session.amount_total / 100  # Convert to currency
 
@@ -1016,7 +1017,7 @@ class WebhookView(View):
             country = expanded_session.customer_details.address.country
             # company = expanded_session.customer_details.
             # print(f"Line items: {expanded_session.line_items}")
-            print("customer_details:", expanded_session)
+            print("customer_details:", company_names[0])
             # stripe_price_id = expanded_session.line_items.data[].price.id
             # print(f"Payment was successful for session: {session['id']}")
             # print(f"Name: {customer_name}")

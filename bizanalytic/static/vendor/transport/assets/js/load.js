@@ -275,8 +275,8 @@ $('body').on('click', '[data-view]', function() {
         headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
         },
         success: function (data) {
-            $('#loadingModal').modal('hide');
             if (data) {
+                $('#loadingModal').modal('hide');
                 var result = data;
                 var message = result.submessage;
                 var status = result.rpstatus;

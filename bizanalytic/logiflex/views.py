@@ -1209,7 +1209,8 @@ class WebhookView(View):
         if session.get('price'):
             price_id = session.get('price')
         logpay = LogPayments.objects.create(session=session)
-        subscription_id = session.get('lines').data[0].parent
+        subscription_id = session.get('lines').data[0].parent.subscription_item_details.subscription
+        price_id = session.get('lines').data[0].pricing.price_details.price
         # print("Session_Invoice Paid", session)
 
         print("SUBSCRIPTION ID:", subscription_id)

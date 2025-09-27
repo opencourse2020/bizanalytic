@@ -1018,8 +1018,8 @@ class WebhookView(View):
             if company_names[0].key == "companyname":
                 company = company_names[0].text.value
 
-            # print(f"Line items: {expanded_session.line_items}")
-            print("company_details:", company_names[0].key, company_names[0].text.value)
+            print(f"Line items: {expanded_session.line_items}")
+            print("company_details:", expanded_session.customer_details)
             # stripe_price_id = expanded_session.line_items.data[].price.id
             # print(f"Payment was successful for session: {session['id']}")
             # print(f"Name: {customer_name}")
@@ -1164,6 +1164,8 @@ class WebhookView(View):
     def handle_invoice_paid(self, session):
         """Process Invoice Paid Successfully"""
         logpay = LogPayments.objects.create(session=session)
+
+
         print("Session_Invoice Paid", session)
         pass
 

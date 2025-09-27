@@ -1198,8 +1198,12 @@ class WebhookView(View):
 
     def handle_invoice_paid(self, session):
         """Process Invoice Paid Successfully"""
-        subscription_id = session.lines.data[0].parent.subscription
-        price_id = session.lines.data[0].pricing.price_details.price
+        subscription_id = ""
+        if session.get('subscription'):
+            subscription_id = session.get('subscription')
+        price_id = ""
+        if session.get('price'):
+            price_id = session.get('price')
         logpay = LogPayments.objects.create(session=session)
 
         # print("Session_Invoice Paid", session)

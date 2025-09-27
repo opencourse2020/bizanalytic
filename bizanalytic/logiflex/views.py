@@ -1017,7 +1017,7 @@ class WebhookView(View):
 
             # Check if client is an existing Client
             client_reference_id_part1 = client_reference_id.split("-")[0]
-            client_type = 2
+            client_type = 1
             if client_reference_id_part1 == "CLTEST":
                 client_type = 1                                       # New Client
             elif client_reference_id_part1 == "CL":
@@ -1049,9 +1049,10 @@ class WebhookView(View):
             quantity = expanded_session.line_items.data[0].quantity
 
             # check if client exists. if not it will be added
+            logiclient = ""
             if client_type == 2:
                 logiclient = LogiFlexClient.objects.filter(client_number=client_reference_id).first()
-            else:
+            if not logiclient:
                 logiclient = LogiFlexClient.objects.filter(email=email).first()
             # Check if Client email matches his client number
 

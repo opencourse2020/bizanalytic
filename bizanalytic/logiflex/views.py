@@ -1049,10 +1049,13 @@ class WebhookView(View):
             quantity = expanded_session.line_items.data[0].quantity
 
             # check if client exists. if not it will be added
-            logiclient = LogiFlexClient.objects.filter(client_number=client_reference_id).first()
+            if client_type == 2:
+                logiclient = LogiFlexClient.objects.filter(client_number=client_reference_id).first()
+            else:
+                logiclient = LogiFlexClient.objects.filter(email=email).first()
             # Check if Client email matches his client number
 
-            if client_type == 1 or not logiclient:
+            if client_type == 1 and not logiclient:
                 logiclient = LogiFlexClient.objects.create(email=email, phone=phone_nb, contact_name=customer_name,
                                                        address_line1=address_line1, address_line2=address_line2,
                                                        city=city, state=state, country=country, postal_code=postal_code,
@@ -1068,7 +1071,7 @@ class WebhookView(View):
                     'curentyear': datetime.now().year
                 }
                 sendnotificationemail.delay(email_info)
-            elif logiclient and client_type == 2:
+            elif logiclient:
                 if not logiclient.company:
                     logiclient.company = company
                 if not logiclient.state:
@@ -1205,8 +1208,8 @@ class WebhookView(View):
         if session.get('price'):
             price_id = session.get('price')
         logpay = LogPayments.objects.create(session=session)
-
-        # print("Session_Invoice Paid", session)
+        subscription_id = session.get('lines')
+        print("Session_Invoice Paid", session)
 
         print("SUBSCRIPTION ID:", subscription_id)
         print("STRIPE PRICE ID:", price_id)

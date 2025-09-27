@@ -1015,11 +1015,12 @@ class WebhookView(View):
             postal_code = expanded_session.customer_details.address.postal_code
             state = expanded_session.customer_details.address.state
             country = expanded_session.customer_details.address.country
+            company = ""
             if company_names[0].key == "companyname":
                 company = company_names[0].text.value
 
-            print(f"Line items: {expanded_session.line_items}")
-            print("company_details:", expanded_session.customer_details)
+            # print(f"Line items: {expanded_session.line_items}")
+            print("company_details:", expanded_session)
             # stripe_price_id = expanded_session.line_items.data[].price.id
             # print(f"Payment was successful for session: {session['id']}")
             # print(f"Name: {customer_name}")
@@ -1029,29 +1030,36 @@ class WebhookView(View):
             strippriceid = expanded_session.line_items.data[0].price.id
             quantity = expanded_session.line_items.data[0].quantity
             # check if client exists. if not it will be added
-            client = LogiFlexClient.objects.filter(email=email).first()
-            if not client:
-                client = LogiFlexClient.objects.create(email=email, phone=phone_nb, contact_name=customer_name,
+            logiclient = LogiFlexClient.objects.filter(email=email).first()
+            if not logiclient:
+                logiclient = LogiFlexClient.objects.create(email=email, phone=phone_nb, contact_name=customer_name,
                                                        address_line1=address_line1, address_line2=address_line2,
-                                                       city=city, state=state, country=country, postal_code=postal_code)
-                client.client_number = makeclientnumber(client.id)
-                client.save()
+                                                       city=city, state=state, country=country, postal_code=postal_code,
+                                                       company=company)
+                logiclient.client_number = makeclientnumber(logiclient.id)
+                logiclient.save()
                 email_info = {
                     'subject': "Urgent: New Client",
                     'to_email': ["bizanalytics.us@gmail.com", ],
-                    'client': client.contact_name,
-                    'company': client.company,
-                    'message': f"A new Client has been created with the following info: client company: {client.company}, email: {email}",
+                    'client': logiclient.contact_name,
+                    'company': logiclient.company,
+                    'message': f"A new Client has been created with the following info: client company: {logiclient.company}, email: {email}",
                     'curentyear': datetime.now().year
                 }
                 sendnotificationemail.delay(email_info)
+            else:
+                if not logiclient.company:
+                    logiclient.company = company
+                if not logiclient.state:
+                    logiclient.state = state
+                logiclient.save()
             # print("Client_email:", client.email)
 
             if strippriceid:
                 payment_plan = PricingPlan.objects.filter(stripe_price_id=strippriceid).first()
                 if payment_plan:
                     # Save payment and Create report instance with empty data
-                    servicepayment = ServicePayment.objects.filter(client=client).first()
+                    servicepayment = ServicePayment.objects.filter(client=logiclient).first()
                     if servicepayment:
                         if payment_plan.name == "onetime_lite":
                             servicepayment.lite_credits += quantity
@@ -1070,7 +1078,7 @@ class WebhookView(View):
                         # if payment_plan.name == "starter":
                         #     advancedcredits = 1
                         servicepayment = ServicePayment.objects.create(
-                            client=client,
+                            client=logiclient,
                             service_type=payment_plan,
                             stripe_checkout_id=session['id'],
                             is_active=True)
@@ -1091,7 +1099,7 @@ class WebhookView(View):
                     # print("browser_family:", browser_family)
 
                     paymenthistory = PaymentsHistory.objects.create(
-                        client=client, service_type=payment_plan, stripe_checkout_id=session['id'],
+                        client=logiclient, service_type=payment_plan, stripe_checkout_id=session['id'],
                         amount_paid=amount_paid, quantity=quantity, ipaddress=ip, user_referee=user_page_referer,
                         user_language=user_language, user_device=device_type, user_browser=browser_family,
                         user_os=os_family, address_line1=address_line1, address_line2=address_line2,
@@ -1100,7 +1108,7 @@ class WebhookView(View):
 
                     currentyear = now().strftime("%y")
                     currentmonth = now().strftime("%m")
-                    receipt = f"RC{currentmonth}{currentyear}-{servicepayment.pk}{client.id}-{paymenthistory.pk}"
+                    receipt = f"RC{currentmonth}{currentyear}-{servicepayment.pk}{logiclient.id}-{paymenthistory.pk}"
                     paymenthistory.receipt_number = receipt
                     downloadcode = generatecode(8)
                     paymenthistory.download_code = downloadcode
@@ -1109,11 +1117,11 @@ class WebhookView(View):
                     email_info = {
                         'payment_link': "https://bizanalytic.com/logiflex/payments/receipt/?cat="+downloadcode,
                         'subject': "Urgent: New Payment",
-                        'to_email': client.email,
-                        'client': client.contact_name,
-                        'company': client.company,
-                        'address_line1': client.address_line1,
-                        'address_line2': client.address_line2,
+                        'to_email': logiclient.email,
+                        'client': logiclient.contact_name,
+                        'company': logiclient.company,
+                        'address_line1': logiclient.address_line1,
+                        'address_line2': logiclient.address_line2,
                         'city': city,
                         'state': state,
                         'postal_code': postal_code,
@@ -1124,7 +1132,7 @@ class WebhookView(View):
                         'quantity': paymenthistory.quantity,
                         'unit_price': servicepayment.service_type.price,
                         'description': servicepayment.service_type.description,
-                        'message': f"A new payment received from {client.company}, email: {email}",
+                        'message': f"A new payment received from {logiclient.company}, email: {email}",
                         'curentyear': datetime.now().year
                     }
                     paymentconfirmationmail.delay(email_info)

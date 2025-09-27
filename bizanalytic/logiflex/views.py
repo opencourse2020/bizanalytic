@@ -1005,6 +1005,24 @@ class WebhookView(View):
 
             amount_paid = expanded_session.amount_total / 100  # Convert to currency
 
+            # Get client reference ID if it exists
+            client_reference_id = ""
+            if expanded_session.client_reference_id:
+                client_reference_id = expanded_session.client_reference_id
+
+            # Get Subscription ID if it exists
+            subscription_id = ""
+            if expanded_session.subscription:
+                subscription_id = expanded_session.subscription
+
+            # Check if client is an existing Client
+            client_reference_id_part1 = client_reference_id.split("-")[0]
+            client_type = 2
+            if client_reference_id_part1 == "CLTEST":
+                client_type = 1                                       # New Client
+            elif client_reference_id_part1 == "CL":
+                client_type = 2                                       # Existing Client
+
             email = expanded_session.customer_details.email
             email = email.lower()
             customer_name = expanded_session.customer_details.name
@@ -1020,7 +1038,7 @@ class WebhookView(View):
                 company = company_names[0].text.value
 
             # print(f"Line items: {expanded_session.line_items}")
-            print("company_details:", expanded_session)
+            # print("company_details:", expanded_session)
             # stripe_price_id = expanded_session.line_items.data[].price.id
             # print(f"Payment was successful for session: {session['id']}")
             # print(f"Name: {customer_name}")
@@ -1029,9 +1047,12 @@ class WebhookView(View):
             # print(f"Payment Amount: {amount_paid}")
             strippriceid = expanded_session.line_items.data[0].price.id
             quantity = expanded_session.line_items.data[0].quantity
+
             # check if client exists. if not it will be added
-            logiclient = LogiFlexClient.objects.filter(email=email).first()
-            if not logiclient:
+            logiclient = LogiFlexClient.objects.filter(client_number=client_reference_id).first()
+            # Check if Client email matches his client number
+
+            if client_type == 1 or not logiclient:
                 logiclient = LogiFlexClient.objects.create(email=email, phone=phone_nb, contact_name=customer_name,
                                                        address_line1=address_line1, address_line2=address_line2,
                                                        city=city, state=state, country=country, postal_code=postal_code,
@@ -1047,13 +1068,12 @@ class WebhookView(View):
                     'curentyear': datetime.now().year
                 }
                 sendnotificationemail.delay(email_info)
-            else:
+            elif logiclient and client_type == 2:
                 if not logiclient.company:
                     logiclient.company = company
                 if not logiclient.state:
                     logiclient.state = state
                 logiclient.save()
-            # print("Client_email:", client.email)
 
             if strippriceid:
                 payment_plan = PricingPlan.objects.filter(stripe_price_id=strippriceid).first()
@@ -1069,7 +1089,7 @@ class WebhookView(View):
                             servicepayment.is_active = True
                         servicepayment.stripe_checkout_id = session['id']
                         servicepayment.service_type = payment_plan
-
+                        servicepayment.subscription_id = subscription_id
                         servicepayment.save()
                         servicepayment.reset_quota_if_needed()
 
@@ -1081,8 +1101,15 @@ class WebhookView(View):
                             client=logiclient,
                             service_type=payment_plan,
                             stripe_checkout_id=session['id'],
-                            is_active=True)
-                        servicepayment.set_quota()
+                            subscription_id=subscription_id)
+                        if payment_plan.name == "onetime_lite":
+                            servicepayment.lite_credits += quantity
+                        elif payment_plan.name == "onetime_advanced":
+                            servicepayment.advanced_credits += quantity
+                        else:
+                            servicepayment.is_active = True
+                            servicepayment.save()
+                            servicepayment.set_quota()
 
                     # Get User Session Information
                     ip = get_ip(self.request)
@@ -1171,11 +1198,14 @@ class WebhookView(View):
 
     def handle_invoice_paid(self, session):
         """Process Invoice Paid Successfully"""
+        subscription_id = session.lines.data[0].parent.subscription
+        price_id = session.lines.data[0].pricing.price_details.price
         logpay = LogPayments.objects.create(session=session)
 
+        # print("Session_Invoice Paid", session)
 
-        print("Session_Invoice Paid", session)
-        pass
+        print("SUBSCRIPTION ID:", subscription_id)
+        print("STRIPE PRICE ID:", price_id)
 
     def handle_invoice_payment_failed(self, session):
         """Process refunds"""

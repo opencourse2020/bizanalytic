@@ -108,6 +108,7 @@ class PricingPlan(models.Model):
 class ServicePayment(models.Model):
     client = models.ForeignKey(LogiFlexClient, on_delete=models.SET_NULL, null=True)
     stripe_checkout_id = models.CharField(max_length=200, null=True, blank=True)
+    subscription_id = models.CharField(max_length=200, null=True, blank=True)
     service_type = models.ForeignKey(PricingPlan, on_delete=models.SET_NULL, null=True, blank=True)
     is_active = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
@@ -155,6 +156,7 @@ class ServicePayment(models.Model):
         """Reset quota when billing cycle renews."""
         if self.reset_date and now() >= self.reset_date:
             self.reports_used = 0
+            self.advanced_reports_used = 0
             # Reset based on plan
             if self.service_type.name == 'starter':
                 self.reports_allowed = 3
@@ -171,8 +173,8 @@ class ServicePayment(models.Model):
             elif self.service_type.name == 'daily':
                 self.reports_allowed = 1
                 self.advanced_reports_allowed = 0
-                self.advanced_credits = 1
-                self.lite_credits = 1
+                self.advanced_credits += 1
+                self.lite_credits += 1
                 self.reset_date = now() + timedelta(days=7)
             # elif self.service_type.name == 'onetime_lite':
             #     self.reports_allowed = 1

@@ -226,6 +226,7 @@ class ServicePayment(models.Model):
 class PaymentsHistory(models.Model):
     client = models.ForeignKey(LogiFlexClient, on_delete=models.SET_NULL, null=True)
     stripe_checkout_id = models.CharField(max_length=200, null=True, blank=True)
+    subscription_id = models.CharField(max_length=200, null=True, blank=True)
     service_type = models.ForeignKey(PricingPlan, on_delete=models.SET_NULL, null=True, blank=True)
     amount_paid = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     quantity = models.SmallIntegerField(default=1)

@@ -1049,7 +1049,7 @@ class WebhookView(View):
             quantity = expanded_session.line_items.data[0].quantity
 
             # check if client exists. if not it will be added
-            logiclient = ""
+            logiclient = None
             if client_type == 2:
                 logiclient = LogiFlexClient.objects.filter(client_number=client_reference_id).first()
             if not logiclient:
@@ -1135,7 +1135,7 @@ class WebhookView(View):
                         user_language=user_language, user_device=device_type, user_browser=browser_family,
                         user_os=os_family, address_line1=address_line1, address_line2=address_line2,
                         city=city, state=state, country=country, postal_code=postal_code, name_on_card=customer_name,
-                        phone_number=phone_nb, company=company)
+                        phone_number=phone_nb, company=company, subscription_id=subscription_id)
 
                     currentyear = now().strftime("%y")
                     currentmonth = now().strftime("%m")
@@ -1202,21 +1202,40 @@ class WebhookView(View):
 
     def handle_invoice_paid(self, session):
         """Process Invoice Paid Successfully"""
-        subscription_id = ""
-        if session.get('subscription'):
-            subscription_id = session.get('subscription')
-        price_id = ""
-        if session.get('price'):
-            price_id = session.get('price')
+
         logpay = LogPayments.objects.create(session=session)
+        email = session.get("customer_email")
+        logiclient = LogiFlexClient.objects.filter(email=email).first()
+
         billing_reason = session.get("billing_reason")
         subscription_id = session.get('lines').data[0].parent.subscription_item_details.subscription
         price_id = session.get('lines').data[0].pricing.price_details.price
+
+        payment_plan = PricingPlan.objects.filter(stripe_price_id=price_id).first()
+        if payment_plan and (payment_plan.name == "starter" or payment_plan.name == "pro" or payment_plan.name == "quarterly" or payment_plan.name == "daily"):
+            if billing_reason and not billing_reason == "subscription_create":
+                if logiclient:
+                    servicepayment = None
+                    if subscription_id:
+                        servicepayment = ServicePayment.objects.filter(client=logiclient, subscription_id=subscription_id).first()
+                    if not servicepayment:
+                        servicepayment = ServicePayment.objects.filter(client=logiclient).first()
+                        if servicepayment:
+                            servicepayment.is_active = True
+                            servicepayment.subscription_id=subscription_id
+                            servicepayment.save()
+                            servicepayment.reset_quota_if_needed()
+                    else:
+                        servicepayment.is_active = True
+                        servicepayment.save()
+                        servicepayment.reset_quota_if_needed()
+            else:
+                print("SUBSCRIPTION ID:", subscription_id)
+                print("STRIPE PRICE ID:", price_id)
+                print("Billing Reason:", billing_reason)
         # print("Session_Invoice Paid", session)
 
-        print("SUBSCRIPTION ID:", subscription_id)
-        print("STRIPE PRICE ID:", price_id)
-        print("Billing Reason:", billing_reason)
+
 
     def handle_invoice_payment_failed(self, session):
         """Process refunds"""
@@ -1248,12 +1267,13 @@ class Payments_ListView(LoginRequiredMixin, TemplateView):
                 service = ServicePayment.objects.filter(client=client).first()
                 payments = PaymentsHistory.objects.filter(client=client)
                 kwargs["payments"] = payments
-                kwargs["lreports"] = service.reports_allowed - service.reports_used
-                kwargs["areports"] = service.advanced_reports_allowed - service.advanced_reports_used
-                kwargs["acredits"] = service.advanced_credits
-                kwargs["lcredits"] = service.lite_credits
-                kwargs["subscrib_status"] = service.is_active
-                kwargs["enddate"] = service.end_date
+                if service:
+                    kwargs["lreports"] = service.reports_allowed - service.reports_used
+                    kwargs["areports"] = service.advanced_reports_allowed - service.advanced_reports_used
+                    kwargs["acredits"] = service.advanced_credits
+                    kwargs["lcredits"] = service.lite_credits
+                    kwargs["subscrib_status"] = service.is_active
+                    kwargs["enddate"] = service.end_date
         # kwargs["stripe_publishable_key"] = stripe_publishable
         return super(Payments_ListView, self).get_context_data(**kwargs)
 

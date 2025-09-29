@@ -164,9 +164,10 @@
                                 </div>
                             <div class="card-footer d-flex">
                                 <p>Check the List of all the Payments</p>
-                                <a href="{% url 'logiflex:payments:list' %}" class="btn btn-outline-primary btn-sm" style="padding: 10px 0px; width: 100px">
-                                    <span style="text-transform: uppercase;font-size: 12px;">Payments List</span>
-                                </a>
+                                <div class="d-flex mt-20" style="width: 100%;justify-content: center;">
+                                    <a href="{% url 'logiflex:payments:list' %}" class="btn btn-outline-danger" style="display: flex;align-items:center;max-height: 50px; border-color: #cccccc;width: 145px;border-radius: 30px;"><span class="text" style="font-size: 18px;margin-right: 10px;">Payments List</span> <span class="icon"><i class="ri-arrow-right-circle-fill" style="font-size: 54px;color: #2ba3c4;"></i></span></a>
+
+                                </div>
                             </div>
                             </div>
 

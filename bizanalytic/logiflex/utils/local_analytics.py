@@ -393,6 +393,7 @@ def savereporttodatabase(report):
         for index, row in df.iterrows():
             for col_name in cols:
                 if col_name == "Date" or col_name == "Date_ship" or col_name == "InvoiceDate" or col_name == "PaymentDate":
+                    print(f"Col: {col_name} -- {row[col_name]}")
                     newdate = datetime.strptime(row[col_name], format_string)
                     model_instance.update({col_name: newdate})
                 else:

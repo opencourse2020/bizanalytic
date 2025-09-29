@@ -66,7 +66,7 @@
 {% block contact_area %}
         <!-- contact area starts -->
     <section class="contact-area pt-40 mb-40" >
-        <div class="container" style="max-width: none;">
+        <div class="container" >
 
             <div class="row">
                 <div class="col-md-7">
@@ -76,13 +76,13 @@
                             <p style="margin-bottom: 0; font-size: 16px;">Product Name</p>
                         </div>
                         <div class="col-md-8" style="border-width: 1px; border-style: solid;">
-                            <p>{{ product }}</p>
+                            <p>{{ payment.name }}</p>
                         </div>
                         <div class="col-md-4" style="border-width: 1px; border-style: solid;">
                             <p>Description</p>
                         </div>
                         <div class="col-md-8" style="border-width: 1px; border-style: solid;">
-                            <p>{{ description }}</p>
+                            <p>{{ payment.description }}</p>
                         </div>
                         <div class="col-md-3 col-xs-6" style="border-width: 1px; border-style: solid;">
                             <p>Quantity</p>
@@ -94,13 +94,14 @@
                             <p>Unit Price</p>
                         </div>
                         <div class="col-md-3 col-xs-6" style="border-width: 1px; border-style: solid;">
-                            <p>{{ Unitprice }}</p>
+                            <p>{{ payment.price }}</p>
                         </div>
+                        <div class="col-md-6" style="border-width: 1px; border-style: solid;"></div>
                         <div class="col-md-3 col-xs-6" style="border-width: 1px; border-style: solid;">
                             <p class="text-end">Total Due</p>
                         </div>
                         <div class="col-md-3 col-xs-6" style="border-width: 1px; border-style: solid;">
-                            <p class="text-end">{{ totaldue }}</p>
+                            <p class="text-end">{{ payment.price }}</p>
                         </div>
                     </div>
                 </div>
@@ -113,29 +114,33 @@
                                 <p>Customer Name</p>
                             </div>
                             <div class="col-12" style="border-width: 1px; border-style: solid;">
-                                <p>{{ customername }}</p>
+                                <p>{{ client.company }}</p>
                             </div>
                             <div class="col-12" style="border-width: 1px; border-style: solid;">
                                 <p>Customer Address</p>
                             </div>
                             <div class="col-12" style="border-width: 1px; border-style: solid;">
-                                <p>{{ customeraddress }}</p>
+                                <p>{{ client.address_line1 }}</p>
+                            </div>
+                            <div class="col-12" style="border-width: 1px; border-style: solid;">
+                                <p>{{ client.address_line2 }}</p>
                             </div>
                             <div class="col-5" style="border-width: 1px; border-style: solid;">
-                                <p>{{ city }}</p>
+                                <p>{{ client.city }}</p>
                             </div>
                             <div class="col-2" style="border-width: 1px; border-style: solid;">
-                                <p>{{ postalcode }}</p>
+                                <p>{{ client.postal_code }}</p>
                             </div>
                             <div class="col-5" style="border-width: 1px; border-style: solid;">
-                                <p>{{ state }} - {{ country }}</p>
+                                <p>{{ client.state }} - {{ client.country }}</p>
                             </div>
                         </div>
                     {% elif clientexist == 2 %}
                         <p>New Customer</p>
                     {% endif %}
                 </div>
-                <div class="col-12 d-flex justify-content-end" style="border-width: 1px; border-style: solid;">
+                <div class="col-8" ></div>
+                <div class="col-md-4 d-flex justify-content-end" style="border-width: 1px; border-style: solid;">
                     <stripe-buy-button
                           buy-button-id="buy_btn_1SCkW32QNXQiBdpDMOwdmw2D"
                           publishable-key="pk_test_51RrI822QNXQiBdpDOEzNJN81HbD0zIar8p1W3lkWEV7LOaEb5xE2IWtyrbykyZplLR8WDKO7MEQ2nrzOFQqNRX6h00FaegTcU5">

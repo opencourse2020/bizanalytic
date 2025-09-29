@@ -1303,7 +1303,7 @@ class OrderDetailsView(TemplateView):
             else:
                 kwargs["clientexist"] = 2
         payment = PricingPlan.objects.filter(name=query).first()
-        kwargs["payments"] = payment
+        kwargs["payment"] = payment
         return super(OrderDetailsView, self).get_context_data(**kwargs)
 
 

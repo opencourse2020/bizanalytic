@@ -79,7 +79,7 @@
                               <div class="col-sm-7">
                                   <p class="text-start " style="color:white;">Start On: <span style="color: #fa4242">
                                       {% if startdate %}
-                                        {{ startdate|date:"M d, Y" }}
+                                        {{ startdate|date:"m/d/Y" }}
                                       {% else %}
                                         {{ startdate }}
                                       {% endif %}
@@ -102,7 +102,7 @@
                             <div class="col-sm-7">
                                   <p class="text-start " style="color:white;">Valid Until: <span style="color: #fa4242">
                                       {% if enddate %}
-                                        {{ enddate|date:"M d, Y" }}
+                                        {{ enddate|date:"m/d/Y" }}
                                       {% else %}
                                         {{ enddate }}
                                       {% endif %}
@@ -163,7 +163,7 @@
 
                                 </div>
                             <div class="card-footer d-flex align-items-center">
-                                <p style="width: 60%; margin-bottom: 0;">Check the List of all the Payments</p>
+                                <p style="width: 60%; margin-bottom: 0;">List of Payments</p>
                                 <div class="d-flex" style="width: 40%;justify-content: center;">
                                     <a href="{% url 'logiflex:payments:list' %}" class="btn btn-outline-secondary" style="display: flex;align-items:center;max-height: 50px; border-color: #cccccc;width: 175px;border-radius: 30px; padding: 0;"><span class="text" style="font-size: 18px;margin-right: 10px; width: 135px;">Payments List</span> <span class="icon"><i class="ri-arrow-right-circle-fill" style="font-size: 54px;color: #2ba3c4;"></i></span></a>
 

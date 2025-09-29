@@ -77,7 +77,13 @@
                                 </p>
                               </div>
                               <div class="col-sm-6">
-                                  <p class="text-end me-4" style="color:white;">Subscription Start On: <span style="color: #fa4242">{{ startdate }}</span></p>
+                                  <p class="text-end me-4" style="color:white;">Subscription Start On: <span style="color: #fa4242">
+                                      {% if startdate %}
+                                        {{ startdate|date: 'Y-m-d' }}
+                                      {% else %}
+                                        {{ startdate }}
+                                      {% endif %}
+                                        </span></p>
 
                               </div>
                               <div class="col-sm-6">
@@ -94,7 +100,13 @@
                                 </p>
                               </div>
                             <div class="col-sm-6">
-                                  <p class="text-end me-4" style="color:white;">Subscription is valid until: <span style="color: #fa4242">{{ enddate }}</span></p>
+                                  <p class="text-end me-4" style="color:white;">Subscription is valid until: <span style="color: #fa4242">
+                                      {% if enddate %}
+                                        {{ enddate|date: 'Y-m-d' }}
+                                      {% else %}
+                                        {{ enddate }}
+                                      {% endif %}
+                                  </span></p>
 
                               </div>
 

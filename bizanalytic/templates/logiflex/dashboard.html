@@ -149,9 +149,9 @@
                                         <ul>
                                             {% for payment in payments %}
                                                 <li class="d-flex">
-                                                    <div class="btn btn-outline-primary btn-sm " data-view="{{ payment.pk }}">
+                                                    <a href="{% url 'logiflex:payments:receipt' %}?cat={{ payment.download_code }}" class="btn btn-outline-primary btn-sm ">
                                                         <span style="text-transform: uppercase;font-size: 12px;">{{ payment.receipt_number }}</span>
-                                                    </div>
+                                                    </a>
                                                     <p>{{ payment.payment_date|date:"M d, Y" }}</p>
                                                     <p>{{ payment.quantity }}</p>
                                                     <p>${{ payment.amount_paid }}</p>

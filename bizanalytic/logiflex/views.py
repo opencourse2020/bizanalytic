@@ -1288,6 +1288,26 @@ class Payments_ListView(LoginRequiredMixin, TemplateView):
         return super(Payments_ListView, self).get_context_data(**kwargs)
 
 
+class OrderDetailsView(TemplateView):
+    template_name = "logiflex/payments_verify.html"
+
+    def get_context_data(self, **kwargs):
+        query = self.request.GET.get("cat")
+        query = query.lower()
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            if user:
+                client = LogiFlexClient.objects.filter(user=user).first()
+                kwargs["client"] = client
+                kwargs["clientexist"] = 1
+            else:
+                kwargs["clientexist"] = 2
+        payment = PricingPlan.objects.filter(name=query).first()
+        kwargs["payments"] = payment
+        return super(OrderDetailsView, self).get_context_data(**kwargs)
+
+
+
 class PaymentView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
     def post(self, request, *args, **kwargs):

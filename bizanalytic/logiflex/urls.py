@@ -53,6 +53,7 @@ payment_patterns = [
     path("px-vr/", views.PaymentView.as_view(), name="px-vr"),
     path("list/", views.Payments_ListView.as_view(), name="list"),
     path("receipt/", views.PaymentDetailView.as_view(), name="receipt"),
+    path("order/", views.OrderDetailsView.as_view(), name="order"),
 ]
 
 urlpatterns = [

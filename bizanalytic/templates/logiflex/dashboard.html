@@ -65,15 +65,21 @@
                         <div class="col-md-8" style="background-color: #202135;">
 
                           <div class="card-body">
-                              <div class="d-flex flex-row">
-                                <p class="text-end me-4 flex-column col-sm-4" style="color:white;">Subscription Status:
+                              <div class="row w-100">
+                              <div class="col-sm-4">
+                                  <p class="text-end me-4" style="color:white;">Subscription Status:
                                     {% if subscrib_status %}
                                         <span style="color: #0ae536">Active</span>
                                     {% else %}
                                         <span style="color: #fa4242">InActive</span>
                                     {% endif %}
                                 </p>
-                                <p class="text-end me-4 flex-column col-sm-8" style="color:white;">Your Subscription is valid until: <span style="color: #fa4242">{{ enddate }}</span></p>
+                              </div>
+                              <div class="col-sm-8">
+                                  <p class="text-end me-4" style="color:white;">Your Subscription is valid until: <span style="color: #fa4242">{{ enddate }}</span></p>
+
+                              </div>
+
 
                             </div>
 

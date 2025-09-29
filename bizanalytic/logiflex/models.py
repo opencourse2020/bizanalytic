@@ -499,8 +499,8 @@ class FreightData(models.Model):
     ShipmentMode = models.CharField(max_length=20, null=True, blank=True)               # Transport mode: LTL, FTL, Parcel, Air, Ocean
     CarrierName = models.CharField(max_length=100, null=True, blank=True)                # Freight carrier handling the load
     DriverName = models.CharField(max_length=60, null=True, blank=True)                 # Driver handling the load
-    FreightCost = models.FloatField(null=True, blank=True)                              # Total freight charge (before fuel & accessorials)
-    FuelCost = models.FloatField(null=True, blank=True)                                 # Fuel surcharge amount
+    FreightCost_USD = models.FloatField(null=True, blank=True)                              # Total freight charge (before fuel & accessorials)
+    FuelCost_USD = models.FloatField(null=True, blank=True)                                 # Fuel surcharge amount
     LoadWeight_lbs = models.FloatField(null=True, blank=True)                           # Total load weight (lbs)
     DeliveryStatus = models.CharField(max_length=15, null=True, blank=True)             # On-Time, Late, or In-Transit
     DeliveryTime_hrs = models.FloatField(null=True, blank=True)                         # Actual transit time (hours)
@@ -517,6 +517,19 @@ class FreightData(models.Model):
     PlannedDelivery_hrs = models.FloatField(null=True, blank=True)                      # Expected transit time (hours)
     Currency = models.CharField(max_length=10, null=True, blank=True)                   # Currency used in invoice
     CommodityType = models.CharField(max_length=30, null=True, blank=True)              # Type of goods: Food, Retail, Industrial, etc.
+    Date = models.DateField(null=True, blank=True)
+    Diesel_Price = models.FloatField(null=True, blank=True)
+    CostPerMile = models.FloatField(null=True, blank=True)
+    CostPerHour = models.FloatField(null=True, blank=True)
+    TotalCostPerMile = models.FloatField(null=True, blank=True)
+    CostPerPound = models.FloatField(null=True, blank=True)
+    CostPerPoundMile = models.FloatField(null=True, blank=True)
+    Speed = models.FloatField(null=True, blank=True)
+    OnTime = models.SmallIntegerField(null=True, blank=True)
+    MilesPerHour = models.FloatField(null=True, blank=True)
+    StopsPerDay = models.FloatField(null=True, blank=True)
+    FuelEfficiency = models.FloatField(null=True, blank=True)
+
     class Meta:
         verbose_name = "FreightData"
         verbose_name_plural = "FreightDatas"

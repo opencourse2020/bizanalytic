@@ -144,8 +144,8 @@
                                 <div class="card-body">
                                 <div class="blog-sidebar">
 
-                                    <div class="sidebar-widget">
-                                        <h4 class="widget-title">{% trans "LATEST PAYMENTSS" %}</h4>
+                                    <div class="sidebar-widget" style="padding: 20px;">
+                                        <h5 class="widget-title">{% trans "LATEST PAYMENTS" %}</h5>
                                         <ul>
                                             {% for payment in payments %}
                                                 <li class="d-flex justify-content-around align-items-center">
@@ -263,7 +263,7 @@
                                 <div class="blog-sidebar">
 
                                     <div class="sidebar-widget">
-                                        <h4 class="widget-title">{% trans "New Analytical Reports" %}</h4>
+                                        <h5 class="widget-title">{% trans "New Analytical Reports" %}</h5>
                                         <ul>
                                             {% for newreport in newreports %}
                                                 <li><a href="{% url 'logiflex:reports:reportview' newreport.pk %}?cat={{ newreport.download_code }}">{{ newreport.report_id }}&nbsp;-&nbsp;<span style="color: #a61b1b">{{ newreport.report_date }}</span> <span class="arrow-icon"><i class="ri-arrow-right-double-line"></i></span></a></li>

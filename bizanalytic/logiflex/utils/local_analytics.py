@@ -383,38 +383,7 @@ def savereporttodatabase(report, df):
         for index, row in df.iterrows():
             for col_name in cols:
                 model_instance.update({col_name: row(col_name)})
-            # instance = FreightData(
-            #     report=report,
-            #     ShipmentID=row['ShipmentID'],
-            #     Date_ship=row['Date_ship'],
-            #     OriginCity=row['OriginCity'],
-            #     OriginZIP=row['OriginZIP'],
-            #     DestinationCity=row['DestinationCity'],
-            #     DestinationZIP=row['DestinationZIP'],
-            #     Distance_Miles=row['Distance_Miles'],
-            #     ShipmentMode=row['ShipmentMode'],
-            #     CarrierName=row['CarrierName'],
-            #     DriverName=row['DriverName'],
-            #     FreightCost=row['FreightCost'],
-            #     FuelCost=row['FuelCost'],
-            #     LoadWeight_lbs=row['LoadWeight_lbs'],
-            #     DeliveryStatus=row['DeliveryStatus'],
-            #     DeliveryTime_hrs=row['DeliveryTime_hrs'],
-            #     LoadType=row['LoadType'],
-            #     PalletCount=row['PalletCount'],
-            #     Volume_CuFt=row['Volume_CuFt'],
-            #     RateType=row['RateType'],
-            #     ContractRate=row['ContractRate'],
-            #     AccessorialCharges=row['AccessorialCharges'],
-            #     Accessorials_Detail=row['Accessorials_Detail'],
-            #     Surcharges=row['Surcharges'],
-            #     InvoiceDate=row['InvoiceDate'],
-            #     PaymentDate=row['PaymentDate'],
-            #     PlannedDelivery_hrs=row['PlannedDelivery_hrs'],
-            #     Currency=row['Currency'],
-            #     CommodityType=row['CommodityType'],
-            # )
-            # model_instances.append(instance)
+            print(model_instance)
             freightdata_instance = FreightData(**model_instance)
             freightdata_instance.save()
 
@@ -1427,3 +1396,37 @@ def prepare_driver_costvariance(df):
     costreliability_action.append(f"<strong class='comp'>{lowiqr}</strong> performance is the benchmark for the group. Recognize and Replicate Good Performance")
 
     return hcarvar, lcarvar, costreliability_action
+
+
+# instance = FreightData(
+            #     report=report,
+            #     ShipmentID=row['ShipmentID'],
+            #     Date_ship=row['Date_ship'],
+            #     OriginCity=row['OriginCity'],
+            #     OriginZIP=row['OriginZIP'],
+            #     DestinationCity=row['DestinationCity'],
+            #     DestinationZIP=row['DestinationZIP'],
+            #     Distance_Miles=row['Distance_Miles'],
+            #     ShipmentMode=row['ShipmentMode'],
+            #     CarrierName=row['CarrierName'],
+            #     DriverName=row['DriverName'],
+            #     FreightCost=row['FreightCost'],
+            #     FuelCost=row['FuelCost'],
+            #     LoadWeight_lbs=row['LoadWeight_lbs'],
+            #     DeliveryStatus=row['DeliveryStatus'],
+            #     DeliveryTime_hrs=row['DeliveryTime_hrs'],
+            #     LoadType=row['LoadType'],
+            #     PalletCount=row['PalletCount'],
+            #     Volume_CuFt=row['Volume_CuFt'],
+            #     RateType=row['RateType'],
+            #     ContractRate=row['ContractRate'],
+            #     AccessorialCharges=row['AccessorialCharges'],
+            #     Accessorials_Detail=row['Accessorials_Detail'],
+            #     Surcharges=row['Surcharges'],
+            #     InvoiceDate=row['InvoiceDate'],
+            #     PaymentDate=row['PaymentDate'],
+            #     PlannedDelivery_hrs=row['PlannedDelivery_hrs'],
+            #     Currency=row['Currency'],
+            #     CommodityType=row['CommodityType'],
+            # )
+            # model_instances.append(instance)

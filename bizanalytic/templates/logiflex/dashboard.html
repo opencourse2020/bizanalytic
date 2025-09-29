@@ -84,9 +84,9 @@
                                   <p class="text-end me-4" style="color:white;">Subscription Type:
                                     {% if servicetype == "starter" %}
                                         <span style="color: #0ae536">Starter Subscription</span>
-                                    {% servicetype == "pro" %}
+                                    {% elif servicetype == "pro" %}
                                         <span style="color: #0ae536">Pro Subscription</span>
-                                    {% servicetype == "quarterly" %}
+                                    {% elif servicetype == "quarterly" %}
                                         <span style="color: #0ae536">Quarterly Subscription</span>
                                     {% endif %}
                                 </p>

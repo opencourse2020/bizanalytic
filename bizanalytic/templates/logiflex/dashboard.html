@@ -56,7 +56,7 @@
                     <div class="col-12 text-center mb-20"><a href="{% url 'logiflex:securepay:payment_page' %}" class="btn btn-success">{% trans "Create New Report" %}</a> </div>
                 {% endif %}
                 <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s" style="margin-bottom: 120px;">
-                    <hr> <span class="sub-title text-center" style="color: #0cb7d6; font-size: 24px">PAYMENTS STATUS</span> <hr>
+                    <hr> <span class="sub-title text-center" style="color: #0cb7d6; font-size: 24px">PAYMENTS & SUBSCRIPTION STATUS</span> <hr>
                     <div class="card mb-3" style="background-color: #f5f5f5;">
                     <div class="card-body p-0">
                       <div class="row g-0">
@@ -64,11 +64,11 @@
                           <img src="{% static "vendor/transport/assets/images/card2.jpg" %}" class="img-fluid rounded-start" style="height: 150px" alt="...">
                         </div>
                         <div class="col-md-8" style="background-color: #54595F; padding-left: 10px; padding-top: 10px;">
-
+                                <h6 style="color: white;font-weight: 600;margin-bottom: 20px;">Subscription</h6>
 
                               <div class="row w-100">
                               <div class="col-sm-6">
-                                  <p class="text-end me-4" style="color:white;">Subscription Status:
+                                  <p class="text-end me-4" style="color:white;">Status:
                                     {% if subscrib_status %}
                                         <span style="color: #0ae536">Active</span>
                                     {% else %}
@@ -77,7 +77,7 @@
                                 </p>
                               </div>
                               <div class="col-sm-6">
-                                  <p class="text-end me-4" style="color:white;">Subscription Start On: <span style="color: #fa4242">
+                                  <p class="text-end me-4" style="color:white;">Start On: <span style="color: #fa4242">
                                       {% if startdate %}
                                         {{ startdate|date:"M d, Y" }}
                                       {% else %}
@@ -87,20 +87,20 @@
 
                               </div>
                               <div class="col-sm-6">
-                                  <p class="text-end me-4" style="color:white;">Subscription Type:
+                                  <p class="text-end me-4" style="color:white;">Type:
                                     {% if servicetype == "starter" %}
-                                        <span style="color: #0ae536">Starter Subscription</span>
+                                        <span style="color: #0ae536">Starter</span>
                                     {% elif servicetype == "pro" %}
-                                        <span style="color: #0ae536">Pro Subscription</span>
+                                        <span style="color: #0ae536">Pro</span>
                                     {% elif servicetype == "quarterly" %}
-                                        <span style="color: #0ae536">Quarterly Subscription</span>
+                                        <span style="color: #0ae536">Quarterly</span>
                                     {% elif servicetype == "daily" %}
-                                        <span style="color: #0ae536">Daily Subscription</span>
+                                        <span style="color: #0ae536">Daily</span>
                                     {% endif %}
                                 </p>
                               </div>
                             <div class="col-sm-6">
-                                  <p class="text-end me-4" style="color:white;">Subscription is valid until: <span style="color: #fa4242">
+                                  <p class="text-end me-4" style="color:white;">Valid Until: <span style="color: #fa4242">
                                       {% if enddate %}
                                         {{ enddate|date:"M d, Y" }}
                                       {% else %}

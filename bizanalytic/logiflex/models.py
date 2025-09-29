@@ -108,6 +108,12 @@ class PricingPlan(models.Model):
 
 
 class ServicePayment(models.Model):
+    statustype = (
+        ('1', _("Active")),
+        ('2', _("Paused")),
+        ('3', _("Canceled")),
+        ('4', _("Resumed")),
+    )
     client = models.ForeignKey(LogiFlexClient, on_delete=models.SET_NULL, null=True)
     stripe_checkout_id = models.CharField(max_length=200, null=True, blank=True)
     subscription_id = models.CharField(max_length=200, null=True, blank=True)
@@ -122,6 +128,8 @@ class ServicePayment(models.Model):
     reports_allowed = models.SmallIntegerField(default=0)
     reports_used = models.SmallIntegerField(default=0)
     reset_date = models.DateTimeField(blank=True, null=True)
+    status = models.CharField(max_length=1, choices=statustype, default=1)
+    date_canceled = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name = "ServicePayment"
@@ -267,6 +275,24 @@ class LogPayments(models.Model):
     def __str__(self):
         return f"{self.date_created}"
 
+
+class CancelSubscriptionRequest(models.Model):
+    requesttype = (
+        ('1', _("Pause")),
+        ('2', _("Cancel")),
+        ('3', _("Resume")),
+    )
+    subscription = models.ForeignKey(ServicePayment, on_delete=models.SET_NULL, null=True)
+    request = models.CharField(max_length=1, choices=requesttype, null=True, blank=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "CancelSubscriptionRequest"
+        verbose_name_plural = "CancelSubscriptionRequests"
+        permissions = (("manage_cancelsubscription", "Manage Cancel Subscriptions"),)
+
+    def __str__(self):
+        return f"{self.subscription.client.company} - {self.subscription.service_type.name}"
 
 
 class LogiflexReport(models.Model):
@@ -461,6 +487,36 @@ class GasPriceState(models.Model):
         return f"{str(self.state_code)}, Prem: {str(self.premiumprice)}, Reg: {str(self.regularprice)}, Mid: {str(self.midgradeprice)}, Dies: {str(self.dieselprice)}"
 
 
+class FreightData(models.Model):
+    report = models.ForeignKey(LogiflexReport, on_delete=models.SET_NULL, null=True)
+    ShipmentID = models.CharField(max_length=50, null=True, blank=True)                 # Unique identifier for each shipment
+    Date_ship = models.DateField()                  # Actual shipment date
+    OriginCity = models.CharField()                 # Origine City Name and State
+    OriginZIP = models.CharField()                  # 5-digit ZIP code of origin
+    DestinationCity = models.CharField()            # Destination City Name and State
+    DestinationZIP = models.CharField()             # 5-digit ZIP code of destination
+    Distance_Miles = models.SmallIntegerField()     # Estimated shipment distance (miles)
+    ShipmentMode = models.CharField()               # Transport mode: LTL, FTL, Parcel, Air, Ocean
+    CarrierName = models.CharField()                # Freight carrier handling the load
+    DriverName = models.CharField()                 # Driver handling the load
+    FreightCost = models.FloatField()               # Total freight charge (before fuel & accessorials)
+    FuelCost = models.FloatField()                  # Fuel surcharge amount
+    LoadWeight_lbs = models.FloatField()            # Total load weight (lbs)
+    DeliveryStatus = models.CharField()             # On-Time, Late, or In-Transit
+    DeliveryTime_hrs = models.FloatField()          # Actual transit time (hours)
+    LoadType = models.CharField()                   # Equipment type: Dry Van, Reefer, Flatbed, etc.
+    PalletCount = models.SmallIntegerField()        # Number of pallets shipped
+    Volume_CuFt = models.FloatField()               # Volume of load in cubic feet
+    RateType = models.CharField()                   # Contract or Spot
+    ContractRate = models.FloatField()              # Agreed rate (if available)
+    AccessorialCharges = models.FloatField()        # Total accessorial charges
+    Accessorials_Detail = models.CharField()        # Accessorial types, separated by commas (Detention,Liftgate, ...)
+    Surcharges = models.CharField()                 # Extra charges not in accessorials (Hazmat Fee 25.00)
+    InvoiceDate = models.DateField()                # Date invoice was issued
+    PaymentDate = models.DateField()                # Date invoice was paid
+    PlannedDelivery_hrs = models.FloatField()       # Expected transit time (hours)
+    Currency = models.CharField()                   # Currency used in invoice
+    CommodityType = models.CharField()              # Type of goods: Food, Retail, Industrial, etc.
 
 # **************************************************************************************************
 # ******     Models related to advanced Report     *************************************************

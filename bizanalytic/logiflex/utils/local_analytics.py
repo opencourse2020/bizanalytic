@@ -379,7 +379,7 @@ def predict_cost(df):
 def savereporttodatabase(report, df):
     cols = list(df.columns)
     try:
-        model_instance = {}
+        model_instance = {'report': report}
         for index, row in df.iterrows():
             for col_name in cols:
                 model_instance.update({col_name: row(col_name)})

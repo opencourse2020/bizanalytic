@@ -376,11 +376,15 @@ def predict_cost(df):
     low_variance = low_variance.sort_values('CostVariance', ascending=True)
     return high_variance, low_variance
 
+
 def savereporttodatabase(report):
     if report.routefile_ext == ".csv":
-        df = pd.read_csv(report.routefile)
+        dff = pd.read_csv(report.routefile)
     elif report.routefile_ext == ".xlsx" or report.routefile_ext == ".xls":
-        df = pd.read_excel(report.routefile)
+        dff = pd.read_excel(report.routefile)
+
+    df = clean_data(dff)
+    df = calculate_kpis(df)
 
     cols = list(df.columns)
     try:

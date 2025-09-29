@@ -149,10 +149,10 @@
                                         <ul>
                                             {% for payment in payments %}
                                                 <li class="d-flex justify-content-around align-items-center">
-                                                    <a href="{% url 'logiflex:payments:receipt' %}?cat={{ payment.download_code }}" class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener noreferrer" style="padding: 10px 0px; width: 120px">
+                                                    <a href="{% url 'logiflex:payments:receipt' %}?cat={{ payment.download_code }}" class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener noreferrer" style="padding: 10px 0px; width: 100px">
                                                         <span style="text-transform: uppercase;font-size: 12px;">{{ payment.receipt_number }}</span>
                                                     </a>
-                                                    <p>{{ payment.payment_date|date:"M d, Y" }}</p>
+                                                    <p>{{ payment.payment_date|date:"m d, Y" }}</p>
                                                     <p>{{ payment.quantity }}</p>
                                                     <p>${{ payment.amount_paid }}</p>
                                                 </li>

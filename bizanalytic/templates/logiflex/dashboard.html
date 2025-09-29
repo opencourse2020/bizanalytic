@@ -56,17 +56,49 @@
                     <div class="col-12 text-center mb-20"><a href="{% url 'logiflex:securepay:payment_page' %}" class="btn btn-success">{% trans "Create New Report" %}</a> </div>
                 {% endif %}
                 <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s">
-                    <hr> <span class="sub-title text-center" style="color: #0cb7d6; font-size: 24px">Payments Status</span> <hr>
-                    <div class="row">
-                        <div class="col-sm-4 wow fadeIn" data-wow-delay=".2s">
-                            <div class="single-service-2" style="padding-left: 10px;padding-right: 10px;">
-                                <img src={% static "vendor/transport/assets/images/on-time.png" %} alt="icon" class="service-icon">
-                                <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=download">{% trans "Available Reports" %}</a></h5>
-                                <div class="d-flex mt-20" style="width: 100%;justify-content: center;">
-                                    <a href="{% url 'logiflex:reports:list' %}?cat=download" class="btn btn-outline-danger" style="display: flex;align-items:center;max-height: 50px; border-color: #cccccc;width: 145px;border-radius: 30px;"><span class="text" style="font-size: 18px;margin-right: 10px;">{{ latest_ontime_reports }}&nbsp;{% trans "Reports" %}</span> <span class="icon"><i class="ri-arrow-right-circle-fill" style="font-size: 54px;color: #2ba3c4;"></i></span></a>
+                    <hr> <span class="sub-title text-center" style="color: #0cb7d6; font-size: 24px">PAYMENTS STATUS</span> <hr>
+                    <div class="card mb-3" >
+                      <div class="row g-0">
+                        <div class="col-md-4" style="background-color: #202135;">
+                          <img src="{% static "vendor/transport/assets/images/card1.jpg" %}" class="img-fluid rounded-start" style="height: 150px" alt="...">
+                        </div>
+                        <div class="col-md-8" style="background-color: #202135;">
+
+                          <div class="card-body">
+                              <h4 class="text-center" style="color: white;">Available Reports and Credits</h4>
+                            <div class="row">
+                                <div class="col-md-3 col-6 d-block text-center px-0 pt-2" style="background-color: #2570CB;">
+                                    <h6 style="color: white; font-weight: 600; font-size: 18px;">Advanced Reports</h6>
+                                    <h5 style="color: white">{{ areports }}</h5>
+                                </div>
+                                <div class="col-md-3 col-6 d-block text-center pt-2" style="background-color: #861FB5;">
+                                    <h6 style="color: white; font-weight: 600; font-size: 18px;">Lite Reports</h6>
+                                    <h5 style="color: white">{{ lreports }}</h5>
+                                </div>
+                                <div class="col-md-3 col-6 d-block text-center px-0 pt-2" style="background-color: #FD9325;">
+                                    <h6 style="color: white; font-weight: 600; font-size: 18px;">Advanced Credits</h6>
+                                    <h5 style="color: white">{{ acredits }}</h5>
+                                </div>
+                                <div class="col-md-3 col-6 d-block text-center pt-2" style="background-color: #D02D49;">
+                                    <h6 style="color: white; font-weight: 600; font-size: 18px;">Lite Credits</h6>
+                                    <h5 style="color: white">{{ lcredits }}</h5>
                                 </div>
                             </div>
+
+                          </div>
+                            <div class="d-flex">
+                                <p class="text-end me-4" style="color:white;">Subscription Status:
+                                    {% if subscrib_status %}
+                                        <span style="color: #0ae536">Active</span>
+                                    {% else %}
+                                        <span style="color: #fa4242">InActive</span>
+                                    {% endif %}
+                                </p>
+                                <p class="text-end me-4" style="color:white;">Your Subscription is valid until: <span style="color: #fa4242">{{ enddate }}</span></p>
+
+                            </div>
                         </div>
+                      </div>
                     </div>
 
                 </div>
@@ -144,7 +176,7 @@
                             </div>
                         </div>
                         <div class="col-sm-4 wow fadeIn" data-wow-delay=".3s">
-                            <div class="single-service-2" style="padding: 20px;">
+                            <div class="single-service-2" style="padding-top: 20px;padding-bottom: 20px;padding-right: 10px;padding-left: 10px;">
                                 <img src={% static "vendor/transport/assets/images/process.png" %} alt="icon" class="service-icon">
                                 <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=processing">{% trans "In Process Reports" %}</a></h5>
                                 <div class="d-flex mt-20" style="width: 100%;justify-content: center;">

@@ -88,7 +88,11 @@
                             <p style="margin-bottom: 0; font-size: 16px;">Quantity</p>
                         </div>
                         <div class="col-md-3 col-xs-6" style="border-width: 1px; border-style: solid;">
-                            <p style="margin-bottom: 0; font-size: 16px; color: #000000">{{ Quantity }}</p>
+                            {% if payment.name == "starter" or payment.name == "pro" or payment.name == "quarterly" %}
+                                <p style="margin-bottom: 0; font-size: 16px; color: #000000">1</p>
+                            {% else %}
+                                <p style="margin-bottom: 0; font-size: 16px; color: #000000">--</p>
+                            {% endif %}
                         </div>
                         <div class="col-md-3 col-xs-6" style="border-width: 1px; border-style: solid;">
                             <p style="margin-bottom: 0; font-size: 16px;">Unit Price</p>
@@ -96,7 +100,7 @@
                         <div class="col-md-3 col-xs-6" style="border-width: 1px; border-style: solid;">
                             <p style="margin-bottom: 0; font-size: 16px; color: #000000">{{ payment.price }}</p>
                         </div>
-                        <div class="col-md-6" style="border-width: 1px; border-style: solid;"></div>
+                        <div class="col-md-6"></div>
                         <div class="col-md-3 col-xs-6" style="border-width: 1px; border-style: solid;">
                             <p class="text-end" style="margin-bottom: 0; font-weight: bold">Total Due</p>
                         </div>
@@ -111,28 +115,43 @@
                     {% if clientexist == 1 %}
                         <div class="row">
                             <div class="col-12" style="border-width: 1px; border-style: solid;">
-                                <p>Customer Name</p>
+                                <p style="margin-bottom: 0; font-size: 16px;" >Customer Business Name</p>
                             </div>
                             <div class="col-12" style="border-width: 1px; border-style: solid;">
-                                <p>{{ client.company }}</p>
+                                <p style="margin-bottom: 0; font-weight: bold; color: #000000">{{ client.company }}</p>
                             </div>
                             <div class="col-12" style="border-width: 1px; border-style: solid;">
-                                <p>Customer Address</p>
+                                <p style="margin-bottom: 0; font-size: 16px;">Customer Address</p>
                             </div>
                             <div class="col-12" style="border-width: 1px; border-style: solid;">
-                                <p>{{ client.address_line1 }}</p>
+                                {% if client.address_line1 %}
+                                    <p style="margin-bottom: 0; font-weight: bold; color: #000000">{{ client.address_line1 }}</p>
+                                {% endif %}
                             </div>
                             <div class="col-12" style="border-width: 1px; border-style: solid;">
-                                <p>{{ client.address_line2 }}</p>
+                                {% if client.address_line2 %}
+                                    <p>{{ client.address_line2 }}</p>
+                                {% endif %}
                             </div>
                             <div class="col-5" style="border-width: 1px; border-style: solid;">
-                                <p>{{ client.city }}</p>
+                                {%  if client.city %}
+                                    <p style="margin-bottom: 0; font-weight: bold; color: #000000">{{ client.city }}</p>
+                                {% endif %}
                             </div>
-                            <div class="col-2" style="border-width: 1px; border-style: solid;">
-                                <p>{{ client.postal_code }}</p>
+                            <div class="col-3" style="border-width: 1px; border-style: solid;">
+                                {% if client.postal_code %}
+                                    <p style="margin-bottom: 0; font-weight: bold; color: #000000">{{ client.postal_code }}</p>
+                                 {% endif %}
                             </div>
-                            <div class="col-5" style="border-width: 1px; border-style: solid;">
-                                <p>{{ client.state }} - {{ client.country }}</p>
+                            <div class="col-4" style="border-width: 1px; border-style: solid;">
+                                <p style="margin-bottom: 0; font-weight: bold; color: #000000">
+                                    {% if client.state %}
+                                        {{ client.state }}
+                                    {% endif %}
+                                    {%  if client.country %}
+                                        - {{ client.country }}
+                                    {% endif %}
+                                </p>
                             </div>
                         </div>
                     {% elif clientexist == 2 %}

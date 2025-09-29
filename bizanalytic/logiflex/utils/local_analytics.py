@@ -385,13 +385,18 @@ def savereporttodatabase(report):
 
     df = clean_data(dff)
     df = calculate_kpis(df)
+    format_string = "%m/%d/%Y"
 
     cols = list(df.columns)
     try:
         model_instance = {'report': report}
         for index, row in df.iterrows():
             for col_name in cols:
-                model_instance.update({col_name: row[col_name]})
+                if col_name == "Date" or col_name == "Date_ship" or col_name == "InvoiceDate" or col_name == "PaymentDate":
+                    newdate = datetime.strptime(row[col_name], format_string)
+                    model_instance.update({col_name: newdate})
+                else:
+                    model_instance.update({col_name: row[col_name]})
             freightdata_instance = FreightData(**model_instance)
             freightdata_instance.save()
 

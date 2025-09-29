@@ -132,10 +132,10 @@
                         </div>
 
                     </div>
-                    <div class="service-items mt-50">
+                    <div class="service-items d-flex justify-content-around mt-50">
                     <div class="row">
                         <div class="col-sm-4 wow fadeIn" data-wow-delay=".2s">
-                            <div class="single-service-2" style="padding-left: 10px;padding-right: 10px;">
+                            <div class="single-service-2" style="padding: 20px;">
                                 <img src={% static "vendor/transport/assets/images/on-time.png" %} alt="icon" class="service-icon">
                                 <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=download">{% trans "Available Reports" %}</a></h5>
                                 <div class="d-flex mt-20" style="width: 100%;justify-content: center;">
@@ -144,7 +144,7 @@
                             </div>
                         </div>
                         <div class="col-sm-4 wow fadeIn" data-wow-delay=".3s">
-                            <div class="single-service-2" style="padding-left: 10px;padding-right: 10px;">
+                            <div class="single-service-2" style="padding: 20px;">
                                 <img src={% static "vendor/transport/assets/images/process.png" %} alt="icon" class="service-icon">
                                 <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=processing">{% trans "In Process Reports" %}</a></h5>
                                 <div class="d-flex mt-20" style="width: 100%;justify-content: center;">
@@ -153,7 +153,7 @@
                             </div>
                         </div>
                         <div class="col-sm-4 wow fadeIn" data-wow-delay=".4s">
-                            <div class="single-service-2" style="padding-left: 10px;padding-right: 10px;">
+                            <div class="single-service-2" style="padding: 20px;">
                                 <img src={% static "vendor/transport/assets/images/cancelled.png" %} alt="icon" class="service-icon">
                                 <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=canceled">{% trans "Canceled Reports" %}</a></h5>
                                 <div class="d-flex mt-20" style="width: 100%;justify-content: center;">

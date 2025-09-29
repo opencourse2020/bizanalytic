@@ -376,14 +376,18 @@ def predict_cost(df):
     low_variance = low_variance.sort_values('CostVariance', ascending=True)
     return high_variance, low_variance
 
-def savereporttodatabase(report, df):
+def savereporttodatabase(report):
+    if report.routefile_ext == ".csv":
+        df = pd.read_csv(report.routefile)
+    elif report.routefile_ext == ".xlsx" or report.routefile_ext == ".xls":
+        df = pd.read_excel(report.routefile)
+
     cols = list(df.columns)
     try:
         model_instance = {'report': report}
         for index, row in df.iterrows():
             for col_name in cols:
-                model_instance.update({col_name: row(col_name)})
-            print(model_instance)
+                model_instance.update({col_name: row[col_name]})
             freightdata_instance = FreightData(**model_instance)
             freightdata_instance.save()
 

@@ -1636,6 +1636,8 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             elif advanced_report == 1:
                 servicepayment.mark_advanced_report_used()
 
+                # Save file to FreightData Model
+            savereporttodatabase(logireport)
             # Clean and validate route file and generate logs
             # flags = ""
             print("step 1 before validating")
@@ -1643,6 +1645,7 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             asynch_preprocess = test_validator.delay(logireport.pk, route_filename)
             if asynch_preprocess:
                 flags = asynch_preprocess.get()
+
             # print("df columns after cleaning")
             # print(df.columns)
             # print(df.head(5))

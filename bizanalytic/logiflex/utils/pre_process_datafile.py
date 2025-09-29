@@ -894,9 +894,6 @@ def test_validator(reportid, routefilename):
     # Run analysis
     summary, hcarvar, lcarvar, costreliability_action, contingency_result, contingency_action = run_analysis(data)
 
-    # Save file to FreightData Model
-    savereporttodatabase(report, data)
-
     json_string = json.dumps(summary)
     report.report_summary = json_string
     report.contingency_result = contingency_result

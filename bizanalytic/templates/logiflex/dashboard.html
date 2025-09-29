@@ -153,7 +153,7 @@
                                                         <span style="text-transform: uppercase;font-size: 12px;">{{ payment.receipt_number }}</span>
                                                     </a>
                                                     <p>{{ payment.payment_date|date:"m/d/Y" }}</p>
-                                                    <p style="color: #04b004">{{ payment.quantity }}</p>
+{#                                                    <p style="color: #04b004">{{ payment.quantity }}</p>#}
                                                     <p style="color: #d20606">${{ payment.amount_paid }}</p>
                                                 </li>
                                             {% endfor %}

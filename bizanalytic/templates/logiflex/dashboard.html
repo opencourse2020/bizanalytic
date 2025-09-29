@@ -143,24 +143,27 @@
                             <div class="single-service-2" style="padding-left: 10px;padding-right: 10px;">
                                 <img src={% static "vendor/transport/assets/images/on-time.png" %} alt="icon" class="service-icon">
                                 <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=download">{% trans "Available Reports" %}</a></h5>
-
-                                <a href="{% url 'logiflex:reports:list' %}?cat=download" class="btn btn-outline-light mt-20" style="display: flex;align-items:center;color: #2ba3c4; border-color: #2ba3c4;width: 120px;border-radius: 30px;margin-left: 20px"><span class="text" style="font-size: 18px;margin-right: 10px;color: #000000;">{{ latest_ontime_reports }}&nbsp;{% trans "Reports" %}</span> <span class="icon"><i class="ri-arrow-right-circle-fill" style="font-size: 28px;"></i></span></a>
+                                <div class="d-flex" style="width: 100%;justify-content: center;">
+                                    <a href="{% url 'logiflex:reports:list' %}?cat=download" class="btn btn-outline-danger mt-20" style="display: flex;align-items:center;max-height: 50px; border-color: #2ba3c4;width: 145px;border-radius: 30px;"><span class="text" style="font-size: 18px;margin-right: 10px;">{{ latest_ontime_reports }}&nbsp;{% trans "Reports" %}</span> <span class="icon"><i class="ri-arrow-right-circle-fill" style="font-size: 54px;"></i></span></a>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-4 wow fadeIn" data-wow-delay=".3s">
                             <div class="single-service-2" style="padding-left: 10px;padding-right: 10px;">
                                 <img src={% static "vendor/transport/assets/images/process.png" %} alt="icon" class="service-icon">
                                 <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=processing">{% trans "In Process Reports" %}</a></h5>
-
-                                <a href="{% url 'logiflex:reports:list' %}?cat=processing" class="btn btn-outline-light mt-20" style="display: flex;align-items:center;color: #2ba3c4; border-color: #2ba3c4;width: 120px;border-radius: 30px;margin-left: 20px"><span class="text" style="font-size: 18px;margin-right: 10px;color: #000000;">{{ latest_ontime_reports }}&nbsp;{% trans "Reports" %}</span> <span class="icon"><i class="ri-arrow-right-circle-fill" style="font-size: 28px;"></i></span></a>
+                                <div class="d-flex" style="width: 100%;justify-content: center;">
+                                    <a href="{% url 'logiflex:reports:list' %}?cat=processing" class="btn btn-outline-danger mt-20" style="display: flex;align-items:center;max-height: 50px;border-color: #2ba3c4;width: 145px;border-radius: 30px;"><span class="text" style="font-size: 18px;margin-right: 10px;">{{ latest_ontime_reports }}&nbsp;{% trans "Reports" %}</span> <span class="icon"><i class="ri-arrow-right-circle-fill" style="font-size: 54px;"></i></span></a>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-4 wow fadeIn" data-wow-delay=".4s">
                             <div class="single-service-2" style="padding-left: 10px;padding-right: 10px;">
                                 <img src={% static "vendor/transport/assets/images/cancelled.png" %} alt="icon" class="service-icon">
                                 <h5 class="title"><a href="{% url 'logiflex:reports:list' %}?cat=canceled">{% trans "Canceled Reports" %}</a></h5>
-
-                                <a href="{% url 'logiflex:reports:list' %}?cat=canceled"  class="btn btn-outline-light mt-20" style="display: flex;align-items:center;color: #2ba3c4; border-color: #2ba3c4;width: 120px;border-radius: 30px;margin-left: 20px"><span class="text" style="font-size: 18px;margin-right: 10px;color: #000000;">{{ latest_ontime_reports }}&nbsp;{% trans "Reports" %}</span> <span class="icon"><i class="ri-arrow-right-circle-fill" style="font-size: 28px;"></i></span></a>
+                                <div class="d-flex" style="width: 100%;justify-content: center;">
+                                    <a href="{% url 'logiflex:reports:list' %}?cat=canceled"  class="btn btn-outline-danger mt-20" style="display: flex;align-items:center;max-height: 50px; border-color: #2ba3c4;width: 145px;border-radius: 30px;"><span class="text" style="font-size: 18px;margin-right: 10px;">{{ latest_ontime_reports }}&nbsp;{% trans "Reports" %}</span> <span class="icon"><i class="ri-arrow-right-circle-fill" style="font-size: 54px;"></i></span></a>
+                                </div>
                             </div>
                         </div>
 {#                        <div class="col-lg-6 col-sm-6 wow fadeIn" data-wow-delay=".3s">#}

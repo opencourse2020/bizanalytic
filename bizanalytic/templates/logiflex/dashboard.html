@@ -67,8 +67,8 @@
                                 <h6 style="color: white;font-weight: 600;margin-bottom: 20px;">Subscription</h6>
 
                               <div class="row w-100">
-                              <div class="col-sm-6">
-                                  <p class="text-start me-4" style="color:white;">Status:
+                              <div class="col-sm-5">
+                                  <p class="text-start " style="color:white;">Status:
                                     {% if subscrib_status %}
                                         <span style="color: #0ae536">Active</span>
                                     {% else %}
@@ -76,8 +76,8 @@
                                     {% endif %}
                                 </p>
                               </div>
-                              <div class="col-sm-6">
-                                  <p class="text-start me-4" style="color:white;">Start On: <span style="color: #fa4242">
+                              <div class="col-sm-7">
+                                  <p class="text-start " style="color:white;">Start On: <span style="color: #fa4242">
                                       {% if startdate %}
                                         {{ startdate|date:"M d, Y" }}
                                       {% else %}
@@ -86,8 +86,8 @@
                                         </span></p>
 
                               </div>
-                              <div class="col-sm-6">
-                                  <p class="text-start me-4" style="color:white;">Type:
+                              <div class="col-sm-5">
+                                  <p class="text-start " style="color:white;">Type:
                                     {% if servicetype == "starter" %}
                                         <span style="color: #0ae536">Starter</span>
                                     {% elif servicetype == "pro" %}
@@ -99,8 +99,8 @@
                                     {% endif %}
                                 </p>
                               </div>
-                            <div class="col-sm-6">
-                                  <p class="text-start me-4" style="color:white;">Valid Until: <span style="color: #fa4242">
+                            <div class="col-sm-7">
+                                  <p class="text-start " style="color:white;">Valid Until: <span style="color: #fa4242">
                                       {% if enddate %}
                                         {{ enddate|date:"M d, Y" }}
                                       {% else %}

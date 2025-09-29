@@ -564,6 +564,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         pu = self.request.user
         servicepayment = ServicePayment.objects.filter(client__user_id=pu).first()
+        payments = PaymentsHistory.objects.filter(client__user_id=pu).order_by('-id')[:3]
         report_allowed = 0
         if servicepayment:
             if servicepayment.can_generate_report() or servicepayment.can_generate_advanced_report():
@@ -614,6 +615,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         kwargs["enddate"] = servicepayment.end_date
         kwargs["startdate"] = servicepayment.date_added
         kwargs["servicetype"] = servicepayment.service_type.name
+        kwargs["payments"] = payments
         return super(DashboardView, self).get_context_data(**kwargs)
 
 class ReportHelpersView(CreateView, JsonFormMixin):

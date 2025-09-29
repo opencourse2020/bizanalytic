@@ -139,6 +139,32 @@
                     </div>
                     </div>
 
+
+                            <div class="card">
+                                <div class="card-body">
+                                <div class="blog-sidebar">
+
+                                    <div class="sidebar-widget">
+                                        <h4 class="widget-title">{% trans "LATEST PAYMENTSS" %}</h4>
+                                        <ul>
+                                            {% for payment in payments %}
+                                                <li class="d-flex">
+                                                    <div class="btn btn-outline-primary btn-sm " data-view="{{ payment.pk }}">
+                                                        <span style="text-transform: uppercase;font-size: 12px;">{{ payment.receipt_number }}</span>
+                                                    </div>
+                                                    <p>{{ payment.payment_date|date:"M d, Y" }}</p>
+                                                    <p>{{ payment.quantity }}</p>
+                                                    <p>${{ payment.amount_paid }}</p>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                </div>
+                            </div>
+
+
                 </div>
                 <div class="col-lg-6 wow fadeInRight align-content-center" data-wow-delay=".2s">
 

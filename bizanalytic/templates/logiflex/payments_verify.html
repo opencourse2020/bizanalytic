@@ -126,22 +126,30 @@
                             <div class="col-12" style="border-width: 1px; border-style: solid;">
                                 {% if client.address_line1 %}
                                     <p style="margin-bottom: 0; font-weight: bold; color: #000000">{{ client.address_line1 }}</p>
+                                {% else %}
+                                    <p>&nbsp;</p>
                                 {% endif %}
                             </div>
                             <div class="col-12" style="border-width: 1px; border-style: solid;">
                                 {% if client.address_line2 %}
                                     <p>{{ client.address_line2 }}</p>
+                                {% else %}
+                                    <p>&nbsp;</p>
                                 {% endif %}
                             </div>
                             <div class="col-5" style="border-width: 1px; border-style: solid;">
                                 {%  if client.city %}
                                     <p style="margin-bottom: 0; font-weight: bold; color: #000000">{{ client.city }}</p>
+                                {% else %}
+                                    <p>&nbsp;</p>
                                 {% endif %}
                             </div>
                             <div class="col-3" style="border-width: 1px; border-style: solid;">
                                 {% if client.postal_code %}
                                     <p style="margin-bottom: 0; font-weight: bold; color: #000000">{{ client.postal_code }}</p>
-                                 {% endif %}
+                                 {% else %}
+                                    <p>&nbsp;</p>
+                                {% endif %}
                             </div>
                             <div class="col-4" style="border-width: 1px; border-style: solid;">
                                 <p style="margin-bottom: 0; font-weight: bold; color: #000000">

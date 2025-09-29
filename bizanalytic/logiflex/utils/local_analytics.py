@@ -12,6 +12,8 @@ from django.conf import settings
 from datetime import datetime
 from .report_helpers import *
 from .mail import sendapprovalrequestmail
+from django.db import IntegrityError
+
 
 OPENAI_KEY = settings.OPENAI_KEY
 client = OpenAI(api_key=OPENAI_KEY)
@@ -373,6 +375,49 @@ def predict_cost(df):
 
     low_variance = low_variance.sort_values('CostVariance', ascending=True)
     return high_variance, low_variance
+
+def savereporttodatabase(report, df):
+
+    try:
+        model_instances = []
+        for index, row in df.iterrows():
+            instance = FreightData(
+                report=report,
+                ShipmentID=row['ShipmentID'],
+                Date_ship=row['Date_ship'],
+                OriginCity=row['OriginCity'],
+                OriginZIP=row['OriginZIP'],
+                DestinationCity=row['DestinationCity'],
+                DestinationZIP=row['DestinationZIP'],
+                Distance_Miles=row['Distance_Miles'],
+                ShipmentMode=row['ShipmentMode'],
+                CarrierName=row['CarrierName'],
+                DriverName=row['DriverName'],
+                FreightCost=row['FreightCost'],
+                FuelCost=row['FuelCost'],
+                LoadWeight_lbs=row['LoadWeight_lbs'],
+                DeliveryStatus=row['DeliveryStatus'],
+                DeliveryTime_hrs=row['DeliveryTime_hrs'],
+                LoadType=row['LoadType'],
+                PalletCount=row['PalletCount'],
+                Volume_CuFt=row['Volume_CuFt'],
+                RateType=row['RateType'],
+                ContractRate=row['ContractRate'],
+                AccessorialCharges=row['AccessorialCharges'],
+                Accessorials_Detail=row['Accessorials_Detail'],
+                Surcharges=row['Surcharges'],
+                InvoiceDate=row['InvoiceDate'],
+                PaymentDate=row['PaymentDate'],
+                PlannedDelivery_hrs=row['PlannedDelivery_hrs'],
+                Currency=row['Currency'],
+                CommodityType=row['CommodityType'],
+            )
+            model_instances.append(instance)
+
+        FreightData.objects.bulk_create(model_instances)
+    except IntegrityError:
+        pass
+
 
 @shared_task(name='run_local_analysis')
 def run_analysis(dff):

@@ -490,34 +490,42 @@ class GasPriceState(models.Model):
 class FreightData(models.Model):
     report = models.ForeignKey(LogiflexReport, on_delete=models.SET_NULL, null=True)
     ShipmentID = models.CharField(max_length=50, null=True, blank=True)                 # Unique identifier for each shipment
-    Date_ship = models.DateField()                  # Actual shipment date
-    OriginCity = models.CharField()                 # Origine City Name and State
-    OriginZIP = models.CharField()                  # 5-digit ZIP code of origin
-    DestinationCity = models.CharField()            # Destination City Name and State
-    DestinationZIP = models.CharField()             # 5-digit ZIP code of destination
-    Distance_Miles = models.SmallIntegerField()     # Estimated shipment distance (miles)
-    ShipmentMode = models.CharField()               # Transport mode: LTL, FTL, Parcel, Air, Ocean
-    CarrierName = models.CharField()                # Freight carrier handling the load
-    DriverName = models.CharField()                 # Driver handling the load
-    FreightCost = models.FloatField()               # Total freight charge (before fuel & accessorials)
-    FuelCost = models.FloatField()                  # Fuel surcharge amount
-    LoadWeight_lbs = models.FloatField()            # Total load weight (lbs)
-    DeliveryStatus = models.CharField()             # On-Time, Late, or In-Transit
-    DeliveryTime_hrs = models.FloatField()          # Actual transit time (hours)
-    LoadType = models.CharField()                   # Equipment type: Dry Van, Reefer, Flatbed, etc.
-    PalletCount = models.SmallIntegerField()        # Number of pallets shipped
-    Volume_CuFt = models.FloatField()               # Volume of load in cubic feet
-    RateType = models.CharField()                   # Contract or Spot
-    ContractRate = models.FloatField()              # Agreed rate (if available)
-    AccessorialCharges = models.FloatField()        # Total accessorial charges
-    Accessorials_Detail = models.CharField()        # Accessorial types, separated by commas (Detention,Liftgate, ...)
-    Surcharges = models.CharField()                 # Extra charges not in accessorials (Hazmat Fee 25.00)
-    InvoiceDate = models.DateField()                # Date invoice was issued
-    PaymentDate = models.DateField()                # Date invoice was paid
-    PlannedDelivery_hrs = models.FloatField()       # Expected transit time (hours)
-    Currency = models.CharField()                   # Currency used in invoice
-    CommodityType = models.CharField()              # Type of goods: Food, Retail, Industrial, etc.
+    Date_ship = models.DateField(null=True, blank=True)                                 # Actual shipment date
+    OriginCity = models.CharField(max_length=50, null=True, blank=True)                 # Origine City Name and State
+    OriginZIP = models.CharField(max_length=12, null=True, blank=True)                  # 5-digit ZIP code of origin
+    DestinationCity = models.CharField(max_length=50, null=True, blank=True)            # Destination City Name and State
+    DestinationZIP = models.CharField(max_length=12, null=True, blank=True)             # 5-digit ZIP code of destination
+    Distance_Miles = models.SmallIntegerField(null=True, blank=True)                    # Estimated shipment distance (miles)
+    ShipmentMode = models.CharField(max_length=20, null=True, blank=True)               # Transport mode: LTL, FTL, Parcel, Air, Ocean
+    CarrierName = models.CharField(max_length=100, null=True, blank=True)                # Freight carrier handling the load
+    DriverName = models.CharField(max_length=60, null=True, blank=True)                 # Driver handling the load
+    FreightCost = models.FloatField(null=True, blank=True)                              # Total freight charge (before fuel & accessorials)
+    FuelCost = models.FloatField(null=True, blank=True)                                 # Fuel surcharge amount
+    LoadWeight_lbs = models.FloatField(null=True, blank=True)                           # Total load weight (lbs)
+    DeliveryStatus = models.CharField(max_length=15, null=True, blank=True)             # On-Time, Late, or In-Transit
+    DeliveryTime_hrs = models.FloatField(null=True, blank=True)                         # Actual transit time (hours)
+    LoadType = models.CharField(max_length=20, null=True, blank=True)                   # Equipment type: Dry Van, Reefer, Flatbed, etc.
+    PalletCount = models.SmallIntegerField(null=True, blank=True)                       # Number of pallets shipped
+    Volume_CuFt = models.FloatField(null=True, blank=True)                              # Volume of load in cubic feet
+    RateType = models.CharField(max_length=20, null=True, blank=True)                   # Contract or Spot
+    ContractRate = models.FloatField(null=True, blank=True)                             # Agreed rate (if available)
+    AccessorialCharges = models.FloatField(null=True, blank=True)                       # Total accessorial charges
+    Accessorials_Detail = models.CharField(max_length=100, null=True, blank=True)       # Accessorial types, separated by commas (Detention,Liftgate, ...)
+    Surcharges = models.CharField(max_length=50, null=True, blank=True)                 # Extra charges not in accessorials (Hazmat Fee 25.00)
+    InvoiceDate = models.DateField(null=True, blank=True)                               # Date invoice was issued
+    PaymentDate = models.DateField(null=True, blank=True)                               # Date invoice was paid
+    PlannedDelivery_hrs = models.FloatField(null=True, blank=True)                      # Expected transit time (hours)
+    Currency = models.CharField(max_length=10, null=True, blank=True)                   # Currency used in invoice
+    CommodityType = models.CharField(max_length=30, null=True, blank=True)              # Type of goods: Food, Retail, Industrial, etc.
+    class Meta:
+        verbose_name = "FreightData"
+        verbose_name_plural = "FreightDatas"
+        permissions = (("manage_freightdata", "Manage FreightData"),)
 
+        unique_together = ('report', 'ShipmentID')
+
+    def __str__(self):
+        return f"Report: {str(self.report.pk)}"
 # **************************************************************************************************
 # ******     Models related to advanced Report     *************************************************
 # **************************************************************************************************

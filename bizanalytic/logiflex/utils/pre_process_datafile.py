@@ -92,7 +92,7 @@ class DateValidator:
         return None, None, 'invalid'
 
     def validate_date_column(self, date_values: List[Union[str, datetime, date]],
-                             column_name: str = 'Date',
+                             column_name: str = 'Date_ship',
                              min_valid_percentage: float = 0.8) -> Dict:
         """
         Validate a column of date values
@@ -893,6 +893,9 @@ def test_validator(reportid, routefilename):
 
     # Run analysis
     summary, hcarvar, lcarvar, costreliability_action, contingency_result, contingency_action = run_analysis(data)
+
+    # Save file to FreightData Model
+    savereporttodatabase(report, data)
 
     json_string = json.dumps(summary)
     report.report_summary = json_string

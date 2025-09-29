@@ -67,7 +67,7 @@
 
 
                               <div class="row w-100">
-                              <div class="col-sm-4">
+                              <div class="col-sm-6">
                                   <p class="text-end me-4" style="color:white;">Subscription Status:
                                     {% if subscrib_status %}
                                         <span style="color: #0ae536">Active</span>
@@ -76,11 +76,25 @@
                                     {% endif %}
                                 </p>
                               </div>
-                              <div class="col-sm-8">
-                                  <p class="text-end me-4" style="color:white;">Your Subscription is valid until: <span style="color: #fa4242">{{ enddate }}</span></p>
+                              <div class="col-sm-6">
+                                  <p class="text-end me-4" style="color:white;">Subscription Start On: <span style="color: #fa4242">{{ startdate }}</span></p>
 
                               </div>
+                              <div class="col-sm-6">
+                                  <p class="text-end me-4" style="color:white;">Subscription Type:
+                                    {% if servicetype == "starter" %}
+                                        <span style="color: #0ae536">Starter Subscription</span>
+                                    {% servicetype == "pro" %}
+                                        <span style="color: #0ae536">Pro Subscription</span>
+                                    {% servicetype == "quarterly" %}
+                                        <span style="color: #0ae536">Quarterly Subscription</span>
+                                    {% endif %}
+                                </p>
+                              </div>
+                            <div class="col-sm-6">
+                                  <p class="text-end me-4" style="color:white;">Subscription is valid until: <span style="color: #fa4242">{{ enddate }}</span></p>
 
+                              </div>
 
                             </div>
 

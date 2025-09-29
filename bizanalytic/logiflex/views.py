@@ -612,6 +612,8 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         kwargs["lcredits"] = servicepayment.lite_credits
         kwargs["subscrib_status"] = servicepayment.is_active
         kwargs["enddate"] = servicepayment.end_date
+        kwargs["startdate"] = servicepayment.date_added
+        kwargs["servicetype"] = servicepayment.service_type.name
         return super(DashboardView, self).get_context_data(**kwargs)
 
 class ReportHelpersView(CreateView, JsonFormMixin):

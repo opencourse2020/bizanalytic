@@ -100,6 +100,8 @@ class PricingPlan(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     stripe_price_id = models.CharField(max_length=200, blank=True, null=True)  # Stripe price ID
     description = models.CharField(max_length=255, null=True, blank=True)
+    buybuttonid = models.CharField(max_length=100, null=True, blank=True)
+    publishablekey = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f"{self.get_name_display()} - ${self.price}"

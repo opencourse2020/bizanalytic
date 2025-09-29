@@ -55,15 +55,15 @@
                 {% else %}
                     <div class="col-12 text-center mb-20"><a href="{% url 'logiflex:securepay:payment_page' %}" class="btn btn-success">{% trans "Create New Report" %}</a> </div>
                 {% endif %}
-                <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s">
+                <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s" style="margin-bottom: 120px;">
                     <hr> <span class="sub-title text-center" style="color: #0cb7d6; font-size: 24px">PAYMENTS STATUS</span> <hr>
-                    <div class="card mb-3" >
-                    <div class="card-body">
+                    <div class="card mb-3" style="background-color: #f5f5f5;">
+                    <div class="card-body p-0">
                       <div class="row g-0">
                         <div class="col-md-4" style="background-color: #202135;">
                           <img src="{% static "vendor/transport/assets/images/card2.jpg" %}" class="img-fluid rounded-start" style="height: 150px" alt="...">
                         </div>
-                        <div class="col-md-8" style="background-color: #202135;">
+                        <div class="col-md-8" style="background-color: #202135; padding-left: 10px; padding-top: 10px;">
 
 
                               <div class="row w-100">
@@ -88,23 +88,23 @@
 
                         </div>
                       </div>
-                    <div class="card-footer">
-                        <h4 class="text-center" style="color: white;">Available Reports and Credits</h4>
+                    <div class="card-footer" style="background-color: white">
+                        <h5 class="text-center" style="color: #000000;">Available Reports and Credits</h5>
                             <div class="row">
-                                <div class="col-md-3 col-6 d-block text-center px-0 pt-2" style="background-color: #2570CB;">
-                                    <h6 style="color: white; font-weight: 600; font-size: 18px;">Advanced Reports</h6>
+                                <div class="col-md-3 col-6 d-block text-center px-0 pt-2" style="background-color: #54595F;">
+                                    <h6 style="color: white; font-weight: 600; font-size: 16px;">Advanced Reports</h6>
                                     <h5 style="color: white">{{ areports }}</h5>
                                 </div>
-                                <div class="col-md-3 col-6 d-block text-center pt-2" style="background-color: #861FB5;">
-                                    <h6 style="color: white; font-weight: 600; font-size: 18px;">Lite Reports</h6>
+                                <div class="col-md-3 col-6 d-block text-center pt-2" style="background-color: #CAA851;">
+                                    <h6 style="color: white; font-weight: 600; font-size: 16px;">Lite Reports</h6>
                                     <h5 style="color: white">{{ lreports }}</h5>
                                 </div>
-                                <div class="col-md-3 col-6 d-block text-center px-0 pt-2" style="background-color: #FD9325;">
-                                    <h6 style="color: white; font-weight: 600; font-size: 18px;">Advanced Credits</h6>
+                                <div class="col-md-3 col-6 d-block text-center px-0 pt-2" style="background-color: #688DB9;">
+                                    <h6 style="color: white; font-weight: 600; font-size: 16px;">Advanced Credits</h6>
                                     <h5 style="color: white">{{ acredits }}</h5>
                                 </div>
-                                <div class="col-md-3 col-6 d-block text-center pt-2" style="background-color: #D02D49;">
-                                    <h6 style="color: white; font-weight: 600; font-size: 18px;">Lite Credits</h6>
+                                <div class="col-md-3 col-6 d-block text-center pt-2" style="background-color: #9E6243;">
+                                    <h6 style="color: white; font-weight: 600; font-size: 16px;">Lite Credits</h6>
                                     <h5 style="color: white">{{ lcredits }}</h5>
                                 </div>
                             </div>

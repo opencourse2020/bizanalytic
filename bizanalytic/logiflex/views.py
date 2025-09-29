@@ -606,6 +606,12 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         kwargs["late_reports"] = math.ceil((num_late_reports/finished_reports)*100)
         kwargs["newreports"] = new_reports
 
+        kwargs["lreports"] = servicepayment.reports_allowed - servicepayment.reports_used
+        kwargs["areports"] = servicepayment.advanced_reports_allowed - servicepayment.advanced_reports_used
+        kwargs["acredits"] = servicepayment.advanced_credits
+        kwargs["lcredits"] = servicepayment.lite_credits
+        kwargs["subscrib_status"] = servicepayment.is_active
+        kwargs["enddate"] = servicepayment.end_date
         return super(DashboardView, self).get_context_data(**kwargs)
 
 class ReportHelpersView(CreateView, JsonFormMixin):

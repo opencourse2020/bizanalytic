@@ -376,32 +376,117 @@ def predict_cost(df):
     low_variance = low_variance.sort_values('CostVariance', ascending=True)
     return high_variance, low_variance
 
-
-def savereporttodatabase(report):
+@shared_task(name='save_freight_to_database')
+def savefreightdatatodatabase(report):
     if report.routefile_ext == ".csv":
         dff = pd.read_csv(report.routefile)
     elif report.routefile_ext == ".xlsx" or report.routefile_ext == ".xls":
         dff = pd.read_excel(report.routefile)
 
+    expected_columns = [
+        'ShipmentID',
+        'Date_ship',
+        'OriginCity',
+        'OriginZIP',
+        'DestinationCity',
+        'DestinationZIP',
+        'Distance_Miles',
+        'ShipmentMode',
+        'FuelCost_USD',
+        'DriverName',
+        'CarrierName',
+        'LoadWeight_lbs',
+        'DeliveryStatus',
+        'DeliveryTime_hrs',
+        'FreightCost_USD',
+        'LoadType',
+        'PalletCount',
+        'Volume_CuFt',
+        'RateType',
+        'ContractRate',
+        'AccessorialCharges',
+        'Accessorials_Detail',
+        'Surcharges',
+        'InvoiceDate',
+        'PaymentDate',
+        'PlannedDelivery_hrs',
+        'Currency',
+        'CommodityType',
+        'Diesel_Price',
+        'CostPerMile',
+        'CostPerHour',
+        'TotalCostPerMile',
+        'CostPerPound',
+        'CostPerPoundMile',
+        'Speed',
+        'OnTime',
+        'MilesPerHour',
+        'StopsPerDay',
+        'FuelEfficiency',
+    ]
+
     df = clean_data(dff)
     df = calculate_kpis(df)
-    format_string = "%m/%d/%Y"
 
-    cols = list(df.columns)
+
+    cols = df.columns.tolist()
+    for col_name in cols:
+        if col_name in expected_columns:
+            expected_columns.remove(col_name)
+
+    for col in expected_columns:
+        df[col] = None
+
     try:
-        model_instance = {'report': report}
+        model_instance = []
         for index, row in df.iterrows():
-            for col_name in cols:
-                if col_name == "Date" or col_name == "Date_ship" or col_name == "InvoiceDate" or col_name == "PaymentDate":
-                    print(f"Col: {col_name} -- {row[col_name]}")
-                    newdate = datetime.strptime(row[col_name], format_string)
-                    model_instance.update({col_name: newdate})
-                else:
-                    model_instance.update({col_name: row[col_name]})
-            freightdata_instance = FreightData(**model_instance)
-            freightdata_instance.save()
+            instance = FreightData(
+                ShipmentID = row['ShipmentID'],
+                Date_ship = row['Date_ship'],
+                OriginCity = row['OriginCity'],
+                OriginZIP = row['OriginZIP'],
+                DestinationCity = row['DestinationCity'],
+                DestinationZIP = row['DestinationZIP'],
+                Distance_Miles = row['Distance_Miles'],
+                ShipmentMode = row['ShipmentMode'],
+                FuelCost_USD = row['FuelCost_USD'],
+                DriverName = row['DriverName'],
+                CarrierName = row['CarrierName'],
+                LoadWeight_lbs = row['LoadWeight_lbs'],
+                DeliveryStatus = row['DeliveryStatus'],
+                DeliveryTime_hrs = row['DeliveryTime_hrs'],
+                FreightCost_USD = row['FreightCost_USD'],
+                LoadType = row['LoadType'],
+                PalletCount = row['PalletCount'],
+                Volume_CuFt = row['Volume_CuFt'],
+                RateType = row['RateType'],
+                ContractRate = row['ContractRate'],
+                AccessorialCharges = row['AccessorialCharges'],
+                Accessorials_Detail = row['Accessorials_Detail'],
+                Surcharges = row['Surcharges'],
+                InvoiceDate = row['InvoiceDate'],
+                PaymentDate = row['PaymentDate'],
+                PlannedDelivery_hrs = row['PlannedDelivery_hrs'],
+                Currency = row['Currency'],
+                CommodityType = row['CommodityType'],
+                Diesel_Price = row['Diesel_Price'],
+                CostPerMile = row['CostPerMile'],
+                CostPerHour = row['CostPerHour'],
+                TotalCostPerMile = row['TotalCostPerMile'],
+                CostPerPound = row['CostPerPound'],
+                CostPerPoundMile = row['CostPerPoundMile'],
+                Speed = row['Speed'],
+                OnTime = row['OnTime'],
+                MilesPerHour = row['MilesPerHour'],
+                StopsPerDay = row['StopsPerDay'],
+                FuelEfficiency = row['FuelEfficiency']
+            )
+            model_instance.append(instance)
+                # model_instance.update({col_name: row[col_name]})
+            # freightdata_instance = FreightData(**model_instance)
+            # freightdata_instance.save()
 
-        # FreightData.objects.bulk_create(model_instances)
+        FreightData.objects.bulk_create(model_instance)
     except IntegrityError:
         pass
 

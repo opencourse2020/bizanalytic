@@ -1646,7 +1646,6 @@ class FullReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
                 flags = asynch_preprocess.get()
 
             # Save file to FreightData Model
-            savereporttodatabase(logireport)
             # print("df columns after cleaning")
             # print(df.columns)
             # print(df.head(5))

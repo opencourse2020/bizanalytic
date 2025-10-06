@@ -626,7 +626,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 class ResumeSubscriptionView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
-        subscription = ServicePayment.objects.filter(user=self.request.user).first()
+        subscription = ServicePayment.objects.filter(client__user=self.request.user).first()
         message = ""
         if subscription:
             if subscription.status == "2" and subscription.is_active:
@@ -641,7 +641,7 @@ class ResumeSubscriptionView(CreateView, JsonFormMixin):
 class PauseSubscriptionView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
         print("Pause Sub 1")
-        subscription = ServicePayment.objects.filter(user=self.request.user).first()
+        subscription = ServicePayment.objects.filter(client__user=self.request.user).first()
         message = ""
         if subscription:
             if (subscription.status == "1" or subscription.status == "4") and subscription.is_active:
@@ -656,7 +656,7 @@ class PauseSubscriptionView(CreateView, JsonFormMixin):
 
 class CancelSubscriptionView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
-        subscription = ServicePayment.objects.filter(user=self.request.user).first()
+        subscription = ServicePayment.objects.filter(client__user=self.request.user).first()
         message = ""
         if subscription:
             if (subscription.status == "1" or subscription.status == "4") and subscription.is_active:

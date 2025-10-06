@@ -160,14 +160,38 @@
                                             {% if not isactive %}
                                                 {% if subscriptionstatus == "0" or subscriptionstatus == "3" %}
                                                     <div class="col-8">
-                                                        <a href="" class="btn btn-outline-light mb-2" style="width: 240px;">Add a New Subscription </a>
+                                                        <a href="" class="btn btn-outline-light mb-2 " style="width: 240px;">Add a New Subscription </a>
                                                     </div>
+                                                    <div class="col-8 ">
+                                                        <a href="" class="btn btn-outline-light mb-2 disabled" style="width: 240px;">Resume Your Subscription </a>
+                                                    </div>
+                                                    <div class="col-8 ">
+                                                    <a href="" class="btn btn-outline-light mb-2 disabled" style="width: 240px;">Pause Your Subscription </a>
+                                                </div>
+                                                <div class="col-8 ">
+                                                    <a href="" class="btn btn-outline-light disabled" style="width: 240px;">Cancel Your Subscription </a>
+                                                </div>
                                                 {% elif subscriptionstatus == "2"  %}
+                                                    <div class="col-8">
+                                                        <a href="" class="btn btn-outline-light mb-2 disabled" style="width: 240px;">Add a New Subscription </a>
+                                                    </div>
                                                     <div class="col-8 ">
                                                         <a href="" class="btn btn-outline-light mb-2" style="width: 240px;">Resume Your Subscription </a>
                                                     </div>
+                                                    <div class="col-8 ">
+                                                    <a href="" class="btn btn-outline-light mb-2 disabled" style="width: 240px;">Pause Your Subscription </a>
+                                                </div>
+                                                <div class="col-8 ">
+                                                    <a href="" class="btn btn-outline-light disabled" style="width: 240px;">Cancel Your Subscription </a>
+                                                </div>
                                                 {% endif %}
                                             {% else %}
+                                                <div class="col-8">
+                                                        <a href="" class="btn btn-outline-light mb-2 disabled" style="width: 240px;">Add a New Subscription </a>
+                                                    </div>
+                                                <div class="col-8 ">
+                                                        <a href="" class="btn btn-outline-light mb-2 disabled" style="width: 240px;">Resume Your Subscription </a>
+                                                    </div>
                                                 <div class="col-8 ">
                                                     <a href="" class="btn btn-outline-light mb-2" style="width: 240px;">Pause Your Subscription </a>
                                                 </div>

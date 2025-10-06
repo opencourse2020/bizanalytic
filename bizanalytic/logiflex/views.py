@@ -640,12 +640,14 @@ class ResumeSubscriptionView(CreateView, JsonFormMixin):
 
 class PauseSubscriptionView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
+        print("Pause Sub 1")
         subscription = ServicePayment.objects.filter(user=self.request.user).first()
         message = ""
         if subscription:
             if (subscription.status == "1" or subscription.status == "4") and subscription.is_active:
                 ChangeSubscriptionRequest.objects.create(user=self.request.user, subscription=subscription, request="1")
                 message = "Your will receive an email once your request is be processed"
+                print(message)
 
         data = {"submessage": message}
 

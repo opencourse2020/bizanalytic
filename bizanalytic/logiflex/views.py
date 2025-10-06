@@ -578,6 +578,9 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             kwargs["subscriptionstatus"] = servicepayment.status
             kwargs["isactive"] = servicepayment.is_active
             clienttype = 1
+        else:
+            kwargs["subscriptionstatus"] = "0"
+            kwargs["isactive"] = False
         reports = LogiflexReport.objects.filter(client__user=pu)
         total_reports = reports.count()
         if total_reports == 0:
@@ -619,6 +622,49 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         kwargs["servicetype"] = servicepayment.service_type.name
         kwargs["payments"] = payments
         return super(DashboardView, self).get_context_data(**kwargs)
+
+
+class ResumeSubscriptionView(CreateView, JsonFormMixin):
+    def post(self, request, *args, **kwargs):
+        subscription = ServicePayment.objects.filter(user=self.request.user).first()
+        message = ""
+        if subscription:
+            if subscription.status == "2" and subscription.is_active:
+                ChangeSubscriptionRequest.objects.create(user=self.request.user, subscription=subscription, request="3")
+                message = "Your will receive an email once your request is be processed"
+
+        data = {"submessage": message}
+
+        return JsonResponse(data)
+
+
+class PauseSubscriptionView(CreateView, JsonFormMixin):
+    def post(self, request, *args, **kwargs):
+        subscription = ServicePayment.objects.filter(user=self.request.user).first()
+        message = ""
+        if subscription:
+            if (subscription.status == "1" or subscription.status == "4") and subscription.is_active:
+                ChangeSubscriptionRequest.objects.create(user=self.request.user, subscription=subscription, request="1")
+                message = "Your will receive an email once your request is be processed"
+
+        data = {"submessage": message}
+
+        return JsonResponse(data)
+
+
+class CancelSubscriptionView(CreateView, JsonFormMixin):
+    def post(self, request, *args, **kwargs):
+        subscription = ServicePayment.objects.filter(user=self.request.user).first()
+        message = ""
+        if subscription:
+            if (subscription.status == "1" or subscription.status == "4") and subscription.is_active:
+                ChangeSubscriptionRequest.objects.create(user=self.request.user, subscription=subscription, request="2")
+                message = "Your will receive an email once your request is be processed"
+
+        data = {"submessage": message}
+
+        return JsonResponse(data)
+
 
 class ReportHelpersView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):

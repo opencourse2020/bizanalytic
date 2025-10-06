@@ -56,6 +56,13 @@ payment_patterns = [
     path("order/", views.OrderDetailsView.as_view(), name="order"),
 ]
 
+subscription_patterns = [
+    path("resume/", views.ResumeSubscriptionView.as_view(), name="resume"),
+    path("cancel/", views.CancelSubscriptionView.as_view(), name="cancel"),
+    path("pause/", views.PauseSubscriptionView.as_view(), name="pause"),
+
+]
+
 urlpatterns = [
 
     path("", views.IndexView.as_view(), name="index"),
@@ -91,5 +98,8 @@ urlpatterns = [
         "payments/",
         include((payment_patterns, "bizanalytic.logiflex"), namespace="payments"),
     ),
-
+    path(
+        "subscription/",
+        include((subscription_patterns, "bizanalytic.logiflex"), namespace="subscription"),
+    ),
 ]

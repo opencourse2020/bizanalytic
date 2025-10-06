@@ -328,3 +328,78 @@ $('body').on('click', '[data-view]', function() {
 
 
     });
+
+$("#resumesub").click(function (){
+    let url = "https://bizanalytic.com/logiflex/subscription/resume/";
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: "",
+        processData: false,
+        contentType: false,
+        headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success: function (data) {
+            if (data) {
+                let message = data.submessage;
+                if (message) {
+                    var f = $("#toast_successreport");
+                    var a = new bootstrap.Toast(f);
+                    $("#message_body").html(message);
+                    a.show()
+                }
+            }
+        }
+    })
+
+});
+
+$("#pausesub").click(function (){
+    let url = "https://bizanalytic.com/logiflex/subscription/pause/";
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: "",
+        processData: false,
+        contentType: false,
+        headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success: function (data) {
+            if (data) {
+                let message = data.submessage;
+                if (message) {
+                    var f = $("#toast_successreport");
+                    var a = new bootstrap.Toast(f);
+                    $("#message_body").html(message);
+                    a.show()
+                }
+            }
+        }
+    })
+
+});
+
+$("#cancelsub").click(function (){
+    let url = "https://bizanalytic.com/logiflex/subscription/cancel/";
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: "",
+        processData: false,
+        contentType: false,
+        headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success: function (data) {
+            if (data) {
+                let message = data.submessage;
+                if (message) {
+                    var f = $("#toast_successreport");
+                    var a = new bootstrap.Toast(f);
+                    $("#message_body").html(message);
+                    a.show()
+                }
+            }
+        }
+    })
+
+});

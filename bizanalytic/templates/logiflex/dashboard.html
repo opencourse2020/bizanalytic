@@ -160,7 +160,7 @@
                                             {% if not isactive %}
                                                 {% if subscriptionstatus == "0" or subscriptionstatus == "3" %}
                                                     <div class="col-8">
-                                                        <a href="" class="btn btn-outline-warning mb-2 " style="width: 240px;">Add a New Subscription </a>
+                                                        <a href="{% url 'logiflex:pricing' %}" class="btn btn-outline-warning mb-2 " id="addsub" style="width: 240px;">Add a New Subscription </a>
                                                     </div>
                                                     <div class="col-8 ">
                                                         <a href="" class="btn btn-outline-light mb-2 disabled" style="width: 240px;">Resume Your Subscription </a>
@@ -176,7 +176,7 @@
                                                         <a href="" class="btn btn-outline-light mb-2 disabled" style="width: 240px;">Add a New Subscription </a>
                                                     </div>
                                                     <div class="col-8 ">
-                                                        <a href="" class="btn btn-outline-warning mb-2" style="width: 240px;">Resume Your Subscription </a>
+                                                        <a href="" class="btn btn-outline-warning mb-2" id="resumesub" style="width: 240px;">Resume Your Subscription </a>
                                                     </div>
                                                     <div class="col-8 ">
                                                     <a href="" class="btn btn-outline-light mb-2 disabled" style="width: 240px;">Pause Your Subscription </a>
@@ -193,10 +193,10 @@
                                                         <a href="" class="btn btn-outline-light mb-2 disabled" style="width: 240px;">Resume Your Subscription </a>
                                                     </div>
                                                 <div class="col-8 ">
-                                                    <a href="" class="btn btn-outline-warning mb-2" style="width: 240px;">Pause Your Subscription </a>
+                                                    <a href="" class="btn btn-outline-warning mb-2" id="pausesub" style="width: 240px;">Pause Your Subscription </a>
                                                 </div>
                                                 <div class="col-8 ">
-                                                    <a href="" class="btn btn-outline-warning" style="width: 240px;">Cancel Your Subscription </a>
+                                                    <a href="" class="btn btn-outline-warning" id="cancelsub" style="width: 240px;">Cancel Your Subscription </a>
                                                 </div>
                                             {% endif %}
                                         </div>
@@ -433,6 +433,17 @@
 <!-- footer area starts -->
 {% block footer_area %}
     {{ block.super }}
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+      <div id="toast_successreport" class="toast hide text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+
+        <div class="toast-body" id="message_body">
+
+        </div>
+      </div>
+    </div>
+    <form action="#" enctype="multipart/form-data">
+        {% csrf_token %}
+    </form>
 {% endblock footer_area %}
 
 {% block js_area %}

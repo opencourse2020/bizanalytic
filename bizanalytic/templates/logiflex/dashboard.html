@@ -145,34 +145,36 @@
                             <div class="faq-content">
                             <div class="section-top">
                                 <span class="sub-title third-color">Manage</span>
-                                <h4 class="title white-color">Subscriptions</h4>
+                                <h4 class="title white-color" >Subscriptions</h4>
                             </div>
 
                             <div class="accordion-area mt-40">
                                 <div class="accordion-item">
                                     <div class="accordion-header">
-                                        <h6 class="title">Manage your Monthly or Quarterly Subscription</h6>
+                                        <h6 class="title" style="font-weight: 500;">Manage your Monthly or Quarterly Subscription</h6>
                                         <span class="icon"><i class="ri-arrow-down-s-line"></i></span>
                                     </div>
                                     <div class="accordion-content">
 
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <a href="" class="btn btn-outline-light mb-2" style="width: 240px;">Add a New Subscription </a>
-
-                                            </div>
-                                            <div class="col-12 ">
-                                                <a href="" class="btn btn-outline-light mb-2" style="width: 240px;">Resume Your Subscription </a>
-
-                                            </div>
-                                            <div class="col-12 ">
-                                                <a href="" class="btn btn-outline-light mb-2" style="width: 240px;">Pause a Subscription </a>
-
-                                            </div>
-                                            <div class="col-12 ">
-                                                <a href="" class="btn btn-outline-light" style="width: 240px;">Cancel a Subscription </a>
-
-                                            </div>
+                                        <div class="row justify-content-center">
+                                            {% if not isactive %}
+                                                {% if subscriptionstatus == "0" or subscriptionstatus == "3" %}
+                                                    <div class="col-8">
+                                                        <a href="" class="btn btn-outline-light mb-2" style="width: 240px;">Add a New Subscription </a>
+                                                    </div>
+                                                {% elif subscriptionstatus == "2"  %}
+                                                    <div class="col-8 ">
+                                                        <a href="" class="btn btn-outline-light mb-2" style="width: 240px;">Resume Your Subscription </a>
+                                                    </div>
+                                                {% endif %}
+                                            {% else %}
+                                                <div class="col-8 ">
+                                                    <a href="" class="btn btn-outline-light mb-2" style="width: 240px;">Pause Your Subscription </a>
+                                                </div>
+                                                <div class="col-8 ">
+                                                    <a href="" class="btn btn-outline-light" style="width: 240px;">Cancel Your Subscription </a>
+                                                </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>

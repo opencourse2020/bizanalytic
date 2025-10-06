@@ -109,6 +109,7 @@ class PricingPlan(models.Model):
 
 class ServicePayment(models.Model):
     statustype = (
+        ('0', _("None")),
         ('1', _("Active")),
         ('2', _("Paused")),
         ('3', _("Canceled")),
@@ -128,7 +129,7 @@ class ServicePayment(models.Model):
     reports_allowed = models.SmallIntegerField(default=0)
     reports_used = models.SmallIntegerField(default=0)
     reset_date = models.DateTimeField(blank=True, null=True)
-    status = models.CharField(max_length=1, choices=statustype, default=1)
+    status = models.CharField(max_length=1, choices=statustype, default=0)
     date_canceled = models.DateTimeField(null=True, blank=True)
 
     class Meta:
@@ -276,15 +277,17 @@ class LogPayments(models.Model):
         return f"{self.date_created}"
 
 
-class CancelSubscriptionRequest(models.Model):
+class ChangeSubscriptionRequest(models.Model):
     requesttype = (
         ('1', _("Pause")),
         ('2', _("Cancel")),
         ('3', _("Resume")),
     )
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     subscription = models.ForeignKey(ServicePayment, on_delete=models.SET_NULL, null=True)
     request = models.CharField(max_length=1, choices=requesttype, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
+    processed = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "CancelSubscriptionRequest"

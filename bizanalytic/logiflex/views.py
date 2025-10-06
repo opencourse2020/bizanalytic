@@ -575,6 +575,8 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             kwargs["company"] = servicepayment.client.company
             kwargs["email"] = servicepayment.client.email
             kwargs["clientid"] = servicepayment.client.id
+            kwargs["subscriptionstatus"] = servicepayment.status
+            kwargs["isactive"] = servicepayment.is_active
             clienttype = 1
         reports = LogiflexReport.objects.filter(client__user=pu)
         total_reports = reports.count()

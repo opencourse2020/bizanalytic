@@ -627,11 +627,12 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 class ResumeSubscriptionView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
         subscription = ServicePayment.objects.filter(client__user=self.request.user).first()
-        message = ""
+        changesubscription = ChangeSubscriptionRequest.objects.filter(user=self.request.user, processed=False,
+                                                                      request="3").first()
+        message = "Your will receive an email once your request is been processed"
         if subscription:
-            if subscription.status == "2" and subscription.is_active:
+            if subscription.status == "2" and subscription.is_active and not changesubscription:
                 ChangeSubscriptionRequest.objects.create(user=self.request.user, subscription=subscription, request="3")
-                message = "Your will receive an email once your request is be processed"
 
         data = {"submessage": message}
 
@@ -642,11 +643,13 @@ class PauseSubscriptionView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
         print("Pause Sub 1")
         subscription = ServicePayment.objects.filter(client__user=self.request.user).first()
-        message = ""
+        changesubscription = ChangeSubscriptionRequest.objects.filter(user=self.request.user, processed=False,
+                                                                      request="1").first()
+        message = "Your will receive an email once your request is been processed"
         if subscription:
-            if (subscription.status == "1" or subscription.status == "4") and subscription.is_active:
+            if (subscription.status == "1" or subscription.status == "4") and subscription.is_active and not changesubscription:
                 ChangeSubscriptionRequest.objects.create(user=self.request.user, subscription=subscription, request="1")
-                message = "Your will receive an email once your request is be processed"
+
                 print(message)
 
         data = {"submessage": message}
@@ -657,11 +660,12 @@ class PauseSubscriptionView(CreateView, JsonFormMixin):
 class CancelSubscriptionView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
         subscription = ServicePayment.objects.filter(client__user=self.request.user).first()
-        message = ""
+        changesubscription = ChangeSubscriptionRequest.objects.filter(user=self.request.user, processed=False,
+                                                                      request="2").first()
+        message = "Your will receive an email once your request is been processed"
         if subscription:
-            if (subscription.status == "1" or subscription.status == "4") and subscription.is_active:
+            if (subscription.status == "1" or subscription.status == "4") and subscription.is_active and not changesubscription:
                 ChangeSubscriptionRequest.objects.create(user=self.request.user, subscription=subscription, request="2")
-                message = "Your will receive an email once your request is be processed"
 
         data = {"submessage": message}
 

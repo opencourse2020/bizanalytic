@@ -641,7 +641,6 @@ class ResumeSubscriptionView(CreateView, JsonFormMixin):
 
 class PauseSubscriptionView(CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
-        print("Pause Sub 1")
         subscription = ServicePayment.objects.filter(client__user=self.request.user).first()
         changesubscription = ChangeSubscriptionRequest.objects.filter(user=self.request.user, processed=False,
                                                                       request="1").first()
@@ -649,8 +648,6 @@ class PauseSubscriptionView(CreateView, JsonFormMixin):
         if subscription:
             if (subscription.status == "1" or subscription.status == "4") and subscription.is_active and not changesubscription:
                 ChangeSubscriptionRequest.objects.create(user=self.request.user, subscription=subscription, request="1")
-
-                print(message)
 
         data = {"submessage": message}
 

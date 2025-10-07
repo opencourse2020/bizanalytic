@@ -617,7 +617,10 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         kwargs["acredits"] = servicepayment.advanced_credits
         kwargs["lcredits"] = servicepayment.lite_credits
         kwargs["subscrib_status"] = servicepayment.is_active
-        kwargs["enddate"] = servicepayment.end_date
+        if servicepayment.is_active:
+            kwargs["enddate"] = servicepayment.reset_date
+        else:
+            kwargs["enddate"] = servicepayment.end_date
         kwargs["startdate"] = servicepayment.date_added
         kwargs["servicetype"] = servicepayment.service_type.name
         kwargs["payments"] = payments

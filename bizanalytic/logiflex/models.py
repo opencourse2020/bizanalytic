@@ -165,32 +165,32 @@ class ServicePayment(models.Model):
 
     def reset_quota_if_needed(self):
         """Reset quota when billing cycle renews."""
-        if self.reset_date and now() >= self.reset_date:
-            self.reports_used = 0
-            self.advanced_reports_used = 0
-            # Reset based on plan
-            if self.service_type.name == 'starter':
-                self.reports_allowed = 3
-                self.advanced_reports_allowed = 0
-                self.reset_date = now() + timedelta(days=30)
-            elif self.service_type.name == 'pro':
-                self.reports_allowed = 10
-                self.advanced_reports_allowed = 2
-                self.reset_date = now() + timedelta(days=30)
-            elif self.service_type.name == 'quarterly':
-                self.reports_allowed = 25
-                self.advanced_reports_allowed = 4
-                self.reset_date = now() + timedelta(days=90)
-            elif self.service_type.name == 'daily':
-                self.reports_allowed = 1
-                self.advanced_reports_allowed = 0
-                self.advanced_credits += 1
-                self.lite_credits += 1
-                self.reset_date = now() + timedelta(days=7)
+        # if self.reset_date and now() >= self.reset_date:
+        self.reports_used = 0
+        self.advanced_reports_used = 0
+        # Reset based on plan
+        if self.service_type.name == 'starter':
+            self.reports_allowed = 3
+            self.advanced_reports_allowed = 0
+            self.reset_date = now() + timedelta(days=30)
+        elif self.service_type.name == 'pro':
+            self.reports_allowed = 10
+            self.advanced_reports_allowed = 2
+            self.reset_date = now() + timedelta(days=30)
+        elif self.service_type.name == 'quarterly':
+            self.reports_allowed = 25
+            self.advanced_reports_allowed = 4
+            self.reset_date = now() + timedelta(days=90)
+        elif self.service_type.name == 'daily':
+            self.reports_allowed = 1
+            self.advanced_reports_allowed = 0
+            self.advanced_credits += 1
+            self.lite_credits += 1
+            self.reset_date = now() + timedelta(days=7)
             # elif self.service_type.name == 'onetime_lite':
             #     self.reports_allowed = 1
             #     self.reset_date = now() + timedelta(days=30)
-            self.save()
+        self.save()
 
     def can_generate_report(self):
         """Check if user can generate a report."""

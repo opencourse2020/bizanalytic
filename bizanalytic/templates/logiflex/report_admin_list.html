@@ -58,7 +58,9 @@
         <!-- contact area starts -->
 <section class="contact-area pt-40 mb-40" >
             <div class="container">
-                <h5 class="title">{% trans "List of Processed Reports" %}</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="title">{% trans "List of Processed Reports" %}</h5>
                 <div id="datatable" class="mb-5">
                     <div class="card">
                     <div class="card-header">
@@ -123,11 +125,65 @@
                             </table>
                         </div>
 
-                        <div class="hljs-container">
-                            <pre><code class="xml" data-url="assets/data/table-plugins/code-1.json"></code></pre>
-                        </div>
+
                     </div>
                 </div>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="title">{% trans "List of Processed Reports" %}</h5>
+                <div id="datatable" class="mb-5">
+                    <div class="card">
+                    <div class="card-header">
+
+                    </div>
+                        <div class="card-body">
+                            <table id="datatableDefault" class="table text-nowrap w-100">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{% trans "Client" %}</th>
+                                    <th>{% trans "Subscription" %}</th>
+                                    <th>{% trans "Request" %}</th>
+                                    <th>{% trans "Date" %}</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if reports == "none" %}
+
+                                {% else %}
+                                    {% for subrequest in requests %}
+                                        <tr>
+                                            <td>{{ subrequest.client.company }}</td>
+                                            <td>
+                                                {{ subrequest.subscription }}
+                                            </td>
+                                            <td>{% if subrequest.request == "1" %}
+                                                    <span class="badge bg-warning">Pause</span>
+                                                {% elif subrequest.request == "2" %}
+                                                    <span class="badge bg-warning">Cancel</span>
+                                                {% elif subrequest.request == "3" %}
+                                                    <span class="badge bg-success">Resume</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {{ subrequest.date_added|date:'Y-m-d' }}
+                                            </td>
+
+                                        </tr>
+                                    {% endfor %}
+
+                                {% endif %}
+                               </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+                </div>
+            </div>
+
             </div>
         </section>
 

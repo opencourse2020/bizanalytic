@@ -283,7 +283,7 @@ class ChangeSubscriptionRequest(models.Model):
         ('2', _("Cancel")),
         ('3', _("Resume")),
     )
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    client = models.ForeignKey(LogiFlexClient, on_delete=models.SET_NULL, null=True)
     subscription = models.ForeignKey(ServicePayment, on_delete=models.SET_NULL, null=True)
     request = models.CharField(max_length=1, choices=requesttype, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)

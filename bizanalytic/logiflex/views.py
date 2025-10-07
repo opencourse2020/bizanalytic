@@ -624,10 +624,11 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         return super(DashboardView, self).get_context_data(**kwargs)
 
 
-class ResumeSubscriptionView(CreateView, JsonFormMixin):
+class ResumeSubscriptionView(LoginRequiredMixin, CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
-        subscription = ServicePayment.objects.filter(client__user=self.request.user).first()
-        changesubscription = ChangeSubscriptionRequest.objects.filter(user=self.request.user, processed=False).first()
+        logiclient = LogiFlexClient.objects.filter(user=self.request.user).first()
+        subscription = ServicePayment.objects.filter(client=logiclient).first()
+        changesubscription = ChangeSubscriptionRequest.objects.filter(client=logiclient, processed=False).first()
         message = "Your will receive an email once your request is been processed"
         if subscription:
             if subscription.status == "2" and subscription.is_active:
@@ -635,7 +636,7 @@ class ResumeSubscriptionView(CreateView, JsonFormMixin):
                     changesubscription.request = "3"
                     changesubscription.save()
                 elif not changesubscription:
-                    ChangeSubscriptionRequest.objects.create(user=self.request.user, subscription=subscription,
+                    ChangeSubscriptionRequest.objects.create(client=logiclient, subscription=subscription,
                                                              request="3")
 
         data = {"submessage": message}
@@ -643,10 +644,11 @@ class ResumeSubscriptionView(CreateView, JsonFormMixin):
         return JsonResponse(data)
 
 
-class PauseSubscriptionView(CreateView, JsonFormMixin):
+class PauseSubscriptionView(LoginRequiredMixin, CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
-        subscription = ServicePayment.objects.filter(client__user=self.request.user).first()
-        changesubscription = ChangeSubscriptionRequest.objects.filter(user=self.request.user, processed=False).first()
+        logiclient = LogiFlexClient.objects.filter(user=self.request.user).first()
+        subscription = ServicePayment.objects.filter(client=logiclient).first()
+        changesubscription = ChangeSubscriptionRequest.objects.filter(client=logiclient, processed=False).first()
         message = "Your will receive an email once your request is been processed"
         if subscription:
             if (subscription.status == "1" or subscription.status == "4") and subscription.is_active:
@@ -654,17 +656,18 @@ class PauseSubscriptionView(CreateView, JsonFormMixin):
                     changesubscription.request = "1"
                     changesubscription.save()
                 elif not changesubscription:
-                    ChangeSubscriptionRequest.objects.create(user=self.request.user, subscription=subscription, request="1")
+                    ChangeSubscriptionRequest.objects.create(client=logiclient, subscription=subscription, request="1")
 
         data = {"submessage": message}
 
         return JsonResponse(data)
 
 
-class CancelSubscriptionView(CreateView, JsonFormMixin):
+class CancelSubscriptionView(LoginRequiredMixin, CreateView, JsonFormMixin):
     def post(self, request, *args, **kwargs):
-        subscription = ServicePayment.objects.filter(client__user=self.request.user).first()
-        changesubscription = ChangeSubscriptionRequest.objects.filter(user=self.request.user, processed=False).first()
+        logiclient = LogiFlexClient.objects.filter(user=self.request.user).first()
+        subscription = ServicePayment.objects.filter(client=logiclient).first()
+        changesubscription = ChangeSubscriptionRequest.objects.filter(client=logiclient, processed=False).first()
         message = "Your will receive an email once your request is been processed"
         if subscription:
             if (subscription.status == "1" or subscription.status == "4") and subscription.is_active:
@@ -672,7 +675,7 @@ class CancelSubscriptionView(CreateView, JsonFormMixin):
                     changesubscription.request = "2"
                     changesubscription.save()
                 elif not changesubscription:
-                    ChangeSubscriptionRequest.objects.create(user=self.request.user, subscription=subscription, request="2")
+                    ChangeSubscriptionRequest.objects.create(client=logiclient, subscription=subscription, request="2")
 
         data = {"submessage": message}
 

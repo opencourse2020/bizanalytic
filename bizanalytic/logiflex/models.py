@@ -120,7 +120,7 @@ class ServicePayment(models.Model):
     subscription_id = models.CharField(max_length=200, null=True, blank=True)
     service_type = models.ForeignKey(PricingPlan, on_delete=models.SET_NULL, null=True, blank=True)
     is_active = models.BooleanField(default=False)
-    date_added = models.DateTimeField(auto_now_add=True)
+    date_added = models.DateTimeField(auto_now=True)
     end_date = models.DateTimeField(blank=True, null=True)
     lite_credits = models.SmallIntegerField(default=0)
     advanced_credits = models.SmallIntegerField(default=0)

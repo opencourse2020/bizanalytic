@@ -157,7 +157,7 @@
                                             <td>{{ subrequest.pk }}</td>
                                             <td>{{ subrequest.client.company }}</td>
                                             <td>
-                                                {{ subrequest.subscription }}
+                                                {{ subrequest.subscription.service_type.name }}
                                             </td>
                                             <td>{% if subrequest.request == "1" %}
                                                     <span class="badge bg-warning">Pause</span>

@@ -1780,7 +1780,7 @@ class AdminReportsListView(UserPassesTestMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         query = self.request.GET.get("cat")
-
+        requests = ChangeSubscriptionRequest.objects.filter(processed=False)
         if query:
             query = query.lower()
             if query in ["processing", "late", "download", "canceled"]:
@@ -1790,6 +1790,7 @@ class AdminReportsListView(UserPassesTestMixin, TemplateView):
         else:
             reports = LogiflexReport.objects.filter(report_approved=False, report_status__in=['processing', 'late'])
         # reports = reports.filter(report_created=True)
+        kwargs["requests"] = requests
         kwargs["reports"] = reports.order_by('-report_number')
 
         return super(AdminReportsListView, self).get_context_data(**kwargs)

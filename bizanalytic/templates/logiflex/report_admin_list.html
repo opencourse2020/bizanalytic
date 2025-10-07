@@ -130,7 +130,7 @@
                 </div>
                 </div>
                 <div class="col-md-6">
-                    <h5 class="title">{% trans "List of Processed Reports" %}</h5>
+                    <h5 class="title">{% trans "List of Requests" %}</h5>
                 <div id="datatable" class="mb-5">
                     <div class="card">
                     <div class="card-header">
@@ -145,7 +145,7 @@
                                     <th>{% trans "Subscription" %}</th>
                                     <th>{% trans "Request" %}</th>
                                     <th>{% trans "Date" %}</th>
-
+                                    <th>{% trans "Approve" %}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -169,7 +169,11 @@
                                             <td>
                                                 {{ subrequest.date_added|date:'Y-m-d' }}
                                             </td>
+                                            <td>
+                                                <div class="btn btn-info btn-sm " data-approve="{{ subrequest.pk }}">
+                                                    <span style="text-transform: uppercase;font-size: 12px;">{% trans "Approve" %}</span></div>
 
+                                            </td>
                                         </tr>
                                     {% endfor %}
 

@@ -149,11 +149,12 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% if reports == "none" %}
+                                {% if requests == "none" %}
 
                                 {% else %}
                                     {% for subrequest in requests %}
                                         <tr>
+                                            <td>{{ subrequest.pk }}</td>
                                             <td>{{ subrequest.client.company }}</td>
                                             <td>
                                                 {{ subrequest.subscription }}

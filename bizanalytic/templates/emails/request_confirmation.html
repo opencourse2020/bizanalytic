@@ -60,7 +60,11 @@
       <p>Hi {{ client_name }} / {{ company }},</p>
       <p>Thanks for using our service. </p>
       <p>{{ subject }}.</p>
-        <p> Note that you can still Fully enjoy all the benefits of your subscription until this date: {{ change_date }}.</p>
+        {% if status == "Resumed" %}
+            <p></p>
+        {% else %}
+            <p> Note that you can still Fully enjoy all the benefits of your subscription until this date: {{ change_date }}.</p>
+        {% endif %}
       <p>&nbsp;</p>
       <p>If you have any questions in the meantime, feel free to reply to this email or contact our support team on {{ support }}.</p>
       <p>Best regards,<br>

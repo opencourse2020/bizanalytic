@@ -1,10 +1,12 @@
 import random
 from django.conf import settings
 import requests
-from bizanalytic.logiflex.models import LogEntry
+from bizanalytic.logiflex.models import *
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils.timezone import now
+from celery import shared_task
+
 
 def generatecode(length):
     result = ''
@@ -130,3 +132,15 @@ def paymentconfirmation(context):
     )
 
     return html_content
+
+
+@shared_task(name='subscription_change_status')
+def update_subscriptions():
+
+    subscriptions = ServicePayment.objects.filter(is_active=True)
+
+    for subscription in subscriptions:
+        if subscription.status == "3" and subscription.date_canceled > now():
+            subscription.cancel_subscription()
+        elif subscription.status == "2" and subscription.date_canceled > now():
+            subscription.pause_subscription()

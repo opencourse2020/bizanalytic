@@ -1933,12 +1933,14 @@ class AdminApproveRequestView(UserPassesTestMixin, CreateView, JsonFormMixin):
                 subscription.status = "2"
                 subscription.date_canceled = subscription.reset_date
                 subscription.save()
+                subrequest.processed = True
+                subrequest.save()
                 email_info = {
                     'subject': f"Your Subscription will be paused on this date {subscription.date_canceled}",
                     'to_email': [subscription.client.email, ],
                     'client': subscription.client.contact_name,
                     'company': subscription.client.company,
-                    'change_date': subscription.date_canceled,
+                    'change_date': subscription.date_canceled.date(),
                     'status': "Paused",
                     'curentyear': now().year
                 }
@@ -1947,14 +1949,32 @@ class AdminApproveRequestView(UserPassesTestMixin, CreateView, JsonFormMixin):
                 subscription.status = "3"
                 subscription.date_canceled = subscription.reset_date
                 subscription.save()
+                subrequest.processed = True
+                subrequest.save()
                 # Send a confirmation Email to client
                 email_info = {
                     'subject': f"Your Subscription will be canceled on this date {subscription.date_canceled}",
                     'to_email': [subscription.client.email, ],
                     'client': subscription.client.contact_name,
                     'company':  subscription.client.company,
-                    'change_date': subscription.date_canceled,
+                    'change_date': subscription.date_canceled.date(),
                     'status': "Cancelled",
+                    'curentyear': now().year
+                }
+                sendapprovedreportmail.delay(email_info)
+            elif subrequest.request == "3":
+                subscription.status = "4"
+                subscription.is_active = True
+                subscription.save()
+                subrequest.processed = True
+                subrequest.save()
+                email_info = {
+                    'subject': f"Your Subscription will be resumed on this date {now()}",
+                    'to_email': [subscription.client.email, ],
+                    'client': subscription.client.contact_name,
+                    'company': subscription.client.company,
+                    'change_date': subscription.date_canceled.date(),
+                    'status': "Resumed",
                     'curentyear': now().year
                 }
                 sendapprovedreportmail.delay(email_info)

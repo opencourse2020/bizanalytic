@@ -231,8 +231,6 @@ class ServicePayment(models.Model):
         self.save()
 
     def pause_subscription(self):
-        self.reports_allowed = 0
-        self.advanced_reports_allowed = 0
         self.is_active = False
         self.save()
 
@@ -243,6 +241,7 @@ class ServicePayment(models.Model):
         self.advanced_reports_used = 0
         self.is_active = False
         self.end_date = now()
+        self.subscription_id = None
         self.save()
 
     def __str__(self):

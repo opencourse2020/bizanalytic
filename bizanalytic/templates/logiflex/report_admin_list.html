@@ -241,48 +241,49 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div class="row">
-                <div class="col-5">
-                <label for="date-added" class="col-form-label">Date Added:</label>
-                <input type="text" class="form-control" id="date-added" disabled>
-                </div>
-                <div class="col-5">
-                <label for="date-reset" class="col-form-label">Date To Reset:</label>
-                <input type="text" class="form-control" id="date-reset" disabled>
-                </div>
-                <div class="col-2">
-                <label for="sub-status" class="col-form-label">Status:</label>
-                <input type="text" class="form-control" id="sub-status" disabled>
-                </div>
-                <div class="col-6">
-                <label for="lite-reports" class="col-form-label">Lite Reports:</label>
-                <input type="text" class="form-control" id="lite-reports" disabled>
-                </div>
-                <div class="col-6">
-                <label for="lite-reportsu" class="col-form-label">Lite Rep. Used:</label>
-                <input type="text" class="form-control" id="lite-reportsu" disabled>
-                </div>
-                <div class="col-6">
-                <label for="adv-reports" class="col-form-label">Adv. Reports:</label>
-                <input type="text" class="form-control" id="adv-reports" disabled>
-                </div>
-                <div class="col-6">
-                <label for="adv-reportsu" class="col-form-label">Adv. Rep. Used:</label>
-                <input type="text" class="form-control" id="adv-reportsu" disabled>
-                </div>
-                <div class="col-6">
-                <label for="lite-credits" class="col-form-label">Lite Credits:</label>
-                <input type="text" class="form-control" id="lite-credits" disabled>
-                </div>
-                <div class="col-6">
-                <label for="adv-credits" class="col-form-label">Adv. Credits:</label>
-                <input type="text" class="form-control" id="adv-credits" disabled>
-                </div>
-            </div>
+              <div class="row">
+                  <div class="col-5">
+                      <label for="date-added" class="col-form-label">Date Added:</label>
+                      <input type="text" class="form-control" id="date-added" disabled>
+                  </div>
+                  <div class="col-5">
+                      <label for="date-reset" class="col-form-label">Date To Reset:</label>
+                      <input type="text" class="form-control" id="date-reset" disabled>
+                  </div>
+                  <div class="col-2">
+                      <label for="sub-status" class="col-form-label">Status:</label>
+                      <input type="text" class="form-control" id="sub-status" disabled>
+                  </div>
+                  <div class="col-6">
+                      <label for="lite-reports" class="col-form-label">Lite Reports:</label>
+                      <input type="text" class="form-control" id="lite-reports" disabled>
+                  </div>
+                  <div class="col-6">
+                      <label for="lite-reportsu" class="col-form-label">Lite Rep. Used:</label>
+                      <input type="text" class="form-control" id="lite-reportsu" disabled>
+                  </div>
+                  <div class="col-6">
+                      <label for="adv-reports" class="col-form-label">Adv. Reports:</label>
+                      <input type="text" class="form-control" id="adv-reports" disabled>
+                  </div>
+                  <div class="col-6">
+                      <label for="adv-reportsu" class="col-form-label">Adv. Rep. Used:</label>
+                      <input type="text" class="form-control" id="adv-reportsu" disabled>
+                  </div>
+                  <div class="col-6">
+                      <label for="lite-credits" class="col-form-label">Lite Credits:</label>
+                      <input type="text" class="form-control" id="lite-credits" disabled>
+                  </div>
+                  <div class="col-6">
+                      <label for="adv-credits" class="col-form-label">Adv. Credits:</label>
+                      <input type="text" class="form-control" id="adv-credits" disabled>
+                      <input type="hidden" id="ci-x-photo" value="" hidden >
+                  </div>
+              </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Approve</button>
+              <button type="button" class="btn btn-primary" id="approve_sub">Approve</button>
           </div>
         </div>
       </div>
@@ -341,46 +342,47 @@
     </script>
     <script>
         var staticBackdrop = document.getElementById('staticBackdrop')
-            staticBackdrop.addEventListener('show.bs.modal', function (event) {
-              // Button that triggered the modal
-                var button = event.relatedTarget
-              // Extract info from data-bs-* attributes
-              var recipient = button.getAttribute('data-bs-whatever')
+        staticBackdrop.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            var button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            var recipient = button.getAttribute('data-bs-whatever')
 
-              //
-              // Update the modal's content.
-                  var modalTitle = staticBackdrop.querySelector('.modal-title')
-              // var modalBodyInput = staticBackdrop.querySelector('.modal-body input')
-                var dateadded = document.getElementById('datead-'+ recipient)
-                var datereset = document.getElementById('dateres-'+ recipient)
-                var substatus = document.getElementById('status-'+ recipient)
-                var lreports = document.getElementById('lrep-'+ recipient)
-                var lreportsu = document.getElementById('lrepu-'+ recipient)
-                var areports = document.getElementById('arep-'+ recipient)
-                var areportsu = document.getElementById('arepu-'+ recipient)
-                var lcredits = document.getElementById('lcred-'+ recipient)
-                var acredits = document.getElementById('acred-'+ recipient)
+            //
+            // Update the modal's content.
+            var modalTitle = staticBackdrop.querySelector('.modal-title')
+            // var modalBodyInput = staticBackdrop.querySelector('.modal-body input')
+            var dateadded = document.getElementById('datead-'+ recipient)
+            var datereset = document.getElementById('dateres-'+ recipient)
+            var substatus = document.getElementById('status-'+ recipient)
+            var lreports = document.getElementById('lrep-'+ recipient)
+            var lreportsu = document.getElementById('lrepu-'+ recipient)
+            var areports = document.getElementById('arep-'+ recipient)
+            var areportsu = document.getElementById('arepu-'+ recipient)
+            var lcredits = document.getElementById('lcred-'+ recipient)
+            var acredits = document.getElementById('acred-'+ recipient)
 
-                var date_added = document.getElementById('date-added')
-                var date_reset = document.getElementById('date-reset')
-                var sub_status = document.getElementById('sub-status')
-                var l_reports = document.getElementById('lite-reports')
-                var l_reportsu = document.getElementById('lite-reportsu')
-                var a_reports = document.getElementById('adv-reports')
-                var a_reportsu = document.getElementById('adv-reportsu')
-                var l_credits = document.getElementById('lite-credits')
-                var a_credits = document.getElementById('adv-credits')
-
-                modalTitle.textContent = 'Subscription Info For ' + recipient
-                date_added.value = dateadded.value
-                date_reset.value = datereset.value
-                sub_status.value = substatus.value
-                l_reports.value = lreports.value
-                l_reportsu.value = lreportsu.value
-                a_reports.value = areports.value
-                a_reportsu.value = areportsu.value
-                l_credits.value = lcredits.value
-                a_credits.value = acredits.value
-            })
+            var date_added = document.getElementById('date-added')
+            var date_reset = document.getElementById('date-reset')
+            var sub_status = document.getElementById('sub-status')
+            var l_reports = document.getElementById('lite-reports')
+            var l_reportsu = document.getElementById('lite-reportsu')
+            var a_reports = document.getElementById('adv-reports')
+            var a_reportsu = document.getElementById('adv-reportsu')
+            var l_credits = document.getElementById('lite-credits')
+            var a_credits = document.getElementById('adv-credits')
+            var cx_photo = document.getElementById('ci-x-photo')
+            modalTitle.textContent = 'Subscription Info For ' + recipient
+            date_added.value = dateadded.value
+            date_reset.value = datereset.value
+            sub_status.value = substatus.value
+            l_reports.value = lreports.value
+            l_reportsu.value = lreportsu.value
+            a_reports.value = areports.value
+            a_reportsu.value = areportsu.value
+            l_credits.value = lcredits.value
+            a_credits.value = acredits.value
+            cx_photo.value = recipient
+        })
     </script>
 {% endblock js_area %}

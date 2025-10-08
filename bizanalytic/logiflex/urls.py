@@ -60,7 +60,7 @@ subscription_patterns = [
     path("resume/", views.ResumeSubscriptionView.as_view(), name="resume"),
     path("cancel/", views.CancelSubscriptionView.as_view(), name="cancel"),
     path("pause/", views.PauseSubscriptionView.as_view(), name="pause"),
-
+    path("approverequest/", views.AdminApproveRequestView.as_view(), name="approverequest"),
 ]
 
 urlpatterns = [

@@ -403,3 +403,32 @@ $("#cancelsub").click(function (){
     })
 
 });
+
+$("#approve_sub").click(function (){
+    let url = "https://bizanalytic.com/logiflex/subscription/approverequest/";
+    let cixphoto = $('#ci-x-photo').val();
+    const formData = new FormData();
+
+    formData.append('rq_cfr_ci', cixphoto);
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: formData,
+        processData: false,
+        contentType: false,
+        headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success: function (data) {
+            if (data) {
+                let message = data.submessage;
+                if (message) {
+                    var f = $("#toast_successreport");
+                    var a = new bootstrap.Toast(f);
+                    $("#message_body").html(message);
+                    a.show()
+                }
+            }
+        }
+    })
+
+});

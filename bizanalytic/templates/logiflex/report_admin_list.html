@@ -173,6 +173,7 @@
                                             <td>
                                                 <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-bs-whatever="{{ subrequest.pk }}">
                                                     <span style="text-transform: uppercase;font-size: 12px;">{% trans "Approve" %}</span></button>
+
                                                 <input type="hidden" id="datead-{{ subrequest.pk }}" value="{{ subrequest.subscription.date_added }}" hidden>
                                                 <input type="hidden" id="dateres-{{ subrequest.pk }}" value="{{ subrequest.subscription.reset_date }}" hidden>
                                                 <input type="hidden" id="status-{{ subrequest.pk }}" value="{{ subrequest.subscription.status }}" hidden>
@@ -342,22 +343,21 @@
               // Button that triggered the modal
                 var button = event.relatedTarget
               // Extract info from data-bs-* attributes
-              //  var recipient = button.getAttribute('data-bs-whatever')
+              var recipient = button.getAttribute('data-bs-whatever')
 
               //
               // Update the modal's content.
                   var modalTitle = staticBackdrop.querySelector('.modal-title')
               // var modalBodyInput = staticBackdrop.querySelector('.modal-body input')
-                var pk = {{ subrequest.pk }}
-                var dateadded = document.getElementById('datead-{{ subrequest.pk }}')
-                var datereset = document.getElementById('dateres-{{ subrequest.pk }}')
-                var substatus = document.getElementById('status-{{ subrequest.pk }}')
-                var lreports = document.getElementById('lrep-{{ subrequest.pk }}')
-                var lreportsu = document.getElementById('lrepu-{{ subrequest.pk }}')
-                var areports = document.getElementById('arep-{{ subrequest.pk }}')
-                var areportsu = document.getElementById('arepu-{{ subrequest.pk }}')
-                var lcredits = document.getElementById('datead-{{ subrequest.pk }}')
-                var acredits = document.getElementById('datead-{{ subrequest.pk }}')
+                var dateadded = document.getElementById('datead-'+ recipient)
+                var datereset = document.getElementById('dateres-'+ recipient)
+                var substatus = document.getElementById('status-'+ recipient)
+                var lreports = document.getElementById('lrep-'+ recipient)
+                var lreportsu = document.getElementById('lrepu-'+ recipient)
+                var areports = document.getElementById('arep-'+ recipient)
+                var areportsu = document.getElementById('arepu-'+ recipient)
+                var lcredits = document.getElementById('datead-'+ recipient)
+                var acredits = document.getElementById('datead-'+ recipient)
 
                 var date_added = document.getElementById('date-added')
                 var date_reset = document.getElementById('date-reset')
@@ -369,7 +369,7 @@
                 var l_credits = document.getElementById('lite-credits')
                 var a_credits = document.getElementById('adv-credits')
 
-                modalTitle.textContent = 'Subscription Info For ' + pk
+                modalTitle.textContent = 'Subscription Info For ' + recipient
                 date_added.value = dateadded
                 date_reset.value = datereset
                 sub_status.value = substatus

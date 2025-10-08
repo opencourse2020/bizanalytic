@@ -305,12 +305,12 @@
               var button = event.relatedTarget
               // Extract info from data-bs-* attributes
               var recipient = button.getAttribute('data-bs-whatever')
-              // If necessary, you could initiate an AJAX request here
-              // and then do the updating in a callback.
+
               //
               // Update the modal's content.
               var modalTitle = staticBackdrop.querySelector('.modal-title')
-              var modalBodyInput = staticBackdrop.querySelector('.modal-body input')
+              // var modalBodyInput = staticBackdrop.querySelector('.modal-body input')
+                var modalBodyInput = document.getElementById('recipient-name')
 
               modalTitle.textContent = 'Subscription Info For ' + recipient
               modalBodyInput.value = recipient

@@ -173,6 +173,13 @@
                                             <td>
                                                 <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-bs-whatever="{{ subrequest.pk }}">
                                                     <span style="text-transform: uppercase;font-size: 12px;">{% trans "Approve" %}</span></button>
+                                                <input type="hidden" id="datead-{{ subrequest.pk }}" value="" hidden>
+                                                <input type="hidden" id="dateres-{{ subrequest.pk }}" value="" hidden>
+                                                <input type="hidden" id="status-{{ subrequest.pk }}" value="" hidden>
+                                                <input type="hidden" id="lrep-{{ subrequest.pk }}" value="" hidden>
+                                                <input type="hidden" id="arep-{{ subrequest.pk }}" value="" hidden>
+                                                <input type="hidden" id="lcred-{{ subrequest.pk }}" value="" hidden>
+                                                <input type="hidden" id="acred-{{ subrequest.pk }}" value="" hidden>
 
                                             </td>
                                         </tr>
@@ -232,11 +239,32 @@
           <div class="modal-body">
             <div class="row">
                 <div class="col-4">
-                <label for="recipient-name" class="col-form-label">Recipient:</label>
-                <input type="text" class="form-control" id="recipient-name">
+                <label for="date-added" class="col-form-label">Date Added:</label>
+                <input type="text" class="form-control" id="date-added">
                 </div>
-                <div class="col-8">
-
+                <div class="col-4">
+                <label for="date-reset" class="col-form-label">Date To Reset:</label>
+                <input type="text" class="form-control" id="date-reset">
+                </div>
+                <div class="col-4">
+                <label for="sub-status" class="col-form-label">Status:</label>
+                <input type="text" class="form-control" id="sub-status">
+                </div>
+                <div class="col-4">
+                <label for="lite-reports" class="col-form-label">Lite Reports:</label>
+                <input type="text" class="form-control" id="lite-reports">
+                </div>
+                <div class="col-4">
+                <label for="adv-reports" class="col-form-label">Adv. Reports:</label>
+                <input type="text" class="form-control" id="adv-reports">
+                </div>
+                <div class="col-4">
+                <label for="lite-credits" class="col-form-label">Lite Credits:</label>
+                <input type="text" class="form-control" id="lite-credits">
+                </div>
+                <div class="col-4">
+                <label for="adv-credits" class="col-form-label">Adv. Credits:</label>
+                <input type="text" class="form-control" id="adv-credits">
                 </div>
             </div>
           </div>
@@ -302,18 +330,39 @@
         var staticBackdrop = document.getElementById('staticBackdrop')
             staticBackdrop.addEventListener('show.bs.modal', function (event) {
               // Button that triggered the modal
-              var button = event.relatedTarget
+                var button = event.relatedTarget
               // Extract info from data-bs-* attributes
-              var recipient = button.getAttribute('data-bs-whatever')
+                var recipient = button.getAttribute('data-bs-whatever')
 
               //
               // Update the modal's content.
-              var modalTitle = staticBackdrop.querySelector('.modal-title')
+                  var modalTitle = staticBackdrop.querySelector('.modal-title')
               // var modalBodyInput = staticBackdrop.querySelector('.modal-body input')
-                var modalBodyInput = document.getElementById('recipient-name')
+                var pk = {{ subrequest.pk }}
+                var dateadded = document.getElementById('datead-{{ subrequest.pk }}')
+                var datereset = document.getElementById('datead-{{ subrequest.pk }}')
+                var substatus = document.getElementById('datead-{{ subrequest.pk }}')
+                var lreports = document.getElementById('datead-{{ subrequest.pk }}')
+                var areports = document.getElementById('datead-{{ subrequest.pk }}')
+                var lcredits = document.getElementById('datead-{{ subrequest.pk }}')
+                var acredits = document.getElementById('datead-{{ subrequest.pk }}')
 
-              modalTitle.textContent = 'Subscription Info For ' + recipient
-              modalBodyInput.value = recipient
+                var date_added = document.getElementById('date-added')
+                var date_reset = document.getElementById('date-reset')
+                var sub_status = document.getElementById('sub-status')
+                var l_reports = document.getElementById('lite-reports')
+                var a_reports = document.getElementById('adv-reports')
+                var l_credits = document.getElementById('lite-credits')
+                var a_credits = document.getElementById('adv-credits')
+
+                modalTitle.textContent = 'Subscription Info For ' + pk
+                date_added.value = dateadded
+                date_reset.value = datereset
+                sub_status.value = substatus
+                l_reports.value = lreports
+                a_reports.value = areports
+                l_credits.value = lcredits
+                a_credits.value = acredits
             })
     </script>
 {% endblock js_area %}

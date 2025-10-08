@@ -41,12 +41,13 @@
 {% endblock left_menu %}
 
 {% block breadcrumb %}
-    <section class="breadcrumb-area mb-1" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+    <section class="breadcrumb-area mb-1" style="padding: 80px 0 20px" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
             <div class="container">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 justify-content-center align-items-center">
                         <h1 class="title">LogiFlex</h1>
-                        <h2 class="title" style="color: #0cb7d6">{% trans "Fleet Efficiency Reports" %}</h2>
+                        <h2 class="title" style="color: #0cb7d6;">&nbsp;{% trans "Dashboard" %}</h2>
+
 
                     </div>
                 </div>
@@ -145,7 +146,7 @@
                                     <th>{% trans "Subscription" %}</th>
                                     <th>{% trans "Request" %}</th>
                                     <th>{% trans "Date" %}</th>
-                                    <th>{% trans "Approve" %}</th>
+                                    <th>{% trans "View Request" %}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -172,10 +173,10 @@
                                             </td>
                                             <td>
                                                 <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-bs-whatever="{{ subrequest.pk }}">
-                                                    <span style="text-transform: uppercase;font-size: 12px;">{% trans "Approve" %}</span></button>
+                                                    <span style="text-transform: uppercase;font-size: 12px;">{% trans "View" %}</span></button>
 
-                                                <input type="hidden" id="datead-{{ subrequest.pk }}" value="{{ subrequest.subscription.date_added|date:'Y-m-d' }}" hidden>
-                                                <input type="hidden" id="dateres-{{ subrequest.pk }}" value="{{ subrequest.subscription.reset_date|date:'Y-m-d' }}" hidden>
+                                                <input type="hidden" id="datead-{{ subrequest.pk }}" value="{{ subrequest.subscription.date_added|date:'m-d-Y' }}" hidden>
+                                                <input type="hidden" id="dateres-{{ subrequest.pk }}" value="{{ subrequest.subscription.reset_date|date:'m-d-Y' }}" hidden>
                                                 <input type="hidden" id="status-{{ subrequest.pk }}" value="{{ subrequest.subscription.status }}" hidden>
                                                 <input type="hidden" id="lrep-{{ subrequest.pk }}" value="{{ subrequest.subscription.reports_allowed }}" hidden>
                                                 <input type="hidden" id="lrepu-{{ subrequest.pk }}" value="{{ subrequest.subscription.reports_used }}" hidden>
@@ -241,15 +242,15 @@
           </div>
           <div class="modal-body">
             <div class="row">
-                <div class="col-4">
+                <div class="col-5">
                 <label for="date-added" class="col-form-label">Date Added:</label>
                 <input type="text" class="form-control" id="date-added" disabled>
                 </div>
-                <div class="col-4">
+                <div class="col-5">
                 <label for="date-reset" class="col-form-label">Date To Reset:</label>
                 <input type="text" class="form-control" id="date-reset" disabled>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                 <label for="sub-status" class="col-form-label">Status:</label>
                 <input type="text" class="form-control" id="sub-status" disabled>
                 </div>
@@ -281,6 +282,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Approve</button>
           </div>
         </div>
       </div>

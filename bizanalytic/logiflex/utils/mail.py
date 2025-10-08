@@ -271,3 +271,43 @@ def paymentconfirmationmail(context):
     except Exception as e:
         logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status 0")
         logger.exception(e)
+
+
+@shared_task(name='email_subscription_request_approval')
+def sendapprovedreportmail(context):
+
+    from_email = settings.EMAIL_HOST_USER  # Your email address
+    subject = context.get('subject')
+    to_email = context.get('to_email')
+
+    context_data = {
+    'client_name' : context.get('client'),
+    'company': context.get('company'),
+    'status' : context.get('status'),
+    'current_year' : context.get('cuurentyear'),
+    'change_date' : context.get('change_date'),
+    'support': "support@bizanalytic.com",
+    'subject': subject
+    }
+    template_name = "emails/request_confirmation.html"
+
+    html_content = render_to_string(
+        template_name=template_name,
+        context=context_data
+    )
+    plain_message = strip_tags(html_content)
+
+    if not to_email:
+        raise ValueError("The 'to_email' address must be provided and cannot be empty.")
+    elif not isinstance(to_email, list):
+        to_email = [to_email]
+
+    message = EmailMultiAlternatives(subject, plain_message, from_email, to_email, cc=["support@bizanalytic.com", ])
+    message.attach_alternative(html_content, "text/html")
+    try:
+        result = message.send()
+        logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status {result}")
+        print("Approved email sent successfully ")
+    except Exception as e:
+        logger.info(f"Sending email to {', '.join(to_email)} with subject: {subject} - Status 0")
+        logger.exception(e)

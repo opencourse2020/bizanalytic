@@ -1287,7 +1287,8 @@ class WebhookView(View):
         billing_reason = session.get("billing_reason")
         subscription_id = session.get('lines').data[0].parent.subscription_item_details.subscription
         price_id = session.get('lines').data[0].pricing.price_details.price
-        # amount_paid = session.amount_total / 100  # Convert to currency
+        amount_paid = session.get('lines').data[0].amount / 100  # Convert to currency
+        quantity = session.get('lines').data[0].quantity
         payment_plan = PricingPlan.objects.filter(stripe_price_id=price_id).first()
         if payment_plan and (payment_plan.name == "starter" or payment_plan.name == "pro" or payment_plan.name == "quarterly" or payment_plan.name == "daily"):
             if billing_reason and not billing_reason == "subscription_create":
@@ -1319,7 +1320,7 @@ class WebhookView(View):
 
                         paymenthistory = PaymentsHistory.objects.create(
                             client=logiclient, service_type=payment_plan, stripe_checkout_id=session['id'],
-                            ipaddress=ip, user_referee=user_page_referer,
+                            amount_paid=amount_paid, quantity=quantity, ipaddress=ip, user_referee=user_page_referer,
                             user_language=user_language, user_device=device_type, user_browser=browser_family,
                             user_os=os_family, subscription_id=subscription_id)
 
@@ -1918,6 +1919,53 @@ class AdminApproveReportView(UserPassesTestMixin, CreateView, JsonFormMixin):
         return JsonResponse(data)
 
 
+class AdminApproveRequestView(UserPassesTestMixin, CreateView, JsonFormMixin):
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def post(self, request, *args, **kwargs):
+        requestid = int(request.POST.get("rq_cfr_ci"))
+
+        subrequest = ChangeSubscriptionRequest.objects.filter(pk=requestid).select_related('subscription').first()
+        subscription = subrequest.subscription
+        if subrequest:
+            if subrequest.request == "1":
+                subscription.status = "2"
+                subscription.date_canceled = subscription.reset_date
+                subscription.save()
+                email_info = {
+                    'subject': f"Your Subscription will be paused on this date {subscription.date_canceled}",
+                    'to_email': [subscription.client.email, ],
+                    'client': subscription.client.contact_name,
+                    'company': subscription.client.company,
+                    'change_date': subscription.date_canceled,
+                    'status': "Paused",
+                    'curentyear': now().year
+                }
+                sendapprovedreportmail.delay(email_info)
+            elif subrequest.request == "2":
+                subscription.status = "3"
+                subscription.date_canceled = subscription.reset_date
+                subscription.save()
+                # Send a confirmation Email to client
+                email_info = {
+                    'subject': f"Your Subscription will be canceled on this date {subscription.date_canceled}",
+                    'to_email': [subscription.client.email, ],
+                    'client': subscription.client.contact_name,
+                    'company':  subscription.client.company,
+                    'change_date': subscription.date_canceled,
+                    'status': "Cancelled",
+                    'curentyear': now().year
+                }
+                sendapprovedreportmail.delay(email_info)
+            message = "Request Approved Successfully"
+            status = "success"
+        else:
+            message = "Request does not exist"
+            status = "fail"
+        data = {"submessage": message, "rpstatus": status}
+
+        return JsonResponse(data)
 class UpdateGasPricesView(UserPassesTestMixin, CreateView, JsonFormMixin):
     def test_func(self):
         return self.request.user.is_staff

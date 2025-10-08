@@ -230,6 +230,21 @@ class ServicePayment(models.Model):
             self.advanced_credits -= 1
         self.save()
 
+    def pause_subscription(self):
+        self.reports_allowed = 0
+        self.advanced_reports_allowed = 0
+        self.is_active = False
+        self.save()
+
+    def cancel_subscription(self):
+        self.reports_allowed = 0
+        self.advanced_reports_allowed = 0
+        self.reports_used = 0
+        self.advanced_reports_used = 0
+        self.is_active = False
+        self.end_date = now()
+        self.save()
+
     def __str__(self):
         return f"{self.client.id} - {self.service_type.name}"
 

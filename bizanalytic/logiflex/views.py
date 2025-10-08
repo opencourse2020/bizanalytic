@@ -1279,7 +1279,7 @@ class WebhookView(View):
 
     def handle_invoice_paid(self, session):
         """Process Invoice Paid Successfully"""
-
+        print(session)
         logpay = LogPayments.objects.create(session=session)
         email = session.get("customer_email")
         logiclient = LogiFlexClient.objects.filter(email=email).first()
@@ -1287,7 +1287,7 @@ class WebhookView(View):
         billing_reason = session.get("billing_reason")
         subscription_id = session.get('lines').data[0].parent.subscription_item_details.subscription
         price_id = session.get('lines').data[0].pricing.price_details.price
-
+        # amount_paid = session.amount_total / 100  # Convert to currency
         payment_plan = PricingPlan.objects.filter(stripe_price_id=price_id).first()
         if payment_plan and (payment_plan.name == "starter" or payment_plan.name == "pro" or payment_plan.name == "quarterly" or payment_plan.name == "daily"):
             if billing_reason and not billing_reason == "subscription_create":
@@ -1299,13 +1299,60 @@ class WebhookView(View):
                         servicepayment = ServicePayment.objects.filter(client=logiclient).first()
                         if servicepayment:
                             servicepayment.is_active = True
-                            servicepayment.subscription_id=subscription_id
+                            servicepayment.subscription_id = subscription_id
                             servicepayment.save()
                             servicepayment.reset_quota_if_needed()
                     else:
                         servicepayment.is_active = True
                         servicepayment.save()
                         servicepayment.reset_quota_if_needed()
+                        # Get User Session Information
+                        ip = get_ip(self.request)
+                        user_browser = self.request.META.get("HTTP_USER_AGENT", "")
+                        user_language = self.request.META.get("HTTP_ACCEPT_LANGUAGE")
+                        user_page_referer = self.request.META.get("HTTP_REFERER")
+
+                        user_agent = parse(user_browser)
+                        device_type = user_agent.device  # e.g., 'mobile', 'tablet', 'pc'
+                        os_family = user_agent.os.family  # e.g., 'iOS', 'Android', 'Windows'
+                        browser_family = user_agent.browser.family  # e.g., 'Chrome', 'Firefox', 'Safari'
+
+                        paymenthistory = PaymentsHistory.objects.create(
+                            client=logiclient, service_type=payment_plan, stripe_checkout_id=session['id'],
+                            ipaddress=ip, user_referee=user_page_referer,
+                            user_language=user_language, user_device=device_type, user_browser=browser_family,
+                            user_os=os_family, subscription_id=subscription_id)
+
+                        currentyear = now().strftime("%y")
+                        currentmonth = now().strftime("%m")
+                        receipt = f"RC{currentmonth}{currentyear}-{servicepayment.pk}{logiclient.id}-{paymenthistory.pk}"
+                        paymenthistory.receipt_number = receipt
+                        downloadcode = generatecode(8)
+                        paymenthistory.download_code = downloadcode
+                        paymenthistory.save()
+
+                        email_info = {
+                            'payment_link': "https://bizanalytic.com/logiflex/payments/receipt/?cat=" + downloadcode,
+                            'subject': "Urgent: New Payment",
+                            'to_email': logiclient.email,
+                            'client': logiclient.contact_name,
+                            'company': logiclient.company,
+                            'address_line1': logiclient.address_line1,
+                            'address_line2': logiclient.address_line2,
+                            'city': logiclient.city,
+                            'state': logiclient.state,
+                            'postal_code': logiclient.postal_code,
+                            'comuntry': logiclient.country,
+                            'receipt': paymenthistory.receipt_number,
+                            'payment_date': paymenthistory.payment_date,
+                            'amount_paid': paymenthistory.amount_paid,
+                            'quantity': paymenthistory.quantity,
+                            'unit_price': servicepayment.service_type.price,
+                            'description': servicepayment.service_type.description,
+                            'message': f"A new payment received from {logiclient.company}, email: {email}",
+                            'curentyear': datetime.now().year
+                        }
+                        paymentconfirmationmail.delay(email_info)
             else:
                 print("SUBSCRIPTION ID:", subscription_id)
                 print("STRIPE PRICE ID:", price_id)

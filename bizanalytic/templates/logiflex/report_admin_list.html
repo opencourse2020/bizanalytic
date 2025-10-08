@@ -171,8 +171,8 @@
                                                 {{ subrequest.date_added|date:'Y-m-d' }}
                                             </td>
                                             <td>
-                                                <div class="btn btn-info btn-sm " data-approve="{{ subrequest.pk }}">
-                                                    <span style="text-transform: uppercase;font-size: 12px;">{% trans "Approve" %}</span></div>
+                                                <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-bs-whatever="{{ subrequest.pk }}">
+                                                    <span style="text-transform: uppercase;font-size: 12px;">{% trans "Approve" %}</span></button>
 
                                             </td>
                                         </tr>
@@ -232,7 +232,8 @@
           <div class="modal-body">
             <div class="row">
                 <div class="col-4">
-
+                <label for="recipient-name" class="col-form-label">Recipient:</label>
+                <input type="text" class="form-control" id="recipient-name">
                 </div>
                 <div class="col-8">
 
@@ -262,39 +263,57 @@
 
     <script src={% static "assets/js/demo/table-plugins.demo.js" %}></script>
     <script>
-    $("#updategas").click(function (){
-        let url = "https://bizanalytic.com/logiflex/updateprices/";
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: "",
-            processData: false,
-            contentType: false,
-            headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
-            },
-            success: function (data) {
-                if (data) {
-                    var result = data;
-                    var message = result.submessage;
-                    var status = result.rpstatus;
-                    if (message) {
-                        if (status == "success"){
-                            var f = $("#toast_successreport");
-                            var a = new bootstrap.Toast(f);
-                            $("#message_body").html(message);
-                            a.show()
-                        }else{
-                            var f = $("#toast_failreport");
-                            var a = new bootstrap.Toast(f);
-                            $("#message_body").html(message);
-                            a.show()
+        $("#updategas").click(function (){
+            let url = "https://bizanalytic.com/logiflex/updateprices/";
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: "",
+                processData: false,
+                contentType: false,
+                headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function (data) {
+                    if (data) {
+                        var result = data;
+                        var message = result.submessage;
+                        var status = result.rpstatus;
+                        if (message) {
+                            if (status == "success"){
+                                var f = $("#toast_successreport");
+                                var a = new bootstrap.Toast(f);
+                                $("#message_body").html(message);
+                                a.show()
+                            }else{
+                                var f = $("#toast_failreport");
+                                var a = new bootstrap.Toast(f);
+                                $("#message_body").html(message);
+                                a.show()
+                            }
                         }
                     }
                 }
-            }
-                    })
+                        })
 
 
-        });
+            });
+    </script>
+    <script>
+        var staticBackdrop = document.getElementById('staticBackdrop')
+            staticBackdrop.addEventListener('show.bs.modal', function (event) {
+              // Button that triggered the modal
+              var button = event.relatedTarget
+              // Extract info from data-bs-* attributes
+              var recipient = button.getAttribute('data-bs-whatever')
+              // If necessary, you could initiate an AJAX request here
+              // and then do the updating in a callback.
+              //
+              // Update the modal's content.
+              var modalTitle = staticBackdrop.querySelector('.modal-title')
+              var modalBodyInput = staticBackdrop.querySelector('.modal-body input')
+
+              modalTitle.textContent = 'Subscription Info For ' + recipient
+              modalBodyInput.value = recipient
+            })
     </script>
 {% endblock js_area %}

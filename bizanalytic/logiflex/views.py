@@ -1078,6 +1078,7 @@ class WebhookView(View):
                 id=session.id,
                 expand=['line_items', 'customer']
             )
+            print(expanded_session)
             company_names = expanded_session.custom_fields
 
             amount_paid = expanded_session.amount_total / 100  # Convert to currency
@@ -1279,7 +1280,7 @@ class WebhookView(View):
 
     def handle_invoice_paid(self, session):
         """Process Invoice Paid Successfully"""
-        print(session)
+
         logpay = LogPayments.objects.create(session=session)
         email = session.get("customer_email")
         logiclient = LogiFlexClient.objects.filter(email=email).first()

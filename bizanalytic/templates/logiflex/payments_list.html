@@ -153,6 +153,8 @@
                                                     Pro Subscription
                                                 {% elif payment.service_type.name == "quarterly" %}
                                                     Quarterly Subscription
+                                                {% elif payment.service_type.name == "daily" %}
+                                                    Daily Subscription
                                                 {% endif %}
 
                                             </td>

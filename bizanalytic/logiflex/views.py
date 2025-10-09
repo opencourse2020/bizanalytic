@@ -1169,6 +1169,9 @@ class WebhookView(View):
                             servicepayment.advanced_credits += quantity
                         else:
                             servicepayment.is_active = True
+                            servicepayment.status = "1"
+                            servicepayment.end_date = None
+                            servicepayment.date_canceled = None
                         servicepayment.stripe_checkout_id = session['id']
                         servicepayment.service_type = payment_plan
                         servicepayment.subscription_id = subscription_id

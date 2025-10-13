@@ -270,8 +270,9 @@
                                     {% for service in servicepayments %}
                                         <tr>
                                             <td>{{ service.pk }}</td>
-                                            <td>{{ service.service_type.name }}</td>
+
                                             <td>{{ service.client.email }}</td>
+                                            <td>{{ service.service_type.name }}</td>
                                             <td>
                                                 {{ service.lite_promotion_code }}
                                             </td>

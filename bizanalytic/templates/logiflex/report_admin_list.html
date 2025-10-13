@@ -219,17 +219,17 @@
                                 </thead>
                                 <tbody>
 
-                                    {% for client in logiclients %}
+                                    {% for logiclient in logiclients %}
                                         <tr>
-                                            <td>{{ client.pk }}</td>
-                                            <td>{{ client.client_number }}</td>
-                                            <td>{{ client.email }}</td>
+                                            <td>{{ logiclient.pk }}</td>
+                                            <td>{{ logiclient.client_number }}</td>
+                                            <td>{{ logiclient.email }}</td>
                                             <td>
-                                                {{ client.date_added|date:'Y-m-d' }}
+                                                {{ logiclient.date_added|date:'Y-m-d' }}
                                             </td>
 
                                             <td>
-                                                {{ client.activated }}
+                                                {{ logiclient.activated }}
                                             </td>
                                             <td>
                                                 <a href="{% url 'logiflex:admin:logiclientUpdate' client.pk %}" class="btn btn-primary">Edit</a>

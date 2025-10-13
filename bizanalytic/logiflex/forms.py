@@ -64,8 +64,9 @@ class LogiFlexClientForm(forms.ModelForm):
 
     class Meta:
         model = models.LogiFlexClient
-        fields = ["email", "manually_created", "activated", "company", "contact_name", "phone", "city", "state", "postal_code", "country"]
+        fields = ["client_number", "email", "manually_created", "activated", "company", "contact_name", "phone", "city", "state", "postal_code", "country"]
         labels = {
+            "client_number": _("Client Number"),
             "email": _("Client Email"),
             "manual_created": _("Manually Created"),
             "company": _("Company"),

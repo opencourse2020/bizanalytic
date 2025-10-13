@@ -564,12 +564,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         pu = self.request.user
-        servicepayments = ServicePayment.objects.all()
-        newservicepayments = servicepayments.exclude(lite_promotion_code=None)
-        newservicepayments = newservicepayments.exclude(lite_promotion_code_used=True)
-        logiclients = LogiFlexClient.objects.filter(manually_created=True)
-
-        servicepayment = servicepayments.filter(client__user_id=pu).first()
+        servicepayment = ServicePayment.objects.filter(client__user_id=pu).first()
         payments = PaymentsHistory.objects.filter(client__user_id=pu).order_by('-id')[:3]
         report_allowed = 0
         if servicepayment:
@@ -630,8 +625,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         kwargs["startdate"] = servicepayment.date_added
         kwargs["servicetype"] = servicepayment.service_type.name
         kwargs["payments"] = payments
-        kwargs["servicepayments"] = newservicepayments
-        kwargs["logiclients"] = logiclients
+
         return super(DashboardView, self).get_context_data(**kwargs)
 
 
@@ -1845,6 +1839,10 @@ class AdminReportsListView(UserPassesTestMixin, TemplateView):
     def get_context_data(self, **kwargs):
         query = self.request.GET.get("cat")
         requests = ChangeSubscriptionRequest.objects.filter(processed=False)
+        servicepayments = ServicePayment.objects.all()
+        newservicepayments = servicepayments.exclude(lite_promotion_code=None)
+        newservicepayments = newservicepayments.exclude(lite_promotion_code_used=True)
+        logiclients = LogiFlexClient.objects.filter(manually_created=True)
         if query:
             query = query.lower()
             if query in ["processing", "late", "download", "canceled"]:
@@ -1856,7 +1854,8 @@ class AdminReportsListView(UserPassesTestMixin, TemplateView):
         # reports = reports.filter(report_created=True)
         kwargs["requests"] = requests
         kwargs["reports"] = reports.order_by('-report_number')
-
+        kwargs["servicepayments"] = newservicepayments
+        kwargs["logiclients"] = logiclients
         return super(AdminReportsListView, self).get_context_data(**kwargs)
 
 

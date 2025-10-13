@@ -64,9 +64,9 @@ class NewsLetter_logiflex_subscription(models.Model):
 class LogiFlexClient(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     client_number = models.CharField(max_length=50, null=True, blank=True)
-    company = models.CharField(max_length=150)
-    email = models.CharField(max_length=150)
-    phone = models.CharField(max_length=20)
+    company = models.CharField(max_length=150, null=True, blank=True)
+    email = models.CharField(max_length=150, null=True, blank=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)
     contact_name = models.CharField(max_length=100, null=True, blank=True)
     address_line1 = models.CharField(max_length=100, null=True, blank=True)
     address_line2 = models.CharField(max_length=100, null=True, blank=True)
@@ -77,6 +77,7 @@ class LogiFlexClient(models.Model):
     date_added = models.DateField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     activated = models.BooleanField(default=False)  # Client activated means he is an existing client
+    manually_created = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "LogiFlexClient"
@@ -84,7 +85,7 @@ class LogiFlexClient(models.Model):
         permissions = (("manage_logiflexclient", "Manage LogiFlex Clients"),)
 
     def __str__(self):
-        return str(self.company)
+        return f"{self.company} - {self.email}"
 
 
 class PricingPlan(models.Model):
@@ -95,6 +96,8 @@ class PricingPlan(models.Model):
         ('pro', _("Pro Monthly Subscription")),
         ('quarterly', _("Pro Quarterly Plan")),
         ('daily', _("Daily Plan")),
+        ('free_lite_report', _("Free One-Time Lite Report")),
+        ('free_advanced_report', _("Free One-Time Advanced Report")),
     ]
     name = models.CharField(max_length=50, choices=PLAN_CHOICES)
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
@@ -131,6 +134,10 @@ class ServicePayment(models.Model):
     reset_date = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=1, choices=statustype, default=0)
     date_canceled = models.DateTimeField(null=True, blank=True)
+    lite_promotion_code = models.CharField(max_length=8, null=True, blank=True)
+    lite_promotion_code_used = models.BooleanField(default=False)
+    advanced_promotion_code = models.CharField(max_length=8, null=True, blank=True)
+    advanced_promotion_code_used = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "ServicePayment"

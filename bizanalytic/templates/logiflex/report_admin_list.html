@@ -46,7 +46,7 @@
                 <div class="row">
                     <div class="col-12 justify-content-center align-items-center">
                         <h1 class="title">LogiFlex</h1>
-                        <h2 class="title" style="color: #0cb7d6;">&nbsp;{% trans "Dashboard" %}</h2>
+                        <h2 class="title" style="color: #0cb7d6;">&nbsp;{% trans "Admin Dashboard" %}</h2>
 
 
                     </div>
@@ -131,7 +131,7 @@
                 </div>
                 </div>
                 <div class="col-md-6">
-                    <h5 class="title">{% trans "List of Requests" %}</h5>
+                    <h5 class="title">{% trans "List of Subscription Requests" %}</h5>
                 <div id="datatable" class="mb-5">
                     <div class="card">
                     <div class="card-header">
@@ -190,6 +190,102 @@
                                     {% endfor %}
 
                                 {% endif %}
+                               </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+                </div>
+            <div class="col-md-6">
+                    <h5 class="title">{% trans "List of Logiflex Clients" %}</h5>
+                <div id="datatable" class="mb-5">
+                    <div class="card">
+                    <div class="card-header">
+                        <a href="{% url 'logiflex:admin:logiclientcreate' %}" class="btn btn-success">Create a new Client</a>
+                    </div>
+                        <div class="card-body">
+                            <table id="datatableDefault" class="table text-nowrap w-100">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{% trans "Client Number" %}</th>
+                                    <th>{% trans "Email" %}</th>
+                                    <th>{% trans "Date Added" %}</th>
+                                    <th>{% trans "Activated" %}</th>
+                                    <th>{% trans "Edit Client" %}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for client in logiclients %}
+                                        <tr>
+                                            <td>{{ client.pk }}</td>
+                                            <td>{{ client.client_number }}</td>
+                                            <td>{{ client.email }}</td>
+                                            <td>
+                                                {{ client.date_added|date:'Y-m-d' }}
+                                            </td>
+
+                                            <td>
+                                                {{ client.activated }}
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'logiflex:admin:logiclientUpdate' client.pk %}" class="btn btn-primary">Edit</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+
+
+                               </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+                </div>
+            <div class="col-md-6">
+                    <h5 class="title">{% trans "List of Service Payments" %}</h5>
+                <div id="datatable" class="mb-5">
+                    <div class="card">
+                    <div class="card-header">
+                        <a href="{% url 'logiflex:admin:servicepaymentcreate' %}" class="btn btn-success">Create a new Service</a>
+                    </div>
+                        <div class="card-body">
+                            <table id="datatableDefault" class="table text-nowrap w-100">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{% trans "Client" %}</th>
+                                    <th>{% trans "Service Type" %}</th>
+                                    <th>{% trans "lite promo. code" %}</th>
+                                    <th>{% trans "Date Added" %}</th>
+                                    <th>{% trans "Edit Service" %}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for service in servicepayments %}
+                                        <tr>
+                                            <td>{{ service.pk }}</td>
+                                            <td>{{ service.service_type.name }}</td>
+                                            <td>{{ service.client.email }}</td>
+                                            <td>
+                                                {{ service.lite_promotion_code }}
+                                            </td>
+
+                                            <td>
+                                                {{ subrequest.date_added|date:'Y-m-d' }}
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'logiflex:admin:servicepaymentUpdate' service.pk %}" class="btn btn-primary">Edit</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+
+
                                </tbody>
                             </table>
                         </div>

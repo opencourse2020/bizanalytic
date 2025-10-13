@@ -5,6 +5,10 @@ app_name = "logiflex"
 
 admin_patterns = [
     path("reports/", views.AdminReportsListView.as_view(), name="reports"),
+    path("logiclientcreate/", views.LogiFlexClientCreateView.as_view(), name="logiclientcreate"),
+    path("servicepaymentcreate/", views.ServicePaymentCreateView.as_view(), name="servicepaymentcreate"),
+    path("logiclientUpdate/<int:pk>/", views.LogiFlexClientUpdateView.as_view(), name="logiclientUpdate"),
+    path("servicepaymentUpdate/<int:pk>/", views.ServicePaymentUpdateView.as_view(), name="servicepaymentUpdate")
 ]
 
 newsletter_patterns = [

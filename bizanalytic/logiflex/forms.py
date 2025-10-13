@@ -45,3 +45,34 @@ class Blog_logiflexForm(forms.ModelForm):
             "meta_description": _("Meta Description"),
             "relatedblog": _("Related Blogs")
         }
+
+
+class ServicePaymentForm(forms.ModelForm):
+    class Meta:
+        model = models.ServicePayment
+        fields = ["client", "service_type", "lite_promotion_code", "lite_credits", ]
+        labels = {
+            "client": _("Client"),
+            "service_type": _("Service Type"),
+            "lite_promotion_code": _("Lite Promotion Code"),
+            "lite_credits": _("Lite Credits"),
+
+        }
+
+
+class LogiFlexClientForm(forms.ModelForm):
+
+    class Meta:
+        model = models.LogiFlexClient
+        fields = ["email", "manually_created", "activated", "company", "contact_name", "phone", "city", "state", "postal_code", "country"]
+        labels = {
+            "email": _("Client Email"),
+            "manual_created": _("Manually Created"),
+            "company": _("Company"),
+            "contact_name": _("Contact Name"),
+            "phone": _("Phone"),
+            "city": _("City"),
+            "state": _("State"),
+            "postal_code": _("Postal Code"),
+            "country": _("Country"),
+        }

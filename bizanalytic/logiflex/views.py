@@ -20,6 +20,7 @@ from django.core.exceptions import PermissionDenied
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, get_object_or_404
+from django.db import transaction
 from django.utils.timezone import now
 import json
 import requests
@@ -563,7 +564,12 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         pu = self.request.user
-        servicepayment = ServicePayment.objects.filter(client__user_id=pu).first()
+        servicepayments = ServicePayment.objects.all()
+        newservicepayments = servicepayments.exclude(lite_promotion_code=None)
+        newservicepayments = newservicepayments.exclude(lite_promotion_code_used=True)
+        logiclients = LogiFlexClient.objects.filter(manually_created=True)
+
+        servicepayment = servicepayments.filter(client__user_id=pu).first()
         payments = PaymentsHistory.objects.filter(client__user_id=pu).order_by('-id')[:3]
         report_allowed = 0
         if servicepayment:
@@ -624,6 +630,8 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         kwargs["startdate"] = servicepayment.date_added
         kwargs["servicetype"] = servicepayment.service_type.name
         kwargs["payments"] = payments
+        kwargs["servicepayments"] = newservicepayments
+        kwargs["logiclients"] = logiclients
         return super(DashboardView, self).get_context_data(**kwargs)
 
 
@@ -1078,7 +1086,7 @@ class WebhookView(View):
                 id=session.id,
                 expand=['line_items', 'customer']
             )
-            print(expanded_session)
+            # print(expanded_session)
             company_names = expanded_session.custom_fields
 
             amount_paid = expanded_session.amount_total / 100  # Convert to currency
@@ -1130,6 +1138,7 @@ class WebhookView(View):
             logiclient = None
             if client_type == 2:
                 logiclient = LogiFlexClient.objects.filter(client_number=client_reference_id).first()
+                print(logiclient)
             if not logiclient:
                 logiclient = LogiFlexClient.objects.filter(email=email).first()
             # Check if Client email matches his client number
@@ -2181,3 +2190,74 @@ class FullNewClientReportCreateView(CreateView, JsonFormMixin):
         data = {"submessage": message, "status": repstatus, "repid": reportid}
 
         return JsonResponse(data)
+
+
+class LogiFlexClientCreateView(UserPassesTestMixin, CreateView):
+    model = LogiFlexClient
+    form_class = LogiFlexClientForm
+    template_name = "logiflex/client_servicepayment_form.html"
+    success_url = reverse_lazy("logiflex:admin:reports")
+
+    def form_valid(self, form):
+        with transaction.atomic():
+            form.instance.client_number = makeclientnumber(form.instance.pk)
+            response = super().form_valid(form)
+            return response
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Logiflex Client"
+
+        return super().get_context_data(**kwargs)
+
+class LogiFlexClientUpdateView(UserPassesTestMixin, UpdateView):
+    model = LogiFlexClient
+    form_class = LogiFlexClientForm
+    template_name = "logiflex/client_servicepayment_form.html"
+    success_url = reverse_lazy("logiflex:admin:reports")
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Logiflex Client"
+
+        return super().get_context_data(**kwargs)
+
+
+class ServicePaymentCreateView(UserPassesTestMixin, CreateView):
+    model = LogiFlexClient
+    form_class = LogiFlexClientForm
+    template_name = "logiflex/client_servicepayment_form.html"
+    success_url = reverse_lazy("logiflex:admin:reports")
+
+    def get_initial(self):
+        promo_code = generatecode(8)
+        initial = {
+            "lite_promotion_code": promo_code,
+        }
+        return initial
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Service Payment"
+
+        return super().get_context_data(**kwargs)
+
+
+class ServicePaymentUpdateView(UserPassesTestMixin, UpdateView):
+    model = LogiFlexClient
+    form_class = LogiFlexClientForm
+    template_name = "logiflex/client_servicepayment_form.html"
+    success_url = reverse_lazy("logiflex:admin:reports")
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def get_context_data(self, **kwargs):
+        kwargs["title"] = "Service Payment"
+
+        return super().get_context_data(**kwargs)

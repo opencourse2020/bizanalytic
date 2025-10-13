@@ -2224,8 +2224,8 @@ class LogiFlexClientUpdateView(UserPassesTestMixin, UpdateView):
 
 
 class ServicePaymentCreateView(UserPassesTestMixin, CreateView):
-    model = LogiFlexClient
-    form_class = LogiFlexClientForm
+    model = ServicePayment
+    form_class = ServicePaymentForm
     template_name = "logiflex/client_servicepayment_form.html"
     success_url = reverse_lazy("logiflex:admin:reports")
 
@@ -2246,8 +2246,8 @@ class ServicePaymentCreateView(UserPassesTestMixin, CreateView):
 
 
 class ServicePaymentUpdateView(UserPassesTestMixin, UpdateView):
-    model = LogiFlexClient
-    form_class = LogiFlexClientForm
+    model = ServicePayment
+    form_class = ServicePaymentForm
     template_name = "logiflex/client_servicepayment_form.html"
     success_url = reverse_lazy("logiflex:admin:reports")
 

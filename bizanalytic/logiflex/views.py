@@ -2198,11 +2198,6 @@ class LogiFlexClientCreateView(UserPassesTestMixin, CreateView):
     template_name = "logiflex/client_servicepayment_form.html"
     success_url = reverse_lazy("logiflex:admin:reports")
 
-    def form_valid(self, form):
-        with transaction.atomic():
-            form.instance.client_number = makeclientnumber(form.instance.pk)
-            response = super().form_valid(form)
-            return response
     def test_func(self):
         return self.request.user.is_staff
 
@@ -2216,6 +2211,12 @@ class LogiFlexClientUpdateView(UserPassesTestMixin, UpdateView):
     form_class = LogiFlexClientForm
     template_name = "logiflex/client_servicepayment_form.html"
     success_url = reverse_lazy("logiflex:admin:reports")
+
+    def get_form_kwargs(self):
+        kwargs = super(LogiFlexClientUpdateView, self).get_form_kwargs()
+        cid = makeclientnumber(self.kwargs.get('pk'))
+        kwargs.update({"client_number": cid})
+        return kwargs
 
     def test_func(self):
         return self.request.user.is_staff

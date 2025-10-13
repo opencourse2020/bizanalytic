@@ -2205,22 +2205,19 @@ class LogiFlexClientCreateView(UserPassesTestMixin, CreateView):
 
         return super().get_context_data(**kwargs)
 
+
 class LogiFlexClientUpdateView(UserPassesTestMixin, UpdateView):
     model = LogiFlexClient
     form_class = LogiFlexClientForm
     template_name = "logiflex/client_servicepayment_form.html"
     success_url = reverse_lazy("logiflex:admin:reports")
 
-    def get_form_kwargs(self):
-        kwargs = super(LogiFlexClientUpdateView, self).get_form_kwargs()
-        cid = makeclientnumber(self.kwargs.get('pk'))
-        kwargs.update({"client_number": cid})
-        return kwargs
-
     def test_func(self):
         return self.request.user.is_staff
 
     def get_context_data(self, **kwargs):
+        cid = makeclientnumber(self.kwargs.get('pk'))
+        kwargs["cid"] = cid
         kwargs["title"] = "Logiflex Client"
 
         return super().get_context_data(**kwargs)

@@ -1841,7 +1841,7 @@ class AdminReportsListView(UserPassesTestMixin, TemplateView):
         requests = ChangeSubscriptionRequest.objects.filter(processed=False)
         servicepayments = ServicePayment.objects.all()
         newservicepayments = servicepayments.exclude(lite_promotion_code=None)
-        newservicepayments = newservicepayments.exclude(lite_promotion_code_used=True)
+        # newservicepayments = newservicepayments.exclude(lite_promotion_code_used=True)
         logiclients = LogiFlexClient.objects.filter(manually_created=True)
         if query:
             query = query.lower()

@@ -17,9 +17,44 @@ var handleRenderTableData = function() {
 	});
 };
 
-
+var handleRenderTableData1 = function() {
+	var table = $('#datatableDefault1').DataTable({
+		dom: "<'row mb-3'<'col-sm-4'l><'col-sm-8 text-end'<'d-flex justify-content-end'fB>>>t<'d-flex align-items-center mt-3'<'me-auto'i><'mb-0'p>>",
+    lengthMenu: [ 10, 20, 30, 40, 50 ],
+		responsive: true,
+		buttons: [
+			{ extend: 'print', className: 'btn btn-outline-default btn-sm ms-2' },
+			{ extend: 'csv', className: 'btn btn-outline-default btn-sm' }
+		]
+	});
+};
+var handleRenderTableData2 = function() {
+	var table = $('#datatableDefault2').DataTable({
+		dom: "<'row mb-3'<'col-sm-4'l><'col-sm-8 text-end'<'d-flex justify-content-end'fB>>>t<'d-flex align-items-center mt-3'<'me-auto'i><'mb-0'p>>",
+    lengthMenu: [ 10, 20, 30, 40, 50 ],
+		responsive: true,
+		buttons: [
+			{ extend: 'print', className: 'btn btn-outline-default btn-sm ms-2' },
+			{ extend: 'csv', className: 'btn btn-outline-default btn-sm' }
+		]
+	});
+};
+var handleRenderTableData3 = function() {
+	var table = $('#datatableDefault3').DataTable({
+		dom: "<'row mb-3'<'col-sm-4'l><'col-sm-8 text-end'<'d-flex justify-content-end'fB>>>t<'d-flex align-items-center mt-3'<'me-auto'i><'mb-0'p>>",
+    lengthMenu: [ 10, 20, 30, 40, 50 ],
+		responsive: true,
+		buttons: [
+			{ extend: 'print', className: 'btn btn-outline-default btn-sm ms-2' },
+			{ extend: 'csv', className: 'btn btn-outline-default btn-sm' }
+		]
+	});
+};
 /* Controller
 ------------------------------------------------ */
 $(document).ready(function() {
 	handleRenderTableData();
+	handleRenderTableData1();
+	handleRenderTableData2();
+	handleRenderTableData3();
 });

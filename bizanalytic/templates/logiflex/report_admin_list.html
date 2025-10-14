@@ -214,7 +214,6 @@
                                     <th>{% trans "Email" %}</th>
                                     <th>{% trans "Date Added" %}</th>
                                     <th>{% trans "Activated" %}</th>
-                                    <th>{% trans "Edit Client" %}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -222,18 +221,20 @@
                                     {% for logiclient in logiclients %}
                                         <tr>
                                             <td>{{ logiclient.pk }}</td>
-                                            <td>{{ logiclient.client_number }}</td>
+                                            <td><a href="{% url 'logiflex:admin:logiclientUpdate' logiclient.pk %}" class="btn btn-outline-primary">{{ logiclient.client_number }}</a></td>
                                             <td>{{ logiclient.email }}</td>
                                             <td>
                                                 {{ logiclient.date_added|date:'Y-m-d' }}
                                             </td>
 
                                             <td>
-                                                {{ logiclient.activated }}
+                                                {% if logiclient.activated %}
+                                                    <span class="badge bg-success">{{ logiclient.activated }}</span>
+                                                {% else %}
+                                                    <span class="badge bg-danger">{{ logiclient.activated }}</span>
+                                                {% endif %}
                                             </td>
-                                            <td>
-                                                <a href="{% url 'logiflex:admin:logiclientUpdate' logiclient.pk %}" class="btn btn-primary">Edit</a>
-                                            </td>
+
                                         </tr>
                                     {% endfor %}
 
@@ -277,7 +278,13 @@
                                             <td>
                                                 {{ service.lite_promotion_code }}
                                             </td>
-                                            <td>{{ service.lite_promotion_code_used }}</td>
+                                            <td>
+                                                {% if service.lite_promotion_code_used %}
+                                                    <span class="badge bg-success">{{ service.lite_promotion_code_used }}</span>
+                                                {% else %}
+                                                    <span class="badge bg-danger">{{ service.lite_promotion_code_used }}</span>
+                                                {% endif %}
+                                                </td>
                                             <td>
                                                 {{ service.date_added|date:'Y-m-d' }}
                                             </td>

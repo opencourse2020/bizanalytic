@@ -221,7 +221,7 @@
                                     {% for logiclient in logiclients %}
                                         <tr>
                                             <td>{{ logiclient.pk }}</td>
-                                            <td><a href="{% url 'logiflex:admin:logiclientUpdate' logiclient.pk %}" class="btn btn-outline-primary">{{ logiclient.client_number }}</a></td>
+                                            <td><a href="{% url 'logiflex:admin:logiclientUpdate' logiclient.pk %}" class="btn btn-outline-primary btn-sm">{{ logiclient.client_number }}</a></td>
                                             <td>{{ logiclient.email }}</td>
                                             <td>
                                                 {{ logiclient.date_added|date:'Y-m-d' }}
@@ -260,11 +260,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>{% trans "Client" %}</th>
-
-                                    <th>{% trans "lite promo. code" %}</th>
-                                    <th>{% trans "Promo. Code Used" %}</th>
+                                    <th>{% trans "Promo. code" %}</th>
+                                    <th>{% trans "Code Used" %}</th>
                                     <th>{% trans "Date Added" %}</th>
-                                    <th>{% trans "Edit Service" %}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -273,7 +271,8 @@
                                         <tr>
                                             <td>{{ service.pk }}</td>
 
-                                            <td>{{ service.client.email }}</td>
+                                            <td>
+                                                <a href="{% url 'logiflex:admin:servicepaymentUpdate' service.pk %}" class="btn btn-outline-primary btn-sm">{{ service.client.client_number }}</a></td>
 
                                             <td>
                                                 {{ service.lite_promotion_code }}

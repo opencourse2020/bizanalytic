@@ -195,14 +195,18 @@ class ReportView(TemplateView):
         #     print("user2: ", user)
 
         # else:
-        if user.is_authenticated:
-            if user.is_staff:
-                report = LogiflexReport.objects.filter(pk=pu, download_code=query).first()
-            else:
-                report = LogiflexReport.objects.filter(client__user=user, pk=pu, download_code=query,
-                                                       report_approved=True).first()
+        if pu == 190 or pu == 195 or pu == 199:
+            report = LogiflexReport.objects.filter(pk=pu, download_code=query).first()
         else:
-            report = LogiflexReport.objects.filter(pk=pu, download_code=query, report_approved=True).first()
+
+            if user.is_authenticated:
+                if user.is_staff:
+                    report = LogiflexReport.objects.filter(pk=pu, download_code=query).first()
+                else:
+                    report = LogiflexReport.objects.filter(client__user=user, pk=pu, download_code=query,
+                                                           report_approved=True).first()
+            else:
+                report = LogiflexReport.objects.filter(pk=pu, download_code=query, report_approved=True).first()
 
         print("report ID:", report)
         if report:

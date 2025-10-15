@@ -97,7 +97,7 @@ class PricingPlan(models.Model):
         ('quarterly', _("Pro Quarterly Plan")),
         ('daily', _("Daily Plan")),
         ('free_lite_report', _("Free One-Time Lite Report")),
-        ('free_advanced_report', _("Free One-Time Advanced Report")),
+        ('discounted_advanced_report', _("Discounted One-Time Advanced Report")),
     ]
     name = models.CharField(max_length=50, choices=PLAN_CHOICES)
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)

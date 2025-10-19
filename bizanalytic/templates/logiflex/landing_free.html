@@ -10,6 +10,22 @@
 
 {% block css %}
     {{ block.super }}
+    <style>
+    :root, [data-bs-theme=light] {
+            --gk-border-radius-xl: 0.75rem;
+        --gk-gutter-x: 1.5rem;
+    --gk-gutter-y: 0;
+    }
+    .rounded-4 {
+    border-radius: var(--gk-border-radius-xl) !important;
+        }
+
+    @media (min-width: 1200px) {
+    .d-xl-block {
+        display: block !important;
+    }
+}
+    </style>
 {% endblock css %}
 
 {% block header_left %}
@@ -120,16 +136,16 @@
     <section class="py-lg-8 py-6">
                                 <div class="container py-lg-8">
                                   <!--row-->
-                                  <div class="row align-items-center">
-                                    <div class="offset-xl-1 col-xl-4 col-lg-6 d-none d-lg-block">
+                                  <div class="row align-items-center" style="flex-shrink: 0;margin-top: var(--gk-gutter-y);max-width: 100%;padding-left: calc(var(--gk-gutter-x) * .5);padding-right: calc(var(--gk-gutter-x) * .5);width: 100%;">
+                                    <div class="offset-xl-1 col-xl-4 col-lg-6 ">
                                       <!--img-->
                                       <div class="position-relative">
                                         <img src={% static "vendor/transport/assets/images/mentor.jpg" %} alt="mentor" class="img-fluid w-100 rounded-4">
 
-                                        <img src={% static "vendor/transport/assets/images/schedule.svg"%} alt="schedule" class="position-absolute top-50 start-100 translate-middle mt-n8 d-xl-block d-none">
+                                        <img src={% static "vendor/transport/assets/images/schedule.svg"%} alt="schedule" class="position-absolute translate-middle mt-n8" style="top: 60% !important;left: 80% !important; height: 50%;">
 {#                                        <img src="../assets/images/mentor/verify.svg" alt="verify" class="position-absolute top-50 start-0 translate-middle mt-n2 d-xl-block d-none">#}
 
-                                        <img src={% static "vendor/transport/assets/images/card1.svg" %} alt="card" class="position-absolute top-50 start-0 translate-middle mt-8 d-xl-block d-none">
+                                        <img src={% static "vendor/transport/assets/images/card1.svg" %} alt="card" class="position-absolute translate-middle mt-8"  style="top: 60% !important;left: 80% !important; height: 40%;">
                                       </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-5 offset-lg-1 offset-xl-1">

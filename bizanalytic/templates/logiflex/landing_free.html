@@ -13,13 +13,17 @@
     <style>
     :root, [data-bs-theme=light] {
             --gk-border-radius-xl: 0.75rem;
-        --gk-gutter-x: 1.5rem;
-    --gk-gutter-y: 0;
+            --gk-gutter-x: 1.5rem;
+            --gk-gutter-y: 0;
+            --gk-border-radius-lg: 0.5rem;
+
     }
     .rounded-4 {
     border-radius: var(--gk-border-radius-xl) !important;
         }
-
+     .rounded-3 {
+    border-radius: var(--gk-border-radius-lg) !important;
+        }
     @media (min-width: 1200px) {
     .d-xl-block {
         display: block !important;
@@ -247,10 +251,12 @@
         </div>
     </section>
     <section class="mt-20">
-    <div class="tab-content" >
-        <div class="tab-pane tab-example-design fade bg-light p-4 rounded-3 active show" id="pills-cta-three-design" role="tabpanel" >
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="tab-content" >
+        <div class="tab-pane tab-example-design fade bg-light p-4 rounded-3 active show" id="pills-cta-three-design" style="border-radius: var(--gk-border-radius-lg) !important;" role="tabpanel" >
         <div class="my-4">
-            <div class="container">
+            <div class="container" style="--gk-gutter-x: 2.5rem;padding-left: calc(var(--gk-gutter-x) * .5);padding-right: calc(var(--gk-gutter-x) * .5);">
                 <div class="row">
                     <div class="offset-xl-1 col-xl-10 col-12 ">
                         <div class="row px-3 pt-3 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border smooth-shadow-sm">
@@ -279,6 +285,9 @@
         </div>
         </div>
     </div>
+        </div>
+    </div>
+
     </section>
 {% endblock contact_area %}
 

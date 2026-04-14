@@ -1288,9 +1288,9 @@ def prepare_data_report(df):
             f"<strong class='comp'>{competitor}</strong> is <strong class='odds'>{odds_ratio:.2f}x</strong> to deliver on time than <strong class='worst'>{worst_carrier}</strong>")
     # print("Result number of competitors", results_df['Competitor'].count())
     if results_df['Competitor'].count() >= 2:
-        contingency_action.append(f"If you want to imporve your overall <strong>Reliability</strong>, Move some of the Shipments from <strong class='worst'>{worst_carrier}</strong> to <strong class='comp'>{results_df.iloc[0]['Competitor']}</strong> and <strong class='comp'>{results_df.iloc[1]['Competitor']}</strong>")
+        contingency_action.append(f"If you want to improve your overall <strong>Reliability</strong>, Move some of the Shipments from <strong class='worst'>{worst_carrier}</strong> to <strong class='comp'>{results_df.iloc[0]['Competitor']}</strong> and <strong class='comp'>{results_df.iloc[1]['Competitor']}</strong>")
     elif results_df['Competitor'].count() == 1:
-        contingency_action.append(f"If you want to imporve your overall <strong>Reliability</strong>, Move some of the Shipments from <strong class='worst'>{worst_carrier}</strong> to <strong class='comp'>{results_df.iloc[0]['Competitor']}</strong>")
+        contingency_action.append(f"If you want to improve your overall <strong>Reliability</strong>, Move some of the Shipments from <strong class='worst'>{worst_carrier}</strong> to <strong class='comp'>{results_df.iloc[0]['Competitor']}</strong>")
 
     # Carrier Reliability Vs Cost Analysis
     q3 = df.groupby('CarrierName')['CostPerMile'].quantile(0.75).reset_index()

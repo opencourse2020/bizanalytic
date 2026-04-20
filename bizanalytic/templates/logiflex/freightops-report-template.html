@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreightOps Report — RPT-2025-000190</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ========== VARIABLES ========== */
+:root {
+  --ink: #1a1a1f;
+  --ink-secondary: #52525b;
+  --ink-tertiary: #8b8b96;
+  --bg: #ffffff;
+  --bg-subtle: #f7f7f8;
+  --bg-card: #fafafa;
+  --border: #e8e8ec;
+  --border-light: #f0f0f3;
+  --accent: #1a56db;
+  --accent-light: #e8effc;
+  --accent-text: #1a4fbd;
+  --green: #047857;
+  --green-light: #ecfdf5;
+  --green-bg: #d1fae5;
+  --red: #b91c1c;
+  --red-light: #fef2f2;
+  --red-bg: #fecaca;
+  --amber: #92400e;
+  --amber-light: #fffbeb;
+  --amber-bg: #fde68a;
+  --font: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', 'SF Mono', monospace;
+  --page-max: 900px;
+  --page-pad: 48px;
+}
+
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font); color: var(--ink); background: var(--bg-subtle); line-height: 1.65; }
+
+/* ========== REPORT CONTAINER ========== */
+.report {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  background: var(--bg);
+  min-height: 100vh;
+}
+.report-inner { padding: var(--page-pad); }
+
+/* ========== HEADER ========== */
+.report-header {
+  padding: 40px var(--page-pad) 32px;
+  border-bottom: 2px solid var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+.report-header-left { flex: 1; }
+.report-brand {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  margin-bottom: 4px;
+}
+.report-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  color: var(--ink);
+}
+.report-subtitle {
+  font-size: 14px;
+  color: var(--ink-secondary);
+  margin-top: 6px;
+}
+.report-meta {
+  text-align: right;
+  flex-shrink: 0;
+}
+.report-meta-id {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-tertiary);
+  letter-spacing: 0.5px;
+}
+.report-meta-date {
+  font-size: 13px;
+  color: var(--ink-tertiary);
+  margin-top: 2px;
+}
+.report-meta-badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: var(--accent-light);
+  color: var(--accent-text);
+  margin-top: 8px;
+}
+
+/* ========== MONEY HEADLINE ========== */
+.money-headline {
+  margin: 40px 0 0;
+  padding: 32px 36px;
+  background: linear-gradient(135deg, #f0f7ff 0%, #f5f3ff 100%);
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  text-align: center;
+}
+.money-headline-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  margin-bottom: 8px;
+}
+.money-headline-value {
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.money-headline-sub {
+  font-size: 14px;
+  color: var(--ink-secondary);
+  margin-top: 6px;
+}
+.money-breakdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  margin-top: 24px;
+  background: var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.money-breakdown-item {
+  background: var(--bg);
+  padding: 14px 12px;
+  text-align: center;
+}
+.money-breakdown-item-value {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.money-breakdown-item-label {
+  font-size: 11px;
+  color: var(--ink-tertiary);
+  margin-top: 2px;
+}
+
+/* ========== TOP ACTIONS ========== */
+.top-actions {
+  margin-top: 32px;
+}
+.top-actions-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  margin-bottom: 12px;
+}
+.action-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: border-color 0.2s;
+}
+.action-card:hover { border-color: var(--accent); }
+.action-rank {
+  font-family: var(--mono);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--border);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 32px;
+}
+.action-body { flex: 1; }
+.action-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.action-detail {
+  font-size: 13px;
+  color: var(--ink-secondary);
+  margin-top: 4px;
+}
+.action-value {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--green);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ========== FLEET HEALTH SCORE ========== */
+.fleet-score {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 32px;
+  margin-top: 36px;
+  padding: 28px 32px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  align-items: center;
+}
+.fleet-score-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 6px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.fleet-score-number {
+  font-size: 44px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}
+.fleet-score-label {
+  font-size: 11px;
+  color: var(--ink-tertiary);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: var(--mono);
+}
+.fleet-score-bars { flex: 1; }
+.score-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.score-bar-label {
+  width: 130px;
+  font-size: 12px;
+  color: var(--ink-secondary);
+  text-align: right;
+  flex-shrink: 0;
+}
+.score-bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--border-light);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.score-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s ease;
+}
+.score-bar-value {
+  width: 36px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ========== SECTION STRUCTURE ========== */
+.section {
+  margin-top: 48px;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.section-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.section-icon.carriers { background: var(--accent-light); color: var(--accent-text); }
+.section-icon.drivers { background: var(--green-light); color: var(--green); }
+.section-icon.routes { background: var(--amber-light); color: var(--amber); }
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+}
+
+/* ========== KPI CARDS ========== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.kpi-card {
+  padding: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.kpi-card-value {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.kpi-card-unit {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ink-tertiary);
+}
+.kpi-card-label {
+  font-size: 12px;
+  color: var(--ink-secondary);
+  margin-top: 4px;
+}
+.kpi-card-entity {
+  font-size: 11px;
+  color: var(--ink-tertiary);
+  margin-top: 2px;
+}
+
+/* ========== CHART PLACEHOLDER ========== */
+.chart-area {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-tertiary);
+  font-size: 13px;
+}
+
+/* ========== ANALYSIS BLOCK (merged narrative) ========== */
+.analysis-block {
+  margin-top: 24px;
+}
+.analysis-summary {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--ink-secondary);
+  padding: 20px 24px;
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  border-left: 3px solid var(--accent);
+  margin-bottom: 20px;
+}
+
+/* ========== INSIGHT LIST ========== */
+.insight-list {
+  list-style: none;
+  margin-bottom: 20px;
+}
+.insight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.insight-item:last-child { border-bottom: none; }
+.insight-marker {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+.insight-marker.finding { background: var(--accent); }
+.insight-marker.warning { background: var(--red); }
+.insight-marker.opportunity { background: var(--green); }
+.insight-text {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.insight-text strong { font-weight: 600; }
+
+/* ========== DRIVER PROFILE CARDS ========== */
+.driver-profiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 24px 0;
+}
+.driver-card {
+  padding: 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  position: relative;
+}
+.driver-card.flagged { border-left: 3px solid var(--red); }
+.driver-card.top-performer { border-left: 3px solid var(--green); }
+.driver-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.driver-archetype {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-tertiary);
+  margin-top: 2px;
+}
+.driver-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+.driver-stat-label {
+  font-size: 10px;
+  color: var(--ink-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: var(--mono);
+}
+.driver-stat-value {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.driver-action {
+  font-size: 12px;
+  color: var(--ink-secondary);
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-light);
+  line-height: 1.55;
+}
+
+/* ========== ANOMALY TABLE ========== */
+.anomaly-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 20px 0;
+}
+.anomaly-table thead { background: var(--bg-subtle); }
+.anomaly-table th {
+  text-align: left;
+  padding: 10px 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  border-bottom: 1px solid var(--border);
+}
+.anomaly-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--ink);
+}
+.anomaly-table td.mono {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+}
+.overpayment-badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--red-light);
+  color: var(--red);
+}
+
+/* ========== FINANCIAL SUMMARY ========== */
+.financial-summary {
+  margin-top: 36px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+}
+.financial-summary-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 16px;
+}
+.financial-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.financial-item {
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 8px;
+}
+.financial-item-value {
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--green);
+}
+.financial-item-label {
+  font-size: 12px;
+  color: var(--ink-secondary);
+  margin-top: 2px;
+}
+
+/* ========== THIS WEEK ACTIONS ========== */
+.week-actions {
+  margin-top: 36px;
+  padding: 28px 32px;
+  background: var(--bg-card);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+}
+.week-actions-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.week-action-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.week-action-item:last-child { border-bottom: none; }
+.week-action-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.week-action-text {
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.55;
+}
+.week-action-text strong { font-weight: 600; }
+
+/* ========== FOOTER ========== */
+.report-footer {
+  margin-top: 48px;
+  padding: 24px var(--page-pad);
+  border-top: 2px solid var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-left {
+  font-size: 12px;
+  color: var(--ink-tertiary);
+}
+.footer-cta {
+  font-size: 12px;
+  color: var(--accent-text);
+  font-weight: 500;
+}
+.footer-confidential {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* ========== PDF DOWNLOAD BUTTON ========== */
+.download-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--ink);
+  padding: 10px var(--page-pad);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.download-bar-text {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+}
+.download-btn {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bg);
+  background: var(--accent);
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.download-btn:hover { opacity: 0.85; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 680px) {
+  :root { --page-pad: 20px; }
+  .report-header { flex-direction: column; }
+  .report-meta { text-align: left; }
+  .report-title { font-size: 22px; }
+  .money-headline-value { font-size: 32px; }
+  .money-breakdown { grid-template-columns: repeat(2, 1fr); }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .driver-profiles { grid-template-columns: 1fr; }
+  .fleet-score { grid-template-columns: 1fr; justify-items: center; }
+  .financial-grid { grid-template-columns: 1fr; }
+}
+
+/* ========== PRINT / PDF STYLES ========== */
+@media print {
+  body { background: white; }
+  .report { box-shadow: none; }
+  .download-bar { display: none !important; }
+  .report-inner { padding: 32px 40px; }
+
+  .section { break-inside: avoid; page-break-inside: avoid; }
+  .kpi-grid { break-inside: avoid; }
+  .driver-profiles { break-inside: avoid; }
+  .action-card { break-inside: avoid; }
+  .money-headline { break-inside: avoid; }
+  .fleet-score { break-inside: avoid; }
+  .financial-summary { break-inside: avoid; }
+  .week-actions { break-inside: avoid; }
+  .analysis-summary { break-inside: avoid; }
+  .chart-area { break-inside: avoid; }
+
+  .section { margin-top: 32px; padding-top: 24px; }
+  .action-card:hover { border-color: var(--border); }
+
+  @page {
+    size: A4;
+    margin: 20mm 15mm;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== DOWNLOAD BAR ========== -->
+<div class="download-bar">
+  <span class="download-bar-text">FreightOps Performance Report</span>
+  <button class="download-btn" onclick="window.print()">⬇ Download as PDF</button>
+</div>
+
+<div class="report">
+
+<!-- ========== HEADER ========== -->
+<header class="report-header">
+  <div class="report-header-left">
+    <div class="report-brand">LogiFlex</div>
+    <h1 class="report-title">FreightOps Performance Report</h1>
+    <p class="report-subtitle">Operational analysis for 127 shipments across 4 carriers and 6 drivers</p>
+  </div>
+  <div class="report-meta">
+    <div class="report-meta-id">RPT-2025-000190</div>
+    <div class="report-meta-date">January 12, 2025</div>
+    <div class="report-meta-badge">AI + Expert Verified</div>
+  </div>
+</header>
+
+<div class="report-inner">
+
+<!-- ========== MONEY HEADLINE ========== -->
+<div class="money-headline">
+  <div class="money-headline-label">Total identified annual savings</div>
+  <div class="money-headline-value">$42,680</div>
+  <div class="money-headline-sub">Based on 127 analyzed shipments across your freight network</div>
+  <div class="money-breakdown">
+    <div class="money-breakdown-item">
+      <div class="money-breakdown-item-value">$18,240</div>
+      <div class="money-breakdown-item-label">Carrier reallocation</div>
+    </div>
+    <div class="money-breakdown-item">
+      <div class="money-breakdown-item-value">$12,100</div>
+      <div class="money-breakdown-item-label">Lane optimization</div>
+    </div>
+    <div class="money-breakdown-item">
+      <div class="money-breakdown-item-value">$8,160</div>
+      <div class="money-breakdown-item-label">Driver coaching</div>
+    </div>
+    <div class="money-breakdown-item">
+      <div class="money-breakdown-item-value">$4,180</div>
+      <div class="money-breakdown-item-label">Invoice anomalies</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TOP 3 ACTIONS ========== -->
+<div class="top-actions">
+  <div class="top-actions-title">Top 3 actions by financial impact</div>
+
+  <div class="action-card">
+    <div class="action-rank">01</div>
+    <div class="action-body">
+      <div class="action-title">Shift 35% of ABC Carriers volume to XYZ Freight on the Dallas → Houston lane</div>
+      <div class="action-detail">ABC Carriers delivers on-time 41.7% of the time vs. XYZ Freight at 56.0%. XYZ Freight costs $96/shipment less on average. This reallocation improves both reliability and cost.</div>
+    </div>
+    <div class="action-value">$18,240/yr</div>
+  </div>
+
+  <div class="action-card">
+    <div class="action-rank">02</div>
+    <div class="action-body">
+      <div class="action-title">Consolidate or reprice the Dallas → Tulsa lane</div>
+      <div class="action-detail">This lane runs a -$84 contribution margin per load after fuel and accessorials. You ran 12 loads this period for a net loss of $1,008. Either increase the rate or consolidate with adjacent lanes.</div>
+    </div>
+    <div class="action-value">$12,100/yr</div>
+  </div>
+
+  <div class="action-card">
+    <div class="action-rank">03</div>
+    <div class="action-body">
+      <div class="action-title">Retrain Chris Park on fuel-efficient driving techniques</div>
+      <div class="action-detail">Chris Park's fuel cost/mile ($0.52) is 2.3σ above fleet mean ($0.38). His driving pattern is classified as aggressive — high speed, low fuel economy. Estimated monthly excess fuel cost: $380.</div>
+    </div>
+    <div class="action-value">$4,560/yr</div>
+  </div>
+</div>
+
+<!-- ========== FLEET HEALTH SCORE ========== -->
+<div class="fleet-score">
+  <div class="fleet-score-circle" id="scoreCircle">
+    <div class="fleet-score-number" id="scoreNumber">41</div>
+    <div class="fleet-score-label">of 100</div>
+  </div>
+  <div class="fleet-score-bars">
+    <div class="score-bar-row">
+      <div class="score-bar-label">On-time delivery</div>
+      <div class="score-bar-track"><div class="score-bar-fill" style="width:47%;background:var(--red)"></div></div>
+      <div class="score-bar-value">47%</div>
+    </div>
+    <div class="score-bar-row">
+      <div class="score-bar-label">Cost efficiency</div>
+      <div class="score-bar-track"><div class="score-bar-fill" style="width:58%;background:var(--amber)"></div></div>
+      <div class="score-bar-value">58</div>
+    </div>
+    <div class="score-bar-row">
+      <div class="score-bar-label">Fuel efficiency</div>
+      <div class="score-bar-track"><div class="score-bar-fill" style="width:62%;background:var(--amber)"></div></div>
+      <div class="score-bar-value">62</div>
+    </div>
+    <div class="score-bar-row">
+      <div class="score-bar-label">Route utilization</div>
+      <div class="score-bar-track"><div class="score-bar-fill" style="width:35%;background:var(--red)"></div></div>
+      <div class="score-bar-value">35</div>
+    </div>
+    <div class="score-bar-row">
+      <div class="score-bar-label">Cost predictability</div>
+      <div class="score-bar-track"><div class="score-bar-fill" style="width:44%;background:var(--red)"></div></div>
+      <div class="score-bar-value">44</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ========================================================= -->
+<!-- SECTION 1: CARRIERS -->
+<!-- ========================================================= -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon carriers">C</div>
+    <h2 class="section-title">Carrier performance</h2>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-card-value">56.0<span class="kpi-card-unit">%</span></div>
+      <div class="kpi-card-label">Best on-time rate</div>
+      <div class="kpi-card-entity">XYZ Freight</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-value">$937<span class="kpi-card-unit">.36</span></div>
+      <div class="kpi-card-label">Lowest avg freight cost</div>
+      <div class="kpi-card-entity">XYZ Freight</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-value">$0.39<span class="kpi-card-unit">/mi</span></div>
+      <div class="kpi-card-label">Lowest cost per mile</div>
+      <div class="kpi-card-entity">GHI Transport</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-value">41.7<span class="kpi-card-unit">%</span></div>
+      <div class="kpi-card-label">Worst on-time rate</div>
+      <div class="kpi-card-entity">ABC Carriers</div>
+    </div>
+  </div>
+
+  <!-- Chart placeholder — replace with your actual chart.js / plotly output -->
+  <div class="chart-area">
+    [Carrier Cost vs. Reliability Scatter Chart — rendered by your existing chart logic]
+  </div>
+
+  <div class="analysis-block">
+    <div class="analysis-summary">
+      XYZ Freight consistently outperforms all peers in both cost and service. Shipment allocation does not align with performance — ABC Carriers handles 28% of volume despite having the lowest on-time rate (41.7%). Optimal reallocation via linear programming shows shifting 35% of ABC's volume to XYZ Freight saves $18,240/year while improving fleet on-time from 47% to 54%.
+    </div>
+
+    <ul class="insight-list">
+      <li class="insight-item">
+        <div class="insight-marker finding"></div>
+        <div class="insight-text">XYZ Freight is <strong>1.78x more likely</strong> to deliver on-time than ABC Carriers, yet handles the fewest shipments (25 vs. 36).</div>
+      </li>
+      <li class="insight-item">
+        <div class="insight-marker warning"></div>
+        <div class="insight-text">DEF Logistics has the <strong>widest cost variance</strong> across shipments — high invoice volatility makes budgeting unreliable. Negotiate fixed rates.</div>
+      </li>
+      <li class="insight-item">
+        <div class="insight-marker opportunity"></div>
+        <div class="insight-text">GHI Transport has the lowest cost/mile ($0.394) with moderate on-time performance (44.8%). Consider increasing volume on <strong>shorter, less time-sensitive lanes</strong>.</div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ========================================================= -->
+<!-- SECTION 2: DRIVERS -->
+<!-- ========================================================= -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon drivers">D</div>
+    <h2 class="section-title">Driver performance</h2>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-card-value">59.0<span class="kpi-card-unit">%</span></div>
+      <div class="kpi-card-label">Best on-time rate</div>
+      <div class="kpi-card-entity">Alex Ray</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-value">8.26<span class="kpi-card-unit"> mpg</span></div>
+      <div class="kpi-card-label">Best fuel efficiency</div>
+      <div class="kpi-card-entity">Sara Kim</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-value">12,362<span class="kpi-card-unit"> mi</span></div>
+      <div class="kpi-card-label">Most miles driven</div>
+      <div class="kpi-card-entity">Mike Lee</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-value">35.0<span class="kpi-card-unit">%</span></div>
+      <div class="kpi-card-label">Worst on-time rate</div>
+      <div class="kpi-card-entity">John Doe</div>
+    </div>
+  </div>
+
+  <!-- Chart placeholder -->
+  <div class="chart-area">
+    [Driver Productivity Matrix — On-Time Rate vs. MPG vs. Speed — rendered by your existing chart logic]
+  </div>
+
+  <!-- Driver profile cards -->
+  <div class="driver-profiles">
+    <div class="driver-card top-performer">
+      <div class="driver-name">Alex Ray</div>
+      <div class="driver-archetype">Methodical, cautious, process-oriented</div>
+      <div class="driver-stats">
+        <div><div class="driver-stat-label">On-time</div><div class="driver-stat-value">59.0%</div></div>
+        <div><div class="driver-stat-label">Cost/mi</div><div class="driver-stat-value">$0.38</div></div>
+        <div><div class="driver-stat-label">MPG</div><div class="driver-stat-value">7.8</div></div>
+        <div><div class="driver-stat-label">Trips</div><div class="driver-stat-value">17</div></div>
+      </div>
+      <div class="driver-action">✓ Top performer. Use as internal benchmark for training other drivers.</div>
+    </div>
+
+    <div class="driver-card top-performer">
+      <div class="driver-name">Sara Kim</div>
+      <div class="driver-archetype">Methodical, cautious, process-oriented</div>
+      <div class="driver-stats">
+        <div><div class="driver-stat-label">On-time</div><div class="driver-stat-value">52.0%</div></div>
+        <div><div class="driver-stat-label">Cost/mi</div><div class="driver-stat-value">$0.36</div></div>
+        <div><div class="driver-stat-label">MPG</div><div class="driver-stat-value">8.26</div></div>
+        <div><div class="driver-stat-label">Trips</div><div class="driver-stat-value">25</div></div>
+      </div>
+      <div class="driver-action">✓ Most fuel-efficient driver. Highest trip count. Consider for critical cost-sensitive routes.</div>
+    </div>
+
+    <div class="driver-card">
+      <div class="driver-name">Emma Stone</div>
+      <div class="driver-archetype">Strong technical skills, low reliability</div>
+      <div class="driver-stats">
+        <div><div class="driver-stat-label">On-time</div><div class="driver-stat-value">40.0%</div></div>
+        <div><div class="driver-stat-label">Cost/mi</div><div class="driver-stat-value">$0.41</div></div>
+        <div><div class="driver-stat-label">MPG</div><div class="driver-stat-value">7.2</div></div>
+        <div><div class="driver-stat-label">Speed</div><div class="driver-stat-value">49 mph</div></div>
+      </div>
+      <div class="driver-action">→ Targeted coaching on route compliance and smooth driving techniques.</div>
+    </div>
+
+    <div class="driver-card flagged">
+      <div class="driver-name">Chris Park</div>
+      <div class="driver-archetype">Aggressive, impatient — safety risk</div>
+      <div class="driver-stats">
+        <div><div class="driver-stat-label">On-time</div><div class="driver-stat-value">38.0%</div></div>
+        <div><div class="driver-stat-label">Fuel/mi</div><div class="driver-stat-value">$0.52</div></div>
+        <div><div class="driver-stat-label">MPG</div><div class="driver-stat-value">5.9</div></div>
+        <div><div class="driver-stat-label">Speed</div><div class="driver-stat-value">52 mph</div></div>
+      </div>
+      <div class="driver-action">⚠ Fuel cost 2.3σ above fleet mean. Excess cost: $380/mo. Immediate retraining required.</div>
+    </div>
+
+    <div class="driver-card flagged">
+      <div class="driver-name">John Doe</div>
+      <div class="driver-archetype">Disengaged or facing external challenges</div>
+      <div class="driver-stats">
+        <div><div class="driver-stat-label">On-time</div><div class="driver-stat-value">35.0%</div></div>
+        <div><div class="driver-stat-label">Cost/mi</div><div class="driver-stat-value">$0.48</div></div>
+        <div><div class="driver-stat-label">Miles</div><div class="driver-stat-value">7,941</div></div>
+        <div><div class="driver-stat-label">Trips</div><div class="driver-stat-value">17</div></div>
+      </div>
+      <div class="driver-action">⚠ Lowest OTD, lowest miles, highest cost/mile. Immediate intervention. Root-cause investigation needed.</div>
+    </div>
+
+    <div class="driver-card">
+      <div class="driver-name">Mike Lee</div>
+      <div class="driver-archetype">Methodical, cautious, process-oriented</div>
+      <div class="driver-stats">
+        <div><div class="driver-stat-label">On-time</div><div class="driver-stat-value">47.0%</div></div>
+        <div><div class="driver-stat-label">Miles</div><div class="driver-stat-value">12,362</div></div>
+        <div><div class="driver-stat-label">MPG</div><div class="driver-stat-value">7.4</div></div>
+        <div><div class="driver-stat-label">Trips</div><div class="driver-stat-value">23</div></div>
+      </div>
+      <div class="driver-action">→ Most miles driven. Average on-time. Review route assignments for OTD improvement.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ========================================================= -->
+<!-- SECTION 3: ROUTES -->
+<!-- ========================================================= -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon routes">R</div>
+    <h2 class="section-title">Route performance</h2>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-card-value">$0.40<span class="kpi-card-unit">/mi</span></div>
+      <div class="kpi-card-label">Avg cost per mile</div>
+      <div class="kpi-card-entity">Fleet-wide</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-value">47.1<span class="kpi-card-unit"> mph</span></div>
+      <div class="kpi-card-label">Avg speed</div>
+      <div class="kpi-card-entity">Fleet-wide</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-value">502<span class="kpi-card-unit"> mi</span></div>
+      <div class="kpi-card-label">Avg route distance</div>
+      <div class="kpi-card-entity">Fleet-wide</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-value">4.2<span class="kpi-card-unit"> loads</span></div>
+      <div class="kpi-card-label">Avg shipments/route</div>
+      <div class="kpi-card-entity">Fleet-wide</div>
+    </div>
+  </div>
+
+  <!-- Chart placeholders -->
+  <div class="chart-area">
+    [Routes Cost Efficiency Heatmap — rendered by your existing chart logic]
+  </div>
+
+  <div class="analysis-block">
+    <div class="analysis-summary">
+      Network flow analysis reveals a significant imbalance: Dallas sends 28 loads to Houston but only receives 11 back — resulting in 17 likely empty return trips costing approximately $1,632/month in deadhead miles. The Dallas → Tulsa lane carries only 1 shipment at the highest cost per mile in the network. 9 of 15 lanes operate above the fleet median cost of $0.40/mile.
+    </div>
+
+    <ul class="insight-list">
+      <li class="insight-item">
+        <div class="insight-marker warning"></div>
+        <div class="insight-text"><strong>Dallas → Tulsa</strong> has only 1 shipment at 692 miles — the longest, most expensive lane in your network. Consolidate or eliminate.</div>
+      </li>
+      <li class="insight-item">
+        <div class="insight-marker opportunity"></div>
+        <div class="insight-text"><strong>Austin → Houston</strong> is your most efficient lane: 8 shipments, shortest distance, and highest utilization. Route more volume here.</div>
+      </li>
+      <li class="insight-item">
+        <div class="insight-marker finding"></div>
+        <div class="insight-text">Heavy-load routes show higher cost/mile than light-load routes — verify that equipment assignments match load profiles for fuel efficiency.</div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ========================================================= -->
+<!-- SECTION 4: COST ANOMALIES -->
+<!-- ========================================================= -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon" style="background:#fef2f2;color:#b91c1c;">!</div>
+    <h2 class="section-title">Flagged invoices</h2>
+  </div>
+
+  <div class="analysis-summary" style="border-left-color:var(--red);">
+    4 shipments out of 127 (3.1%) were flagged as cost anomalies — priced significantly above the lane median. Total potential overpayment: $4,180. Review these invoices with your carriers.
+  </div>
+
+  <table class="anomaly-table">
+    <thead>
+      <tr>
+        <th>Shipment</th>
+        <th>Lane</th>
+        <th>Carrier</th>
+        <th>Actual cost</th>
+        <th>Lane median</th>
+        <th>Overpayment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mono">SHP-12847</td>
+        <td>Houston → OKC</td>
+        <td>DEF Logistics</td>
+        <td class="mono">$1,420.00</td>
+        <td class="mono">$1,040.00</td>
+        <td><span class="overpayment-badge">+$380</span></td>
+      </tr>
+      <tr>
+        <td class="mono">SHP-12903</td>
+        <td>Dallas → Austin</td>
+        <td>ABC Carriers</td>
+        <td class="mono">$1,680.00</td>
+        <td class="mono">$1,180.00</td>
+        <td><span class="overpayment-badge">+$500</span></td>
+      </tr>
+      <tr>
+        <td class="mono">SHP-13015</td>
+        <td>Austin → Houston</td>
+        <td>DEF Logistics</td>
+        <td class="mono">$2,812.72</td>
+        <td class="mono">$996.38</td>
+        <td><span class="overpayment-badge">+$1,816</span></td>
+      </tr>
+      <tr>
+        <td class="mono">SHP-13042</td>
+        <td>Dallas → Houston</td>
+        <td>ABC Carriers</td>
+        <td class="mono">$1,524.00</td>
+        <td class="mono">$1,040.00</td>
+        <td><span class="overpayment-badge">+$484</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ========================================================= -->
+<!-- FINANCIAL SUMMARY -->
+<!-- ========================================================= -->
+<div class="financial-summary">
+  <div class="financial-summary-title">Financial impact summary</div>
+  <div class="financial-grid">
+    <div class="financial-item">
+      <div class="financial-item-value">$18,240</div>
+      <div class="financial-item-label">Annual savings from carrier reallocation (LP-optimized allocation shift from ABC → XYZ)</div>
+    </div>
+    <div class="financial-item">
+      <div class="financial-item-value">$12,100</div>
+      <div class="financial-item-label">Annual savings from lane optimization (consolidating/repricing 3 unprofitable lanes)</div>
+    </div>
+    <div class="financial-item">
+      <div class="financial-item-value">$8,160</div>
+      <div class="financial-item-label">Annual savings from driver coaching (reducing fuel excess for Chris Park + John Doe)</div>
+    </div>
+    <div class="financial-item">
+      <div class="financial-item-value">$4,180</div>
+      <div class="financial-item-label">Recoverable from 4 flagged invoice anomalies (immediate carrier review)</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ========================================================= -->
+<!-- WHAT TO DO THIS WEEK -->
+<!-- ========================================================= -->
+<div class="week-actions">
+  <h3 class="week-actions-title">What to do this week</h3>
+  <div class="week-action-item">
+    <div class="week-action-num">1</div>
+    <div class="week-action-text"><strong>Call ABC Carriers</strong> about the 4 flagged invoices totaling $3,180 in potential overcharges. Reference shipment IDs SHP-12903, SHP-13042, SHP-13015, SHP-12847.</div>
+  </div>
+  <div class="week-action-item">
+    <div class="week-action-num">2</div>
+    <div class="week-action-text"><strong>Reassign 10 shipments from ABC Carriers to XYZ Freight</strong> on the Dallas → Houston and Austin → Houston lanes starting next dispatch cycle.</div>
+  </div>
+  <div class="week-action-item">
+    <div class="week-action-num">3</div>
+    <div class="week-action-text"><strong>Schedule a coaching session with Chris Park</strong> focused on fuel-efficient driving. Share his SPC data: fuel cost/mile is $0.52 vs. fleet mean of $0.38 — that gap costs $380/month.</div>
+  </div>
+</div>
+
+
+</div><!-- /report-inner -->
+
+<!-- ========== FOOTER ========== -->
+<footer class="report-footer">
+  <div class="footer-left">
+    <strong>LogiFlex</strong> by BizAnalytic &middot; Generated Jan 12, 2025
+  </div>
+  <div class="footer-cta">Upload again next month to track your progress →</div>
+</footer>
+<div class="footer-confidential">Confidential — prepared for authorized recipient only</div>
+
+</div><!-- /report -->
+
+<script>
+// Animate fleet health score on load
+document.addEventListener('DOMContentLoaded', () => {
+  const circle = document.getElementById('scoreCircle');
+  const score = 41;
+  let color;
+  if (score >= 70) color = '#047857';
+  else if (score >= 50) color = '#92400e';
+  else color = '#b91c1c';
+  circle.style.borderColor = color;
+  circle.style.transition = 'border-color 0.6s ease';
+});
+</script>
+</body>
+</html>

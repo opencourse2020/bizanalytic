@@ -71,6 +71,15 @@ def get_ip(request):
 class LandingFreeView(TemplateView):
     template_name = "logiflex/landing_free.html"
 
+
+class FreeFreightOpsView(TemplateView):
+    template_name = "logiflex/freightops-report-template.html"
+
+
+class FreeFreightDiagnosticView(TemplateView):
+    template_name = "logiflex/freight-health-check.html"
+
+
 class IndexView(TemplateView):
     template_name = "logiflex/home.html"
     def get_context_data(self, **kwargs):

@@ -22,7 +22,7 @@ import numpy as np
 from scipy import stats
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, asdict
-
+import pulp
 
 # =============================================================================
 # MODEL 1: CARRIER ALLOCATION OPTIMIZER (Linear Programming)
@@ -78,7 +78,7 @@ def optimize_carrier_allocation(
 
     # On-time rate per carrier
     df_ontime = df.copy()
-    df_ontime["is_ontime"] = df_ontime["DeliveryStatus"].str.strip().str.lower() == "on-time"
+    df_ontime["is_ontime"] = df_ontime["DeliveryStatus"].str.strip() == "Delivered"
     ontime_rates = df_ontime.groupby("CarrierName")["is_ontime"].mean().reset_index()
     ontime_rates.columns = ["CarrierName", "ontime_rate"]
 
@@ -242,7 +242,7 @@ def _carrier_allocation_fallback(df: pd.DataFrame) -> Dict[str, Any]:
     ).reset_index()
 
     df_ontime = df.copy()
-    df_ontime["is_ontime"] = df_ontime["DeliveryStatus"].str.strip().str.lower() == "on-time"
+    df_ontime["is_ontime"] = df_ontime["DeliveryStatus"].str.strip() == "Delivered"
     ontime_rates = df_ontime.groupby("CarrierName")["is_ontime"].mean().reset_index()
     ontime_rates.columns = ["CarrierName", "ontime_rate"]
 
@@ -287,7 +287,7 @@ def _carrier_allocation_fallback(df: pd.DataFrame) -> Dict[str, Any]:
 
 def analyze_lane_profitability(
         df: pd.DataFrame,
-        fuel_cost_col: str = "FuelCost",
+        fuel_cost_col: str = "AvgCostPerMile",
         accessorial_col: str = "AccessorialCharges",
         estimated_driver_cost_per_mile: float = 0.18,
 ) -> Dict[str, Any]:
@@ -354,7 +354,7 @@ def analyze_lane_profitability(
     # FreightCost is revenue from the carrier's perspective (what they charge)
     # For an operator, FreightCost is what they pay — so margin = revenue - freight - variable
     # If we don't have separate revenue, we analyze cost efficiency instead
-    work["total_cost"] = pd.to_numeric(work["FreightCost"], errors="coerce").fillna(0) + work["accessorials"]
+    work["total_cost"] = pd.to_numeric(work["FreightCost_USD"], errors="coerce").fillna(0) + work["accessorials"]
     work["cost_per_mile"] = np.where(
         work.get("Distance_Miles", 0) > 0,
         work["total_cost"] / work["Distance_Miles"],
@@ -363,9 +363,9 @@ def analyze_lane_profitability(
 
     # Lane-level aggregation
     lane_stats = work.groupby("lane").agg(
-        shipment_count=("FreightCost", "size"),
-        avg_freight_cost=("FreightCost", "mean"),
-        total_freight_cost=("FreightCost", "sum"),
+        shipment_count=("FreightCost_USD", "size"),
+        avg_freight_cost=("FreightCost_USD", "mean"),
+        total_freight_cost=("FreightCost_USD", "sum"),
         avg_fuel=("fuel", "mean"),
         total_fuel=("fuel", "sum"),
         avg_accessorials=("accessorials", "mean"),

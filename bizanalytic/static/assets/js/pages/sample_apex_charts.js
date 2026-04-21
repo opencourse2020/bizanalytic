@@ -249,19 +249,28 @@ var routesheatdmadoptions = {
 
 
 var fleetscorechartoptions = {
-          series: [fleetscore],
-          chart: {
-          height: 350,
-          type: 'radialBar',
+          series: [75], // The percentage value
+  chart: {
+    type: 'radialBar',
+  },
+  plotOptions: {
+    radialBar: {
+      hollow: {
+        size: '70%', // Size of the inner circle
+      },
+      dataLabels: {
+        name: {
+          show: true,
+          fontSize: '22px',
         },
-        plotOptions: {
-          radialBar: {
-            hollow: {
-              size: '70%',
-            }
-          },
-        },
-        labels: [fleetscore],
+        value: {
+          show: true,
+          fontSize: '16px',
+        }
+      }
+    },
+  },
+  labels: ['Progress'], // Label for the series
         };
 
 var fleetscorechart = new ApexCharts(document.querySelector("#fleetscorechart"), fleetscorechartoptions);

@@ -257,7 +257,7 @@ var fleetscorechartoptions = {
         plotOptions: {
           radialBar: {
             hollow: {
-              size: 'OF 100',
+              size: '70%',
             }
           },
         },

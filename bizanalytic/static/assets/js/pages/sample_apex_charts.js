@@ -38,7 +38,9 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledr
 		chart: {
 			height: 350,
 			type: 'scatter',
-			zoom: { enabled: true, type: 'xy' }
+			zoom: { enabled: true, type: 'xy' },
+            redrawOnParentResize: true
+
 		},
 		annotations: {
 		  yaxis: [
@@ -104,7 +106,9 @@ var MixedDriverOnTimeMPGMPHoptions = {
           chart: {
           height: 350,
           type: 'line',
-          stacked: false
+          stacked: false,
+          redrawOnParentResize: true
+
         },
         dataLabels: {
           enabled: true,
@@ -212,6 +216,8 @@ var routesheatdmadoptions = {
           chart: {
           height: 350,
           type: 'heatmap',
+          redrawOnParentResize: true
+
         },
         plotOptions: {
           heatmap: {

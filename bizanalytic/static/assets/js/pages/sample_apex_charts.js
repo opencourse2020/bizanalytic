@@ -261,7 +261,7 @@ var routesheatdmadoptions = {
                 hollow: {
                     margin: 0,
                     size: "70%",
-                    background: "#293450"
+                    background: "#FAFAFA"
                 },
 
                 dataLabels: {
@@ -269,11 +269,11 @@ var routesheatdmadoptions = {
                     name: {
                         offsetY: -10,
                         show: true,
-                        color: "#fff",
+                        color: "#000",
                         fontSize: "13px"
                     },
                     value: {
-                        color: "#fff",
+                        color: "#000",
                         fontSize: "25px",
                         show: true
                     }

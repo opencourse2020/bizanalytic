@@ -22,6 +22,7 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledr
 
 
 	const seriesdata =[];
+    const costdata =[];
 	for (let i = 0; i < df.shape[0]; i++) {
 		seriesdata.push({name: df.iloc({rows: [i]})["CarrierName"].values[0], data: [[df.iloc({rows: [i]})["AvgFreightCost"].values[0], df.iloc({rows: [i]})["OnTimeRate"].values[0]]]});
         if (costpermile !== "0") {

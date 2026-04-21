@@ -250,12 +250,12 @@ var routesheatdmadoptions = {
 
     var fleetscorechartoptions = {
         chart: {
-            height: 280,
+            height: 350,
             type: "radialBar"
         },
 
         series: [fleetscore],
-        colors: ["#20E647"],
+        colors: ["#c07008"],
         plotOptions: {
             radialBar: {
                 hollow: {
@@ -273,8 +273,8 @@ var routesheatdmadoptions = {
                         fontSize: "13px"
                     },
                     value: {
-                        color: "#111",
-                        fontSize: "20px",
+                        color: "#fff",
+                        fontSize: "25px",
                         show: true
                     }
                 }

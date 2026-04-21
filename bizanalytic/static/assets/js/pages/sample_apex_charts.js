@@ -255,12 +255,13 @@ var routesheatdmadoptions = {
         },
 
         series: [fleetscore],
-
+        colors: ["#20E647"],
         plotOptions: {
             radialBar: {
                 hollow: {
-                    margin: 15,
-                    size: "70%"
+                    margin: 0,
+                    size: "70%",
+                    background: "#293450"
                 },
 
                 dataLabels: {
@@ -268,18 +269,26 @@ var routesheatdmadoptions = {
                     name: {
                         offsetY: -10,
                         show: true,
-                        color: "#888",
+                        color: "#fff",
                         fontSize: "13px"
                     },
                     value: {
                         color: "#111",
-                        fontSize: "30px",
+                        fontSize: "20px",
                         show: true
                     }
                 }
             }
         },
-
+        fill: {
+            type: "gradient",
+            gradient: {
+              shade: "dark",
+              type: "vertical",
+              gradientToColors: ["#b91c1c"],
+              stops: [0, 100]
+            }
+          },
         stroke: {
             lineCap: "round",
         },

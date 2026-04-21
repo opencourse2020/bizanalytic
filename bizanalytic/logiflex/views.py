@@ -75,6 +75,74 @@ class LandingFreeView(TemplateView):
 class FreeFreightOpsView(TemplateView):
     template_name = "logiflex/freightops-report-template.html"
 
+    def get_context_data(self, **kwargs):
+        report = LogiflexReport.objects.filter(pk=190, download_code="mNUW9tzr").first()
+        dff = pd.read_csv(report.routefile)
+        df = clean_data(dff)
+        df = calculate_kpis(df)
+
+        # Carrier Analysis
+        carrier_stats = prepare_carrier_stats(df)
+        carrier_stats["AvgCostPerMile"] = carrier_stats["AvgCostPerMile"].round(3)
+        carrier_stats["AvgFreightCost"] = carrier_stats["AvgFreightCost"].round(2)
+        carrier_stats["AvgCostPerPound"] = carrier_stats["AvgCostPerPound"].round(3)
+        carrier_stats = carrier_stats.reset_index()
+        carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
+        kwargs["carrierstats"] = carrier_stats
+
+        # Drivers Analysis
+        driver_stats = prepare_driver_stats(df)
+        driver_stats["OnTimeRate"] = driver_stats["OnTimeRate"] * 100
+        driver_stats = driver_stats.reset_index()
+        driver_stats = json.loads(driver_stats.to_json(orient='records'))
+        kwargs["driverstats"] = driver_stats
+
+        # Routes Analysis
+        route_stats = prepare_route_stats(df)
+        route_stats = route_stats.reset_index()
+
+        # Pivot for heatmap
+        heatmap_data = route_stats.pivot(
+            index='OriginCity',
+            columns='DestinationCity',
+            values='AvgCostPerMile'
+        )
+        start = heatmap_data.min().min()
+        end = heatmap_data.max().max()
+        colors = ['#FCB79D', '#FB8464', '#F44F39', '#B81419', '#67000D', ]
+        costintensity = ['Very Low', 'Low', 'Medium', 'High', 'Extreme']
+        num_parts = 5
+        division_points = np.linspace(start, end, num_parts + 1)
+        division_points = [float(x) for x in division_points]
+        range_values = []
+        for i in range(int(len(division_points) - 1)):
+            range_values.append({"from": division_points[i], "to": division_points[i + 1], "name": costintensity[i],
+                                 "color": colors[i]})
+
+        heatmap_data = heatmap_data.fillna(0)
+
+        hm_dest = []
+
+        for index, row in heatmap_data.iterrows():
+            hm_dest.append({"name": index, "data": row.to_list()})
+        heatmap_columns = heatmap_data.columns.to_list()
+        print("range_values:", range_values)
+        heatmap_values = {"range_values": range_values, "heatmapvalues": hm_dest, "heatmap_columns": heatmap_columns}
+        # kwargs["rangevalues"] = range_values
+        kwargs["heatmapvalues"] = heatmap_values
+        # Carrier Cost Per Mile Analysis
+        cost_mile = df[['CarrierName', 'CostPerMile']]
+        cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)
+        cost_mile = json.loads(cost_mile.to_json(orient='records'))
+        kwargs["costmile"] = cost_mile
+
+        # Driver Cost Per Mile Analysis
+        cost_mile_driver = df[['DriverName', 'CostPerMile']]
+        cost_mile_driver["CostPerMile"] = cost_mile_driver["CostPerMile"].round(4)
+        cost_mile_driver = json.loads(cost_mile_driver.to_json(orient='records'))
+        kwargs["costmiledriver"] = cost_mile_driver
+
+        return super(FreeFreightOpsView, self).get_context_data(**kwargs)
 
 class FreeFreightDiagnosticView(TemplateView):
     template_name = "logiflex/freight-health-check.html"

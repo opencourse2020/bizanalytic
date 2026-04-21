@@ -5,7 +5,7 @@ Author: Sean Ngu
 Website: http://www.seantheme.com/hud/
 */
 
-var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmap_values) {
+var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledriver, heatmap_values, fleetscore) {
 	df = new dfd.DataFrame(full_df);
 	dfdriver = new dfd.DataFrame(df_driver);
 
@@ -246,6 +246,26 @@ var routesheatdmadoptions = {
 			  }
 			}
         };
+
+
+var fleetscorechartoptions = {
+          series: [fleetscore],
+          chart: {
+          height: 350,
+          type: 'radialBar',
+        },
+        plotOptions: {
+          radialBar: {
+            hollow: {
+              size: 'OF 100%',
+            }
+          },
+        },
+        labels: [fleetscore],
+        };
+
+var fleetscorechart = new ApexCharts(document.querySelector("#fleetscorechart"), fleetscorechartoptions);
+        fleetscorechart.render();
 
 
 var apexHeatMapChart = new ApexCharts(document.querySelector("#RouteHeatMap"), routesheatdmadoptions);

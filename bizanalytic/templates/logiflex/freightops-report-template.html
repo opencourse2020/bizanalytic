@@ -798,9 +798,9 @@ body { font-family: var(--font); color: var(--ink); background: var(--bg-subtle)
 
 <!-- ========== FLEET HEALTH SCORE ========== -->
 <div class="fleet-score">
-  <div class="fleet-score-circle" id="scoreCircle">
-    <div class="fleet-score-number" id="scoreNumber">41</div>
-    <div class="fleet-score-label">of 100</div>
+  <div class="fleet-score-circle" id="fleetscorechart">
+{#    <div class="fleet-score-number" id="scoreNumber">41</div>#}
+{#    <div class="fleet-score-label">of 100</div>#}
   </div>
   <div class="fleet-score-bars">
     <div class="score-bar-row">
@@ -1226,10 +1226,10 @@ document.addEventListener('DOMContentLoaded', () => {
             heatmap_values = {{ heatmapvalues|safe }};
 
             costpermile = {{ costmile|safe }};
-            costmiledriver = {{ costmiledriver|safe }}
+            costmiledriver = {{ costmiledriver|safe }},
+            fleetscore = 41;
 
-
-            handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values);
+            handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, fleetscore);
 
             $(document).on('theme-reload', function() {
                 if (costpermile !== "0") {

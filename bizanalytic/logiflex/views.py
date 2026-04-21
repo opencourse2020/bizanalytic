@@ -339,6 +339,8 @@ class ReportView(TemplateView):
                     costreliability_action = report.costreliability_action
                     contingency_action = report.contingency_action
 
+                #
+
                 # Drivers Analysis
                 driver_stats = prepare_driver_stats(df)
                 driver_messages, driver_actions, driver_extended_message = prepare_driver_analysis(driver_stats)
@@ -503,6 +505,7 @@ class ReportView(TemplateView):
                 kwargs["driverhighcostvariance"] = driver_hcarvar
                 kwargs["driverlowcostvariance"] = driver_lcarvar
                 kwargs["driver_costreliability_action"] = driver_costreliability_action
+                kwargs["reportdate"] = report.report_date
 
                 if report.report_type == "lite":
 

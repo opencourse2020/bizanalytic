@@ -2434,9 +2434,9 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
             start_time = time.time()
             extension_ok = True
             if ext == ".csv":
-                dff = pd.read_csv(route_file)
+                dff = pd.read_csv(logireport.uploaded_file)
             elif ext == ".xlsx" or ext == ".xls":
-                dff = pd.read_excel(route_file)
+                dff = pd.read_excel(logireport.uploaded_file)
             else:
                 extension_ok = False
 

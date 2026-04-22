@@ -2354,8 +2354,7 @@ class ServicePaymentUpdateView(UserPassesTestMixin, UpdateView):
         return super().get_context_data(**kwargs)
 
 
-class AdvancedReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
-    model = FreightOpsReport
+class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
 
     def post(self, request, *args, **kwargs):
 

@@ -2370,26 +2370,28 @@ class AdvancedReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
 
         reportid = None
         client = LogiFlexClient.objects.filter(user=self.request.user).first()
-        servicepayment = ServicePayment.objects.filter(client=client).first()
-        lite_report = 0
+        servicepayment = None
+        if client:
+            servicepayment = ServicePayment.objects.filter(client=client).first()
+        check_report = 0
         advanced_report = 0
         print("Report Type:", reportype)
         report_type = ""
         # Check report type
         if reportype == "1":
             report_type = "lite"
-            if servicepayment.can_generate_report():
-                lite_report = 1
+            if (servicepayment and servicepayment.can_generate_report()) or not servicepayment:
+                check_report = 1
         elif reportype == "2":
             report_type = "advanced"
-            if servicepayment.can_generate_advanced_report():
+            if servicepayment and servicepayment.can_generate_advanced_report():
                 advanced_report = 1
 
         # print("client: ", client.pk)
         # print("Service Payment:", servicepayment.pk)
         # print("lite_report:", lite_report, "advanced_report:", advanced_report)
         # print("report_type:", report_type)
-        if lite_report or advanced_report:
+        if check_report or advanced_report:
             # print("you can generate reports")
             # Save client and result data
             user = self.request.user
@@ -2401,9 +2403,15 @@ class AdvancedReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             client.save()
 
             downloadcode = generatecode(8)
+            if check_report == 1:
+                report_type = FreightOpsReport.ReportType.HEALTH_CHECK
+            elif advanced_report == 1:
+                report_type = FreightOpsReport.ReportType.FULL_REPORT
+
             logireport = FreightOpsReport.objects.create(client=client, payment=servicepayment,
                                                        download_code=downloadcode,
                                                        report_number=FreightOpsReport.generate_report_number(),
+                                                       report_type=report_type
                                                         )
             # add route file information
             logireport.uploaded_file = route_file
@@ -2417,7 +2425,7 @@ class AdvancedReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
             # logireport.expected_delivery = now() + timedelta(days=1)
 
             logireport.save()
-            if lite_report == 1:
+            if check_report == 1:
                 servicepayment.mark_report_used()
             elif advanced_report == 1:
                 servicepayment.mark_advanced_report_used()

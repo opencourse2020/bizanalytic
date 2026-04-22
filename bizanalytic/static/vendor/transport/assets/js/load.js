@@ -153,7 +153,8 @@ $("#generate_full_rp").click(function (){
          }
         if(agree_create === "1") {
             if (cixview == "1"){
-                urlref = "https://bizanalytic.com/logiflex/reports/full-report-create/";
+                // urlref = "https://bizanalytic.com/logiflex/reports/full-report-create/";
+                urlref = "https://bizanalytic.com/logiflex/reports/advancedreport/";
             }else if (cixview == "2"){
                 urlref = "https://bizanalytic.com/logiflex/reports/full-newclientreport-create/";
             }

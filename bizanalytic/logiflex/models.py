@@ -4,11 +4,14 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from bizanalytic.profiles.formatChecker import ContentTypeRestrictedFileField
 import os
+import json
+import uuid
 from datetime import timedelta, datetime
 from django.utils.timezone import now
 from django.utils.text import slugify
 # from django.db.models.signals import pre_save
 from bizanalytic.profiles.models import User
+
 # Create your models here.
 
 
@@ -563,6 +566,562 @@ class FreightData(models.Model):
 
     def __str__(self):
         return f"Report: {str(self.report.pk)}"
+
+
+class FreightOpsReport(models.Model):
+    """
+    A single FreightOps Performance Report generated from a user's CSV upload.
+
+    Architecture:
+      - Raw upload stored as reference (not re-processed)
+      - Structured analysis stored as JSON (deterministic, from OR models)
+      - Narrative stored as JSON (from Sonnet, regenerable)
+      - Fleet score stored as indexed fields (for querying/trending)
+    """
+
+    # =====================================================================
+    # IDENTITY & OWNERSHIP
+    # =====================================================================
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False,
+    )
+    # user = models.ForeignKey(
+    #     settings.AUTH_USER_MODEL,
+    #     on_delete=models.CASCADE,
+    #     related_name="freight_reports",
+    #     db_index=True,
+    # )
+    client = models.ForeignKey(LogiFlexClient, on_delete=models.CASCADE, related_name="freight_reports",db_index=True,)
+    payment = models.ForeignKey(ServicePayment, on_delete=models.SET_NULL, null=True)
+    report_number = models.CharField(
+        max_length=20,
+        unique=True,
+        db_index=True,
+        help_text="Human-readable report ID, e.g., RPT-2025-000190",
+    )
+    download_code = models.CharField(max_length=8, null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now, db_index=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class ReportType(models.TextChoices):
+        HEALTH_CHECK = "health_check", "Freight Health Check (free diagnostic)"
+        FULL_REPORT = "full_report", "FreightOps Performance Report"
+
+    report_type = models.CharField(
+        max_length=20,
+        choices=ReportType.choices,
+        default=ReportType.FULL_REPORT,
+        db_index=True,
+    )
+
+    class ReportStatus(models.TextChoices):
+        PROCESSING = "processing", "Processing"
+        COMPLETED = "completed", "Completed"
+        FAILED = "failed", "Failed"
+
+    status = models.CharField(
+        max_length=20,
+        choices=ReportStatus.choices,
+        default=ReportStatus.PROCESSING,
+        db_index=True,
+    )
+
+    # =====================================================================
+    # RAW DATA REFERENCE
+    # =====================================================================
+    uploaded_file = ContentTypeRestrictedFileField(upload_to=datafiles_directory_path,
+                                               content_types=['application/vnd.ms-excel', 'text/csv',
+                                                              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', ],
+                                               max_upload_size=5242880, blank=True, null=True)
+    file_name = models.CharField(max_length=255, blank=True)
+    file_extension = models.CharField(max_length=10, null=True, blank=True)
+    total_rows = models.PositiveIntegerField(default=0)
+    total_columns = models.PositiveIntegerField(default=0)
+
+    # Data completeness flags (from run_phase1_analysis.data_quality)
+    has_fuel_cost = models.BooleanField(default=False)
+    has_distance = models.BooleanField(default=False)
+    has_weight = models.BooleanField(default=False)
+    has_accessorials = models.BooleanField(default=False)
+    has_delivery_time = models.BooleanField(default=False)
+
+    # =====================================================================
+    # DATA SUMMARY (for display without re-parsing)
+    # =====================================================================
+    total_shipments = models.PositiveIntegerField(default=0)
+    total_carriers = models.PositiveSmallIntegerField(default=0)
+    total_drivers = models.PositiveSmallIntegerField(default=0)
+    total_lanes = models.PositiveSmallIntegerField(default=0)
+    date_range_start = models.DateField(null=True, blank=True)
+    date_range_end = models.DateField(null=True, blank=True)
+
+    # =====================================================================
+    # FLEET HEALTH SCORE (from compute_fleet_score)
+    # =====================================================================
+    # Indexed fields for querying, sorting, trending across reports
+    fleet_score = models.PositiveSmallIntegerField(
+        default=0,
+        db_index=True,
+        help_text="Composite 0-100 score",
+    )
+
+    class FleetGrade(models.TextChoices):
+        CRITICAL = "Critical", "Critical (0-39)"
+        NEEDS_WORK = "Needs work", "Needs work (40-59)"
+        COMPETENT = "Competent", "Competent (60-74)"
+        STRONG = "Strong", "Strong (75-89)"
+        ELITE = "Elite", "Elite (90-100)"
+        INSUFFICIENT = "Insufficient data", "Insufficient data"
+
+    fleet_grade = models.CharField(
+        max_length=20,
+        choices=FleetGrade.choices,
+        default=FleetGrade.INSUFFICIENT,
+        db_index=True,
+    )
+
+    # Individual dimension scores (0-100 each)
+    score_ontime_delivery = models.FloatField(
+        null=True, blank=True,
+        help_text="On-time delivery dimension score (weight: 30%)",
+    )
+    score_cost_efficiency = models.FloatField(
+        null=True, blank=True,
+        help_text="Cost efficiency dimension score (weight: 25%)",
+    )
+    score_fuel_efficiency = models.FloatField(
+        null=True, blank=True,
+        help_text="Fuel efficiency dimension score (weight: 20%)",
+    )
+    score_route_utilization = models.FloatField(
+        null=True, blank=True,
+        help_text="Route utilization dimension score (weight: 15%)",
+    )
+    score_cost_predictability = models.FloatField(
+        null=True, blank=True,
+        help_text="Cost predictability dimension score (weight: 10%)",
+    )
+
+    # Biggest drag/strength (for quick display)
+    biggest_drag_dimension = models.CharField(max_length=30, blank=True)
+    biggest_drag_score = models.FloatField(null=True, blank=True)
+    biggest_strength_dimension = models.CharField(max_length=30, blank=True)
+    biggest_strength_score = models.FloatField(null=True, blank=True)
+
+    # Improvement scenario
+    improvement_current = models.PositiveSmallIntegerField(
+        null=True, blank=True,
+        help_text="Current fleet score",
+    )
+    improvement_projected = models.PositiveSmallIntegerField(
+        null=True, blank=True,
+        help_text="Projected score if biggest drag improved to 75",
+    )
+    improvement_delta = models.PositiveSmallIntegerField(
+        null=True, blank=True,
+        help_text="Point gain from fixing biggest drag",
+    )
+
+    # Full score JSON (complete compute_fleet_score output)
+    fleet_score_json = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text="Full fleet score output including all dimensions and benchmarks",
+    )
+
+    # =====================================================================
+    # COMPOSITE SAVINGS (the money headline)
+    # =====================================================================
+    total_annual_savings = models.DecimalField(
+        max_digits=12, decimal_places=2,
+        default=0,
+        db_index=True,
+        help_text="Total identified annual savings across all models",
+    )
+    savings_carrier_reallocation = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0,
+        help_text="Annual savings from LP-optimized carrier allocation",
+    )
+    savings_lane_optimization = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0,
+        help_text="Annual savings from lane profitability optimization",
+    )
+    savings_driver_coaching = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0,
+        help_text="Annual savings from addressing SPC-flagged driver inefficiencies",
+    )
+    savings_invoice_anomalies = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0,
+        help_text="Recoverable from IQR-detected cost anomalies",
+    )
+
+    # =====================================================================
+    # OR MODEL OUTPUTS (structured analysis — deterministic)
+    # =====================================================================
+    # Each JSON field stores the full output dict from the corresponding model.
+    # These feed both the LLM prompt and the report charts/tables.
+
+    carrier_optimization_json = models.JSONField(
+        default=dict, blank=True,
+        help_text="Output from optimize_carrier_allocation() — LP model",
+    )
+    lane_profitability_json = models.JSONField(
+        default=dict, blank=True,
+        help_text="Output from analyze_lane_profitability() — ABC model",
+    )
+    driver_spc_json = models.JSONField(
+        default=dict, blank=True,
+        help_text="Output from analyze_driver_spc() — SPC control charts",
+    )
+    cost_anomalies_json = models.JSONField(
+        default=dict, blank=True,
+        help_text="Output from detect_cost_anomalies() — IQR outlier detection",
+    )
+
+    # =====================================================================
+    # STATISTICS SUMMARIES (pre-computed for the LLM prompt)
+    # =====================================================================
+    carrier_stats_json = models.JSONField(
+        default=dict, blank=True,
+        help_text="Carrier statistics including contingency analysis",
+    )
+    driver_stats_json = models.JSONField(
+        default=dict, blank=True,
+        help_text="Driver statistics with per-driver KPIs",
+    )
+    route_stats_json = models.JSONField(
+        default=dict, blank=True,
+        help_text="Route statistics with network balance analysis",
+    )
+
+    # =====================================================================
+    # LLM-GENERATED NARRATIVE (from Sonnet — the prose sections)
+    # =====================================================================
+    # Stored as a single JSON blob matching the output format spec
+    # in report_generator.py. Individual fields extracted for convenience.
+
+    narrative_json = models.JSONField(
+        default=dict, blank=True,
+        help_text="Complete LLM-generated narrative — all sections",
+    )
+
+    # Denormalized fields for template rendering without JSON parsing
+    # (optional — you can always read from narrative_json instead)
+    money_headline_sub = models.TextField(
+        blank=True,
+        help_text="One-sentence summary below the savings number",
+    )
+    carriers_summary = models.TextField(
+        blank=True,
+        help_text="Executive carrier analysis (default view)",
+    )
+    carriers_detailed = models.TextField(
+        blank=True,
+        help_text="Expanded carrier analysis (toggle view)",
+    )
+    drivers_summary = models.TextField(
+        blank=True,
+        help_text="Executive driver analysis (default view)",
+    )
+    drivers_detailed = models.TextField(
+        blank=True,
+        help_text="Expanded driver analysis (toggle view)",
+    )
+    routes_summary = models.TextField(
+        blank=True,
+        help_text="Executive route analysis (default view)",
+    )
+    routes_detailed = models.TextField(
+        blank=True,
+        help_text="Expanded route analysis (toggle view)",
+    )
+    improvement_scenario_text = models.TextField(
+        blank=True,
+        help_text="'Improving X to Y would raise your score from A to B'",
+    )
+
+    # Top actions and week actions stored in narrative_json
+    # (list fields — access via self.get_top_actions(), self.get_week_actions())
+
+    # =====================================================================
+    # WHITE-LABEL SETTINGS (Pro tier)
+    # =====================================================================
+    is_white_labeled = models.BooleanField(
+        default=False,
+        help_text="Whether this report uses the user's branding",
+    )
+    white_label_company = models.CharField(
+        max_length=200, blank=True,
+        help_text="Company name to display instead of LogiFlex",
+    )
+    white_label_logo_url = models.URLField(
+        blank=True,
+        help_text="Logo URL to replace the LogiFlex logo",
+    )
+    white_label_accent_color = models.CharField(
+        max_length=7, blank=True,
+        help_text="Hex color for report accents, e.g., #1a56db",
+    )
+
+    # =====================================================================
+    # LLM COST TRACKING
+    # =====================================================================
+    llm_model = models.CharField(
+        max_length=50, blank=True,
+        default="claude-sonnet-4-6-20250514",
+    )
+    llm_input_tokens = models.PositiveIntegerField(default=0)
+    llm_output_tokens = models.PositiveIntegerField(default=0)
+    llm_cost_usd = models.DecimalField(
+        max_digits=6, decimal_places=4, default=0,
+        help_text="Estimated API cost for this report generation",
+    )
+    generation_time_seconds = models.FloatField(
+        null=True, blank=True,
+        help_text="Wall-clock time from upload to report completion",
+    )
+
+    # =====================================================================
+    # HEALTH CHECK SPECIFIC (free diagnostic)
+    # =====================================================================
+    health_check_expires_at = models.DateTimeField(
+        null=True, blank=True,
+        help_text="Free Health Check expires 7 days after creation",
+    )
+    health_check_converted = models.BooleanField(
+        default=False,
+        db_index=True,
+        help_text="Whether this Health Check led to a paid subscription",
+    )
+
+    # =====================================================================
+    # DATA FINGERPRINT (abuse prevention)
+    # =====================================================================
+    data_fingerprint = models.CharField(
+        max_length=64, blank=True, db_index=True,
+        help_text="SHA-256 hash of carrier+driver+lane+daterange for dedup",
+    )
+
+    # =====================================================================
+    # META
+    # =====================================================================
+
+    class Meta:
+        ordering = ["-created_at"]
+        indexes = [
+            models.Index(fields=["user", "-created_at"]),
+            models.Index(fields=["user", "report_type"]),
+            models.Index(fields=["fleet_score"]),
+            models.Index(fields=["data_fingerprint"]),
+        ]
+        verbose_name = "FreightOps Report"
+        verbose_name_plural = "FreightOps Reports"
+
+    def __str__(self):
+        return f"{self.report_number} — {self.user} — Score: {self.fleet_score}"
+
+    # =====================================================================
+    # CLASS METHODS
+    # =====================================================================
+
+    @classmethod
+    def generate_report_number(cls):
+        """Generates the next sequential report number: RPT-YYYY-NNNNNN"""
+        year = timezone.now().year
+        prefix = f"RPT-{year}-"
+        last = (
+            cls.objects.filter(report_number__startswith=prefix)
+            .order_by("-report_number")
+            .values_list("report_number", flat=True)
+            .first()
+        )
+        if last:
+            last_num = int(last.split("-")[-1])
+            return f"{prefix}{last_num + 1:06d}"
+        return f"{prefix}000001"
+
+    # =====================================================================
+    # INSTANCE METHODS — Data access helpers
+    # =====================================================================
+
+    def get_top_actions(self):
+        """Returns the top 3 ranked actions from the narrative."""
+        return self.narrative_json.get("top_actions", [])
+
+    def get_week_actions(self):
+        """Returns the 'what to do this week' actions."""
+        return self.narrative_json.get("week_actions", [])
+
+    def get_carriers_insights(self):
+        """Returns carrier insight bullets with type markers."""
+        return self.narrative_json.get("carriers_insights", [])
+
+    def get_routes_insights(self):
+        """Returns route insight bullets with type markers."""
+        return self.narrative_json.get("routes_insights", [])
+
+    def get_financial_impact(self):
+        """Returns the financial impact line items."""
+        return self.narrative_json.get("financial_impact", [])
+
+    def get_anomalies(self):
+        """Returns flagged invoice anomalies for the table."""
+        ca = self.cost_anomalies_json
+        return ca.get("anomalies", []) if ca else []
+
+    def get_driver_flags(self):
+        """Returns SPC-flagged drivers with their violations."""
+        spc = self.driver_spc_json
+        if not spc:
+            return []
+        return [d for d in spc.get("drivers", []) if d.get("is_out_of_control")]
+
+    def get_network_balance(self):
+        """Returns network balance data for deadhead analysis."""
+        rs = self.route_stats_json
+        return rs.get("network_balance", []) if rs else []
+
+    def get_score_dimensions(self):
+        """Returns fleet score dimensions for the bar chart."""
+        fs = self.fleet_score_json
+        return fs.get("dimensions", []) if fs else []
+
+    @property
+    def is_health_check(self):
+        return self.report_type == self.ReportType.HEALTH_CHECK
+
+    @property
+    def is_expired(self):
+        """Check if a Health Check has expired (7-day window)."""
+        if not self.is_health_check or not self.health_check_expires_at:
+            return False
+        return timezone.now() > self.health_check_expires_at
+
+    @property
+    def savings_breakdown(self):
+        """Returns savings as a list of (label, amount) tuples, sorted by amount."""
+        items = [
+            ("Carrier reallocation", self.savings_carrier_reallocation),
+            ("Lane optimization", self.savings_lane_optimization),
+            ("Driver coaching", self.savings_driver_coaching),
+            ("Invoice anomalies", self.savings_invoice_anomalies),
+        ]
+        return sorted(items, key=lambda x: x[1], reverse=True)
+
+    # =====================================================================
+    # POPULATE FROM ANALYSIS RESULTS
+    # =====================================================================
+
+    def populate_from_results(self, result: dict):
+        """
+        Populates all model fields from the output of generate_full_report().
+
+        Call this after generating the report, before .save().
+
+        Parameters
+        ----------
+        result : dict
+            Output from report_generator.generate_full_report(df)
+        """
+        analysis = result["analysis"]
+        score = result["fleet_score"]
+        narrative = result["narrative"]
+
+        # --- Fleet Score ---
+        self.fleet_score = score.get("score", 0)
+        self.fleet_grade = score.get("grade", "Insufficient data")
+        self.fleet_score_json = score
+
+        # Map dimension scores
+        dim_map = {
+            "On-time delivery": "score_ontime_delivery",
+            "Cost efficiency": "score_cost_efficiency",
+            "Fuel efficiency": "score_fuel_efficiency",
+            "Route utilization": "score_route_utilization",
+            "Cost predictability": "score_cost_predictability",
+        }
+        for dim in score.get("dimensions", []):
+            field = dim_map.get(dim["name"])
+            if field:
+                setattr(self, field, dim["score"])
+
+        # Drag/strength
+        drag = score.get("biggest_drag", {})
+        self.biggest_drag_dimension = drag.get("dimension", "")
+        self.biggest_drag_score = drag.get("dimension_score")
+
+        strength = score.get("biggest_strength", {})
+        self.biggest_strength_dimension = strength.get("dimension", "")
+        self.biggest_strength_score = strength.get("dimension_score")
+
+        imp = score.get("improvement_scenario", {})
+        self.improvement_current = imp.get("current_fleet_score")
+        self.improvement_projected = imp.get("projected_fleet_score")
+        self.improvement_delta = imp.get("point_gain")
+
+        # --- Composite Savings ---
+        savings = analysis.get("composite_savings", {})
+        self.total_annual_savings = savings.get("total_identified_annual_savings", 0)
+        self.savings_carrier_reallocation = savings.get("carrier_reallocation_annual", 0)
+        self.savings_lane_optimization = savings.get("lane_excess_cost_annual", 0)
+        self.savings_driver_coaching = savings.get("driver_inefficiency_annual", 0)
+        self.savings_invoice_anomalies = savings.get("cost_anomalies_annual", 0)
+
+        # --- OR Model Outputs ---
+        self.carrier_optimization_json = analysis.get("carrier_optimization", {})
+        self.lane_profitability_json = analysis.get("lane_profitability", {})
+        self.driver_spc_json = analysis.get("driver_spc", {})
+        self.cost_anomalies_json = analysis.get("cost_anomalies", {})
+
+        # --- Statistics ---
+        self.carrier_stats_json = result.get("carrier_stats", {})
+        self.driver_stats_json = result.get("driver_stats", {})
+        self.route_stats_json = result.get("route_stats", {})
+
+        # --- Data Quality ---
+        dq = analysis.get("data_quality", {})
+        self.total_rows = dq.get("total_rows", 0)
+        self.total_columns = dq.get("total_columns", 0)
+        self.has_fuel_cost = dq.get("has_fuel_cost", False)
+        self.has_distance = dq.get("has_distance", False)
+        self.has_weight = dq.get("has_weight", False)
+        self.has_accessorials = dq.get("has_accessorials", False)
+        self.has_delivery_time = dq.get("has_delivery_time", False)
+
+        # --- Narrative ---
+        self.narrative_json = narrative
+        self.money_headline_sub = narrative.get("money_headline_sub", "")
+        self.carriers_summary = narrative.get("carriers_summary", "")
+        self.carriers_detailed = narrative.get("carriers_detailed", "")
+        self.drivers_summary = narrative.get("drivers_summary", "")
+        self.drivers_detailed = narrative.get("drivers_detailed", "")
+        self.routes_summary = narrative.get("routes_summary", "")
+        self.routes_detailed = narrative.get("routes_detailed", "")
+        self.improvement_scenario_text = narrative.get("improvement_scenario", "")
+
+        # --- LLM Cost ---
+        meta = narrative.get("_meta", {})
+        self.llm_model = meta.get("model", "")
+        self.llm_input_tokens = meta.get("input_tokens", 0)
+        self.llm_output_tokens = meta.get("output_tokens", 0)
+        self.llm_cost_usd = meta.get("estimated_cost_usd", 0)
+
+        # --- Summary counts ---
+        cs = result.get("carrier_stats", {})
+        ds = result.get("driver_stats", {})
+        rs = result.get("route_stats", {})
+        self.total_carriers = cs.get("total_carriers", 0)
+        self.total_drivers = ds.get("total_drivers", 0)
+        self.total_lanes = rs.get("total_lanes", 0)
+
+        # --- Health Check expiry ---
+        if self.report_type == self.ReportType.HEALTH_CHECK:
+            self.health_check_expires_at = timezone.now() + timezone.timedelta(days=7)
+
+        self.status = self.ReportStatus.COMPLETED
+
 # **************************************************************************************************
 # ******     Models related to advanced Report     *************************************************
 # **************************************************************************************************

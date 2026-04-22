@@ -71,9 +71,9 @@ def optimize_carrier_allocation(
 
     # --- Compute carrier-level KPIs ---
     carrier_stats = df.groupby("CarrierName").agg(
-        total_shipments=("FreightCost", "size"),
-        avg_cost=("FreightCost", "mean"),
-        total_cost=("FreightCost", "sum"),
+        total_shipments=("FreightCost_USD", "size"),
+        avg_cost=("FreightCost_USD", "mean"),
+        total_cost=("FreightCost_USD", "sum"),
     ).reset_index()
 
     # On-time rate per carrier
@@ -237,8 +237,8 @@ def _carrier_allocation_fallback(df: pd.DataFrame) -> Dict[str, Any]:
     Uses a greedy heuristic instead of LP.
     """
     carrier_stats = df.groupby("CarrierName").agg(
-        total_shipments=("FreightCost", "size"),
-        avg_cost=("FreightCost", "mean"),
+        total_shipments=("FreightCost_USD", "size"),
+        avg_cost=("FreightCost_USD", "mean"),
     ).reset_index()
 
     df_ontime = df.copy()
@@ -514,17 +514,17 @@ def analyze_driver_spc(
     work = df.copy()
 
     work["is_ontime"] = work["DeliveryStatus"].str.strip().str.lower() == "on-time"
-    work["FreightCost"] = pd.to_numeric(work["FreightCost"], errors="coerce")
+    work["FreightCost_USD"] = pd.to_numeric(work["FreightCost_USD"], errors="coerce")
 
     has_distance = "Distance_Miles" in work.columns and work["Distance_Miles"].notna().sum() > 0
-    has_fuel = "FuelCost" in work.columns and work["FuelCost"].notna().sum() > 0
+    has_fuel = "FuelCost_USD" in work.columns and work["FuelCost_USD"].notna().sum() > 0
     has_time = "DeliveryTime_hrs" in work.columns and work["DeliveryTime_hrs"].notna().sum() > 0
 
     # Cost per mile per shipment
     if has_distance:
         work["cost_per_mile"] = np.where(
             work["Distance_Miles"] > 0,
-            work["FreightCost"] / work["Distance_Miles"],
+            work["FreightCost_USD"] / work["Distance_Miles"],
             np.nan,
         )
     else:
@@ -532,10 +532,10 @@ def analyze_driver_spc(
 
     # Fuel cost per mile
     if has_fuel and has_distance:
-        work["FuelCost"] = pd.to_numeric(work["FuelCost"], errors="coerce")
+        work["FuelCost_USD"] = pd.to_numeric(work["FuelCost_USD"], errors="coerce")
         work["fuel_per_mile"] = np.where(
             work["Distance_Miles"] > 0,
-            work["FuelCost"] / work["Distance_Miles"],
+            work["FuelCost_USD"] / work["Distance_Miles"],
             np.nan,
         )
     else:
@@ -554,15 +554,15 @@ def analyze_driver_spc(
 
     # --- Aggregate per driver ---
     driver_stats = work.groupby("DriverName").agg(
-        shipment_count=("FreightCost", "size"),
+        shipment_count=("FreightCost_USD", "size"),
         ontime_rate=("is_ontime", "mean"),
-        avg_freight_cost=("FreightCost", "mean"),
-        total_freight_cost=("FreightCost", "sum"),
+        avg_freight_cost=("FreightCost_USD", "mean"),
+        total_freight_cost=("FreightCost_USD", "sum"),
         avg_cost_per_mile=("cost_per_mile", "mean"),
         avg_fuel_per_mile=("fuel_per_mile", "mean"),
         avg_speed=("avg_speed", "mean"),
-        total_miles=("Distance_Miles", "sum") if has_distance else ("FreightCost", "size"),
-        cost_std=("FreightCost", "std"),
+        total_miles=("Distance_Miles", "sum") if has_distance else ("FreightCost_USD", "size"),
+        cost_std=("FreightCost_USD", "std"),
     ).reset_index()
 
     # Adaptive sigma threshold based on fleet size
@@ -799,14 +799,14 @@ def detect_cost_anomalies(
         - summary: high-level stats
     """
     work = df.copy()
-    work["FreightCost"] = pd.to_numeric(work["FreightCost"], errors="coerce")
+    work["FreightCost_USD"] = pd.to_numeric(work["FreightCost_USD"], errors="coerce")
     work["lane"] = work["OriginCity"].str.strip() + " → " + work["DestinationCity"].str.strip()
 
     # Include accessorials and fuel if available
-    total_cost_cols = ["FreightCost"]
-    if "FuelCost" in work.columns:
-        work["FuelCost"] = pd.to_numeric(work["FuelCost"], errors="coerce").fillna(0)
-        total_cost_cols.append("FuelCost")
+    total_cost_cols = ["FreightCost_USD"]
+    if "FuelCost_USD" in work.columns:
+        work["FuelCost_USD"] = pd.to_numeric(work["FuelCost_USD"], errors="coerce").fillna(0)
+        total_cost_cols.append("FuelCost_USD")
     if "AccessorialCharges" in work.columns:
         work["AccessorialCharges"] = pd.to_numeric(work["AccessorialCharges"], errors="coerce").fillna(0)
         total_cost_cols.append("AccessorialCharges")

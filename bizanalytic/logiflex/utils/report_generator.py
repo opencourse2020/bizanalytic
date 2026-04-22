@@ -331,11 +331,11 @@ def build_carrier_stats(df) -> Dict[str, Any]:
     import numpy as np
 
     work = df.copy()
-    work["FreightCost"] = pd.to_numeric(work["FreightCost"], errors="coerce")
+    work["FreightCost_USD"] = pd.to_numeric(work["FreightCost_USD"], errors="coerce")
     work["is_ontime"] = work["DeliveryStatus"].str.strip().str.lower() == "on-time"
 
     has_distance = "Distance_Miles" in work.columns
-    has_fuel = "FuelCost" in work.columns
+    has_fuel = "FuelCost_USD" in work.columns
     has_weight = "LoadWeight_lbs" in work.columns
 
     carriers = []
@@ -344,11 +344,11 @@ def build_carrier_stats(df) -> Dict[str, Any]:
             "carrier_name": carrier,
             "total_shipments": int(len(grp)),
             "pct_of_total": round(len(grp) / len(work) * 100, 1),
-            "avg_freight_cost": round(grp["FreightCost"].mean(), 2),
-            "total_freight_cost": round(grp["FreightCost"].sum(), 2),
+            "avg_freight_cost": round(grp["FreightCost_USD"].mean(), 2),
+            "total_freight_cost": round(grp["FreightCost_USD"].sum(), 2),
             "cost_std_dev": round(grp["FreightCost"].std(), 2),
             "cost_cv": round(
-                grp["FreightCost"].std() / grp["FreightCost"].mean(), 3
+                grp["FreightCost"].std() / grp["FreightCost_USD"].mean(), 3
             ) if grp["FreightCost"].mean() > 0 else 0,
             "ontime_rate": round(grp["is_ontime"].mean() * 100, 1),
             "late_rate": round((1 - grp["is_ontime"].mean()) * 100, 1),
@@ -359,17 +359,17 @@ def build_carrier_stats(df) -> Dict[str, Any]:
             valid = grp[grp["Distance_Miles"] > 0]
             if len(valid) > 0:
                 stats["avg_cost_per_mile"] = round(
-                    (valid["FreightCost"] / valid["Distance_Miles"]).mean(), 4
+                    (valid["FreightCost_USD"] / valid["Distance_Miles"]).mean(), 4
                 )
                 stats["avg_distance"] = round(valid["Distance_Miles"].mean(), 1)
         if has_fuel:
-            fuel = pd.to_numeric(grp["FuelCost"], errors="coerce")
+            fuel = pd.to_numeric(grp["FuelCost_USD"], errors="coerce")
             stats["avg_fuel_cost"] = round(fuel.mean(), 2)
         if has_weight:
             weight = pd.to_numeric(grp["LoadWeight_lbs"], errors="coerce")
             if weight.mean() > 0:
                 stats["avg_cost_per_pound"] = round(
-                    grp["FreightCost"].mean() / weight.mean(), 4
+                    grp["FreightCost_USD"].mean() / weight.mean(), 4
                 )
 
         carriers.append(stats)
@@ -395,7 +395,7 @@ def build_carrier_stats(df) -> Dict[str, Any]:
         "carriers": sorted(carriers, key=lambda c: c["ontime_rate"], reverse=True),
         "total_carriers": len(carriers),
         "fleet_avg_ontime": round(work["is_ontime"].mean() * 100, 1),
-        "fleet_avg_cost": round(work["FreightCost"].mean(), 2),
+        "fleet_avg_cost": round(work["FreightCost_USD"].mean(), 2),
         "contingency_analysis": contingency,
     }
 
@@ -406,25 +406,25 @@ def build_driver_stats(df) -> Dict[str, Any]:
     import numpy as np
 
     work = df.copy()
-    work["FreightCost"] = pd.to_numeric(work["FreightCost"], errors="coerce")
+    work["FreightCost_USD"] = pd.to_numeric(work["FreightCost_USD"], errors="coerce")
     work["is_ontime"] = work["DeliveryStatus"].str.strip().str.lower() == "on-time"
 
     has_distance = "Distance_Miles" in work.columns
-    has_fuel = "FuelCost" in work.columns
+    has_fuel = "FuelCost_USD" in work.columns
     has_time = "DeliveryTime_hrs" in work.columns
 
     if has_distance:
         work["cost_per_mile"] = np.where(
             work["Distance_Miles"] > 0,
-            work["FreightCost"] / work["Distance_Miles"],
+            work["FreightCost_USD"] / work["Distance_Miles"],
             np.nan,
         )
 
     if has_fuel and has_distance:
-        work["FuelCost"] = pd.to_numeric(work["FuelCost"], errors="coerce")
+        work["FuelCost_USD"] = pd.to_numeric(work["FuelCost_USD"], errors="coerce")
         work["fuel_per_mile"] = np.where(
             work["Distance_Miles"] > 0,
-            work["FuelCost"] / work["Distance_Miles"],
+            work["FuelCost_USD"] / work["Distance_Miles"],
             np.nan,
         )
 
@@ -442,8 +442,8 @@ def build_driver_stats(df) -> Dict[str, Any]:
             "driver_name": driver,
             "total_shipments": int(len(grp)),
             "ontime_rate": round(grp["is_ontime"].mean() * 100, 1),
-            "avg_freight_cost": round(grp["FreightCost"].mean(), 2),
-            "total_freight_cost": round(grp["FreightCost"].sum(), 2),
+            "avg_freight_cost": round(grp["FreightCost_USD"].mean(), 2),
+            "total_freight_cost": round(grp["FreightCost_USD"].sum(), 2),
         }
         if has_distance:
             stats["total_miles"] = round(grp["Distance_Miles"].sum(), 0)
@@ -477,7 +477,7 @@ def build_route_stats(df) -> Dict[str, Any]:
     import numpy as np
 
     work = df.copy()
-    work["FreightCost"] = pd.to_numeric(work["FreightCost"], errors="coerce")
+    work["FreightCost"] = pd.to_numeric(work["FreightCost_USD"], errors="coerce")
     work["lane"] = work["OriginCity"].str.strip() + " → " + work["DestinationCity"].str.strip()
     work["is_ontime"] = work["DeliveryStatus"].str.strip().str.lower() == "on-time"
 
@@ -486,7 +486,7 @@ def build_route_stats(df) -> Dict[str, Any]:
     if has_distance:
         work["cost_per_mile"] = np.where(
             work["Distance_Miles"] > 0,
-            work["FreightCost"] / work["Distance_Miles"],
+            work["FreightCost_USD"] / work["Distance_Miles"],
             np.nan,
         )
 
@@ -495,8 +495,8 @@ def build_route_stats(df) -> Dict[str, Any]:
         stats = {
             "lane": lane,
             "shipment_count": int(len(grp)),
-            "avg_freight_cost": round(grp["FreightCost"].mean(), 2),
-            "total_freight_cost": round(grp["FreightCost"].sum(), 2),
+            "avg_freight_cost": round(grp["FreightCost_USD"].mean(), 2),
+            "total_freight_cost": round(grp["FreightCost_USD"].sum(), 2),
             "ontime_rate": round(grp["is_ontime"].mean() * 100, 1),
         }
         if has_distance:
@@ -537,7 +537,7 @@ def build_route_stats(df) -> Dict[str, Any]:
     }
 
 
-def build_sample_data(df, n_rows: int = 5) -> list:
+def build_sample_data(df, n_rows: int = 5) -> Dict[str, Any]:
     """Extracts the first N rows as a list of dicts for the prompt."""
     sample = df.head(n_rows).copy()
     # Convert to serializable types

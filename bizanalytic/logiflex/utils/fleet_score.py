@@ -98,10 +98,10 @@ def compute_fleet_score(
     else:
         work["is_ontime"] = np.nan
 
-    work["FreightCost"] = pd.to_numeric(work.get("FreightCost"), errors="coerce")
+    work["FreightCost_USD"] = pd.to_numeric(work.get("FreightCost_USD"), errors="coerce")
 
     has_distance = "Distance_Miles" in work.columns and work["Distance_Miles"].notna().sum() > 0
-    has_fuel = "FuelCost" in work.columns and work["FuelCost"].notna().sum() > 0
+    has_fuel = "FuelCost_USD" in work.columns and work["FuelCost_USD"].notna().sum() > 0
     has_delivery = "DeliveryStatus" in work.columns and work["DeliveryStatus"].notna().sum() > 0
     has_carriers = "CarrierName" in work.columns
     has_origins = "OriginCity" in work.columns and "DestinationCity" in work.columns
@@ -196,10 +196,10 @@ def compute_fleet_score(
     # DIMENSION 3: FUEL EFFICIENCY (weight: 20%)
     # =====================================================================
     if has_fuel and has_distance:
-        work["FuelCost"] = pd.to_numeric(work["FuelCost"], errors="coerce")
+        work["FuelCost_USD"] = pd.to_numeric(work["FuelCost_USD"], errors="coerce")
         work["fuel_per_mile"] = np.where(
             work["Distance_Miles"] > 0,
-            work["FuelCost"] / work["Distance_Miles"],
+            work["FuelCost_USD"] / work["Distance_Miles"],
             np.nan,
         )
 
@@ -306,7 +306,7 @@ def compute_fleet_score(
         work["lane"] = work["OriginCity"].str.strip() + " → " + work["DestinationCity"].str.strip()
         work["lane_carrier"] = work["lane"] + " | " + work["CarrierName"].str.strip()
 
-        lc_stats = work.groupby("lane_carrier")["FreightCost"].agg(["mean", "std", "count"])
+        lc_stats = work.groupby("lane_carrier")["FreightCost_USD"].agg(["mean", "std", "count"])
         lc_stats = lc_stats[lc_stats["count"] >= 3]  # only groups with enough data
 
         if len(lc_stats) > 0:

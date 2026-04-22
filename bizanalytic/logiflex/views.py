@@ -14,6 +14,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+import hashlib
+import time
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
@@ -43,6 +45,7 @@ from .utils.pre_process_datafile import *
 from .utils.local_analytics import *
 from .utils.report_helpers import *
 from .utils.prompts import SYSTEM_PROMPT, JSON_SCHEMA
+from .utils.report_generator import generate_full_report
 # Create your views here.
 
 # Initiate variables
@@ -2087,6 +2090,8 @@ class AdminApproveRequestView(UserPassesTestMixin, CreateView, JsonFormMixin):
         data = {"submessage": message, "rpstatus": status}
 
         return JsonResponse(data)
+
+
 class UpdateGasPricesView(UserPassesTestMixin, CreateView, JsonFormMixin):
     def test_func(self):
         return self.request.user.is_staff
@@ -2347,3 +2352,143 @@ class ServicePaymentUpdateView(UserPassesTestMixin, UpdateView):
         kwargs["title"] = "Service Payment"
 
         return super().get_context_data(**kwargs)
+
+
+class AdvancedReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
+    def post(self, request, *args, **kwargs):
+
+        client_name = request.POST.get("client_nm")
+        cp_name = request.POST.get("cp_nm")
+        email_name = request.POST.get("email_nm")
+        email_name = email_name.lower()
+        reportype = request.POST.get("reptyp")
+        route_file = request.FILES["route_file"]
+
+        route_filename = route_file.name
+        _, ext = os.path.splitext(route_filename)
+        ext = ext.lower()  # Convert to lowercase for case-insensitive comparison
+
+        reportid = None
+        client = LogiFlexClient.objects.filter(user=self.request.user).first()
+        servicepayment = ServicePayment.objects.filter(client=client).first()
+        lite_report = 0
+        advanced_report = 0
+        print("Report Type:", reportype)
+        report_type = ""
+        # Check report type
+        if reportype == "1":
+            report_type = "lite"
+            if servicepayment.can_generate_report():
+                lite_report = 1
+        elif reportype == "2":
+            report_type = "advanced"
+            if servicepayment.can_generate_advanced_report():
+                advanced_report = 1
+
+        # print("client: ", client.pk)
+        # print("Service Payment:", servicepayment.pk)
+        # print("lite_report:", lite_report, "advanced_report:", advanced_report)
+        # print("report_type:", report_type)
+        if lite_report or advanced_report:
+            # print("you can generate reports")
+            # Save client and result data
+            user = self.request.user
+            if not client.contact_name:
+                client.contact_name = client_name
+            if not client.company:
+                client.company = cp_name
+
+            client.save()
+
+            downloadcode = generatecode(8)
+            logireport = FreightOpsReport.objects.create(client=client, payment=servicepayment,
+                                                       download_code=downloadcode,
+                                                       report_number=FreightOpsReport.generate_report_number(),
+                                                        )
+            # add route file information
+            logireport.uploaded_file = route_file
+            logireport.file_extension = ext
+            logireport.file_name = route_file.name
+
+            # add report ID
+            logireport.report_number = makereportnumber(logireport.pk, reportype)
+
+            # add expected_delivery
+            # logireport.expected_delivery = now() + timedelta(days=1)
+
+            logireport.save()
+            if lite_report == 1:
+                servicepayment.mark_report_used()
+            elif advanced_report == 1:
+                servicepayment.mark_advanced_report_used()
+
+            start_time = time.time()
+            extension_ok = True
+            if ext == ".csv":
+                dff = pd.read_csv(route_file)
+            elif ext == ".xlsx" or ext == ".xls":
+                dff = pd.read_excel(route_file)
+            else:
+                extension_ok = False
+
+            if extension_ok:
+                df = clean_data(dff)
+                df = calculate_kpis(df)
+
+            # Compute data fingerprint (abuse prevention)
+            carriers = sorted(df["CarrierName"].dropna().unique().tolist())
+            drivers = sorted(df["DriverName"].dropna().unique().tolist()) if "DriverName" in df.columns else []
+            lanes = sorted((df["OriginCity"].str.strip() + df["DestinationCity"].str.strip()).unique().tolist())
+            fingerprint_input = "|".join(carriers + drivers + lanes)
+            fingerprint = hashlib.sha256(fingerprint_input.encode()).hexdigest()
+
+            logireport.data_fingerprint = fingerprint
+            logireport.total_shipments = len(df)
+
+            logireport.save()
+
+            validator = ColumnNameValidator()
+            date_validator = DateValidator()
+
+            test_columns = df.columns
+            # print("Testing with sample column variations...")
+            results = validator.validate_and_correct_columns(df)
+            column_report = validator.print_validation_report(results)
+
+            # Test date validation with sample dates
+            # print("\n" + "=" * 60)
+            # print("Testing date validation...")
+
+            sample_dates = df['Date_ship']
+            date_results = date_validator.validate_date_column(sample_dates, 'TestDate')
+            date_report = date_validator.print_date_validation_report(date_results)
+
+            # Test date fixing
+            # print("\nTesting date format fixing...")
+            fixed_dates, fix_report = date_validator.fix_date_format(sample_dates, '%Y-%m-%d')
+
+
+            # Generate report
+            result = generate_full_report(df, api_key=settings.ANTHROPIC_API_KEY)
+
+            # Parse date range
+            if "Date_ship" in df.columns:
+                dates = pd.to_datetime(df["Date_ship"], errors="coerce").dropna()
+                if len(dates) > 0:
+                    logireport.date_range_start = dates.min().date()
+                    logireport.date_range_end = dates.max().date()
+
+            logireport.populate_from_results(result)
+            logireport.generation_time_seconds = round(time.time() - start_time, 2)
+            logireport.save()
+
+            message = "Report Uploaded Succssefully. Wait for a confirmation email from us."
+            repstatus = "success"
+            reportid = logireport.id
+        else:
+            message = "Report Already Uploaded Succssefully.Check the list of your reports for more details"
+            repstatus = "fail"
+
+        data = {"submessage": message, "repstatus": repstatus, "repid": reportid}
+
+        return JsonResponse(data)

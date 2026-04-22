@@ -2420,7 +2420,7 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
             logireport.file_name = route_file.name
 
             # add report ID
-            logireport.report_number = makereportnumber(logireport.pk, reportype)
+            # logireport.report_number = makereportnumber(logireport.pk, reportype)
 
             # add expected_delivery
             # logireport.expected_delivery = now() + timedelta(days=1)

@@ -2355,6 +2355,8 @@ class ServicePaymentUpdateView(UserPassesTestMixin, UpdateView):
 
 
 class AdvancedReportCreateView(LoginRequiredMixin, CreateView, JsonFormMixin):
+    model = FreightOpsReport
+
     def post(self, request, *args, **kwargs):
 
         client_name = request.POST.get("client_nm")

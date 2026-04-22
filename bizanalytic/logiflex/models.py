@@ -911,8 +911,8 @@ class FreightOpsReport(models.Model):
     class Meta:
         ordering = ["-created_at"]
         indexes = [
-            models.Index(fields=["user", "-created_at"]),
-            models.Index(fields=["user", "report_type"]),
+            models.Index(fields=["client", "-created_at"]),
+            models.Index(fields=["client", "report_type"]),
             models.Index(fields=["fleet_score"]),
             models.Index(fields=["data_fingerprint"]),
         ]
@@ -920,7 +920,7 @@ class FreightOpsReport(models.Model):
         verbose_name_plural = "FreightOps Reports"
 
     def __str__(self):
-        return f"{self.report_number} — {self.user} — Score: {self.fleet_score}"
+        return f"{self.report_number} — {self.client} — Score: {self.fleet_score}"
 
     # =====================================================================
     # CLASS METHODS

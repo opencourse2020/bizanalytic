@@ -86,7 +86,7 @@ def build_report_prompt(
     """
     Constructs the user prompt with all analysis data and output format spec.
     """
-
+    print(sample_data)
     prompt = f"""Generate the FreightOps Performance Report narrative from the following 
 analysis data. Return ONLY a valid JSON object with the structure defined below.
 
@@ -138,7 +138,7 @@ COST ANOMALY DETECTION
 ============================
 SAMPLE RAW DATA (first 5 rows for context)
 ============================
-{json.dumps(sample_data, indent=2, cls=NumpyEncoder)}
+{json.dumps(sample_data, indent=2)}
 
 ============================
 REQUIRED OUTPUT FORMAT

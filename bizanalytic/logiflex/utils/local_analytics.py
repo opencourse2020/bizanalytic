@@ -30,28 +30,28 @@ def clean_data(df_clean):
     # 2- Clean and prepare categorical data columns
     # CarrierName
     distinct_CarrierName = df_clean['CarrierName'].unique()
-    print("CarrierName")
-    print(distinct_CarrierName)
+    # print("CarrierName")
+    # print(distinct_CarrierName)
 
     # DriverName
     distinct_DriverName = df_clean['DriverName'].unique()
-    print("DriverName")
-    print(distinct_DriverName)
+    # print("DriverName")
+    # print(distinct_DriverName)
 
     # DeliveryStatus
     distinct_DeliveryStatus = df_clean['DeliveryStatus'].unique()
-    print("DeliveryStatus")
-    print(distinct_DeliveryStatus)
+    # print("DeliveryStatus")
+    # print(distinct_DeliveryStatus)
 
     # OriginCity
     distinct_OriginCity = df_clean['OriginCity'].unique()
-    print("OriginCity")
-    print(distinct_OriginCity)
+    # print("OriginCity")
+    # print(distinct_OriginCity)
 
     # DestinationCity
     distinct_DestinationCity = df_clean['DestinationCity'].unique()
-    print("DestinationCity")
-    print(distinct_DestinationCity)
+    # print("DestinationCity")
+    # print(distinct_DestinationCity)
 
     # 3- Clean and prepare Numerical Data columns
     # enfore numerical type on numerical columns

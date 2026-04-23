@@ -86,7 +86,7 @@ def build_report_prompt(
     """
     Constructs the user prompt with all analysis data and output format spec.
     """
-    print(sample_data)
+    # print(sample_data)
     prompt = f"""Generate the FreightOps Performance Report narrative from the following 
 analysis data. Return ONLY a valid JSON object with the structure defined below.
 

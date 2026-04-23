@@ -348,8 +348,8 @@ def build_carrier_stats(df) -> Dict[str, Any]:
             "total_freight_cost": round(grp["FreightCost_USD"].sum(), 2),
             "cost_std_dev": round(grp["FreightCost"].std(), 2),
             "cost_cv": round(
-                grp["FreightCost"].std() / grp["FreightCost_USD"].mean(), 3
-            ) if grp["FreightCost"].mean() > 0 else 0,
+                grp["FreightCost_USD"].std() / grp["FreightCost_USD"].mean(), 3
+            ) if grp["FreightCost_USD"].mean() > 0 else 0,
             "ontime_rate": round(grp["is_ontime"].mean() * 100, 1),
             "late_rate": round((1 - grp["is_ontime"].mean()) * 100, 1),
             "ontime_shipments": int(grp["is_ontime"].sum()),
@@ -477,7 +477,7 @@ def build_route_stats(df) -> Dict[str, Any]:
     import numpy as np
 
     work = df.copy()
-    work["FreightCost"] = pd.to_numeric(work["FreightCost_USD"], errors="coerce")
+    work["FreightCost_USD"] = pd.to_numeric(work["FreightCost_USD"], errors="coerce")
     work["lane"] = work["OriginCity"].str.strip() + " → " + work["DestinationCity"].str.strip()
     work["is_ontime"] = work["DeliveryStatus"].str.strip().str.lower() == "on-time"
 

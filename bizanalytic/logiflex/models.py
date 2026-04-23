@@ -907,7 +907,7 @@ class FreightOpsReport(models.Model):
     # =====================================================================
     # LLM Raw Data
     # =====================================================================
-    llm_result = models.JSONField(blank=True)
+    llm_result = models.JSONField(blank=True, null=True)
 
     # =====================================================================
     # META

@@ -70,11 +70,16 @@ WRITING RULES:
 - Use short paragraphs (2-3 sentences max). Use plain English, not logistics jargon.
 - Never invent numbers. Use ONLY the values provided in the analysis data.
   If a metric is missing, skip it — do not estimate or hallucinate.
+- do never use single quote for messages or strings instead use double quote in the output.
+- use double quotes with boolean values (False and True) and with inf values. 
 
 OUTPUT FORMAT:
 Return a JSON object (no markdown, no backticks, no preamble) with the exact 
 structure specified in the user message. Every field must be a string containing 
-the narrative text for that section."""
+the narrative text for that section. do not use a single quote at all instead use 
+always double quote for any string or message. for boolean values (False and True) 
+put them inside double quotes. the same thing for inf values put them in double quote 
+to avoid errors in loading as json"""
 
 
 # =============================================================================
@@ -307,7 +312,7 @@ def generate_report_narrative(
     if cleaned.endswith("```"):
         cleaned = cleaned[:-3]
     cleaned = cleaned.strip()
-    cleaned = cleaned.replace("'", '"')
+    # cleaned = cleaned.replace("'", '"')
 
     print("Cleaned Result start here")
     print("*********************************************************************************")

@@ -152,7 +152,7 @@ def compute_fleet_score(
     if has_distance and has_origins:
         work["cost_per_mile"] = np.where(
             work["Distance_Miles"] > 0,
-            work["FreightCost"] / work["Distance_Miles"],
+            work["FreightCost_USD"] / work["Distance_Miles"],
             np.nan,
         )
 

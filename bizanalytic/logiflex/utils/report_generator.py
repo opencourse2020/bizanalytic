@@ -317,25 +317,25 @@ def generate_report_narrative(
     # print("*********************************************************************************")
     # print("*********************************************************************************")
 
-    try:
-        narrative = json.loads(cleaned)
-    except json.JSONDecodeError as e:
-        return {
-            "error": f"Failed to parse LLM response as JSON: {str(e)}",
-            "raw_response": raw_text,
-        }
+    # try:
+    #     narrative = json.loads(cleaned)
+    # except json.JSONDecodeError as e:
+    #     return {
+    #         "error": f"Failed to parse LLM response as JSON: {str(e)}",
+    #         "raw_response": raw_text,
+    #     }
 
     # Add usage metadata
-    narrative["_meta"] = {
-        "model": "claude-sonnet-4-6",
-        "input_tokens": message.usage.input_tokens,
-        "output_tokens": message.usage.output_tokens,
-        "estimated_cost_usd": round(
-            (message.usage.input_tokens / 1_000_000 * 3)
-            + (message.usage.output_tokens / 1_000_000 * 15),
-            4,
-        ),
-    }
+    # narrative["_meta"] = {
+    #     "model": "claude-sonnet-4-6",
+    #     "input_tokens": message.usage.input_tokens,
+    #     "output_tokens": message.usage.output_tokens,
+    #     "estimated_cost_usd": round(
+    #         (message.usage.input_tokens / 1_000_000 * 3)
+    #         + (message.usage.output_tokens / 1_000_000 * 15),
+    #         4,
+    #     ),
+    # }
 
     return cleaned
 

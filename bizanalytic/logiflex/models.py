@@ -1084,11 +1084,11 @@ class FreightOpsReport(models.Model):
         dq = analysis.get("data_quality", {})
         self.total_rows = dq.get("total_rows", 0)
         self.total_columns = dq.get("total_columns", 0)
-        self.has_fuel_cost = dq.get("has_fuel_cost", False)
-        self.has_distance = dq.get("has_distance", False)
-        self.has_weight = dq.get("has_weight", False)
-        self.has_accessorials = dq.get("has_accessorials", False)
-        self.has_delivery_time = dq.get("has_delivery_time", False)
+        # self.has_fuel_cost = dq.get("has_fuel_cost", False)
+        # self.has_distance = dq.get("has_distance", False)
+        # self.has_weight = dq.get("has_weight", False)
+        # self.has_accessorials = dq.get("has_accessorials", False)
+        # self.has_delivery_time = dq.get("has_delivery_time", False)
 
         # --- Narrative ---
         self.narrative_json = narrative

@@ -346,7 +346,7 @@ def build_carrier_stats(df) -> Dict[str, Any]:
             "pct_of_total": round(len(grp) / len(work) * 100, 1),
             "avg_freight_cost": round(grp["FreightCost_USD"].mean(), 2),
             "total_freight_cost": round(grp["FreightCost_USD"].sum(), 2),
-            "cost_std_dev": round(grp["FreightCost"].std(), 2),
+            "cost_std_dev": round(grp["FreightCost_USD"].std(), 2),
             "cost_cv": round(
                 grp["FreightCost_USD"].std() / grp["FreightCost_USD"].mean(), 3
             ) if grp["FreightCost_USD"].mean() > 0 else 0,

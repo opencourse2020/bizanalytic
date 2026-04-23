@@ -2482,6 +2482,9 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
             directory_path = 'data_files/route_files/company_id_{0}/report_{1}'.format(logireport.client.id,
                                                                                        logireport.id)
             # dff.drop('Date', axis=1, inplace=True)
+            print("Data before saving to csv file")
+            print(dff.head(5))
+            print(dff.columns)
             filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(logireport.client.id,
                                                                                      logireport.id,
                                                                                      logireport.file_name)

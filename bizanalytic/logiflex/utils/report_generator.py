@@ -574,8 +574,8 @@ def generate_full_report(df, api_key: str = None) -> Dict[str, Any]:
         - meta: token usage and cost
     """
     # Import the OR models
-    from or_models import run_phase1_analysis
-    from fleet_score import compute_fleet_score
+    from .or_models import run_phase1_analysis
+    from .fleet_score import compute_fleet_score
 
     # Step 1: Run all OR models
     analysis = run_phase1_analysis(df)

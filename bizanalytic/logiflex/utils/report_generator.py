@@ -297,7 +297,12 @@ def generate_report_narrative(
     if cleaned.endswith("```"):
         cleaned = cleaned[:-3]
     cleaned = cleaned.strip()
-
+    print("Cleaned Result start here")
+    print("*********************************************************************************")
+    print("*********************************************************************************")
+    print(cleaned)
+    print("*********************************************************************************")
+    print("*********************************************************************************")
     try:
         narrative = json.loads(cleaned)
     except json.JSONDecodeError as e:

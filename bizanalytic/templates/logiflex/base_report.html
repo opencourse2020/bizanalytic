@@ -1,0 +1,383 @@
+{% comment %}
+Base Report Template
+====================
+Provides the CSS system, font imports, and block structure.
+Extended by full_report.html and health_check.html.
+
+All CSS classes are defined here. Child templates use them
+without inline styles.
+{% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}FreightOps Report{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+{% block extra_head %}{% endblock %}
+<style>
+/* ========== VARIABLES ========== */
+:root {
+  --ink: #1a1a1f;
+  --ink-secondary: #52525b;
+  --ink-tertiary: #8b8b96;
+  --bg: #ffffff;
+  --bg-subtle: #f7f7f8;
+  --bg-card: #fafafa;
+  --border: #e8e8ec;
+  --border-light: #f0f0f3;
+  --accent: #1a56db;
+  --accent-light: #e8effc;
+  --accent-text: #1a4fbd;
+  --green: #047857;
+  --green-light: #ecfdf5;
+  --green-bg: #d1fae5;
+  --red: #b91c1c;
+  --red-light: #fef2f2;
+  --red-bg: #fecaca;
+  --amber: #92400e;
+  --amber-light: #fffbeb;
+  --amber-bg: #fde68a;
+  --font: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', 'SF Mono', monospace;
+  --page-max: 900px;
+  --page-pad: 48px;
+}
+
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font); color: var(--ink); background: var(--bg-subtle); line-height: 1.65; }
+
+/* ========== REPORT CONTAINER ========== */
+.report { max-width: var(--page-max); margin: 0 auto; background: var(--bg); min-height: 100vh; }
+.report-inner { padding: var(--page-pad); }
+
+/* ========== HEADER ========== */
+.report-header {
+  padding: 40px var(--page-pad) 32px;
+  border-bottom: 2px solid var(--ink);
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;
+}
+.report-header-left { flex: 1; }
+.report-brand {
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--accent-text); margin-bottom: 4px;
+}
+.report-title {
+  font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; color: var(--ink);
+}
+.report-subtitle { font-size: 14px; color: var(--ink-secondary); margin-top: 6px; }
+.report-meta { text-align: right; flex-shrink: 0; }
+.report-meta-id {
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  color: var(--ink-tertiary); letter-spacing: 0.5px;
+}
+.report-meta-date { font-size: 13px; color: var(--ink-tertiary); margin-top: 2px; }
+.report-meta-badge {
+  display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px;
+  background: var(--accent-light); color: var(--accent-text); margin-top: 8px;
+}
+
+/* ========== MONEY HEADLINE ========== */
+.money-headline {
+  margin: 40px 0 0; padding: 32px 36px;
+  background: linear-gradient(135deg, #f0f7ff 0%, #f5f3ff 100%);
+  border: 1px solid #dbeafe; border-radius: 12px; text-align: center;
+}
+.money-headline-label {
+  font-family: var(--mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--accent-text); margin-bottom: 8px;
+}
+.money-headline-value {
+  font-size: 42px; font-weight: 700; letter-spacing: -1px; color: var(--ink); line-height: 1.1;
+}
+.money-headline-sub { font-size: 14px; color: var(--ink-secondary); margin-top: 6px; }
+.money-breakdown {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  margin-top: 24px; background: var(--border); border-radius: 8px; overflow: hidden;
+}
+.money-breakdown-item { background: var(--bg); padding: 14px 12px; text-align: center; }
+.money-breakdown-item-value {
+  font-family: var(--mono); font-size: 16px; font-weight: 600; color: var(--ink);
+}
+.money-breakdown-item-label { font-size: 11px; color: var(--ink-tertiary); margin-top: 2px; }
+
+/* ========== TOP ACTIONS ========== */
+.top-actions { margin-top: 32px; }
+.top-actions-title {
+  font-family: var(--mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--ink-tertiary); margin-bottom: 12px;
+}
+.action-card {
+  display: flex; align-items: flex-start; gap: 16px; padding: 18px 20px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; margin-bottom: 10px; transition: border-color 0.2s;
+}
+.action-card:hover { border-color: var(--accent); }
+.action-rank {
+  font-family: var(--mono); font-size: 24px; font-weight: 700;
+  color: var(--border); line-height: 1; flex-shrink: 0; width: 32px;
+}
+.action-body { flex: 1; }
+.action-title { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.35; }
+.action-detail { font-size: 13px; color: var(--ink-secondary); margin-top: 4px; }
+.action-value {
+  font-family: var(--mono); font-size: 15px; font-weight: 600;
+  color: var(--green); flex-shrink: 0; white-space: nowrap;
+}
+
+/* ========== FLEET HEALTH SCORE ========== */
+.fleet-score {
+  display: grid; grid-template-columns: 180px 1fr; gap: 32px;
+  margin-top: 36px; padding: 28px 32px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; align-items: center;
+}
+.fleet-score-circle {
+  width: 140px; height: 140px; border-radius: 50%;
+  border: 6px solid var(--border-light);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.fleet-score-number { font-size: 44px; font-weight: 700; color: var(--ink); line-height: 1; }
+.fleet-score-label {
+  font-size: 11px; color: var(--ink-tertiary); margin-top: 2px;
+  text-transform: uppercase; letter-spacing: 1px; font-family: var(--mono);
+}
+.fleet-score-bars { flex: 1; }
+.score-bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.score-bar-label { width: 130px; font-size: 12px; color: var(--ink-secondary); text-align: right; flex-shrink: 0; }
+.score-bar-track { flex: 1; height: 8px; background: var(--border-light); border-radius: 4px; overflow: hidden; }
+.score-bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+.score-bar-value {
+  width: 36px; font-family: var(--mono); font-size: 12px; font-weight: 600;
+  color: var(--ink); text-align: right; flex-shrink: 0;
+}
+.score-improvement {
+  margin-top: 14px; padding: 10px 14px;
+  background: var(--accent-light); border-radius: 6px;
+  font-size: 12px; color: var(--accent-text); line-height: 1.5;
+}
+
+/* ========== SECTIONS ========== */
+.section { margin-top: 48px; padding-top: 36px; border-top: 1px solid var(--border); }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.section-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700; flex-shrink: 0;
+}
+.section-icon.carriers { background: var(--accent-light); color: var(--accent-text); }
+.section-icon.drivers { background: var(--green-light); color: var(--green); }
+.section-icon.routes { background: var(--amber-light); color: var(--amber); }
+.section-icon.anomalies { background: var(--red-light); color: var(--red); }
+.section-title { font-size: 20px; font-weight: 700; color: var(--ink); letter-spacing: -0.3px; }
+
+/* ========== KPI CARDS ========== */
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+.kpi-card { padding: 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; }
+.kpi-card-value {
+  font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--ink); line-height: 1.1;
+}
+.kpi-card-unit { font-size: 14px; font-weight: 400; color: var(--ink-tertiary); }
+.kpi-card-label { font-size: 12px; color: var(--ink-secondary); margin-top: 4px; }
+.kpi-card-entity { font-size: 11px; color: var(--ink-tertiary); margin-top: 2px; }
+
+/* ========== CHART AREA ========== */
+.chart-area {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 24px; margin-bottom: 24px; min-height: 280px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-tertiary); font-size: 13px;
+}
+
+/* ========== ANALYSIS BLOCKS ========== */
+.analysis-block { margin-top: 24px; }
+.analysis-summary {
+  font-size: 14px; line-height: 1.75; color: var(--ink-secondary);
+  padding: 20px 24px; background: var(--bg-subtle); border-radius: 10px;
+  border-left: 3px solid var(--accent); margin-bottom: 20px;
+}
+.analysis-summary--warning { border-left-color: var(--red); }
+
+/* ========== INSIGHT LIST ========== */
+.insight-list { list-style: none; margin-bottom: 20px; }
+.insight-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid var(--border-light);
+}
+.insight-item:last-child { border-bottom: none; }
+.insight-marker {
+  width: 6px; height: 6px; border-radius: 50%; margin-top: 7px; flex-shrink: 0;
+}
+.insight-marker.finding { background: var(--accent); }
+.insight-marker.warning { background: var(--red); }
+.insight-marker.opportunity { background: var(--green); }
+.insight-text { font-size: 13.5px; line-height: 1.65; color: var(--ink); }
+.insight-text strong { font-weight: 600; }
+
+/* ========== DETAIL TOGGLE ========== */
+.detail-toggle {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font); font-size: 13px; font-weight: 500;
+  color: var(--accent-text); background: none; border: 1px solid var(--border);
+  padding: 8px 16px; border-radius: 6px; cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  margin-top: 8px;
+}
+.detail-toggle:hover { background: var(--accent-light); border-color: var(--accent); }
+.detail-toggle[aria-expanded="true"] {
+  background: var(--accent-light); border-color: var(--accent);
+}
+
+.detail-section {
+  margin-top: 16px; padding: 20px 24px;
+  background: var(--bg-subtle); border-radius: 10px;
+  border: 1px solid var(--border-light);
+  font-size: 13.5px; line-height: 1.75; color: var(--ink-secondary);
+}
+
+/* ========== DRIVER PROFILE CARDS ========== */
+.driver-profiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+.driver-card {
+  padding: 18px; background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; position: relative;
+}
+.driver-card.flagged { border-left: 3px solid var(--red); }
+.driver-card.top-performer { border-left: 3px solid var(--green); }
+.driver-name { font-size: 14px; font-weight: 700; color: var(--ink); }
+.driver-archetype { font-size: 11px; font-weight: 500; color: var(--ink-tertiary); margin-top: 2px; }
+.driver-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.driver-stat-label {
+  font-size: 10px; color: var(--ink-tertiary); text-transform: uppercase;
+  letter-spacing: 0.5px; font-family: var(--mono);
+}
+.driver-stat-value { font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--ink); }
+.driver-action {
+  font-size: 12px; color: var(--ink-secondary); margin-top: 12px;
+  padding-top: 10px; border-top: 1px solid var(--border-light); line-height: 1.55;
+}
+
+/* ========== ANOMALY TABLE ========== */
+.anomaly-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 20px 0; }
+.anomaly-table thead { background: var(--bg-subtle); }
+.anomaly-table th {
+  text-align: left; padding: 10px 14px; font-family: var(--mono);
+  font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--ink-tertiary); border-bottom: 1px solid var(--border);
+}
+.anomaly-table td { padding: 12px 14px; border-bottom: 1px solid var(--border-light); color: var(--ink); }
+.anomaly-table td.mono { font-family: var(--mono); font-size: 12px; font-weight: 500; }
+.overpayment-badge {
+  display: inline-block; font-family: var(--mono); font-size: 11px; font-weight: 600;
+  padding: 2px 8px; border-radius: 4px; background: var(--red-light); color: var(--red);
+}
+
+/* ========== FINANCIAL SUMMARY ========== */
+.financial-summary {
+  margin-top: 36px; padding: 28px 32px;
+  background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+  border: 1px solid #bbf7d0; border-radius: 12px;
+}
+.financial-summary-title {
+  font-family: var(--mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--green); margin-bottom: 16px;
+}
+.financial-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.financial-item { padding: 14px 16px; background: rgba(255,255,255,0.7); border-radius: 8px; }
+.financial-item-value { font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--green); }
+.financial-item-label { font-size: 12px; color: var(--ink-secondary); margin-top: 2px; }
+
+/* ========== WEEK ACTIONS ========== */
+.week-actions {
+  margin-top: 36px; padding: 28px 32px;
+  background: var(--bg-card); border: 2px solid var(--ink); border-radius: 12px;
+}
+.week-actions-title { font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 16px; }
+.week-action-item {
+  display: flex; align-items: flex-start; gap: 14px; padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.week-action-item:last-child { border-bottom: none; }
+.week-action-num {
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--ink); color: var(--bg);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.week-action-text { font-size: 14px; color: var(--ink); line-height: 1.55; }
+.week-action-text strong { font-weight: 600; }
+
+/* ========== FOOTER ========== */
+.report-footer {
+  margin-top: 48px; padding: 24px var(--page-pad);
+  border-top: 2px solid var(--ink);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-left { font-size: 12px; color: var(--ink-tertiary); }
+.footer-cta { font-size: 12px; color: var(--accent-text); font-weight: 500; }
+.footer-confidential {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--ink-tertiary); text-align: center; margin-top: 12px;
+}
+
+/* ========== DOWNLOAD BAR ========== */
+.download-bar {
+  position: sticky; top: 0; z-index: 100; background: var(--ink);
+  padding: 10px var(--page-pad);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.download-bar-text { font-size: 13px; color: rgba(255,255,255,0.7); }
+.download-btn {
+  font-family: var(--font); font-size: 13px; font-weight: 600;
+  color: var(--bg); background: var(--accent); border: none;
+  padding: 8px 20px; border-radius: 6px; cursor: pointer; transition: opacity 0.2s;
+}
+.download-btn:hover { opacity: 0.85; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 680px) {
+  :root { --page-pad: 20px; }
+  .report-header { flex-direction: column; }
+  .report-meta { text-align: left; }
+  .report-title { font-size: 22px; }
+  .money-headline-value { font-size: 32px; }
+  .money-breakdown { grid-template-columns: repeat(2, 1fr); }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .driver-profiles { grid-template-columns: 1fr; }
+  .fleet-score { grid-template-columns: 1fr; justify-items: center; }
+  .financial-grid { grid-template-columns: 1fr; }
+}
+
+/* ========== PRINT / PDF ========== */
+@media print {
+  body { background: white; }
+  .report { box-shadow: none; }
+  .download-bar { display: none !important; }
+  .report-inner { padding: 32px 40px; }
+  .detail-toggle { display: none !important; }
+  .detail-section { display: block !important; }
+  .detail-section[hidden] { display: block !important; }
+  .section { break-inside: avoid; page-break-inside: avoid; }
+  .kpi-grid { break-inside: avoid; }
+  .driver-profiles { break-inside: avoid; }
+  .action-card { break-inside: avoid; }
+  .money-headline { break-inside: avoid; }
+  .fleet-score { break-inside: avoid; }
+  .financial-summary { break-inside: avoid; }
+  .week-actions { break-inside: avoid; }
+  .analysis-summary { break-inside: avoid; }
+  .chart-area { break-inside: avoid; }
+  .section { margin-top: 32px; padding-top: 24px; }
+  .action-card:hover { border-color: var(--border); }
+  @page { size: A4; margin: 20mm 15mm; }
+}
+</style>
+</head>
+<body>
+{% block report_content %}{% endblock %}
+{% block report_scripts %}{% endblock %}
+</body>
+</html>

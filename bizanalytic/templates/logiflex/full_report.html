@@ -1,0 +1,591 @@
+{% extends "reports/base_report.html" %}
+{% load humanize %}
+{% load report_tags %}
+
+{% comment %}
+FreightOps Performance Report — Django Template
+================================================
+Context variables (passed from view):
+  report              — FreightOpsReport model instance
+  top_actions         — list of dicts: {title, detail, value}
+  week_actions        — list of dicts: {text}
+  carrier_insights    — list of dicts: {type, text}
+  route_insights      — list of dicts: {type, text}
+  financial_impact    — list of dicts: {value, description}
+  anomalies           — list of dicts from cost_anomalies_json.anomalies
+  flagged_drivers     — list of driver dicts with is_out_of_control=True
+  score_dimensions    — list of dicts: {name, score, weight, raw_value, raw_unit}
+  savings_breakdown   — list of tuples: (label, amount) sorted desc
+  network_balance     — list of dicts: {city, out, in, deadhead}
+
+CSS is loaded via base_report.html from your static files.
+All classes match freightops-report-template.html exactly.
+{% endcomment %}
+
+{% block title %}FreightOps Report — {{ report.report_number }}{% endblock %}
+
+{% block report_content %}
+
+{# ================================================================ #}
+{# DOWNLOAD BAR                                                     #}
+{# ================================================================ #}
+<div class="download-bar">
+  <span class="download-bar-text">FreightOps Performance Report</span>
+  <button class="download-btn" onclick="window.print()">&#11015; Download as PDF</button>
+</div>
+
+<div class="report">
+
+{# ================================================================ #}
+{# HEADER                                                           #}
+{# ================================================================ #}
+<header class="report-header">
+  <div class="report-header-left">
+    {% if report.is_white_labeled and report.white_label_company %}
+      <div class="report-brand">{{ report.white_label_company }}</div>
+    {% else %}
+      <div class="report-brand">LogiFlex</div>
+    {% endif %}
+    <h1 class="report-title">FreightOps Performance Report</h1>
+    <p class="report-subtitle">
+      Operational analysis for {{ report.total_shipments|intcomma }} shipments
+      across {{ report.total_carriers }} carrier{{ report.total_carriers|pluralize }}
+      and {{ report.total_drivers }} driver{{ report.total_drivers|pluralize }}
+    </p>
+  </div>
+  <div class="report-meta">
+    <div class="report-meta-id">{{ report.report_number }}</div>
+    <div class="report-meta-date">{{ report.created_at|date:"F j, Y" }}</div>
+    <div class="report-meta-badge">AI + Expert Verified</div>
+  </div>
+</header>
+
+<div class="report-inner">
+
+{# ================================================================ #}
+{# MONEY HEADLINE                                                   #}
+{# ================================================================ #}
+<div class="money-headline">
+  <div class="money-headline-label">Total identified annual savings</div>
+  <div class="money-headline-value">${{ report.total_annual_savings|floatformat:0|intcomma }}</div>
+  {% if report.money_headline_sub %}
+    <div class="money-headline-sub">{{ report.money_headline_sub }}</div>
+  {% else %}
+    <div class="money-headline-sub">
+      Based on {{ report.total_shipments|intcomma }} analyzed shipments across your freight network
+    </div>
+  {% endif %}
+  <div class="money-breakdown">
+    {% for label, amount in savings_breakdown %}
+      <div class="money-breakdown-item">
+        <div class="money-breakdown-item-value">${{ amount|floatformat:0|intcomma }}</div>
+        <div class="money-breakdown-item-label">{{ label }}</div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{# ================================================================ #}
+{# TOP 3 ACTIONS                                                    #}
+{# ================================================================ #}
+{% if top_actions %}
+<div class="top-actions">
+  <div class="top-actions-title">Top {{ top_actions|length }} actions by financial impact</div>
+  {% for action in top_actions %}
+    <div class="action-card">
+      <div class="action-rank">{{ forloop.counter|stringformat:"02d" }}</div>
+      <div class="action-body">
+        <div class="action-title">{{ action.title }}</div>
+        <div class="action-detail">{{ action.detail }}</div>
+      </div>
+      <div class="action-value">{{ action.value }}</div>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{# ================================================================ #}
+{# FLEET HEALTH SCORE                                               #}
+{# ================================================================ #}
+<div class="fleet-score" id="fleetScoreSection">
+  <div class="fleet-score-circle" id="scoreCircle">
+    <div class="fleet-score-number" id="scoreNumber">{{ report.fleet_score }}</div>
+    <div class="fleet-score-label">of 100</div>
+  </div>
+  <div class="fleet-score-bars">
+    {% for dim in score_dimensions %}
+      <div class="score-bar-row">
+        <div class="score-bar-label">{{ dim.name }}</div>
+        <div class="score-bar-track">
+          <div class="score-bar-fill"
+               data-width="{{ dim.score|floatformat:0 }}"
+               data-score="{{ dim.score|floatformat:0 }}">
+          </div>
+        </div>
+        <div class="score-bar-value">
+          {% if dim.raw_unit == "%" %}
+            {{ dim.raw_value|floatformat:1 }}%
+          {% else %}
+            {{ dim.score|floatformat:0 }}
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+
+    {% if report.improvement_scenario_text %}
+      <div class="score-improvement">
+        {{ report.improvement_scenario_text }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+
+{# ================================================================ #}
+{# SECTION 1: CARRIERS                                              #}
+{# ================================================================ #}
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon carriers">C</div>
+    <h2 class="section-title">Carrier performance</h2>
+  </div>
+
+  {# KPI cards from carrier_stats_json #}
+  {% with stats=report.carrier_stats_json %}
+    {% if stats.carriers %}
+      <div class="kpi-grid">
+        {% with best=stats.carriers.0 %}
+          <div class="kpi-card">
+            <div class="kpi-card-value">{{ best.ontime_rate|floatformat:1 }}<span class="kpi-card-unit">%</span></div>
+            <div class="kpi-card-label">Best on-time rate</div>
+            <div class="kpi-card-entity">{{ best.carrier_name }}</div>
+          </div>
+        {% endwith %}
+
+        {% with best=stats.carriers.0 %}
+          <div class="kpi-card">
+            <div class="kpi-card-value">${{ best.avg_freight_cost|floatformat:2 }}</div>
+            <div class="kpi-card-label">Lowest avg freight cost</div>
+            <div class="kpi-card-entity">{{ best.carrier_name }}</div>
+          </div>
+        {% endwith %}
+
+        {% if stats.carriers.0.avg_cost_per_mile %}
+          <div class="kpi-card">
+            <div class="kpi-card-value">${{ stats.carriers.0.avg_cost_per_mile|floatformat:2 }}<span class="kpi-card-unit">/mi</span></div>
+            <div class="kpi-card-label">Lowest cost per mile</div>
+            <div class="kpi-card-entity">{{ stats.carriers.0.carrier_name }}</div>
+          </div>
+        {% endif %}
+
+        {% with worst=stats.carriers|last %}
+          <div class="kpi-card">
+            <div class="kpi-card-value">{{ worst.ontime_rate|floatformat:1 }}<span class="kpi-card-unit">%</span></div>
+            <div class="kpi-card-label">Worst on-time rate</div>
+            <div class="kpi-card-entity">{{ worst.carrier_name }}</div>
+          </div>
+        {% endwith %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {# Chart area — your existing chart.js renders here #}
+  <div class="chart-area" id="carrierChart">
+    <canvas id="carrierChartCanvas"></canvas>
+  </div>
+
+  {# Executive summary (default view) #}
+  <div class="analysis-block">
+    {% if report.carriers_summary %}
+      <div class="analysis-summary">{{ report.carriers_summary }}</div>
+    {% endif %}
+
+    {# Insight bullets #}
+    {% if carrier_insights %}
+      <ul class="insight-list">
+        {% for insight in carrier_insights %}
+          <li class="insight-item">
+            <div class="insight-marker {{ insight.type }}"></div>
+            <div class="insight-text">{{ insight.text|safe }}</div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {# Expandable detail toggle #}
+    {% if report.carriers_detailed %}
+      <button class="detail-toggle" onclick="toggleDetail('carriers')" aria-expanded="false" aria-controls="carriers-detail">
+        Show detailed analysis
+      </button>
+      <div class="detail-section" id="carriers-detail" hidden>
+        {{ report.carriers_detailed|linebreaksbr }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+
+{# ================================================================ #}
+{# SECTION 2: DRIVERS                                               #}
+{# ================================================================ #}
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon drivers">D</div>
+    <h2 class="section-title">Driver performance</h2>
+  </div>
+
+  {# KPI cards from driver_stats_json #}
+  {% with stats=report.driver_stats_json %}
+    {% if stats.drivers %}
+      <div class="kpi-grid">
+        {% with best=stats.drivers.0 %}
+          <div class="kpi-card">
+            <div class="kpi-card-value">{{ best.ontime_rate|floatformat:1 }}<span class="kpi-card-unit">%</span></div>
+            <div class="kpi-card-label">Best on-time rate</div>
+            <div class="kpi-card-entity">{{ best.driver_name }}</div>
+          </div>
+        {% endwith %}
+
+        {% with worst=stats.drivers|last %}
+          <div class="kpi-card">
+            <div class="kpi-card-value">{{ worst.ontime_rate|floatformat:1 }}<span class="kpi-card-unit">%</span></div>
+            <div class="kpi-card-label">Worst on-time rate</div>
+            <div class="kpi-card-entity">{{ worst.driver_name }}</div>
+          </div>
+        {% endwith %}
+
+        <div class="kpi-card">
+          <div class="kpi-card-value">{{ stats.fleet_avg_ontime|floatformat:1 }}<span class="kpi-card-unit">%</span></div>
+          <div class="kpi-card-label">Fleet avg on-time</div>
+          <div class="kpi-card-entity">{{ stats.total_drivers }} drivers</div>
+        </div>
+
+        {% if stats.fleet_total_miles %}
+          <div class="kpi-card">
+            <div class="kpi-card-value">{{ stats.fleet_total_miles|floatformat:0|intcomma }}<span class="kpi-card-unit"> mi</span></div>
+            <div class="kpi-card-label">Total miles driven</div>
+            <div class="kpi-card-entity">Fleet-wide</div>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {# Chart area #}
+  <div class="chart-area" id="driverChart">
+    <canvas id="driverChartCanvas"></canvas>
+  </div>
+
+  {# Executive summary (default view) #}
+  <div class="analysis-block">
+    {% if report.drivers_summary %}
+      <div class="analysis-summary">{{ report.drivers_summary }}</div>
+    {% endif %}
+  </div>
+
+  {# Driver profile cards from driver_stats_json + driver_spc_json #}
+  {% with stats=report.driver_stats_json spc=report.driver_spc_json %}
+    {% if stats.drivers %}
+      <div class="driver-profiles">
+        {% for driver in stats.drivers %}
+          {% with is_flagged=driver.driver_name|in_list:spc.out_of_control_drivers %}
+            <div class="driver-card {% if forloop.first %}top-performer{% elif is_flagged %}flagged{% endif %}">
+              <div class="driver-name">{{ driver.driver_name }}</div>
+              <div class="driver-stats">
+                <div>
+                  <div class="driver-stat-label">On-time</div>
+                  <div class="driver-stat-value">{{ driver.ontime_rate|floatformat:1 }}%</div>
+                </div>
+                <div>
+                  <div class="driver-stat-label">Trips</div>
+                  <div class="driver-stat-value">{{ driver.shipments }}</div>
+                </div>
+                {% if driver.avg_cost_per_mile %}
+                  <div>
+                    <div class="driver-stat-label">Cost/mi</div>
+                    <div class="driver-stat-value">${{ driver.avg_cost_per_mile|floatformat:2 }}</div>
+                  </div>
+                {% endif %}
+                {% if driver.avg_fuel_per_mile %}
+                  <div>
+                    <div class="driver-stat-label">Fuel/mi</div>
+                    <div class="driver-stat-value">${{ driver.avg_fuel_per_mile|floatformat:2 }}</div>
+                  </div>
+                {% endif %}
+                {% if driver.total_miles %}
+                  <div>
+                    <div class="driver-stat-label">Miles</div>
+                    <div class="driver-stat-value">{{ driver.total_miles|floatformat:0|intcomma }}</div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endwith %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {# Expandable detail toggle #}
+  {% if report.drivers_detailed %}
+    <button class="detail-toggle" onclick="toggleDetail('drivers')" aria-expanded="false" aria-controls="drivers-detail">
+      Show detailed analysis
+    </button>
+    <div class="detail-section" id="drivers-detail" hidden>
+      {{ report.drivers_detailed|linebreaksbr }}
+    </div>
+  {% endif %}
+</div>
+
+
+{# ================================================================ #}
+{# SECTION 3: ROUTES                                                #}
+{# ================================================================ #}
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon routes">R</div>
+    <h2 class="section-title">Route performance</h2>
+  </div>
+
+  {# KPI cards from route_stats_json #}
+  {% with stats=report.route_stats_json %}
+    <div class="kpi-grid">
+      {% if stats.fleet_avg_cost_per_mile %}
+        <div class="kpi-card">
+          <div class="kpi-card-value">${{ stats.fleet_avg_cost_per_mile|floatformat:2 }}<span class="kpi-card-unit">/mi</span></div>
+          <div class="kpi-card-label">Avg cost per mile</div>
+          <div class="kpi-card-entity">Fleet-wide</div>
+        </div>
+      {% endif %}
+
+      {% if stats.fleet_avg_distance %}
+        <div class="kpi-card">
+          <div class="kpi-card-value">{{ stats.fleet_avg_distance|floatformat:0 }}<span class="kpi-card-unit"> mi</span></div>
+          <div class="kpi-card-label">Avg route distance</div>
+          <div class="kpi-card-entity">Fleet-wide</div>
+        </div>
+      {% endif %}
+
+      <div class="kpi-card">
+        <div class="kpi-card-value">{{ stats.total_lanes }}</div>
+        <div class="kpi-card-label">Total lanes</div>
+        <div class="kpi-card-entity">In network</div>
+      </div>
+
+      {% if network_balance %}
+        {% with worst=network_balance.0 %}
+          <div class="kpi-card">
+            <div class="kpi-card-value">{{ worst.deadhead }}<span class="kpi-card-unit"> trips</span></div>
+            <div class="kpi-card-label">Est. deadhead trips</div>
+            <div class="kpi-card-entity">{{ worst.city }}</div>
+          </div>
+        {% endwith %}
+      {% endif %}
+    </div>
+  {% endwith %}
+
+  {# Chart area #}
+  <div class="chart-area" id="routeChart">
+    <canvas id="routeChartCanvas"></canvas>
+  </div>
+
+  {# Executive summary #}
+  <div class="analysis-block">
+    {% if report.routes_summary %}
+      <div class="analysis-summary">{{ report.routes_summary }}</div>
+    {% endif %}
+
+    {% if route_insights %}
+      <ul class="insight-list">
+        {% for insight in route_insights %}
+          <li class="insight-item">
+            <div class="insight-marker {{ insight.type }}"></div>
+            <div class="insight-text">{{ insight.text|safe }}</div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {# Expandable detail toggle #}
+    {% if report.routes_detailed %}
+      <button class="detail-toggle" onclick="toggleDetail('routes')" aria-expanded="false" aria-controls="routes-detail">
+        Show detailed analysis
+      </button>
+      <div class="detail-section" id="routes-detail" hidden>
+        {{ report.routes_detailed|linebreaksbr }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+
+{# ================================================================ #}
+{# SECTION 4: FLAGGED INVOICES                                      #}
+{# ================================================================ #}
+{% if anomalies %}
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon anomalies">!</div>
+    <h2 class="section-title">Flagged invoices</h2>
+  </div>
+
+  {% with ca=report.cost_anomalies_json %}
+    <div class="analysis-summary analysis-summary--warning">
+      {{ ca.total_anomalies }} shipment{{ ca.total_anomalies|pluralize }}
+      out of {{ ca.total_shipments_analyzed|intcomma }}
+      ({{ ca.pct_anomalous }}%) flagged as cost anomalies —
+      priced significantly above the lane median.
+      Total potential overpayment: ${{ ca.total_overpayment|floatformat:0|intcomma }}.
+      Review these invoices with your carriers.
+    </div>
+  {% endwith %}
+
+  <table class="anomaly-table">
+    <thead>
+      <tr>
+        <th>Shipment</th>
+        <th>Lane</th>
+        <th>Carrier</th>
+        <th>Actual cost</th>
+        <th>Lane median</th>
+        <th>Overpayment</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in anomalies %}
+        {% if a.anomaly_type == "high_cost" %}
+          <tr>
+            <td class="mono">{{ a.shipment_id }}</td>
+            <td>{{ a.lane }}</td>
+            <td>{{ a.carrier }}</td>
+            <td class="mono">${{ a.actual_cost|floatformat:2|intcomma }}</td>
+            <td class="mono">${{ a.lane_median_cost|floatformat:2|intcomma }}</td>
+            <td><span class="overpayment-badge">+${{ a.overpayment|floatformat:0|intcomma }}</span></td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+
+{# ================================================================ #}
+{# FINANCIAL IMPACT SUMMARY                                         #}
+{# ================================================================ #}
+{% if financial_impact %}
+<div class="financial-summary">
+  <div class="financial-summary-title">Financial impact summary</div>
+  <div class="financial-grid">
+    {% for item in financial_impact %}
+      <div class="financial-item">
+        <div class="financial-item-value">{{ item.value }}</div>
+        <div class="financial-item-label">{{ item.description }}</div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+
+{# ================================================================ #}
+{# WHAT TO DO THIS WEEK                                             #}
+{# ================================================================ #}
+{% if week_actions %}
+<div class="week-actions">
+  <h3 class="week-actions-title">What to do this week</h3>
+  {% for action in week_actions %}
+    <div class="week-action-item">
+      <div class="week-action-num">{{ forloop.counter }}</div>
+      <div class="week-action-text">{{ action.text|safe }}</div>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+
+</div>{# /report-inner #}
+
+{# ================================================================ #}
+{# FOOTER                                                           #}
+{# ================================================================ #}
+<footer class="report-footer">
+  <div class="footer-left">
+    {% if report.is_white_labeled and report.white_label_company %}
+      <strong>{{ report.white_label_company }}</strong> &middot; Generated {{ report.created_at|date:"M j, Y" }}
+    {% else %}
+      <strong>LogiFlex</strong> by BizAnalytic &middot; Generated {{ report.created_at|date:"M j, Y" }}
+    {% endif %}
+  </div>
+  <div class="footer-cta">Upload again next month to track your progress &rarr;</div>
+</footer>
+<div class="footer-confidential">Confidential — prepared for authorized recipient only</div>
+
+</div>{# /report #}
+
+{% endblock report_content %}
+
+
+{% block report_scripts %}
+<script>
+/* =================================================================
+   DETAIL SECTION TOGGLE
+   No framework. Works with the hidden attribute.
+   ================================================================= */
+function toggleDetail(section) {
+  var panel = document.getElementById(section + '-detail');
+  var btn = panel.previousElementSibling;
+  var isHidden = panel.hasAttribute('hidden');
+
+  if (isHidden) {
+    panel.removeAttribute('hidden');
+    btn.textContent = 'Hide detailed analysis';
+    btn.setAttribute('aria-expanded', 'true');
+  } else {
+    panel.setAttribute('hidden', '');
+    btn.textContent = 'Show detailed analysis';
+    btn.setAttribute('aria-expanded', 'false');
+  }
+}
+
+/* =================================================================
+   FLEET SCORE — color the ring and animate bars
+   ================================================================= */
+document.addEventListener('DOMContentLoaded', function() {
+  var score = {{ report.fleet_score }};
+  var circle = document.getElementById('scoreCircle');
+
+  if (circle) {
+    var color;
+    if (score >= 75)      color = '#047857';
+    else if (score >= 60) color = '#1a56db';
+    else if (score >= 40) color = '#92400e';
+    else                  color = '#b91c1c';
+
+    circle.style.borderColor = color;
+    circle.style.transition = 'border-color 0.6s ease';
+  }
+
+  /* Animate score bar fills */
+  var fills = document.querySelectorAll('.score-bar-fill');
+  for (var i = 0; i < fills.length; i++) {
+    var el = fills[i];
+    var pct = el.getAttribute('data-width');
+    var s = parseInt(el.getAttribute('data-score'), 10);
+
+    var barColor;
+    if (s >= 70)      barColor = '#047857';
+    else if (s >= 50) barColor = '#92400e';
+    else              barColor = '#b91c1c';
+
+    el.style.background = barColor;
+    el.style.width = '0%';
+    el.style.transition = 'width 0.8s ease ' + (i * 0.1) + 's';
+
+    /* Force reflow then set final width */
+    void el.offsetWidth;
+    el.style.width = pct + '%';
+  }
+});
+</script>
+{% endblock report_scripts %}

@@ -544,6 +544,10 @@ def build_sample_data(df, n_rows: int = 5) -> Dict[str, Any]:
     for col in sample.columns:
         if sample[col].dtype in ["float64", "float32"]:
             sample[col] = sample[col].round(2)
+
+    for col in sample.select_dtypes(include=['datetime64']):
+        sample[col] = sample[col].dt.strftime('%Y-%m-%d %H:%M:%S')
+
     return sample.to_dict(orient="records")
 
 

@@ -24,6 +24,16 @@ import anthropic
 from typing import Dict, Any
 
 
+def has_bool(obj):
+    if isinstance(obj, bool):
+        return True
+    if isinstance(obj, dict):
+        return any(has_bool(v) for v in obj.values())
+    if isinstance(obj, list):
+        return any(has_bool(item) for item in obj)
+    return False
+
+
 class NumpyEncoder(json.JSONEncoder):
     """Handles numpy types that default json.dumps can't serialize."""
 
@@ -297,12 +307,18 @@ def generate_report_narrative(
     if cleaned.endswith("```"):
         cleaned = cleaned[:-3]
     cleaned = cleaned.strip()
+
     print("Cleaned Result start here")
     print("*********************************************************************************")
     print("*********************************************************************************")
-    print(cleaned)
+    nt = json.loads(cleaned)
+    contains_bool = has_bool(nt)
+    print(f"Contains boolean: {contains_bool}")
     print("*********************************************************************************")
     print("*********************************************************************************")
+
+
+
     try:
         narrative = json.loads(cleaned)
     except json.JSONDecodeError as e:

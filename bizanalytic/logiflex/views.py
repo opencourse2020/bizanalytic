@@ -2524,7 +2524,7 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                     logireport.date_range_start = dates.min().date()
                     logireport.date_range_end = dates.max().date()
 
-            logireport.populate_from_results(result)
+                logireport.populate_from_results(result)
             logireport.generation_time_seconds = round(time.time() - start_time, 2)
             logireport.save()
 

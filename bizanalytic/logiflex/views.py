@@ -2440,6 +2440,57 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
             else:
                 extension_ok = False
 
+            validator = ColumnNameValidator()
+            date_validator = DateValidator()
+
+            test_columns = dff.columns
+            # print("Testing with sample column variations...")
+            results = validator.validate_and_correct_columns(dff)
+            column_report = validator.print_validation_report(results)
+
+            # Test date validation with sample dates
+            # print("\n" + "=" * 60)
+            # print("Testing date validation...")
+
+            sample_dates = dff['Date_ship']
+            date_results = date_validator.validate_date_column(sample_dates, 'TestDate')
+            date_report = date_validator.print_date_validation_report(date_results)
+
+            orig_cities = dff[['OriginCity', 'DestinationCity']]
+            # print("Origine cities:", orig_cities.columns)
+            uscities = City.objects.all().values()
+            us_cities = pd.DataFrame(uscities)
+            usstates = State.objects.all().values()
+            us_states = pd.DataFrame(usstates)
+            gasprices = GasPriceState.objects.all().values()
+            state_diesel_price = pd.DataFrame(gasprices)
+            normalizer = CityStateNormalizer(orig_cities, us_cities, us_states, state_diesel_price)
+            clean_df, review_df, misscities_origin, missgstates_origin, misscities_destin, missgstates_destin, flags, dieselprices = normalizer.normalize()
+            # print("clean_df")
+            # print(clean_df.index)
+            # print(clean_df.info())
+            # data = data.drop(['OriginCity', 'DestinationCity'], axis=1)
+            # data = pd.concat([data, clean_df], axis=0, ignore_index=True)
+            dff.update(clean_df['OriginCity'])
+            dff.update(clean_df['DestinationCity'])
+            dff['Diesel_Price'] = dieselprices
+
+            # Test date fixing
+            # print("\nTesting date format fixing...")
+            fixed_dates, fix_report = date_validator.fix_date_format(sample_dates, '%Y-%m-%d')
+
+            directory_path = 'data_files/route_files/company_id_{0}/report_{1}'.format(logireport.client.id,
+                                                                                       logireport.id)
+            dff.drop('Date', axis=1, inplace=True)
+            filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(logireport.client.id,
+                                                                                     logireport.id,
+                                                                                     logireport.file_name)
+            print("filename: ", filename)
+            filepath = settings.MEDIA_ROOT + "/" + filename
+            # f = open(filepath, 'w')
+            dff.to_csv(filepath, index=False)
+
+
             if extension_ok:
                 df = clean_data(dff)
                 df = calculate_kpis(df)
@@ -2455,26 +2506,6 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
             logireport.total_shipments = len(df)
 
             logireport.save()
-
-            validator = ColumnNameValidator()
-            date_validator = DateValidator()
-
-            test_columns = df.columns
-            # print("Testing with sample column variations...")
-            results = validator.validate_and_correct_columns(df)
-            column_report = validator.print_validation_report(results)
-
-            # Test date validation with sample dates
-            # print("\n" + "=" * 60)
-            # print("Testing date validation...")
-
-            sample_dates = df['Date_ship']
-            date_results = date_validator.validate_date_column(sample_dates, 'TestDate')
-            date_report = date_validator.print_date_validation_report(date_results)
-
-            # Test date fixing
-            # print("\nTesting date format fixing...")
-            fixed_dates, fix_report = date_validator.fix_date_format(sample_dates, '%Y-%m-%d')
 
 
             # Generate report

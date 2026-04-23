@@ -870,7 +870,7 @@ class FreightOpsReport(models.Model):
     # =====================================================================
     llm_model = models.CharField(
         max_length=50, blank=True,
-        default="claude-sonnet-4-6-20250514",
+        default="claude-sonnet-4-6",
     )
     llm_input_tokens = models.PositiveIntegerField(default=0)
     llm_output_tokens = models.PositiveIntegerField(default=0)

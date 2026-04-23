@@ -308,7 +308,7 @@ def generate_report_narrative(
 
     # Add usage metadata
     narrative["_meta"] = {
-        "model": "claude-sonnet-4-6-20250514",
+        "model": "claude-sonnet-4-6",
         "input_tokens": message.usage.input_tokens,
         "output_tokens": message.usage.output_tokens,
         "estimated_cost_usd": round(

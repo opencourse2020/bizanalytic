@@ -81,6 +81,9 @@ class FreeFreightOpsView(TemplateView):
     def get_context_data(self, **kwargs):
         report = LogiflexReport.objects.filter(pk=190, download_code="mNUW9tzr").first()
         dff = pd.read_csv(report.routefile)
+        validator = ColumnNameValidator()
+
+        results = validator.validate_and_correct_columns(dff)
         df = clean_data(dff)
         df = calculate_kpis(df)
 

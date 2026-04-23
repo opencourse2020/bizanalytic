@@ -1096,25 +1096,25 @@ class FreightOpsReport(models.Model):
         self.has_delivery_time = dq.get("has_delivery_time", False)
 
         # --- Narrative ---
-        # self.narrative_json = narrative
-        # self.money_headline_sub = narrative.get("money_headline_sub", "")
-        # self.carriers_summary = narrative.get("carriers_summary", "")
-        # self.carriers_detailed = narrative.get("carriers_detailed", "")
-        # self.drivers_summary = narrative.get("drivers_summary", "")
-        # self.drivers_detailed = narrative.get("drivers_detailed", "")
-        # self.routes_summary = narrative.get("routes_summary", "")
-        # self.routes_detailed = narrative.get("routes_detailed", "")
-        # self.improvement_scenario_text = narrative.get("improvement_scenario", "")
+        self.narrative_json = narrative
+        self.money_headline_sub = narrative.get("money_headline_sub", "")
+        self.carriers_summary = narrative.get("carriers_summary", "")
+        self.carriers_detailed = narrative.get("carriers_detailed", "")
+        self.drivers_summary = narrative.get("drivers_summary", "")
+        self.drivers_detailed = narrative.get("drivers_detailed", "")
+        self.routes_summary = narrative.get("routes_summary", "")
+        self.routes_detailed = narrative.get("routes_detailed", "")
+        self.improvement_scenario_text = narrative.get("improvement_scenario", "")
 
         # --- LLM Cost ---
-        # meta = narrative.get("_meta", {})
-        # self.llm_model = meta.get("model", "")
-        # self.llm_input_tokens = meta.get("input_tokens", 0)
-        # self.llm_output_tokens = meta.get("output_tokens", 0)
-        # self.llm_cost_usd = meta.get("estimated_cost_usd", 0)
+        meta = narrative.get("_meta", {})
+        self.llm_model = meta.get("model", "")
+        self.llm_input_tokens = meta.get("input_tokens", 0)
+        self.llm_output_tokens = meta.get("output_tokens", 0)
+        self.llm_cost_usd = meta.get("estimated_cost_usd", 0)
 
         # LLM Result as raw data
-        self.llm_result = narrative
+        # self.llm_result = narrative
 
         # --- Summary counts ---
         cs = result.get("carrier_stats", {})

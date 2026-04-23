@@ -2474,6 +2474,7 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
             dff.update(clean_df['OriginCity'])
             dff.update(clean_df['DestinationCity'])
             dff['Diesel_Price'] = dieselprices
+            dff['Diesel_Price'] = dff['Diesel_Price'].astype(float)
 
             # Test date fixing
             # print("\nTesting date format fixing...")

@@ -546,7 +546,7 @@ def build_sample_data(df, n_rows: int = 5) -> Dict[str, Any]:
             sample[col] = sample[col].round(2)
 
     for col in sample.select_dtypes(include=['datetime64']):
-        sample[col] = sample[col].dt.strftime('%Y-%m-%d %H:%M:%S')
+        sample[col] = sample[col].dt.strftime('%Y-%m-%d')
 
     return sample.to_dict(orient="records")
 

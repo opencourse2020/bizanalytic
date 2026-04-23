@@ -2513,7 +2513,7 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
 
             # Generate report
             result = generate_full_report(df, api_key=settings.ANTHROPIC_API_KEY)
-
+            print(result)
             # Parse date range
             if "Date_ship" in df.columns:
                 dates = pd.to_datetime(df["Date_ship"], errors="coerce").dropna()

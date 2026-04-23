@@ -69,8 +69,8 @@ def clean_data(df_clean):
     df_clean['DeliveryTime_hrs'].fillna(df_clean['DeliveryTime_hrs'].mean(), inplace=True)
 
     # 4- Clean and prepare Date Data columns
-    df_clean['Date'] = pd.to_datetime(df_clean['Date'], errors='coerce')
-    df_clean['Date'].fillna(df_clean['Date'].mode()[0], inplace=True)
+    df_clean['Date_ship'] = pd.to_datetime(df_clean['Date_ship'], errors='coerce')
+    df_clean['Date_ship'].fillna(df_clean['Date_ship'].mode()[0], inplace=True)
 
     # 5- Remove In-Transit data
     delivery_data = df_clean[df_clean['DeliveryStatus'].isin(['Delivered', 'Delayed'])]

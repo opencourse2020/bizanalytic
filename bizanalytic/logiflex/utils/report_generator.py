@@ -291,7 +291,7 @@ def generate_report_narrative(
 
     message = client.messages.create(
         model="claude-sonnet-4-6",
-        max_tokens=16000,
+        max_tokens=7000,
         system=SYSTEM_PROMPT,
         messages=[
             {"role": "user", "content": user_prompt}
@@ -299,7 +299,7 @@ def generate_report_narrative(
     )
 
     raw_text = message.content[0].text
-
+    raw_text = raw_text.replace("'", '"')
     # Clean potential markdown fencing
     cleaned = raw_text.strip()
     if cleaned.startswith("```"):
@@ -307,6 +307,7 @@ def generate_report_narrative(
     if cleaned.endswith("```"):
         cleaned = cleaned[:-3]
     cleaned = cleaned.strip()
+    cleaned = cleaned.replace("'", '"')
 
     print("Cleaned Result start here")
     print("*********************************************************************************")

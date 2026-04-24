@@ -316,7 +316,7 @@ def generate_report_narrative(
     print("Cleaned Result start here")
     print("*********************************************************************************")
     print("*********************************************************************************")
-    print(raw_text)
+    print(cleaned)
     # nt = json.loads(cleaned)
     # contains_bool = has_bool(nt)
     # print(f"Contains boolean: {contains_bool}")
@@ -328,7 +328,7 @@ def generate_report_narrative(
     except json.JSONDecodeError as e:
         return {
             # "error": f"Failed to parse LLM response as JSON: {str(e)}",
-            "raw_response": raw_text,
+            "raw_response": cleaned,
         }
 
     # Add usage metadata

@@ -311,7 +311,7 @@ def generate_report_narrative(
     if cleaned.endswith("```"):
         cleaned = cleaned[:-3]
     cleaned = cleaned.strip()
-    cleaned = cleaned.replace("'", " ")
+    cleaned = cleaned.replace("'", '"')
 
     print("Cleaned Result start here")
     print("*********************************************************************************")
@@ -408,7 +408,7 @@ def build_carrier_stats(df) -> Dict[str, Any]:
             ratio = round(c["ontime_rate"] / worst["ontime_rate"], 2)
         else:
             # ratio = float("inf")
-            ratio = None
+            ratio = "None"
         contingency.append({
             "better_carrier": c["carrier_name"],
             "worse_carrier": worst["carrier_name"],

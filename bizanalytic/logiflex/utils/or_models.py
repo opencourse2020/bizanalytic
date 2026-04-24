@@ -474,10 +474,10 @@ def analyze_lane_profitability(
         "worst_lane": lanes_output[0] if lanes_output else None,
         "best_lane": lanes_output[-1] if lanes_output else None,
         "data_completeness": {
-            "has_fuel_data": has_fuel,
-            "has_accessorial_data": has_accessorial,
-            "has_weight_data": has_weight,
-            "has_distance_data": has_distance,
+            "has_fuel_data": str(has_fuel),
+            "has_accessorial_data": str(has_accessorial),
+            "has_weight_data": str(has_weight),
+            "has_distance_data": str(has_distance),
         },
     }
 
@@ -590,7 +590,7 @@ def analyze_driver_spc(
             "std": fleet_ontime_std,
             "ucl": min(fleet_ontime_mean + sigma_threshold * fleet_ontime_std, 1.0),
             "lcl": max(fleet_ontime_mean - sigma_threshold * fleet_ontime_std, 0.0),
-            "higher_is_better": True,
+            "higher_is_better": "True",
             "label": "On-Time Rate",
             "format": "pct",
         }
@@ -606,7 +606,7 @@ def analyze_driver_spc(
                 "std": cpm_std,
                 "ucl": cpm_mean + sigma_threshold * cpm_std,
                 "lcl": max(cpm_mean - sigma_threshold * cpm_std, 0),
-                "higher_is_better": False,
+                "higher_is_better": "False",
                 "label": "Cost per Mile",
                 "format": "dollar",
             }
@@ -622,7 +622,7 @@ def analyze_driver_spc(
                 "std": fpm_std,
                 "ucl": fpm_mean + sigma_threshold * fpm_std,
                 "lcl": max(fpm_mean - sigma_threshold * fpm_std, 0),
-                "higher_is_better": False,
+                "higher_is_better": "False",
                 "label": "Fuel Cost per Mile",
                 "format": "dollar",
             }
@@ -638,7 +638,7 @@ def analyze_driver_spc(
                 "std": std_std,
                 "ucl": std_mean + sigma_threshold * std_std,
                 "lcl": max(std_mean - sigma_threshold * std_std, 0),
-                "higher_is_better": False,
+                "higher_is_better": "False",
                 "label": "Cost Variability (Std Dev)",
                 "format": "dollar",
             }
@@ -679,7 +679,7 @@ def analyze_driver_spc(
             driver_profile["sigma_positions"][params["label"]] = round(sigma_pos, 2)
 
             # Check if out of control
-            if params["higher_is_better"]:
+            if params["higher_is_better"] == "True":
                 if val < params["lcl"]:
                     excess = params["mean"] - val
                     flag_type = "below_lcl"
@@ -721,7 +721,7 @@ def analyze_driver_spc(
                     "estimated_monthly_excess_cost": round(excess_cost, 2),
                 })
 
-        driver_profile["is_out_of_control"] = is_out_of_control
+        driver_profile["is_out_of_control"] = str(is_out_of_control)
         drivers_output.append(driver_profile)
 
         if is_out_of_control:
@@ -1019,12 +1019,12 @@ def run_phase1_analysis(df: pd.DataFrame) -> Dict[str, Any]:
     results["data_quality"] = {
         "total_rows": len(df),
         "total_columns": len(df.columns),
-        "has_fuel_cost": "FuelCost" in cols,
-        "has_distance": "Distance_Miles" in cols,
-        "has_weight": "LoadWeight_lbs" in cols,
-        "has_accessorials": "AccessorialCharges" in cols,
-        "has_delivery_time": "DeliveryTime_hrs" in cols,
-        "has_shipment_id": "ShipmentID" in cols,
+        "has_fuel_cost": str("FuelCost_USD" in cols),
+        "has_distance": str("Distance_Miles" in cols),
+        "has_weight": str("LoadWeight_lbs" in cols),
+        "has_accessorials": str("AccessorialCharges" in cols),
+        "has_delivery_time": str("DeliveryTime_hrs" in cols),
+        "has_shipment_id": str("ShipmentID" in cols),
     }
 
     return results

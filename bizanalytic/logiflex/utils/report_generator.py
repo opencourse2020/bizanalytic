@@ -70,16 +70,15 @@ WRITING RULES:
 - Use short paragraphs (2-3 sentences max). Use plain English, not logistics jargon.
 - Never invent numbers. Use ONLY the values provided in the analysis data.
   If a metric is missing, skip it — do not estimate or hallucinate.
-- do never use single quote for messages or strings instead use double quote in the output.
-- use double quotes with boolean values (False and True) and with inf values. 
+- do never use single quotes for messages or strings instead use double quotes in the output.
+- avoid using single quotes anywhere
 
 OUTPUT FORMAT:
 Return a JSON object (no markdown, no backticks, no preamble) with the exact 
 structure specified in the user message. Every field must be a string containing 
 the narrative text for that section. do not use a single quote at all instead use 
 always double quote for any string or message. for boolean values (False and True) 
-put them inside double quotes. the same thing for inf values put them in double quote 
-to avoid errors in loading as json"""
+put them inside double quotes to avoid errors in loading as json"""
 
 
 # =============================================================================
@@ -312,7 +311,7 @@ def generate_report_narrative(
     if cleaned.endswith("```"):
         cleaned = cleaned[:-3]
     cleaned = cleaned.strip()
-    # cleaned = cleaned.replace("'", '"')
+    cleaned = cleaned.replace("'", " ")
 
     print("Cleaned Result start here")
     print("*********************************************************************************")
@@ -328,7 +327,7 @@ def generate_report_narrative(
         narrative = json.loads(cleaned)
     except json.JSONDecodeError as e:
         return {
-            "error": f"Failed to parse LLM response as JSON: {str(e)}",
+            # "error": f"Failed to parse LLM response as JSON: {str(e)}",
             "raw_response": raw_text,
         }
 
@@ -408,7 +407,8 @@ def build_carrier_stats(df) -> Dict[str, Any]:
         if worst["ontime_rate"] > 0:
             ratio = round(c["ontime_rate"] / worst["ontime_rate"], 2)
         else:
-            ratio = float("inf")
+            # ratio = float("inf")
+            ratio = None
         contingency.append({
             "better_carrier": c["carrier_name"],
             "worse_carrier": worst["carrier_name"],

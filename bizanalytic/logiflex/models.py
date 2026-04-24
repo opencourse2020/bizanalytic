@@ -1036,7 +1036,7 @@ class FreightOpsReport(models.Model):
             narrative = result["narrative"].get("raw_response")
         else:
             narrative = result["narrative"]
-        narrative = json.loads(narrative)
+        # narrative = json.loads(narrative)
         # --- Fleet Score ---
         self.fleet_score = score.get("score", 0)
         self.fleet_grade = score.get("grade", "Insufficient data")

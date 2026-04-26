@@ -2524,7 +2524,39 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                     logireport.date_range_start = dates.min().date()
                     logireport.date_range_end = dates.max().date()
 
-                logireport.populate_from_results(narrative, analysis, score, carrier_stats, driver_stats, route_stats)
+                # logireport.populate_from_results(narrative, analysis, score, carrier_stats, driver_stats, route_stats)
+
+                logireport.fleet_score = score.get("score", 0)
+                logireport.fleet_grade = score.get("grade", "Insufficient data")
+                logireport.fleet_score_json = score
+
+                # Map dimension scores
+                dim_map = {
+                    "On-time delivery": "score_ontime_delivery",
+                    "Cost efficiency": "score_cost_efficiency",
+                    "Fuel efficiency": "score_fuel_efficiency",
+                    "Route utilization": "score_route_utilization",
+                    "Cost predictability": "score_cost_predictability",
+                }
+                for dim in score.get("dimensions", []):
+                    field = dim_map.get(dim["name"])
+                    if field:
+                        setattr(logireport, field, dim["score"])
+
+                # Drag/strength
+                drag = score.get("biggest_drag", {})
+                logireport.biggest_drag_dimension = drag.get("dimension", "")
+                logireport.biggest_drag_score = drag.get("dimension_score")
+
+                strength = score.get("biggest_strength", {})
+                logireport.biggest_strength_dimension = strength.get("dimension", "")
+                logireport.biggest_strength_score = strength.get("dimension_score")
+
+                imp = score.get("improvement_scenario", {})
+                logireport.improvement_current = imp.get("current_fleet_score")
+                logireport.improvement_projected = imp.get("projected_fleet_score")
+                logireport.improvement_delta = imp.get("point_gain")
+
             logireport.generation_time_seconds = round(time.time() - start_time, 2)
             logireport.save()
 

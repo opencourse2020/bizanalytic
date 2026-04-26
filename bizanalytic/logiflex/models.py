@@ -1018,8 +1018,8 @@ class FreightOpsReport(models.Model):
     # =====================================================================
     # POPULATE FROM ANALYSIS RESULTS
     # =====================================================================
-
-    def populate_from_results(self, result: dict):
+    # self, result: dict
+    def populate_from_results(self, narrative, analysis, score, carrier_stats, driver_stats, route_stats):
         """
         Populates all model fields from the output of generate_full_report().
 
@@ -1030,13 +1030,13 @@ class FreightOpsReport(models.Model):
         result : dict
             Output from report_generator.generate_full_report(df)
         """
-        analysis = result["analysis"]
-        score = result["fleet_score"]
-        if result["narrative"].get("raw_response"):
-            narrative = result["narrative"].get("raw_response")
-        else:
-            narrative = result["narrative"]
-        narrative = json.loads(narrative)
+        # analysis = result["analysis"]
+        # score = result["fleet_score"]
+        # if result["narrative"].get("raw_response"):
+        #     narrative = result["narrative"].get("raw_response")
+        # else:
+        #     narrative = result["narrative"]
+        # narrative = json.loads(narrative)
         # --- Fleet Score ---
         self.fleet_score = score.get("score", 0)
         self.fleet_grade = score.get("grade", "Insufficient data")
@@ -1084,9 +1084,9 @@ class FreightOpsReport(models.Model):
         self.cost_anomalies_json = analysis.get("cost_anomalies", {})
 
         # --- Statistics ---
-        self.carrier_stats_json = result.get("carrier_stats", {})
-        self.driver_stats_json = result.get("driver_stats", {})
-        self.route_stats_json = result.get("route_stats", {})
+        self.carrier_stats_json = carrier_stats
+        self.driver_stats_json = driver_stats
+        self.route_stats_json = route_stats
 
         # --- Data Quality ---
         dq = analysis.get("data_quality", {})
@@ -1120,9 +1120,9 @@ class FreightOpsReport(models.Model):
         # self.llm_result = narrative
 
         # --- Summary counts ---
-        cs = result.get("carrier_stats", {})
-        ds = result.get("driver_stats", {})
-        rs = result.get("route_stats", {})
+        cs = carrier_stats
+        ds = driver_stats
+        rs = route_stats
         self.total_carriers = cs.get("total_carriers", 0)
         self.total_drivers = ds.get("total_drivers", 0)
         self.total_lanes = rs.get("total_lanes", 0)

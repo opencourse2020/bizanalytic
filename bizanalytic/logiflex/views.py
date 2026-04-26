@@ -2515,8 +2515,8 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
 
 
             # Generate report
-            result = generate_full_report(df, api_key=settings.ANTHROPIC_API_KEY)
-            print(result)
+            narrative, analysis, score, carrier_stats, driver_stats, route_stats = generate_full_report(df, api_key=settings.ANTHROPIC_API_KEY)
+            # print(result)
             # Parse date range
             if "Date_ship" in df.columns:
                 dates = pd.to_datetime(df["Date_ship"], errors="coerce").dropna()
@@ -2524,7 +2524,7 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                     logireport.date_range_start = dates.min().date()
                     logireport.date_range_end = dates.max().date()
 
-                logireport.populate_from_results(result)
+                logireport.populate_from_results(narrative, analysis, score, carrier_stats, driver_stats, route_stats)
             logireport.generation_time_seconds = round(time.time() - start_time, 2)
             logireport.save()
 

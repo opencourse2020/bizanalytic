@@ -303,7 +303,7 @@ def generate_report_narrative(
     )
 
     raw_text = message.content[0].text
-    raw_text = raw_text.replace("'", '"')
+    # raw_text = raw_text.replace("'", '"')
     # Clean potential markdown fencing
     cleaned = raw_text.strip()
     if cleaned.startswith("```"):
@@ -316,7 +316,7 @@ def generate_report_narrative(
     print("Cleaned Result start here")
     print("*********************************************************************************")
     print("*********************************************************************************")
-    print(cleaned)
+    # print(cleaned)
     # nt = json.loads(cleaned)
     # contains_bool = has_bool(nt)
     # print(f"Contains boolean: {contains_bool}")
@@ -580,8 +580,8 @@ def build_sample_data(df, n_rows: int = 5) -> Dict[str, Any]:
 # =============================================================================
 # FULL PIPELINE: DataFrame → Report Narrative
 # =============================================================================
-
-def generate_full_report(df, api_key: str = None) -> Dict[str, Any]:
+# -> Dict[str, Any]
+def generate_full_report(df, api_key: str = None):
     """
     End-to-end: takes a cleaned DataFrame, runs all models,
     and generates the complete report narrative.
@@ -634,16 +634,16 @@ def generate_full_report(df, api_key: str = None) -> Dict[str, Any]:
         api_key=api_key,
     )
 
-    return {
-        "narrative": narrative,
-        "analysis": analysis,
-        "fleet_score": score,
-        "carrier_stats": carrier_stats,
-        "driver_stats": driver_stats,
-        "route_stats": route_stats,
-    }
+    return narrative, analysis, score, carrier_stats, driver_stats, route_stats
 
-
+# {
+#         "narrative": narrative,
+#         "analysis": analysis,
+#         "fleet_score": score,
+#         "carrier_stats": carrier_stats,
+#         "driver_stats": driver_stats,
+#         "route_stats": route_stats,
+#     }
 # =============================================================================
 # DJANGO VIEW INTEGRATION
 # =============================================================================

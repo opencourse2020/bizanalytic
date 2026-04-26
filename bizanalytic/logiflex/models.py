@@ -1041,7 +1041,19 @@ class FreightOpsReport(models.Model):
         self.fleet_score = score.get("score", 0)
         self.fleet_grade = score.get("grade", "Insufficient data")
         self.fleet_score_json = score
-
+        print("*********************************************************************************")
+        print(narrative)
+        print("*********************************************************************************")
+        print(carrier_stats)
+        print("*********************************************************************************")
+        print(driver_stats)
+        print("*********************************************************************************")
+        print(route_stats)
+        print("*********************************************************************************")
+        print(score)
+        print("*********************************************************************************")
+        print(analysis)
+        print("*********************************************************************************")
         # Map dimension scores
         dim_map = {
             "On-time delivery": "score_ontime_delivery",

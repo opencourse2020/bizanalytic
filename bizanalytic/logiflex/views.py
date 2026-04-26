@@ -2557,6 +2557,30 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 logireport.improvement_projected = imp.get("projected_fleet_score")
                 logireport.improvement_delta = imp.get("point_gain")
 
+                savings = analysis.get("composite_savings", {})
+                logireport.total_annual_savings = savings.get("total_identified_annual_savings", 0)
+                logireport.savings_carrier_reallocation = savings.get("carrier_reallocation_annual", 0)
+                logireport.savings_lane_optimization = savings.get("lane_excess_cost_annual", 0)
+                logireport.savings_driver_coaching = savings.get("driver_inefficiency_annual", 0)
+                logireport.savings_invoice_anomalies = savings.get("cost_anomalies_annual", 0)
+
+                # --- OR Model Outputs ---
+                logireport.carrier_optimization_json = analysis.get("carrier_optimization", {})
+                logireport.lane_profitability_json = analysis.get("lane_profitability", {})
+                logireport.driver_spc_json = analysis.get("driver_spc", {})
+                logireport.cost_anomalies_json = analysis.get("cost_anomalies", {})
+
+                # --- Data Quality ---
+                dq = analysis.get("data_quality", {})
+                logireport.total_rows = dq.get("total_rows", 0)
+                logireport.total_columns = dq.get("total_columns", 0)
+                logireport.has_fuel_cost = dq.get("has_fuel_cost", False)
+                logireport.has_distance = dq.get("has_distance", False)
+                logireport.has_weight = dq.get("has_weight", False)
+                logireport.has_accessorials = dq.get("has_accessorials", False)
+                logireport.has_delivery_time = dq.get("has_delivery_time", False)
+
+
             logireport.generation_time_seconds = round(time.time() - start_time, 2)
             logireport.save()
 

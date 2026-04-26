@@ -2580,6 +2580,24 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 logireport.has_accessorials = dq.get("has_accessorials", False)
                 logireport.has_delivery_time = dq.get("has_delivery_time", False)
 
+                # --- Narrative ---
+                logireport.narrative_json = narrative
+                logireport.money_headline_sub = narrative.get("money_headline_sub", "")
+                logireport.carriers_summary = narrative.get("carriers_summary", "")
+                logireport.carriers_detailed = narrative.get("carriers_detailed", "")
+                logireport.drivers_summary = narrative.get("drivers_summary", "")
+                logireport.drivers_detailed = narrative.get("drivers_detailed", "")
+                logireport.routes_summary = narrative.get("routes_summary", "")
+                logireport.routes_detailed = narrative.get("routes_detailed", "")
+                logireport.improvement_scenario_text = narrative.get("improvement_scenario", "")
+
+                # --- LLM Cost ---
+                meta = narrative.get("_meta", {})
+                logireport.llm_model = meta.get("model", "")
+                logireport.llm_input_tokens = meta.get("input_tokens", 0)
+                logireport.llm_output_tokens = meta.get("output_tokens", 0)
+                logireport.llm_cost_usd = meta.get("estimated_cost_usd", 0)
+
 
             logireport.generation_time_seconds = round(time.time() - start_time, 2)
             logireport.save()

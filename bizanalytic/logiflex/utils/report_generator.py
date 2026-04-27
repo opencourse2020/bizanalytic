@@ -94,6 +94,7 @@ def build_report_prompt(
         composite_savings: Dict[str, Any],
         carrier_stats: Dict[str, Any],
         driver_stats: Dict[str, Any],
+        contingency_analysis: Dict[str, Any],
         route_stats: Dict[str, Any],
         sample_data: Dict[str, Any],
 ) -> str:
@@ -123,6 +124,11 @@ CARRIER STATISTICS SUMMARY
 CARRIER OPTIMIZATION (LP MODEL)
 ============================
 {json.dumps(carrier_optimization, indent=2, cls=NumpyEncoder)}
+
+============================
+CARRIER Contingency Analysis
+============================
+{json.dumps(contingency_analysis, indent=2, cls=NumpyEncoder)}
 
 ============================
 DRIVER STATISTICS SUMMARY
@@ -242,7 +248,7 @@ def generate_report_narrative(
         carrier_stats: Dict[str, Any],
         driver_stats: Dict[str, Any],
         route_stats: Dict[str, Any],
-        contingency_analysis,
+        contingency_analysis: Dict[str, Any],
         sample_data: Dict[str, Any],
         api_key: str = None,
 ) -> Dict[str, Any]:
@@ -277,6 +283,7 @@ def generate_report_narrative(
     Returns
     -------
     dict : The parsed JSON narrative sections, ready for the Django template.
+    :param contingency_analysis:
     """
 
     client = anthropic.Anthropic(api_key=api_key)
@@ -290,6 +297,7 @@ def generate_report_narrative(
         composite_savings=composite_savings,
         carrier_stats=carrier_stats,
         driver_stats=driver_stats,
+        contingency_analysis=contingency_analysis,
         route_stats=route_stats,
         sample_data=sample_data,
     )
@@ -351,7 +359,7 @@ def generate_report_narrative(
 # HELPER: Build statistics summaries from raw DataFrame
 # =============================================================================
 
-def build_carrier_stats(df) -> Dict[str, Any]:
+def build_carrier_stats(df):
     """Pre-computes carrier statistics for the prompt."""
     import pandas as pd
     import numpy as np
@@ -622,16 +630,19 @@ def generate_full_report(df, api_key: str = None):
     sample_data = build_sample_data(df)
     contingency_analysis, worst_carrier = run_contingency_analysis(df)
 
-    contingency_matrix = ["contingency analysis based on on time deliveries rate: "]
-    contingency_matrix.append(f"Carrier with lowest on-time rate: {worst_carrier}")
+    # contingency_matrix = ["contingency analysis based on on-time deliveries rate: "]
+    contingency_matrix = []
+    contingency_matrix.append((worst_carrier, "is the worst carrier in terms of Reliability"))
     for idx, row in contingency_analysis.iterrows():
-        print("contingency_matrix:", contingency_matrix)
+        # print("contingency_matrix:", contingency_matrix)
+
         competitor = row['Competitor']
         odds_ratio = row['Odds_Ratio']
+        contingency_matrix.append((competitor, f"is {odds_ratio:.2f}x to deliver on time than {worst_carrier}"))
         # p_value = row['P_Value']
-        contingency_matrix.append(f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier}")
+        # contingency_matrix.append(f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier}")
 
-    # contingency_matrix = contingency_matrix
+    contingency_matrix = dict(contingency_matrix)
 
     # Step 4: Generate narrative via Sonnet
     narrative = generate_report_narrative(

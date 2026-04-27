@@ -605,8 +605,8 @@ def analyze_in_transit(df_intransit) -> dict:
 
     result = {
         "count": len(df_intransit),
-        "total_freight_value": round(float(df_intransit["FreightCost"].sum()), 2),
-        "avg_freight_cost": round(float(df_intransit["FreightCost"].mean()), 2),
+        "total_freight_value": round(float(df_intransit["FreightCost_USD"].sum()), 2),
+        "avg_freight_cost": round(float(df_intransit["FreightCost_USD"].mean()), 2),
     }
 
     # Carrier concentration — who's carrying your active loads?

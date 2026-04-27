@@ -2605,7 +2605,7 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
 
                 # --- Statistics ---
                 logireport.carrier_stats_json = carrier_stats
-                # logireport.driver_stats_json = driver_stats
+                logireport.driver_stats_json = json.dumps(driver_stats)
                 print(driver_stats)
                 logireport.route_stats_json = route_stats
                 logireport.contingency_analysis = contingency_matrix

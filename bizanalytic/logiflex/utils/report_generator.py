@@ -335,10 +335,11 @@ def generate_report_narrative(
     try:
         narrative = json.loads(cleaned)
     except json.JSONDecodeError as e:
-        return {
-            # "error": f"Failed to parse LLM response as JSON: {str(e)}",
-            "raw_response": cleaned,
-        }
+        return raw_text
+        # {
+        #     # "error": f"Failed to parse LLM response as JSON: {str(e)}",
+        #     "raw_response": cleaned,
+        # }
 
     # Add usage metadata
     narrative["_meta"] = {
@@ -501,8 +502,8 @@ def build_driver_stats(df) -> Dict[str, Any]:
         "drivers": sorted(drivers, key=lambda d: d["ontime_rate"], reverse=True),
         "total_drivers": len(drivers),
         "fleet_avg_ontime": round(work["is_ontime"].mean() * 100, 1),
-        "fleet_total_miles": round(work["Distance_Miles"].sum(), 0) if has_distance else None,
-        "fleet_avg_trip_length": round(work["Distance_Miles"].mean(), 1) if has_distance else None,
+        "fleet_total_miles": round(work["Distance_Miles"].sum(), 0) if has_distance else "None",
+        "fleet_avg_trip_length": round(work["Distance_Miles"].mean(), 1) if has_distance else "None",
         "fleet_total_shipments": len(work),
     }
 
@@ -564,11 +565,11 @@ def build_route_stats(df) -> Dict[str, Any]:
         "total_lanes": len(lanes),
         "fleet_avg_cost_per_mile": round(
             work["cost_per_mile"].dropna().mean(), 4
-        ) if has_distance else None,
+        ) if has_distance else "None",
         "fleet_median_cost_per_mile": round(
             work["cost_per_mile"].dropna().median(), 4
-        ) if has_distance else None,
-        "fleet_avg_distance": round(work["Distance_Miles"].mean(), 1) if has_distance else None,
+        ) if has_distance else "None",
+        "fleet_avg_distance": round(work["Distance_Miles"].mean(), 1) if has_distance else "None",
         "network_balance": network_balance,
     }
 

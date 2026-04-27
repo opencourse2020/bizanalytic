@@ -111,7 +111,7 @@ def clean_data(df_clean):
 
     # Split into three pools
     # df_completed = df_clean[df_clean["status_clean"].isin(["on-time", "late", "delivered", "delayed"])]
-    df_intransit = df_clean[df_clean["status_clean"].isin(["in-transit", "in transit", "pending", "en route"])]
+    df_intransit = df_clean[df_clean["DeliveryStatus"] == "in-transit"]
     df_unknown = df_clean[~df_clean.index.isin(delivery_data.index) & ~df_clean.index.isin(df_intransit.index)]
 
     # returns delivery_data (only delivered or delayed shipments) - and df_clean (includes all the shipments even in-transit)

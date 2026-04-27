@@ -157,11 +157,6 @@ COST ANOMALY DETECTION
 {json.dumps(cost_anomalies, indent=2, cls=NumpyEncoder)}
 
 ============================
-IN-TRANSIT ANALYSIS
-============================
-{json.dumps(in_transit_analysis, indent=2, cls=NumpyEncoder)}
-
-============================
 SAMPLE RAW DATA (first 5 rows for context)
 ============================
 {json.dumps(sample_data, indent=2)}
@@ -255,7 +250,6 @@ def generate_report_narrative(
         driver_stats: Dict[str, Any],
         route_stats: Dict[str, Any],
         contingency_analysis: Dict[str, Any],
-        in_transit_analysis: Dict[str, Any],
         sample_data: Dict[str, Any],
         api_key: str = None,
 ) -> Dict[str, Any]:
@@ -305,7 +299,6 @@ def generate_report_narrative(
         carrier_stats=carrier_stats,
         driver_stats=driver_stats,
         contingency_analysis=contingency_analysis,
-        in_transit_analysis=in_transit_analysis,
         route_stats=route_stats,
         sample_data=sample_data,
     )

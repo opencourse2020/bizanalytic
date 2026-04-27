@@ -18,6 +18,37 @@ from django.db import IntegrityError
 OPENAI_KEY = settings.OPENAI_KEY
 client = OpenAI(api_key=OPENAI_KEY)
 
+
+def normalize_delivery_status(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Normalizes the DeliveryStatus column to three clean categories:
+      - delivered   (from: on-time, delivered, on time)
+      - delayed     (from: late, delayed, overdue)
+      - in-transit  (from: in-transit, in transit, pending, en route)
+
+    Call this immediately after CSV parsing, before any analysis.
+    """
+    work = df.copy()
+    raw = work["DeliveryStatus"].str.strip().str.lower()
+
+    status_map = {
+        "on-time":    "delivered",
+        "on time":    "delivered",
+        "delivered":  "delivered",
+        "late":       "delayed",
+        "delayed":    "delayed",
+        "overdue":    "delayed",
+        "in-transit": "in-transit",
+        "in transit": "in-transit",
+        "pending":    "in-transit",
+        "en route":   "in-transit",
+    }
+
+    work["DeliveryStatus"] = raw.map(status_map).fillna("unknown")
+
+    return work
+
+
 # 1- Cleaning Data
 def clean_data(df_clean):
     # df_clean = pd.read_csv(report.routefile)
@@ -72,9 +103,19 @@ def clean_data(df_clean):
     df_clean['Date_ship'] = pd.to_datetime(df_clean['Date_ship'], errors='coerce')
     df_clean['Date_ship'].fillna(df_clean['Date_ship'].mode()[0], inplace=True)
 
+    # 5- Normalize delivery status
+    df_clean = normalize_delivery_status(df_clean)
+
     # 5- Remove In-Transit data
-    delivery_data = df_clean[df_clean['DeliveryStatus'].isin(['Delivered', 'Delayed'])]
-    return delivery_data
+    delivery_data = df_clean[df_clean['DeliveryStatus'].isin(['delivered', 'delayed'])]
+
+    # Split into three pools
+    # df_completed = df_clean[df_clean["status_clean"].isin(["on-time", "late", "delivered", "delayed"])]
+    df_intransit = df_clean[df_clean["status_clean"].isin(["in-transit", "in transit", "pending", "en route"])]
+    df_unknown = df_clean[~df_clean.index.isin(delivery_data.index) & ~df_clean.index.isin(df_intransit.index)]
+
+    # returns delivery_data (only delivered or delayed shipments) - and df_clean (includes all the shipments even in-transit)
+    return delivery_data, df_intransit, df_unknown
 
 
 # 2- Calculate KPis

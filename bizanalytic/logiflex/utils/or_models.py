@@ -242,7 +242,7 @@ def _carrier_allocation_fallback(df: pd.DataFrame) -> Dict[str, Any]:
     ).reset_index()
 
     df_ontime = df.copy()
-    df_ontime["is_ontime"] = df_ontime["DeliveryStatus"].str.strip() == "Delivered"
+    df_ontime["is_ontime"] = df_ontime["DeliveryStatus"].str.strip() == "delivered"
     ontime_rates = df_ontime.groupby("CarrierName")["is_ontime"].mean().reset_index()
     ontime_rates.columns = ["CarrierName", "ontime_rate"]
 

@@ -95,6 +95,7 @@ def build_report_prompt(
         carrier_stats: Dict[str, Any],
         driver_stats: Dict[str, Any],
         contingency_analysis: Dict[str, Any],
+        in_transit_analysis: Dict[str, Any],
         route_stats: Dict[str, Any],
         sample_data: Dict[str, Any],
 ) -> str:
@@ -154,6 +155,11 @@ LANE PROFITABILITY ANALYSIS
 COST ANOMALY DETECTION
 ============================
 {json.dumps(cost_anomalies, indent=2, cls=NumpyEncoder)}
+
+============================
+IN-TRANSIT ANALYSIS
+============================
+{json.dumps(in_transit_analysis, indent=2, cls=NumpyEncoder)}
 
 ============================
 SAMPLE RAW DATA (first 5 rows for context)
@@ -249,6 +255,7 @@ def generate_report_narrative(
         driver_stats: Dict[str, Any],
         route_stats: Dict[str, Any],
         contingency_analysis: Dict[str, Any],
+        in_transit_analysis: Dict[str, Any],
         sample_data: Dict[str, Any],
         api_key: str = None,
 ) -> Dict[str, Any]:
@@ -298,6 +305,7 @@ def generate_report_narrative(
         carrier_stats=carrier_stats,
         driver_stats=driver_stats,
         contingency_analysis=contingency_analysis,
+        in_transit_analysis=in_transit_analysis,
         route_stats=route_stats,
         sample_data=sample_data,
     )
@@ -366,8 +374,9 @@ def build_carrier_stats(df):
 
     work = df.copy()
     work["FreightCost_USD"] = pd.to_numeric(work["FreightCost_USD"], errors="coerce")
-    work["is_ontime"] = work["DeliveryStatus"].str.strip().str.lower() == "on-time"
+    work["is_ontime"] = work["DeliveryStatus"] == "delivered"
 
+    # work['OnTime'] = np.where(work['DeliveryStatus'] == 'Delivered', 1, 0)
     has_distance = "Distance_Miles" in work.columns
     has_fuel = "FuelCost_USD" in work.columns
     has_weight = "LoadWeight_lbs" in work.columns
@@ -442,7 +451,7 @@ def build_driver_stats(df) -> Dict[str, Any]:
 
     work = df.copy()
     work["FreightCost_USD"] = pd.to_numeric(work["FreightCost_USD"], errors="coerce")
-    work["is_ontime"] = work["DeliveryStatus"].str.strip().str.lower() == "on-time"
+    work["is_ontime"] = work["DeliveryStatus"] == "delivered"
 
     has_distance = "Distance_Miles" in work.columns
     has_fuel = "FuelCost_USD" in work.columns
@@ -514,7 +523,7 @@ def build_route_stats(df) -> Dict[str, Any]:
     work = df.copy()
     work["FreightCost_USD"] = pd.to_numeric(work["FreightCost_USD"], errors="coerce")
     work["lane"] = work["OriginCity"].str.strip() + " → " + work["DestinationCity"].str.strip()
-    work["is_ontime"] = work["DeliveryStatus"].str.strip().str.lower() == "on-time"
+    work["is_ontime"] = work["DeliveryStatus"] == "delivered"
 
     has_distance = "Distance_Miles" in work.columns
 
@@ -586,11 +595,66 @@ def build_sample_data(df, n_rows: int = 5) -> Dict[str, Any]:
     return sample.to_dict(orient="records")
 
 
+def analyze_in_transit(df_intransit) -> dict:
+    """
+    Analyzes currently in-transit shipments for real-time exposure.
+    No performance metrics — only operational awareness.
+    """
+    if len(df_intransit) == 0:
+        return {"count": 0}
+
+    result = {
+        "count": len(df_intransit),
+        "total_freight_value": round(float(df_intransit["FreightCost"].sum()), 2),
+        "avg_freight_cost": round(float(df_intransit["FreightCost"].mean()), 2),
+    }
+
+    # Carrier concentration — who's carrying your active loads?
+    if "CarrierName" in df_intransit.columns:
+        carrier_counts = df_intransit["CarrierName"].value_counts()
+        result["by_carrier"] = [
+            {"carrier": c, "shipments": int(n), "pct": round(n / len(df_intransit) * 100, 1)}
+            for c, n in carrier_counts.items()
+        ]
+        # Risk: if one carrier has >50% of in-transit, you're exposed
+        top_carrier_pct = carrier_counts.iloc[0] / len(df_intransit) * 100
+        result["concentration_risk"] = top_carrier_pct > 50
+        result["top_carrier"] = carrier_counts.index[0]
+        result["top_carrier_pct"] = round(top_carrier_pct, 1)
+
+    # Lane exposure — where are your active loads going?
+    if "OriginCity" in df_intransit.columns and "DestinationCity" in df_intransit.columns:
+        df_intransit = df_intransit.copy()
+        df_intransit["lane"] = (
+            df_intransit["OriginCity"].str.strip() + " → " +
+            df_intransit["DestinationCity"].str.strip()
+        )
+        lane_counts = df_intransit["lane"].value_counts()
+        result["by_lane"] = [
+            {"lane": l, "shipments": int(n)}
+            for l, n in lane_counts.head(5).items()
+        ]
+
+    # Driver exposure — who's on the road right now?
+    if "DriverName" in df_intransit.columns:
+        driver_counts = df_intransit["DriverName"].value_counts()
+        result["by_driver"] = [
+            {"driver": d, "active_shipments": int(n)}
+            for d, n in driver_counts.items()
+        ]
+
+    # Cost risk — flag any in-transit shipment already above
+    # the lane median from completed data
+    # (you'd pass the lane medians from completed analysis)
+
+    return result
+
+
 # =============================================================================
 # FULL PIPELINE: DataFrame → Report Narrative
 # =============================================================================
 # -> Dict[str, Any]
-def generate_full_report(df, api_key: str = None):
+def generate_full_report(df, df_in_transit, api_key: str = None):
     """
     End-to-end: takes a cleaned DataFrame, runs all models,
     and generates the complete report narrative.
@@ -629,6 +693,7 @@ def generate_full_report(df, api_key: str = None):
     route_stats = build_route_stats(df)
     sample_data = build_sample_data(df)
     contingency_analysis, worst_carrier = run_contingency_analysis(df)
+    in_transit_analysis = analyze_in_transit(df_in_transit)
 
     # contingency_matrix = ["contingency analysis based on on-time deliveries rate: "]
     contingency_matrix = []
@@ -656,6 +721,7 @@ def generate_full_report(df, api_key: str = None):
         driver_stats=driver_stats,
         route_stats=route_stats,
         contingency_analysis=contingency_matrix,
+        in_transit_analysis=in_transit_analysis,
         sample_data=sample_data,
         api_key=api_key,
     )

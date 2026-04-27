@@ -95,7 +95,6 @@ def build_report_prompt(
         carrier_stats: Dict[str, Any],
         driver_stats: Dict[str, Any],
         contingency_analysis: Dict[str, Any],
-        in_transit_analysis: Dict[str, Any],
         route_stats: Dict[str, Any],
         sample_data: Dict[str, Any],
 ) -> str:

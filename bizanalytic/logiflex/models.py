@@ -799,6 +799,10 @@ class FreightOpsReport(models.Model):
         default=dict, blank=True,
         help_text="Carrier contingency analysis",
     )
+    intransit_analysis = models.JSONField(
+        default=dict, blank=True,
+        help_text="in transit analysis",
+    )
     # =====================================================================
     # LLM-GENERATED NARRATIVE (from Sonnet — the prose sections)
     # =====================================================================

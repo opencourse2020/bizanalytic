@@ -45,7 +45,7 @@ from .utils.pre_process_datafile import *
 from .utils.local_analytics import *
 from .utils.report_helpers import *
 from .utils.prompts import SYSTEM_PROMPT, JSON_SCHEMA
-from .utils.report_generator import generate_full_report
+from .utils.report_generator import generate_full_report, analyze_in_transit
 # Create your views here.
 
 # Initiate variables
@@ -2501,6 +2501,9 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 df, df_in_transit, df_unkown = clean_data(dff)
                 df = calculate_kpis(df)
 
+            in_transit_analysis = analyze_in_transit(df_in_transit)
+            print(in_transit_analysis)
+            print("**************************************************************************")
             # Compute data fingerprint (abuse prevention)
             carriers = sorted(df["CarrierName"].dropna().unique().tolist())
             drivers = sorted(df["DriverName"].dropna().unique().tolist()) if "DriverName" in df.columns else []
@@ -2510,14 +2513,14 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
 
             logireport.data_fingerprint = fingerprint
             logireport.total_shipments = len(df)
-
+            logireport.intransit_analysis = in_transit_analysis
             logireport.save()
 
 
             # Generate report
             narrative, analysis, score, \
             carrier_stats, driver_stats, route_stats, contingency_matrix = \
-                generate_full_report(df, df_in_transit, api_key=settings.ANTHROPIC_API_KEY)
+                generate_full_report(df, api_key=settings.ANTHROPIC_API_KEY)
             # print(result)
             # Parse date range
             if "Date_ship" in df.columns:

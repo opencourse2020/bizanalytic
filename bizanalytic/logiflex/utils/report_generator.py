@@ -693,7 +693,7 @@ def generate_full_report(df, df_in_transit, api_key: str = None):
     route_stats = build_route_stats(df)
     sample_data = build_sample_data(df)
     contingency_analysis, worst_carrier = run_contingency_analysis(df)
-    in_transit_analysis = analyze_in_transit(df_in_transit)
+
 
     # contingency_matrix = ["contingency analysis based on on-time deliveries rate: "]
     contingency_matrix = []
@@ -721,7 +721,6 @@ def generate_full_report(df, df_in_transit, api_key: str = None):
         driver_stats=driver_stats,
         route_stats=route_stats,
         contingency_analysis=contingency_matrix,
-        in_transit_analysis=in_transit_analysis,
         sample_data=sample_data,
         api_key=api_key,
     )

@@ -2515,7 +2515,7 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
 
 
             # Generate report
-            narrative, analysis, score, carrier_stats, driver_stats, route_stats = generate_full_report(df, api_key=settings.ANTHROPIC_API_KEY)
+            narrative, analysis, score, carrier_stats, driver_stats, route_stats, contingency_matrix = generate_full_report(df, api_key=settings.ANTHROPIC_API_KEY)
             # print(result)
             # Parse date range
             if "Date_ship" in df.columns:
@@ -2603,6 +2603,7 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 # logireport.driver_stats_json = driver_stats
                 print(driver_stats)
                 logireport.route_stats_json = route_stats
+                logireport.contingency_analysis = contingency_matrix
 
                 # --- Summary counts ---
                 cs = carrier_stats

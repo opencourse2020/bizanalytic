@@ -660,7 +660,7 @@ def generate_full_report(df, api_key: str = None):
         api_key=api_key,
     )
 
-    return narrative, analysis, score, carrier_stats, driver_stats, route_stats
+    return narrative, analysis, score, carrier_stats, driver_stats, route_stats, contingency_matrix
 
 # {
 #         "narrative": narrative,

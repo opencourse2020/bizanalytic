@@ -785,7 +785,7 @@ class FreightOpsReport(models.Model):
     # =====================================================================
     carrier_stats_json = models.JSONField(
         default=dict, blank=True,
-        help_text="Carrier statistics including contingency analysis",
+        help_text="Carrier statistics",
     )
     driver_stats_json = models.JSONField(
         default=dict, blank=True,
@@ -795,7 +795,10 @@ class FreightOpsReport(models.Model):
         default=dict, blank=True,
         help_text="Route statistics with network balance analysis",
     )
-
+    contingency_analysis = models.JSONField(
+        default=dict, blank=True,
+        help_text="Carrier contingency analysis",
+    )
     # =====================================================================
     # LLM-GENERATED NARRATIVE (from Sonnet — the prose sections)
     # =====================================================================

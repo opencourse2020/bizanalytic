@@ -203,18 +203,18 @@ def run_contingency_analysis(delivery_data):
             [
                 # Competitor delivered
                 len(delivery_data[(delivery_data['CarrierName'] == competitor) &
-                                  (delivery_data['DeliveryStatus'] == 'Delivered')]),
+                                  (delivery_data['DeliveryStatus'] == 'delivered')]),
                 # Competitor delayed
                 len(delivery_data[(delivery_data['CarrierName'] == competitor) &
-                                  (delivery_data['DeliveryStatus'] == 'Delayed')])
+                                  (delivery_data['DeliveryStatus'] == 'delayed')])
             ],
             [
                 # Worst carrier delivered
                 len(delivery_data[(delivery_data['CarrierName'] == worst_carrier) &
-                                  (delivery_data['DeliveryStatus'] == 'Delivered')]),
+                                  (delivery_data['DeliveryStatus'] == 'delivered')]),
                 # Worst carrier delayed
                 len(delivery_data[(delivery_data['CarrierName'] == worst_carrier) &
-                                  (delivery_data['DeliveryStatus'] == 'Delayed')])
+                                  (delivery_data['DeliveryStatus'] == 'delayed')])
             ]
         ]
 

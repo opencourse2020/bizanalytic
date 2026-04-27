@@ -654,7 +654,7 @@ def analyze_in_transit(df_intransit) -> dict:
 # FULL PIPELINE: DataFrame → Report Narrative
 # =============================================================================
 # -> Dict[str, Any]
-def generate_full_report(df, df_in_transit, api_key: str = None):
+def generate_full_report(df, api_key: str = None):
     """
     End-to-end: takes a cleaned DataFrame, runs all models,
     and generates the complete report narrative.

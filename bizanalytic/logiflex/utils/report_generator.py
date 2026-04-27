@@ -242,6 +242,7 @@ def generate_report_narrative(
         carrier_stats: Dict[str, Any],
         driver_stats: Dict[str, Any],
         route_stats: Dict[str, Any],
+        contingency_analysis,
         sample_data: Dict[str, Any],
         api_key: str = None,
 ) -> Dict[str, Any]:
@@ -422,7 +423,7 @@ def build_carrier_stats(df) -> Dict[str, Any]:
         "total_carriers": len(carriers),
         "fleet_avg_ontime": round(work["is_ontime"].mean() * 100, 1),
         "fleet_avg_cost": round(work["FreightCost_USD"].mean(), 2),
-        "contingency_analysis": contingency,
+        # "contingency_analysis": contingency,
     }
 
 
@@ -606,6 +607,7 @@ def generate_full_report(df, api_key: str = None):
     # Import the OR models
     from .or_models import run_phase1_analysis
     from .fleet_score import compute_fleet_score
+    from .local_analytics import run_contingency_analysis
 
     # Step 1: Run all OR models
     analysis = run_phase1_analysis(df)
@@ -613,11 +615,23 @@ def generate_full_report(df, api_key: str = None):
     # Step 2: Compute Fleet Health Score
     score = compute_fleet_score(df, phase1_results=analysis)
 
-    # Step 3: Build statistics summaries
+    # Step 3: Build statistics summaries and contingency_analysis
     carrier_stats = build_carrier_stats(df)
     driver_stats = build_driver_stats(df)
     route_stats = build_route_stats(df)
     sample_data = build_sample_data(df)
+    contingency_analysis, worst_carrier = run_contingency_analysis(df)
+
+    contingency_matrix = ["contingency analysis based on on time deliveries rate: "]
+    contingency_matrix.append(f"Carrier with lowest on-time rate: {worst_carrier}")
+    for idx, row in contingency_analysis.iterrows():
+        print("contingency_matrix:", contingency_matrix)
+        competitor = row['Competitor']
+        odds_ratio = row['Odds_Ratio']
+        # p_value = row['P_Value']
+        contingency_matrix.append(f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier}")
+
+    # contingency_matrix = contingency_matrix
 
     # Step 4: Generate narrative via Sonnet
     narrative = generate_report_narrative(
@@ -630,6 +644,7 @@ def generate_full_report(df, api_key: str = None):
         carrier_stats=carrier_stats,
         driver_stats=driver_stats,
         route_stats=route_stats,
+        contingency_analysis=contingency_matrix,
         sample_data=sample_data,
         api_key=api_key,
     )

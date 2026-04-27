@@ -2599,7 +2599,7 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 logireport.llm_cost_usd = meta.get("estimated_cost_usd", 0)
 
                 # --- Statistics ---
-                # logireport.carrier_stats_json = carrier_stats
+                logireport.carrier_stats_json = carrier_stats
                 # logireport.driver_stats_json = driver_stats
                 # logireport.route_stats_json = route_stats
 

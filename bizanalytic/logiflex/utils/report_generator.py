@@ -618,7 +618,7 @@ def analyze_in_transit(df_intransit) -> dict:
         ]
         # Risk: if one carrier has >50% of in-transit, you're exposed
         top_carrier_pct = carrier_counts.iloc[0] / len(df_intransit) * 100
-        result["concentration_risk"] = top_carrier_pct > 50
+        result["concentration_risk"] = str(top_carrier_pct > 50)
         result["top_carrier"] = carrier_counts.index[0]
         result["top_carrier_pct"] = round(top_carrier_pct, 1)
 

@@ -2589,7 +2589,7 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 # --- Narrative ---
                 # try:
                 #     narrative = json.loads(narrative)
-                logireport.narrative_json = narrative
+
                 logireport.money_headline_sub = narrative.get("money_headline_sub", "")
                 logireport.carriers_summary = narrative.get("carriers_summary", "")
                 logireport.carriers_detailed = narrative.get("carriers_detailed", "")
@@ -2598,6 +2598,7 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 logireport.routes_summary = narrative.get("routes_summary", "")
                 logireport.routes_detailed = narrative.get("routes_detailed", "")
                 logireport.improvement_scenario_text = narrative.get("improvement_scenario", "")
+
                 # except json.JSONDecodeError as e:
                 #     logireport.llm_result = narrative
 
@@ -2607,6 +2608,8 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 logireport.llm_input_tokens = meta.get("input_tokens", 0)
                 logireport.llm_output_tokens = meta.get("output_tokens", 0)
                 logireport.llm_cost_usd = meta.get("estimated_cost_usd", 0)
+                narrative = json.dumps(narrative)
+                logireport.narrative_json = narrative
                 logireport.save()
                 # --- Statistics ---
                 logireport.carrier_stats_json = carrier_stats

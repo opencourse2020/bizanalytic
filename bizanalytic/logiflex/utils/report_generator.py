@@ -325,7 +325,7 @@ def generate_report_narrative(
     print("Cleaned Result start here")
     print("*********************************************************************************")
     print("*********************************************************************************")
-    # print(cleaned)
+    print(raw_text)
     # nt = json.loads(cleaned)
     # contains_bool = has_bool(nt)
     # print(f"Contains boolean: {contains_bool}")

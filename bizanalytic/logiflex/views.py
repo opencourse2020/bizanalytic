@@ -2502,8 +2502,8 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 df = calculate_kpis(df)
 
             in_transit_analysis = analyze_in_transit(df_in_transit)
-            print(in_transit_analysis)
-            print("**************************************************************************")
+            # print(in_transit_analysis)
+            # print("**************************************************************************")
             # Compute data fingerprint (abuse prevention)
             carriers = sorted(df["CarrierName"].dropna().unique().tolist())
             drivers = sorted(df["DriverName"].dropna().unique().tolist()) if "DriverName" in df.columns else []
@@ -2586,15 +2586,19 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 logireport.has_delivery_time = dq.get("has_delivery_time", False)
 
                 # --- Narrative ---
-                logireport.narrative_json = narrative
-                logireport.money_headline_sub = narrative.get("money_headline_sub", "")
-                logireport.carriers_summary = narrative.get("carriers_summary", "")
-                logireport.carriers_detailed = narrative.get("carriers_detailed", "")
-                logireport.drivers_summary = narrative.get("drivers_summary", "")
-                logireport.drivers_detailed = narrative.get("drivers_detailed", "")
-                logireport.routes_summary = narrative.get("routes_summary", "")
-                logireport.routes_detailed = narrative.get("routes_detailed", "")
-                logireport.improvement_scenario_text = narrative.get("improvement_scenario", "")
+                try:
+                    narrative = json.loads(narrative)
+                    logireport.narrative_json = narrative
+                    logireport.money_headline_sub = narrative.get("money_headline_sub", "")
+                    logireport.carriers_summary = narrative.get("carriers_summary", "")
+                    logireport.carriers_detailed = narrative.get("carriers_detailed", "")
+                    logireport.drivers_summary = narrative.get("drivers_summary", "")
+                    logireport.drivers_detailed = narrative.get("drivers_detailed", "")
+                    logireport.routes_summary = narrative.get("routes_summary", "")
+                    logireport.routes_detailed = narrative.get("routes_detailed", "")
+                    logireport.improvement_scenario_text = narrative.get("improvement_scenario", "")
+                except json.JSONDecodeError as e:
+                    logireport.llm_result = narrative
 
                 # --- LLM Cost ---
                 meta = narrative.get("_meta", {})

@@ -2615,11 +2615,12 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 # --- Statistics ---
                 logireport.carrier_stats_json = carrier_stats
                 logireport.save()
-                print(driver_stats)
+                # print(driver_stats)
                 # if not isinstance(driver_stats, dict):
                 #     driver_stats = json.dumps(dict(driver_stats))
                 # else:
                 driver_stats = json.dumps(driver_stats, default=convert_to_python_types)
+                print(driver_stats)
                 logireport.driver_stats_json = driver_stats
                 logireport.save()
                 logireport.route_stats_json = route_stats

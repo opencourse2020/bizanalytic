@@ -35,10 +35,46 @@ def has_bool(obj):
 
 
 def convert_to_python_types(obj):
-    if hasattr(obj, 'item'):  # NumPy scalars have .item() method
-        return obj.item()
+    # Handle integer types
+    if isinstance(obj, (np.integer, np.int8, np.int16, np.int32, np.int64,
+                        np.uint8, np.uint16, np.uint32, np.uint64)):
+        return int(obj)
+
+    # Handle float types
+    elif isinstance(obj, (np.floating, np.float16, np.float32, np.float64)):
+        return float(obj)
+
+    # Handle complex types
+    elif isinstance(obj, (np.complex64, np.complex128, np.complex256)):
+        return complex(obj)
+
+    # Handle boolean types
+    elif isinstance(obj, (np.bool_)):
+        return bool(obj)
+
+    # Handle string/unicode types
+    elif isinstance(obj, (np.str_, np.unicode_)):
+        return str(obj)
+
+    # Handle bytes
+    elif isinstance(obj, (np.bytes_)):
+        return obj.decode('utf-8')
+
+    # Handle datetime64 and timedelta64
+    elif isinstance(obj, np.datetime64):
+        return obj.astype(str)  # or use: obj.item().isoformat()
+    elif isinstance(obj, np.timedelta64):
+        return float(obj / np.timedelta64(1, 's'))  # convert to seconds as float
+
+    # Handle arrays
     elif isinstance(obj, np.ndarray):
         return obj.tolist()
+
+    # Handle scalar types (generic fallback)
+    elif np.isscalar(obj):
+        return obj.item()
+
+    # Return unchanged for Python native types
     return obj
 
 

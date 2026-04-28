@@ -35,10 +35,8 @@ def has_bool(obj):
 
 
 def convert_to_python_types(obj):
-    if isinstance(obj, (np.integer, np.int64)):
-        return int(obj)
-    elif isinstance(obj, (np.floating, np.float64)):
-        return float(obj)
+    if hasattr(obj, 'item'):  # NumPy scalars have .item() method
+        return obj.item()
     elif isinstance(obj, np.ndarray):
         return obj.tolist()
     return obj

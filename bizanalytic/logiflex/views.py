@@ -45,7 +45,7 @@ from .utils.pre_process_datafile import *
 from .utils.local_analytics import *
 from .utils.report_helpers import *
 from .utils.prompts import SYSTEM_PROMPT, JSON_SCHEMA
-from .utils.report_generator import generate_full_report, analyze_in_transit
+from .utils.report_generator import generate_full_report, analyze_in_transit, convert_to_python_types
 # Create your views here.
 
 # Initiate variables
@@ -2616,10 +2616,10 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 logireport.carrier_stats_json = carrier_stats
                 logireport.save()
                 print(driver_stats)
-                if not isinstance(driver_stats, dict):
-                    driver_stats = json.dumps(dict(driver_stats))
-                else:
-                    driver_stats = json.dumps(driver_stats)
+                # if not isinstance(driver_stats, dict):
+                #     driver_stats = json.dumps(dict(driver_stats))
+                # else:
+                driver_stats = json.loads(json.dumps(driver_stats, default=convert_to_python_types))
                 logireport.driver_stats_json = driver_stats
                 logireport.save()
                 logireport.route_stats_json = route_stats

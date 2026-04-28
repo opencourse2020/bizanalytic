@@ -34,6 +34,16 @@ def has_bool(obj):
     return False
 
 
+def convert_to_python_types(obj):
+    if isinstance(obj, (np.integer, np.int64)):
+        return int(obj)
+    elif isinstance(obj, (np.floating, np.float64)):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    return obj
+
+
 class NumpyEncoder(json.JSONEncoder):
     """Handles numpy types that default json.dumps can't serialize."""
 

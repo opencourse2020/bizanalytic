@@ -335,11 +335,10 @@ def generate_report_narrative(
     try:
         narrative = json.loads(cleaned)
     except json.JSONDecodeError as e:
-        return raw_text
-        # {
-        #     # "error": f"Failed to parse LLM response as JSON: {str(e)}",
-        #     "raw_response": cleaned,
-        # }
+        return {
+            # "error": f"Failed to parse LLM response as JSON: {str(e)}",
+            "raw_response": raw_text,
+        }
 
     # Add usage metadata
     narrative["_meta"] = {

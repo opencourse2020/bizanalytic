@@ -2607,14 +2607,17 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 logireport.llm_input_tokens = meta.get("input_tokens", 0)
                 logireport.llm_output_tokens = meta.get("output_tokens", 0)
                 logireport.llm_cost_usd = meta.get("estimated_cost_usd", 0)
-
+                logireport.save()
                 # --- Statistics ---
                 logireport.carrier_stats_json = carrier_stats
-                logireport.driver_stats_json = json.dumps(driver_stats)
+                logireport.save()
                 print(driver_stats)
+                logireport.driver_stats_json = json.dumps(driver_stats)
+                logireport.save()
                 logireport.route_stats_json = route_stats
+                logireport.save()
                 logireport.contingency_analysis = contingency_matrix
-
+                logireport.save()
                 # --- Summary counts ---
                 cs = carrier_stats
                 ds = driver_stats

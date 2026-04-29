@@ -2659,7 +2659,7 @@ class FullAdvancedReportView(TemplateView):
         pu = self.kwargs.get("pk")
         report = FreightOpsReport.objects.filter(id=pu).first()
         if report:
-            kwargs["report"] = report.report_text
+            kwargs["report"] = report
             kwargs["top_actions"] = report.get_top_actions()
             kwargs["week_actions"] = report.get_week_actions()
             kwargs["carrier_insights"] = report.get_carriers_insights()

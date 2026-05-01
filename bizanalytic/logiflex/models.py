@@ -634,7 +634,7 @@ class FreightOpsReport(models.Model):
     uploaded_file = ContentTypeRestrictedFileField(upload_to=datafiles_directory_path,
                                                content_types=['application/vnd.ms-excel', 'text/csv',
                                                               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', ],
-                                               max_upload_size=5242880, blank=True, null=True)
+                                               max_upload_size=5242880, blank=True, null=True, max_length=255)
     file_name = models.CharField(max_length=255, blank=True)
     file_extension = models.CharField(max_length=10, null=True, blank=True)
     total_rows = models.PositiveIntegerField(default=0)

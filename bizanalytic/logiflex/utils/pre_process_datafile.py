@@ -956,15 +956,15 @@ def routefile_validator(reportid, routefilename):
     data.update(clean_df['DestinationCity'])
     data['Diesel_Price'] = dieselprices
     print("*********************************  Data  Information      **********************************")
-    print(data.head(5))
-    print(data.columns)
+    # print(data.head(5))
+    # print(data.columns)
     # data.drop('Date', axis=1, inplace=True)
     filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(report.client.id, report.id, routefilename)
     print("filename: ", filename)
     filepath = settings.MEDIA_ROOT + "/" + filename
 
     data.to_csv(filepath, index=False)
-    path = Path(filepath)
+    # path = Path(filepath)
     # with path.open(mode="rb") as f:
     #     # Wrap in Django File object
     #     new_routefile = File(f, name=path.name)

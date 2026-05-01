@@ -2527,6 +2527,9 @@ class FullAdvancedReportView(TemplateView):
 
             df = pd.read_csv(report.uploaded_file)
             df = clean_data(df)
+            print(df.head(5))
+            print(df.info())
+            print(df.columns)
             df = calculate_kpis(df)
 
             # generate carrier, driver and route stats

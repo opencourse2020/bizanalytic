@@ -66,7 +66,7 @@ def clean_data(df_clean):
     # print(distinct_CarrierName)
 
     # DriverName
-    df_clean['DriverName'].fillna('Unknown', inplace=True)
+    df_clean.fillna({'DriverName':'Unknown'}, inplace=True)
     distinct_DriverName = df_clean['DriverName'].unique()
     # print("DriverName")
     # print(distinct_DriverName)

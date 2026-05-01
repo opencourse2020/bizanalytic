@@ -924,10 +924,10 @@ def routefile_validator(reportid, routefilename):
     report = FreightOpsReport.objects.filter(pk=reportid).first()
     # print(us_cities.head(5))
     # Check file extension and Load sample data
-    if report.routefile_ext == ".csv":
-        data = pd.read_csv(report.routefile)
-    elif report.routefile_ext == ".xlsx" or report.routefile_ext == ".xls":
-        data = pd.read_excel(report.routefile)
+    if report.file_extension == ".csv":
+        data = pd.read_csv(report.uploaded_file)
+    elif report.file_extension == ".xlsx" or report.file_extension == ".xls":
+        data = pd.read_excel(report.uploaded_file)
 
     """Test the validator with sample data"""
     validator = ColumnNameValidator()

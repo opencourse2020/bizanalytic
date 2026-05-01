@@ -2611,7 +2611,7 @@ class FullAdvancedReportView(TemplateView):
             kwargs["savings_breakdown"] = report.savings_breakdown
             kwargs["network_balance"] = report.get_network_balance()
 
-            df = pd.read_csv(report.routefile)
+            df = pd.read_csv(report.uploaded_file)
 
             # generate carrier, driver and route stats
             carrier_stats = report.carrier_statdata_json

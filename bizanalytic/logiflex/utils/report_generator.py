@@ -728,7 +728,7 @@ def generate_full_report(df, contingency_matrix, api_key: str = None):
     driver_stats = build_driver_stats(df)
     route_stats = build_route_stats(df)
     sample_data = build_sample_data(df)
-
+    sample_data = json.loads(json.dumps(sample_data, default=convert_to_python_types))
 
     # Step 4: Generate narrative via Sonnet
     narrative = generate_report_narrative(

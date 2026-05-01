@@ -2530,6 +2530,8 @@ class FullAdvancedReportView(TemplateView):
             print(df.head(5))
             print(df.info())
             print(df.columns)
+            print(df['FuelCost_USD'].dtype)
+            print(df['Distance_Miles'].dtype)
             df = calculate_kpis(df)
 
             # generate carrier, driver and route stats

@@ -2527,7 +2527,7 @@ class FullAdvancedReportView(TemplateView):
 
             df = pd.read_csv(report.uploaded_file)
             print(df)
-            df = clean_data(df)
+            df, df_intransit, df_unknown = clean_data(df)
             print(df)
             # print(df.head(5))
             # print(df.info())

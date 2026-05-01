@@ -10,6 +10,8 @@ from django.conf import settings
 from celery import shared_task
 from bizanalytic.logiflex.models import *
 from .local_analytics import *
+from pathlib import Path
+from django.core.files import File
 
 staticfolder = settings.STATIC_ROOT
 
@@ -953,13 +955,19 @@ def routefile_validator(reportid, routefilename):
     data.update(clean_df['OriginCity'])
     data.update(clean_df['DestinationCity'])
     data['Diesel_Price'] = dieselprices
+    print("*********************************  Data  Information      **********************************")
     print(data.head(5))
     print(data.columns)
     # data.drop('Date', axis=1, inplace=True)
     filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(report.client.id, report.id, routefilename)
     print("filename: ", filename)
     filepath = settings.MEDIA_ROOT + "/" + filename
-    # f = open(filepath, 'w')
-    data.to_csv(filepath, index=False)
 
+    data.to_csv(filepath, index=False)
+    path = Path(filepath)
+    with path.open(mode="rb") as f:
+        # Wrap in Django File object
+        new_routefile = File(f, name=path.name)
+
+    report.uploaded_file.save(path.name, new_routefile, save=True)
     return data

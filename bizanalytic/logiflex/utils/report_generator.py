@@ -22,7 +22,7 @@ import json
 import numpy as np
 import anthropic
 from typing import Dict, Any
-
+from decimal import Decimal
 
 def has_bool(obj):
     if isinstance(obj, bool):
@@ -40,8 +40,12 @@ def convert_to_python_types(obj):
                         np.uint8, np.uint16, np.uint32, np.uint64)):
         return int(obj)
 
+    # Handle Decimal types
+    elif isinstance(obj, Decimal):
+        return float(obj)
+
     # Handle float types
-    elif isinstance(obj, (np.floating, np.float16, np.float32, np.float64)):
+    elif isinstance(obj, (np.floating, np.float16, np.float32, np.float64, )):
         return float(obj)
 
     # Handle complex types

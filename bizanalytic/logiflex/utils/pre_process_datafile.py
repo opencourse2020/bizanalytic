@@ -965,9 +965,10 @@ def routefile_validator(reportid, routefilename):
 
     data.to_csv(filepath, index=False)
     path = Path(filepath)
-    with path.open(mode="rb") as f:
-        # Wrap in Django File object
-        new_routefile = File(f, name=path.name)
-        report.uploaded_file = filename
-        report.save()
+    # with path.open(mode="rb") as f:
+    #     # Wrap in Django File object
+    #     new_routefile = File(f, name=path.name)
+    report.uploaded_file = filename
+    report.save()
+
     return data

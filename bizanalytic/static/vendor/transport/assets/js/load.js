@@ -192,7 +192,7 @@ $("#generate_full_rp").click(function (){
                                     $("#message_body").html(message);
                                     a.show()
                                     if (rid !== null){
-                                        window.location.href = "https://bizanalytic.com/logiflex/reports/detail/" + rid + "/";
+                                        window.location.href = "https://bizanalytic.com/logiflex/reports/advancedreportdetail/" + rid + "/";
                                     }
                                 }else{
                                     var f = $("#toast_failreport");

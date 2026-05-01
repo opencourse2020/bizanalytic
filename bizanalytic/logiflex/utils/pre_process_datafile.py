@@ -968,6 +968,5 @@ def routefile_validator(reportid, routefilename):
     with path.open(mode="rb") as f:
         # Wrap in Django File object
         new_routefile = File(f, name=path.name)
-
-    report.uploaded_file.save(path.name, new_routefile, save=True)
+        report.uploaded_file.save(path.name, new_routefile, save=True)
     return data

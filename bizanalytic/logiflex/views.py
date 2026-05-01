@@ -2617,6 +2617,7 @@ class FullAdvancedReportView(TemplateView):
             kwargs["network_balance"] = report.get_network_balance()
 
             df = pd.read_csv(report.uploaded_file)
+            df = clean_data(df)
             df = calculate_kpis(df)
 
             # generate carrier, driver and route stats

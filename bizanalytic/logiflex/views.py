@@ -2526,12 +2526,14 @@ class FullAdvancedReportView(TemplateView):
             kwargs["network_balance"] = report.get_network_balance()
 
             df = pd.read_csv(report.uploaded_file)
+            print(df)
             df = clean_data(df)
-            print(df.head(5))
-            print(df.info())
-            print(df.columns)
-            print(df['FuelCost_USD'].dtype)
-            print(df['Distance_Miles'].dtype)
+            print(df)
+            # print(df.head(5))
+            # print(df.info())
+            # print(df.columns)
+            # print(df['FuelCost_USD'].dtype)
+            # print(df['Distance_Miles'].dtype)
             df = calculate_kpis(df)
 
             # generate carrier, driver and route stats

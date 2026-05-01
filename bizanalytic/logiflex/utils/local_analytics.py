@@ -60,11 +60,13 @@ def clean_data(df_clean):
 
     # 2- Clean and prepare categorical data columns
     # CarrierName
+    df_clean['CarrierName'].fillna('Unknown', inplace=True)
     distinct_CarrierName = df_clean['CarrierName'].unique()
     # print("CarrierName")
     # print(distinct_CarrierName)
 
     # DriverName
+    df_clean['DriverName'].fillna('Unknown', inplace=True)
     distinct_DriverName = df_clean['DriverName'].unique()
     # print("DriverName")
     # print(distinct_DriverName)

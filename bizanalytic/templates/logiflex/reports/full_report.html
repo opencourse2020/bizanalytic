@@ -190,8 +190,9 @@ All classes match freightops-report-template.html exactly.
   {% endwith %}
 
   {# Chart area — your existing chart.js renders here #}
+<div class="top-actions-title">Carrier Cost vs. Reliability Scatter Chart</div>
   <div class="chart-area" id="carrierChart">
-    <canvas id="carrierChartCanvas"></canvas>
+    <div id="CarrierCostReliabilityChart" style="width: 600px"></div>
   </div>
 
   {# Executive summary (default view) #}
@@ -272,8 +273,9 @@ All classes match freightops-report-template.html exactly.
   {% endwith %}
 
   {# Chart area #}
+<div class="top-actions-title">Drivers Productivity Matrix: On-Time Rate Vs. MPG Vs. Speed</div>
   <div class="chart-area" id="driverChart">
-    <canvas id="driverChartCanvas"></canvas>
+    <div id="DriverMpgOnTime" style="width: 600px"></div>
   </div>
 
   {# Executive summary (default view) #}
@@ -385,8 +387,9 @@ All classes match freightops-report-template.html exactly.
   {% endwith %}
 
   {# Chart area #}
+<div class="top-actions-title">Routes Cost Efficiency Heatmap</div>
   <div class="chart-area" id="routeChart">
-    <canvas id="routeChartCanvas"></canvas>
+    <div id="RouteHeatMap" style="width: 800px"></div>
   </div>
 
   {# Executive summary #}
@@ -527,6 +530,45 @@ All classes match freightops-report-template.html exactly.
 
 
 {% block report_scripts %}
+
+<script src={% static "vendor/transport/assets/js/jquery-3.7.1.min.js" %}></script>
+    <script src={% static "assets/plugins/apexcharts/distro/apexcharts.min.js" %}></script>
+    <script src={% static "assets/plugins/Danfo/bundle.min.js" %}></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+    <script src={% static "assets/js/pages/sample_apex_charts.js" %}></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+        /* Controller
+    ------------------------------------------------ */
+        $(document).ready(function() {
+
+            full_df = {{ carrierstats|safe }};
+            df_driver = {{ driverstats|safe }};
+            heatmap_values = {{ heatmapvalues|safe }};
+
+            costpermile = {{ costmile|safe }};
+            costmiledriver = {{ costmiledriver|safe }},
+            fleetscore = 41;
+
+            dfcostdirver = new dfd.DataFrame(costmiledriver);
+            driver_df = dfcostdirver.groupby(["DriverName"]);
+
+            driver_df.print()
+
+            handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, fleetscore);
+
+            $(document).on('theme-reload', function() {
+                if (costpermile !== "0") {
+                    $('#CarrierCostReliabilityChart, #CarrierCostPerMile, #DriverMpgOnTime').empty();
+                }else {
+                    $('#CarrierCostReliabilityChart, #DriverMpgOnTime').empty();
+                }
+
+                handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values);
+            });
+        });
+    </script>
 <script>
 /* =================================================================
    DETAIL SECTION TOGGLE
@@ -588,4 +630,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+
+
+
 {% endblock report_scripts %}

@@ -2611,4 +2611,38 @@ class FullAdvancedReportView(TemplateView):
             kwargs["savings_breakdown"] = report.savings_breakdown
             kwargs["network_balance"] = report.get_network_balance()
 
+            df = pd.read_csv(report.routefile)
+
+            # generate carrier, driver and route stats
+            carrier_stats = report.carrier_statdata_json
+            carrier_stats = pd.DataFrame(carrier_stats)
+            carrier_stats = carrier_stats.reset_index()
+            carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
+            kwargs["carrierstats"] = carrier_stats
+
+            driver_stats = report.driver_statdata_json
+            driver_stats = pd.DataFrame(driver_stats)
+            driver_stats = driver_stats.reset_index()
+            driver_stats = json.loads(driver_stats.to_json(orient='records'))
+            kwargs["driverstats"] = driver_stats
+
+            # Routes Heatmap data
+            route_stats = report.route_statdata_json
+            route_stats = pd.DataFrame(route_stats)
+            route_stats = route_stats.reset_index()
+            heatmap_values = heatmap_data(route_stats)
+            kwargs["heatmapvalues"] = heatmap_values
+
+            # Carrier Cost Per Mile Analysis
+            cost_mile = df[['CarrierName', 'CostPerMile']]
+            cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)
+            cost_mile = json.loads(cost_mile.to_json(orient='records'))
+            kwargs["costmile"] = cost_mile
+
+            # Driver Cost Per Mile Analysis
+            cost_mile_driver = df[['DriverName', 'CostPerMile']]
+            cost_mile_driver["CostPerMile"] = cost_mile_driver["CostPerMile"].round(4)
+            cost_mile_driver = json.loads(cost_mile_driver.to_json(orient='records'))
+            kwargs["costmiledriver"] = cost_mile_driver
+
         return super(FullAdvancedReportView, self).get_context_data(**kwargs)

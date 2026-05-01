@@ -829,6 +829,7 @@ def test_validator(reportid, routefilename):
 
 
     sample_dates = data['Date_ship']
+    print(sample_dates)
     date_results = date_validator.validate_date_column(sample_dates, 'TestDate')
     date_report = date_validator.print_date_validation_report(date_results)
 
@@ -952,7 +953,8 @@ def routefile_validator(reportid, routefilename):
     data.update(clean_df['OriginCity'])
     data.update(clean_df['DestinationCity'])
     data['Diesel_Price'] = dieselprices
-
+    print(data.head(5))
+    print(data.columns)
     # data.drop('Date', axis=1, inplace=True)
     filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(report.client.id, report.id, routefilename)
     print("filename: ", filename)

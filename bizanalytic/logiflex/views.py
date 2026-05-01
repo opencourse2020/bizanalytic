@@ -16,6 +16,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 import hashlib
 import time
+from io import StringIO
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
@@ -2387,54 +2388,54 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 servicepayment.mark_advanced_report_used()
 
             start_time = time.time()
-            extension_ok = True
-            if ext == ".csv":
-                dff = pd.read_csv(logireport.uploaded_file)
-            elif ext == ".xlsx" or ext == ".xls":
-                dff = pd.read_excel(logireport.uploaded_file)
-            else:
-                extension_ok = False
-
+            # extension_ok = True
+            # if ext == ".csv":
+            #     dff = pd.read_csv(logireport.uploaded_file)
+            # elif ext == ".xlsx" or ext == ".xls":
+            #     dff = pd.read_excel(logireport.uploaded_file)
+            # else:
+            #     extension_ok = False
+            dff = routefile_validator(logireport.id, logireport.file_name)
             validator = ColumnNameValidator()
             date_validator = DateValidator()
 
-            test_columns = dff.columns
-            results = validator.validate_and_correct_columns(dff)
-            column_report = validator.print_validation_report(results)
-
-            sample_dates = dff['Date_ship']
-            date_results = date_validator.validate_date_column(sample_dates, 'TestDate')
-            date_report = date_validator.print_date_validation_report(date_results)
-
-            orig_cities = dff[['OriginCity', 'DestinationCity']]
-            uscities = City.objects.all().values()
-            us_cities = pd.DataFrame(uscities)
-            usstates = State.objects.all().values()
-            us_states = pd.DataFrame(usstates)
-            gasprices = GasPriceState.objects.all().values()
-            state_diesel_price = pd.DataFrame(gasprices)
-            normalizer = CityStateNormalizer(orig_cities, us_cities, us_states, state_diesel_price)
-            clean_df, review_df, misscities_origin, missgstates_origin, misscities_destin, missgstates_destin, flags, dieselprices = normalizer.normalize()
-
-            dff.update(clean_df['OriginCity'])
-            dff.update(clean_df['DestinationCity'])
-            dff['Diesel_Price'] = dieselprices
-            dff['Diesel_Price'] = dff['Diesel_Price'].astype(float)
-
-            # Test date fixing
-            fixed_dates, fix_report = date_validator.fix_date_format(sample_dates, '%Y-%m-%d')
-
-            filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(logireport.client.id,
-                                                                                     logireport.id,
-                                                                                     logireport.file_name)
-            # print("filename: ", filename)
-            filepath = settings.MEDIA_ROOT + "/" + filename
-            # f = open(filepath, 'w')
-            dff.to_csv(filepath, index=False)
-
-            if extension_ok:
-                df, df_in_transit, df_unkown = clean_data(dff)
-                df = calculate_kpis(df)
+            # test_columns = dff.columns
+            # results = validator.validate_and_correct_columns(dff)
+            # column_report = validator.print_validation_report(results)
+            #
+            # sample_dates = dff['Date_ship']
+            # date_results = date_validator.validate_date_column(sample_dates, 'TestDate')
+            # date_report = date_validator.print_date_validation_report(date_results)
+            #
+            # orig_cities = dff[['OriginCity', 'DestinationCity']]
+            # uscities = City.objects.all().values()
+            # us_cities = pd.DataFrame(uscities)
+            # usstates = State.objects.all().values()
+            # us_states = pd.DataFrame(usstates)
+            # gasprices = GasPriceState.objects.all().values()
+            # state_diesel_price = pd.DataFrame(gasprices)
+            # normalizer = CityStateNormalizer(orig_cities, us_cities, us_states, state_diesel_price)
+            # clean_df, review_df, misscities_origin, missgstates_origin, misscities_destin, missgstates_destin, flags, dieselprices = normalizer.normalize()
+            #
+            # dff.update(clean_df['OriginCity'])
+            # dff.update(clean_df['DestinationCity'])
+            # dff['Diesel_Price'] = dieselprices
+            # dff['Diesel_Price'] = dff['Diesel_Price'].astype(float)
+            #
+            # # Test date fixing
+            # fixed_dates, fix_report = date_validator.fix_date_format(sample_dates, '%Y-%m-%d')
+            #
+            # filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(logireport.client.id,
+            #                                                                          logireport.id,
+            #                                                                          logireport.file_name)
+            # # print("filename: ", filename)
+            # filepath = settings.MEDIA_ROOT + "/" + filename
+            # # f = open(filepath, 'w')
+            # dff.to_csv(filepath, index=False)
+            #
+            # if extension_ok:
+            df, df_in_transit, df_unkown = clean_data(dff)
+            df = calculate_kpis(df)
 
             in_transit_analysis = analyze_in_transit(df_in_transit)
             # print(in_transit_analysis)
@@ -2469,10 +2470,14 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
 
             # --- Statistics ---
             # generate carrier, driver and route stats
-            carrier_statdata, driver_statdata, route_statdata = prepare_carrier_stats(df)
-            logireport.carrier_statdata_json = carrier_statdata.to_dict()
-            logireport.driver_statdata_json = driver_statdata.to_dict()
-            logireport.route_statdata_json = route_statdata.to_dict()
+            carrier_statdata, driver_statdata, route_statdata = prepare_stats_data(df)
+            driver_statdata = driver_statdata.reset_index()
+            carrier_statdata = carrier_statdata.reset_index()
+            route_statdata = route_statdata.reset_index()
+
+            logireport.carrier_statdata_json = carrier_statdata.to_json(orient='records')
+            logireport.driver_statdata_json = driver_statdata.to_json(orient='records')
+            logireport.route_statdata_json = route_statdata.to_json(orient='records')
 
             carrier_stats = build_carrier_stats(df)
             driver_stats = build_driver_stats(df)
@@ -2616,21 +2621,21 @@ class FullAdvancedReportView(TemplateView):
 
             # generate carrier, driver and route stats
             carrier_stats = report.carrier_statdata_json
-            carrier_stats = pd.DataFrame(carrier_stats)
-            carrier_stats = carrier_stats.reset_index()
+            carrier_stats = pd.read_json(StringIO(carrier_stats))
+            # carrier_stats = carrier_stats.reset_index()
             carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
             kwargs["carrierstats"] = carrier_stats
 
             driver_stats = report.driver_statdata_json
-            driver_stats = pd.DataFrame(driver_stats)
-            driver_stats = driver_stats.reset_index()
+            driver_stats = pd.read_json(StringIO(driver_stats))
+            # driver_stats = driver_stats.reset_index()
             driver_stats = json.loads(driver_stats.to_json(orient='records'))
             kwargs["driverstats"] = driver_stats
 
             # Routes Heatmap data
             route_stats = report.route_statdata_json
-            route_stats = pd.DataFrame(route_stats)
-            route_stats = route_stats.reset_index()
+            route_stats = pd.read_json(StringIO(route_stats))
+            # route_stats = route_stats.reset_index()
             heatmap_values = heatmap_data(route_stats)
             kwargs["heatmapvalues"] = heatmap_values
 

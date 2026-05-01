@@ -910,3 +910,54 @@ def test_validator(reportid, routefilename):
 
     return flags
 
+
+def routefile_validator(reportid, routefilename):
+
+    # load us cities file
+    uscities = City.objects.all().values()
+    us_cities = pd.DataFrame(uscities)
+    usstates = State.objects.all().values()
+    us_states = pd.DataFrame(usstates)
+    gasprices = GasPriceState.objects.all().values()
+    state_diesel_price = pd.DataFrame(gasprices)
+
+    report = FreightOpsReport.objects.filter(pk=reportid).first()
+    # print(us_cities.head(5))
+    # Check file extension and Load sample data
+    if report.routefile_ext == ".csv":
+        data = pd.read_csv(report.routefile)
+    elif report.routefile_ext == ".xlsx" or report.routefile_ext == ".xls":
+        data = pd.read_excel(report.routefile)
+
+    """Test the validator with sample data"""
+    validator = ColumnNameValidator()
+    date_validator = DateValidator()
+
+    test_columns = data.columns
+    results = validator.validate_and_correct_columns(data)
+    column_report = validator.print_validation_report(results)
+
+    sample_dates = data['Date_ship']
+    date_results = date_validator.validate_date_column(sample_dates, 'TestDate')
+    date_report = date_validator.print_date_validation_report(date_results)
+
+    # Test date fixing
+    # print("\nTesting date format fixing...")
+    fixed_dates, fix_report = date_validator.fix_date_format(sample_dates, '%Y-%m-%d')
+
+    # Fix cities and states and add a new column Diesel_Price
+    orig_cities = data[['OriginCity', 'DestinationCity']]
+    normalizer = CityStateNormalizer(orig_cities, us_cities, us_states, state_diesel_price)
+    clean_df, review_df, misscities_origin, missgstates_origin, misscities_destin, missgstates_destin, flags, dieselprices = normalizer.normalize()
+    data.update(clean_df['OriginCity'])
+    data.update(clean_df['DestinationCity'])
+    data['Diesel_Price'] = dieselprices
+
+    data.drop('Date', axis=1, inplace=True)
+    filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(report.client.id, report.id, routefilename)
+    print("filename: ", filename)
+    filepath = settings.MEDIA_ROOT + "/" + filename
+    # f = open(filepath, 'w')
+    data.to_csv(filepath, index=False)
+
+    return data

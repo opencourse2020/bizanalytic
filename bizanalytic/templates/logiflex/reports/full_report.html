@@ -556,17 +556,17 @@ All classes match freightops-report-template.html exactly.
 
             driver_df.print()
 
-            handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, fleetscore);
-
-            $(document).on('theme-reload', function() {
-                if (costpermile !== "0") {
-                    $('#CarrierCostReliabilityChart, #CarrierCostPerMile, #DriverMpgOnTime').empty();
-                }else {
-                    $('#CarrierCostReliabilityChart, #DriverMpgOnTime').empty();
-                }
-
-                handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values);
-            });
+            {#handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, fleetscore);#}
+            {##}
+            {#$(document).on('theme-reload', function() {#}
+            {#    if (costpermile !== "0") {#}
+            {#        $('#CarrierCostReliabilityChart, #CarrierCostPerMile, #DriverMpgOnTime').empty();#}
+            {#    }else {#}
+            {#        $('#CarrierCostReliabilityChart, #DriverMpgOnTime').empty();#}
+            {#    }#}
+            {##}
+            {#    handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values);#}
+            //});
         });
     </script>
 <script>

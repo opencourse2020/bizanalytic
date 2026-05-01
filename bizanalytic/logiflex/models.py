@@ -787,13 +787,25 @@ class FreightOpsReport(models.Model):
         default=dict, blank=True,
         help_text="Carrier statistics",
     )
+    carrier_statdata_json = models.JSONField(
+        default=dict, blank=True,
+        help_text="Carrier statistics for charts",
+    )
     driver_stats_json = models.JSONField(
         default=dict, blank=True,
         help_text="Driver statistics with per-driver KPIs",
     )
+    driver_statdata_json = models.JSONField(
+        default=dict, blank=True,
+        help_text="Carrier statistics for charts",
+    )
     route_stats_json = models.JSONField(
         default=dict, blank=True,
         help_text="Route statistics with network balance analysis",
+    )
+    route_statdata_json = models.JSONField(
+        default=dict, blank=True,
+        help_text="Carrier statistics for charts",
     )
     contingency_analysis = models.JSONField(
         default=dict, blank=True,

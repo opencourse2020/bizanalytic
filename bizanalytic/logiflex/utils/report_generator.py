@@ -690,7 +690,7 @@ def analyze_in_transit(df_intransit) -> dict:
 # FULL PIPELINE: DataFrame → Report Narrative
 # =============================================================================
 # -> Dict[str, Any]
-def generate_full_report(df, api_key: str = None):
+def generate_full_report(df, contingency_matrix, api_key: str = None):
     """
     End-to-end: takes a cleaned DataFrame, runs all models,
     and generates the complete report narrative.
@@ -728,22 +728,7 @@ def generate_full_report(df, api_key: str = None):
     driver_stats = build_driver_stats(df)
     route_stats = build_route_stats(df)
     sample_data = build_sample_data(df)
-    contingency_analysis, worst_carrier = run_contingency_analysis(df)
 
-
-    # contingency_matrix = ["contingency analysis based on on-time deliveries rate: "]
-    contingency_matrix = []
-    contingency_matrix.append((worst_carrier, "is the worst carrier in terms of Reliability"))
-    for idx, row in contingency_analysis.iterrows():
-        # print("contingency_matrix:", contingency_matrix)
-
-        competitor = row['Competitor']
-        odds_ratio = row['Odds_Ratio']
-        contingency_matrix.append((competitor, f"is {odds_ratio:.2f}x to deliver on time than {worst_carrier}"))
-        # p_value = row['P_Value']
-        # contingency_matrix.append(f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier}")
-
-    contingency_matrix = dict(contingency_matrix)
 
     # Step 4: Generate narrative via Sonnet
     narrative = generate_report_narrative(
@@ -761,7 +746,7 @@ def generate_full_report(df, api_key: str = None):
         api_key=api_key,
     )
 
-    return narrative, analysis, score, carrier_stats, driver_stats, route_stats, contingency_matrix
+    return narrative, analysis, score
 
 # {
 #         "narrative": narrative,

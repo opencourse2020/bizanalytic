@@ -417,6 +417,68 @@ def predict_cost(df):
     low_variance = low_variance.sort_values('CostVariance', ascending=True)
     return high_variance, low_variance
 
+
+# *******************************************************************************************************
+# *******************************************************************************************************
+# *****************    Prepare Carrier, Driver and Route Stats   ****************************************
+def prepare_stats_data(df):
+
+    # Carrier Analysis
+    carrier_stats = prepare_carrier_stats(df)
+    carrier_stats["AvgCostPerMile"] = carrier_stats["AvgCostPerMile"].round(3)
+    carrier_stats["AvgFreightCost"] = carrier_stats["AvgFreightCost"].round(2)
+    carrier_stats["AvgCostPerPound"] = carrier_stats["AvgCostPerPound"].round(3)
+
+    # Drivers Analysis
+    driver_stats = prepare_driver_stats(df)
+    driver_stats["OnTimeRate"] = driver_stats["OnTimeRate"] * 100
+
+    # Routes Analysis
+    route_stats = prepare_route_stats(df)
+
+    return carrier_stats, driver_stats, route_stats
+# *******************************************************************************************************
+# *******************************************************************************************************
+
+
+# *******************************************************************************************************
+# *******************************************************************************************************
+# *****************    Generate Heatmap data   ****************************************
+def heatmap_data(rd):
+    # Pivot for heatmap
+    heatmap_data = rd.pivot(
+        index='OriginCity',
+        columns='DestinationCity',
+        values='AvgCostPerMile'
+    )
+    start = heatmap_data.min().min()
+    end = heatmap_data.max().max()
+    colors = ['#FCB79D', '#FB8464', '#F44F39', '#B81419', '#67000D', ]
+    costintensity = ['Very Low', 'Low', 'Medium', 'High', 'Extreme']
+    num_parts = 5
+    division_points = np.linspace(start, end, num_parts + 1)
+    division_points = [float(x) for x in division_points]
+    range_values = []
+    for i in range(int(len(division_points) - 1)):
+        range_values.append({"from": division_points[i], "to": division_points[i + 1], "name": costintensity[i],
+                             "color": colors[i]})
+
+    heatmap_data = heatmap_data.fillna(0)
+
+    hm_dest = []
+
+    for index, row in heatmap_data.iterrows():
+        hm_dest.append({"name": index, "data": row.to_list()})
+    heatmap_columns = heatmap_data.columns.to_list()
+    print("range_values:", range_values)
+    heatmap_values = {"range_values": range_values, "heatmapvalues": hm_dest, "heatmap_columns": heatmap_columns}
+
+    return heatmap_values
+
+
+# *******************************************************************************************************
+# *******************************************************************************************************
+
 @shared_task(name='save_freight_to_database')
 def savefreightdatatodatabase(report):
     if report.routefile_ext == ".csv":

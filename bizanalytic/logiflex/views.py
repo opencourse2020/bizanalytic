@@ -45,7 +45,7 @@ from .utils.pre_process_datafile import *
 from .utils.local_analytics import *
 from .utils.report_helpers import *
 from .utils.prompts import SYSTEM_PROMPT, JSON_SCHEMA
-from .utils.report_generator import generate_full_report, analyze_in_transit, convert_to_python_types
+from .utils.report_generator import *
 # Create your views here.
 
 # Initiate variables
@@ -80,62 +80,29 @@ class FreeFreightOpsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         report = LogiflexReport.objects.filter(pk=190, download_code="mNUW9tzr").first()
-        df = pd.read_csv(report.routefile)
-        # validator = ColumnNameValidator()
-        #
-        # results = validator.validate_and_correct_columns(dff)
-        # df = clean_data(dff)
-        # df = calculate_kpis(df)
+        dff = pd.read_csv(report.routefile)
+        validator = ColumnNameValidator()
 
-        # Carrier Analysis
-        carrier_stats = prepare_carrier_stats(df)
-        carrier_stats["AvgCostPerMile"] = carrier_stats["AvgCostPerMile"].round(3)
-        carrier_stats["AvgFreightCost"] = carrier_stats["AvgFreightCost"].round(2)
-        carrier_stats["AvgCostPerPound"] = carrier_stats["AvgCostPerPound"].round(3)
+        results = validator.validate_and_correct_columns(dff)
+        df = clean_data(dff)
+        df = calculate_kpis(df)
+
+        # generate carrier, driver and route stats
+        carrier_stats, driver_stats, route_stats = prepare_carrier_stats(df)
+
         carrier_stats = carrier_stats.reset_index()
         carrier_stats = json.loads(carrier_stats.to_json(orient='records'))
         kwargs["carrierstats"] = carrier_stats
 
-        # Drivers Analysis
-        driver_stats = prepare_driver_stats(df)
-        driver_stats["OnTimeRate"] = driver_stats["OnTimeRate"] * 100
         driver_stats = driver_stats.reset_index()
         driver_stats = json.loads(driver_stats.to_json(orient='records'))
         kwargs["driverstats"] = driver_stats
 
-        # Routes Analysis
-        route_stats = prepare_route_stats(df)
+        # Routes Heatmap data
         route_stats = route_stats.reset_index()
-
-        # Pivot for heatmap
-        heatmap_data = route_stats.pivot(
-            index='OriginCity',
-            columns='DestinationCity',
-            values='AvgCostPerMile'
-        )
-        start = heatmap_data.min().min()
-        end = heatmap_data.max().max()
-        colors = ['#FCB79D', '#FB8464', '#F44F39', '#B81419', '#67000D', ]
-        costintensity = ['Very Low', 'Low', 'Medium', 'High', 'Extreme']
-        num_parts = 5
-        division_points = np.linspace(start, end, num_parts + 1)
-        division_points = [float(x) for x in division_points]
-        range_values = []
-        for i in range(int(len(division_points) - 1)):
-            range_values.append({"from": division_points[i], "to": division_points[i + 1], "name": costintensity[i],
-                                 "color": colors[i]})
-
-        heatmap_data = heatmap_data.fillna(0)
-
-        hm_dest = []
-
-        for index, row in heatmap_data.iterrows():
-            hm_dest.append({"name": index, "data": row.to_list()})
-        heatmap_columns = heatmap_data.columns.to_list()
-        print("range_values:", range_values)
-        heatmap_values = {"range_values": range_values, "heatmapvalues": hm_dest, "heatmap_columns": heatmap_columns}
-        # kwargs["rangevalues"] = range_values
+        heatmap_values = heatmap_data(route_stats)
         kwargs["heatmapvalues"] = heatmap_values
+
         # Carrier Cost Per Mile Analysis
         cost_mile = df[['CarrierName', 'CostPerMile']]
         cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)
@@ -2383,22 +2350,13 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
         report_type = ""
         # Check report type
         if reportype == "1":
-            report_type = "lite"
             if (servicepayment and servicepayment.can_generate_report()) or not servicepayment:
                 check_report = 1
         elif reportype == "2":
-            report_type = "advanced"
             if servicepayment and servicepayment.can_generate_advanced_report():
                 advanced_report = 1
 
-        # print("client: ", client.pk)
-        # print("Service Payment:", servicepayment.pk)
-        # print("lite_report:", lite_report, "advanced_report:", advanced_report)
-        # print("report_type:", report_type)
         if check_report or advanced_report:
-            # print("you can generate reports")
-            # Save client and result data
-            user = self.request.user
             if not client.contact_name:
                 client.contact_name = client_name
             if not client.company:
@@ -2421,14 +2379,8 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
             logireport.uploaded_file = route_file
             logireport.file_extension = ext
             logireport.file_name = route_file.name
-
-            # add report ID
-            # logireport.report_number = makereportnumber(logireport.pk, reportype)
-
-            # add expected_delivery
-            # logireport.expected_delivery = now() + timedelta(days=1)
-
             logireport.save()
+
             if check_report == 1:
                 servicepayment.mark_report_used()
             elif advanced_report == 1:
@@ -2447,20 +2399,14 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
             date_validator = DateValidator()
 
             test_columns = dff.columns
-            # print("Testing with sample column variations...")
             results = validator.validate_and_correct_columns(dff)
             column_report = validator.print_validation_report(results)
-
-            # Test date validation with sample dates
-            # print("\n" + "=" * 60)
-            # print("Testing date validation...")
 
             sample_dates = dff['Date_ship']
             date_results = date_validator.validate_date_column(sample_dates, 'TestDate')
             date_report = date_validator.print_date_validation_report(date_results)
 
             orig_cities = dff[['OriginCity', 'DestinationCity']]
-            # print("Origine cities:", orig_cities.columns)
             uscities = City.objects.all().values()
             us_cities = pd.DataFrame(uscities)
             usstates = State.objects.all().values()
@@ -2469,26 +2415,15 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
             state_diesel_price = pd.DataFrame(gasprices)
             normalizer = CityStateNormalizer(orig_cities, us_cities, us_states, state_diesel_price)
             clean_df, review_df, misscities_origin, missgstates_origin, misscities_destin, missgstates_destin, flags, dieselprices = normalizer.normalize()
-            # print("clean_df")
-            # print(clean_df.index)
-            # print(clean_df.info())
-            # data = data.drop(['OriginCity', 'DestinationCity'], axis=1)
-            # data = pd.concat([data, clean_df], axis=0, ignore_index=True)
+
             dff.update(clean_df['OriginCity'])
             dff.update(clean_df['DestinationCity'])
             dff['Diesel_Price'] = dieselprices
             dff['Diesel_Price'] = dff['Diesel_Price'].astype(float)
 
             # Test date fixing
-            # print("\nTesting date format fixing...")
             fixed_dates, fix_report = date_validator.fix_date_format(sample_dates, '%Y-%m-%d')
 
-            directory_path = 'data_files/route_files/company_id_{0}/report_{1}'.format(logireport.client.id,
-                                                                                       logireport.id)
-            # dff.drop('Date', axis=1, inplace=True)
-            # print("Data before saving to csv file")
-            # print(dff.head(5))
-            # print(dff.columns)
             filename = 'data_files/route_files/company_id_{0}/report_{1}/{2}'.format(logireport.client.id,
                                                                                      logireport.id,
                                                                                      logireport.file_name)
@@ -2514,14 +2449,46 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
             logireport.data_fingerprint = fingerprint
             logireport.total_shipments = len(df)
             logireport.intransit_analysis = in_transit_analysis
+
+            contingency_analysis, worst_carrier = run_contingency_analysis(df)
+
+            # contingency_matrix
+            contingency_matrix = []
+            contingency_matrix.append((worst_carrier, "is the worst carrier in terms of Reliability"))
+            for idx, row in contingency_analysis.iterrows():
+                # print("contingency_matrix:", contingency_matrix)
+
+                competitor = row['Competitor']
+                odds_ratio = row['Odds_Ratio']
+                contingency_matrix.append((competitor, f"is {odds_ratio:.2f}x to deliver on time than {worst_carrier}"))
+                # p_value = row['P_Value']
+                # contingency_matrix.append(f"{competitor} is {odds_ratio:.2f}x to deliver on time than {worst_carrier}")
+
+            contingency_matrix = dict(contingency_matrix)
+
+
+            # --- Statistics ---
+            # generate carrier, driver and route stats
+            carrier_statdata, driver_statdata, route_statdata = prepare_carrier_stats(df)
+            logireport.carrier_statdata_json = carrier_statdata.to_dict()
+            logireport.driver_statdata_json = driver_statdata.to_dict()
+            logireport.route_statdata_json = route_statdata.to_dict()
+
+            carrier_stats = build_carrier_stats(df)
+            driver_stats = build_driver_stats(df)
+            route_stats = build_route_stats(df)
+            carrier_stats = json.loads(json.dumps(carrier_stats, default=convert_to_python_types))
+            driver_stats = json.loads(json.dumps(driver_stats, default=convert_to_python_types))
+            route_stats = json.loads(json.dumps(route_stats, default=convert_to_python_types))
+            logireport.carrier_stats_json = carrier_stats
+            logireport.driver_stats_json = driver_stats
+            logireport.route_stats_json = route_stats
+            logireport.contingency_analysis = contingency_matrix
+
             logireport.save()
 
-
             # Generate report
-            narrative, analysis, score, \
-            carrier_stats, driver_stats, route_stats, contingency_matrix = \
-                generate_full_report(df, api_key=settings.ANTHROPIC_API_KEY)
-            # print(result)
+            narrative, analysis, score = generate_full_report(df, contingency_matrix, api_key=settings.ANTHROPIC_API_KEY)
             # Parse date range
             if "Date_ship" in df.columns:
                 dates = pd.to_datetime(df["Date_ship"], errors="coerce").dropna()
@@ -2587,9 +2554,6 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 logireport.has_delivery_time = dq.get("has_delivery_time", False)
 
                 # --- Narrative ---
-                # try:
-                #     narrative = json.loads(narrative)
-
                 logireport.money_headline_sub = narrative.get("money_headline_sub", "")
                 logireport.carriers_summary = narrative.get("carriers_summary", "")
                 logireport.carriers_detailed = narrative.get("carriers_detailed", "")
@@ -2599,9 +2563,6 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 logireport.routes_detailed = narrative.get("routes_detailed", "")
                 logireport.improvement_scenario_text = narrative.get("improvement_scenario", "")
 
-                # except json.JSONDecodeError as e:
-                #     logireport.llm_result = narrative
-
                 # --- LLM Cost ---
                 meta = narrative.get("_meta", {})
                 logireport.llm_model = meta.get("model", "")
@@ -2610,32 +2571,11 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
                 logireport.llm_cost_usd = meta.get("estimated_cost_usd", 0)
                 # narrative = json.dumps(narrative)
                 logireport.narrative_json = narrative
-                logireport.save()
 
-                # --- Statistics ---
-                logireport.carrier_stats_json = carrier_stats
-                logireport.save()
-                print(driver_stats)
-                print("**************************************************************************")
-                print("**************************************************************************")
-                # if not isinstance(driver_stats, dict):
-                #     driver_stats = json.dumps(dict(driver_stats))
-                # else:
-                driver_stats = json.loads(json.dumps(driver_stats, default=convert_to_python_types))
-                print(driver_stats)
-                logireport.driver_stats_json = driver_stats
-                logireport.save()
-                logireport.route_stats_json = route_stats
-                logireport.save()
-                logireport.contingency_analysis = contingency_matrix
-                logireport.save()
                 # --- Summary counts ---
-                cs = carrier_stats
-                ds = driver_stats
-                rs = route_stats
-                logireport.total_carriers = cs.get("total_carriers", 0)
-                logireport.total_drivers = ds.get("total_drivers", 0)
-                logireport.total_lanes = rs.get("total_lanes", 0)
+                logireport.total_carriers = carrier_stats.get("total_carriers", 0)
+                logireport.total_drivers = driver_stats.get("total_drivers", 0)
+                logireport.total_lanes = route_stats.get("total_lanes", 0)
 
             logireport.generation_time_seconds = round(time.time() - start_time, 2)
             logireport.save()

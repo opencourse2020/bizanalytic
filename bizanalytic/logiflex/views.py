@@ -89,7 +89,7 @@ class FreeFreightOpsView(TemplateView):
         df = calculate_kpis(df)
 
         # generate carrier, driver and route stats
-        carrier_stats, driver_stats, route_stats = prepare_carrier_stats(df)
+        carrier_stats, driver_stats, route_stats = prepare_stats_data(df)
 
         carrier_stats = carrier_stats.reset_index()
         carrier_stats = json.loads(carrier_stats.to_json(orient='records'))

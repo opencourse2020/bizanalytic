@@ -929,6 +929,12 @@ class FreightOpsReport(models.Model):
     llm_result = models.TextField(blank=True, null=True)
 
     # =====================================================================
+    # Prompts
+    # =====================================================================
+    user_prompt = models.TextField(blank=True, null=True)
+    system_prompt = models.TextField(blank=True, null=True)
+
+    # =====================================================================
     # META
     # =====================================================================
 

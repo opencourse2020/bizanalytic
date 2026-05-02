@@ -103,6 +103,7 @@ var MixedDriverOnTimeMPGMPHoptions = {
           type: 'line',
           data: mphdata
         }],
+        colors: ['#047857', '#eb5849', '#008ffb'],
           chart: {
           height: 350,
           type: 'line',

@@ -555,7 +555,8 @@ All classes match freightops-report-template.html exactly.
             let dfcostdirver = new dfd.DataFrame(costmiledriver);
             let driver_df = dfcostdirver.groupby(["DriverName"]);
 
-            driver_df.print();
+            console.log(driver_df);
+            {#driver_df.print();#}
 
             {#handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, fleetscore);#}
             {##}

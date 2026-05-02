@@ -158,17 +158,17 @@ var MixedDriverOnTimeMPGMPHoptions = {
             },
             axisBorder: {
               show: true,
-              color: '#00E396'
+              color: '#047857'
             },
             labels: {
               style: {
-                colors: '#00E396',
+                colors: '#047857',
               }
             },
             title: {
               text: "Fuel Efficiency (MPG)",
               style: {
-                color: '#00E396',
+                color: '#047857',
               }
             },
           },
@@ -180,18 +180,18 @@ var MixedDriverOnTimeMPGMPHoptions = {
             },
             axisBorder: {
               show: true,
-              color: '#feb019'
+              color: '#eb5849'
             },
             labels: {
               style: {
-                colors: '#feb019',
+                colors: '#eb5849',
               },
             },
-			  colors: '#feb019',
+			  colors: '#eb5849',
             title: {
               text: "Median Speed (MPH)",
               style: {
-                color: '#feb019',
+                color: '#eb5849',
               }
             }
           },

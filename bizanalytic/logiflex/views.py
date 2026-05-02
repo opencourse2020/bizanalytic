@@ -85,7 +85,7 @@ class FreeFreightOpsView(TemplateView):
         validator = ColumnNameValidator()
 
         results = validator.validate_and_correct_columns(dff)
-        df = clean_data(dff)
+        df, dfd, dfu = clean_data(dff)
         df = calculate_kpis(df)
 
         # generate carrier, driver and route stats

@@ -552,10 +552,10 @@ All classes match freightops-report-template.html exactly.
             costmiledriver = {{ costmiledriver|safe }},
             fleetscore = 41;
 
-            dfcostdirver = new dfd.DataFrame(costmiledriver);
-            driver_df = dfcostdirver.groupby(["DriverName"]);
+            let dfcostdirver = new dfd.DataFrame(costmiledriver);
+            let driver_df = dfcostdirver.groupby(["DriverName"]);
 
-            driver_df.print()
+            driver_df.print();
 
             {#handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, fleetscore);#}
             {##}

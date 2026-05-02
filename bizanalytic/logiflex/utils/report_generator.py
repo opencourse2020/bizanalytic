@@ -735,21 +735,7 @@ def generate_full_report(df, contingency_matrix, api_key: str = None):
     sample_data = json.loads(json.dumps(sample_data, default=convert_to_python_types))
 
     # Step 4: Generate narrative via Sonnet
-    # narrative = generate_report_narrative(
-    #     fleet_score=score,
-    #     carrier_optimization=analysis["carrier_optimization"],
-    #     lane_profitability=analysis["lane_profitability"],
-    #     driver_spc=analysis["driver_spc"],
-    #     cost_anomalies=analysis["cost_anomalies"],
-    #     composite_savings=analysis["composite_savings"],
-    #     carrier_stats=carrier_stats,
-    #     driver_stats=driver_stats,
-    #     route_stats=route_stats,
-    #     contingency_analysis=contingency_matrix,
-    #     sample_data=sample_data,
-    #     api_key=api_key,
-    # )
-    narrative = build_report_prompt(
+    narrative = generate_report_narrative(
         fleet_score=score,
         carrier_optimization=analysis["carrier_optimization"],
         lane_profitability=analysis["lane_profitability"],
@@ -758,11 +744,11 @@ def generate_full_report(df, contingency_matrix, api_key: str = None):
         composite_savings=analysis["composite_savings"],
         carrier_stats=carrier_stats,
         driver_stats=driver_stats,
-        contingency_analysis=contingency_matrix,
         route_stats=route_stats,
+        contingency_analysis=contingency_matrix,
         sample_data=sample_data,
+        api_key=api_key,
     )
-    analysis = SYSTEM_PROMPT
 
     return narrative, analysis, score
 

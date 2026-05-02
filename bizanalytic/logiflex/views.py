@@ -2649,15 +2649,15 @@ class FullAdvancedReportView(TemplateView):
             kwargs["heatmapvalues"] = heatmap_values
 
             # Carrier Cost Per Mile Analysis
-            cost_mile = df[['CarrierName', 'CostPerMile']]
-            cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)
-            cost_mile = json.loads(cost_mile.to_json(orient='records'))
-            kwargs["costmile"] = cost_mile
+            # cost_mile = df[['CarrierName', 'CostPerMile']]
+            # cost_mile["CostPerMile"] = cost_mile["CostPerMile"].round(4)
+            # cost_mile = json.loads(cost_mile.to_json(orient='records'))
+            # kwargs["costmile"] = cost_mile
 
             # Driver Cost Per Mile Analysis
-            cost_mile_driver = df[['DriverName', 'CostPerMile']]
-            cost_mile_driver["CostPerMile"] = cost_mile_driver["CostPerMile"].round(4)
-            cost_mile_driver = json.loads(cost_mile_driver.to_json(orient='records'))
-            kwargs["costmiledriver"] = cost_mile_driver
+            # cost_mile_driver = df[['DriverName', 'CostPerMile']]
+            # cost_mile_driver["CostPerMile"] = cost_mile_driver["CostPerMile"].round(4)
+            # cost_mile_driver = json.loads(cost_mile_driver.to_json(orient='records'))
+            # kwargs["costmiledriver"] = cost_mile_driver
 
         return super(FullAdvancedReportView, self).get_context_data(**kwargs)

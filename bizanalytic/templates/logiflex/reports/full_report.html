@@ -548,27 +548,24 @@ All classes match freightops-report-template.html exactly.
             df_driver = {{ driverstats|safe }};
             heatmap_values = {{ heatmapvalues|safe }};
 
-            costpermile = {{ costmile|safe }};
-            costmiledriver = {{ costmiledriver|safe }},
+            //costpermile = {{ costmile|safe }};
+            //costmiledriver = {{ costmiledriver|safe }};
+            costpermile = "";
+            costmiledriver = "";
             fleetscore = 41;
 
-            let dfcostdirver = new dfd.DataFrame(costmiledriver);
-            let driver_df = dfcostdirver.groupby(["DriverName"]);
 
-            console.log(driver_df);
-            {#driver_df.print();#}
+            handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, fleetscore);
 
-            {#handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values, fleetscore);#}
-            {##}
-            {#$(document).on('theme-reload', function() {#}
-            {#    if (costpermile !== "0") {#}
-            {#        $('#CarrierCostReliabilityChart, #CarrierCostPerMile, #DriverMpgOnTime').empty();#}
-            {#    }else {#}
-            {#        $('#CarrierCostReliabilityChart, #DriverMpgOnTime').empty();#}
-            {#    }#}
-            {##}
-            {#    handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values);#}
-            //});
+            $(document).on('theme-reload', function() {
+                if (costpermile !== "0") {
+                    $('#CarrierCostReliabilityChart, #CarrierCostPerMile, #DriverMpgOnTime').empty();
+                }else {
+                    $('#CarrierCostReliabilityChart, #DriverMpgOnTime').empty();
+                }
+
+                handleRenderApexChart(full_df, costpermile, df_driver, costmiledriver, heatmap_values);
+            });
         });
     </script>
 <script>

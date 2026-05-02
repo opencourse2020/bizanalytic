@@ -9,12 +9,12 @@ var handleRenderApexChart = function(full_df, costpermile, df_driver, costmiledr
 	df = new dfd.DataFrame(full_df);
 	dfdriver = new dfd.DataFrame(df_driver);
 
-	if (costpermile !== "0"){
-		dfcost = new dfd.DataFrame(costpermile);
-		dfcostdirver = new dfd.DataFrame(costmiledriver);
-		dfcost.print();
-		dfcost.sortValues("CostPerMile", { inplace: true })
-	}
+	// if (costpermile !== "0"){
+	// 	dfcost = new dfd.DataFrame(costpermile);
+	// 	dfcostdirver = new dfd.DataFrame(costmiledriver);
+	// 	dfcost.print();
+	// 	dfcost.sortValues("CostPerMile", { inplace: true })
+	// }
 
 
 	const seriesdata =[];

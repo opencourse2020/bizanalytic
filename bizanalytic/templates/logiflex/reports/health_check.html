@@ -1,0 +1,420 @@
+{% extends "reports/base_health_check.html" %}
+{% load humanize %}
+{% load static %}
+
+{% comment %}
+Freight Health Check — Free Diagnostic Report
+==============================================
+Context variables (same view as full_report.html):
+  report              — FreightOpsReport model instance (report_type=HEALTH_CHECK)
+  top_actions         — list of dicts: {title, detail, value}
+  score_dimensions    — list of dicts: {name, score, weight, raw_value, raw_unit}
+  savings_breakdown   — list of tuples: (label, amount) sorted desc
+  anomalies           — list of dicts from cost_anomalies_json.anomalies
+
+The Health Check shows: score, savings headline, 3 findings, KPI snapshot.
+Everything else is blurred behind the upgrade CTA.
+No detailed narrative sections are rendered — only the executive teasers.
+{% endcomment %}
+
+{% block title %}Freight Health Check — {{ report.report_number }}{% endblock %}
+
+{% block report_content %}
+
+{# ================================================================ #}
+{# DOWNLOAD BAR                                                     #}
+{# ================================================================ #}
+<div class="dl-bar">
+  <span>Freight Health Check &mdash; Free Diagnostic</span>
+  <button class="dl-btn" onclick="window.print()">&#11015; Download PDF</button>
+</div>
+
+<div class="rpt">
+
+{# ================================================================ #}
+{# HEADER                                                           #}
+{# ================================================================ #}
+<header class="hdr">
+  <div class="hdr-l">
+    <div class="hdr-brand">LogiFlex</div>
+    <h1 class="hdr-title">Freight Health Check</h1>
+    <p class="hdr-sub">
+      Diagnostic snapshot for {{ report.total_shipments|intcomma }} shipments
+      &middot; {{ report.total_carriers }} carrier{{ report.total_carriers|pluralize }}
+      &middot; {{ report.total_drivers }} driver{{ report.total_drivers|pluralize }}
+    </p>
+  </div>
+  <div class="hdr-r">
+    <div class="hdr-id">{{ report.report_number }}</div>
+    <div class="hdr-date">{{ report.created_at|date:"F j, Y" }}</div>
+    <div class="hdr-badge">Free diagnostic</div>
+  </div>
+</header>
+
+<div class="rpt-body">
+
+{# ================================================================ #}
+{# HERO: FLEET HEALTH SCORE                                         #}
+{# ================================================================ #}
+<div class="hero" id="heroSection">
+  <div class="hero-score">
+    <div class="hero-circle" id="heroCircle">
+      <svg viewBox="0 0 150 150">
+        <circle class="track" cx="75" cy="75" r="64"/>
+        <circle class="fill" id="scoreFill" cx="75" cy="75" r="64"
+          stroke-dasharray="402"
+          stroke-dashoffset="402"/>
+      </svg>
+      <div class="hero-num">{{ report.fleet_score }}</div>
+      <div class="hero-of">of 100</div>
+    </div>
+    {% if report.fleet_score >= 75 %}
+      <div class="hero-verdict" id="heroVerdict" data-grade="strong">Strong</div>
+    {% elif report.fleet_score >= 60 %}
+      <div class="hero-verdict" id="heroVerdict" data-grade="competent">Competent</div>
+    {% elif report.fleet_score >= 40 %}
+      <div class="hero-verdict" id="heroVerdict" data-grade="needs-work">Needs work</div>
+    {% else %}
+      <div class="hero-verdict" id="heroVerdict" data-grade="critical">Needs attention</div>
+    {% endif %}
+  </div>
+  <div class="hero-detail">
+    {% with drag=report.biggest_drag_dimension %}
+      {% if report.fleet_score < 60 %}
+        <div class="hero-detail-title">
+          Your fleet is underperforming on key operational metrics
+        </div>
+      {% else %}
+        <div class="hero-detail-title">
+          Your fleet is performing at a {{ report.fleet_grade|lower }} level
+        </div>
+      {% endif %}
+      {% if report.improvement_scenario_text %}
+        <div class="hero-detail-sub">{{ report.improvement_scenario_text }}</div>
+      {% else %}
+        <div class="hero-detail-sub">
+          Compared to industry benchmarks, your operation has room for improvement.
+          The data shows exactly where to focus.
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {# Dimension bars #}
+    {% for dim in score_dimensions %}
+      <div class="bar-row">
+        <div class="bar-label">{{ dim.name }}</div>
+        <div class="bar-track">
+          <div class="bar-fill"
+               data-width="{{ dim.score|floatformat:0 }}"
+               data-score="{{ dim.score|floatformat:0 }}">
+          </div>
+        </div>
+        <div class="bar-val">
+          {% if dim.raw_unit == "%" %}
+            {{ dim.raw_value|floatformat:1 }}%
+          {% else %}
+            {{ dim.score|floatformat:0 }}
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{# ================================================================ #}
+{# MONEY REVEAL                                                     #}
+{# ================================================================ #}
+<div class="money">
+  <div class="money-label">Estimated annual savings identified in your data</div>
+  <div class="money-val">${{ report.total_annual_savings|floatformat:0|intcomma }}</div>
+  <div class="money-sub">
+    Across
+    {% for label, amount in savings_breakdown %}
+      {% if amount > 0 %}
+        {{ label|lower }}{% if not forloop.last %}, {% endif %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{# ================================================================ #}
+{# 3 BIGGEST FINDINGS                                               #}
+{# ================================================================ #}
+{% if top_actions %}
+<div class="findings">
+  {% for action in top_actions %}
+    <div class="finding-card {% if forloop.counter == 1 %}risk{% elif forloop.counter == 2 %}opportunity{% else %}insight{% endif %}">
+      <div class="finding-type">
+        {% if forloop.counter == 1 %}
+          Biggest cost risk
+        {% elif forloop.counter == 2 %}
+          Biggest opportunity
+        {% else %}
+          Hidden finding
+        {% endif %}
+      </div>
+      <div class="finding-title">{{ action.title }}</div>
+      <div class="finding-detail">{{ action.detail }}</div>
+      <div class="finding-value">{{ action.value }}</div>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{# ================================================================ #}
+{# SNAPSHOT KPIs                                                    #}
+{# ================================================================ #}
+<div class="snapshot">
+  <div class="snapshot-title">Your fleet at a glance</div>
+  <div class="snapshot-grid">
+
+    {# On-time rate #}
+    {% with cs=report.carrier_stats_json %}
+      <div class="snap-cell">
+        <div class="snap-val">{{ cs.fleet_avg_ontime|floatformat:1 }}<span class="snap-unit">%</span></div>
+        <div class="snap-label">On-time rate</div>
+        {% if cs.fleet_avg_ontime < 60 %}
+          <div class="snap-bench bad">Industry: 85%+</div>
+        {% elif cs.fleet_avg_ontime < 80 %}
+          <div class="snap-bench ok">Industry: 85%+</div>
+        {% else %}
+          <div class="snap-bench good">Above average</div>
+        {% endif %}
+      </div>
+    {% endwith %}
+
+    {# Avg freight cost #}
+    {% with cs=report.carrier_stats_json %}
+      <div class="snap-cell">
+        <div class="snap-val">${{ cs.fleet_avg_cost|floatformat:0|intcomma }}</div>
+        <div class="snap-label">Avg freight cost</div>
+        <div class="snap-bench ok">Per shipment</div>
+      </div>
+    {% endwith %}
+
+    {# Cost per mile #}
+    {% with rs=report.route_stats_json %}
+      {% if rs.fleet_avg_cost_per_mile %}
+        <div class="snap-cell">
+          <div class="snap-val">${{ rs.fleet_avg_cost_per_mile|floatformat:2 }}<span class="snap-unit">/mi</span></div>
+          <div class="snap-label">Cost per mile</div>
+          <div class="snap-bench ok">Fleet-wide</div>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {# Total shipments #}
+    <div class="snap-cell">
+      <div class="snap-val">{{ report.total_shipments|intcomma }}</div>
+      <div class="snap-label">Total shipments</div>
+      <div class="snap-bench good">Analyzed</div>
+    </div>
+
+    {# Avg distance #}
+    {% with rs=report.route_stats_json %}
+      {% if rs.fleet_avg_distance %}
+        <div class="snap-cell">
+          <div class="snap-val">{{ rs.fleet_avg_distance|floatformat:0 }}<span class="snap-unit">mi</span></div>
+          <div class="snap-label">Avg distance</div>
+          <div class="snap-bench ok">Fleet-wide</div>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+  </div>
+</div>
+
+{# ================================================================ #}
+{# BLURRED PREVIEW: CARRIER DEEP DIVE                               #}
+{# ================================================================ #}
+<div class="blur-section">
+  <div class="blur-content">
+    {# Tease real carrier KPIs (visible but blurred) #}
+    {% with cs=report.carrier_stats_json %}
+      {% if cs.carriers %}
+        <div class="blur-kpi-grid">
+          {% with best=cs.carriers.0 worst=cs.carriers|last %}
+            <div class="blur-kpi">
+              <div class="blur-kpi-val">{{ best.ontime_rate|floatformat:1 }}%</div>
+              <div class="blur-kpi-label">Best on-time</div>
+            </div>
+            <div class="blur-kpi">
+              <div class="blur-kpi-val">${{ best.avg_freight_cost|floatformat:0 }}</div>
+              <div class="blur-kpi-label">Lowest cost</div>
+            </div>
+            {% if best.avg_cost_per_mile %}
+              <div class="blur-kpi">
+                <div class="blur-kpi-val">${{ best.avg_cost_per_mile|floatformat:2 }}</div>
+                <div class="blur-kpi-label">Cost/mile</div>
+              </div>
+            {% endif %}
+            <div class="blur-kpi">
+              <div class="blur-kpi-val">{{ worst.ontime_rate|floatformat:1 }}%</div>
+              <div class="blur-kpi-label">Worst on-time</div>
+            </div>
+          {% endwith %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    <div class="blur-chart"></div>
+    <div class="blur-text">
+      <div class="blur-line" data-w="80"></div>
+      <div class="blur-line" data-w="65"></div>
+      <div class="blur-line" data-w="90"></div>
+      <div class="blur-line" data-w="50"></div>
+    </div>
+  </div>
+  <div class="blur-overlay">
+    <div class="blur-lock">&#128274;</div>
+    <div class="blur-title">Full carrier, driver, and route analysis</div>
+    <div class="blur-sub">
+      The complete FreightOps Report includes detailed carrier scorecards,
+      driver performance profiles with coaching recommendations,
+      route heatmaps, LP-optimized reallocation plans,
+      and the specific actions behind the
+      ${{ report.total_annual_savings|floatformat:0|intcomma }} in savings.
+    </div>
+    <a href="{% url 'pricing' %}" class="blur-cta">Unlock full report &mdash; starts at $49/mo</a>
+  </div>
+</div>
+
+{# ================================================================ #}
+{# BLURRED PREVIEW: DRIVER PROFILES                                 #}
+{# ================================================================ #}
+<div class="blur-section">
+  <div class="blur-content">
+    {# Tease real driver data (visible but blurred) #}
+    {% with ds=report.driver_stats_json %}
+      {% if ds.drivers %}
+        <div class="blur-driver-grid">
+          {% for driver in ds.drivers|slice:":3" %}
+            <div class="blur-driver {% if forloop.first %}good{% elif driver.ontime_rate < 40 %}bad{% endif %}">
+              <div class="blur-driver-name">{{ driver.driver_name }}</div>
+              <div class="blur-driver-stats">
+                <div>
+                  <div class="blur-driver-stat-label">OTD</div>
+                  <div class="blur-driver-stat-val">{{ driver.ontime_rate|floatformat:0 }}%</div>
+                </div>
+                {% if driver.avg_cost_per_mile %}
+                  <div>
+                    <div class="blur-driver-stat-label">Cost/mi</div>
+                    <div class="blur-driver-stat-val">${{ driver.avg_cost_per_mile|floatformat:2 }}</div>
+                  </div>
+                {% elif driver.avg_fuel_per_mile %}
+                  <div>
+                    <div class="blur-driver-stat-label">Fuel/mi</div>
+                    <div class="blur-driver-stat-val">${{ driver.avg_fuel_per_mile|floatformat:2 }}</div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  </div>
+  <div class="blur-overlay">
+    <div class="blur-lock">&#128274;</div>
+    <div class="blur-title">Driver personality profiles + coaching plans</div>
+    <div class="blur-sub">
+      See which drivers need intervention, who your top performers are,
+      and get auto-generated coaching recommendations with dollar-value
+      impact per driver.
+    </div>
+    <a href="{% url 'pricing' %}" class="blur-cta">Unlock full report &mdash; starts at $49/mo</a>
+  </div>
+</div>
+
+</div>{# /rpt-body #}
+
+{# ================================================================ #}
+{# FOOTER                                                           #}
+{# ================================================================ #}
+<footer class="rpt-footer">
+  <div class="ft-l"><strong>LogiFlex</strong> by BizAnalytic &middot; Free Health Check</div>
+  <div class="ft-r">Get the full analysis &rarr; logiflex.com/pricing</div>
+</footer>
+<div class="ft-conf">Confidential &mdash; prepared for authorized recipient only</div>
+
+</div>{# /rpt #}
+
+{% endblock report_content %}
+
+
+{% block report_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var score = {{ report.fleet_score }};
+
+  /* === Score ring color and animation === */
+  var scoreColor;
+  if (score >= 75)      scoreColor = '#047857';
+  else if (score >= 60) scoreColor = '#1d4ed8';
+  else if (score >= 40) scoreColor = '#92400e';
+  else                  scoreColor = '#b91c1c';
+
+  var circle = document.getElementById('heroCircle');
+  if (circle) {
+    circle.style.setProperty('--score-color', scoreColor);
+  }
+
+  /* Verdict badge color */
+  var verdict = document.getElementById('heroVerdict');
+  if (verdict) {
+    var grade = verdict.getAttribute('data-grade');
+    if (grade === 'critical' || grade === 'needs-work') {
+      verdict.style.background = '#fef2f2';
+      verdict.style.color = '#b91c1c';
+    } else if (grade === 'competent') {
+      verdict.style.background = '#eff4ff';
+      verdict.style.color = '#1e40af';
+    } else {
+      verdict.style.background = '#ecfdf5';
+      verdict.style.color = '#047857';
+    }
+  }
+
+  /* Animate the SVG ring */
+  var fill = document.getElementById('scoreFill');
+  if (fill) {
+    var circumference = 2 * Math.PI * 64;
+    var offset = circumference - (score / 100) * circumference;
+    fill.style.strokeDasharray = circumference;
+    fill.style.strokeDashoffset = circumference;
+    /* Double rAF to ensure the initial state is painted before transition */
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        fill.style.strokeDashoffset = offset;
+      });
+    });
+  }
+
+  /* === Dimension bar animations === */
+  var fills = document.querySelectorAll('.bar-fill');
+  for (var i = 0; i < fills.length; i++) {
+    var el = fills[i];
+    var pct = el.getAttribute('data-width');
+    var s = parseInt(el.getAttribute('data-score'), 10);
+
+    var barColor;
+    if (s >= 70)      barColor = '#047857';
+    else if (s >= 50) barColor = '#92400e';
+    else              barColor = '#b91c1c';
+
+    el.style.background = barColor;
+    el.style.width = '0%';
+    el.style.transition = 'width 0.8s ease ' + (i * 0.12 + 0.3) + 's';
+
+    void el.offsetWidth;
+    el.style.width = pct + '%';
+  }
+
+  /* === Blur placeholder line widths === */
+  var lines = document.querySelectorAll('.blur-line');
+  var widths = [80, 65, 90, 50];
+  for (var j = 0; j < lines.length; j++) {
+    lines[j].style.width = (widths[j % widths.length]) + '%';
+  }
+});
+</script>
+{% endblock report_scripts %}

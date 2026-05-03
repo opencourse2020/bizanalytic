@@ -43,7 +43,8 @@ report_patterns = [
     path('helper/', views.ReportHelpersView.as_view(), name='helper'),
     path('samplereport/', views.FreeFreightOpsView.as_view(), name="samplereport"),
     path('samplediagnostic/', views.FreeFreightDiagnosticView.as_view(), name="samplediagnostic"),
-    path('advancedreportdetail/<uuid:pk>/', views.FullAdvancedReportView.as_view(), name="advancedreportdetail")
+    path('advancedreportdetail/<uuid:pk>/', views.FullAdvancedReportView.as_view(), name="advancedreportdetail"),
+    path('diagnosticreportdetail/<uuid:pk>/', views.FullDiagnosticReportView.as_view(), name="diagnosticreportdetail")
 ]
 
 stripe_patterns = [

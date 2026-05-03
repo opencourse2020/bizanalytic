@@ -2617,16 +2617,16 @@ class FullAdvancedReportView(TemplateView):
             kwargs["savings_breakdown"] = report.savings_breakdown
             kwargs["network_balance"] = report.get_network_balance()
 
-            df = pd.read_csv(report.uploaded_file)
-            print(df)
-            df, df_intransit, df_unknown = clean_data(df)
-            print(df)
+            # df = pd.read_csv(report.uploaded_file)
+            # print(df)
+            # df, df_intransit, df_unknown = clean_data(df)
+            # print(df)
             # print(df.head(5))
             # print(df.info())
             # print(df.columns)
             # print(df['FuelCost_USD'].dtype)
             # print(df['Distance_Miles'].dtype)
-            df = calculate_kpis(df)
+            # df = calculate_kpis(df)
 
             # generate carrier, driver and route stats
             carrier_stats = report.carrier_statdata_json
@@ -2661,3 +2661,25 @@ class FullAdvancedReportView(TemplateView):
             # kwargs["costmiledriver"] = cost_mile_driver
 
         return super(FullAdvancedReportView, self).get_context_data(**kwargs)
+
+
+class FullDiagnosticReportView(TemplateView):
+    template_name = "logiflex/reports/health_check.html"
+
+    def get_context_data(self, **kwargs):
+        pu = self.kwargs.get("pk")
+        report = FreightOpsReport.objects.filter(id=pu).first()
+        if report:
+            kwargs["report"] = report
+            kwargs["top_actions"] = report.get_top_actions()
+            kwargs["week_actions"] = report.get_week_actions()
+            kwargs["carrier_insights"] = report.get_carriers_insights()
+            kwargs["route_insights"] = report.get_routes_insights()
+            kwargs["financial_impact"] = report.get_financial_impact()
+            kwargs["anomalies"] = report.get_anomalies()
+            kwargs["flagged_drivers"] = report.get_driver_flags()
+            kwargs["score_dimensions"] = report.get_score_dimensions()
+            kwargs["savings_breakdown"] = report.savings_breakdown
+            kwargs["network_balance"] = report.get_network_balance()
+
+        return super(FullDiagnosticReportView, self).get_context_data(**kwargs)

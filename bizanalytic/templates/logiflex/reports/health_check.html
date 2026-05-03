@@ -230,32 +230,24 @@ No detailed narrative sections are rendered — only the executive teasers.
 <div class="blur-section">
   <div class="blur-content">
     {# Tease real carrier KPIs (visible but blurred) #}
-    {% with cs=report.carrier_stats_json %}
-      {% if cs.carriers %}
         <div class="blur-kpi-grid">
-          {% with best=cs.carriers.0 worst=cs.carriers|last %}
-            <div class="blur-kpi">
-              <div class="blur-kpi-val">{{ best.ontime_rate|floatformat:1 }}%</div>
-              <div class="blur-kpi-label">Best on-time</div>
-            </div>
-            <div class="blur-kpi">
-              <div class="blur-kpi-val">${{ best.avg_freight_cost|floatformat:0 }}</div>
-              <div class="blur-kpi-label">Lowest cost</div>
-            </div>
-            {% if best.avg_cost_per_mile %}
-              <div class="blur-kpi">
-                <div class="blur-kpi-val">${{ best.avg_cost_per_mile|floatformat:2 }}</div>
-                <div class="blur-kpi-label">Cost/mile</div>
-              </div>
-            {% endif %}
-            <div class="blur-kpi">
-              <div class="blur-kpi-val">{{ worst.ontime_rate|floatformat:1 }}%</div>
-              <div class="blur-kpi-label">Worst on-time</div>
-            </div>
-          {% endwith %}
-        </div>
-      {% endif %}
-    {% endwith %}
+          <div class="blur-kpi">
+            <div class="blur-kpi-val">00.0%</div>
+            <div class="blur-kpi-label">Best on-time</div>
+          </div>
+          <div class="blur-kpi">
+            <div class="blur-kpi-val">$0,000</div>
+            <div class="blur-kpi-label">Lowest cost</div>
+          </div>
+          <div class="blur-kpi">
+            <div class="blur-kpi-val">$0.00</div>
+            <div class="blur-kpi-label">Cost/mile</div>
+          </div>
+          <div class="blur-kpi">
+            <div class="blur-kpi-val">00.0%</div>
+            <div class="blur-kpi-label">Worst on-time</div>
+          </div>
+    </div>
     <div class="blur-chart"></div>
     <div class="blur-text">
       <div class="blur-line" data-w="80"></div>
@@ -284,34 +276,29 @@ No detailed narrative sections are rendered — only the executive teasers.
 <div class="blur-section">
   <div class="blur-content">
     {# Tease real driver data (visible but blurred) #}
-    {% with ds=report.driver_stats_json %}
-      {% if ds.drivers %}
         <div class="blur-driver-grid">
-          {% for driver in ds.drivers|slice:":3" %}
-            <div class="blur-driver {% if forloop.first %}good{% elif driver.ontime_rate < 40 %}bad{% endif %}">
-              <div class="blur-driver-name">{{ driver.driver_name }}</div>
-              <div class="blur-driver-stats">
-                <div>
-                  <div class="blur-driver-stat-label">OTD</div>
-                  <div class="blur-driver-stat-val">{{ driver.ontime_rate|floatformat:0 }}%</div>
-                </div>
-                {% if driver.avg_cost_per_mile %}
-                  <div>
-                    <div class="blur-driver-stat-label">Cost/mi</div>
-                    <div class="blur-driver-stat-val">${{ driver.avg_cost_per_mile|floatformat:2 }}</div>
-                  </div>
-                {% elif driver.avg_fuel_per_mile %}
-                  <div>
-                    <div class="blur-driver-stat-label">Fuel/mi</div>
-                    <div class="blur-driver-stat-val">${{ driver.avg_fuel_per_mile|floatformat:2 }}</div>
-                  </div>
-                {% endif %}
-              </div>
+          <div class="blur-driver good">
+            <div class="blur-driver-name">Driver A</div>
+            <div class="blur-driver-stats">
+              <div><div class="blur-driver-stat-label">OTD</div><div class="blur-driver-stat-val">00%</div></div>
+              <div><div class="blur-driver-stat-label">Cost/mi</div><div class="blur-driver-stat-val">$0.00</div></div>
             </div>
-          {% endfor %}
+          </div>
+          <div class="blur-driver bad">
+            <div class="blur-driver-name">Driver B</div>
+            <div class="blur-driver-stats">
+              <div><div class="blur-driver-stat-label">OTD</div><div class="blur-driver-stat-val">00%</div></div>
+              <div><div class="blur-driver-stat-label">Fuel/mi</div><div class="blur-driver-stat-val">$0.00</div></div>
+            </div>
+          </div>
+          <div class="blur-driver bad">
+            <div class="blur-driver-name">Driver C</div>
+            <div class="blur-driver-stats">
+              <div><div class="blur-driver-stat-label">OTD</div><div class="blur-driver-stat-val">00%</div></div>
+              <div><div class="blur-driver-stat-label">Cost/mi</div><div class="blur-driver-stat-val">$0.00</div></div>
+            </div>
+          </div>
         </div>
-      {% endif %}
-    {% endwith %}
   </div>
   <div class="blur-overlay">
     <div class="blur-lock">&#128274;</div>

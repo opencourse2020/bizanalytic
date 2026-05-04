@@ -79,7 +79,7 @@ img { width: 100%; height: auto; display: block; }
   .main-menu li:hover .submenu { top: 100%; opacity: 1; visibility: visible; }
   .main-menu li.has-submenu::after { content: '\2335'; color: #ffffff; font-size: 12px; font-weight: 700; margin-left: 2px; position: relative; top: -2px; -webkit-transition: all 0.2s ease-in; -o-transition: all 0.2s ease-in; transition: all 0.2s ease-in; }
   .main-menu li a { color: #ffffff; padding: 30px 0; font-family: "Rajdhani", sans-serif; font-weight: 600; display: inline-block; text-transform: uppercase; -webkit-transition: all 0.2s ease-in; -o-transition: all 0.2s ease-in; transition: all 0.2s ease-in; }
-  .main-menu li .submenu { text-align: left; position: absolute; width: 160px; top: 110%; left: 0; background: #ffffff; border: 1px solid #CCCCCC; padding: 10px 20px; opacity: 0; visibility: hidden; -webkit-transition: all 0.2s ease-in; -o-transition: all 0.2s ease-in; transition: all 0.2s ease-in; }
+  .main-menu li .submenu { text-align: left; position: absolute; width: 200px; top: 110%; left: 0; background: #ffffff; border: 1px solid #CCCCCC; padding: 10px 20px; opacity: 0; visibility: hidden; -webkit-transition: all 0.2s ease-in; -o-transition: all 0.2s ease-in; transition: all 0.2s ease-in; }
   .main-menu li .submenu li { display: block; margin: 0; }
   .main-menu li .submenu li a { color: #0F1B24; display: block; padding: 5px 0; width: 100%; }
   .main-menu li .submenu li a:hover { color: #2ba3c4; } }

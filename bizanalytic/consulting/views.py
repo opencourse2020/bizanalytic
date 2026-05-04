@@ -103,7 +103,7 @@ def freight_book_submit(request):
     Differentiates by the hidden 'intake_type' field.
     """
     if request.method != 'POST':
-        return redirect('consulting_freight_book')
+        return redirect('consulting:consulting_freight_book')
 
     intake_type = request.POST.get('intake_type', 'discovery_call')
     name = request.POST.get('name', '').strip()
@@ -112,7 +112,7 @@ def freight_book_submit(request):
 
     if not name or not email or not company:
         messages.error(request, 'Please fill in all required fields.')
-        return redirect('consulting_freight_book')
+        return redirect('consulting:consulting_freight_book')
 
     if intake_type == 'discovery_call':
         monthly_spend = request.POST.get('monthly_spend', '')

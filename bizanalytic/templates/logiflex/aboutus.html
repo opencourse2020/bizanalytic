@@ -163,7 +163,7 @@
   line-height: 1.7;
   color: var(--cs-ink-3);
   margin-bottom: 20px;
-  max-width: 480px;
+  max-width: 680px;
 }
 .ab-contact-details {
   display: flex;
@@ -198,7 +198,7 @@ a.ab-contact-val:hover {
   flex-direction: column;
   gap: 10px;
   flex-shrink: 0;
-  padding-top: 40px;
+  {#padding-top: 40px;#}
 }
 
 /* ========== CONTAINER ========== */
@@ -368,40 +368,7 @@ a.ab-contact-val:hover {
                                     data has a <storng>PhD</storng> in the discipline and has been doing this work for over
                                     two decades.
                                 </p>
-                                <ul data-start="1056" data-end="1218">
-                                    <li data-start="1056" data-end="1092">
-                                        <p data-start="1058" data-end="1092">
-                                            Route efficiency and performance
-                                        </p>
-                                    </li>
-                                    <li data-start="1093" data-end="1138">
-                                        <p data-start="1095" data-end="1138">
-                                            Cost breakdowns and savings opportunities
-                                        </p>
-                                    </li>
-                                    <li data-start="1139" data-end="1168">
-                                        <p data-start="1141" data-end="1168">
-                                            On-time delivery analysis
-                                        </p>
-                                    </li>
-                                    <li data-start="1169" data-end="1218">
-                                        <p data-start="1171" data-end="1218">
-                                            Fleet utilization and productivity benchmarks
-                                        </p>
-                                    </li>
-                                </ul>
-                                <p data-start="1220" data-end="1384">
-                                    We go beyond numbers. Each report includes clear recommendations, so you don’t just see how your operations are performing—you understand <strong data-start="1358" data-end="1382">how to improve them.</strong>
-                                </p>
-                                <p data-start="1386" data-end="1651">
-                                    Our team brings deep expertise in <strong data-start="1420" data-end="1483">supply chain management, logistics, and advanced analytics.</strong> We combine industry knowledge with the latest in AI technology to deliver tools that help you compete, grow, and thrive in today’s fast-moving logistics environment.
-                                </p>
-                                <p data-start="1653" data-end="1893">
-                                    Whether you’re a regional freight carrier, a delivery fleet, or a growing logistics company, <strong data-start="1746" data-end="1799">our goal is to be your trusted analytics partner.</strong> We make decision-making easier, more data-driven, and always aligned with your bottom line.
-                                </p>
-                                <p data-start="1895" data-end="1943">
-                                    <strong data-start="1895" data-end="1941">BizAnalytic – Turning Data Into Decisions.</strong>
-                                </p>
+
                             <div class="about-items mt-30">
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -569,8 +536,15 @@ a.ab-contact-val:hover {
   <div class="container">
     <div class="ab-contact">
       <div class="ab-contact-content">
-        <h2 class="cs-section-title">Let's talk</h2>
-        <p class="ab-contact-desc">
+{#        <h2 class="cs-section-title">Let's talk</h2>#}
+        <div class="phone-text">
+            <img src={% static "vendor/transport/assets/images/icon-5.png" %} alt="icon">
+            <div class="text-part">
+                <span>Need Help?</span>
+                <h5 class="title"><a href="#">Contact Us</a></h5>
+            </div>
+        </div>
+          <p class="ab-contact-desc">
           Whether you're exploring LogiFlex, considering a freight audit,
           or just want to ask a question about your data — I respond to
           every email personally, usually within a few hours.

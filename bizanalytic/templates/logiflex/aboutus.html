@@ -566,7 +566,7 @@ a.ab-contact-val:hover {
 {# CONTACT                                                          #}
 {# ================================================================ #}
 <section class="cs-section">
-  <div class="cs-container">
+  <div class="container">
     <div class="ab-contact">
       <div class="ab-contact-content">
         <h2 class="cs-section-title">Let's talk</h2>
@@ -575,25 +575,33 @@ a.ab-contact-val:hover {
           or just want to ask a question about your data — I respond to
           every email personally, usually within a few hours.
         </p>
-        <div class="ab-contact-details">
-          <div class="ab-contact-row">
-            <span class="ab-contact-label">Email</span>
-            <a href="mailto:support@bizanalytic.com" class="ab-contact-val">support@bizanalytic.com</a>
+          <div class="row">
+              <div class="col-6">
+                  <div class="ab-contact-details">
+                      <div class="ab-contact-row">
+                        <span class="ab-contact-label">Email</span>
+                        <a href="mailto:support@bizanalytic.com" class="ab-contact-val">support@bizanalytic.com</a>
+                      </div>
+                      <div class="ab-contact-row">
+                        <span class="ab-contact-label">Phone</span>
+                        <a href="tel:+18324302434" class="ab-contact-val">+1 (832) 430-2434</a>
+                      </div>
+                      <div class="ab-contact-row">
+                        <span class="ab-contact-label">Location</span>
+                        <span class="ab-contact-val">The Woodlands, Texas 77380</span>
+                      </div>
+                    </div>
+              </div>
+              <div class="col-3">
+                  <div class="ab-contact-cta">
+                    <a href="{% url 'consulting:consulting_freight' %}" class="cs-btn cs-btn-primary cs-btn-lg">Book a free call</a>
+                    <a href="{% url 'logiflex:index' %}" class="cs-btn cs-btn-secondary">Try LogiFlex free</a>
+                  </div>
+              </div>
           </div>
-          <div class="ab-contact-row">
-            <span class="ab-contact-label">Phone</span>
-            <a href="tel:+18324302434" class="ab-contact-val">+1 (832) 430-2434</a>
-          </div>
-          <div class="ab-contact-row">
-            <span class="ab-contact-label">Location</span>
-            <span class="ab-contact-val">The Woodlands, Texas 77380</span>
-          </div>
-        </div>
+
       </div>
-      <div class="ab-contact-cta">
-        <a href="{% url 'consulting:consulting_freight' %}" class="cs-btn cs-btn-primary cs-btn-lg">Book a free call</a>
-        <a href="{% url 'logiflex:index' %}" class="cs-btn cs-btn-secondary">Try LogiFlex free</a>
-      </div>
+
     </div>
   </div>
 </section>

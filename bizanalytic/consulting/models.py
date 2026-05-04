@@ -1,6 +1,5 @@
 from django.db import models
-
-# Create your models here.
+from bizanalytic.logiflex.models import LogiFlexClient
 
 
 class ConsultingLead(models.Model):

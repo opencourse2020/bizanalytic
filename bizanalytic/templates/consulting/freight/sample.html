@@ -189,7 +189,7 @@
             Get the full 3-page sample as a PDF. See the exact format, 
             depth, and quality of our analysis.
           </p>
-          <form method="post" action="{% url 'consulting_freight_sample_download' %}">
+          <form method="post" action="{% url 'consulting:consulting_freight_sample_download' %}">
             {% csrf_token %}
             <div class="cs-form-group">
               <label for="sample_name" class="cs-form-label">Name</label>
@@ -221,7 +221,7 @@
             <li>LP-optimized carrier allocation</li>
             <li>30-minute video walkthrough</li>
           </ul>
-          <a href="{% url 'consulting_freight' %}" class="cs-link">Learn more about the full audit &rarr;</a>
+          <a href="{% url 'consulting:consulting_freight' %}" class="cs-link">Learn more about the full audit &rarr;</a>
         </div>
       </div>
 
@@ -239,8 +239,8 @@
       Start with a free 3-page mini-audit or book a 15-minute discovery call.
     </p>
     <div class="cs-hero-actions" style="justify-content:center">
-      <a href="{% url 'consulting_freight_book' %}" class="cs-btn cs-btn-primary">Book a call</a>
-      <a href="{% url 'consulting_freight' %}" class="cs-btn cs-btn-secondary">Back to service overview</a>
+      <a href="{% url 'consulting:consulting_freight_book' %}" class="cs-btn cs-btn-primary">Book a call</a>
+      <a href="{% url 'consulting:consulting_freight' %}" class="cs-btn cs-btn-secondary">Back to service overview</a>
     </div>
   </div>
 </section>

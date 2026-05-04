@@ -103,8 +103,11 @@
 
 /* Prose */
 .ab-prose {
-  max-width: 640px;
+  max-width: 960px;
   background-color: #fff;
+  padding: 24px;
+    border: 1px solid var(--cs-border);
+  border-radius: 10px;
 }
 .ab-prose p {
   font-size: 15px;
@@ -212,7 +215,7 @@
   line-height: 1.7;
   color: var(--cs-ink-3);
   margin-bottom: 20px;
-  max-width: 680px;
+  max-width: 720px;
 }
 .ab-contact-details {
   display: flex;
@@ -325,7 +328,7 @@ a.ab-contact-val:hover {
   .ab-creds { flex-direction: column; gap: 20px; }
   .ab-cred-sep { width: 40px; height: 1px; }
   .ab-services { grid-template-columns: 1fr; }
-  .ab-contact { flex-direction: column; gap: 24px; }
+  .ab-contact { flex-direction: column; gap: 24px; padding: 24px; }
   .ab-contact-cta { padding-top: 0; flex-direction: row; }
   .cs-cred-grid { grid-template-columns: 1fr; }
 }
@@ -378,8 +381,9 @@ a.ab-contact-val:hover {
                             <div class="section-top">
                                 <span class="sub-title">About - Adam Akaaboune</span>
                                 <p class="ab-title-line">
-                                  PhD in Engineering Science &middot; Professor of Operations &amp; Supply Chain Management &middot; Founder of BizAnalytic
+                                  PhD in Engineering Science &middot; Professor of Operations &amp; Supply Chain Management
                                 </p>
+                                <p>Founder of BizAnalytic</p>
                                 <p class="ab-location">The Woodlands, Texas</p>
                                 <h3 class="title mt-10"><span>Seamless logistics Analysis</span> for Smarter Decisions</h3>
                             </div>
@@ -596,9 +600,12 @@ a.ab-contact-val:hover {
           </div>
           <p class="ab-contact-desc">
           Whether you're exploring LogiFlex, considering a freight audit,
-          or just want to ask a question about your data — I respond to
-          every email personally, usually within a few hours.
+          or just want to ask a question about your data
         </p>
+          <p class="ab-contact-desc">
+              I respond to
+          every email personally, usually within a few hours.
+          </p>
           <div class="row justify-content-between">
               <div class="col-md-6 col-12">
                   <div class="ab-contact-details mb-4">

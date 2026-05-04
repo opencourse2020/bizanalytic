@@ -1,0 +1,391 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+    <meta name="description" content="We analyze your freight invoices and find $16K-$30K/month in hidden overpayments. Lane-level cost benchmarks, carrier rate anomalies, and a prioritized savings plan. Free mini-audit available.">
+        <meta name="author" content='"logistics performance analytics platform", "freight cost optimization tool for SMEs", "data-driven decision making in logistics", "logistics analytics SaaS for small freight companies"'>
+        <!-- page title -->
+        <title>Freight Spend Audit — Find Hidden Savings in Your Shipping Data | BizAnalytic</title>
+{% endblock head_title %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'assets/css/consulting.css' %}">
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block pdf_button %}
+{% endblock pdf_button %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+
+{% block breadcrumb %}
+     <section class="breadcrumb-area mb-1" style="padding: 80px 0 20px" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <h1 class="title">LogiFlex - </h1>
+                            <span class="title" style="color: #0cb7d6; font-size: 40px">&nbsp;{% trans "Report Details" %}</span>
+                        </div>
+                        <p style="color: white; font-size: 18px;">{% trans "Report ID:" %}&nbsp;{{ report.report_id }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+
+{# ================================================================ #}
+{# HERO                                                             #}
+{# ================================================================ #}
+<section class="cs-hero">
+  <div class="cs-container">
+    <div class="cs-hero-grid">
+      <div class="cs-hero-content">
+        <div class="cs-badge">Freight consulting</div>
+        <h1 class="cs-hero-title">
+          You're spending $200K/month on freight.<br>
+          <span class="cs-hero-accent">Do you know where it goes?</span>
+        </h1>
+        <p class="cs-hero-sub">
+          We analyze your freight invoices lane by lane, carrier by carrier, 
+          and show you exactly which routes, rates, and charges are costing 
+          more than they should — with dollar amounts on every finding.
+        </p>
+        <div class="cs-hero-actions">
+          <a href="{% url 'consulting_freight_book' %}" class="cs-btn cs-btn-primary">Book a free 15-min call</a>
+          <a href="#deliverable" class="cs-btn cs-btn-secondary">See sample report</a>
+        </div>
+        <div class="cs-hero-proof">
+          <div class="cs-proof-item">
+            <div class="cs-proof-val">$2,352</div>
+            <div class="cs-proof-label">Avg overpayment found per lane</div>
+          </div>
+          <div class="cs-proof-sep"></div>
+          <div class="cs-proof-item">
+            <div class="cs-proof-val">5 days</div>
+            <div class="cs-proof-label">From data upload to full report</div>
+          </div>
+          <div class="cs-proof-sep"></div>
+          <div class="cs-proof-item">
+            <div class="cs-proof-val">8-15%</div>
+            <div class="cs-proof-label">Typical freight cost reduction</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# THE PROBLEM                                                      #}
+{# ================================================================ #}
+<section class="cs-section">
+  <div class="cs-container">
+    <div class="cs-section-label">The problem</div>
+    <h2 class="cs-section-title">Most SMB shippers overpay on freight by 8-15%</h2>
+    <div class="cs-prose">
+      <p>
+        A shipper spending $200K/month on freight is leaking $16K-$30K/month 
+        without knowing it. The reasons are always the same: rates negotiated 
+        annually with gut feel instead of data, accessorial charges that 
+        accumulate unnoticed, carrier invoices accepted without lane-level 
+        benchmarking, and no visibility into which lanes are profitable and 
+        which are bleeding money.
+      </p>
+      <p>
+        Enterprise shippers solve this with $100K+/year audit firms like 
+        Chainalytics. But if your freight spend is $50K-$500K/month, no 
+        affordable audit option exists. Your data already sits in TMS exports 
+        or carrier invoices as CSVs. Nobody is turning those CSVs into 
+        dollar-specific savings reports. Until now.
+      </p>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# WHAT YOU GET                                                      #}
+{# ================================================================ #}
+<section class="cs-section cs-section-alt" id="deliverable">
+  <div class="cs-container">
+    <div class="cs-section-label">What you get</div>
+    <h2 class="cs-section-title">A 15-page Freight Spend Intelligence Report</h2>
+    <p class="cs-section-sub">
+      Not a dashboard. Not a spreadsheet. A branded, executive-grade analysis 
+      you can hand to your CFO on Monday morning.
+    </p>
+    <div class="cs-deliverable-grid">
+      <div class="cs-del-card">
+        <div class="cs-del-num">01</div>
+        <h3 class="cs-del-title">Lane-level cost benchmarks</h3>
+        <p class="cs-del-desc">
+          Every lane in your network, ranked by cost per mile. We show you 
+          which lanes are above fleet median and by how much — with dollar 
+          amounts, not percentages.
+        </p>
+      </div>
+      <div class="cs-del-card">
+        <div class="cs-del-num">02</div>
+        <h3 class="cs-del-title">Carrier rate anomalies</h3>
+        <p class="cs-del-desc">
+          Statistical outlier detection (IQR) flags individual invoices 
+          priced significantly above the lane median. We list each anomalous 
+          shipment with the exact overpayment amount.
+        </p>
+      </div>
+      <div class="cs-del-card">
+        <div class="cs-del-num">03</div>
+        <h3 class="cs-del-title">Accessorial charge patterns</h3>
+        <p class="cs-del-desc">
+          Detention, liftgate, residential delivery, fuel surcharges — we 
+          break down where your accessorials concentrate and which carriers 
+          charge the most per event.
+        </p>
+      </div>
+      <div class="cs-del-card">
+        <div class="cs-del-num">04</div>
+        <h3 class="cs-del-title">Carrier allocation optimization</h3>
+        <p class="cs-del-desc">
+          Linear programming model computes the optimal shipment split 
+          across your carriers. Shows exactly how many shipments to shift, 
+          from whom to whom, and the projected annual savings.
+        </p>
+      </div>
+      <div class="cs-del-card">
+        <div class="cs-del-num">05</div>
+        <h3 class="cs-del-title">Prioritized savings action plan</h3>
+        <p class="cs-del-desc">
+          Top 5 actions ranked by financial impact. Each action names the 
+          carrier, the lane, the dollar amount, and the specific step to take. 
+          Not "consider renegotiating" — "call ABC Carriers about invoice SHP-12903."
+        </p>
+      </div>
+      <div class="cs-del-card">
+        <div class="cs-del-num">06</div>
+        <h3 class="cs-del-title">30-minute video walkthrough</h3>
+        <p class="cs-del-desc">
+          A recorded walkthrough of your report by a PhD-level operations 
+          research analyst. Not a generic overview — a specific conversation 
+          about your data, your carriers, your lanes, your savings.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# HOW IT WORKS                                                      #}
+{# ================================================================ #}
+<section class="cs-section">
+  <div class="cs-container">
+    <div class="cs-section-label">How it works</div>
+    <h2 class="cs-section-title">Three steps. Five business days.</h2>
+    <div class="cs-steps">
+      <div class="cs-step">
+        <div class="cs-step-num">1</div>
+        <div class="cs-step-body">
+          <h3 class="cs-step-title">Send us your freight data</h3>
+          <p class="cs-step-desc">
+            Export 3-6 months of freight invoices from your TMS or carrier 
+            portal. CSV or Excel. We provide a template if needed. A 15-minute 
+            discovery call helps us understand your network and priorities.
+          </p>
+        </div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">2</div>
+        <div class="cs-step-body">
+          <h3 class="cs-step-title">We run the analysis</h3>
+          <p class="cs-step-desc">
+            Our operations research models process your data: linear 
+            programming for carrier allocation, IQR for invoice anomalies, 
+            activity-based costing for lane profitability, SPC control charts 
+            for performance variance. No AI hallucinations — deterministic 
+            math on your actual numbers.
+          </p>
+        </div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">3</div>
+        <div class="cs-step-body">
+          <h3 class="cs-step-title">You get your report + walkthrough</h3>
+          <p class="cs-step-desc">
+            Within 5 business days: a branded PDF report with every finding, 
+            every dollar amount, and every action step — plus a 30-minute 
+            recorded video walkthrough explaining the results and 
+            recommendations.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# CREDIBILITY                                                       #}
+{# ================================================================ #}
+<section class="cs-section cs-section-alt">
+  <div class="cs-container">
+    <div class="cs-section-label">Why us</div>
+    <h2 class="cs-section-title">Operations research, not guesswork</h2>
+    <div class="cs-cred-grid">
+      <div class="cs-cred-card">
+        <h3 class="cs-cred-title">Academic rigor</h3>
+        <p class="cs-cred-desc">
+          PhD in engineering science. 13+ years teaching operations management, 
+          supply chain, and business intelligence at the university level. 
+          Published research in optimization and analytics. Your report is 
+          written by someone who teaches this discipline, not someone who 
+          learned it last month from a YouTube video.
+        </p>
+      </div>
+      <div class="cs-cred-card">
+        <h3 class="cs-cred-title">Deterministic models</h3>
+        <p class="cs-cred-desc">
+          Every number in your report comes from mathematical models — linear 
+          programming, statistical process control, interquartile range 
+          detection, activity-based costing. The AI writes the narrative. 
+          The math produces the numbers. Nothing is estimated or hallucinated.
+        </p>
+      </div>
+      <div class="cs-cred-card">
+        <h3 class="cs-cred-title">Actionable, not decorative</h3>
+        <p class="cs-cred-desc">
+          We don't deliver dashboards you never open. We deliver a document 
+          with specific names, specific shipment IDs, and specific dollar 
+          amounts. You read it once, make 3 phone calls, and save money 
+          this month.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# PRICING                                                          #}
+{# ================================================================ #}
+<section class="cs-section" id="pricing">
+  <div class="cs-container">
+    <div class="cs-section-label">Pricing</div>
+    <h2 class="cs-section-title">Simple, transparent pricing</h2>
+    <div class="cs-pricing-grid">
+      <div class="cs-price-card">
+        <div class="cs-price-label">One-time audit</div>
+        <div class="cs-price-val">$2,500 <span>- $5,000</span></div>
+        <div class="cs-price-desc">
+          Full Freight Spend Intelligence Report + 30-min video walkthrough. 
+          Price depends on data volume and network complexity. Most clients 
+          fall at $3,500.
+        </div>
+        <ul class="cs-price-list">
+          <li>15-page branded PDF report</li>
+          <li>Lane-level cost benchmarks</li>
+          <li>Carrier anomaly detection</li>
+          <li>LP-optimized allocation plan</li>
+          <li>Prioritized savings action plan</li>
+          <li>30-minute video walkthrough</li>
+          <li>5 business day turnaround</li>
+        </ul>
+        <a href="{% url 'consulting_freight_book' %}" class="cs-btn cs-btn-primary cs-btn-full">Get started</a>
+      </div>
+      <div class="cs-price-card cs-price-card-accent">
+        <div class="cs-price-label">Monthly monitoring</div>
+        <div class="cs-price-val">$1,500 <span>- $3,000/mo</span></div>
+        <div class="cs-price-desc">
+          Monthly updated report tracking cost trends, new anomalies, and 
+          savings progress. Includes a monthly 20-minute review call.
+        </div>
+        <ul class="cs-price-list">
+          <li>Everything in the one-time audit</li>
+          <li>Monthly updated analysis</li>
+          <li>Trend tracking across periods</li>
+          <li>New anomaly alerts</li>
+          <li>Savings progress tracking</li>
+          <li>Monthly 20-min review call</li>
+          <li>Cancel anytime</li>
+        </ul>
+        <a href="{% url 'consulting_freight_book' %}" class="cs-btn cs-btn-primary cs-btn-full">Book a call</a>
+      </div>
+    </div>
+    <div class="cs-pricing-note">
+      Not ready to commit? Start with a 
+      <a href="{% url 'consulting_freight_book' %}">free 3-page mini-audit</a> 
+      — we analyze a subset of your data and show you what we find. No cost, 
+      no obligation.
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# SELF-SERVE CTA                                                    #}
+{# ================================================================ #}
+<section class="cs-section cs-section-alt">
+  <div class="cs-container">
+    <div class="cs-selfserve">
+      <div class="cs-selfserve-content">
+        <h3 class="cs-selfserve-title">Prefer to do it yourself?</h3>
+        <p class="cs-selfserve-desc">
+          LogiFlex is our self-serve platform. Upload your freight data and 
+          get an AI-powered performance report in under 60 seconds. Same 
+          analytical models, automated delivery. Starts with a free Fleet 
+          Health Check.
+        </p>
+      </div>
+      <a href="{% url 'logiflex_home' %}" class="cs-btn cs-btn-secondary">Try LogiFlex free</a>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# FINAL CTA                                                        #}
+{# ================================================================ #}
+<section class="cs-section cs-cta-section">
+  <div class="cs-container">
+    <h2 class="cs-cta-title">Find out what your freight data is hiding</h2>
+    <p class="cs-cta-sub">
+      A 15-minute call. No pitch, no pressure. We look at your situation 
+      and tell you honestly whether a freight audit would find meaningful savings.
+    </p>
+    <a href="{% url 'consulting_freight_book' %}" class="cs-btn cs-btn-primary cs-btn-lg">Book your free discovery call</a>
+  </div>
+</section>
+
+{% endblock contact_area %}
+
+{% block feature_area %}
+
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+
+{% block js_area %}
+    {{ block.super }}
+{% endblock js_area %}

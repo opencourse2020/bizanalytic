@@ -41,6 +41,7 @@ urlpatterns = [
     path('freereport/', LandingFreeView.as_view(), name="freereport"),
     path('refund-policy/', RefundPolicyView.as_view(), name="refund-policy"),
     path("logiflex/", include("bizanalytic.logiflex.urls", namespace="logiflex")),
+    path("consulting/", include("bizanalytic.consulting.urls", namespace="consulting")),
     path("", RedirectView.as_view(pattern_name="logiflex:index")),
     path("accounts/", include("allauth.urls")),
     # path("accounts/profile/", ProfileView.as_view()),

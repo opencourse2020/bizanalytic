@@ -79,7 +79,7 @@ INSTALLED_APPS = [
     'corsheaders',
     "bizanalytic.profiles.apps.ProfilesConfig",
     "bizanalytic.logiflex.apps.LogiflexConfig",
-
+    "bizanalytic.consulting.apps.ConsultingConfig",
 
 ]
 

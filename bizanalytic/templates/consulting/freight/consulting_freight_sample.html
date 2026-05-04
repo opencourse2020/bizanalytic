@@ -1,0 +1,266 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+    <meta name="description" content="Download a sample Freight Spend Intelligence Report. See exactly what our freight audit delivers: lane-level benchmarks, carrier anomalies, and a prioritized savings plan with real dollar amounts.">
+        <meta name="author" content='"logistics performance analytics platform", "freight cost optimization tool for SMEs", "data-driven decision making in logistics", "logistics analytics SaaS for small freight companies"'>
+        <!-- page title -->
+        <title>Sample Freight Spend Audit — See What We Deliver | BizAnalytic</title>
+{% endblock head_title %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'assets/css/consulting.css' %}">
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block pdf_button %}
+{% endblock pdf_button %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+
+{% block breadcrumb %}
+     <section class="breadcrumb-area mb-1" style="padding: 80px 0 20px" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <h1 class="title">LogiFlex - </h1>
+                            <span class="title" style="color: #0cb7d6; font-size: 40px">&nbsp;{% trans "Report Details" %}</span>
+                        </div>
+                        <p style="color: white; font-size: 18px;">{% trans "Report ID:" %}&nbsp;{{ report.report_id }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+
+{# ================================================================ #}
+{# HERO                                                             #}
+{# ================================================================ #}
+<section class="cs-hero cs-hero-compact">
+  <div class="cs-container">
+    <div class="cs-badge">Sample report</div>
+    <h1 class="cs-hero-title cs-hero-title-sm">
+      See exactly what you'll receive
+    </h1>
+    <p class="cs-hero-sub">
+      This is an anonymized excerpt from a real freight spend audit. 
+      The data is fictional, but the format, depth, and quality are 
+      identical to what you'll get with your own data.
+    </p>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# REPORT PREVIEW                                                    #}
+{# ================================================================ #}
+<section class="cs-section">
+  <div class="cs-container">
+    <div class="cs-sample-grid">
+
+      {# Left: preview pages #}
+      <div class="cs-sample-preview">
+        <div class="cs-preview-page">
+          <div class="cs-preview-page-label">Page 1 of 15</div>
+          <div class="cs-preview-page-content">
+            <div class="cs-preview-header">
+              <div class="cs-preview-brand">BizAnalytic</div>
+              <div class="cs-preview-title">Freight Spend Intelligence Report</div>
+              <div class="cs-preview-sub">Sample Corp — Q3 2025 Analysis</div>
+            </div>
+            <div class="cs-preview-money">
+              <div class="cs-preview-money-label">Identified annual savings</div>
+              <div class="cs-preview-money-val">$38,420</div>
+            </div>
+            <div class="cs-preview-actions">
+              <div class="cs-preview-action">
+                <span class="cs-preview-action-rank">01</span>
+                <span class="cs-preview-action-text">Shift 40% of Carrier B volume to Carrier A on the Dallas-Houston lane</span>
+                <span class="cs-preview-action-val">$14,200/yr</span>
+              </div>
+              <div class="cs-preview-action">
+                <span class="cs-preview-action-rank">02</span>
+                <span class="cs-preview-action-text">Dispute 6 flagged invoices totaling $3,840 in potential overcharges</span>
+                <span class="cs-preview-action-val">$11,520/yr</span>
+              </div>
+              <div class="cs-preview-action">
+                <span class="cs-preview-action-rank">03</span>
+                <span class="cs-preview-action-text">Consolidate the Austin-Tulsa lane or reprice above $2.10/mi</span>
+                <span class="cs-preview-action-val">$8,400/yr</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-preview-page">
+          <div class="cs-preview-page-label">Page 4 of 15 — Carrier analysis</div>
+          <div class="cs-preview-page-content">
+            <div class="cs-preview-section-title">Carrier performance</div>
+            <div class="cs-preview-kpi-row">
+              <div class="cs-preview-kpi">
+                <div class="cs-preview-kpi-val">72.4%</div>
+                <div class="cs-preview-kpi-label">Best on-time</div>
+              </div>
+              <div class="cs-preview-kpi">
+                <div class="cs-preview-kpi-val">$1.82/mi</div>
+                <div class="cs-preview-kpi-label">Lowest CPM</div>
+              </div>
+              <div class="cs-preview-kpi">
+                <div class="cs-preview-kpi-val">41.3%</div>
+                <div class="cs-preview-kpi-label">Worst on-time</div>
+              </div>
+              <div class="cs-preview-kpi">
+                <div class="cs-preview-kpi-val">$2.47/mi</div>
+                <div class="cs-preview-kpi-label">Highest CPM</div>
+              </div>
+            </div>
+            <div class="cs-preview-text-block">
+              <div class="cs-preview-text-line" data-w="90"></div>
+              <div class="cs-preview-text-line" data-w="78"></div>
+              <div class="cs-preview-text-line" data-w="85"></div>
+              <div class="cs-preview-text-line" data-w="60"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-preview-page">
+          <div class="cs-preview-page-label">Page 12 of 15 — Flagged invoices</div>
+          <div class="cs-preview-page-content">
+            <div class="cs-preview-section-title">Cost anomalies</div>
+            <div class="cs-preview-table">
+              <div class="cs-preview-table-head">
+                <span>Shipment</span>
+                <span>Lane</span>
+                <span>Actual</span>
+                <span>Median</span>
+                <span>Excess</span>
+              </div>
+              <div class="cs-preview-table-row">
+                <span>SHP-4021</span>
+                <span>DAL → HOU</span>
+                <span>$1,420</span>
+                <span>$980</span>
+                <span class="cs-preview-excess">+$440</span>
+              </div>
+              <div class="cs-preview-table-row">
+                <span>SHP-4087</span>
+                <span>AUS → OKC</span>
+                <span>$2,812</span>
+                <span>$1,140</span>
+                <span class="cs-preview-excess">+$1,672</span>
+              </div>
+              <div class="cs-preview-table-row">
+                <span>SHP-4103</span>
+                <span>HOU → TUL</span>
+                <span>$1,680</span>
+                <span>$1,200</span>
+                <span class="cs-preview-excess">+$480</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {# Right: download form #}
+      <div class="cs-sample-form-wrapper">
+        <div class="cs-sample-form">
+          <h3 class="cs-sample-form-title">Download the sample report</h3>
+          <p class="cs-sample-form-desc">
+            Get the full 3-page sample as a PDF. See the exact format, 
+            depth, and quality of our analysis.
+          </p>
+          <form method="post" action="{% url 'consulting_freight_sample_download' %}">
+            {% csrf_token %}
+            <div class="cs-form-group">
+              <label for="sample_name" class="cs-form-label">Name</label>
+              <input type="text" id="sample_name" name="name" required class="cs-form-input" placeholder="Your name">
+            </div>
+            <div class="cs-form-group">
+              <label for="sample_email" class="cs-form-label">Work email</label>
+              <input type="email" id="sample_email" name="email" required class="cs-form-input" placeholder="you@company.com">
+            </div>
+            <div class="cs-form-group">
+              <label for="sample_company" class="cs-form-label">Company <span class="cs-form-optional">(optional)</span></label>
+              <input type="text" id="sample_company" name="company" class="cs-form-input" placeholder="Your company">
+            </div>
+            <button type="submit" class="cs-btn cs-btn-primary cs-btn-full">Download sample PDF</button>
+          </form>
+          <p class="cs-sample-form-note">
+            We'll email you the PDF and may follow up once to see if a 
+            freight audit would be useful for your operation. No spam, 
+            no sequences.
+          </p>
+        </div>
+
+        <div class="cs-sample-includes">
+          <div class="cs-sample-includes-title">The full audit includes</div>
+          <ul class="cs-sample-includes-list">
+            <li>15 pages (sample shows 3)</li>
+            <li>Your actual carrier names and lanes</li>
+            <li>Dollar amounts on every finding</li>
+            <li>LP-optimized carrier allocation</li>
+            <li>30-minute video walkthrough</li>
+          </ul>
+          <a href="{% url 'consulting_freight' %}" class="cs-link">Learn more about the full audit &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# CTA                                                              #}
+{# ================================================================ #}
+<section class="cs-section cs-cta-section">
+  <div class="cs-container">
+    <h2 class="cs-cta-title">Ready to see your own data?</h2>
+    <p class="cs-cta-sub">
+      Start with a free 3-page mini-audit or book a 15-minute discovery call.
+    </p>
+    <div class="cs-hero-actions" style="justify-content:center">
+      <a href="{% url 'consulting_freight_book' %}" class="cs-btn cs-btn-primary">Book a call</a>
+      <a href="{% url 'consulting_freight' %}" class="cs-btn cs-btn-secondary">Back to service overview</a>
+    </div>
+  </div>
+</section>
+
+{% endblock contact_area %}
+
+{% block feature_area %}
+
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+
+{% block js_area %}
+    {{ block.super }}
+{% endblock js_area %}

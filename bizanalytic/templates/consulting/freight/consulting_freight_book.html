@@ -1,0 +1,333 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+    <meta name="description" content="Book a free 15-minute discovery call to learn if a freight spend audit can find savings in your shipping data. Or request a free 3-page mini-audit of your freight invoices.">
+        <meta name="author" content='"logistics performance analytics platform", "freight cost optimization tool for SMEs", "data-driven decision making in logistics", "logistics analytics SaaS for small freight companies"'>
+        <!-- page title -->
+        <title>Book a Freight Spend Audit — Free Discovery Call | BizAnalytic</title>
+{% endblock head_title %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'assets/css/consulting.css' %}">
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block pdf_button %}
+{% endblock pdf_button %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+
+{% block breadcrumb %}
+     <section class="breadcrumb-area mb-1" style="padding: 80px 0 20px" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <h1 class="title">LogiFlex - </h1>
+                            <span class="title" style="color: #0cb7d6; font-size: 40px">&nbsp;{% trans "Report Details" %}</span>
+                        </div>
+                        <p style="color: white; font-size: 18px;">{% trans "Report ID:" %}&nbsp;{{ report.report_id }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+
+{# ================================================================ #}
+{# HERO                                                             #}
+{# ================================================================ #}
+<section class="cs-hero cs-hero-compact">
+  <div class="cs-container">
+    <div class="cs-badge">Get started</div>
+    <h1 class="cs-hero-title cs-hero-title-sm">
+      Let's find out what your freight data is hiding
+    </h1>
+    <p class="cs-hero-sub">
+      Two options: book a 15-minute call to discuss your situation, or 
+      send us a sample of your freight data and we'll run a free mini-audit.
+    </p>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# TWO INTAKE OPTIONS                                               #}
+{# ================================================================ #}
+<section class="cs-section">
+  <div class="cs-container">
+    <div class="cs-intake-grid">
+
+      {# Option 1: Discovery call #}
+      <div class="cs-intake-card">
+        <div class="cs-intake-badge">Option 1</div>
+        <h2 class="cs-intake-title">Book a discovery call</h2>
+        <p class="cs-intake-desc">
+          A 15-minute conversation. No pitch, no pressure. We look at your 
+          situation and tell you honestly whether a freight audit would find 
+          meaningful savings for your operation.
+        </p>
+        <div class="cs-intake-details">
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Duration</span>
+            <span>15 minutes</span>
+          </div>
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Format</span>
+            <span>Zoom or phone</span>
+          </div>
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Cost</span>
+            <span>Free</span>
+          </div>
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Prep needed</span>
+            <span>None</span>
+          </div>
+        </div>
+
+        <form method="post" action="{% url 'consulting_freight_book_submit' %}" class="cs-intake-form">
+          {% csrf_token %}
+          <input type="hidden" name="intake_type" value="discovery_call">
+
+          <div class="cs-form-group">
+            <label for="call_name" class="cs-form-label">Your name</label>
+            <input type="text" id="call_name" name="name" required class="cs-form-input">
+          </div>
+
+          <div class="cs-form-group">
+            <label for="call_email" class="cs-form-label">Work email</label>
+            <input type="email" id="call_email" name="email" required class="cs-form-input">
+          </div>
+
+          <div class="cs-form-group">
+            <label for="call_company" class="cs-form-label">Company name</label>
+            <input type="text" id="call_company" name="company" required class="cs-form-input">
+          </div>
+
+          <div class="cs-form-group">
+            <label for="call_spend" class="cs-form-label">Estimated monthly freight spend</label>
+            <select id="call_spend" name="monthly_spend" required class="cs-form-input">
+              <option value="">Select range</option>
+              <option value="under_50k">Under $50K/month</option>
+              <option value="50k_100k">$50K - $100K/month</option>
+              <option value="100k_250k">$100K - $250K/month</option>
+              <option value="250k_500k">$250K - $500K/month</option>
+              <option value="over_500k">Over $500K/month</option>
+              <option value="not_sure">Not sure</option>
+            </select>
+          </div>
+
+          <div class="cs-form-group">
+            <label for="call_challenge" class="cs-form-label">
+              What's your biggest freight challenge right now?
+              <span class="cs-form-optional">(optional)</span>
+            </label>
+            <textarea id="call_challenge" name="challenge" rows="3" class="cs-form-input cs-form-textarea" placeholder="e.g., rates keep climbing, no visibility into which carriers are cheapest, too many late deliveries..."></textarea>
+          </div>
+
+          <button type="submit" class="cs-btn cs-btn-primary cs-btn-full">Book my call</button>
+        </form>
+
+        <p class="cs-intake-note">
+          We'll respond within 1 business day with available times.
+        </p>
+      </div>
+
+      {# Option 2: Free mini-audit #}
+      <div class="cs-intake-card cs-intake-card-alt">
+        <div class="cs-intake-badge cs-intake-badge-accent">Option 2</div>
+        <h2 class="cs-intake-title">Request a free mini-audit</h2>
+        <p class="cs-intake-desc">
+          Send us 1-3 months of freight invoice data. We'll run a quick 
+          analysis and send you a free 3-page summary of what we find — 
+          top savings opportunities, biggest anomalies, and a Fleet Health 
+          Score. No cost, no obligation.
+        </p>
+        <div class="cs-intake-details">
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Deliverable</span>
+            <span>3-page PDF summary</span>
+          </div>
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Turnaround</span>
+            <span>3 business days</span>
+          </div>
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Cost</span>
+            <span>Free</span>
+          </div>
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Data needed</span>
+            <span>CSV or Excel freight invoices</span>
+          </div>
+        </div>
+
+        <form method="post" action="{% url 'consulting_freight_book_submit' %}" enctype="multipart/form-data" class="cs-intake-form">
+          {% csrf_token %}
+          <input type="hidden" name="intake_type" value="mini_audit">
+
+          <div class="cs-form-group">
+            <label for="audit_name" class="cs-form-label">Your name</label>
+            <input type="text" id="audit_name" name="name" required class="cs-form-input">
+          </div>
+
+          <div class="cs-form-group">
+            <label for="audit_email" class="cs-form-label">Work email</label>
+            <input type="email" id="audit_email" name="email" required class="cs-form-input">
+          </div>
+
+          <div class="cs-form-group">
+            <label for="audit_company" class="cs-form-label">Company name</label>
+            <input type="text" id="audit_company" name="company" required class="cs-form-input">
+          </div>
+
+          <div class="cs-form-group">
+            <label for="audit_carriers" class="cs-form-label">
+              How many carriers do you use?
+            </label>
+            <select id="audit_carriers" name="carrier_count" required class="cs-form-input">
+              <option value="">Select</option>
+              <option value="1-3">1-3 carriers</option>
+              <option value="4-8">4-8 carriers</option>
+              <option value="9-15">9-15 carriers</option>
+              <option value="15+">15+ carriers</option>
+            </select>
+          </div>
+
+          <div class="cs-form-group">
+            <label for="audit_file" class="cs-form-label">Upload freight data</label>
+            <input type="file" id="audit_file" name="freight_data" accept=".csv,.xlsx,.xls" required class="cs-form-input cs-form-file">
+            <p class="cs-form-hint">
+              CSV or Excel. 1-3 months of freight invoices. 
+              <a href="{% url 'consulting_freight' %}#deliverable">Need a template?</a>
+            </p>
+          </div>
+
+          <button type="submit" class="cs-btn cs-btn-primary cs-btn-full">Submit for free mini-audit</button>
+        </form>
+
+        <p class="cs-intake-note">
+          Your data is encrypted in transit and at rest. We analyze it, 
+          deliver your mini-audit, and delete the raw data within 30 days 
+          unless you engage us for a full audit.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# WHAT HAPPENS NEXT                                                #}
+{# ================================================================ #}
+<section class="cs-section cs-section-alt">
+  <div class="cs-container">
+    <div class="cs-section-label">What happens next</div>
+    <h2 class="cs-section-title">After you submit</h2>
+    <div class="cs-steps">
+      <div class="cs-step">
+        <div class="cs-step-num">1</div>
+        <div class="cs-step-body">
+          <h3 class="cs-step-title">We acknowledge within 1 business day</h3>
+          <p class="cs-step-desc">
+            For discovery calls: we reply with 3-4 available time slots. 
+            For mini-audits: we confirm receipt and flag any data format 
+            issues immediately.
+          </p>
+        </div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">2</div>
+        <div class="cs-step-body">
+          <h3 class="cs-step-title">We deliver the mini-audit or conduct the call</h3>
+          <p class="cs-step-desc">
+            Mini-audits take 3 business days. Discovery calls are 15 minutes 
+            — we'll ask about your network, your carriers, and your 
+            biggest pain point.
+          </p>
+        </div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">3</div>
+        <div class="cs-step-body">
+          <h3 class="cs-step-title">You decide</h3>
+          <p class="cs-step-desc">
+            If the mini-audit or call reveals meaningful savings potential, 
+            we'll propose a full engagement with a fixed price. If it 
+            doesn't, we'll tell you — and you'll have a free report 
+            you can keep.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# TRUST                                                             #}
+{# ================================================================ #}
+<section class="cs-section">
+  <div class="cs-container">
+    <div class="cs-trust-bar">
+      <div class="cs-trust-item">
+        <div class="cs-trust-val">PhD</div>
+        <div class="cs-trust-label">Engineering science</div>
+      </div>
+      <div class="cs-trust-sep"></div>
+      <div class="cs-trust-item">
+        <div class="cs-trust-val">13+</div>
+        <div class="cs-trust-label">Years academic</div>
+      </div>
+      <div class="cs-trust-sep"></div>
+      <div class="cs-trust-item">
+        <div class="cs-trust-val">OR</div>
+        <div class="cs-trust-label">Operations research models</div>
+      </div>
+      <div class="cs-trust-sep"></div>
+      <div class="cs-trust-item">
+        <div class="cs-trust-val">5-day</div>
+        <div class="cs-trust-label">Turnaround guarantee</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock contact_area %}
+
+{% block feature_area %}
+
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+
+{% block js_area %}
+    {{ block.super }}
+{% endblock js_area %}

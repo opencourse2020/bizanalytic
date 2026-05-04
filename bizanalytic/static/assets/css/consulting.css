@@ -24,9 +24,10 @@
   --cs-bg-warm: #fafaf8;
   --cs-border: #e5e5ea;
   --cs-border-lt: #efeff2;
-  --cs-accent: #1a4fbd;
-  --cs-accent-lt: #eef3fc;
-  --cs-accent-dk: #0f3a8a;
+  --cs-accent: #0cb7d6;
+  --cs-accent-dark: #0394ae ;
+  --cs-accent-lt: #e3fbff;
+  --cs-accent-dk: #014856;
   --cs-green: #047857;
   --cs-green-lt: #ecfdf5;
   --cs-red: #b91c1c;
@@ -139,7 +140,7 @@
   text-align: center;
 }
 .cs-btn-primary {
-  background: var(--cs-accent);
+  background: var(--cs-accent-dark);
   color: #fff;
 }
 .cs-btn-primary:hover {

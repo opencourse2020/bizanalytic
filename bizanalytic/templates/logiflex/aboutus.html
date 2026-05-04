@@ -10,6 +10,207 @@
 
 {% block css %}
     {{ block.super }}
+    <style>
+/* ========== ABOUT PAGE SPECIFIC ========== */
+
+/* Hero */
+.ab-hero {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.ab-photo-wrap {
+  flex-shrink: 0;
+}
+.ab-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--cs-border);
+}
+.ab-hero-content {
+  flex: 1;
+}
+.ab-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--cs-ink);
+  letter-spacing: -0.3px;
+  margin-bottom: 4px;
+}
+.ab-title-line {
+  font-size: 14px;
+  color: var(--cs-ink-3);
+  line-height: 1.5;
+  margin-bottom: 2px;
+}
+.ab-location {
+  font-family: var(--cs-mono);
+  font-size: 11px;
+  color: var(--cs-ink-4);
+  letter-spacing: 0.5px;
+}
+
+/* Prose */
+.ab-prose {
+  max-width: 640px;
+}
+.ab-prose p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--cs-ink-2);
+  margin-bottom: 18px;
+}
+.ab-prose p:last-child {
+  margin-bottom: 0;
+}
+
+/* Credentials bar */
+.ab-creds {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  padding: 8px 0;
+}
+.ab-cred {
+  text-align: center;
+}
+.ab-cred-val {
+  font-family: var(--cs-mono);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--cs-ink);
+  line-height: 1.1;
+}
+.ab-cred-label {
+  font-size: 12px;
+  color: var(--cs-ink-3);
+  margin-top: 4px;
+  max-width: 180px;
+}
+.ab-cred-sep {
+  width: 1px;
+  height: 48px;
+  background: var(--cs-border);
+}
+
+/* Service cards */
+.ab-services {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.ab-service-card {
+  padding: 24px;
+  border: 1px solid var(--cs-border);
+  border-radius: 12px;
+  background: var(--cs-bg);
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  display: block;
+}
+.ab-service-card:hover {
+  border-color: var(--cs-accent);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.ab-service-badge {
+  display: inline-block;
+  font-family: var(--cs-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.ab-service-badge-green { background: var(--cs-green-lt); color: var(--cs-green); }
+.ab-service-badge-blue { background: var(--cs-accent-lt); color: var(--cs-accent); }
+.ab-service-badge-red { background: var(--cs-red-lt); color: var(--cs-red); }
+.ab-service-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--cs-ink);
+  margin-bottom: 6px;
+}
+.ab-service-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--cs-ink-3);
+  margin-bottom: 12px;
+}
+.ab-service-price {
+  font-family: var(--cs-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cs-ink-2);
+}
+
+/* Contact */
+.ab-contact {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+}
+.ab-contact-content {
+  flex: 1;
+}
+.ab-contact-desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--cs-ink-3);
+  margin-bottom: 20px;
+  max-width: 480px;
+}
+.ab-contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ab-contact-row {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+}
+.ab-contact-label {
+  font-family: var(--cs-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--cs-ink-4);
+  width: 70px;
+  flex-shrink: 0;
+}
+.ab-contact-val {
+  font-size: 14px;
+  color: var(--cs-ink-2);
+  text-decoration: none;
+}
+a.ab-contact-val:hover {
+  color: var(--cs-accent);
+}
+.ab-contact-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+  padding-top: 40px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ab-hero { flex-direction: column; text-align: center; }
+  .ab-name { font-size: 24px; }
+  .ab-creds { flex-direction: column; gap: 20px; }
+  .ab-cred-sep { width: 40px; height: 1px; }
+  .ab-services { grid-template-columns: 1fr; }
+  .ab-contact { flex-direction: column; gap: 24px; }
+  .ab-contact-cta { padding-top: 0; flex-direction: row; }
+}
+</style>
 {% endblock css %}
 
 {% block header_left %}
@@ -55,17 +256,53 @@
                     <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s">
                         <div class="about-content">
                             <div class="section-top">
-                                <span class="sub-title">About us</span>
+                                <span class="sub-title">About - Adam Akaaboune</span>
+                                <p class="ab-title-line">
+                                  PhD in Engineering Science &middot; Professor of Operations &amp; Supply Chain Management &middot; Founder of BizAnalytic
+                                </p>
+                                <p class="ab-location">The Woodlands, Texas</p>
                                 <h3 class="title mt-10"><span>Seamless logistics Analysis</span> for Smarter Decisions</h3>
                             </div>
                             <p class="mt-20" data-start="277" data-end="596">
-                                    At <strong data-start="280" data-end="295">BizAnalytic</strong>, we believe that small and medium freight operators deserve the same powerful tools that large logistics companies use—without the steep costs or technical complexity. That’s why we created <strong data-start="486" data-end="500">FreightOps(Part of LogiFlex Tools)</strong>, an AI-powered reporting platform designed specifically for freight and logistics businesses.
+                                    I've spent 13 years teaching operations management, supply chain, and
+                                    business intelligence at the university level. Before that, I spent
+                                    8 years in industry — working inside logistics operations, manufacturing
+                                    plants, and consulting engagements where I saw the same problem over and
+                                    over again.
                             </p>
                                 <p data-start="598" data-end="907">
-                                    Our mission is simple: <strong data-start="621" data-end="686">make freight operations smarter, faster, and more profitable.</strong> We know that managing routes, deliveries, and costs is already challenging enough. You shouldn’t have to spend hours crunching spreadsheets or investing in enterprise systems that are too expensive and over-engineered.
+                                    Small and mid-size operators are drowning in data they never look at.
+                                    Their TMS exports sit in folders. Their carrier invoices pile up in
+                                    spreadsheets. They negotiate rates with gut feel, not evidence. They
+                                    lose money on lanes they don't know are unprofitable. They keep sending
+                                    volume to carriers that deliver late 40% of the time. Not because they're
+                                    bad at their jobs — because nobody gives them the tools to see what's
+                                    happening.
                                 </p>
                                 <p data-start="909" data-end="1055">
-                                    With FreightOps, all it takes is a single upload of your route data. Within minutes, you receive a <strong data-start="1008" data-end="1052">professional report packed with insights</strong>:
+                                    The enterprise world has Chainalytics, FourKites, project44 — analytics
+                                    platforms that cost $50K-$200K a year. They're built for shippers moving
+                                    $10M+ in freight. If you're running a 15-truck fleet or a mid-size
+                                    brokerage, those tools aren't even aware you exist. You're left with
+                                    Excel and instinct.
+                                </p>
+                                <p data-start="909" data-end="1055">
+                                    I built <strong>BizAnalytic</strong> to fix that. Not with a dashboard you'll never open.
+                                    With reports that tell you exactly what's wrong, exactly what to do about
+                                    it, and exactly how much money each action saves. The analytics behind
+                                    every report come from the same operations research models I teach in
+                                    graduate courses — linear programming for carrier allocation, statistical
+                                    process control for driver performance, interquartile range detection for
+                                    invoice anomalies, activity-based costing for lane profitability. The AI
+                                    writes the narrative. The math produces the numbers. Nothing is estimated
+                                    or hallucinated.
+                                </p>
+                                <p data-start="909" data-end="1055">
+                                    I'm a sole founder. I wrote every model. I designed every report. When
+                                    you email support@bizanalytic.com, I'm the one who answers. That's not
+                                    a limitation — it's a guarantee that the person analyzing your freight
+                                    data has a <storng>PhD</storng> in the discipline and has been doing this work for over
+                                    two decades.
                                 </p>
                                 <ul data-start="1056" data-end="1218">
                                     <li data-start="1056" data-end="1092">
@@ -124,6 +361,32 @@
                                 </div>
                             </div>
 
+                            <section class="cs-section cs-section-alt">
+                          <div class="cs-container">
+                            <div class="ab-creds">
+                              <div class="ab-cred">
+                                <div class="ab-cred-val">PhD</div>
+                                <div class="ab-cred-label">Engineering science</div>
+                              </div>
+                              <div class="ab-cred-sep"></div>
+                              <div class="ab-cred">
+                                <div class="ab-cred-val">13+</div>
+                                <div class="ab-cred-label">Years teaching operations management, supply chain, and BI</div>
+                              </div>
+                              <div class="ab-cred-sep"></div>
+                              <div class="ab-cred">
+                                <div class="ab-cred-val">8+</div>
+                                <div class="ab-cred-label">Years industrial and consulting experience</div>
+                              </div>
+                              <div class="ab-cred-sep"></div>
+                              <div class="ab-cred">
+                                <div class="ab-cred-val">OR</div>
+                                <div class="ab-cred-label">Linear programming, SPC, IQR, ABC — every model hand-built</div>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+
                             <div class="button-group mt-30">
                                 <div class="phone-text">
                                     <img src={% static "vendor/transport/assets/images/icon-5.png" %} alt="icon">
@@ -149,6 +412,128 @@
                 </div>
             </div>
         </section>
+    {# ================================================================ #}
+{# THREE SERVICES                                                   #}
+{# ================================================================ #}
+<section class="cs-section">
+  <div class="cs-container">
+    <div class="cs-section-label">What I offer</div>
+    <h2 class="cs-section-title">One analytical spine. Three ways to use it.</h2>
+    <p class="cs-section-sub">
+      Every service runs the same operations research models on your data.
+      The difference is how deeply you want me involved.
+    </p>
+
+    <div class="ab-services">
+
+      <a href="{% url 'logiflex:index' %}" class="ab-service-card">
+        <div class="ab-service-badge ab-service-badge-green">Self-serve</div>
+        <h3 class="ab-service-name">LogiFlex</h3>
+        <p class="ab-service-desc">
+          Upload your freight CSV. Get an AI-powered FreightOps Performance
+          Report in under 60 seconds. Fleet Health Score, driver profiles,
+          carrier optimization, anomaly detection, and a prioritized savings
+          action plan. Starts with a free diagnostic.
+        </p>
+        <div class="ab-service-price">Free / $49 / $99 per month</div>
+      </a>
+
+      <a href="{% url 'consulting:consulting_freight' %}" class="ab-service-card">
+        <div class="ab-service-badge ab-service-badge-blue">White-glove</div>
+        <h3 class="ab-service-name">Freight spend audit</h3>
+        <p class="ab-service-desc">
+          Send me your freight invoices. I run a full analysis and deliver a
+          15-page Freight Spend Intelligence Report with a 30-minute video
+          walkthrough. Specific carriers, specific lanes, specific dollar
+          amounts. I do the work. You make the calls.
+        </p>
+        <div class="ab-service-price">$2,500 - $5,000 per engagement</div>
+      </a>
+
+      <a href="{% url 'consulting:consulting_freight' %}" class="ab-service-card">
+        <div class="ab-service-badge ab-service-badge-red">E-commerce</div>
+        <h3 class="ab-service-name">Shipping cost audit</h3>
+        <p class="ab-service-desc">
+          For DTC brands overpaying on UPS, FedEx, and USPS. I analyze your
+          Shopify or ShipStation export: zone distribution, surcharge patterns,
+          dim-weight penalties, and a negotiation playbook with specific rate
+          targets per zone and weight tier.
+        </p>
+        <div class="ab-service-price">$1,500 - $3,000 per audit</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# THE APPROACH                                                     #}
+{# ================================================================ #}
+<section class="cs-section cs-section-alt">
+  <div class="cs-container">
+    <div class="cs-section-label">How I work</div>
+    <h2 class="cs-section-title">Math first. AI second. Always specific.</h2>
+    <div class="ab-prose">
+      <p>
+        Every analysis starts with deterministic models — the kind I teach in
+        graduate-level operations research courses. Linear programming computes
+        your optimal carrier allocation. Statistical process control flags drivers
+        whose performance is out of control. Interquartile range detection catches
+        invoice anomalies. Activity-based costing reveals your true lane-by-lane
+        profitability.
+      </p>
+      <p>
+        The AI layer comes last. After the math has produced every number, an LLM
+        writes the narrative — translating statistical output into plain language
+        a fleet manager can act on without a data science degree. The AI never
+        invents a number. It narrates the ones the models computed.
+      </p>
+      <p>
+        This matters because it means every dollar amount in your report is
+        traceable to a specific model, a specific calculation, and your specific
+        data. When I tell you "shifting 35% of ABC Carriers volume to XYZ Freight
+        saves $18,240/year," that number comes from a linear program — not from
+        a language model guessing.
+      </p>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# CONTACT                                                          #}
+{# ================================================================ #}
+<section class="cs-section">
+  <div class="cs-container">
+    <div class="ab-contact">
+      <div class="ab-contact-content">
+        <h2 class="cs-section-title">Let's talk</h2>
+        <p class="ab-contact-desc">
+          Whether you're exploring LogiFlex, considering a freight audit,
+          or just want to ask a question about your data — I respond to
+          every email personally, usually within a few hours.
+        </p>
+        <div class="ab-contact-details">
+          <div class="ab-contact-row">
+            <span class="ab-contact-label">Email</span>
+            <a href="mailto:support@bizanalytic.com" class="ab-contact-val">support@bizanalytic.com</a>
+          </div>
+          <div class="ab-contact-row">
+            <span class="ab-contact-label">Phone</span>
+            <a href="tel:+18324302434" class="ab-contact-val">+1 (832) 430-2434</a>
+          </div>
+          <div class="ab-contact-row">
+            <span class="ab-contact-label">Location</span>
+            <span class="ab-contact-val">The Woodlands, Texas 77380</span>
+          </div>
+        </div>
+      </div>
+      <div class="ab-contact-cta">
+        <a href="{% url 'consulting:consulting_freight' %}" class="cs-btn cs-btn-primary cs-btn-lg">Book a free call</a>
+        <a href="{% url 'logiflex:index' %}" class="cs-btn cs-btn-secondary">Try LogiFlex free</a>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock contact_area %}
 
 {% block feature_area %}

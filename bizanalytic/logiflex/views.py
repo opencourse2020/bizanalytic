@@ -2119,7 +2119,7 @@ class UpdateGasPricesView(UserPassesTestMixin, CreateView, JsonFormMixin):
 
 
 class AboutUsView(TemplateView):
-    template_name = "logiflex/about-us.html"
+    template_name = "logiflex/aboutus.html"
 
 
 class PaymentSuccessfulView(RedirectView):

@@ -507,7 +507,7 @@ a.ab-contact-val:hover {
       The difference is how deeply you want me involved.
     </p>
     <div class="cs-cred-grid">
-      <div class="cs-cred-card">
+      <div class="cs-cred-card  wow fadeInLeft" data-wow-delay=".2s" >
           <div class="ab-service-badge ab-service-badge-green">Self-serve</div>
           <a href="{% url 'logiflex:index' %}">
               <h3 class="cs-cred-title">LogiFlex</h3></a>
@@ -519,7 +519,7 @@ a.ab-contact-val:hover {
         </p>
           <div class="ab-service-price">Free / $49 / $99 per month</div>
       </div>
-        <div class="cs-cred-card">
+        <div class="cs-cred-card wow fadeInLeft" data-wow-delay=".2s">
             <div class="ab-service-badge ab-service-badge-blue">White-glove</div>
             <a href="{% url 'consulting:consulting_freight' %}">
                 <h3 class="cs-cred-title">Freight spend audit</h3></a>
@@ -531,7 +531,7 @@ a.ab-contact-val:hover {
         </p>
         <div class="ab-service-price">$2,500 - $5,000 per engagement</div>
           </div>
-      <div class="cs-cred-card">
+      <div class="cs-cred-card wow fadeInRight" data-wow-delay=".2s">
           <div class="ab-service-badge ab-service-badge-red">E-commerce</div>
           <a href="{% url 'consulting:consulting_freight' %}" >
               <h3 class="cs-cred-title">Shipping cost audit</h3></a>
@@ -598,13 +598,12 @@ a.ab-contact-val:hover {
                   </div>
               </div>
           </div>
-          <p class="ab-contact-desc">
+          <p class="ab-contact-desc mb-0" >
           Whether you're exploring LogiFlex, considering a freight audit,
           or just want to ask a question about your data
         </p>
           <p class="ab-contact-desc">
-              I respond to
-          every email personally, usually within a few hours.
+              I respond to every email personally, usually within a few hours.
           </p>
           <div class="row justify-content-between">
               <div class="col-md-6 col-12">

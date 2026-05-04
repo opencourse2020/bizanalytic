@@ -415,52 +415,51 @@ a.ab-contact-val:hover {
     {# ================================================================ #}
 {# THREE SERVICES                                                   #}
 {# ================================================================ #}
-<section class="cs-section">
+<section class="cs-section cs-section-alt">
   <div class="cs-container">
     <div class="cs-section-label">What I offer</div>
     <h2 class="cs-section-title">One analytical spine. Three ways to use it.</h2>
-    <p class="cs-section-sub">
+      <p class="cs-section-sub">
       Every service runs the same operations research models on your data.
       The difference is how deeply you want me involved.
     </p>
-
-    <div class="ab-services">
-
-      <a href="{% url 'logiflex:index' %}" class="ab-service-card">
-        <div class="ab-service-badge ab-service-badge-green">Self-serve</div>
-        <h3 class="ab-service-name">LogiFlex</h3>
-        <p class="ab-service-desc">
+    <div class="cs-cred-grid">
+      <div class="cs-cred-card">
+          <div class="ab-service-badge ab-service-badge-green">Self-serve</div>
+          <a href="{% url 'logiflex:index' %}">
+              <h3 class="cs-cred-title">LogiFlex</h3></a>
+        <p class="cs-cred-desc">
           Upload your freight CSV. Get an AI-powered FreightOps Performance
           Report in under 60 seconds. Fleet Health Score, driver profiles,
           carrier optimization, anomaly detection, and a prioritized savings
           action plan. Starts with a free diagnostic.
         </p>
-        <div class="ab-service-price">Free / $49 / $99 per month</div>
-      </a>
-
-      <a href="{% url 'consulting:consulting_freight' %}" class="ab-service-card">
-        <div class="ab-service-badge ab-service-badge-blue">White-glove</div>
-        <h3 class="ab-service-name">Freight spend audit</h3>
-        <p class="ab-service-desc">
-          Send me your freight invoices. I run a full analysis and deliver a
+          <div class="ab-service-price">Free / $49 / $99 per month</div>
+      </div>
+        <div class="cs-cred-card">
+            <div class="ab-service-badge ab-service-badge-blue">White-glove</div>
+            <a href="{% url 'consulting:consulting_freight' %}">
+                <h3 class="cs-cred-title">Freight spend audit</h3></a>
+            <p class="cs-cred-desc">
+              Send me your freight invoices. I run a full analysis and deliver a
           15-page Freight Spend Intelligence Report with a 30-minute video
           walkthrough. Specific carriers, specific lanes, specific dollar
           amounts. I do the work. You make the calls.
         </p>
         <div class="ab-service-price">$2,500 - $5,000 per engagement</div>
-      </a>
-
-      <a href="{% url 'consulting:consulting_freight' %}" class="ab-service-card">
-        <div class="ab-service-badge ab-service-badge-red">E-commerce</div>
-        <h3 class="ab-service-name">Shipping cost audit</h3>
-        <p class="ab-service-desc">
+          </div>
+      <div class="cs-cred-card">
+          <div class="ab-service-badge ab-service-badge-red">E-commerce</div>
+          <a href="{% url 'consulting:consulting_freight' %}" >
+              <h3 class="cs-cred-title">Shipping cost audit</h3></a>
+        <p class="cs-cred-desc">
           For DTC brands overpaying on UPS, FedEx, and USPS. I analyze your
           Shopify or ShipStation export: zone distribution, surcharge patterns,
           dim-weight penalties, and a negotiation playbook with specific rate
           targets per zone and weight tier.
         </p>
         <div class="ab-service-price">$1,500 - $3,000 per audit</div>
-      </a>
+      </div>
 
     </div>
   </div>

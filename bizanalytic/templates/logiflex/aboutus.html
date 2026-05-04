@@ -11,6 +11,55 @@
 {% block css %}
     {{ block.super }}
     <style>
+    :root {
+          --cs-ink: #141418;
+          --cs-ink-2: #3d3d42;
+          --cs-ink-3: #6b6b73;
+          --cs-ink-4: #9b9ba3;
+          --cs-bg: #ffffff;
+          --cs-bg-alt: #f7f7f9;
+          --cs-bg-warm: #fafaf8;
+          --cs-border: #e5e5ea;
+          --cs-border-lt: #efeff2;
+          --cs-accent: #0cb7d6;
+          --cs-accent-dark: #0394ae ;
+          --cs-accent-lt: #fbfeff;
+          --cs-accent-dk: #014856;
+          --cs-green: #047857;
+          --cs-green-lt: #ecfdf5;
+          --cs-red: #b91c1c;
+          --cs-red-lt: #fef2f2;
+          --cs-font: 'DM Sans', system-ui, -apple-system, sans-serif;
+          --cs-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+          --cs-max: 960px;
+          --cs-pad: 24px;
+    }
+    /* ========== BUTTONS ========== */
+.cs-btn {
+  display: inline-block;
+  font-family: var(--cs-font);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 11px 24px;
+  border-radius: 8px;
+  transition: opacity 0.15s, background 0.15s, border-color 0.15s;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+}
+
+.cs-btn-secondary {
+  background: transparent;
+  color: var(--cs-accent);
+  border: 1px solid var(--cs-border);
+}
+.cs-btn-secondary:hover {
+  border-color: var(--cs-accent);
+  background: var(--cs-accent-lt);
+  color: var(--cs-accent);
+}
+
 /* ========== ABOUT PAGE SPECIFIC ========== */
 
 /* Hero */
@@ -206,6 +255,13 @@ a.ab-contact-val:hover {
   max-width: var(--cs-max);
   margin: 0 auto;
   padding: 0 var(--cs-pad);
+}
+
+.cs-hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
 }
 
 /* ========== CREDIBILITY ========== */

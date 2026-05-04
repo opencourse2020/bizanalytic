@@ -1743,6 +1743,9 @@ class FullReportView(LoginRequiredMixin, TemplateView):
                 kwargs["email"] = servicepayment.client.email
                 kwargs["clientid"] = servicepayment.client.id
                 clienttype = 1
+        else:
+            kwargs["lite_allowed"] = 1
+            kwargs["advanced_allowed"] = 0
         kwargs["clienttype"] = clienttype
         return super(FullReportView, self).get_context_data(**kwargs)
 

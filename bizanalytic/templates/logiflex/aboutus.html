@@ -392,17 +392,6 @@ a.ab-contact-val:hover {
                                 </div>
                             </div>
 
-
-
-                            <div class="button-group mt-30">
-                                <div class="phone-text">
-                                    <img src={% static "vendor/transport/assets/images/icon-5.png" %} alt="icon">
-                                    <div class="text-part">
-                                        <span>Need Help?</span>
-                                        <h5 class="title"><a href="#">Contact Us</a></h5>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -420,31 +409,31 @@ a.ab-contact-val:hover {
             </div>
         </section>
 
-    <section class="cs-section cs-section-alt">
-                          <div class="container">
-                            <div class="ab-creds">
-                              <div class="ab-cred">
-                                <div class="ab-cred-val">PhD</div>
-                                <div class="ab-cred-label">Engineering science</div>
-                              </div>
-                              <div class="ab-cred-sep"></div>
-                              <div class="ab-cred">
-                                <div class="ab-cred-val">13+</div>
-                                <div class="ab-cred-label">Years teaching operations management, supply chain, and BI</div>
-                              </div>
-                              <div class="ab-cred-sep"></div>
-                              <div class="ab-cred">
-                                <div class="ab-cred-val">8+</div>
-                                <div class="ab-cred-label">Years industrial and consulting experience</div>
-                              </div>
-                              <div class="ab-cred-sep"></div>
-                              <div class="ab-cred">
-                                <div class="ab-cred-val">OR</div>
-                                <div class="ab-cred-label">Linear programming, SPC, IQR, ABC — every model hand-built</div>
-                              </div>
-                            </div>
-                          </div>
-                        </section>
+    <section class="cs-section cs-section-alt mb-40">
+        <div class="container">
+            <div class="ab-creds">
+                <div class="ab-cred">
+                    <div class="ab-cred-val">PhD</div>
+                    <div class="ab-cred-label">Engineering science</div>
+                </div>
+                <div class="ab-cred-sep"></div>
+                <div class="ab-cred">
+                    <div class="ab-cred-val">13+</div>
+                    <div class="ab-cred-label">Years teaching operations management, supply chain, and BI</div>
+                </div>
+                <div class="ab-cred-sep"></div>
+                <div class="ab-cred">
+                    <div class="ab-cred-val">8+</div>
+                    <div class="ab-cred-label">Years industrial and consulting experience</div>
+                </div>
+                <div class="ab-cred-sep"></div>
+                <div class="ab-cred">
+                    <div class="ab-cred-val">OR</div>
+                    <div class="ab-cred-label">Linear programming, SPC, IQR, ABC — every model hand-built</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     {# ================================================================ #}
 {# THREE SERVICES                                                   #}
@@ -540,21 +529,23 @@ a.ab-contact-val:hover {
     <div class="ab-contact">
       <div class="ab-contact-content">
 {#        <h2 class="cs-section-title">Let's talk</h2>#}
-        <div class="phone-text">
-            <img src={% static "vendor/transport/assets/images/icon-5.png" %} alt="icon">
-            <div class="text-part">
-                <span>Need Help?</span>
-                <h5 class="title"><a href="#">Contact Us</a></h5>
-            </div>
-        </div>
+          <div class="button-group mt-30">
+              <div class="phone-text">
+                  <img src={% static "vendor/transport/assets/images/icon-5.png" %} alt="icon">
+                  <div class="text-part">
+                      <span>Need Help?</span>
+                      <h5 class="title"><a href="#">Contact Us</a></h5>
+                  </div>
+              </div>
+          </div>
           <p class="ab-contact-desc">
           Whether you're exploring LogiFlex, considering a freight audit,
           or just want to ask a question about your data — I respond to
           every email personally, usually within a few hours.
         </p>
-          <div class="row">
-              <div class="col-6">
-                  <div class="ab-contact-details">
+          <div class="row justify-content-between">
+              <div class="col-md-6 col-12">
+                  <div class="ab-contact-details mb-4">
                       <div class="ab-contact-row">
                         <span class="ab-contact-label">Email</span>
                         <a href="mailto:support@bizanalytic.com" class="ab-contact-val">support@bizanalytic.com</a>
@@ -569,11 +560,12 @@ a.ab-contact-val:hover {
                       </div>
                     </div>
               </div>
-              <div class="col-3">
-                  <div class="ab-contact-cta">
-                    <a href="{% url 'consulting:consulting_freight' %}" class="cs-btn cs-btn-primary cs-btn-lg">Book a free call</a>
-                    <a href="{% url 'logiflex:index' %}" class="cs-btn cs-btn-secondary">Try LogiFlex free</a>
-                  </div>
+              <div class="col-md-3 col-12 ">
+                  <div class="cs-hero-actions">
+                      <a href="{% url 'consulting:consulting_freight_book' %}" class="cs-btn cs-btn-secondary">Book a free call</a>
+                      <a href="{% url 'logiflex:index' %}" class="cs-btn cs-btn-secondary">Try LogiFlex free</a>
+                    </div>
+
               </div>
           </div>
 

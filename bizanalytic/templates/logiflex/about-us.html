@@ -376,7 +376,7 @@ a.ab-contact-val:hover {
 
     <div class="ab-services">
 
-      <a href="{% url 'logiflex_home' %}" class="ab-service-card">
+      <a href="{% url 'logiflex:index' %}" class="ab-service-card">
         <div class="ab-service-badge ab-service-badge-green">Self-serve</div>
         <h3 class="ab-service-name">LogiFlex</h3>
         <p class="ab-service-desc">
@@ -388,7 +388,7 @@ a.ab-contact-val:hover {
         <div class="ab-service-price">Free / $49 / $99 per month</div>
       </a>
 
-      <a href="{% url 'consulting_freight' %}" class="ab-service-card">
+      <a href="{% url 'consulting:consulting_freight' %}" class="ab-service-card">
         <div class="ab-service-badge ab-service-badge-blue">White-glove</div>
         <h3 class="ab-service-name">Freight spend audit</h3>
         <p class="ab-service-desc">
@@ -400,7 +400,7 @@ a.ab-contact-val:hover {
         <div class="ab-service-price">$2,500 - $5,000 per engagement</div>
       </a>
 
-      <a href="{% url 'consulting_ecommerce' %}" class="ab-service-card">
+      <a href="{% url 'consulting:consulting_freight' %}" class="ab-service-card">
         <div class="ab-service-badge ab-service-badge-red">E-commerce</div>
         <h3 class="ab-service-name">Shipping cost audit</h3>
         <p class="ab-service-desc">
@@ -478,8 +478,8 @@ a.ab-contact-val:hover {
         </div>
       </div>
       <div class="ab-contact-cta">
-        <a href="{% url 'consulting_freight_book' %}" class="cs-btn cs-btn-primary cs-btn-lg">Book a free call</a>
-        <a href="{% url 'logiflex_home' %}" class="cs-btn cs-btn-secondary">Try LogiFlex free</a>
+        <a href="{% url 'consulting:consulting_freight' %}" class="cs-btn cs-btn-primary cs-btn-lg">Book a free call</a>
+        <a href="{% url 'logiflex:index' %}" class="cs-btn cs-btn-secondary">Try LogiFlex free</a>
       </div>
     </div>
   </div>

@@ -1,0 +1,348 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+    <meta name="description" content="Book a free 15-minute discovery call to learn if a freight spend audit can find savings in your shipping data. Or request a free 3-page mini-audit of your freight invoices.">
+        <meta name="author" content='"logistics performance analytics platform", "freight cost optimization tool for SMEs", "data-driven decision making in logistics", "logistics analytics SaaS for small freight companies"'>
+        <!-- page title -->
+        <title>
+        {% if intake_type == "mini_audit" %}
+            Data Received — Your Mini-Audit Is In Progress | BizAnalytic
+         {% else %}
+            Call Requested — We'll Be In Touch | BizAnalytic
+        {% endif %}
+        </title>
+{% endblock head_title %}
+
+{% block css %}
+    {{ block.super }}
+    <style>
+.ab-success {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ab-success-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--cs-green-lt);
+  color: var(--cs-green);
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.ab-success-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--cs-ink);
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+}
+
+.ab-success-sub {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--cs-ink-3);
+  margin-bottom: 32px;
+}
+
+/* Progress steps */
+.ab-success-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  text-align: left;
+  margin-bottom: 36px;
+  padding: 24px;
+  background: var(--cs-bg-alt);
+  border-radius: 12px;
+  border: 1px solid var(--cs-border);
+}
+
+.ab-success-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--cs-border-lt);
+}
+.ab-success-step:last-child {
+  border-bottom: none;
+}
+
+.ab-success-step-num {
+  font-family: var(--cs-mono);
+  font-size: 12px;
+  font-weight: 600;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--cs-bg);
+  color: var(--cs-ink-4);
+  border: 1px solid var(--cs-border);
+}
+.ab-success-step-num.ab-success-step-done {
+  background: var(--cs-green);
+  color: #fff;
+  border-color: var(--cs-green);
+}
+.ab-success-step-num.ab-success-step-active {
+  background: var(--cs-accent-lt);
+  color: var(--cs-accent);
+  border-color: var(--cs-accent);
+}
+
+.ab-success-step-body {
+  flex: 1;
+}
+.ab-success-step-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cs-ink);
+}
+.ab-success-step-desc {
+  font-size: 12.5px;
+  color: var(--cs-ink-3);
+  margin-top: 1px;
+}
+
+/* While you wait */
+.ab-success-meanwhile {
+  text-align: left;
+}
+.ab-success-meanwhile-title {
+  font-family: var(--cs-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cs-ink-4);
+  margin-bottom: 10px;
+}
+
+.ab-success-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ab-success-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--cs-border);
+  border-radius: 10px;
+  background: var(--cs-bg);
+  text-decoration: none;
+  transition: border-color 0.15s;
+}
+.ab-success-link:hover {
+  border-color: var(--cs-accent);
+}
+
+.ab-success-link-icon {
+  font-size: 10px;
+  color: var(--cs-accent);
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+.ab-success-link strong {
+  font-size: 14px;
+  color: var(--cs-ink);
+  display: block;
+}
+.ab-success-link-desc {
+  font-size: 12px;
+  color: var(--cs-ink-3);
+  display: block;
+  margin-top: 1px;
+}
+
+@media (max-width: 680px) {
+  .ab-success-title { font-size: 20px; }
+}
+</style>
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block pdf_button %}
+{% endblock pdf_button %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+
+{% block breadcrumb %}
+     <section class="breadcrumb-area mb-1" style="padding: 80px 0 20px" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <h2 class="title">
+                                {% if intake_type == "mini_audit" %}
+                                    Data Received
+                                 {% else %}
+                                    Call Requested
+                                {% endif %}
+                            </h2>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+
+<section class="cs-hero cs-hero-compact">
+  <div class="cs-container">
+
+    <div class="ab-success">
+
+      <div class="ab-success-icon">&#10003;</div>
+
+      {% if intake_type == "mini_audit" %}
+
+        <h1 class="ab-success-title">Your freight data has been received</h1>
+        <p class="ab-success-sub">
+          I'll review the file, run the analysis, and deliver your free 
+          3-page mini-audit within 3 business days. If I have any questions 
+          about the data format, I'll reach out directly.
+        </p>
+
+        <div class="ab-success-steps">
+          <div class="ab-success-step">
+            <div class="ab-success-step-num ab-success-step-done">1</div>
+            <div class="ab-success-step-body">
+              <div class="ab-success-step-title">Data received</div>
+              <div class="ab-success-step-desc">Your file has been uploaded and encrypted</div>
+            </div>
+          </div>
+          <div class="ab-success-step">
+            <div class="ab-success-step-num ab-success-step-active">2</div>
+            <div class="ab-success-step-body">
+              <div class="ab-success-step-title">Analysis in progress</div>
+              <div class="ab-success-step-desc">OR models running on your shipment data</div>
+            </div>
+          </div>
+          <div class="ab-success-step">
+            <div class="ab-success-step-num">3</div>
+            <div class="ab-success-step-body">
+              <div class="ab-success-step-title">Mini-audit delivered</div>
+              <div class="ab-success-step-desc">3-page PDF to your inbox within 3 business days</div>
+            </div>
+          </div>
+        </div>
+
+      {% else %}
+
+        <h1 class="ab-success-title">Your call request has been received</h1>
+        <p class="ab-success-sub">
+          I'll reply within 1 business day with 3-4 available time slots 
+          for a 15-minute discovery call. Check your inbox for a 
+          confirmation email.
+        </p>
+
+        <div class="ab-success-steps">
+          <div class="ab-success-step">
+            <div class="ab-success-step-num ab-success-step-done">1</div>
+            <div class="ab-success-step-body">
+              <div class="ab-success-step-title">Request received</div>
+              <div class="ab-success-step-desc">Confirmation email sent to your inbox</div>
+            </div>
+          </div>
+          <div class="ab-success-step">
+            <div class="ab-success-step-num ab-success-step-active">2</div>
+            <div class="ab-success-step-body">
+              <div class="ab-success-step-title">Scheduling</div>
+              <div class="ab-success-step-desc">I'll send available times within 1 business day</div>
+            </div>
+          </div>
+          <div class="ab-success-step">
+            <div class="ab-success-step-num">3</div>
+            <div class="ab-success-step-body">
+              <div class="ab-success-step-title">Discovery call</div>
+              <div class="ab-success-step-desc">15 minutes — your situation, your data, honest assessment</div>
+            </div>
+          </div>
+        </div>
+
+      {% endif %}
+
+      <div class="ab-success-meanwhile">
+        <div class="ab-success-meanwhile-title">While you wait</div>
+        <div class="ab-success-links">
+          <a href="{% url 'consulting_freight_sample' %}" class="ab-success-link">
+            <span class="ab-success-link-icon">&#9654;</span>
+            <span>
+              <strong>See a sample report</strong>
+              <span class="ab-success-link-desc">Preview the exact format and depth of our analysis</span>
+            </span>
+          </a>
+          <a href="{% url 'logiflex_home' %}" class="ab-success-link">
+            <span class="ab-success-link-icon">&#9654;</span>
+            <span>
+              <strong>Try LogiFlex free</strong>
+              <span class="ab-success-link-desc">Upload your CSV and get an instant Fleet Health Check</span>
+            </span>
+          </a>
+          <a href="{% url 'about' %}" class="ab-success-link">
+            <span class="ab-success-link-icon">&#9654;</span>
+            <span>
+              <strong>About BizAnalytic</strong>
+              <span class="ab-success-link-desc">The professor behind the models</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% endblock contact_area %}
+
+{% block feature_area %}
+
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+
+{% block js_area %}
+    {{ block.super }}
+{% endblock js_area %}

@@ -54,7 +54,7 @@ def freight_sample_download(request):
     Captures email, then serves the PDF.
     """
     if request.method != 'POST':
-        return redirect('consulting_freight_sample')
+        return redirect('consulting:consulting_freight_sample')
 
     name = request.POST.get('name', '').strip()
     email = request.POST.get('email', '').strip()
@@ -62,7 +62,7 @@ def freight_sample_download(request):
 
     if not name or not email:
         messages.error(request, 'Please provide your name and email.')
-        return redirect('consulting_freight_sample')
+        return redirect('consulting:consulting_freight_sample')
 
     # Save the lead (create a simple model or log to your CRM)
     _save_consulting_lead(
@@ -168,7 +168,7 @@ def freight_book_submit(request):
 
         if not freight_data:
             messages.error(request, 'Please upload your freight data file.')
-            return redirect('consulting_freight_book')
+            return redirect('consulting:consulting_freight_book')
 
         # Save uploaded file
         upload_dir = os.path.join(

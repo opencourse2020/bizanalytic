@@ -14,6 +14,8 @@ from django.conf import settings
 from django.contrib import messages
 import os
 
+from .models import ConsultingLead
+
 
 # =====================================================================
 # PAGE VIEWS
@@ -248,12 +250,11 @@ def _save_consulting_lead(name, email, company, lead_type, service, extra=None):
     Or just log to a CSV file for now.
     """
     # TODO: Replace with your actual model save
-    # ConsultingLead.objects.create(
-    #     name=name, email=email, company=company,
-    #     lead_type=lead_type, service=service,
-    #     extra_json=extra or {},
-    # )
-    pass
+    ConsultingLead.objects.create(
+        name=name, email=email, company=company,
+        lead_type=lead_type, service=service,
+        extra_json=extra or {},
+    )
 
 
 def _notify_new_lead(lead_type, name, email, company, extra_lines=None):

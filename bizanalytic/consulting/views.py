@@ -86,6 +86,7 @@ def freight_sample_download(request):
         settings.BASE_DIR, 'static', 'consulting',
         'freight-spend-audit-sample.pdf'
     )
+    print(sample_path)
     if not os.path.exists(sample_path):
         raise Http404('Sample report not found.')
 

@@ -151,11 +151,11 @@
                                         <a href="{% url 'logiflex:index' %}">{% trans "Home" %}</a>
                                     {% endif %}
                                 </li>
-                                <li class="has-submenu"><a href="#">{% trans "Services" %}</a>
+                                <li class="has-submenu"><a href="#">{% trans "LogiFlex" %}</a>
                                     <ul class="submenu">
-                                        <li><a href="{% url 'logiflex:reports:fullreport' %}">{% trans "LogiFlex" %}</a>
+                                        <li><a href="{% url 'logiflex:reports:fullreport' %}">{% trans "FreightOps Report" %}</a></li>
+                                        <li><a href="{% url 'logiflex:pricing' %}">{% trans "Pricing" %}</a></li>
 
-                                        </li>
                                     </ul>
                                 </li>
                             <li class="has-submenu"><a href="#">{% trans "Consulting" %}</a>
@@ -169,7 +169,7 @@
                                     <ul class="submenu">
                                         <li><a href="{% url 'logiflex:aboutus' %}">{% trans "About Us" %}</a></li>
                                         <li><a href="{% url 'logiflex:blog:blogs' %}">{% trans "Blog" %}</a></li>
-                                        <li><a href="{% url 'logiflex:pricing' %}">{% trans "Pricing" %}</a></li>
+{#                                        <li><a href="{% url 'logiflex:pricing' %}">{% trans "Pricing" %}</a></li>#}
                                         <li><a href="#">{% trans "Contact" %}</a></li>
                                     </ul>
                                 </li>
@@ -423,7 +423,7 @@
                                     <h5 class="title">{% trans "our services" %}</h5>
                                 </div>
                                 <ul class="nav-links mt-30">
-                                    <li><a href="#">LogiFlex</a></li>
+                                    <li><a href="{% url 'logiflex:index' %}">LogiFlex</a></li>
                                     <li><a href="{% url 'consulting:consulting_freight' %}">Freight Consulting</a></li>
                                     <li><a href="#">Ecommerce Consulting</a></li>
                                 </ul>

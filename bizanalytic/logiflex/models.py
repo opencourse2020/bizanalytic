@@ -95,11 +95,11 @@ class PricingPlan(models.Model):
     PLAN_CHOICES = [
         ('onetime_lite', _("One-Time Lite Report")),
         ('onetime_advanced', _("One-Time Advanced Report")),
-        ('starter', _("Starter Monthly Subscription")),
-        ('pro', _("Pro Monthly Subscription")),
-        ('quarterly', _("Pro Quarterly Plan")),
+        ('growth', _("growth Monthly Subscription $49")),
+        ('pro', _("Pro Monthly Subscription $99")),
+        # ('quarterly', _("Pro Quarterly Plan")),
         ('daily', _("Daily Plan")),
-        ('free_lite_report', _("Free One-Time Lite Report")),
+        ('free_diagnostic_report', _("Free One-Time Diagnostic Report")),
         ('discounted_advanced_report', _("Discounted One-Time Advanced Report")),
     ]
     name = models.CharField(max_length=50, choices=PLAN_CHOICES)
@@ -148,14 +148,14 @@ class ServicePayment(models.Model):
         permissions = (("manage_servicepayment", "Manage Service Payments"),)
 
     def set_quota(self):
-        if self.service_type.name == 'starter':
-            self.reports_allowed = 3
-            self.advanced_reports_allowed = 0
-            self.advanced_credits = 1
+        if self.service_type.name == 'growth':
+            self.reports_allowed = 5
+            self.advanced_reports_allowed = 5
+            self.advanced_credits = 0
             self.reset_date = now() + timedelta(days=30)
         elif self.service_type.name == 'pro':
             self.reports_allowed = 10
-            self.advanced_reports_allowed = 2
+            self.advanced_reports_allowed = 1000
             self.reset_date = now() + timedelta(days=30)
         elif self.service_type.name == 'quarterly':
             self.reports_allowed = 25
@@ -179,13 +179,13 @@ class ServicePayment(models.Model):
         self.reports_used = 0
         self.advanced_reports_used = 0
         # Reset based on plan
-        if self.service_type.name == 'starter':
+        if self.service_type.name == 'growth':
             self.reports_allowed = 3
-            self.advanced_reports_allowed = 0
+            self.advanced_reports_allowed = 5
             self.reset_date = now() + timedelta(days=30)
         elif self.service_type.name == 'pro':
             self.reports_allowed = 10
-            self.advanced_reports_allowed = 2
+            self.advanced_reports_allowed = 1000
             self.reset_date = now() + timedelta(days=30)
         elif self.service_type.name == 'quarterly':
             self.reports_allowed = 25

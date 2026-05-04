@@ -1360,7 +1360,7 @@ class WebhookView(View):
         amount_paid = session.get('lines').data[0].amount / 100  # Convert to currency
         quantity = session.get('lines').data[0].quantity
         payment_plan = PricingPlan.objects.filter(stripe_price_id=price_id).first()
-        if payment_plan and (payment_plan.name == "starter" or payment_plan.name == "pro" or payment_plan.name == "quarterly" or payment_plan.name == "daily"):
+        if payment_plan and (payment_plan.name == "growth" or payment_plan.name == "pro" or payment_plan.name == "daily"):
             if billing_reason and not billing_reason == "subscription_create":
                 if logiclient:
                     servicepayment = None
@@ -1726,22 +1726,23 @@ class FullReportView(LoginRequiredMixin, TemplateView):
         # pu = self.kwargs.get("pk")
         client = LogiFlexClient.objects.filter(user=self.request.user).first()
         clienttype = 0
-        servicepayment = ServicePayment.objects.filter(client=client).first()
-        if servicepayment:
-            if servicepayment.can_generate_report():
-                kwargs["lite_allowed"] = 1
-            else:
-                kwargs["lite_allowed"] = 0
-            if servicepayment.can_generate_advanced_report():
-                kwargs["advanced_allowed"] = 1
-            else:
-                kwargs["advanced_allowed"] = 0
+        if client:
+            servicepayment = ServicePayment.objects.filter(client=client).first()
+            if servicepayment:
+                if servicepayment.can_generate_report():
+                    kwargs["lite_allowed"] = 1
+                else:
+                    kwargs["lite_allowed"] = 0
+                if servicepayment.can_generate_advanced_report():
+                    kwargs["advanced_allowed"] = 1
+                else:
+                    kwargs["advanced_allowed"] = 0
 
-            kwargs["contact_name"] = servicepayment.client.contact_name
-            kwargs["company"] = servicepayment.client.company
-            kwargs["email"] = servicepayment.client.email
-            kwargs["clientid"] = servicepayment.client.id
-            clienttype = 1
+                kwargs["contact_name"] = servicepayment.client.contact_name
+                kwargs["company"] = servicepayment.client.company
+                kwargs["email"] = servicepayment.client.email
+                kwargs["clientid"] = servicepayment.client.id
+                clienttype = 1
         kwargs["clienttype"] = clienttype
         return super(FullReportView, self).get_context_data(**kwargs)
 

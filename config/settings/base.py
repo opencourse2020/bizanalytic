@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "django_celery_results",
     "django_celery_beat",
+    'axes',
     # "admin_honeypot",
     # "honeypot",
     # "captcha",
@@ -97,6 +98,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     'user_language_middleware.UserLanguageMiddleware',
     "allauth.account.middleware.AccountMiddleware",
+    'axes.middleware.AxesMiddleware', # Must be last
 
 ]
 
@@ -192,6 +194,7 @@ ADMINS = tuple(parseaddr(email) for email in admins_data)
 
 # Third-party syndicma settings
 AUTHENTICATION_BACKENDS = (
+    'axes.backends.AxesStandaloneBackend', # Must be first
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
     "guardian.backends.ObjectPermissionBackend",

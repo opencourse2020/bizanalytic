@@ -2482,12 +2482,12 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
 
             # Carrier Reliability analysis
             reliable_carriers = reliability_analysis(carrier_statdata)
-            print(reliable_carriers.info)
+            print(reliable_carriers.columns)
             print(reliable_carriers.head(3))
             print("*************************************************************************")
             # Carrier Cost Efficiency
             efficient_carriers = calculate_cost_efficiency(carrier_statdata)
-            print(efficient_carriers.info)
+            print(efficient_carriers.columns)
             print(efficient_carriers.head(3))
 
             logireport.carrier_statdata_json = carrier_statdata.to_json(orient='records')

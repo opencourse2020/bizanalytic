@@ -73,6 +73,19 @@ def freight_sample_download(request):
         service='freight',
     )
 
+    # Fetch Email's body and subject with the company name
+    subject, body = get_sample_download_followup(
+        name=name, company=company)
+
+    # Send confirmation to the prospect
+    send_mail(
+        subject=subject,
+        message=body,
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[email],
+        fail_silently=True,
+    )
+
     # Send notification to yourself
     _notify_new_lead(
         lead_type='Sample download',

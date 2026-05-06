@@ -14,7 +14,7 @@ import os
 import sys
 from email.utils import parseaddr
 from django.conf.locale.en import formats as en_formats
-
+from datetime import timedelta
 import environ
 from django.utils.translation import gettext_lazy as _
 
@@ -199,6 +199,18 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
     "guardian.backends.ObjectPermissionBackend",
 )
+
+# Classic: 3 failures -> 30 min lockout
+AXES_FAILURE_LIMIT = 3
+AXES_COOLOFF_TIME = timedelta(minutes=30)
+
+# refer to the Django request and response objects documentation
+AXES_IPWARE_META_PRECEDENCE_ORDER = [
+    'HTTP_X_FORWARDED_FOR',
+    'REMOTE_ADDR',
+]
+
+
 SITE_ID = 1
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"

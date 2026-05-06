@@ -15,7 +15,7 @@ from django.contrib import messages
 import os
 
 from .models import ConsultingLead
-
+from .utils.consulting_emails import *
 
 # =====================================================================
 # PAGE VIEWS
@@ -142,21 +142,16 @@ def freight_book_submit(request):
             ],
         )
 
+        # Fetch Email's body and subject with the company name
+        subject, body = get_discovery_call_followup(
+            name=name, company=company,
+            monthly_spend=monthly_spend, challenge=challenge,
+        )
+
         # Send confirmation to the prospect
         send_mail(
-            subject='Your discovery call request — BizAnalytic',
-            message=(
-                f'Hi {name},\n\n'
-                f'Thanks for your interest in a freight spend audit. '
-                f'I\'ll reply within 1 business day with available times '
-                f'for a 15-minute call.\n\n'
-                f'In the meantime, you can see a sample of what we deliver:\n'
-                f'https://bizanalytic.com/consulting/freight/sample/\n\n'
-                f'Best,\n'
-                f'Adil Akaaboune\n'
-                f'BizAnalytic\n'
-                f'+1 (832) 430-2434'
-            ),
+            subject=subject,
+            message=body,
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[email],
             fail_silently=True,
@@ -205,20 +200,16 @@ def freight_book_submit(request):
             ],
         )
 
+        # Fetch Email's body and subject with the company name
+        subject, body = get_mini_audit_followup(
+            name=name, company=company,
+            file_name=freight_data.name
+        )
+
         # Send confirmation to the prospect
         send_mail(
-            subject='Your freight data received — BizAnalytic',
-            message=(
-                f'Hi {name},\n\n'
-                f'We\'ve received your freight data file ({freight_data.name}). '
-                f'Your free 3-page mini-audit will be ready within 3 business days.\n\n'
-                f'If we have any questions about the data format, '
-                f'we\'ll reach out to {email} directly.\n\n'
-                f'Best,\n'
-                f'Adil Akaaboune\n'
-                f'BizAnalytic\n'
-                f'+1 (832) 430-2434'
-            ),
+            subject=subject,
+            message=body,
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[email],
             fail_silently=True,

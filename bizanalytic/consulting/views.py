@@ -129,7 +129,8 @@ def freight_book_submit(request):
     website = request.POST.get('website', '').strip()
     address = request.POST.get('address', '').strip()
     token = secrets.token_urlsafe(32)
-
+    print("website:", website, "-")
+    print("address:", address, "-")
     if website or address:
         return redirect('consulting:consulting_freight_book_success')
 

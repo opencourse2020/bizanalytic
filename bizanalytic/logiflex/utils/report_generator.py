@@ -1080,13 +1080,13 @@ def generate_full_report(df, contingency_matrix, report_level, reliable_carriers
     elif report_level == "expert":
 
         # Get Carrier reliability
-        # reliable_carriers = reliable_carriers.reset_index()
+        reliable_carriers = reliable_carriers.reset_index()
         most_reliable_carriers = reliable_carriers['CarrierName'][0]
         reliable_dict = reliable_carriers.to_dict()
 
 
         # Get Cost Efficiency
-        # efficient_carriers = efficient_carriers.reset_index()
+        efficient_carriers = efficient_carriers.reset_index()
         most_efficient_carriers = efficient_carriers['CarrierName'][0]
         efficient_dict = efficient_carriers.to_dict()
 

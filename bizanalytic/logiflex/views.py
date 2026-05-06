@@ -2476,19 +2476,20 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
             # --- Statistics ---
             # generate carrier, driver and route stats
             carrier_statdata, driver_statdata, route_statdata = prepare_stats_data(df)
-            driver_statdata = driver_statdata.reset_index()
-            carrier_statdata = carrier_statdata.reset_index()
-            route_statdata = route_statdata.reset_index()
 
             # Carrier Reliability analysis
             reliable_carriers = reliability_analysis(carrier_statdata)
             print(reliable_carriers.columns)
-            print(reliable_carriers.head(3))
+            print(reliable_carriers.reset_index())
             print("*************************************************************************")
             # Carrier Cost Efficiency
             efficient_carriers = calculate_cost_efficiency(carrier_statdata)
             print(efficient_carriers.columns)
-            print(efficient_carriers.head(3))
+            print(efficient_carriers.reset_index())
+
+            driver_statdata = driver_statdata.reset_index()
+            carrier_statdata = carrier_statdata.reset_index()
+            route_statdata = route_statdata.reset_index()
 
             logireport.carrier_statdata_json = carrier_statdata.to_json(orient='records')
             logireport.driver_statdata_json = driver_statdata.to_json(orient='records')

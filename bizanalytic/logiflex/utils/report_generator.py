@@ -1080,13 +1080,16 @@ def generate_full_report(df, contingency_matrix, report_level, reliable_carriers
     elif report_level == "expert":
 
         # Get Carrier reliability
-        reliable_carriers = reliable_carriers.reset_index()
-        reliable_dict = reliable_carriers.to_dict()
+        # reliable_carriers = reliable_carriers.reset_index()
         most_reliable_carriers = reliable_carriers['CarrierName'][0]
+        reliable_dict = reliable_carriers.to_dict()
+
 
         # Get Cost Efficiency
-        efficient_carriers = efficient_carriers.reset_index()
+        # efficient_carriers = efficient_carriers.reset_index()
         most_efficient_carriers = efficient_carriers['CarrierName'][0]
+        efficient_dict = efficient_carriers.to_dict()
+
 
         # Step 4: Generate narrative via Sonnet
         narrative = generate_expert_report_narrative(
@@ -1100,9 +1103,9 @@ def generate_full_report(df, contingency_matrix, report_level, reliable_carriers
             driver_stats=driver_stats,
             route_stats=route_stats,
             contingency_analysis=contingency_matrix,
-            reliable_carriers=reliable_carriers,
+            reliable_carriers=reliable_dict,
             most_reliable_carriers=most_reliable_carriers,
-            efficient_carriers=efficient_carriers,
+            efficient_carriers=efficient_dict,
             most_efficient_carriers=most_efficient_carriers,
             sample_data=sample_data,
             api_key=api_key,

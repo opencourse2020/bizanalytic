@@ -131,8 +131,8 @@ def freight_book_submit(request):
     token = secrets.token_urlsafe(32)
     print("website:", website, "-")
     print("address:", address, "-")
-    if website or address:
-        return redirect('consulting:consulting_freight_book_success')
+    # if website or address:
+    #     return redirect('consulting:consulting_freight_book_success')
 
     if not name or not email or not company:
         messages.error(request, 'Please fill in all required fields.')

@@ -14,6 +14,8 @@ from django.conf import settings
 from django.contrib import messages
 import os
 import secrets
+from django.utils import timezone
+from datetime import timedelta
 
 from .models import ConsultingLead
 from .utils.consulting_emails import *
@@ -246,6 +248,10 @@ def freight_book_submit(request):
 
 def freight_verify(request, token):
     lead = get_object_or_404(ConsultingLead, verification_token=token, is_verified=False)
+
+    if timezone.now() - lead.created_at > timedelta(days=7):
+        return render(request, 'consulting/freight/expired.html')
+
     lead.is_verified = True
     lead.save()
 

@@ -7,12 +7,12 @@ class ConsultingLead(models.Model):
     email = models.EmailField()
     company = models.CharField(max_length=200, blank=True)
     lead_type = models.CharField(max_length=50)
-    service = models.CharField(max_length=50)
+    service = models.CharField(max_length=50, default='freight')
     extra_json = models.JSONField(default=dict, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_contacted = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
-    verification_token = models.CharField(max_length=64, blank=True, null=True)
+    verification_token = models.CharField(max_length=64, unique=True, db_index=True)
     notes = models.TextField(blank=True)
 
     class Meta:

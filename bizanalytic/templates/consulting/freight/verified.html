@@ -1,0 +1,102 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+    <meta name="description" content="Book a free 15-minute discovery call to learn if a freight spend audit can find savings in your shipping data. Or request a free 3-page mini-audit of your freight invoices.">
+        <meta name="author" content='"logistics performance analytics platform", "freight cost optimization tool for SMEs", "data-driven decision making in logistics", "logistics analytics SaaS for small freight companies"'>
+        <!-- page title -->
+        <title>
+        {% if intake_type == "mini_audit" %}
+            Data Received — Your Mini-Audit Is In Progress | BizAnalytic
+         {% else %}
+            Call Requested — We'll Be In Touch | BizAnalytic
+        {% endif %}
+        </title>
+{% endblock head_title %}
+
+{% block css %}
+    {{ block.super }}
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block pdf_button %}
+{% endblock pdf_button %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+
+{% block breadcrumb %}
+     <section class="breadcrumb-area mb-1" style="padding: 80px 0 20px" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <h2 class="title">
+                                {% if intake_type == "mini_audit" %}
+                                    Data Received
+                                 {% else %}
+                                    Call Requested
+                                {% endif %}
+                            </h2>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+
+<section class="cs-hero cs-hero-compact">
+  <div class="cs-container">
+    <div class="ab-success">
+      <div class="ab-success-icon">&#10003;</div>
+      <h1 class="ab-success-title">Email confirmed</h1>
+      <p class="ab-success-sub">
+        Thanks, {{ lead.name }}. Your
+        {% if lead.lead_type == "mini_audit" %}
+          mini-audit request
+        {% else %}
+          discovery call request
+        {% endif %}
+        is now active. I'll be in touch within 1 business day.
+      </p>
+    </div>
+  </div>
+</section>
+
+{% endblock contact_area %}
+
+{% block feature_area %}
+
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+
+{% block js_area %}
+    {{ block.super }}
+{% endblock js_area %}

@@ -44,4 +44,14 @@ urlpatterns = [
         views.freight_book_success,
         name='consulting_freight_book_success',
     ),
+    path(
+        'freight/verify/<str:token>/',
+        views.freight_verify,
+        name='consulting_freight_verify',
+    ),
+    # path(
+    #     'freight/expired/',
+    #     views.freight_book_success,
+    #     name='consulting_freight_book_success',
+    # ),
 ]

@@ -12,7 +12,7 @@ class ConsultingLead(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_contacted = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
-    verification_token = models.CharField(max_length=64, unique=True, db_index=True, null=True)
+    verification_token = models.CharField(max_length=64, unique=True, db_index=True)
     notes = models.TextField(blank=True)
 
     class Meta:

@@ -2504,7 +2504,7 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
             logireport.save()
 
             # Generate report
-            narrative, analysis, score = generate_full_report(df, contingency_matrix, "advanced",
+            narrative, analysis, score = generate_full_report(df, contingency_matrix, "expert",
                                                               reliable_carriers, efficient_carriers,
                                                               api_key=settings.ANTHROPIC_API_KEY)
             # Parse date range

@@ -134,6 +134,9 @@ def freight_book_submit(request):
     # if website or address:
     #     return redirect('consulting:consulting_freight_book_success')
 
+    if is_disposable_email(email):
+        return redirect('consulting:consulting_freight_book_success')
+
     if not name or not email or not company:
         messages.error(request, 'Please fill in all required fields.')
         return redirect('consulting:consulting_freight_book')
@@ -379,3 +382,21 @@ def _notify_new_lead(lead_type, name, email, company, extra_lines=None):
         recipient_list=[settings.EMAIL_HOST_USER],
         fail_silently=True,
     )
+
+
+DISPOSABLE_DOMAINS = {
+    'mailinator.com', 'tempmail.com', 'guerrillamail.com', 'throwaway.email',
+    'yopmail.com', 'sharklasers.com', 'guerrillamailblock.com', 'grr.la',
+    'dispostable.com', 'trashmail.com', 'fakeinbox.com', 'mailnesia.com',
+    'maildrop.cc', 'discard.email', 'temp-mail.org', 'getnada.com',
+    'mohmal.com', 'burnermail.io', 'inboxkitten.com', 'minutemail.com',
+    'emailondeck.com', 'crazymailing.com', 'tempr.email', 'bupmail.com',
+    'mailcatch.com', 'tempinbox.com', 'harakirimail.com',
+}
+# There are open-source lists with 3,000+ domains — use one:
+# https://github.com/disposable-email-domains/disposable-email-domains
+
+
+def is_disposable_email(email):
+    domain = email.split('@')[-1].lower()
+    return domain in DISPOSABLE_DOMAINS

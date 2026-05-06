@@ -120,6 +120,7 @@ WRITING RULES:
   If a metric is missing, skip it — do not estimate or hallucinate.
 - do never use single quotes for messages or strings instead use double quotes in the output.
 - avoid using single quotes anywhere
+- 
 
 OUTPUT FORMAT:
 Return a JSON object (no markdown, no backticks, no preamble) with the exact 
@@ -128,6 +129,36 @@ the narrative text for that section. do not use a single quote at all instead us
 always double quote for any string or message. for boolean values (False and True) 
 put them inside double quotes to avoid errors in loading as json"""
 
+
+SYSTEM_PROMPT_EXPERT = """You are a senior logistics performance analyst and an academic 
+researcher with extensive experience in freight optimization and supply chain analytics.
+writing a FreightOps Performance Report for an SMB fleet operator. Your reader is a fleet manager or 
+owner-operator with 5-50 trucks who has no analytics background. They need to 
+understand what's happening and what to do about it — in plain language. Go beyond 
+descriptive analysis—provide diagnostic insights, root causes, and strategic recommendations 
+that reflect both practical field experience and academic rigor. Be concise, structured, and actionable.
+
+WRITING RULES:
+- Write like a professor explaining results to a business owner, not like software 
+  generating output. Warm, direct, authoritative.
+- Every insight must include a specific dollar amount, percentage, or comparison.
+  Never say "significant" without a number. Never say "consider" without a reason.
+- Use carrier names, driver names, lane names, and shipment IDs from the data.
+  Generic advice is worthless — specific advice is what they pay for.
+- When recommending an action, state: what to do, who it involves, and the 
+  estimated financial impact.
+- Use short paragraphs (2-3 sentences max). Use plain English, not logistics jargon.
+- Never invent numbers. Use ONLY the values provided in the analysis data.
+  If a metric is missing, skip it — do not estimate or hallucinate.
+- do never use single quotes for messages or strings instead use double quotes in the output.
+- avoid using single quotes anywhere
+
+OUTPUT FORMAT:
+Return a JSON object (no markdown, no backticks, no preamble) with the exact 
+structure specified in the user message. Every field must be a string containing 
+the narrative text for that section. do not use a single quote at all instead use 
+always double quote for any string or message. for boolean values (False and True) 
+put them inside double quotes to avoid errors in loading as json"""
 
 # =============================================================================
 # BUILD THE USER PROMPT — Structured data + output instructions
@@ -234,7 +265,7 @@ Return a JSON object with EXACTLY these keys. Each value is a string of narrativ
     }}
   ],
 
-  "carriers_summary": "3-5 sentence executive analysis of carrier performance. Name specific carriers. Include the key comparison (best vs worst on-time, cost gap). End with the single most important carrier decision.",
+  "carriers_summary": "6-9 sentence executive analysis of carrier performance. Name specific carriers. Include the key comparison (best vs worst on-time, cost gap). End with the single most important carrier decision.",
 
   "carriers_insights": [
     {{
@@ -243,7 +274,7 @@ Return a JSON object with EXACTLY these keys. Each value is a string of narrativ
     }}
   ],
 
-  "carriers_detailed": "Full carrier analysis: 3-4 paragraphs covering performance ranking, cost variance analysis, contingency/reliability analysis (which carrier is Nx more likely to deliver on-time than which), allocation optimization results from the LP model (current vs optimal split with shipment counts), and specific negotiation recommendations. Use all carrier stats and optimization results provided. This is the expanded view — be thorough.",
+  "carriers_detailed": "Full carrier analysis: 6-9 paragraphs covering performance ranking, cost variance analysis, contingency/reliability analysis (which carrier is Nx more likely to deliver on-time than which), allocation optimization results from the LP model (current vs optimal split with shipment counts), and specific negotiation recommendations. Use all carrier stats and optimization results provided. This is the expanded view — be thorough. ",
 
   "drivers_summary": "3-5 sentence executive analysis of driver performance. Name specific drivers. Include fleet average on-time vs industry benchmark. Highlight the best and worst performers with their personality archetypes.",
 
@@ -281,6 +312,178 @@ no explanatory text before or after. Just the raw JSON."""
 
     return prompt
 
+
+def build_expert_report_prompt(
+        fleet_score: Dict[str, Any],
+        carrier_optimization: Dict[str, Any],
+        lane_profitability: Dict[str, Any],
+        driver_spc: Dict[str, Any],
+        cost_anomalies: Dict[str, Any],
+        composite_savings: Dict[str, Any],
+        carrier_stats: Dict[str, Any],
+        driver_stats: Dict[str, Any],
+        contingency_analysis: Dict[str, Any],
+        reliability_matrix: Dict[str, Any],,
+        most_reliable_carrier: str,
+        efficiency_matrix: Dict[str, Any],,
+        most_efficient_carrier: str,
+        route_stats: Dict[str, Any],
+        sample_data: Dict[str, Any],
+) -> str:
+    """
+    Constructs the user prompt with all analysis data and output format spec.
+    """
+    # print(sample_data)
+    prompt = f"""Generate the FreightOps Performance Report narrative from the following 
+analysis data. Return ONLY a valid JSON object with the structure defined below.
+
+============================
+FLEET HEALTH SCORE
+============================
+{json.dumps(fleet_score, indent=2, cls=NumpyEncoder)}
+
+============================
+COMPOSITE SAVINGS SUMMARY
+============================
+{json.dumps(composite_savings, indent=2, cls=NumpyEncoder)}
+
+============================
+CARRIER STATISTICS SUMMARY
+============================
+{json.dumps(carrier_stats, indent=2, cls=NumpyEncoder)}
+
+============================
+CARRIER OPTIMIZATION (LP MODEL)
+============================
+{json.dumps(carrier_optimization, indent=2, cls=NumpyEncoder)}
+
+============================
+CARRIER Contingency Analysis
+============================
+{json.dumps(contingency_analysis, indent=2, cls=NumpyEncoder)}
+
+============================
+CARRIER RELIABILITY Analysis
+============================
+{json.dumps(reliability_matrix, indent=2, cls=NumpyEncoder)}
+
+============================
+MOST RELIABLE CARRIER 
+============================
+{most_reliable_carrier}
+
+============================
+CARRIER COST EFFICIENCY Analysis
+============================
+{json.dumps(efficiency_matrix, indent=2, cls=NumpyEncoder)}
+
+============================
+MOST EFFICIENT CARRIER 
+============================
+{most_efficient_carrier}
+
+============================
+DRIVER STATISTICS SUMMARY
+============================
+{json.dumps(driver_stats, indent=2, cls=NumpyEncoder)}
+
+============================
+DRIVER SPC ANALYSIS
+============================
+{json.dumps(driver_spc, indent=2, cls=NumpyEncoder)}
+
+============================
+ROUTE STATISTICS SUMMARY
+============================
+{json.dumps(route_stats, indent=2, cls=NumpyEncoder)}
+
+============================
+LANE PROFITABILITY ANALYSIS
+============================
+{json.dumps(lane_profitability, indent=2, cls=NumpyEncoder)}
+
+============================
+COST ANOMALY DETECTION
+============================
+{json.dumps(cost_anomalies, indent=2, cls=NumpyEncoder)}
+
+============================
+SAMPLE RAW DATA (first 5 rows for context)
+============================
+{json.dumps(sample_data, indent=2)}
+
+============================
+REQUIRED OUTPUT FORMAT
+============================
+Return a JSON object with EXACTLY these keys. Each value is a string of narrative text.
+
+{{
+  "money_headline_sub": "One sentence summarizing where the savings come from (under 20 words)",
+
+  "top_actions": [
+    {{
+      "title": "Specific action instruction (e.g., 'Shift 35% of ABC Carriers volume to XYZ Freight on Dallas → Houston')",
+      "detail": "3-4 sentence explanation with numbers from the data. Why this matters, what changes.",
+      "value": "Dollar amount per year (e.g., '$18,240/yr')"
+    }},
+    {{
+      "title": "Second action",
+      "detail": "Explanation",
+      "value": "Dollar amount"
+    }},
+    {{
+      "title": "Third action",
+      "detail": "Explanation",
+      "value": "Dollar amount"
+    }}
+  ],
+
+  "carriers_summary": "6-9 sentence executive analysis of carrier performance. Name specific carriers. Include the key comparison (best vs worst on-time, cost gap). End with the single most important carrier decision.",
+
+  "carriers_insights": [
+    {{
+      "type": "finding|warning|opportunity",
+      "text": "One specific insight with numbers. Bold the carrier name and key metric."
+    }}
+  ],
+
+  "carriers_detailed": "Full carrier analysis: 6-9 paragraphs covering performance ranking, cost variance analysis, contingency/reliability analysis (which carrier is Nx more likely to deliver on-time than which), allocation optimization results from the LP model (current vs optimal split with shipment counts), and specific negotiation recommendations. Use all carrier stats and optimization results provided. provide a Personal interpretation based on your consulting experience with similar clients. provide a Cross-client pattern recognition (what patterns here resemble common issues across the industry). provide an Industry judgment grounded in real-world logistics practices and relevant research insights. This is the expanded view — be thorough. ",
+
+  "drivers_summary": "6-9 sentence executive analysis of driver performance. Name specific drivers. Include fleet average on-time vs industry benchmark. Highlight the best and worst performers with their personality archetypes.",
+
+  "drivers_detailed": "Full driver analysis: 3-4 paragraphs covering SPC control chart findings (who is out of control, on which metrics, by how many sigma), driver personality profiles with behavioral descriptions, specific coaching recommendations per flagged driver with dollar impact, and fleet-wide improvement projections. Use all driver SPC data provided. provide a Personal interpretation based on your consulting experience with similar clients. provide a Cross-client pattern recognition (what patterns here resemble common issues across the industry). provide an Industry judgment grounded in real-world logistics practices and relevant research insights. This is the expanded view — be thorough.",
+
+  "routes_summary": "6-9 sentence executive analysis of route performance. Name specific lanes. Include the network imbalance finding (deadhead/empty miles). Highlight the worst and best performing lanes with cost data.",
+
+  "routes_insights": [
+    {{
+      "type": "finding|warning|opportunity",
+      "text": "One specific insight about a lane or route pattern."
+    }}
+  ],
+
+  "routes_detailed": "Full route analysis: 6-9 paragraphs covering lane profitability rankings (contribution margin analysis), underutilized lanes, network balance analysis (inbound vs outbound by city), the 5 worst routes with specific reasons (heavy load vs light load distinction), and consolidation/repricing recommendations with dollar impact. Use all lane profitability data provided. provide a Personal interpretation based on your consulting experience with similar clients. provide a Cross-client pattern recognition (what patterns here resemble common issues across the industry). provide an Industry judgment grounded in real-world logistics practices and relevant research insights. This is the expanded view — be thorough.",
+
+  "financial_impact": [
+    {{
+      "value": "Dollar amount",
+      "description": "3-4 sentences explaining what this saving comes from and how it's achieved"
+    }}
+  ],
+
+  "week_actions": [
+    {{
+      "text": "Specific Monday-morning action. Include names, shipment IDs, dollar amounts. Must be executable within 48 hours."
+    }}
+  ],
+
+  "improvement_scenario": "3-4 sentences: 'Improving [biggest drag dimension] to [target] would raise your Fleet Score from [current] to [projected] (+[delta] points).' Use the fleet score improvement_scenario data."
+}}
+
+CRITICAL: Return ONLY the JSON object. No markdown formatting, no ```json blocks, 
+no explanatory text before or after. Just the raw JSON."""
+
+    return prompt
 
 # =============================================================================
 # API CALL — Generate the report narrative
@@ -402,6 +605,130 @@ def generate_report_narrative(
 
     return narrative
 
+
+def generate_expert_report_narrative(
+        fleet_score: Dict[str, Any],
+        carrier_optimization: Dict[str, Any],
+        lane_profitability: Dict[str, Any],
+        driver_spc: Dict[str, Any],
+        cost_anomalies: Dict[str, Any],
+        composite_savings: Dict[str, Any],
+        carrier_stats: Dict[str, Any],
+        driver_stats: Dict[str, Any],
+        route_stats: Dict[str, Any],
+        contingency_analysis: Dict[str, Any],
+        reliable_carriers: Dict[str, Any],
+        most_reliable_carriers: str,
+        efficient_carriers: Dict[str, Any],
+        most_efficient_carriers: str,
+        sample_data: Dict[str, Any],
+        api_key: str = None,
+) -> Dict[str, Any]:
+    """
+    Calls Claude Opus 4.6 to generate all report narrative sections.
+
+    Parameters
+    ----------
+    fleet_score : dict
+        Output from compute_fleet_score()
+    carrier_optimization : dict
+        Output from optimize_carrier_allocation()
+    lane_profitability : dict
+        Output from analyze_lane_profitability()
+    driver_spc : dict
+        Output from analyze_driver_spc()
+    cost_anomalies : dict
+        Output from detect_cost_anomalies()
+    composite_savings : dict
+        The composite_savings key from run_phase1_analysis()
+    carrier_stats : dict
+        Pre-computed carrier-level statistics (see build_carrier_stats)
+    driver_stats : dict
+        Pre-computed driver-level statistics (see build_driver_stats)
+    route_stats : dict
+        Pre-computed route-level statistics (see build_route_stats)
+    sample_data : dict
+        First 5 rows of the uploaded CSV as a list of dicts
+    api_key : str, optional
+        Anthropic API key. If None, reads from ANTHROPIC_API_KEY env var.
+
+    Returns
+    -------
+    dict : The parsed JSON narrative sections, ready for the Django template.
+    :param contingency_analysis:
+    """
+
+    client = anthropic.Anthropic(api_key=api_key)
+
+    user_prompt = build_expert_report_prompt(
+        fleet_score=fleet_score,
+        carrier_optimization=carrier_optimization,
+        lane_profitability=lane_profitability,
+        driver_spc=driver_spc,
+        cost_anomalies=cost_anomalies,
+        composite_savings=composite_savings,
+        carrier_stats=carrier_stats,
+        driver_stats=driver_stats,
+        contingency_analysis=contingency_analysis,
+        reliability_matrix=reliable_carriers,
+        most_reliable_carrier=most_reliable_carriers,
+        efficiency_matrix=efficient_carriers,
+        most_efficient_carrier=most_efficient_carriers,
+        route_stats=route_stats,
+        sample_data=sample_data,
+    )
+# claude-sonnet-4-6
+    message = client.messages.create(
+        model="claude-opus-4-6",
+        max_tokens=7000,
+        system=SYSTEM_PROMPT_EXPERT,
+        messages=[
+            {"role": "user", "content": user_prompt}
+        ],
+    )
+
+    raw_text = message.content[0].text
+    # raw_text = raw_text.replace("'", '"')
+    # Clean potential markdown fencing
+    cleaned = raw_text.strip()
+    if cleaned.startswith("```"):
+        cleaned = cleaned.split("\n", 1)[1] if "\n" in cleaned else cleaned[3:]
+    if cleaned.endswith("```"):
+        cleaned = cleaned[:-3]
+    cleaned = cleaned.strip()
+    cleaned = cleaned.replace("'", '"')
+
+    print("Cleaned Result start here")
+    print("*********************************************************************************")
+    print("*********************************************************************************")
+    # print(raw_text)
+    # nt = json.loads(cleaned)
+    # contains_bool = has_bool(nt)
+    # print(f"Contains boolean: {contains_bool}")
+    print("*********************************************************************************")
+    print("*********************************************************************************")
+
+    try:
+        narrative = json.loads(cleaned)
+    except json.JSONDecodeError as e:
+        return {
+            # "error": f"Failed to parse LLM response as JSON: {str(e)}",
+            "raw_response": raw_text,
+        }
+
+    # Add usage metadata
+    narrative["_meta"] = {
+        "model": "claude-opus-4-6",
+        "input_tokens": message.usage.input_tokens,
+        "output_tokens": message.usage.output_tokens,
+        "estimated_cost_usd": round(
+            (message.usage.input_tokens / 1_000_000 * 3)
+            + (message.usage.output_tokens / 1_000_000 * 15),
+            4,
+        ),
+    }
+
+    return narrative
 
 # =============================================================================
 # HELPER: Build statistics summaries from raw DataFrame
@@ -694,7 +1021,7 @@ def analyze_in_transit(df_intransit) -> dict:
 # FULL PIPELINE: DataFrame → Report Narrative
 # =============================================================================
 # -> Dict[str, Any]
-def generate_full_report(df, contingency_matrix, api_key: str = None):
+def generate_full_report(df, contingency_matrix, report_level, reliable_carriers, efficient_carriers, api_key: str = None):
     """
     End-to-end: takes a cleaned DataFrame, runs all models,
     and generates the complete report narrative.
@@ -733,22 +1060,53 @@ def generate_full_report(df, contingency_matrix, api_key: str = None):
     route_stats = build_route_stats(df)
     sample_data = build_sample_data(df)
     sample_data = json.loads(json.dumps(sample_data, default=convert_to_python_types))
+    narrative = {}
+    if report_level == "advanced":
+        # Step 4: Generate narrative via Sonnet
+        narrative = generate_report_narrative(
+            fleet_score=score,
+            carrier_optimization=analysis["carrier_optimization"],
+            lane_profitability=analysis["lane_profitability"],
+            driver_spc=analysis["driver_spc"],
+            cost_anomalies=analysis["cost_anomalies"],
+            composite_savings=analysis["composite_savings"],
+            carrier_stats=carrier_stats,
+            driver_stats=driver_stats,
+            route_stats=route_stats,
+            contingency_analysis=contingency_matrix,
+            sample_data=sample_data,
+            api_key=api_key,
+        )
+    elif report_level == "expert":
 
-    # Step 4: Generate narrative via Sonnet
-    narrative = generate_report_narrative(
-        fleet_score=score,
-        carrier_optimization=analysis["carrier_optimization"],
-        lane_profitability=analysis["lane_profitability"],
-        driver_spc=analysis["driver_spc"],
-        cost_anomalies=analysis["cost_anomalies"],
-        composite_savings=analysis["composite_savings"],
-        carrier_stats=carrier_stats,
-        driver_stats=driver_stats,
-        route_stats=route_stats,
-        contingency_analysis=contingency_matrix,
-        sample_data=sample_data,
-        api_key=api_key,
-    )
+        # Get Carrier reliability
+        reliable_carriers = reliable_carriers.reset_index()
+        reliable_dict = reliable_carriers.to_dict()
+        most_reliable_carriers = reliable_carriers['CarrierName'][0]
+
+        # Get Cost Efficiency
+        efficient_carriers = efficient_carriers.reset_index()
+        most_efficient_carriers = efficient_carriers['CarrierName'][0]
+
+        # Step 4: Generate narrative via Sonnet
+        narrative = generate_expert_report_narrative(
+            fleet_score=score,
+            carrier_optimization=analysis["carrier_optimization"],
+            lane_profitability=analysis["lane_profitability"],
+            driver_spc=analysis["driver_spc"],
+            cost_anomalies=analysis["cost_anomalies"],
+            composite_savings=analysis["composite_savings"],
+            carrier_stats=carrier_stats,
+            driver_stats=driver_stats,
+            route_stats=route_stats,
+            contingency_analysis=contingency_matrix,
+            reliable_carriers=reliable_carriers,
+            most_reliable_carriers=most_reliable_carriers,
+            efficient_carriers=efficient_carriers,
+            most_efficient_carriers=most_efficient_carriers,
+            sample_data=sample_data,
+            api_key=api_key,
+        )
 
     return narrative, analysis, score
 

@@ -2472,12 +2472,19 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
             contingency_matrix = dict(contingency_matrix)
 
 
+
             # --- Statistics ---
             # generate carrier, driver and route stats
             carrier_statdata, driver_statdata, route_statdata = prepare_stats_data(df)
             driver_statdata = driver_statdata.reset_index()
             carrier_statdata = carrier_statdata.reset_index()
             route_statdata = route_statdata.reset_index()
+
+            # Carrier Reliability analysis
+            reliable_carriers = reliability_analysis(carrier_statdata)
+
+            # Carrier Cost Efficiency
+            efficient_carriers = calculate_cost_efficiency(carrier_statdata)
 
             logireport.carrier_statdata_json = carrier_statdata.to_json(orient='records')
             logireport.driver_statdata_json = driver_statdata.to_json(orient='records')
@@ -2497,7 +2504,8 @@ class AdvancedReportCreateView(LoginRequiredMixin, View, JsonFormMixin):
             logireport.save()
 
             # Generate report
-            narrative, analysis, score = generate_full_report(df, contingency_matrix,
+            narrative, analysis, score = generate_full_report(df, contingency_matrix, "advanced",
+                                                              reliable_carriers, efficient_carriers,
                                                               api_key=settings.ANTHROPIC_API_KEY)
             # Parse date range
             if "Date_ship" in df.columns:

@@ -11,6 +11,8 @@ class ConsultingLead(models.Model):
     extra_json = models.JSONField(default=dict, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_contacted = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
+    verification_token = models.CharField(max_length=64, blank=True, null=True)
     notes = models.TextField(blank=True)
 
     class Meta:

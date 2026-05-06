@@ -7,12 +7,13 @@ Handles:
   - Booking form submission (discovery call + mini-audit intake)
 """
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import FileResponse, Http404
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 import os
+import secrets
 
 from .models import ConsultingLead
 from .utils.consulting_emails import *
@@ -123,6 +124,12 @@ def freight_book_submit(request):
     name = request.POST.get('name', '').strip()
     email = request.POST.get('email', '').strip()
     company = request.POST.get('company', '').strip()
+    website = request.POST.get('website', '').strip()
+    address = request.POST.get('address', '').strip()
+    token = secrets.token_urlsafe(32)
+
+    if website or address:
+        return redirect('consulting_freight_book_success')
 
     if not name or not email or not company:
         messages.error(request, 'Please fill in all required fields.')
@@ -138,37 +145,38 @@ def freight_book_submit(request):
             company=company,
             lead_type='discovery_call',
             service='freight',
+            token=token,
             extra={
                 'monthly_spend': monthly_spend,
                 'challenge': challenge,
             },
         )
 
-        _notify_new_lead(
-            lead_type='Discovery call request',
-            name=name,
-            email=email,
-            company=company,
-            extra_lines=[
-                f'Monthly spend: {monthly_spend}',
-                f'Challenge: {challenge}' if challenge else '',
-            ],
-        )
-
-        # Fetch Email's body and subject with the company name
-        subject, body = get_discovery_call_followup(
-            name=name, company=company,
-            monthly_spend=monthly_spend, challenge=challenge,
-        )
-
-        # Send confirmation to the prospect
-        send_mail(
-            subject=subject,
-            message=body,
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[email],
-            fail_silently=True,
-        )
+        # _notify_new_lead(
+        #     lead_type='Discovery call request',
+        #     name=name,
+        #     email=email,
+        #     company=company,
+        #     extra_lines=[
+        #         f'Monthly spend: {monthly_spend}',
+        #         f'Challenge: {challenge}' if challenge else '',
+        #     ],
+        # )
+        #
+        # # Fetch Email's body and subject with the company name
+        # subject, body = get_discovery_call_followup(
+        #     name=name, company=company,
+        #     monthly_spend=monthly_spend, challenge=challenge,
+        # )
+        #
+        # # Send confirmation to the prospect
+        # send_mail(
+        #     subject=subject,
+        #     message=body,
+        #     from_email=settings.EMAIL_HOST_USER,
+        #     recipient_list=[email],
+        #     fail_silently=True,
+        # )
 
     elif intake_type == 'mini_audit':
         carrier_count = request.POST.get('carrier_count', '')
@@ -194,6 +202,7 @@ def freight_book_submit(request):
             company=company,
             lead_type='mini_audit',
             service='freight',
+            token=token,
             extra={
                 'carrier_count': carrier_count,
                 'file_name': freight_data.name,
@@ -201,22 +210,68 @@ def freight_book_submit(request):
             },
         )
 
+    # Send verification email
+    verify_url = request.build_absolute_uri(
+        f'/consulting/freight/verify/{token}/'
+    )
+    send_mail(
+        subject='Confirm your request — BizAnalytic',
+        message=(
+            f'Hi {name},\n\n'
+            f'Click here to confirm your request:\n'
+            f'{verify_url}\n\n'
+            f'If you didn\'t submit this form, ignore this email.\n\n'
+            f'— Adil, BizAnalytic'
+        ),
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=[email],
+    )
+        # _notify_new_lead(
+        #     lead_type='Mini-audit request (FILE ATTACHED)',
+        #     name=name,
+        #     email=email,
+        #     company=company,
+        #     extra_lines=[
+        #         f'Carriers: {carrier_count}',
+        #         f'File: {freight_data.name} ({freight_data.size // 1024}KB)',
+        #         f'Saved to: {file_path}',
+        #     ],
+        # )
+
+
+
+    return redirect(f"{settings.LOGIN_URL}?next=/consulting/freight/book/success/?type={intake_type}"
+                    if False else f'/consulting/freight/book/success/?type={intake_type}')
+
+
+def freight_verify(request, token):
+    lead = get_object_or_404(ConsultingLead, verification_token=token, is_verified=False)
+    lead.is_verified = True
+    lead.save()
+
+    # NOW notify yourself — this is a real lead
+    if lead.lead_type == "mini_audit":
+        carrier_count = ""
+        file_name = ""
+        file_size = 0
+        if lead.extra_json:
+            carrier_count = lead.extra_json["carrier_count"]
+            file_name = lead.extra_json["file_name"]
+            file_size = lead.extra_json["file_size"]
         _notify_new_lead(
             lead_type='Mini-audit request (FILE ATTACHED)',
-            name=name,
-            email=email,
-            company=company,
+            name=lead.name,
+            email=lead.email,
+            company=lead.company,
             extra_lines=[
                 f'Carriers: {carrier_count}',
-                f'File: {freight_data.name} ({freight_data.size // 1024}KB)',
-                f'Saved to: {file_path}',
+                f'File: {file_name} ({file_size // 1024}KB)',
             ],
         )
-
         # Fetch Email's body and subject with the company name
         subject, body = get_mini_audit_followup(
-            name=name, company=company,
-            file_name=freight_data.name
+            name=lead.name, company=lead.company,
+            file_name=file_name
         )
 
         # Send confirmation to the prospect
@@ -224,19 +279,53 @@ def freight_book_submit(request):
             subject=subject,
             message=body,
             from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[email],
+            recipient_list=[lead.email],
             fail_silently=True,
         )
 
-    return redirect(f"{settings.LOGIN_URL}?next=/consulting/freight/book/success/?type={intake_type}"
-                    if False else f'/consulting/freight/book/success/?type={intake_type}')
+    elif lead.lead_type == "discovery_call":
+
+        monthly_spend = ""
+        challenge = ""
+
+        if lead.extra_json:
+            monthly_spend = lead.extra_json["monthly_spend"]
+            challenge = lead.extra_json["challenge"]
+
+        _notify_new_lead(
+            lead_type='Discovery call request',
+            name=lead.name,
+            email=lead.email,
+            company=lead.company,
+            extra_lines=[
+                f'Monthly spend: {monthly_spend}',
+                f'Challenge: {challenge}' if challenge else '',
+            ],
+        )
+
+        # Fetch Email's body and subject with the company name
+        subject, body = get_discovery_call_followup(
+            name=lead.name, company=lead.company,
+            monthly_spend=monthly_spend, challenge=challenge,
+        )
+
+        # Send confirmation to the prospect
+        send_mail(
+            subject=subject,
+            message=body,
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[lead.email],
+            fail_silently=True,
+        )
+
+    return render(request, 'consulting/freight/verified.html', {'lead': lead})
 
 
 # =====================================================================
 # HELPERS
 # =====================================================================
 
-def _save_consulting_lead(name, email, company, lead_type, service, extra=None):
+def _save_consulting_lead(name, email, company, lead_type, service, token, extra=None):
     """
     Saves a consulting lead to the database.
 
@@ -258,6 +347,7 @@ def _save_consulting_lead(name, email, company, lead_type, service, extra=None):
     ConsultingLead.objects.create(
         name=name, email=email, company=company,
         lead_type=lead_type, service=service,
+        is_verified=False, verification_token=token,
         extra_json=extra or {},
     )
 

@@ -177,7 +177,7 @@ def _save_uploaded_file(uploaded_file, service):
 
 
 # =====================================================================
-# VERIFICATION VIEW (shared by both services)
+# VERIFICATION VIEWS (shared by both services)
 # =====================================================================
 
 def verify_lead(request, token):
@@ -205,7 +205,7 @@ def verify_lead(request, token):
     return render(request, template, {"lead": lead})
 
 
-def download_sample(request, token):
+def verify_download_sample(request, token):
     """Handles the email verification click."""
     lead = get_object_or_404(
         ConsultingLead,
@@ -243,6 +243,7 @@ def download_sample(request, token):
         as_attachment=True,
         filename=filename,
     )
+
 # =====================================================================
 # FREIGHT VIEWS
 # =====================================================================
@@ -294,7 +295,6 @@ def freight_sample_download(request):
         service=ConsultingLead.Service.FREIGHT,
         lead_type=ConsultingLead.LeadType.SAMPLE_DOWNLOAD,
         status=ConsultingLead.LeadStatus.VERIFIED,
-        is_verified=True,
         name=form.cleaned_data["name"],
         email=form.cleaned_data["email"],
         company=form.cleaned_data.get("company", ""),
@@ -437,7 +437,6 @@ def ecommerce_sample_download(request):
         service=ConsultingLead.Service.ECOMMERCE,
         lead_type=ConsultingLead.LeadType.SAMPLE_DOWNLOAD,
         status=ConsultingLead.LeadStatus.VERIFIED,
-        is_verified=True,
         name=form.cleaned_data["name"],
         email=form.cleaned_data["email"],
         store_url=form.cleaned_data.get("store_url", ""),

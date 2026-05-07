@@ -194,11 +194,12 @@ class ConsultingLead(models.Model):
         return timezone.now() - self.created_at > timezone.timedelta(days=7)
 
     def verify(self):
-        """Mark this lead as verified."""
-        self.is_verified = True
-        self.verified_at = timezone.now()
-        self.status = self.LeadStatus.VERIFIED
-        self.save(update_fields=["is_verified", "verified_at", "status"])
+        if not self.is_verified:
+            """Mark this lead as verified."""
+            self.is_verified = True
+            self.verified_at = timezone.now()
+            self.status = self.LeadStatus.VERIFIED
+            self.save(update_fields=["is_verified", "verified_at", "status"])
 
     def mark_contacted(self):
         self.status = self.LeadStatus.CONTACTED

@@ -27,8 +27,8 @@ urlpatterns = [
     ),
     path(
         "download/sample/<str:token>/",
-        views.download_sample,
-        name="download_sample",
+        views.verify_download_sample,
+        name="verify_download_sample",
     ),
 
     # =================================================================

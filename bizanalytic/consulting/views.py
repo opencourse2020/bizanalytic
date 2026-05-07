@@ -362,7 +362,7 @@ def ecommerce_sample_download(request):
 
     if not form.is_valid():
         messages.error(request, "Please provide a valid name and work email.")
-        print("Please provide a valid name and work email.")
+        print(form.errors)
         return redirect("consulting:consulting_ecommerce_sample")
 
     ip = _get_client_ip(request)

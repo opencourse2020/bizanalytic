@@ -220,12 +220,12 @@ def freight_sample_download(request):
 
     if not form.is_valid():
         messages.error(request, "Please provide a valid name and work email.")
-        return redirect("consulting_freight_sample")
+        return redirect("consulting:consulting_freight_sample")
 
     ip = _get_client_ip(request)
     if _is_rate_limited(form.cleaned_data["email"], ip):
         messages.info(request, "You've already downloaded the sample report.")
-        return redirect("consulting_freight_sample")
+        return redirect("consulting:consulting_freight_sample")
 
     # Save as verified lead (sample downloads don't need email verification)
     ConsultingLead.objects.create(
@@ -265,12 +265,12 @@ def freight_book_submit(request):
         form = FreightDiscoveryCallForm(request.POST)
         if not form.is_valid():
             messages.error(request, "Please fill in all required fields.")
-            return redirect("consulting_freight_book")
+            return redirect("consulting:consulting_freight_book")
 
         email = form.cleaned_data["email"]
         if _is_rate_limited(email, ip):
             messages.info(request, "You've already submitted a request. Check your email.")
-            return redirect("consulting_freight_book")
+            return redirect("consulting:consulting_freight_book")
 
         lead = ConsultingLead.objects.create(
             service=ConsultingLead.Service.FREIGHT,
@@ -298,7 +298,7 @@ def freight_book_submit(request):
         email = form.cleaned_data["email"]
         if _is_rate_limited(email, ip):
             messages.info(request, "You've already submitted a request. Check your email.")
-            return redirect("consulting_freight_book")
+            return redirect("consulting:consulting_freight_book")
 
         uploaded_file = form.cleaned_data["freight_data"]
         file_path = _save_uploaded_file(uploaded_file, "freight")
@@ -362,12 +362,12 @@ def ecommerce_sample_download(request):
 
     if not form.is_valid():
         messages.error(request, "Please provide a valid name and work email.")
-        return redirect("consulting_ecommerce_sample")
+        return redirect("consulting:consulting_ecommerce_sample")
 
     ip = _get_client_ip(request)
     if _is_rate_limited(form.cleaned_data["email"], ip):
         messages.info(request, "You've already downloaded the sample report.")
-        return redirect("consulting_ecommerce_sample")
+        return redirect("consulting:consulting_ecommerce_sample")
 
     ConsultingLead.objects.create(
         service=ConsultingLead.Service.ECOMMERCE,
@@ -405,12 +405,12 @@ def ecommerce_book_submit(request):
         form = EcommerceDiscoveryCallForm(request.POST)
         if not form.is_valid():
             messages.error(request, "Please fill in all required fields.")
-            return redirect("consulting_ecommerce_book")
+            return redirect("consulting:consulting_ecommerce_book")
 
         email = form.cleaned_data["email"]
         if _is_rate_limited(email, ip):
             messages.info(request, "You've already submitted a request. Check your email.")
-            return redirect("consulting_ecommerce_book")
+            return redirect("consulting:consulting_ecommerce_book")
 
         lead = ConsultingLead.objects.create(
             service=ConsultingLead.Service.ECOMMERCE,
@@ -433,12 +433,12 @@ def ecommerce_book_submit(request):
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, error)
-            return redirect("consulting_ecommerce_book")
+            return redirect("consulting:consulting_ecommerce_book")
 
         email = form.cleaned_data["email"]
         if _is_rate_limited(email, ip):
             messages.info(request, "You've already submitted a request. Check your email.")
-            return redirect("consulting_ecommerce_book")
+            return redirect("consulting:consulting_ecommerce_book")
 
         uploaded_file = form.cleaned_data["shipping_data"]
         file_path = _save_uploaded_file(uploaded_file, "ecommerce")

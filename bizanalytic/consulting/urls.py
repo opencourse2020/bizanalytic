@@ -1,16 +1,17 @@
 """
-URL configuration for consulting pages.
+Consulting URL Configuration
+=============================
+Handles both freight and e-commerce consulting services
+plus the shared email verification endpoint.
 
 Add to your main urls.py:
     path('consulting/', include('consulting.urls')),
 
-Or add these patterns directly to your existing urlpatterns.
+Place at: consulting/urls.py
 """
 
 from django.urls import path
 from . import views
-
-app_name = "consulting"
 
 urlpatterns = [
 
@@ -18,43 +19,43 @@ urlpatterns = [
     # SHARED
     # =================================================================
     path(
-        'freight/verify/<str:token>/',
-        views.freight_verify,
-        name='consulting_freight_verify',
+        "verify/<str:token>/",
+        views.verify_lead,
+        name="consulting_verify",
     ),
 
     # =================================================================
     # FREIGHT SPEND AUDIT
     # =================================================================
     path(
-        'freight/',
+        "freight/",
         views.freight_service,
-        name='consulting_freight',
+        name="consulting_freight",
     ),
     path(
-        'freight/sample/',
+        "freight/sample/",
         views.freight_sample,
-        name='consulting_freight_sample',
+        name="consulting_freight_sample",
     ),
     path(
-        'freight/sample/download/',
+        "freight/sample/download/",
         views.freight_sample_download,
-        name='consulting_freight_sample_download',
+        name="consulting_freight_sample_download",
     ),
     path(
-        'freight/book/',
+        "freight/book/",
         views.freight_book,
-        name='consulting_freight_book',
+        name="consulting_freight_book",
     ),
     path(
-        'freight/book/submit/',
+        "freight/book/submit/",
         views.freight_book_submit,
-        name='consulting_freight_book_submit',
+        name="consulting_freight_book_submit",
     ),
     path(
-        'freight/book/success/',
+        "freight/book/success/",
         views.freight_book_success,
-        name='consulting_freight_book_success',
+        name="consulting_freight_book_success",
     ),
 
     # =================================================================
@@ -90,10 +91,4 @@ urlpatterns = [
         views.ecommerce_book_success,
         name="consulting_ecommerce_book_success",
     ),
-
-    # path(
-    #     'freight/expired/',
-    #     views.freight_book_success,
-    #     name='consulting_freight_book_success',
-    # ),
 ]

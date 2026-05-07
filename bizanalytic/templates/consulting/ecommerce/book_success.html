@@ -233,8 +233,8 @@
 
         <h1 class="ab-success-title">Your freight data has been received</h1>
         <p class="ab-success-sub">
-          I'll review the file, run the analysis, and deliver your free 
-          3-page mini-audit within 3 business days. If I have any questions 
+          I'll review the file, run the analysis, and deliver your free
+          3-page mini-audit within 3 business days. If I have any questions
           about the data format, I'll reach out directly.
         </p>
 
@@ -266,8 +266,8 @@
 
         <h1 class="ab-success-title">Your call request has been received</h1>
         <p class="ab-success-sub">
-          I'll reply within 1 business day with 3-4 available time slots 
-          for a 15-minute discovery call. Check your inbox for a 
+          I'll reply within 1 business day with 3-4 available time slots
+          for a 15-minute discovery call. Check your inbox for a
           confirmation email.
         </p>
 
@@ -294,7 +294,6 @@
             </div>
           </div>
         </div>
-
       {% else %}
           <h1 class="ab-success-title">Your request has been received</h1>
         <p class="ab-success-sub">
@@ -322,7 +321,7 @@
             <div class="ab-success-step-body">
               <div class="ab-success-step-title">If you are satisfied and want to give it a try</div>
               <div class="ab-success-step-desc">
-                  <a href="{% url 'consulting:consulting_freight' %}" class="ab-success-link">
+                  <a href="{% url 'consulting:consulting_ecommerce' %}" class="ab-success-link">
                     <span class="ab-success-link-icon">&#9654;</span>
                     <span>
                       <strong>Check our services</strong>
@@ -335,22 +334,14 @@
       {% endif %}
 
     {% if intake_type == "mini_audit" or intake_type == "discovery_call" %}
-
       <div class="ab-success-meanwhile">
         <div class="ab-success-meanwhile-title">While you wait</div>
         <div class="ab-success-links">
-          <a href="{% url 'consulting:consulting_freight_sample' %}" class="ab-success-link">
+          <a href="{% url 'consulting:consulting_ecommerce_sample' %}" class="ab-success-link">
             <span class="ab-success-link-icon">&#9654;</span>
             <span>
               <strong>See a sample report</strong>
               <span class="ab-success-link-desc">Preview the exact format and depth of our analysis</span>
-            </span>
-          </a>
-          <a href="{% url 'logiflex:index' %}" class="ab-success-link">
-            <span class="ab-success-link-icon">&#9654;</span>
-            <span>
-              <strong>Try LogiFlex free</strong>
-              <span class="ab-success-link-desc">Upload your CSV and get an instant Fleet Health Check</span>
             </span>
           </a>
           <a href="{% url 'logiflex:aboutus' %}" class="ab-success-link">
@@ -363,6 +354,7 @@
         </div>
       </div>
     {% endif %}
+
     </div>
 
   </div>

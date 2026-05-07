@@ -25,6 +25,11 @@ urlpatterns = [
         views.verify_lead,
         name="consulting_verify",
     ),
+    path(
+        "download/sample/<str:token>/",
+        views.download_sample,
+        name="download_sample",
+    ),
 
     # =================================================================
     # FREIGHT SPEND AUDIT

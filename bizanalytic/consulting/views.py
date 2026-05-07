@@ -96,6 +96,30 @@ def _send_verification_email(lead, request):
     )
 
 
+def _send_verification_email_download(lead, request):
+    """Sends the email verification link to the prospect."""
+    verify_url = request.build_absolute_uri(
+        f"/consulting/download/sample/{lead.verification_token}/"
+    )
+
+    service_name = "sample freight report" if lead.service == "freight" else "sample shipping audit report"
+
+    send_mail(
+        subject="Confirm your request — BizAnalytic",
+        message=(
+            f"Hi {lead.name},\n\n"
+            f"Click here to download your {service_name} :\n"
+            f"{verify_url}\n\n"
+            f"This link expires in 7 days.\n\n"
+            f"If you didn't submit this form, ignore this email.\n\n"
+            f"— Adam, BizAnalytic"
+        ),
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[lead.email],
+        fail_silently=True,
+    )
+
+
 def _notify_owner(lead):
     """Sends you an email notification about a verified lead."""
     lines = [
@@ -131,8 +155,8 @@ def _notify_owner(lead):
     send_mail(
         subject=f"[BizAnalytic] VERIFIED lead: {lead.get_lead_type_display()} — {lead.name}",
         message="\n".join(lines),
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[settings.DEFAULT_FROM_EMAIL],
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[settings.EMAIL_HOST_USER],
         fail_silently=True,
     )
 
@@ -181,6 +205,45 @@ def verify_lead(request, token):
     return render(request, template, {"lead": lead})
 
 
+def download_sample(request, token):
+    """Handles the email verification click."""
+    lead = get_object_or_404(
+        ConsultingLead,
+        verification_token=token,
+        is_verified=False,
+    )
+
+    # Check expiry
+    if lead.is_expired:
+        return render(request, "consulting/verify_expired.html")
+
+    lead.verify()
+    _notify_owner(lead)
+
+    # Serve the PDF
+    filename = ""
+    if lead.service == ConsultingLead.Service.FREIGHT:
+
+        sample_path = os.path.join(
+            settings.BASE_DIR, "static", "consulting",
+            "freight-spend-audit-sample.pdf"
+        )
+        filename = "BizAnalytic-Freight-Spend-Audit-Sample.pdf"
+    elif lead.service == ConsultingLead.Service.ECOMMERCE:
+        sample_path = os.path.join(
+            settings.BASE_DIR, "static", "consulting",
+            "ecommerce-shipping-audit-sample.pdf"
+        )
+        filename = "BizAnalytic-Shipping-Audit-Sample.pdf"
+    if not os.path.exists(sample_path):
+        raise Http404("Sample report not found.")
+
+    return FileResponse(
+        open(sample_path, "rb"),
+        content_type="application/pdf",
+        as_attachment=True,
+        filename=filename,
+    )
 # =====================================================================
 # FREIGHT VIEWS
 # =====================================================================
@@ -228,7 +291,7 @@ def freight_sample_download(request):
         return redirect("consulting:consulting_freight_sample")
 
     # Save as verified lead (sample downloads don't need email verification)
-    ConsultingLead.objects.create(
+    lead = ConsultingLead.objects.create(
         service=ConsultingLead.Service.FREIGHT,
         lead_type=ConsultingLead.LeadType.SAMPLE_DOWNLOAD,
         status=ConsultingLead.LeadStatus.VERIFIED,
@@ -238,22 +301,24 @@ def freight_sample_download(request):
         company=form.cleaned_data.get("company", ""),
         ip_address=ip,
     )
+    intake_type = "download"
 
-    # Serve the PDF
-    sample_path = os.path.join(
-        settings.BASE_DIR, "static", "consulting",
-        "freight-spend-audit-sample.pdf"
-    )
-    if not os.path.exists(sample_path):
-        raise Http404("Sample report not found.")
-
-    return FileResponse(
-        open(sample_path, "rb"),
-        content_type="application/pdf",
-        as_attachment=True,
-        filename="BizAnalytic-Freight-Spend-Audit-Sample.pdf",
-    )
-
+    _send_verification_email_download(lead, request)
+    # # Serve the PDF
+    # sample_path = os.path.join(
+    #     settings.BASE_DIR, "static", "consulting",
+    #     "freight-spend-audit-sample.pdf"
+    # )
+    # if not os.path.exists(sample_path):
+    #     raise Http404("Sample report not found.")
+    #
+    # return FileResponse(
+    #     open(sample_path, "rb"),
+    #     content_type="application/pdf",
+    #     as_attachment=True,
+    #     filename="BizAnalytic-Freight-Spend-Audit-Sample.pdf",
+    # )
+    return redirect(f"/consulting/freight/book/success/?type={intake_type}")
 
 @require_POST
 def freight_book_submit(request):
@@ -359,19 +424,17 @@ def ecommerce_book_success(request):
 def ecommerce_sample_download(request):
     """Handles sample report download with email capture."""
     form = SampleDownloadForm(request.POST)
-    print(form)
+
     if not form.is_valid():
         messages.error(request, "Please provide a valid name and work email.")
-        print(form.errors)
         return redirect("consulting:consulting_ecommerce_sample")
 
     ip = _get_client_ip(request)
     if _is_rate_limited(form.cleaned_data["email"], ip):
         messages.info(request, "You've already downloaded the sample report.")
-        print("You've already downloaded the sample report.")
         return redirect("consulting:consulting_ecommerce_sample")
 
-    ConsultingLead.objects.create(
+    lead = ConsultingLead.objects.create(
         service=ConsultingLead.Service.ECOMMERCE,
         lead_type=ConsultingLead.LeadType.SAMPLE_DOWNLOAD,
         status=ConsultingLead.LeadStatus.VERIFIED,
@@ -382,19 +445,23 @@ def ecommerce_sample_download(request):
         ip_address=ip,
     )
 
-    sample_path = os.path.join(
-        settings.BASE_DIR, "static", "consulting",
-        "ecommerce-shipping-audit-sample.pdf"
-    )
-    if not os.path.exists(sample_path):
-        raise Http404("Sample report not found.")
+    intake_type = "download"
 
-    return FileResponse(
-        open(sample_path, "rb"),
-        content_type="application/pdf",
-        as_attachment=True,
-        filename="BizAnalytic-Shipping-Audit-Sample.pdf",
-    )
+    _send_verification_email_download(lead, request)
+    # sample_path = os.path.join(
+    #     settings.BASE_DIR, "static", "consulting",
+    #     "ecommerce-shipping-audit-sample.pdf"
+    # )
+    # if not os.path.exists(sample_path):
+    #     raise Http404("Sample report not found.")
+    #
+    # return FileResponse(
+    #     open(sample_path, "rb"),
+    #     content_type="application/pdf",
+    #     as_attachment=True,
+    #     filename="BizAnalytic-Shipping-Audit-Sample.pdf",
+    # )
+    return redirect(f"/consulting/ecommerce/book/success/?type={intake_type}")
 
 
 @require_POST

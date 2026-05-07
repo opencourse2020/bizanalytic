@@ -335,7 +335,7 @@ def ecommerce_service(request):
 def ecommerce_sample(request):
     """Sample report page with email-gated download."""
     return render(request, "consulting/ecommerce/sample.html", {
-        "form_timestamp": _get_form_timestamp(),
+        "form_ts": _get_form_timestamp(),
     })
 
 

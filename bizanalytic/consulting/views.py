@@ -362,11 +362,13 @@ def ecommerce_sample_download(request):
 
     if not form.is_valid():
         messages.error(request, "Please provide a valid name and work email.")
+        print("Please provide a valid name and work email.")
         return redirect("consulting:consulting_ecommerce_sample")
 
     ip = _get_client_ip(request)
     if _is_rate_limited(form.cleaned_data["email"], ip):
         messages.info(request, "You've already downloaded the sample report.")
+        print("You've already downloaded the sample report.")
         return redirect("consulting:consulting_ecommerce_sample")
 
     ConsultingLead.objects.create(

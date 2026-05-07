@@ -293,7 +293,7 @@ def freight_book_submit(request):
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, error)
-            return redirect("consulting_freight_book")
+            return redirect("consulting:consulting_freight_book")
 
         email = form.cleaned_data["email"]
         if _is_rate_limited(email, ip):

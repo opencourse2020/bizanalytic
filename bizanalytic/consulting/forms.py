@@ -57,16 +57,16 @@ class AntiBotMixin:
             raise forms.ValidationError("Bot detected.")
         return value
 
-    def clean_form_ts(self):
-        """Timestamp check — form must have been open for at least 3 seconds."""
-        ts = self.cleaned_data.get("form_ts", "0")
-        try:
-            elapsed = int(time.time()) - int(ts)
-        except (ValueError, TypeError):
-            elapsed = 0
-        if elapsed < 3:
-            raise forms.ValidationError("Submission too fast.")
-        return ts
+    # def clean_form_ts(self):
+    #     """Timestamp check — form must have been open for at least 3 seconds."""
+    #     ts = self.cleaned_data.get("form_ts", "0")
+    #     try:
+    #         elapsed = int(time.time()) - int(ts)
+    #     except (ValueError, TypeError):
+    #         elapsed = 0
+    #     if elapsed < 3:
+    #         raise forms.ValidationError("Submission too fast.")
+    #     return ts
 
 
 # =====================================================================
@@ -103,7 +103,7 @@ class SampleDownloadForm(AntiBotMixin, forms.Form):
     )
     # Anti-bot fields
     website = forms.CharField(required=False, widget=forms.HiddenInput())
-    form_ts = forms.CharField(required=False, widget=forms.HiddenInput())
+    # form_ts = forms.CharField(required=False, widget=forms.HiddenInput())
 
     def clean_email(self):
         return clean_disposable_email(self.cleaned_data["email"])

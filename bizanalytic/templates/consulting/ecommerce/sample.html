@@ -1,0 +1,314 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+    <meta name="description" content="Download a sample Shipping Intelligence Report. See exactly what our e-commerce shipping audit delivers: zone analysis, surcharge breakdown, dim-weight penalties, and a carrier negotiation playbook.">
+        <meta name="author" content='"logistics performance analytics platform", "freight cost optimization tool for SMEs", "data-driven decision making in logistics", "logistics analytics SaaS for small freight companies"'>
+        <!-- page title -->
+        <title>Sample Shipping Audit Report — See What We Deliver | BizAnalytic</title>
+{% endblock head_title %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'assets/css/consulting.css' %}">
+    <style>
+        .cs-ecom-zone-grid { display: flex; flex-direction: column; gap: 6px; margin: 12px 0; }
+        .cs-ecom-zone { display: flex; align-items: center; gap: 8px; }
+        .cs-ecom-zone-label { font-family: var(--cs-mono); font-size: 10px; font-weight: 600; color: var(--cs-ink-3); width: 48px; flex-shrink: 0; }
+        .cs-ecom-zone-bar { flex: 1; height: 14px; background: #f0f0f3; border-radius: 3px; overflow: hidden; }
+        .cs-ecom-zone-fill { height: 100%; border-radius: 3px; background: var(--cs-accent); }
+        .cs-ecom-zone-fill--hot { background: #dc2626; }
+        .cs-ecom-zone-fill[data-w="6"] { width: 6%; } .cs-ecom-zone-fill[data-w="11"] { width: 11%; }
+        .cs-ecom-zone-fill[data-w="12"] { width: 12%; } .cs-ecom-zone-fill[data-w="15"] { width: 15%; }
+        .cs-ecom-zone-fill[data-w="16"] { width: 16%; } .cs-ecom-zone-fill[data-w="18"] { width: 18%; }
+        .cs-ecom-zone-fill[data-w="22"] { width: 22%; }
+        .cs-ecom-zone-pct { font-family: var(--cs-mono); font-size: 11px; font-weight: 600; color: var(--cs-ink); width: 32px; text-align: right; flex-shrink: 0; }
+        .cs-ecom-zone-insight { font-size: 11.5px; color: var(--cs-ink-3); line-height: 1.55; padding: 10px 12px; background: #fef2f2; border-radius: 6px; border-left: 3px solid #dc2626; margin-top: 8px; }
+        </style>
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block pdf_button %}
+{% endblock pdf_button %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+
+{% block breadcrumb %}
+     <section class="breadcrumb-area mb-1" style="padding: 80px 0 20px" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <h2 class="title">E-COMMERCE </h2>
+                            <span class="title" style="color: #0cb7d6; font-size: 40px">&nbsp;{% trans "Sample Report" %}</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+
+{# ================================================================ #}
+{# HERO                                                             #}
+{# ================================================================ #}
+<section class="cs-hero cs-hero-compact">
+  <div class="cs-container">
+    <div class="cs-badge">Sample report</div>
+    <h1 class="cs-hero-title cs-hero-title-sm">See exactly what you'll receive</h1>
+    <p class="cs-hero-sub">
+      This is an anonymized excerpt from a real shipping audit for a DTC 
+      brand doing 4,000 orders/month. The data is fictional, but the format 
+      and depth are identical to what you'll get.
+    </p>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# REPORT PREVIEW                                                   #}
+{# ================================================================ #}
+<section class="cs-section">
+  <div class="cs-container">
+    <div class="cs-sample-grid">
+
+      {# Left: preview pages #}
+      <div class="cs-sample-preview">
+
+        {# Page 1: headline #}
+        <div class="cs-preview-page">
+          <div class="cs-preview-page-label">Page 1 &mdash; Executive summary</div>
+          <div class="cs-preview-page-content">
+            <div class="cs-preview-header">
+              <div class="cs-preview-brand">BizAnalytic</div>
+              <div class="cs-preview-title">Shipping Intelligence Report</div>
+              <div class="cs-preview-sub">Sample Brand Co. &mdash; 24,000 shipments analyzed</div>
+            </div>
+            <div class="cs-preview-money">
+              <div class="cs-preview-money-label">Estimated annual shipping savings</div>
+              <div class="cs-preview-money-val">$31,200</div>
+            </div>
+            <div class="cs-preview-actions">
+              <div class="cs-preview-action">
+                <span class="cs-preview-action-rank">01</span>
+                <span class="cs-preview-action-text">Switch Zone 1-3 lightweight orders from UPS to USPS Ground Advantage</span>
+                <span class="cs-preview-action-val">$14,400/yr</span>
+              </div>
+              <div class="cs-preview-action">
+                <span class="cs-preview-action-rank">02</span>
+                <span class="cs-preview-action-text">Reduce box size on top 5 SKUs to eliminate dim-weight penalties</span>
+                <span class="cs-preview-action-val">$9,600/yr</span>
+              </div>
+              <div class="cs-preview-action">
+                <span class="cs-preview-action-rank">03</span>
+                <span class="cs-preview-action-text">Renegotiate UPS residential surcharge using 48K annual volume</span>
+                <span class="cs-preview-action-val">$7,200/yr</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {# Page 2: zone distribution #}
+        <div class="cs-preview-page">
+          <div class="cs-preview-page-label">Page 3 &mdash; Zone distribution</div>
+          <div class="cs-preview-page-content">
+            <div class="cs-preview-section-title">Where your packages go</div>
+            <div class="cs-ecom-zone-grid">
+              <div class="cs-ecom-zone">
+                <div class="cs-ecom-zone-label">Zone 2</div>
+                <div class="cs-ecom-zone-bar"><div class="cs-ecom-zone-fill" data-w="12"></div></div>
+                <div class="cs-ecom-zone-pct">12%</div>
+              </div>
+              <div class="cs-ecom-zone">
+                <div class="cs-ecom-zone-label">Zone 3</div>
+                <div class="cs-ecom-zone-bar"><div class="cs-ecom-zone-fill" data-w="15"></div></div>
+                <div class="cs-ecom-zone-pct">15%</div>
+              </div>
+              <div class="cs-ecom-zone">
+                <div class="cs-ecom-zone-label">Zone 4</div>
+                <div class="cs-ecom-zone-bar"><div class="cs-ecom-zone-fill" data-w="18"></div></div>
+                <div class="cs-ecom-zone-pct">18%</div>
+              </div>
+              <div class="cs-ecom-zone">
+                <div class="cs-ecom-zone-label">Zone 5</div>
+                <div class="cs-ecom-zone-bar"><div class="cs-ecom-zone-fill cs-ecom-zone-fill--hot" data-w="22"></div></div>
+                <div class="cs-ecom-zone-pct">22%</div>
+              </div>
+              <div class="cs-ecom-zone">
+                <div class="cs-ecom-zone-label">Zone 6</div>
+                <div class="cs-ecom-zone-bar"><div class="cs-ecom-zone-fill cs-ecom-zone-fill--hot" data-w="16"></div></div>
+                <div class="cs-ecom-zone-pct">16%</div>
+              </div>
+              <div class="cs-ecom-zone">
+                <div class="cs-ecom-zone-label">Zone 7</div>
+                <div class="cs-ecom-zone-bar"><div class="cs-ecom-zone-fill cs-ecom-zone-fill--hot" data-w="11"></div></div>
+                <div class="cs-ecom-zone-pct">11%</div>
+              </div>
+              <div class="cs-ecom-zone">
+                <div class="cs-ecom-zone-label">Zone 8</div>
+                <div class="cs-ecom-zone-bar"><div class="cs-ecom-zone-fill cs-ecom-zone-fill--hot" data-w="6"></div></div>
+                <div class="cs-ecom-zone-pct">6%</div>
+              </div>
+            </div>
+            <div class="cs-ecom-zone-insight">
+              55% of volume ships to Zones 5-8 (cross-country). 
+              USPS Ground Advantage is 28-40% cheaper than UPS Ground for 
+              lightweight packages in these zones.
+            </div>
+          </div>
+        </div>
+
+        {# Page 3: surcharge breakdown #}
+        <div class="cs-preview-page">
+          <div class="cs-preview-page-label">Page 6 &mdash; Surcharge breakdown</div>
+          <div class="cs-preview-page-content">
+            <div class="cs-preview-section-title">Top surcharges by annual cost</div>
+            <div class="cs-preview-table">
+              <div class="cs-preview-table-head">
+                <span>Surcharge</span>
+                <span>Occurrences</span>
+                <span>Avg charge</span>
+                <span>Annual cost</span>
+              </div>
+              <div class="cs-preview-table-row">
+                <span>Residential delivery</span>
+                <span>21,360 (89%)</span>
+                <span>$5.70</span>
+                <span class="cs-preview-excess">$121,752</span>
+              </div>
+              <div class="cs-preview-table-row">
+                <span>Fuel surcharge</span>
+                <span>24,000 (100%)</span>
+                <span>$1.84</span>
+                <span class="cs-preview-excess">$44,160</span>
+              </div>
+              <div class="cs-preview-table-row">
+                <span>Dim-weight penalty</span>
+                <span>5,520 (23%)</span>
+                <span>$3.20</span>
+                <span class="cs-preview-excess">$17,664</span>
+              </div>
+              <div class="cs-preview-table-row">
+                <span>Address correction</span>
+                <span>840 (3.5%)</span>
+                <span>$18.00</span>
+                <span class="cs-preview-excess">$15,120</span>
+              </div>
+              <div class="cs-preview-table-row">
+                <span>Additional handling</span>
+                <span>1,200 (5%)</span>
+                <span>$4.50</span>
+                <span class="cs-preview-excess">$5,400</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {# Right: download form #}
+      <div class="cs-sample-form-wrapper">
+        <div class="cs-sample-form">
+          <h3 class="cs-sample-form-title">Download the sample report</h3>
+          <p class="cs-sample-form-desc">
+            Get the full 3-page sample as a PDF. See the format, depth, 
+            and exact type of recommendations we deliver.
+          </p>
+          <form method="post" action="{% url 'consulting:consulting_ecommerce_sample_download' %}">
+            {% csrf_token %}
+            <div class="cs-form-group">
+              <label for="sample_name" class="cs-form-label">Name</label>
+              <input type="text" id="sample_name" name="name" required class="cs-form-input" placeholder="Your name">
+            </div>
+            <div class="cs-form-group">
+              <label for="sample_email" class="cs-form-label">Work email</label>
+              <input type="email" id="sample_email" name="email" required class="cs-form-input" placeholder="you@brand.com">
+            </div>
+            <div class="cs-form-group">
+              <label for="sample_store" class="cs-form-label">Store URL <span class="cs-form-optional">(optional)</span></label>
+              <input type="text" id="sample_store" name="store_url" class="cs-form-input" placeholder="yourstore.com">
+            </div>
+            <button type="submit" class="cs-btn cs-btn-primary cs-btn-full">Download sample PDF</button>
+          </form>
+          <p class="cs-sample-form-note">
+            We'll email you the PDF and may follow up once to see if a 
+            shipping audit would be useful. No spam.
+          </p>
+        </div>
+
+        <div class="cs-sample-includes">
+          <div class="cs-sample-includes-title">The full audit includes</div>
+          <ul class="cs-sample-includes-list">
+            <li>10+ pages (sample shows 3)</li>
+            <li>Your actual carrier rates analyzed</li>
+            <li>Dollar amounts on every finding</li>
+            <li>Carrier negotiation playbook</li>
+            <li>ShipStation routing rules</li>
+            <li>20-minute video walkthrough</li>
+          </ul>
+          <a href="{% url 'consulting:consulting_ecommerce' %}" class="cs-link">Learn more about the full audit &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# CTA                                                              #}
+{# ================================================================ #}
+<section class="cs-section cs-cta-section">
+  <div class="cs-container">
+    <h2 class="cs-cta-title">Ready to see your own data?</h2>
+    <p class="cs-cta-sub">
+      Export your Shopify or ShipStation CSV. We'll send you a free 1-page 
+      snapshot &mdash; or book a 15-minute call to talk through your situation.
+    </p>
+    <div class="cs-hero-actions" style="justify-content:center">
+      <a href="{% url 'consulting:consulting_ecommerce_book' %}" class="cs-btn cs-btn-primary">Get started</a>
+      <a href="{% url 'consulting:consulting_ecommerce' %}" class="cs-btn cs-btn-secondary">Back to service overview</a>
+    </div>
+  </div>
+</section>
+
+{% endblock contact_area %}
+
+{% block extra_css %}
+
+{% endblock extra_css %}
+
+{% block feature_area %}
+
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+
+{% block js_area %}
+    {{ block.super }}
+{% endblock js_area %}

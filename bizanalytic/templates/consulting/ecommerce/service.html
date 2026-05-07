@@ -1,0 +1,449 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+    <meta name="description" content="We analyze your Shopify, ShipStation, or carrier invoices package by package. Zone analysis, surcharge breakdown, dim-weight penalties, and a carrier negotiation playbook. Free 1-page shipping snapshot available.">
+        <meta name="author" content='"logistics performance analytics platform", "freight cost optimization tool for SMEs", "data-driven decision making in logistics", "logistics analytics SaaS for small freight companies"'>
+        <!-- page title -->
+        <title>E-Commerce Shipping Audit — Stop Overpaying on Every Package | BizAnalytic</title>
+{% endblock head_title %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'assets/css/consulting.css' %}">
+    <style>
+        .cs-platforms {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-bottom: 16px;
+        }
+        .cs-platform {
+          font-family: var(--cs-mono);
+          font-size: 12px;
+          font-weight: 600;
+          color: var(--cs-ink-2);
+          background: var(--cs-bg);
+          border: 1px solid var(--cs-border);
+          padding: 8px 18px;
+          border-radius: 6px;
+        }
+        .cs-platform-note {
+          font-size: 13px;
+          color: var(--cs-ink-4);
+        }
+    </style>
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block pdf_button %}
+{% endblock pdf_button %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+
+{% block breadcrumb %}
+     <section class="breadcrumb-area mb-1" style="padding: 80px 0 20px" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <h2 class="title">E-Commerce </h2>
+                            <span class="title" style="color: #0cb7d6; font-size: 40px">&nbsp;{% trans "Consulting" %}</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+
+<section class="cs-hero">
+  <div class="cs-container">
+    <div class="cs-hero-content">
+      <div class="cs-badge">E-commerce shipping</div>
+      <h1 class="cs-hero-title">
+        You're overpaying on shipping<br>
+        <span class="cs-hero-accent">by 10-25% per package.</span>
+      </h1>
+      <p class="cs-hero-sub">
+        We analyze your shipping data package by package &mdash; every zone,
+        every surcharge, every dim-weight penalty &mdash; and show you exactly
+        where the money is going and how to get it back.
+      </p>
+      <div class="cs-hero-actions">
+        <a href="{% url 'consulting:consulting_ecommerce_book' %}" class="cs-btn cs-btn-primary">Get a free shipping snapshot</a>
+        <a href="#deliverable" class="cs-btn cs-btn-secondary">See sample report</a>
+      </div>
+      <div class="cs-hero-proof">
+        <div class="cs-proof-item">
+          <div class="cs-proof-val">10-25%</div>
+          <div class="cs-proof-label">Typical shipping cost reduction</div>
+        </div>
+        <div class="cs-proof-sep"></div>
+        <div class="cs-proof-item">
+          <div class="cs-proof-val">5 days</div>
+          <div class="cs-proof-label">From data to full report</div>
+        </div>
+        <div class="cs-proof-sep"></div>
+        <div class="cs-proof-item">
+          <div class="cs-proof-val">$0</div>
+          <div class="cs-proof-label">Upfront if you choose pay-for-savings</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# THE PROBLEM                                                      #}
+{# ================================================================ #}
+<section class="cs-section">
+  <div class="cs-container">
+    <div class="cs-section-label">The problem</div>
+    <h2 class="cs-section-title">Your shipping bill is full of charges you've never questioned</h2>
+    <div class="cs-prose">
+      <p>
+        A DTC brand shipping 3,000 packages a month at $6.50 average is
+        spending $19,500/month on shipping. Buried inside that number:
+        residential delivery surcharges ($5.70/package on UPS, $0 on USPS),
+        dimensional weight penalties on boxes too big for the product, fuel
+        surcharges that fluctuate weekly, and zone 5-8 rates that could be
+        30% cheaper on a different carrier.
+      </p>
+      <p>
+        Enterprise shippers use Shipware, 71lbs, or SpendLogic to audit
+        their parcel spend. Those services target brands shipping $1M+/year.
+        If you're spending $100K-$500K/year on shipping, nobody is looking
+        at your data. Meanwhile, your Shopify admin has a CSV export with
+        every shipment you've ever made &mdash; and nobody has analyzed it.
+      </p>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# WHAT YOU GET                                                     #}
+{# ================================================================ #}
+<section class="cs-section cs-section-alt" id="deliverable">
+  <div class="cs-container">
+    <div class="cs-section-label">What you get</div>
+    <h2 class="cs-section-title">A Shipping Intelligence Report</h2>
+    <p class="cs-section-sub">
+      Not a dashboard. A branded analysis document with dollar amounts on
+      every finding and a step-by-step playbook for reducing your shipping costs.
+    </p>
+    <div class="cs-deliverable-grid">
+      <div class="cs-del-card">
+        <div class="cs-del-num">01</div>
+        <h3 class="cs-del-title">Zone distribution analysis</h3>
+        <p class="cs-del-desc">
+          Where your packages actually go. We map every shipment to its
+          delivery zone and show you the cost distribution. If 60% of your
+          volume ships to Zones 5-8, you're paying cross-country rates
+          on the majority of orders &mdash; and a second fulfillment center
+          or regional carrier could cut those costs significantly.
+        </p>
+      </div>
+      <div class="cs-del-card">
+        <div class="cs-del-num">02</div>
+        <h3 class="cs-del-title">Surcharge breakdown</h3>
+        <p class="cs-del-desc">
+          Every surcharge on every invoice, categorized and totaled:
+          residential delivery, fuel, peak/demand, additional handling,
+          address correction, Saturday delivery, signature required.
+          We show you which surcharges are avoidable and which carriers
+          charge less for each.
+        </p>
+      </div>
+      <div class="cs-del-card">
+        <div class="cs-del-num">03</div>
+        <h3 class="cs-del-title">Dim-weight penalty analysis</h3>
+        <p class="cs-del-desc">
+          Every shipment where you paid for dimensional weight instead
+          of actual weight. We calculate the exact overpayment per SKU
+          and recommend packaging changes that eliminate the penalty.
+          A brand spending $4/package extra on 30% of shipments is
+          burning $1,200+/month on air inside boxes.
+        </p>
+      </div>
+      <div class="cs-del-card">
+        <div class="cs-del-num">04</div>
+        <h3 class="cs-del-title">Carrier rate comparison</h3>
+        <p class="cs-del-desc">
+          Your actual rates vs. published rates vs. what you should be
+          paying at your volume tier. We compare UPS, FedEx, USPS Ground
+          Advantage, and regional carriers zone by zone, weight tier by
+          weight tier. Most brands find one carrier is cheaper for Zones
+          1-4 and another for Zones 5-8.
+        </p>
+      </div>
+      <div class="cs-del-card">
+        <div class="cs-del-num">05</div>
+        <h3 class="cs-del-title">Negotiation playbook</h3>
+        <p class="cs-del-desc">
+          Specific rate targets per zone and weight tier to bring to your
+          carrier rep. We tell you exactly what to ask for, what leverage
+          you have (your annual volume, your zone mix, competitive quotes),
+          and what discount percentage is realistic for your tier.
+        </p>
+      </div>
+      <div class="cs-del-card">
+        <div class="cs-del-num">06</div>
+        <h3 class="cs-del-title">ShipStation routing rules</h3>
+        <p class="cs-del-desc">
+          If you use ShipStation, we provide ready-to-import automation
+          rules that route each order to the cheapest carrier based on
+          zone and weight. No manual rate shopping needed &mdash; every
+          order automatically goes to the optimal carrier.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# HOW IT WORKS                                                     #}
+{# ================================================================ #}
+<section class="cs-section">
+  <div class="cs-container">
+    <div class="cs-section-label">How it works</div>
+    <h2 class="cs-section-title">Export your data. We do the rest.</h2>
+    <div class="cs-steps">
+      <div class="cs-step">
+        <div class="cs-step-num">1</div>
+        <div class="cs-step-body">
+          <h3 class="cs-step-title">Export your shipping data</h3>
+          <p class="cs-step-desc">
+            Download 3-6 months of shipment history from Shopify,
+            ShipStation, ShipBob, or your carrier invoice portal. CSV or
+            Excel. Takes 2 minutes. We provide step-by-step export
+            instructions for every platform.
+          </p>
+        </div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">2</div>
+        <div class="cs-step-body">
+          <h3 class="cs-step-title">We run the analysis</h3>
+          <p class="cs-step-desc">
+            Every shipment is parsed by zone, weight, service level,
+            carrier, and surcharge type. Statistical models flag outlier
+            charges, identify dim-weight penalties, and compare your rates
+            against benchmarks for your volume tier. No AI hallucinations
+            &mdash; deterministic math on your actual invoices.
+          </p>
+        </div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">3</div>
+        <div class="cs-step-body">
+          <h3 class="cs-step-title">You get your report + walkthrough</h3>
+          <p class="cs-step-desc">
+            Within 5 business days: a branded PDF report with every finding,
+            every dollar amount, and a carrier negotiation playbook. Plus a
+            20-minute recorded video walkthrough explaining the results and
+            what to do first.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# DATA SOURCES                                                     #}
+{# ================================================================ #}
+<section class="cs-section cs-section-alt">
+  <div class="cs-container">
+    <div class="cs-section-label">Compatible with</div>
+    <h2 class="cs-section-title">We work with data from any platform</h2>
+    <div class="cs-platforms">
+      <div class="cs-platform">Shopify</div>
+      <div class="cs-platform">ShipStation</div>
+      <div class="cs-platform">ShipBob</div>
+      <div class="cs-platform">Pirate Ship</div>
+      <div class="cs-platform">EasyPost</div>
+      <div class="cs-platform">UPS Billing Center</div>
+      <div class="cs-platform">FedEx Invoice</div>
+      <div class="cs-platform">USPS Informed Delivery</div>
+    </div>
+    <p class="cs-platform-note">
+      Don't see your platform? If it exports to CSV or Excel, we can work with it.
+    </p>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# CREDIBILITY                                                      #}
+{# ================================================================ #}
+<section class="cs-section">
+  <div class="cs-container">
+    <div class="cs-section-label">Why us</div>
+    <h2 class="cs-section-title">Operations research, not guesswork</h2>
+    <div class="cs-cred-grid">
+      <div class="cs-cred-card">
+        <h3 class="cs-cred-title">Academic rigor</h3>
+        <p class="cs-cred-desc">
+          PhD in engineering science. 13+ years teaching operations management
+          and supply chain analytics. Your report is built by someone who
+          teaches statistical analysis at the graduate level.
+        </p>
+      </div>
+      <div class="cs-cred-card">
+        <h3 class="cs-cred-title">Industry experience</h3>
+        <p class="cs-cred-desc">
+          8+ years of hands-on industrial and consulting experience across
+          logistics, distribution, and supply chain operations. We understand
+          the operational reality behind the data.
+        </p>
+      </div>
+      <div class="cs-cred-card">
+        <h3 class="cs-cred-title">Package-level precision</h3>
+        <p class="cs-cred-desc">
+          We don't sample your data. We analyze every single shipment.
+          Statistical outlier detection flags individual invoices that
+          deviate from your lane norms. Every dollar amount is traceable
+          to a specific package, carrier, and charge.
+        </p>
+      </div>
+      <div class="cs-cred-card">
+        <h3 class="cs-cred-title">Actionable output</h3>
+        <p class="cs-cred-desc">
+          You get a negotiation script with specific rate targets, not
+          a dashboard with charts. Call your UPS rep, reference the
+          numbers in the report, and ask for the discount. That's it.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# PRICING                                                          #}
+{# ================================================================ #}
+<section class="cs-section cs-section-alt" id="pricing">
+  <div class="cs-container">
+    <div class="cs-section-label">Pricing</div>
+    <h2 class="cs-section-title">Two ways to pay</h2>
+    <div class="cs-pricing-grid">
+      <div class="cs-price-card">
+        <div class="cs-price-label">Fixed fee</div>
+        <div class="cs-price-val">$1,500 <span>- $3,000</span></div>
+        <div class="cs-price-desc">
+          Full Shipping Intelligence Report + 20-min video walkthrough.
+          Price depends on shipment volume and carrier complexity.
+          Most brands fall at $2,000.
+        </div>
+        <ul class="cs-price-list">
+          <li>Zone distribution analysis</li>
+          <li>Surcharge breakdown by type</li>
+          <li>Dim-weight penalty identification</li>
+          <li>Carrier rate comparison matrix</li>
+          <li>Negotiation playbook with rate targets</li>
+          <li>ShipStation routing rules (if applicable)</li>
+          <li>20-minute video walkthrough</li>
+          <li>5 business day turnaround</li>
+        </ul>
+        <a href="{% url 'consulting:consulting_ecommerce_book' %}" class="cs-btn cs-btn-primary cs-btn-full">Get started</a>
+      </div>
+      <div class="cs-price-card cs-price-card-accent">
+        <div class="cs-price-label">Pay for savings</div>
+        <div class="cs-price-val">20% <span>of first-year savings</span></div>
+        <div class="cs-price-desc">
+          Same full report. You only pay if we find savings. We document
+          the specific dollar amount, you verify it against your invoices
+          after implementation, and you pay 20% of the confirmed
+          first-year reduction.
+        </div>
+        <ul class="cs-price-list">
+          <li>Everything in the fixed fee audit</li>
+          <li>$0 upfront cost</li>
+          <li>Pay only after savings are verified</li>
+          <li>60-day verification window</li>
+          <li>Capped at $5,000 maximum</li>
+          <li>Free if savings are under $2,000/year</li>
+        </ul>
+        <a href="{% url 'consulting:consulting_ecommerce_book' %}" class="cs-btn cs-btn-primary cs-btn-full">Book a call</a>
+      </div>
+    </div>
+    <div class="cs-pricing-note">
+      Not ready to commit? Start with a
+      <a href="{% url 'consulting:consulting_ecommerce_book' %}">free 1-page shipping cost snapshot</a>
+      &mdash; we analyze a subset of your data and show you what we find.
+      No cost, no obligation.
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# SELF-SERVE CTA                                                   #}
+{# ================================================================ #}
+<section class="cs-section">
+  <div class="cs-container">
+    <div class="cs-selfserve">
+      <div class="cs-selfserve-content">
+        <h3 class="cs-selfserve-title">Shipping freight, not packages?</h3>
+        <p class="cs-selfserve-desc">
+          If you're a carrier, broker, or shipper managing truckload and
+          LTL freight, our Freight Spend Audit uses the same analytical
+          models for lane-level cost optimization, carrier allocation,
+          and invoice anomaly detection.
+        </p>
+      </div>
+      <a href="{% url 'consulting:consulting_freight' %}" class="cs-btn cs-btn-secondary">See freight consulting</a>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# FINAL CTA                                                        #}
+{# ================================================================ #}
+<section class="cs-section cs-cta-section">
+  <div class="cs-container">
+    <h2 class="cs-cta-title">Find out what's hiding in your shipping data</h2>
+    <p class="cs-cta-sub">
+      Export your Shopify or ShipStation CSV. We'll send you a free 1-page
+      snapshot showing your zone distribution and top 3 savings opportunities.
+    </p>
+    <a href="{% url 'consulting:consulting_ecommerce_book' %}" class="cs-btn cs-btn-primary cs-btn-lg">Get your free shipping snapshot</a>
+  </div>
+</section>
+
+{% endblock contact_area %}
+
+{% block feature_area %}
+
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+
+{% block js_area %}
+    {{ block.super }}
+{% endblock js_area %}

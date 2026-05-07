@@ -680,7 +680,7 @@ def generate_expert_report_narrative(
 # claude-sonnet-4-6
     message = client.messages.create(
         model="claude-opus-4-6",
-        max_tokens=7000,
+        max_tokens=16000,
         system=SYSTEM_PROMPT_EXPERT,
         messages=[
             {"role": "user", "content": user_prompt}

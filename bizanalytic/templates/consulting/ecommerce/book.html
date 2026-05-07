@@ -1,0 +1,381 @@
+{% extends "logiflex_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+    <meta name="description" content="Upload your Shopify or ShipStation export for a free 1-page shipping cost snapshot. Or book a 15-minute call to discuss a full Shipping Intelligence Report for your e-commerce brand.">
+        <meta name="author" content='We analyze your Shopify, ShipStation, or carrier invoices package by package. Zone analysis, surcharge breakdown, dim-weight penalties, and a carrier negotiation playbook. Free 1-page shipping snapshot available.'>
+        <!-- page title -->
+        <title>Get a Shipping Audit — Free Snapshot or Full Analysis | BizAnalytic</title>
+{% endblock head_title %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'assets/css/consulting.css' %}">
+        <style>
+        .cs-checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+        .cs-checkbox {
+          font-size: 13px; color: var(--cs-ink-2); cursor: pointer;
+          display: flex; align-items: center; gap: 6px;
+          padding: 6px 12px; border: 1px solid var(--cs-border); border-radius: 6px;
+          background: var(--cs-bg); transition: border-color 0.15s;
+        }
+        .cs-checkbox:hover { border-color: var(--cs-accent); }
+        .cs-checkbox input { accent-color: var(--cs-accent); }
+        .cs-export-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .cs-export-card {
+          padding: 20px; border: 1px solid var(--cs-border); border-radius: 10px; background: var(--cs-bg);
+        }
+        .cs-export-card-title { font-size: 15px; font-weight: 700; color: var(--cs-ink); margin-bottom: 10px; }
+        .cs-export-steps p { font-size: 12.5px; color: var(--cs-ink-3); line-height: 1.55; margin-bottom: 6px; }
+        .cs-export-steps p:last-child { margin-bottom: 0; }
+        @media (max-width: 768px) {
+          .cs-export-grid { grid-template-columns: 1fr; }
+          .cs-checkbox-group { flex-direction: column; }
+        }
+    </style>
+{% endblock css %}
+
+{% block header_left %}
+    {{ block.super }}
+{% endblock header_left %}
+
+{% block header_right %}
+    {{ block.super }}
+{% endblock header_right %}
+
+{% block pdf_button %}
+{% endblock pdf_button %}
+
+{% block main_menu%}
+    {{ block.super }}
+{% endblock main_menu%}
+
+{% block left_menu %}
+    {{ block.super }}
+{% endblock left_menu %}
+
+
+{% block breadcrumb %}
+     <section class="breadcrumb-area mb-1" style="padding: 80px 0 20px" data-background={% static "vendor/transport/assets/images/breadcrumb-bg1.jpg" %}>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <h2 class="title">before you commit</h2>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock breadcrumb %}
+
+{% block contact_area %}
+
+{# ================================================================ #}
+{# HERO                                                             #}
+{# ================================================================ #}
+<section class="cs-hero cs-hero-compact">
+  <div class="cs-container">
+    <div class="cs-badge">Get started</div>
+    <h1 class="cs-hero-title cs-hero-title-sm">
+      Let's find out what your shipping data is hiding
+    </h1>
+    <p class="cs-hero-sub">
+      Two options: get a free 1-page shipping snapshot from your data, 
+      or book a 15-minute call to discuss a full audit.
+    </p>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# TWO INTAKE OPTIONS                                               #}
+{# ================================================================ #}
+<section class="cs-section">
+  <div class="cs-container">
+    <div class="cs-intake-grid">
+
+      {# Option 1: Free snapshot #}
+      <div class="cs-intake-card cs-intake-card-alt">
+        <div class="cs-intake-badge cs-intake-badge-accent">Most popular</div>
+        <h2 class="cs-intake-title">Get a free shipping snapshot</h2>
+        <p class="cs-intake-desc">
+          Export 1-3 months of shipping data from Shopify, ShipStation, 
+          or your carrier portal. We'll send you a free 1-page summary: 
+          your zone distribution, top 3 surcharges by cost, and estimated 
+          savings range. No cost, no obligation.
+        </p>
+        <div class="cs-intake-details">
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Deliverable</span>
+            <span>1-page PDF snapshot</span>
+          </div>
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Turnaround</span>
+            <span>3 business days</span>
+          </div>
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Cost</span>
+            <span>Free</span>
+          </div>
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Data needed</span>
+            <span>CSV or Excel shipment export</span>
+          </div>
+        </div>
+
+        <form method="post" action="{% url 'consulting:consulting_ecommerce_book_submit' %}" enctype="multipart/form-data" class="cs-intake-form">
+          {% csrf_token %}
+          <input type="hidden" name="intake_type" value="shipping_snapshot">
+          <input type="hidden" name="form_ts" value="{{ form_timestamp }}">
+          {# Honeypot #}
+          <div style="position:absolute;left:-9999px;top:-9999px;height:0;overflow:hidden;" aria-hidden="true">
+            <input type="text" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="cs-form-group">
+            <label for="snap_name" class="cs-form-label">Your name</label>
+            <input type="text" id="snap_name" name="name" required class="cs-form-input">
+          </div>
+
+          <div class="cs-form-group">
+            <label for="snap_email" class="cs-form-label">Work email</label>
+            <input type="email" id="snap_email" name="email" required class="cs-form-input" placeholder="you@brand.com">
+          </div>
+
+          <div class="cs-form-group">
+            <label for="snap_store" class="cs-form-label">Store URL</label>
+            <input type="text" id="snap_store" name="store_url" required class="cs-form-input" placeholder="yourstore.com">
+          </div>
+
+          <div class="cs-form-group">
+            <label for="snap_volume" class="cs-form-label">Monthly order volume</label>
+            <select id="snap_volume" name="monthly_volume" required class="cs-form-input">
+              <option value="">Select range</option>
+              <option value="under_500">Under 500 orders/month</option>
+              <option value="500_2000">500 - 2,000 orders/month</option>
+              <option value="2000_5000">2,000 - 5,000 orders/month</option>
+              <option value="5000_10000">5,000 - 10,000 orders/month</option>
+              <option value="over_10000">10,000+ orders/month</option>
+            </select>
+          </div>
+
+          <div class="cs-form-group">
+            <label for="snap_carriers" class="cs-form-label">Which carriers do you use?</label>
+            <div class="cs-checkbox-group">
+              <label class="cs-checkbox"><input type="checkbox" name="carriers" value="ups"> UPS</label>
+              <label class="cs-checkbox"><input type="checkbox" name="carriers" value="fedex"> FedEx</label>
+              <label class="cs-checkbox"><input type="checkbox" name="carriers" value="usps"> USPS</label>
+              <label class="cs-checkbox"><input type="checkbox" name="carriers" value="dhl"> DHL</label>
+              <label class="cs-checkbox"><input type="checkbox" name="carriers" value="regional"> Regional carrier</label>
+            </div>
+          </div>
+
+          <div class="cs-form-group">
+            <label for="snap_platform" class="cs-form-label">Shipping platform</label>
+            <select id="snap_platform" name="platform" class="cs-form-input">
+              <option value="">Select</option>
+              <option value="shopify">Shopify</option>
+              <option value="shipstation">ShipStation</option>
+              <option value="shipbob">ShipBob</option>
+              <option value="pirateship">Pirate Ship</option>
+              <option value="easypost">EasyPost</option>
+              <option value="carrier_portal">Carrier portal directly</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="cs-form-group">
+            <label for="snap_file" class="cs-form-label">Upload shipping data</label>
+            <input type="file" id="snap_file" name="shipping_data" accept=".csv,.xlsx,.xls" required class="cs-form-input cs-form-file">
+            <p class="cs-form-hint">
+              CSV or Excel. 1-3 months of shipment history. 
+              <a href="#export-help" class="cs-link">How to export from Shopify &rarr;</a>
+            </p>
+          </div>
+
+          <button type="submit" class="cs-btn cs-btn-primary cs-btn-full">Submit for free snapshot</button>
+        </form>
+
+        <p class="cs-intake-note">
+          Your data is encrypted in transit and at rest. We analyze it, 
+          deliver your snapshot, and delete the raw data within 30 days.
+        </p>
+      </div>
+
+      {# Option 2: Discovery call #}
+      <div class="cs-intake-card">
+        <div class="cs-intake-badge">Option 2</div>
+        <h2 class="cs-intake-title">Book a discovery call</h2>
+        <p class="cs-intake-desc">
+          A 15-minute conversation. No pitch. We look at your shipping 
+          situation and tell you honestly whether an audit would find 
+          meaningful savings for your brand.
+        </p>
+        <div class="cs-intake-details">
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Duration</span>
+            <span>15 minutes</span>
+          </div>
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Format</span>
+            <span>Zoom or phone</span>
+          </div>
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Cost</span>
+            <span>Free</span>
+          </div>
+          <div class="cs-intake-detail">
+            <span class="cs-intake-detail-label">Prep needed</span>
+            <span>None</span>
+          </div>
+        </div>
+
+        <form method="post" action="{% url 'consulting:consulting_ecommerce_book_submit' %}" class="cs-intake-form">
+          {% csrf_token %}
+          <input type="hidden" name="intake_type" value="discovery_call">
+          <input type="hidden" name="form_ts" value="{{ form_timestamp }}">
+          {# Honeypot #}
+          <div style="position:absolute;left:-9999px;top:-9999px;height:0;overflow:hidden;" aria-hidden="true">
+            <input type="text" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="cs-form-group">
+            <label for="call_name" class="cs-form-label">Your name</label>
+            <input type="text" id="call_name" name="name" required class="cs-form-input">
+          </div>
+
+          <div class="cs-form-group">
+            <label for="call_email" class="cs-form-label">Work email</label>
+            <input type="email" id="call_email" name="email" required class="cs-form-input">
+          </div>
+
+          <div class="cs-form-group">
+            <label for="call_store" class="cs-form-label">Store URL</label>
+            <input type="text" id="call_store" name="store_url" required class="cs-form-input" placeholder="yourstore.com">
+          </div>
+
+          <div class="cs-form-group">
+            <label for="call_spend" class="cs-form-label">Estimated monthly shipping spend</label>
+            <select id="call_spend" name="monthly_spend" required class="cs-form-input">
+              <option value="">Select range</option>
+              <option value="under_5k">Under $5K/month</option>
+              <option value="5k_15k">$5K - $15K/month</option>
+              <option value="15k_40k">$15K - $40K/month</option>
+              <option value="over_40k">Over $40K/month</option>
+              <option value="not_sure">Not sure</option>
+            </select>
+          </div>
+
+          <div class="cs-form-group">
+            <label for="call_pain" class="cs-form-label">
+              Biggest shipping challenge right now?
+              <span class="cs-form-optional">(optional)</span>
+            </label>
+            <textarea id="call_pain" name="challenge" rows="3" class="cs-form-input cs-form-textarea" placeholder="e.g., costs keep climbing, not sure if our rates are competitive, too many surcharges..."></textarea>
+          </div>
+
+          <button type="submit" class="cs-btn cs-btn-primary cs-btn-full">Book my call</button>
+        </form>
+
+        <p class="cs-intake-note">
+          We'll respond within 1 business day with available times.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# EXPORT HELP                                                      #}
+{# ================================================================ #}
+<section class="cs-section cs-section-alt" id="export-help">
+  <div class="cs-container">
+    <div class="cs-section-label">Data export guide</div>
+    <h2 class="cs-section-title">How to export your shipping data</h2>
+    <div class="cs-export-grid">
+      <div class="cs-export-card">
+        <h3 class="cs-export-card-title">Shopify</h3>
+        <div class="cs-export-steps">
+          <p>Settings &rarr; Shipping and delivery &rarr; Manage rates</p>
+          <p>Or: Orders &rarr; Export &rarr; All orders &rarr; CSV</p>
+          <p>We need: order date, shipping method, carrier, tracking, 
+          destination zip, weight, shipping cost.</p>
+        </div>
+      </div>
+      <div class="cs-export-card">
+        <h3 class="cs-export-card-title">ShipStation</h3>
+        <div class="cs-export-steps">
+          <p>Shipments tab &rarr; Filter by date range &rarr; Export CSV</p>
+          <p>We need: ship date, carrier, service, zone, weight, 
+          dimensions, cost, surcharges.</p>
+        </div>
+      </div>
+      <div class="cs-export-card">
+        <h3 class="cs-export-card-title">UPS / FedEx portal</h3>
+        <div class="cs-export-steps">
+          <p>Billing Center &rarr; Download invoices &rarr; CSV format</p>
+          <p>We need: invoice detail (not summary). Each shipment as a 
+          separate row with tracking, zone, weight, and all charges.</p>
+        </div>
+      </div>
+    </div>
+    <p class="cs-platform-note">
+      Using a different platform? Email us at support@bizanalytic.com 
+      and we'll send you specific export instructions.
+    </p>
+  </div>
+</section>
+
+{# ================================================================ #}
+{# TRUST BAR                                                        #}
+{# ================================================================ #}
+<section class="cs-section">
+  <div class="cs-container">
+    <div class="cs-trust-bar">
+      <div class="cs-trust-item">
+        <div class="cs-trust-val">PhD</div>
+        <div class="cs-trust-label">Engineering science</div>
+      </div>
+      <div class="cs-trust-sep"></div>
+      <div class="cs-trust-item">
+        <div class="cs-trust-val">13+</div>
+        <div class="cs-trust-label">Years academic</div>
+      </div>
+      <div class="cs-trust-sep"></div>
+      <div class="cs-trust-item">
+        <div class="cs-trust-val">8+</div>
+        <div class="cs-trust-label">Years industry</div>
+      </div>
+      <div class="cs-trust-sep"></div>
+      <div class="cs-trust-item">
+        <div class="cs-trust-val">100%</div>
+        <div class="cs-trust-label">Package-level analysis</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock contact_area %}
+
+{% block feature_area %}
+
+{% endblock feature_area %}
+
+<!-- cta area starts -->
+{% block cta_area %}
+    {{ block.super }}
+{% endblock cta_area %}
+
+<!-- footer area starts -->
+{% block footer_area %}
+    {{ block.super }}
+{% endblock footer_area %}
+
+{% block js_area %}
+    {{ block.super }}
+{% endblock js_area %}

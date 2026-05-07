@@ -13,7 +13,19 @@ from . import views
 app_name = "consulting"
 
 urlpatterns = [
-    # Freight Spend Audit
+
+    # =================================================================
+    # SHARED
+    # =================================================================
+    path(
+        'freight/verify/<str:token>/',
+        views.freight_verify,
+        name='consulting_freight_verify',
+    ),
+
+    # =================================================================
+    # FREIGHT SPEND AUDIT
+    # =================================================================
     path(
         'freight/',
         views.freight_service,
@@ -44,11 +56,41 @@ urlpatterns = [
         views.freight_book_success,
         name='consulting_freight_book_success',
     ),
+
+    # =================================================================
+    # E-COMMERCE SHIPPING AUDIT
+    # =================================================================
     path(
-        'freight/verify/<str:token>/',
-        views.freight_verify,
-        name='consulting_freight_verify',
+        "ecommerce/",
+        views.ecommerce_service,
+        name="consulting_ecommerce",
     ),
+    path(
+        "ecommerce/sample/",
+        views.ecommerce_sample,
+        name="consulting_ecommerce_sample",
+    ),
+    path(
+        "ecommerce/sample/download/",
+        views.ecommerce_sample_download,
+        name="consulting_ecommerce_sample_download",
+    ),
+    path(
+        "ecommerce/book/",
+        views.ecommerce_book,
+        name="consulting_ecommerce_book",
+    ),
+    path(
+        "ecommerce/book/submit/",
+        views.ecommerce_book_submit,
+        name="consulting_ecommerce_book_submit",
+    ),
+    path(
+        "ecommerce/book/success/",
+        views.ecommerce_book_success,
+        name="consulting_ecommerce_book_success",
+    ),
+
     # path(
     #     'freight/expired/',
     #     views.freight_book_success,

@@ -210,7 +210,6 @@ def download_sample(request, token):
     lead = get_object_or_404(
         ConsultingLead,
         verification_token=token,
-        is_verified=False,
     )
 
     # Check expiry

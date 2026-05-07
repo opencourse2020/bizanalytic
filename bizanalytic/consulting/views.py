@@ -359,7 +359,7 @@ def ecommerce_book_success(request):
 def ecommerce_sample_download(request):
     """Handles sample report download with email capture."""
     form = SampleDownloadForm(request.POST)
-
+    print(form)
     if not form.is_valid():
         messages.error(request, "Please provide a valid name and work email.")
         print(form.errors)

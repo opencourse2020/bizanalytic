@@ -13,6 +13,8 @@ Place at: consulting/urls.py
 from django.urls import path
 from . import views
 
+app_name = "consulting"
+
 urlpatterns = [
 
     # =================================================================
